@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#bfeee0">
+<meta name="description" content="مار و پله‌ی دانش — بازی آموزشی دو نفره از حکیمستان. جواب بده، تاس بنداز، اول از همه به خانه ۱۰۰ برس!">
+<meta property="og:title" content="مار و پله‌ی دانش — حکیمستان">
+<meta property="og:description" content="بازی آموزشی دو نفره: هر جواب درست یک تاس است!">
+<title>🐍 مار و پله‌ی دانش — حکیمستان</title>
+
+<!-- فونت‌ها: Lalezar (کارتونی) + Vazirmatn (متن) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   مار و پله‌ی دانش — استایل‌ها
+   تم: سبز-زرد شاد و بازیگوش (چمنی/آسمانی)
+   ============================================================ */
+:root{
+  --green:#34c759;
+  --green-deep:#1f9d4d;
+  --yellow:#ffd23f;
+  --orange:#ff9f43;
+  --blue:#3b82f6;
+  --red:#ef4444;
+  --ink:#23403a;
+  --muted:#5c7a70;
+  --cream:#fdf6e3;
+  --cell-a:#fffbe9;
+  --cell-b:#f3e8c9;
+  --board-brd:#e0c98f;
+  --card:rgba(255,255,255,.9);
+  --shadow:0 16px 40px -16px rgba(35,64,58,.35);
+  --radius:20px;
+  --font:'Vazirmatn','Vazir',Tahoma,'Segoe UI',Arial,sans-serif;
+  --title:'Lalezar','Vazirmatn',Tahoma,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:var(--font);
+  color:var(--ink);
+  min-height:100vh;min-height:100dvh;
+  overflow-x:hidden;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(900px 500px at 85% -10%, rgba(255,255,255,.85), transparent 55%),
+    radial-gradient(700px 500px at 10% 110%, rgba(52,199,89,.25), transparent 55%),
+    linear-gradient(180deg,#a9e7cd 0%,#c9f0dd 45%,#e7f8ee 100%);
+  background-attachment:fixed;
+}
+button{font-family:inherit;touch-action:manipulation;cursor:pointer;}
+a{text-decoration:none;color:inherit;}
+
+/* ---------- پس‌زمینه: ابرها و آفتاب ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.cloud{
+  position:absolute;background:rgba(255,255,255,.75);border-radius:60px;
+  animation:cloudMove linear infinite;opacity:.9;
+}
+.cloud::before,.cloud::after{
+  content:'';position:absolute;background:inherit;border-radius:50%;
+}
+.cloud::before{width:55%;height:120%;top:-55%;right:18%;}
+.cloud::after{width:42%;height:90%;top:-40%;right:55%;}
+@keyframes cloudMove{
+  from{transform:translateX(-30vw);}
+  to{transform:translateX(110vw);}
+}
+.sun{
+  position:absolute;top:calc(20px + env(safe-area-inset-top,0px));left:20px;
+  width:74px;height:74px;border-radius:50%;
+  background:radial-gradient(circle at 35% 32%, #fff7d6, #ffd23f 62%, #ffb020);
+  box-shadow:0 0 40px 8px rgba(255,210,63,.55);
+  animation:sunPulse 4s ease-in-out infinite;
+}
+@keyframes sunPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+
+/* ---------- ظرف اصلی ---------- */
+#app{position:relative;z-index:5;max-width:680px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top,0px)) 16px 40px;}
+.screen{display:none;animation:fadeUp .5s ease;}
+.screen.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+/* ---------- دکمه‌ی موسیقی ---------- */
+.music-btn{
+  position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:calc(14px + env(safe-area-inset-left,0px));
+  z-index:1000;width:46px;height:46px;border-radius:50%;
+  background:var(--card);border:2px solid rgba(52,199,89,.5);
+  box-shadow:0 6px 16px -6px rgba(35,64,58,.4);
+  font-size:1.2rem;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s, box-shadow .3s;
+}
+.music-btn:active{transform:scale(.92);}
+.music-btn.playing{box-shadow:0 6px 18px -4px rgba(52,199,89,.55), 0 0 22px rgba(255,210,63,.5);}
+.music-btn.playing .m-ic{animation:spinNote 3s linear infinite;}
+.m-ic{display:inline-block;}
+@keyframes spinNote{to{transform:rotate(360deg);}}
+
+/* ---------- صفحه‌ی شروع ---------- */
+.home-wrap{text-align:center;padding-top:8px;}
+.game-title{
+  font-family:var(--title);font-weight:400;
+  font-size:clamp(2.3rem,10vw,3.6rem);line-height:1.25;
+  color:var(--green-deep);
+  text-shadow:0 3px 0 #fff, 0 6px 18px rgba(31,157,77,.35);
+  margin:6px 0 2px;
+}
+.game-title .snake-em{display:inline-block;animation:wiggle 2.6s ease-in-out infinite;transform-origin:center;}
+@keyframes wiggle{0%,100%{transform:rotate(-6deg);}50%{transform:rotate(8deg);}}
+.subtitle{color:var(--muted);font-size:.95rem;font-weight:600;margin-bottom:18px;}
+
+.panel{
+  background:var(--card);border:2px solid rgba(224,201,143,.7);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:18px 16px;margin-bottom:14px;text-align:right;
+}
+.panel h3{font-family:var(--title);font-weight:400;color:var(--green-deep);font-size:1.25rem;margin-bottom:12px;text-align:center;}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:.8rem;font-weight:800;color:var(--muted);margin-bottom:5px;}
+.field input{
+  width:100%;font-family:inherit;font-size:1rem;font-weight:700;color:var(--ink);
+  background:#fff;border:2px solid #e3d5ad;border-radius:13px;padding:11px 13px;outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.field input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(52,199,89,.18);}
+.color-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.color-row .lbl{font-size:.8rem;font-weight:800;color:var(--muted);}
+.swatches{display:flex;gap:7px;flex-wrap:wrap;}
+.swatch{
+  width:34px;height:34px;border-radius:50%;border:3px solid transparent;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);transition:transform .15s;
+}
+.swatch.sel{border-color:#fff;outline:3px solid var(--ink);transform:scale(1.12);}
+.swatch:active{transform:scale(.9);}
+
+.rules{
+  background:rgba(255,210,63,.18);border:2px dashed rgba(200,150,20,.5);
+  border-radius:16px;padding:12px 14px;font-size:.82rem;font-weight:600;color:var(--ink);
+  text-align:right;margin-bottom:14px;line-height:1.9;
+}
+.rules .r{display:flex;align-items:center;gap:8px;}
+
+.btn-row{display:flex;flex-direction:column;gap:10px;max-width:400px;margin:0 auto;}
+.btn{
+  border:none;border-radius:16px;font-weight:800;font-size:1.05rem;padding:15px 22px;
+  font-family:inherit;transition:transform .12s, box-shadow .2s, filter .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{
+  color:#fff;background:linear-gradient(180deg,#43d06a,#1f9d4d);
+  box-shadow:0 10px 24px -8px rgba(31,157,77,.6), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.btn-primary:hover{filter:brightness(1.05);}
+.btn-ghost{color:var(--ink);background:rgba(255,255,255,.75);border:2px solid #d8c891;}
+.btn-ghost:hover{background:#fff;}
+.btn-small{min-height:44px;padding:10px 16px;font-size:.9rem;border-radius:13px;}
+
+/* ---------- صفحه‌ی بازی ---------- */
+.hud{
+  display:flex;flex-direction:column;gap:8px;margin-bottom:12px;
+  background:var(--card);border:2px solid rgba(224,201,143,.7);
+  border-radius:16px;padding:11px 13px;box-shadow:0 8px 22px -12px rgba(35,64,58,.35);
+}
+.turn-chip{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  font-weight:900;font-size:1.02rem;color:var(--green-deep);
+}
+.turn-chip .dot{width:16px;height:16px;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.7);}
+.players-bar{display:flex;gap:8px;}
+.p-chip{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  font-size:.78rem;font-weight:800;color:var(--muted);
+  background:rgba(255,255,255,.6);border:2px solid transparent;border-radius:11px;padding:7px 6px;
+  transition:all .25s;
+}
+.p-chip .dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto;}
+.p-chip.on{color:var(--ink);border-color:var(--green);background:rgba(52,199,89,.12);box-shadow:0 2px 10px rgba(31,157,77,.25);}
+
+/* ---------- تخته ---------- */
+.board-wrap{display:flex;justify-content:center;margin-bottom:12px;}
+.board{
+  position:relative;width:100%;max-width:560px;aspect-ratio:1/1;
+  background:var(--cream);border:7px solid var(--board-brd);border-radius:16px;
+  box-shadow:0 20px 44px -18px rgba(35,64,58,.5), inset 0 0 0 2px rgba(255,255,255,.55);
+}
+@supports not (aspect-ratio:1/1){.board{height:0;padding-bottom:100%;}}
+.cell{
+  position:absolute;width:10%;height:10%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(140,110,50,.14);border-radius:4px;
+  background:var(--cell-a);
+}
+.cell.alt{background:var(--cell-b);}
+.cell-num{font-size:clamp(7px,2vw,11.5px);font-weight:800;color:#9a8757;line-height:1;}
+.cell.snake-head{background:rgba(239,68,68,.2);}
+.cell.snake-tail{background:rgba(34,197,94,.16);}
+.cell.ladder{background:rgba(255,179,32,.24);}
+.cell.start .cell-num,.cell.goal .cell-num{color:#7a5a10;}
+.cell.goal{background:rgba(255,210,63,.4);}
+.cell-badge{position:absolute;font-size:clamp(6px,1.7vw,10px);bottom:1px;line-height:1;pointer-events:none;}
+
+/* مارها و پله‌ها (SVG) */
+.board svg.overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+
+/* مهره‌ها */
+.piece{position:absolute;width:8.2%;height:8.2%;transition:left .2s ease, top .2s ease;z-index:5;}
+.piece .dot{
+  position:absolute;inset:0;border-radius:50%;
+  border:2.5px solid #fff;
+  box-shadow:0 3px 7px rgba(0,0,0,.35), inset 0 -3px 6px rgba(0,0,0,.25);
+}
+.piece .dot::after{ /* برق سفید */
+  content:'';position:absolute;top:14%;left:20%;width:34%;height:24%;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0));
+}
+.piece .face{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(9px,2.6vw,15px);
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.3));
+}
+#crown{
+  position:absolute;width:10%;height:10%;z-index:6;font-size:clamp(15px,4.6vw,26px);
+  display:none;align-items:flex-start;justify-content:center;
+  animation:crownBounce 1s ease-in-out infinite;pointer-events:none;transform:translate(-50%,0);
+}
+@keyframes crownBounce{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,-6px);}}
+
+/* ---------- نوار تاس ---------- */
+.dice-bar{
+  display:flex;align-items:center;gap:14px;
+  background:var(--card);border:2px solid rgba(224,201,143,.7);
+  border-radius:16px;padding:12px 14px;box-shadow:0 8px 22px -12px rgba(35,64,58,.35);
+}
+.dice-scene{perspective:400px;flex:0 0 auto;}
+.dice{
+  position:relative;width:58px;height:58px;transform-style:preserve-3d;
+  transition:transform .3s ease-out;
+}
+.dice.rolling{animation:diceTumble 1s cubic-bezier(.2,.7,.3,1);}
+@keyframes diceTumble{
+  0%{transform:rotateX(0) rotateY(0);}
+  100%{transform:rotateX(360deg) rotateY(360deg);}
+}
+.face{
+  position:absolute;inset:0;background:#fff;border:2px solid #e2d7b0;border-radius:12px;
+  box-shadow:inset 0 0 10px rgba(0,0,0,.08);
+}
+.face i{
+  position:absolute;width:12px;height:12px;border-radius:50%;background:#22333a;
+  transform:translate(-50%,-50%);box-shadow:inset 0 -2px 3px rgba(0,0,0,.35);
+}
+.face.f1{transform:translateZ(29px);}
+.face.f6{transform:rotateY(180deg) translateZ(29px);}
+.face.f2{transform:rotateY(90deg) translateZ(29px);}
+.face.f5{transform:rotateY(-90deg) translateZ(29px);}
+.face.f3{transform:rotateX(90deg) translateZ(29px);}
+.face.f4{transform:rotateX(-90deg) translateZ(29px);}
+
+.dice-mid{flex:1;min-width:0;}
+.dice-result{
+  font-family:var(--title);font-size:1.9rem;color:var(--green-deep);line-height:1;min-height:1.6rem;
+  text-align:center;margin-bottom:4px;
+}
+.dice-hint{font-size:.72rem;color:var(--muted);font-weight:600;text-align:center;}
+
+.btn-roll{
+  flex:0 0 auto;color:#fff;font-size:1rem;font-weight:900;min-height:52px;padding:0 18px;
+  border:none;border-radius:15px;
+  background:linear-gradient(180deg,#ffdf6b,#ffb020);
+  box-shadow:0 8px 20px -8px rgba(255,159,67,.7), inset 0 1px 0 rgba(255,255,255,.6);
+  text-shadow:0 1px 0 rgba(0,0,0,.12);transition:transform .12s;
+}
+.btn-roll:active{transform:scale(.95);}
+.btn-roll.pulse{animation:rollPulse 1.6s ease-in-out infinite;}
+.btn-roll:disabled{filter:grayscale(.5);opacity:.6;cursor:default;}
+@keyframes rollPulse{0%,100%{box-shadow:0 8px 20px -8px rgba(255,159,67,.7);}50%{box-shadow:0 8px 26px -6px rgba(255,159,67,.95);}}
+
+.top-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.home-link{
+  font-size:.8rem;font-weight:800;color:var(--green-deep);background:var(--card);
+  border:2px solid rgba(224,201,143,.7);border-radius:12px;padding:7px 13px;min-height:40px;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.game-tag{font-size:.78rem;color:var(--muted);font-weight:700;}
+
+/* ---------- مودال سؤال ---------- */
+.modal{
+  position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;
+  padding:16px;background:rgba(20,40,32,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+.modal.hidden{display:none;}
+.qcard{
+  width:100%;max-width:460px;max-height:92vh;max-height:92dvh;overflow-y:auto;
+  background:#fff;border:3px solid #e0d5b4;border-radius:20px;padding:18px 16px 16px;
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.5);animation:popIn .35s cubic-bezier(.22,1,.36,1);
+  text-align:right;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.92) translateY(14px);}to{opacity:1;transform:none;}}
+.qm-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.qm-badge{
+  font-size:.72rem;font-weight:800;color:#1f9d4d;background:rgba(52,199,89,.14);
+  border:1px solid rgba(52,199,89,.4);padding:3px 11px;border-radius:99px;
+}
+.qm-count{font-size:.72rem;color:var(--muted);font-weight:700;}
+.qm-text{font-size:1.02rem;font-weight:800;line-height:1.9;color:var(--ink);margin-bottom:14px;text-align:center;}
+.qm-text .blank-inline{display:inline-block;vertical-align:middle;}
+
+/* گزینه‌ها */
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opt{
+  display:flex;align-items:center;gap:10px;width:100%;text-align:right;
+  padding:12px 13px;border-radius:14px;border:2px solid #e6dcbb;background:#fffdf4;
+  font-family:inherit;font-size:.95rem;font-weight:700;color:var(--ink);
+  transition:transform .12s, border-color .2s, background .2s;
+}
+.opt:hover{background:#f6f0d8;border-color:#c9b877;}
+.opt:active{transform:scale(.98);}
+.opt .letter{
+  flex:0 0 auto;width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  background:rgba(52,199,89,.16);border:1.5px solid rgba(52,199,89,.45);font-size:.78rem;font-weight:900;color:#1f9d4d;
+}
+.opt.correct{border-color:#22c55e;background:rgba(34,197,94,.15);box-shadow:0 0 0 3px rgba(34,197,94,.15);}
+.opt.correct .letter{background:#22c55e;border-color:#22c55e;color:#fff;}
+.opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.12);animation:shake .4s;}
+.opt.wrong .letter{background:#ef4444;border-color:#ef4444;color:#fff;}
+.opt.disabled{pointer-events:none;}
+@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-4px);}40%{transform:translateX(4px);}60%{transform:translateX(-3px);}80%{transform:translateX(3px);}}
+
+.tf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tf-btn{
+  display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 10px;border-radius:15px;
+  border:2px solid #e6dcbb;background:#fffdf4;font-family:inherit;font-size:1.05rem;font-weight:900;color:var(--ink);
+  transition:all .15s;
+}
+.tf-btn .ic{font-size:1.8rem;line-height:1;}
+.tf-btn:active{transform:scale(.96);}
+.tf-btn.correct{border-color:#22c55e;background:rgba(34,197,94,.15);}
+.tf-btn.wrong{border-color:#ef4444;background:rgba(239,68,68,.12);animation:shake .4s;}
+.tf-btn.disabled{pointer-events:none;}
+
+.multi-opt{
+  display:flex;align-items:center;gap:10px;width:100%;text-align:right;padding:11px 13px;border-radius:14px;
+  border:2px solid #e6dcbb;background:#fffdf4;font-family:inherit;font-size:.95rem;font-weight:700;color:var(--ink);
+  transition:all .15s;
+}
+.multi-opt .box{
+  flex:0 0 auto;width:23px;height:23px;border-radius:8px;border:2px solid #c9b877;
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;color:transparent;
+}
+.multi-opt.checked{background:rgba(52,199,89,.12);border-color:#34c759;}
+.multi-opt.checked .box{background:#34c759;border-color:#34c759;color:#fff;}
+.multi-opt.correct{border-color:#22c55e;background:rgba(34,197,94,.15);}
+.multi-opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.12);}
+.multi-opt.disabled{pointer-events:none;}
+
+.input-line{display:flex;gap:9px;}
+.text-input{
+  flex:1;min-width:0;background:#fff;border:2px solid #e6dcbb;border-radius:13px;
+  font-family:inherit;font-size:1rem;font-weight:700;color:var(--ink);padding:11px 13px;outline:none;
+}
+.text-input:focus{border-color:#34c759;}
+.blank-line{font-size:1.05rem;font-weight:800;line-height:2.4;color:var(--ink);text-align:center;}
+.blank-input{
+  width:96px;margin:0 3px;background:#fff;border:2px solid #e6dcbb;border-radius:10px;
+  font-family:inherit;font-size:1rem;font-weight:800;color:var(--green-deep);padding:3px 8px;outline:none;text-align:center;
+}
+.blank-input:focus{border-color:#34c759;}
+.select{
+  width:100%;background:#fff;border:2px solid #e6dcbb;border-radius:13px;
+  font-family:inherit;font-size:.98rem;font-weight:700;color:var(--ink);padding:11px 13px;outline:none;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235c7a70' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:left 12px center;
+}
+.select.mini{width:auto;display:inline-block;margin:0 3px;min-width:104px;padding:4px 30px 4px 10px;font-size:.95rem;text-align:center;background-position:left 8px center;}
+
+.match-hint{font-size:.74rem;color:var(--muted);text-align:center;margin-bottom:9px;}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.match-col-head{font-size:.72rem;font-weight:900;color:#1f9d4d;text-align:center;padding:1px 0 6px;}
+.match-col{display:flex;flex-direction:column;gap:8px;}
+.m-item{
+  display:flex;align-items:center;gap:7px;padding:9px 9px;border-radius:12px;
+  border:2px solid #e6dcbb;background:#fffdf4;font-family:inherit;font-size:.82rem;font-weight:700;color:var(--ink);
+  cursor:pointer;transition:all .15s;text-align:right;min-height:44px;line-height:1.5;
+}
+.m-item .m-chip{
+  flex:0 0 auto;width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;font-weight:900;color:#fff;background:var(--c,#34c759);
+}
+.m-item .m-holder{
+  flex:0 0 auto;width:22px;height:22px;border-radius:7px;border:2px dashed #c9b877;
+  display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:900;color:#fff;
+}
+.m-item.left.sel{border-color:#ffb020;background:rgba(255,179,32,.16);box-shadow:0 0 0 3px rgba(255,179,32,.15);}
+.m-item.correct{border-color:#22c55e;background:rgba(34,197,94,.14);}
+.m-item.wrong{border-color:#ef4444;background:rgba(239,68,68,.12);}
+.m-item.disabled{pointer-events:none;}
+
+/* بازخورد پاسخ */
+.fb{border-radius:14px;padding:13px 14px;margin-top:14px;text-align:center;}
+.fb.good{border:2px solid rgba(34,197,94,.5);background:rgba(34,197,94,.12);}
+.fb.bad{border:2px solid rgba(239,68,68,.45);background:rgba(239,68,68,.1);}
+.fb-title{font-size:1.1rem;font-weight:900;color:var(--ink);margin-bottom:4px;}
+.fb-sub{font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:2px;}
+.fb-sub b{color:var(--green-deep);}
+.fb-expl{font-size:.8rem;color:var(--muted);background:rgba(0,0,0,.05);border-radius:10px;padding:8px 11px;margin:8px 0 10px;line-height:1.8;text-align:right;}
+.fb .btn{width:100%;margin-top:6px;}
+
+/* ---------- صفحه‌ی پایان ---------- */
+.win-wrap{text-align:center;padding-top:10px;}
+.win-title{
+  font-family:var(--title);font-weight:400;font-size:clamp(2rem,8vw,2.9rem);
+  color:var(--green-deep);text-shadow:0 3px 0 #fff, 0 6px 18px rgba(31,157,77,.3);margin-bottom:6px;
+}
+.win-sub{color:var(--muted);font-size:.95rem;font-weight:600;margin-bottom:16px;}
+.trophy{font-size:4rem;line-height:1;display:inline-block;animation:trophyBounce 1.4s ease-in-out infinite;filter:drop-shadow(0 8px 16px rgba(255,179,32,.4));}
+@keyframes trophyBounce{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-10px) rotate(4deg);}}
+.win-card{
+  background:var(--card);border:2px solid rgba(224,201,143,.7);border-radius:var(--radius);
+  padding:18px 16px;margin:14px auto 16px;max-width:440px;box-shadow:var(--shadow);
+}
+.win-name{font-size:1.3rem;font-weight:900;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;}
+.win-name .dot{width:18px;height:18px;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.7);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat{background:rgba(255,255,255,.7);border:1px solid #e3d5ad;border-radius:12px;padding:9px 6px;}
+.stat .num{font-size:1.15rem;font-weight:900;color:var(--green-deep);}
+.stat .lbl{font-size:.7rem;color:var(--muted);font-weight:700;}
+
+/* ---------- لایه‌ی افکت‌ها ---------- */
+#fx{position:fixed;inset:0;z-index:1500;pointer-events:none;overflow:hidden;}
+.confetti{
+  position:absolute;top:-20px;width:9px;height:14px;border-radius:2px;opacity:.95;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  0%{transform:translateY(0) rotate(0) rotateY(0);}
+  100%{transform:translateY(110vh) rotate(720deg) rotateY(360deg);opacity:.9;}
+}
+.sparkle{
+  position:absolute;width:8px;height:8px;border-radius:50%;
+  background:radial-gradient(circle,#fff,#ffd23f 60%,transparent);
+  animation:sparkFly .8s ease-out forwards;
+}
+@keyframes sparkFly{
+  0%{transform:translate(0,0) scale(1);opacity:1;}
+  100%{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0;}
+}
+
+/* ---------- مودال خطا ---------- */
+.err-card{
+  width:100%;max-width:380px;background:#fff;border:3px solid #f0d9a8;border-radius:18px;
+  padding:20px;text-align:center;box-shadow:var(--shadow);
+}
+.err-title{font-size:1.1rem;font-weight:900;color:#d33;margin-bottom:8px;}
+.err-msg{font-size:.85rem;color:var(--ink);line-height:1.9;margin-bottom:14px;text-align:right;max-height:46vh;overflow:auto;}
+.err-msg code{direction:ltr;display:inline-block;background:rgba(0,0,0,.06);padding:1px 6px;border-radius:6px;font-size:.74rem;color:#8a5a10;}
+.err-card .btn{max-width:220px;margin:0 auto;}
+
+/* ---------- توست ---------- */
+#toast{
+  position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(20px);z-index:1600;
+  background:rgba(31,64,53,.96);border:1px solid rgba(255,255,255,.3);color:#fff;
+  padding:11px 20px;border-radius:99px;font-size:.86rem;font-weight:800;
+  opacity:0;pointer-events:none;transition:all .35s;max-width:92vw;text-align:center;
+  box-shadow:0 12px 30px -10px rgba(0,0,0,.5);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- امضا ---------- */
+#signature{position:relative;z-index:5;text-align:center;padding:14px 16px 6px;color:#5c7a70;font-size:10.5px;line-height:1.9;margin-top:22px;}
+#signature .sig-line{height:1px;max-width:300px;margin:6px auto;background:linear-gradient(90deg,transparent,rgba(31,157,77,.4),transparent);}
+#signature .sig-brand{font-weight:800;color:#1f9d4d;}
+#signature .sig-dev{color:#5c7a70;}
+#signature .sig-name{color:#c77b12;font-weight:800;}
+
+/* ---------- واکنش‌گرا ---------- */
+@media (min-width:720px){
+  #app{max-width:720px;}
+  .board{max-width:560px;}
+  .qm-text{font-size:1.1rem;}
+}
+@media (max-width:480px){
+  #app{padding:calc(14px + env(safe-area-inset-top,0px)) 12px 30px;}
+  .board{border-width:5px;}
+  .dice-bar{gap:10px;padding:10px 11px;}
+  .dice{width:52px;height:52px;}
+  .face.f1,.face.f6{transform:translateZ(26px);}
+  .face.f2,.face.f5{transform:rotateY(90deg) translateZ(26px);}
+  .face.f3,.face.f4{transform:rotateX(90deg) translateZ(26px);}
+  .btn-roll{font-size:.9rem;padding:0 14px;min-height:48px;}
+}
+@media (max-width:340px){
+  .players-bar{flex-direction:column;gap:6px;}
+  .dice-bar{flex-wrap:wrap;justify-content:center;}
+}
+
+/* ---------- کاهش حرکت ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+}
+*:focus-visible{outline:3px solid var(--green);outline-offset:2px;border-radius:10px;}
+</style>
+</head>
+<body>
+
+<!-- پس‌زمینه: آفتاب و ابرها -->
+<div class="bg" aria-hidden="true">
+  <div class="sun"></div>
+  <div class="cloud" id="cloud1"></div>
+  <div class="cloud" id="cloud2"></div>
+  <div class="cloud" id="cloud3"></div>
+</div>
+
+<!-- افکت‌ها -->
+<div id="fx" aria-hidden="true"></div>
+
+<!-- دکمه‌ی موسیقی -->
+<button class="music-btn" id="musicBtn" aria-label="روشن یا خاموش کردن موسیقی" title="موسیقی">
+  <span class="m-ic" id="musicIcon">🔇</span>
+</button>
+<audio id="music" src="music5.mp3" loop preload="auto"></audio>
+
+<div id="app">
+
+  <!-- ================= صفحه‌ی شروع ================= -->
+  <section class="screen active" id="screen-home">
+    <div class="home-wrap">
+      <h1 class="game-title">مار و پله‌ی <span class="snake-em">🐍</span> دانش</h1>
+      <p class="subtitle">جواب بده، تاس بنداز، اول از همه برس به خانه‌ی ۱۰۰! 🏆</p>
+
+      <div class="panel">
+        <h3>🎮 بازیکن‌ها</h3>
+        <div class="field">
+          <label for="name1">نام بازیکن ۱:</label>
+          <input id="name1" type="text" maxlength="20" placeholder="بازیکن ۱" autocomplete="off">
+        </div>
+        <div class="color-row" style="margin-bottom:12px">
+          <span class="lbl">رنگ مهره:</span>
+          <div class="swatches" id="sw0"></div>
+        </div>
+        <div class="field">
+          <label for="name2">نام بازیکن ۲:</label>
+          <input id="name2" type="text" maxlength="20" placeholder="بازیکن ۲" autocomplete="off">
+        </div>
+        <div class="color-row">
+          <span class="lbl">رنگ مهره:</span>
+          <div class="swatches" id="sw1"></div>
+        </div>
+      </div>
+
+      <div class="rules">
+        <div class="r"><span>🪜</span> پله: با جواب درست می‌پری بالا!</div>
+        <div class="r"><span>🐍</span> مار: مواظب باش، عقب می‌افتی!</div>
+        <div class="r"><span>🎲</span> جواب درست = تاس؛ جواب غلط = نوبت نفر بعدی</div>
+        <div class="r"><span>🏆</span> برای رسیدن به ۱۰۰ باید دقیقاً عدد بیاری</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="startBtn">🎲 شروع بازی</button>
+        <button class="btn btn-ghost" id="loadBtn">📂 بارگذاری سؤال‌ها</button>
+        <button class="btn btn-ghost" id="resetBtn" style="display:none">↩️ بازگشت به سؤال‌های پیش‌فرض</button>
+      </div>
+      <p class="subtitle" id="qCount" style="margin-top:14px"></p>
+    </div>
+  </section>
+
+  <!-- ================= صفحه‌ی بازی ================= -->
+  <section class="screen" id="screen-game">
+    <div class="top-actions">
+      <a href="#" class="home-link" id="homeBtn" role="button">🏠 خانه</a>
+      <span class="game-tag" id="gameTag"></span>
+    </div>
+
+    <div class="hud">
+      <div class="turn-chip" id="turnChip"></div>
+      <div class="players-bar">
+        <div class="p-chip on" id="pChip0"></div>
+        <div class="p-chip" id="pChip1"></div>
+      </div>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board" id="board"></div>
+    </div>
+
+    <div class="dice-bar">
+      <div class="dice-scene" aria-hidden="true">
+        <div class="dice" id="dice"></div>
+      </div>
+      <div class="dice-mid">
+        <div class="dice-result" id="diceResult"></div>
+        <div class="dice-hint" id="diceHint">برای پرتاب، Space یا Enter بزن</div>
+      </div>
+      <button class="btn-roll" id="rollBtn">🎲 پرتاب تاس</button>
+    </div>
+  </section>
+
+  <!-- ================= صفحه‌ی پایان ================= -->
+  <section class="screen" id="screen-result">
+    <div class="win-wrap">
+      <div class="trophy" aria-hidden="true">🏆</div>
+      <h1 class="win-title" id="winTitle">برنده!</h1>
+      <p class="win-sub" id="winSub"></p>
+
+      <div class="win-card">
+        <div class="win-name" id="winName"></div>
+        <div class="stat-grid">
+          <div class="stat"><div class="num" id="stQ">۰</div><div class="lbl">کل سؤال‌ها</div></div>
+          <div class="stat"><div class="num" id="stC1">۰</div><div class="lbl" id="stL1">جواب درست ۱</div></div>
+          <div class="stat"><div class="num" id="stC2">۰</div><div class="lbl" id="stL2">جواب درست ۲</div></div>
+          <div class="stat"><div class="num" id="stP1">۱</div><div class="lbl" id="stLP1">خانه ۱</div></div>
+          <div class="stat"><div class="num" id="stP2">۱</div><div class="lbl" id="stLP2">خانه ۲</div></div>
+          <div class="stat"><div class="num" id="stRoll">۰</div><div class="lbl">تاس‌ها 🎲</div></div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="againBtn">🔄 بازی دوباره</button>
+        <button class="btn btn-ghost" id="homeBtn2">🏠 خانه</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- امضا -->
+<footer id="signature">
+  <div class="sig-line"></div>
+  <div class="sig-brand">🧙 حکیمستان — دیار حکیم، سرزمین یادگیری</div>
+  <div class="sig-dev">طراح و توسعه‌دهنده: <span class="sig-name">مهدی شریفیان</span></div>
+  <div class="sig-line"></div>
+</footer>
+
+<!-- مودال سؤال -->
+<div class="modal hidden" id="qModal">
+  <div class="qcard" role="dialog" aria-modal="true">
+    <div class="qm-head">
+      <span class="qm-badge" id="qmBadge">📍 سؤال دانش</span>
+      <span class="qm-count" id="qmCount"></span>
+    </div>
+    <div class="qm-text" id="qmText"></div>
+    <div id="qmArea"></div>
+    <div id="qmFeedback"></div>
+  </div>
+</div>
+
+<!-- مودال خطا -->
+<div class="modal hidden" id="errModal">
+  <div class="err-card">
+    <div class="err-title">⚠️ خطا</div>
+    <div class="err-msg" id="errMsg"></div>
+    <button class="btn btn-primary" id="errOk">باشه</button>
+  </div>
+</div>
+
+<!-- توست -->
+<div id="toast" aria-live="polite" role="status"></div>
+
+<input type="file" id="fileInput" accept=".json,application/json,text/plain" hidden>
+
+<script>
+'use strict';
+/* =========================================================================
+   مار و پله‌ی دانش — منطق بازی
+   مهدی شریفیان — پلتفرم آموزشی حکیمستان
+   ========================================================================= */
+
+/* ------------------------------------------------------------------ */
+/* ۱) سؤال‌های پیش‌فرض (علوم پنجم — فصل ۵ و ۶)                         */
+/* ------------------------------------------------------------------ */
+const DEFAULT_HQF = {
+  "hqf": "1.0",
+  "meta": { "title": "مار و پله‌ی دانش — علوم پنجم", "subject": "علوم", "grade": "پنجم دبستان" },
+  "questions": [
+    { "id": "q1", "type": "tf", "section": "فصل ۵: اندام‌های حسی",
+      "text": "ورزش باعث نیرومند شدن ماهیچه‌ها می‌شود.", "answer": true, "score": 1 },
+    { "id": "q2", "type": "tf", "section": "فصل ۵: اندام‌های حسی",
+      "text": "ماهیچه‌های قلب، خون را در رگ‌ها به جریان در می‌آورند.", "answer": true, "score": 1 },
+    { "id": "q3", "type": "tf", "section": "فصل ۵: اندام‌های حسی",
+      "text": "افراد نزدیک‌بین، اجسام دور را واضح نمی‌بینند.", "answer": true, "score": 1 },
+    { "id": "q4", "type": "tf", "section": "فصل ۵: اندام‌های حسی",
+      "text": "در جای تاریک، مردمک چشم تنگ می‌شود.", "answer": false, "score": 1,
+      "explanation": "در جای تاریک، مردمک چشم گشاد می‌شود تا نور بیشتری وارد شود." },
+    { "id": "q5", "type": "blank", "section": "فصل ۵: اندام‌های حسی",
+      "text": "در فضای لوله‌ای‌شکل درون ستون مهره‌ها __ قرار دارد.",
+      "answer": ["نخاع"], "score": 1 },
+    { "id": "q6", "type": "blank", "section": "فصل ۶: اسکلت بدن",
+      "text": "در محل مفصل، در سر استخوان‌ها __ وجود دارد.",
+      "answer": ["غضروف"], "score": 1 },
+    { "id": "q7", "type": "mcq", "section": "فصل ۵: اندام‌های حسی",
+      "text": "شبکیه در کدام لایه‌ی کره‌ی چشم قرار دارد؟",
+      "options": ["داخلی‌ترین", "خارجی‌ترین", "میانی", "همه‌ی لایه‌ها"], "answer": 0, "score": 1 },
+    { "id": "q8", "type": "short", "section": "فصل ۵: اندام‌های حسی",
+      "text": "چشم، اندام حس .......... است.",
+      "answer": ["بینایی", "بینایی است"], "score": 1 },
+    { "id": "q9", "type": "mcq", "section": "فصل ۶: اسکلت بدن",
+      "text": "کدام یک از ماهیچه‌های زیر ارادی است؟",
+      "options": ["ساق پا", "معده", "قلب", "روده"], "answer": 0, "score": 1,
+      "explanation": "ماهیچه‌های ساق پا ارادی هستند (با اراده حرکت می‌کنند)، ولی معده، قلب و روده غیرارادی هستند." },
+    { "id": "q10", "type": "mcq", "section": "فصل ۵: اندام‌های حسی",
+      "text": "بخش رنگی چشم چه نام دارد؟",
+      "options": ["عنبیه", "قرنیه", "مردمک", "شبکیه"], "answer": 0, "score": 1 },
+    { "id": "q11", "type": "mcq", "section": "فصل ۶: اسکلت بدن",
+      "text": "کدام یک از مواد غذایی زیر بر رشد استخوان‌ها تأثیر بیشتری دارد؟",
+      "options": ["برنج", "نان", "زیتون", "شیر"], "answer": 3, "score": 1,
+      "explanation": "شیر سرشار از کلسیم است که برای رشد و استحکام استخوان‌ها ضروری است." },
+    { "id": "q12", "type": "mcq", "section": "فصل ۵: اندام‌های حسی",
+      "text": "کدام بخش چشم میزان نوری که به چشم وارد می‌شود را تنظیم می‌کند؟",
+      "options": ["پرده شبکیه", "قرنیه", "مردمک", "عنبیه"], "answer": 2, "score": 1,
+      "explanation": "مردمک با تنگ و گشاد شدن، میزان نور ورودی به چشم را تنظیم می‌کند." }
+  ]
+};
+
+/* ------------------------------------------------------------------ */
+/* ۲) مارها و پله‌ها (موقعیت‌های ثابت)                                  */
+/* ------------------------------------------------------------------ */
+const SNAKES = [[99,41],[95,75],[92,88],[89,68],[74,53],[64,60],[62,19],[49,11],[46,25],[16,6]];
+const SNAKE_COLORS = ['#ef4444','#a855f7','#22c55e','#f97316','#ec4899','#06b6d4','#84cc16','#f43f5e','#8b5cf6','#eab308'];
+const LADDERS = [[1,38],[4,14],[9,31],[21,42],[28,84],[36,44],[51,67],[71,91],[80,100]];
+const LADDER_COLORS = ['#b45309','#d97706','#a16207','#92400e','#ca8a04'];
+
+/* ------------------------------------------------------------------ */
+/* ۳) وضعیت کلی بازی                                                   */
+/* ------------------------------------------------------------------ */
+const LETTERS = ['الف','ب','ج','د','هـ','و','ز','ح','ط','ی'];
+const MATCH_COLORS = ['#34c759','#3b82f6','#ef4444','#f59e0b','#a855f7','#ec4899','#06b6d4','#84cc16'];
+const PALETTE = ['#3b82f6','#ef4444','#22c55e','#f59e0b','#a855f7','#ec4899'];
+const PIECE_EMOJI = ['🙂','😎'];
+
+const state = {
+  questions: clone(DEFAULT_HQF.questions),
+  meta: clone(DEFAULT_HQF.meta),
+  customLoaded: false,
+  players: [ {name:'بازیکن ۱', color:PALETTE[0], pos:1, correct:0, wrong:0},
+             {name:'بازیکن ۲', color:PALETTE[1], pos:1, correct:0, wrong:0} ],
+  current: 0,
+  gameOver: false,
+  busy: false,
+  rolls: 0,
+  answered: 0
+};
+let pool = [];          // مخزن سؤال‌های باقی‌مانده
+let currentQ = null;    // سؤال باز در مودال
+let modalLocked = false;
+let modalOpen = false;
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ------------------------------------------------------------------ */
+/* ۴) ابزارهای کمکی                                                    */
+/* ------------------------------------------------------------------ */
+function clone(o){ try { return structuredClone(o); } catch(e){ return JSON.parse(JSON.stringify(o)); } }
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toFa(n){ return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[+d]); }
+function shuffle(a){ const r = a.slice(); for(let i=r.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [r[i],r[j]]=[r[j],r[i]]; } return r; }
+function sleep(ms){ return new Promise(res => setTimeout(res, ms)); }
+function vibrate(p){ try { if(navigator.vibrate) navigator.vibrate(p); } catch(e){} }
+
+/* نرمال‌سازی متن */
+function normalize(str){
+  if(str === null || str === undefined) return '';
+  let s = String(str);
+  s = s.replace(/[\u064B-\u065F\u0670\u0640]/g, '');
+  s = s.replace(/[\u064A\u0649\u0626]/g, '\u06CC');
+  s = s.replace(/\u0643/g, '\u06A9');
+  s = s.replace(/[\u0623\u0625\u0622]/g, '\u0627');
+  s = s.replace(/\u0629/g, '\u0647');
+  s = s.replace(/\u0624/g, '\u0648');
+  s = s.replace(/\u0621/g, '');
+  s = s.replace(/[\u0660-\u0669]/g, d => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+  s = s.replace(/[\u06F0-\u06F9]/g, d => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+  s = s.replace(/\u200C/g, '');
+  s = s.replace(/[\u200E\u200F\u200B]/g, '');
+  s = s.replace(/[«»"'“”‘’]/g, ' ');
+  s = s.replace(/[.،,؛:!؟?\/\-_\\()\[\]{}\|]/g, ' ');
+  s = s.replace(/\s+/g, ' ').trim().toLowerCase();
+  return s;
+}
+function eq(a, b){ return normalize(a) === normalize(b); }
+function resolveIndex(ans, options){
+  if(Array.isArray(ans)) return ans.map(a => resolveIndex(a, options));
+  if(typeof ans === 'number') return ans;
+  if(ans === null || ans === undefined) return -1;
+  const s = String(ans).trim();
+  const n = parseInt(s, 10);
+  if(!isNaN(n) && String(n) === s) return n;
+  return options.findIndex(o => eq(o, s));
+}
+function toBool(v){
+  if(typeof v === 'boolean') return v;
+  return ['true','1','بله','درست','صحیح','yes','t','right','درسته'].includes(normalize(v));
+}
+function countBlanks(text){ const m = String(text).match(/_{2,}/g); return m ? m.length : 0; }
+function normalizePairs(q){
+  if(Array.isArray(q.pairs)) return q.pairs.map(p => Array.isArray(p) ? [p[0], p[1]] : [p.left ?? p.l ?? p.a ?? p[0], p.right ?? p.r ?? p.b ?? p[1]]);
+  if(Array.isArray(q.left) && Array.isArray(q.right)) return q.left.map((l, i) => [l, q.right[i]]);
+  return [];
+}
+function correctAnswerText(q){
+  switch(q.type){
+    case 'mcq': { const i = resolveIndex(q.answer, q.options); return (i >= 0) ? q.options[i] : String(q.answer); }
+    case 'tf': return toBool(q.answer) ? 'درست' : 'نادرست';
+    case 'multi': { const idx = resolveIndex(q.answer, q.options); const arr = Array.isArray(idx) ? idx : [idx]; return arr.map(i => q.options[i]).join('، '); }
+    case 'short': return Array.isArray(q.answer) ? q.answer.join(' / ') : String(q.answer);
+    case 'blank': { const n = countBlanks(q.text); const a = Array.isArray(q.answer) ? q.answer : Array(Math.max(1, n)).fill(q.answer); return a.join(' • '); }
+    case 'dropdown': { const idx = resolveIndex(q.answer, q.options); const arr = Array.isArray(idx) ? idx : [idx]; return arr.map(i => (i >= 0 ? q.options[i] : String(q.answer))).join(' • '); }
+    case 'match': return normalizePairs(q).map(p => p[0] + ' ←→ ' + p[1]).join(' • ');
+    default: return '';
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* ۵) صدا (Web Audio — بدون فایل)                                      */
+/* ------------------------------------------------------------------ */
+let AC = null;
+function ensureAudio(){
+  if(!AC){ try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }
+  if(AC && AC.state === 'suspended'){ AC.resume().catch(()=>{}); }
+  return AC;
+}
+function tone(f0, f1, dur, type, vol, delay){
+  const ac = ensureAudio(); if(!ac) return;
+  const t0 = ac.currentTime + (delay || 0);
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.type = type || 'sine';
+  o.frequency.setValueAtTime(f0, t0);
+  if(f1) o.frequency.exponentialRampToValueAtTime(Math.max(f1, 1), t0 + dur);
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(vol || 0.2, t0 + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(ac.destination);
+  o.start(t0); o.stop(t0 + dur + 0.05);
+}
+function hiss(dur){ /* صدای «سسس» مار با نویز */
+  const ac = ensureAudio(); if(!ac) return;
+  const t0 = ac.currentTime, d = dur || 0.5;
+  const len = Math.floor(ac.sampleRate * d);
+  const buf = ac.createBuffer(1, len, ac.sampleRate);
+  const ch = buf.getChannelData(0);
+  for(let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * (1 - i / len);
+  const src = ac.createBufferSource(); src.buffer = buf;
+  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1;
+  bp.frequency.setValueAtTime(4200, t0);
+  bp.frequency.exponentialRampToValueAtTime(1200, t0 + d);
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(0.22, t0 + 0.03);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+  src.connect(bp); bp.connect(g); g.connect(ac.destination);
+  src.start(t0);
+}
+function playCorrect(){ tone(523.25, 523.25, 0.12, 'sine', 0.18); tone(783.99, 783.99, 0.16, 'sine', 0.18, 0.09); tone(1046.5, 1046.5, 0.24, 'sine', 0.15, 0.18); }
+function playWrong(){ tone(240, 150, 0.3, 'sawtooth', 0.1); tone(170, 110, 0.34, 'sawtooth', 0.08, 0.06); }
+function playStep(){ tone(320, 360, 0.05, 'square', 0.05); }
+function playDiceSound(){ tone(200, 150, 0.03, 'square', 0.07); tone(190, 140, 0.03, 'square', 0.07, 0.09); tone(210, 155, 0.03, 'square', 0.07, 0.18); }
+function playSnake(){ hiss(0.55); tone(300, 120, 0.5, 'sawtooth', 0.06, 0.05); }
+function playLadder(){ tone(300, 700, 0.16, 'sine', 0.16); tone(500, 1100, 0.2, 'sine', 0.14, 0.1); }
+function playWin(){ [523.25, 659.25, 783.99, 1046.5, 1318.5, 1568].forEach((f, i) => tone(f, f, 0.3, 'sine', 0.16, i * 0.13)); }
+
+/* ------------------------------------------------------------------ */
+/* ۶) موسیقی پس‌زمینه (music5.mp3)                                      */
+/* ------------------------------------------------------------------ */
+const musicEl = document.getElementById('music');
+const musicBtn = document.getElementById('musicBtn');
+const musicIcon = document.getElementById('musicIcon');
+let musicOn = false, musicOk = true, musicTried = false;
+const MUSIC_KEY = 'hakimestan_snake_music';
+musicEl.src = 'music5.mp3';
+musicEl.volume = 0.35;
+musicEl.addEventListener('error', () => {
+  musicOk = false; musicOn = false;
+  updateMusicUI(false);
+  if(musicTried) toast('فایل music5.mp3 پیدا نشد. بازی بدون موسیقی ادامه دارد.');
+});
+try { if(localStorage.getItem(MUSIC_KEY) === 'off') musicOn = false; } catch(e){}
+function updateMusicUI(playing){
+  musicIcon.textContent = playing ? '🎵' : '🔇';
+  musicBtn.classList.toggle('playing', playing);
+  musicBtn.setAttribute('aria-label', playing ? 'خاموش کردن موسیقی' : 'روشن کردن موسیقی');
+}
+function tryPlayMusic(){
+  if(!musicOk || !musicOn) return;
+  const p = musicEl.play();
+  if(p && typeof p.then === 'function'){ p.then(()=>updateMusicUI(true)).catch(()=>updateMusicUI(false)); }
+  else updateMusicUI(true);
+}
+musicBtn.addEventListener('click', () => {
+  musicTried = true;
+  if(!musicOk){ toast('فایل music5.mp3 پیدا نشد. بازی بدون موسیقی ادامه دارد.'); return; }
+  musicOn = !musicOn;
+  try { localStorage.setItem(MUSIC_KEY, musicOn ? 'on' : 'off'); } catch(e){}
+  if(musicOn) tryPlayMusic();
+  else { musicEl.pause(); updateMusicUI(false); }
+});
+updateMusicUI(false);
+function firstTouch(){
+  if(musicOn && musicOk && musicEl.paused) tryPlayMusic();
+  document.removeEventListener('pointerdown', firstTouch);
+  document.removeEventListener('keydown', firstTouch);
+}
+document.addEventListener('pointerdown', firstTouch);
+document.addEventListener('keydown', firstTouch);
+let wasPlayingBeforeHide = false;
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden){
+    if(!musicEl.paused){ wasPlayingBeforeHide = true; musicEl.pause(); }
+  } else if(wasPlayingBeforeHide && musicOn && musicOk){
+    tryPlayMusic(); wasPlayingBeforeHide = false;
+  }
+});
+
+/* ------------------------------------------------------------------ */
+/* ۷) مختصات تخته (۱۰×۱۰ — شماره‌گذاری مارپیچ)                          */
+/* ------------------------------------------------------------------ */
+function cellXY(n){
+  const q = Math.floor((n - 1) / 10);  // 0..9 (0 = ردیف پایین)
+  const rem = (n - 1) % 10;            // 0..9
+  const x = (q % 2 === 0) ? rem : (9 - rem); // 0 = سمت راست
+  const y = q;                          // 0 = پایین
+  return { x, y };
+}
+function cellLeft(n){ return (9 - cellXY(n).x) * 10 + 5; } // درصد از چپ
+function cellTop(n){ return (9 - cellXY(n).y) * 10 + 5; }  // درصد از بالا
+function svgX(n){ return 100 - (cellXY(n).x + 0.5) * 10; } // مختصات SVG
+function svgY(n){ return 100 - (cellXY(n).y + 0.5) * 10; }
+
+/* ------------------------------------------------------------------ */
+/* ۸) ساخت تخته: خانه‌ها + مارها + پله‌ها + مهره‌ها                     */
+/* ------------------------------------------------------------------ */
+const boardEl = document.getElementById('board');
+const piecesEl = [];
+function buildBoard(){
+  boardEl.innerHTML = '';
+
+  /* خانه‌ها */
+  const headSet = new Set(SNAKES.map(s => s[0]));
+  const tailSet = new Set(SNAKES.map(s => s[1]));
+  const ladSet = new Set([].concat(...LADDERS.map(l => [l[0], l[1]])));
+
+  for(let n = 1; n <= 100; n++){
+    const { x, y } = cellXY(n);
+    const c = document.createElement('div');
+    c.className = 'cell' + ((x + y) % 2 === 1 ? ' alt' : '');
+    if(headSet.has(n)) c.classList.add('snake-head');
+    if(tailSet.has(n)) c.classList.add('snake-tail');
+    if(ladSet.has(n)) c.classList.add('ladder');
+    if(n === 1) c.classList.add('start');
+    if(n === 100) c.classList.add('goal');
+    c.style.left = cellLeft(n) + '%';
+    c.style.top = cellTop(n) + '%';
+    c.innerHTML = '<span class="cell-num">' + n + '</span>' +
+      (n === 1 ? '<span class="cell-badge">شروع</span>' : '') +
+      (n === 100 ? '<span class="cell-badge">🏆</span>' : '');
+    boardEl.appendChild(c);
+  }
+
+  /* لایه‌ی SVG مارها و پله‌ها */
+  let svg = '<svg class="overlay" viewBox="0 0 100 100" preserveAspectRatio="none">';
+  SNAKES.forEach((s, i) => { svg += snakeSVG(s[0], s[1], SNAKE_COLORS[i % SNAKE_COLORS.length]); });
+  LADDERS.forEach((l, i) => { svg += ladderSVG(l[0], l[1], LADDER_COLORS[i % LADDER_COLORS.length]); });
+  svg += '</svg>';
+  boardEl.insertAdjacentHTML('beforeend', svg);
+
+  /* مهره‌ها */
+  state.players.forEach((p, i) => {
+    const piece = document.createElement('div');
+    piece.className = 'piece';
+    piece.id = 'piece' + i;
+    // حلقه و هاله‌ی مهره هم‌رنگ با رنگ انتخاب‌شده (نه سفید) تا دو مهره کاملاً متمایز باشند
+    piece.innerHTML =
+      '<div class="dot" style="background:radial-gradient(circle at 35% 30%, ' + lighten(p.color) + ', ' + p.color + ');' +
+        'border-color:' + darken(p.color) + ';' +
+        'box-shadow:0 3px 7px rgba(0,0,0,.35), inset 0 -3px 6px rgba(0,0,0,.25), 0 0 12px ' + p.color + '"></div>' +
+      '<div class="face">' + PIECE_EMOJI[i] + '</div>';
+    boardEl.appendChild(piece);
+    piecesEl[i] = piece;
+  });
+  syncPieceOffsets();
+
+  /* تاج برنده */
+  const crown = document.createElement('div');
+  crown.id = 'crown';
+  crown.textContent = '👑';
+  boardEl.appendChild(crown);
+}
+function shade(hex, amt){
+  // تیره/روشن کردن یک رنگ HEX برای حلقه و هایلایت مهره
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.max(0, Math.min(255, ((n >> 16) & 255) + amt));
+  const g = Math.max(0, Math.min(255, ((n >> 8) & 255) + amt));
+  const b = Math.max(0, Math.min(255, (n & 255) + amt));
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+function lighten(hex){ return shade(hex, 55); }
+function darken(hex){ return shade(hex, -60); }
+
+/* SVG مار */
+function snakeSVG(head, tail, color){
+  const h = { x: svgX(head), y: svgY(head) };
+  const t = { x: svgX(tail), y: svgY(tail) };
+  const dx = t.x - h.x, dy = t.y - h.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len, ny = dx / len;
+  const w = Math.min(4.5, len * 0.22);
+  const m1 = [h.x + dx * 0.33 + nx * w, h.y + dy * 0.33 + ny * w];
+  const m2 = [h.x + dx * 0.66 - nx * w, h.y + dy * 0.66 - ny * w];
+  const d = 'M' + h.x + ' ' + h.y + ' C ' + m1[0] + ' ' + m1[1] + ', ' + m2[0] + ' ' + m2[1] + ', ' + t.x + ' ' + t.y;
+  const headR = 3.4;
+  const ang = Math.atan2(dy, dx);
+  const ex = Math.cos(ang + Math.PI / 2) * 1.4, ey = Math.sin(ang + Math.PI / 2) * 1.4;
+  const tx = h.x + Math.cos(ang + Math.PI) * 3.2, ty = h.y + Math.sin(ang + Math.PI) * 3.2;
+  const fx = Math.cos(ang + Math.PI) * 4.6, fy = Math.sin(ang + Math.PI) * 4.6;
+  return '<g>' +
+    '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="3" stroke-linecap="round" opacity="0.9"/>' +
+    '<circle cx="' + h.x + '" cy="' + h.y + '" r="' + headR + '" fill="' + color + '" stroke="#00000022" stroke-width="0.4"/>' +
+    '<circle cx="' + (h.x + ex) + '" cy="' + (h.y + ey) + '" r="0.85" fill="#fff"/>' +
+    '<circle cx="' + (h.x - ex) + '" cy="' + (h.y - ey) + '" r="0.85" fill="#fff"/>' +
+    '<circle cx="' + (h.x + ex) + '" cy="' + (h.y + ey) + '" r="0.4" fill="#111"/>' +
+    '<circle cx="' + (h.x - ex) + '" cy="' + (h.y - ey) + '" r="0.4" fill="#111"/>' +
+    '<path d="M' + tx + ' ' + ty + ' L' + fx + ' ' + fy + '" stroke="#e11d48" stroke-width="0.9" stroke-linecap="round" fill="none"/>' +
+    '<path d="M' + fx + ' ' + fy + ' l ' + (Math.cos(ang + Math.PI - 0.5) * 1.8) + ' ' + (Math.sin(ang + Math.PI - 0.5) * 1.8) + '" stroke="#e11d48" stroke-width="0.7" stroke-linecap="round"/>' +
+    '<path d="M' + fx + ' ' + fy + ' l ' + (Math.cos(ang + Math.PI + 0.5) * 1.8) + ' ' + (Math.sin(ang + Math.PI + 0.5) * 1.8) + '" stroke="#e11d48" stroke-width="0.7" stroke-linecap="round"/>' +
+    '</g>';
+}
+/* SVG پله */
+function ladderSVG(bottom, top, color){
+  const b = { x: svgX(bottom), y: svgY(bottom) };
+  const t = { x: svgX(top), y: svgY(top) };
+  const dx = t.x - b.x, dy = t.y - b.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len, ny = dx / len;
+  const off = 2.3;
+  let out = '<g stroke="' + color + '" stroke-width="1.7" stroke-linecap="round" opacity="0.95">';
+  out += '<line x1="' + (b.x + nx * off) + '" y1="' + (b.y + ny * off) + '" x2="' + (t.x + nx * off) + '" y2="' + (t.y + ny * off) + '"/>';
+  out += '<line x1="' + (b.x - nx * off) + '" y1="' + (b.y - ny * off) + '" x2="' + (t.x - nx * off) + '" y2="' + (t.y - ny * off) + '"/>';
+  const steps = 5;
+  for(let i = 1; i < steps; i++){
+    const tt = i / steps;
+    const x = b.x + dx * tt, y = b.y + dy * tt;
+    out += '<line x1="' + (x + nx * off) + '" y1="' + (y + ny * off) + '" x2="' + (x - nx * off) + '" y2="' + (y - ny * off) + '"/>';
+  }
+  out += '</g>';
+  return out;
+}
+
+/* موقعیت مهره (بدون افست — برای انیمیشن قدم‌به‌قدم) */
+function setPiecePos(i, n){
+  piecesEl[i].style.left = cellLeft(n) + '%';
+  piecesEl[i].style.top = cellTop(n) + '%';
+  piecesEl[i].style.transition = 'left .2s ease, top .2s ease';
+}
+/* اگر هر دو مهره روی یک خانه باشند، کمی جابه‌جا می‌شوند تا هر دو دیده شوند */
+function syncPieceOffsets(){
+  const same = state.players[0].pos === state.players[1].pos;
+  state.players.forEach((p, i) => {
+    let dx = 0, dy = 0;
+    if(same){
+      dx = (i === 0 ? -2.8 : 2.8);
+      dy = (i === 0 ? 2.8 : -2.8);
+    }
+    piecesEl[i].style.left = (cellLeft(p.pos) + dx) + '%';
+    piecesEl[i].style.top = (cellTop(p.pos) + dy) + '%';
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* ۹) مودال سؤال — رندر ۷ نوع سؤال                                     */
+/* ------------------------------------------------------------------ */
+const qmText = document.getElementById('qmText');
+const qmArea = document.getElementById('qmArea');
+const qmFeedback = document.getElementById('qmFeedback');
+const qmBadge = document.getElementById('qmBadge');
+const qmCount = document.getElementById('qmCount');
+const qModal = document.getElementById('qModal');
+
+function nextQuestion(){
+  if(pool.length === 0) pool = shuffle(state.questions.slice());
+  return pool.pop();
+}
+function openModal(){ qModal.classList.remove('hidden'); modalOpen = true; }
+function closeModal(){ qModal.classList.add('hidden'); modalOpen = false; modalLocked = false; currentQ = null; }
+
+function askQuestion(){
+  const q = nextQuestion();
+  currentQ = q;
+  modalLocked = false;
+  qmFeedback.innerHTML = '';
+  qmBadge.textContent = q.section ? '📍 ' + q.section : '📍 سؤال دانش';
+  qmCount.textContent = 'سؤال ' + toFa(state.answered + 1);
+  // برای blank و dropdown (با جای خالی) متن داخل رندرر ساخته می‌شود
+  const textless = (q.type === 'blank') || (q.type === 'dropdown' && countBlanks(q.text) > 0);
+  qmText.textContent = textless ? '' : q.text;
+  renderModalQuestion(q);
+  openModal();
+}
+
+function renderModalQuestion(q){
+  switch(q.type){
+    case 'mcq': renderMcq(q); break;
+    case 'tf': renderTf(q); break;
+    case 'multi': renderMulti(q); break;
+    case 'short': renderShort(q); break;
+    case 'blank': renderBlank(q); break;
+    case 'dropdown': renderDropdown(q); break;
+    case 'match': renderMatch(q); break;
+    default: renderMcq(q);
+  }
+}
+
+/* --- چهارگزینه‌ای --- */
+function renderMcq(q){
+  qmArea.innerHTML = '<div class="opts">' + q.options.map((o, i) =>
+    '<button class="opt" data-key="' + (i + 1) + '" data-i="' + i + '"><span class="letter">' + (LETTERS[i] || (i + 1)) + '</span><span>' + esc(o) + '</span></button>'
+  ).join('') + '</div>';
+  qmArea.querySelectorAll('.opt').forEach(btn => {
+    btn.onclick = () => {
+      if(modalLocked) return;
+      const i = +btn.dataset.i;
+      submitAnswer(i === resolveIndex(q.answer, q.options), () => {
+        const ci = resolveIndex(q.answer, q.options);
+        qmArea.querySelectorAll('.opt').forEach(b => {
+          const bi = +b.dataset.i;
+          if(bi === ci) b.classList.add('correct');
+          if(bi === i && i !== ci) b.classList.add('wrong');
+          b.classList.add('disabled');
+        });
+      });
+    };
+  });
+}
+
+/* --- صحیح/غلط --- */
+function renderTf(q){
+  qmArea.innerHTML = '<div class="tf-row">' +
+    '<button class="tf-btn" data-key="1" data-v="1"><span class="ic">✅</span><span>درست</span></button>' +
+    '<button class="tf-btn" data-key="2" data-v="0"><span class="ic">❌</span><span>نادرست</span></button>' +
+    '</div>';
+  qmArea.querySelectorAll('.tf-btn').forEach(btn => {
+    btn.onclick = () => {
+      if(modalLocked) return;
+      const v = btn.dataset.v === '1';
+      submitAnswer(v === toBool(q.answer), () => {
+        const c = toBool(q.answer);
+        qmArea.querySelectorAll('.tf-btn').forEach(b => {
+          const bv = b.dataset.v === '1';
+          if(bv === c) b.classList.add('correct');
+          if(bv === v && v !== c) b.classList.add('wrong');
+          b.classList.add('disabled');
+        });
+      });
+    };
+  });
+}
+
+/* --- چندپاسخی --- */
+function renderMulti(q){
+  qmArea.innerHTML = '<div class="opts">' + q.options.map((o, i) =>
+    '<button class="multi-opt" data-key="' + (i + 1) + '" data-i="' + i + '"><span class="box">✓</span><span>' + esc(o) + '</span></button>'
+  ).join('') + '</div>' +
+  '<button class="btn btn-primary" id="mOk" style="margin-top:12px">تأیید پاسخ</button>';
+  const chosen = new Set();
+  qmArea.querySelectorAll('.multi-opt').forEach(btn => {
+    btn.onclick = () => {
+      if(modalLocked) return;
+      const i = +btn.dataset.i;
+      if(chosen.has(i)){ chosen.delete(i); btn.classList.remove('checked'); }
+      else { chosen.add(i); btn.classList.add('checked'); }
+    };
+  });
+  document.getElementById('mOk').onclick = () => {
+    if(modalLocked) return;
+    if(chosen.size === 0){ toast('حداقل یک گزینه انتخاب کن'); return; }
+    const u = Array.from(chosen);
+    const correct = resolveIndex(q.answer, q.options);
+    const c = (Array.isArray(correct) ? correct : [correct]).map(Number).sort();
+    const a = u.map(Number).sort();
+    const ok = c.length === a.length && c.every((v, i) => v === a[i]);
+    submitAnswer(ok, () => {
+      const cset = new Set((Array.isArray(correct) ? correct : [correct]).map(Number));
+      qmArea.querySelectorAll('.multi-opt').forEach(b => {
+        const bi = +b.dataset.i;
+        if(cset.has(bi)) b.classList.add('correct');
+        else if(chosen.has(bi)) b.classList.add('wrong');
+        b.classList.add('disabled');
+      });
+    });
+  };
+}
+
+/* --- پاسخ کوتاه --- */
+function renderShort(q){
+  qmArea.innerHTML = '<div class="input-line">' +
+    '<input type="text" class="text-input" id="sIn" placeholder="پاسخ را بنویس…" autocomplete="off" aria-label="پاسخ کوتاه">' +
+    '<button class="btn btn-primary btn-small" id="sOk" style="flex:0 0 auto">پاسخ</button></div>';
+  const inp = document.getElementById('sIn');
+  const go = () => {
+    if(modalLocked) return;
+    const v = inp.value;
+    if(!v.trim()){ inp.classList.add('wrong'); setTimeout(()=>inp.classList.remove('wrong'), 500); inp.focus(); return; }
+    const answers = Array.isArray(q.answer) ? q.answer : [q.answer];
+    submitAnswer(answers.some(a => eq(a, v)), () => { inp.disabled = true; });
+  };
+  document.getElementById('sOk').onclick = go;
+  inp.addEventListener('keydown', e => { if(e.key === 'Enter') go(); });
+  setTimeout(() => inp.focus(), 80);
+}
+
+/* --- جای خالی --- */
+function renderBlank(q){
+  const parts = String(q.text).split(/_{2,}/);
+  let html = '<div class="blank-line">';
+  parts.forEach((p, i) => {
+    html += esc(p);
+    if(i < parts.length - 1) html += '<input type="text" class="blank-input" data-i="' + i + '" autocomplete="off">';
+  });
+  html += '</div><button class="btn btn-primary" id="bOk" style="margin-top:14px;width:100%">تأیید پاسخ</button>';
+  qmArea.innerHTML = html;
+  const inputs = qmArea.querySelectorAll('.blank-input');
+  const go = () => {
+    if(modalLocked) return;
+    const vals = Array.from(inputs).map(x => x.value);
+    if(vals.some(v => !v.trim())){ inputs.forEach(x => { x.classList.add('wrong'); setTimeout(()=>x.classList.remove('wrong'), 500); }); return; }
+    const n = countBlanks(q.text);
+    const answers = Array.isArray(q.answer) ? q.answer : Array(Math.max(1, n)).fill(q.answer);
+    const ok = Array.from({ length: n }, (_, i) => i).every(i => eq(answers[i], vals[i]));
+    submitAnswer(ok, () => inputs.forEach(x => x.disabled = true));
+  };
+  document.getElementById('bOk').onclick = go;
+  inputs.forEach(inp => inp.addEventListener('keydown', e => { if(e.key === 'Enter') go(); }));
+}
+
+/* --- انتخاب از لیست --- */
+function renderDropdown(q){
+  const blanks = countBlanks(q.text);
+  const opts = q.options.map((o, i) => '<option value="' + i + '">' + esc(o) + '</option>').join('');
+  if(blanks > 0){
+    const parts = String(q.text).split(/_{2,}/);
+    let html = '<div class="blank-line">';
+    parts.forEach((p, i) => {
+      html += esc(p);
+      if(i < parts.length - 1) html += '<select class="select mini" data-i="' + i + '"><option value="" selected disabled>…</option>' + opts + '</select>';
+    });
+    html += '</div><button class="btn btn-primary" id="dOk" style="margin-top:14px;width:100%">تأیید پاسخ</button>';
+    qmArea.innerHTML = html;
+    const sels = qmArea.querySelectorAll('select');
+    const go = () => {
+      if(modalLocked) return;
+      const vals = Array.from(sels).map(x => x.value);
+      if(vals.some(v => v === '')){ sels.forEach(x => { x.classList.add('wrong'); setTimeout(()=>x.classList.remove('wrong'), 500); }); return; }
+      const idx = resolveIndex(q.answer, q.options);
+      const c = Array.isArray(idx) ? idx : [idx];
+      const ok = c.every((v, i) => Number(vals[i]) === Number(v));
+      submitAnswer(ok, () => sels.forEach(x => x.disabled = true));
+    };
+    document.getElementById('dOk').onclick = go;
+  } else {
+    qmArea.innerHTML = '<select class="select" id="dSel"><option value="" selected disabled>گزینه‌ی درست را انتخاب کن…</option>' + opts + '</select>' +
+      '<button class="btn btn-primary" id="dOk" style="margin-top:14px;width:100%">تأیید پاسخ</button>';
+    const sel = document.getElementById('dSel');
+    const go = () => {
+      if(modalLocked) return;
+      if(sel.value === ''){ sel.classList.add('wrong'); setTimeout(()=>sel.classList.remove('wrong'), 500); return; }
+      const idx = resolveIndex(q.answer, q.options);
+      const ok = Number(sel.value) === Number(idx);
+      submitAnswer(ok, () => sel.disabled = true);
+    };
+    document.getElementById('dOk').onclick = go;
+  }
+}
+
+/* --- تطبیقی --- */
+function renderMatch(q){
+  const pairs = normalizePairs(q);
+  const left = pairs.map(p => p[0]);
+  const right = shuffle(pairs.map(p => p[1]));
+  const assignment = Array(pairs.length).fill(null);
+  let selected = null;
+  let html = '<div class="match-hint">از «ستون الف» یک مورد را لمس کن، سپس همتایش را از «ستون ب» برگزین.</div><div class="match-grid">';
+  html += '<div class="match-col"><div class="match-col-head">ستون الف</div>' + left.map((l, i) =>
+    '<button class="m-item left" data-i="' + i + '"><span class="m-chip" style="--c:' + MATCH_COLORS[i % MATCH_COLORS.length] + '">' + (LETTERS[i] || (i + 1)) + '</span><span>' + esc(l) + '</span></button>'
+  ).join('') + '</div>';
+  html += '<div class="match-col"><div class="match-col-head">ستون ب</div>' + right.map((r, j) =>
+    '<button class="m-item right" data-j="' + j + '"><span>' + esc(r) + '</span><span class="m-holder" data-holder="' + j + '"></span></button>'
+  ).join('') + '</div>';
+  html += '</div><button class="btn btn-primary" id="mOk" style="margin-top:14px;width:100%">تأیید تطبیق</button>';
+  qmArea.innerHTML = html;
+
+  const holder = j => qmArea.querySelector('[data-holder="' + j + '"]');
+  const refresh = () => {
+    right.forEach((_, j) => { const h = holder(j); h.textContent = ''; h.style.background = 'transparent'; h.style.border = '2px dashed #c9b877'; });
+    left.forEach((_, i) => {
+      const j = assignment[i];
+      if(j !== null){
+        const h = holder(j);
+        h.textContent = LETTERS[i] || (i + 1);
+        h.style.background = MATCH_COLORS[i % MATCH_COLORS.length];
+        h.style.border = 'none';
+      }
+    });
+    qmArea.querySelectorAll('.m-item.left').forEach(b => b.classList.toggle('sel', +b.dataset.i === selected));
+  };
+  qmArea.querySelectorAll('.m-item.left').forEach(btn => {
+    btn.onclick = () => {
+      if(modalLocked) return;
+      const i = +btn.dataset.i;
+      selected = (selected === i) ? null : i;
+      refresh();
+    };
+  });
+  qmArea.querySelectorAll('.m-item.right').forEach(btn => {
+    btn.onclick = () => {
+      if(modalLocked) return;
+      if(selected === null){ toast('اول از «ستون الف» یک مورد را انتخاب کن'); return; }
+      const j = +btn.dataset.j;
+      left.forEach((_, i) => { if(assignment[i] === j) assignment[i] = null; });
+      assignment[selected] = j;
+      selected = null;
+      refresh();
+    };
+  });
+  document.getElementById('mOk').onclick = () => {
+    if(modalLocked) return;
+    if(assignment.some(a => a === null)){ toast('همه‌ی جفت‌ها را وصل کن'); return; }
+    const ok = pairs.every((p, i) => eq(p[1], right[assignment[i]]));
+    submitAnswer(ok, () => {
+      left.forEach((_, i) => {
+        const pairOk = eq(pairs[i][1], right[assignment[i]]);
+        qmArea.querySelectorAll('.m-item.left').forEach(b => { if(+b.dataset.i === i) b.classList.add(pairOk ? 'correct' : 'wrong'); });
+        qmArea.querySelectorAll('.m-item.right').forEach(b => { if(+b.dataset.j === assignment[i]) b.classList.add(pairOk ? 'correct' : 'wrong'); });
+        qmArea.querySelectorAll('.m-item').forEach(b => b.classList.add('disabled'));
+      });
+    });
+  };
+}
+
+/* ثبت پاسخ */
+function submitAnswer(isCorrect, highlightFn){
+  if(modalLocked) return;
+  modalLocked = true;
+  if(highlightFn) highlightFn();
+  const p = state.players[state.current];
+  state.answered++;
+  if(isCorrect){
+    p.correct++;
+    playCorrect(); vibrate([10, 30, 20]);
+    qmFeedback.innerHTML =
+      '<div class="fb good"><div class="fb-title">✅ آفرین ' + esc(p.name) + '!</div>' +
+      '<div class="fb-sub">حالا تاس بنداز!</div>' +
+      '<button class="btn btn-primary" id="qmContinue">🎲 تاس می‌اندازم!</button></div>';
+  } else {
+    p.wrong++;
+    playWrong(); vibrate([70]);
+    qmFeedback.innerHTML =
+      '<div class="fb bad"><div class="fb-title">❌ اشکالی نداره، نوبت بعدی</div>' +
+      '<div class="fb-sub">پاسخ درست: <b>' + esc(correctAnswerText(currentQ)) + '</b></div>' +
+      (currentQ.explanation ? '<div class="fb-expl">💡 ' + esc(currentQ.explanation) + '</div>' : '') +
+      '<button class="btn btn-primary" id="qmContinue">ادامه</button></div>';
+  }
+  document.getElementById('qmContinue').onclick = () => {
+    closeModal();
+    if(isCorrect) doDiceRoll();
+    else endTurn();
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۰) جریان بازی: تاس → حرکت → مار/پله → نوبت                         */
+/* ------------------------------------------------------------------ */
+const diceEl = document.getElementById('dice');
+const diceResultEl = document.getElementById('diceResult');
+const rollBtn = document.getElementById('rollBtn');
+const DICE_ROT = {
+  1: 'rotateX(720deg) rotateY(720deg)',
+  2: 'rotateX(720deg) rotateY(630deg)',
+  3: 'rotateX(630deg) rotateY(720deg)',
+  4: 'rotateX(810deg) rotateY(720deg)',
+  5: 'rotateX(720deg) rotateY(810deg)',
+  6: 'rotateX(720deg) rotateY(900deg)'
+};
+function pipsFor(v){
+  const P = { 1:[[50,50]], 2:[[30,30],[70,70]], 3:[[26,26],[50,50],[74,74]],
+              4:[[30,30],[70,30],[30,70],[70,70]], 5:[[30,30],[70,30],[50,50],[30,70],[70,70]],
+              6:[[30,24],[30,50],[30,76],[70,24],[70,50],[70,76]] }[v];
+  return P.map(p => '<i style="left:' + p[0] + '%;top:' + p[1] + '%"></i>').join('');
+}
+function buildDice(){
+  diceEl.innerHTML = '';
+  for(let v = 1; v <= 6; v++){
+    const f = document.createElement('div');
+    f.className = 'face f' + v;
+    f.innerHTML = pipsFor(v);
+    diceEl.appendChild(f);
+  }
+}
+function rollDiceAnim(val){
+  return new Promise(res => {
+    diceEl.classList.add('rolling');
+    diceResultEl.textContent = '';
+    diceResultEl.classList.remove('pop');
+    playDiceSound();
+    setTimeout(() => {
+      diceEl.classList.remove('rolling');
+      diceEl.style.transform = DICE_ROT[val];
+      diceResultEl.textContent = toFa(val);
+      res();
+    }, REDUCED ? 40 : 1050);
+  });
+}
+function onRollClick(){
+  if(state.busy || state.gameOver || modalOpen) return;
+  askQuestion();
+}
+function doDiceRoll(){
+  state.busy = true;
+  state.rolls++;
+  const val = 1 + Math.floor(Math.random() * 6);
+  rollDiceAnim(val).then(() => movePiece(state.current, val));
+}
+
+async function movePiece(i, steps){
+  const p = state.players[i];
+
+  /* قانون کلاسیک: برای رسیدن به ۱۰۰ باید دقیقاً عدد بیاری؛
+     اگر مجموع از ۱۰۰ رد شود، مهره اصلاً حرکت نمی‌کند */
+  if(p.pos + steps > 100){
+    toast(p.name + ' برای رسیدن به ۱۰۰ باید دقیقاً عدد بیاری!');
+    endTurn();
+    return;
+  }
+
+  let cur = p.pos;
+
+  /* گام‌به‌گام */
+  for(let s = 0; s < steps; s++){
+    cur++;
+    setPiecePos(i, cur);
+    playStep();
+    if(!REDUCED) await sleep(210);
+  }
+
+  /* مار؟ */
+  const sn = SNAKES.find(s => s[0] === cur);
+  if(sn){
+    await sleep(300);
+    playSnake();
+    piecesEl[i].style.transition = 'left .75s ease-in, top .75s ease-in';
+    setPiecePos(i, sn[1]);
+    toast('🐍 آخ! مار ' + p.name + ' را برد پایین!');
+    if(!REDUCED) await sleep(780);
+    piecesEl[i].style.transition = 'left .2s ease, top .2s ease';
+    cur = sn[1];
+  }
+
+  /* پله؟ */
+  const ld = LADDERS.find(l => l[0] === cur);
+  if(ld){
+    await sleep(300);
+    playLadder();
+    sparkleAt(ld[0]);
+    piecesEl[i].style.transition = 'left .7s cubic-bezier(.3,1.6,.4,1), top .7s cubic-bezier(.3,1.6,.4,1)';
+    setPiecePos(i, ld[1]);
+    toast('🪜 هورا! پله ' + p.name + ' را برد بالا!');
+    if(!REDUCED) await sleep(720);
+    piecesEl[i].style.transition = 'left .2s ease, top .2s ease';
+    cur = ld[1];
+  }
+
+  p.pos = cur;
+  syncPieceOffsets();
+  updateHUD();
+
+  if(cur === 100){ gameWon(i); return; }
+  endTurn();
+}
+
+function endTurn(){
+  state.current = 1 - state.current;
+  state.busy = false;
+  updateHUD();
+  toast('نوبت ' + state.players[state.current].name);
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۱) HUD و صفحه‌ها                                                   */
+/* ------------------------------------------------------------------ */
+const turnChip = document.getElementById('turnChip');
+const pChip0 = document.getElementById('pChip0');
+const pChip1 = document.getElementById('pChip1');
+function updateHUD(){
+  const cur = state.players[state.current];
+  turnChip.innerHTML = 'نوبت: <span class="dot" style="background:' + cur.color + '"></span> ' + esc(cur.name);
+  [pChip0, pChip1].forEach((chip, i) => {
+    const p = state.players[i];
+    chip.innerHTML = '<span class="dot" style="background:' + p.color + '"></span> ' + esc(p.name) + ' — خانه ' + toFa(p.pos);
+    chip.classList.toggle('on', i === state.current);
+  });
+  rollBtn.disabled = state.busy || state.gameOver;
+  rollBtn.classList.toggle('pulse', !state.busy && !state.gameOver);
+}
+
+function showScreen(name){
+  ['screen-home', 'screen-game', 'screen-result'].forEach(id => {
+    document.getElementById(id).classList.toggle('active', id === name);
+  });
+  window.scrollTo({ top: 0 });
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۲) شروع و پایان بازی                                               */
+/* ------------------------------------------------------------------ */
+function startGame(){
+  ensureAudio();
+  const n1 = (document.getElementById('name1').value || '').trim() || 'بازیکن ۱';
+  const n2 = (document.getElementById('name2').value || '').trim() || 'بازیکن ۲';
+  state.players = [
+    { name: n1, color: chosenColor[0], pos: 1, correct: 0, wrong: 0 },
+    { name: n2, color: chosenColor[1], pos: 1, correct: 0, wrong: 0 }
+  ];
+  state.current = 0; state.gameOver = false; state.busy = false;
+  state.rolls = 0; state.answered = 0;
+  pool = shuffle(state.questions.slice());
+  buildBoard();
+  showScreen('screen-game');
+  document.getElementById('gameTag').textContent = state.customLoaded ? '📚 ' + (state.meta.title || 'آزمون سفارشی') : '📚 علوم پنجم — فصل ۵ و ۶';
+  updateHUD();
+  toast('نوبت ' + state.players[0].name + ' — با دکمه‌ی تاس شروع کن!');
+}
+
+function gameWon(i){
+  state.gameOver = true;
+  const winner = state.players[i];
+  playWin();
+  vibrate([20, 40, 20, 40, 80]);
+  updateHUD();
+  // تاج روی مهره‌ی برنده
+  const crown = document.getElementById('crown');
+  crown.style.display = 'flex';
+  crown.style.left = cellLeft(winner.pos) + '%';
+  crown.style.top = cellTop(winner.pos) + '%';
+  celebrate();
+  showScreen('screen-result');
+  document.getElementById('winTitle').textContent = 'برنده!';
+  document.getElementById('winSub').textContent = '🏆 ' + esc(winner.name) + ' اول از همه به خانه‌ی ۱۰۰ رسید!';
+  document.getElementById('winName').innerHTML = '<span class="dot" style="background:' + winner.color + '"></span>' + esc(winner.name) + ' قهرمان شد!';
+  document.getElementById('stQ').textContent = toFa(state.answered);
+  document.getElementById('stC1').textContent = toFa(state.players[0].correct);
+  document.getElementById('stL1').textContent = esc(state.players[0].name) + ' — جواب درست';
+  document.getElementById('stC2').textContent = toFa(state.players[1].correct);
+  document.getElementById('stL2').textContent = esc(state.players[1].name) + ' — جواب درست';
+  document.getElementById('stP1').textContent = toFa(state.players[0].pos);
+  document.getElementById('stLP1').textContent = esc(state.players[0].name) + ' — خانه';
+  document.getElementById('stP2').textContent = toFa(state.players[1].pos);
+  document.getElementById('stLP2').textContent = esc(state.players[1].name) + ' — خانه';
+  document.getElementById('stRoll').textContent = toFa(state.rolls);
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۳) افکت‌های جشن و جرقه                                             */
+/* ------------------------------------------------------------------ */
+function celebrate(){
+  const layer = document.getElementById('fx');
+  const colors = ['#ffd23f','#34c759','#3b82f6','#ef4444','#ff9f43','#a855f7','#ec4899'];
+  const n = REDUCED ? 20 : 70;
+  for(let i = 0; i < n; i++){
+    const c = document.createElement('span');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDelay = Math.random() * 0.6 + 's';
+    c.style.animationDuration = 2.2 + Math.random() * 2 + 's';
+    c.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+    layer.appendChild(c);
+    setTimeout(() => { if(c.parentNode) c.parentNode.removeChild(c); }, 4800);
+  }
+}
+function sparkleAt(n){
+  const board = document.getElementById('board');
+  const rect = board.getBoundingClientRect();
+  const x = rect.left + rect.width * cellLeft(n) / 100;
+  const y = rect.top + rect.height * cellTop(n) / 100;
+  const layer = document.getElementById('fx');
+  for(let i = 0; i < 8; i++){
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    s.style.left = x + 'px';
+    s.style.top = y + 'px';
+    const ang = Math.random() * 6.2832, dist = 20 + Math.random() * 30;
+    s.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+    s.style.setProperty('--dy', Math.sin(ang) * dist + 'px');
+    layer.appendChild(s);
+    setTimeout(() => { if(s.parentNode) s.parentNode.removeChild(s); }, 850);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۴) انتخاب رنگ مهره                                                 */
+/* ------------------------------------------------------------------ */
+const chosenColor = [PALETTE[0], PALETTE[1]];
+function buildSwatches(){
+  [0, 1].forEach(idx => {
+    const wrap = document.getElementById(idx === 0 ? 'sw0' : 'sw1');
+    wrap.innerHTML = PALETTE.map((c, ci) =>
+      '<button class="swatch' + (ci === idx ? ' sel' : '') + '" data-c="' + ci + '" aria-label="رنگ مهره ' + c + '" style="background:' + c + '"></button>'
+    ).join('');
+    wrap.querySelectorAll('.swatch').forEach(btn => {
+      btn.onclick = () => {
+        chosenColor[idx] = PALETTE[+btn.dataset.c];
+        wrap.querySelectorAll('.swatch').forEach(b => b.classList.toggle('sel', b === btn));
+        playStep();
+      };
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۵) بارگذاری فایل سؤال (HQF v1.0 و پشتیبان حکیمستان)                */
+/* ------------------------------------------------------------------ */
+function extractQuestions(data){
+  if(!data) return null;
+  if(Array.isArray(data)) return data;
+  if(data.hqf === '1.0' || (data.hqf && Array.isArray(data.questions))){
+    return Array.isArray(data.questions) ? data.questions : null;
+  }
+  if(data.hakimestan === 2 && Array.isArray(data.exams) && data.exams.length){
+    const ex = data.exams[0];
+    if(Array.isArray(ex)) return ex;
+    if(ex && typeof ex === 'object'){
+      if(Array.isArray(ex.questions)) return ex.questions;
+      if(Array.isArray(ex.items)) return ex.items;
+      if(ex.questions && Array.isArray(ex.questions.list)) return ex.questions.list;
+      if(Array.isArray(ex.list)) return ex.list;
+    }
+    return null;
+  }
+  if(Array.isArray(data.questions)) return data.questions;
+  return null;
+}
+function extractMeta(data){
+  if(data && data.meta && typeof data.meta === 'object') return data.meta;
+  if(data && data.hakimestan === 2 && Array.isArray(data.exams) && data.exams.length){
+    const e = data.exams[0] || {};
+    return { title: e.title || e.name || 'آزمون حکیمستان', subject: e.subject || e.lesson || '', grade: e.grade || e.base || '' };
+  }
+  return null;
+}
+function normalizeQuestion(q){
+  const n = Object.assign({}, q);
+  if(!n.text && (n.question || n.body || n.prompt)) n.text = n.question || n.body || n.prompt;
+  if(!n.options && Array.isArray(n.choices)) n.options = n.choices;
+  if(n.answer === undefined && n.correct !== undefined) n.answer = n.correct;
+  if(n.answer === undefined && n.correctIndex !== undefined) n.answer = n.correctIndex;
+  if(n.answer === undefined && Array.isArray(n.answers)) n.answer = n.answers;
+  return n;
+}
+function validateQuestions(qs){
+  const valid = [], errors = [];
+  qs.forEach((raw, i) => {
+    const q = raw && typeof raw === 'object' ? normalizeQuestion(raw) : raw;
+    const label = (q && (q.id || q.text)) ? '«' + String(q.id || q.text).slice(0, 26) + '»' : 'سؤال ' + (i + 1);
+    if(!q || typeof q !== 'object'){ errors.push(label + ': ساختار نامعتبر است'); return; }
+    if(!['mcq','tf','multi','short','blank','dropdown','match'].includes(q.type)){ errors.push(label + ': نوع سؤال ناشناخته («' + q.type + '»)'); return; }
+    if(!q.text){ errors.push(label + ': متن سؤال ندارد'); return; }
+    switch(q.type){
+      case 'mcq':
+        if(!Array.isArray(q.options) || q.options.length < 2){ errors.push(label + ': گزینه ندارد (options)'); return; }
+        { const ri = resolveIndex(q.answer, q.options); if(ri < 0 || ri >= q.options.length){ errors.push(label + ': پاسخ درست در میان گزینه‌ها یافت نشد'); return; } }
+        break;
+      case 'tf':
+        if(q.answer === undefined || q.answer === null || q.answer === ''){ errors.push(label + ': پاسخ (درست/نادرست) ندارد'); return; }
+        break;
+      case 'multi':
+        if(!Array.isArray(q.options) || q.options.length < 2){ errors.push(label + ': گزینه ندارد (options)'); return; }
+        { const ci = resolveIndex(q.answer, q.options); const c = (Array.isArray(ci) ? ci : [ci]).map(Number);
+          if(c.length === 0 || c.some(n => isNaN(n) || n < 0 || n >= q.options.length)){ errors.push(label + ': پاسخ درست در میان گزینه‌ها یافت نشد'); return; } }
+        break;
+      case 'short':
+        if(q.answer === undefined || q.answer === null || q.answer === ''){ errors.push(label + ': پاسخ ندارد'); return; }
+        break;
+      case 'blank':
+        if(countBlanks(q.text) < 1){ errors.push(label + ': جای خالی (__) در متن ندارد'); return; }
+        if(q.answer === undefined || q.answer === null || q.answer === ''){ errors.push(label + ': پاسخ جای خالی ندارد'); return; }
+        break;
+      case 'dropdown':
+        if(!Array.isArray(q.options) || q.options.length < 2){ errors.push(label + ': گزینه ندارد (options)'); return; }
+        { const ci = resolveIndex(q.answer, q.options); const c = (Array.isArray(ci) ? ci : [ci]).map(Number);
+          if(c.length === 0 || c.some(n => isNaN(n) || n < 0 || n >= q.options.length)){ errors.push(label + ': پاسخ درست در میان گزینه‌ها یافت نشد'); return; } }
+        break;
+      case 'match':
+        if(normalizePairs(q).length < 2){ errors.push(label + ': جفت‌های تطبیقی (pairs) ندارد'); return; }
+        break;
+    }
+    valid.push(q);
+  });
+  return { valid, errors };
+}
+function loadCustomFile(file){
+  if(!file) return;
+  toast('⏳ در حال خواندن فایل…');
+  const reader = new FileReader();
+  reader.onload = e => {
+    setTimeout(() => {
+      let data;
+      try { data = JSON.parse(e.target.result); }
+      catch(err){ showError('فایل انتخاب‌شده JSON معتبر نیست.<br><code>' + esc(err.message) + '</code>'); return; }
+      const qs = extractQuestions(data);
+      if(!qs || qs.length === 0){
+        showError('قالب فایل شناخته نشد.<br>فرمت‌های پشتیبانی‌شده: <b>HQF v1.0</b> یا پشتیبان <b>آزمون‌ساز حکیمستان</b> (<code>{ hakimestan: 2, exams: [...] }</code>).');
+        return;
+      }
+      const { valid, errors } = validateQuestions(qs);
+      if(valid.length === 0){
+        showError('هیچ سؤال معتبری در فایل پیدا نشد.<br><br>' + errors.slice(0, 5).map(esc).join('<br>') + (errors.length > 5 ? '<br>… و ' + toFa(errors.length - 5) + ' مورد دیگر' : ''));
+        return;
+      }
+      state.questions = valid;
+      state.customLoaded = true;
+      state.meta = extractMeta(data) || { title: 'آزمون سفارشی', subject: '', grade: '' };
+      if(errors.length) toast('⚠️ ' + toFa(valid.length) + ' سؤال بارگذاری شد؛ ' + toFa(errors.length) + ' سؤال نامعتبر نادیده گرفته شد');
+      else toast('✅ ' + toFa(valid.length) + ' سؤال بارگذاری شد. آماده‌ی بازی!');
+      renderHome();
+      showScreen('screen-home');
+    }, 40);
+  };
+  reader.readAsText(file);
+}
+function resetToDefault(){
+  state.questions = clone(DEFAULT_HQF.questions);
+  state.meta = clone(DEFAULT_HQF.meta);
+  state.customLoaded = false;
+  toast('↩️ به سؤال‌های پیش‌فرض بازگشتیم');
+  renderHome();
+}
+function renderHome(){
+  document.getElementById('resetBtn').style.display = state.customLoaded ? 'flex' : 'none';
+  document.getElementById('qCount').textContent = '✨ ' + toFa(state.questions.length) + ' سؤال آماده است • ' + toFa(SNAKES.length) + ' مار 🐍 و ' + toFa(LADDERS.length) + ' پله 🪜';
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۶) توست و خطا                                                     */
+/* ------------------------------------------------------------------ */
+let toastTimer = null;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+function showError(msg){
+  document.getElementById('errMsg').innerHTML = msg;
+  document.getElementById('errModal').classList.remove('hidden');
+}
+
+/* ------------------------------------------------------------------ */
+/* ۱۷) کیبورد                                                          */
+/* ------------------------------------------------------------------ */
+document.addEventListener('keydown', e => {
+  if(modalOpen){
+    if(e.key === 'Escape'){
+      e.preventDefault();
+      const cont = document.getElementById('qmContinue');
+      if(cont) cont.click();
+      else if(!modalLocked) submitAnswer(false, null);
+      return;
+    }
+    if(e.key >= '1' && e.key <= '4' && !modalLocked){
+      const opt = qmArea.querySelector('[data-key="' + e.key + '"]');
+      if(opt) opt.click();
+      return;
+    }
+  } else {
+    if(screens.game.classList.contains('active') && !state.busy && !state.gameOver){
+      if(e.key === ' ' || e.key === 'Enter'){
+        e.preventDefault();
+        onRollClick();
+      }
+    }
+  }
+});
+
+/* ------------------------------------------------------------------ */
+/* ۱۸) اتصال رویدادها و راه‌اندازی                                     */
+/* ------------------------------------------------------------------ */
+const screens = {
+  home: document.getElementById('screen-home'),
+  game: document.getElementById('screen-game'),
+  result: document.getElementById('screen-result')
+};
+
+rollBtn.addEventListener('click', onRollClick);
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('againBtn').addEventListener('click', () => { startGame(); });
+document.getElementById('loadBtn').addEventListener('click', () => document.getElementById('fileInput').click());
+document.getElementById('resetBtn').addEventListener('click', resetToDefault);
+document.getElementById('errOk').addEventListener('click', () => document.getElementById('errModal').classList.add('hidden'));
+document.getElementById('fileInput').addEventListener('change', e => {
+  const f = e.target.files && e.target.files[0];
+  if(f) loadCustomFile(f);
+  e.target.value = '';
+});
+function goHome(){
+  if(modalOpen) closeModal();
+  state.gameOver = true;
+  showScreen('screen-home');
+  renderHome();
+}
+document.getElementById('homeBtn').addEventListener('click', e => { e.preventDefault(); goHome(); });
+document.getElementById('homeBtn2').addEventListener('click', goHome);
+
+/* راه‌اندازی */
+buildSwatches();
+buildDice();
+buildBoard();
+renderHome();
+updateHUD();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3a1ea15ded5b7cb',t:'MTc4OTI0NzU4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
