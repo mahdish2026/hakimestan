@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مبدل آزمون‌ساز به HQF | حکیمستان</title>
+<!-- فونت وزیرمتن از گوگل فونتس (تنها منبع خارجی؛ در آفلاین با فونت جایگزین کار می‌کند) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+<style>
+  /* ─── متغیرهای تم ─── */
+  :root {
+    --bg: #eef2ff;
+    --card: #ffffff;
+    --ink: #1e293b;
+    --muted: #64748b;
+    --primary: #3b5bdb;
+    --primary-dark: #2f4bc4;
+    --primary-soft: #edf1fd;
+    --indigo: #5c7cfa;
+    --gold: #d9a404;
+    --gold-dark: #9c6f00;
+    --gold-bg: #fef6dd;
+    --ok: #2f9e44;
+    --ok-bg: #ebfbee;
+    --warn-bg: #fff9db;
+    --warn-border: #ffd43b;
+    --warn-ink: #7a5c00;
+    --err-bg: #ffe3e3;
+    --err-border: #ff8787;
+    --err-ink: #a61e1e;
+    --radius: 16px;
+    --shadow: 0 4px 20px rgba(59, 91, 219, .10);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: "Vazirmatn", Tahoma, Arial, sans-serif;
+    background: linear-gradient(180deg, #e7edff 0%, var(--bg) 220px, #f8faff 100%);
+    color: var(--ink);
+    line-height: 1.9;
+    min-height: 100vh;
+  }
+
+  /* ─── سربرگ ─── */
+  header {
+    background: linear-gradient(135deg, #364fc7 0%, #3b5bdb 55%, #5c7cfa 100%);
+    color: #fff;
+    padding: 28px 16px 24px;
+    text-align: center;
+    border-bottom: 4px solid var(--gold);
+  }
+  header h1 { margin: 0; font-size: 1.4rem; font-weight: 800; }
+  header p { margin: 6px 0 0; font-size: .9rem; opacity: .92; }
+  header .badge-ver {
+    display: inline-block; margin-top: 10px;
+    background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.4);
+    border-radius: 999px; padding: 2px 14px; font-size: .78rem;
+  }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 16px 14px 60px; }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 16px;
+    margin-bottom: 18px;
+    border: 1px solid #e3e9fb;
+  }
+  .card h2 {
+    margin: 0 0 4px; font-size: 1.1rem; font-weight: 800; color: var(--primary-dark);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card .step-num {
+    background: var(--primary); color: #fff; font-size: .8rem;
+    width: 28px; height: 28px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .card .desc { color: var(--muted); font-size: .85rem; margin: 0 0 14px; }
+
+  .hidden { display: none !important; }
+
+  /* ─── بخش ۱: ناحیه کشیدن و رها کردن ─── */
+  #dropzone {
+    border: 2px dashed #91a7ff;
+    border-radius: var(--radius);
+    background: var(--primary-soft);
+    padding: 36px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s, transform .15s;
+  }
+  #dropzone:hover, #dropzone.dragover {
+    border-color: var(--gold);
+    background: var(--gold-bg);
+    transform: scale(1.005);
+  }
+  #dropzone .dz-icon { font-size: 2.6rem; line-height: 1; }
+  #dropzone .dz-title { font-weight: 800; margin: 10px 0 2px; }
+  #dropzone .dz-sub { color: var(--muted); font-size: .83rem; }
+
+  #fileInput { display: none; }
+
+  /* ─── دکمه‌ها (لمسی، حداقل ۴۸ پیکسل) ─── */
+  .btn {
+    font-family: inherit;
+    min-height: 48px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: .95rem;
+    padding: 10px 18px;
+    cursor: pointer;
+    border: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: filter .15s, transform .1s;
+    width: 100%;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-primary { background: linear-gradient(135deg, var(--primary-dark), var(--indigo)); color: #fff; }
+  .btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+  .btn-gold { background: linear-gradient(135deg, #eab308, var(--gold)); color: #3d2e00; }
+  .btn-gold:hover:not(:disabled) { filter: brightness(1.05); }
+  .btn-outline { background: #fff; border: 2px solid #c3cff9; color: var(--primary-dark); }
+  .btn-outline:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-soft); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 2px dashed #cbd5e1; }
+  .btn-row { display: grid; gap: 10px; margin-top: 12px; }
+  @media (min-width: 640px) {
+    .btn-row { grid-template-columns: 1fr 1fr; }
+    .btn-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    /* ردیف خروجی: تعداد دکمه‌ها متغیر است (دانلود تکی/گروهی) ← ستون‌های خودکار */
+    .btn-row.cols-auto { grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); }
+  }
+  .btn-hint { color: var(--muted); font-size: .76rem; margin: 8px 2px 0; text-align: center; }
+
+  .sample-link {
+    display: block; text-align: center; margin-top: 12px;
+    background: none; border: none; color: var(--primary); font-family: inherit;
+    font-size: .85rem; cursor: pointer; text-decoration: underline; width: 100%;
+    min-height: 44px;
+  }
+
+  /* ─── پیام‌های خطا / فایل‌های بارگذاری‌شده ─── */
+  .msg {
+    border-radius: 12px; padding: 10px 14px; margin-top: 12px; font-size: .87rem;
+    border: 1px solid;
+  }
+  .msg-error { background: var(--err-bg); border-color: var(--err-border); color: var(--err-ink); }
+  .msg-ok { background: var(--ok-bg); border-color: #8ce99a; color: #1e6b2e; }
+  .file-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .file-chip {
+    background: var(--primary-soft); border: 1px solid #c3cff9; color: var(--primary-dark);
+    border-radius: 999px; padding: 4px 12px; font-size: .8rem;
+  }
+
+  /* ─── بخش ۲: کارت‌های آزمون ─── */
+  .merge-toggle {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--gold-bg); border: 2px solid var(--gold);
+    border-radius: 12px; padding: 10px 14px; margin-bottom: 12px;
+    cursor: pointer; font-weight: 700; font-size: .9rem; min-height: 52px;
+  }
+  .merge-toggle input { width: 22px; height: 22px; accent-color: var(--gold-dark); flex-shrink: 0; }
+  .exam-grid { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .exam-grid { grid-template-columns: 1fr 1fr; } }
+  .exam-card {
+    border: 2px solid #dbe3f8; border-radius: 12px; padding: 12px 14px;
+    cursor: pointer; background: #fbfcff; transition: border-color .15s, background .15s;
+    text-align: right; font-family: inherit; width: 100%; color: var(--ink);
+  }
+  .exam-card:hover { border-color: var(--indigo); }
+  .exam-card.selected { border-color: var(--primary); background: var(--primary-soft); box-shadow: 0 0 0 2px #b8c5fa; }
+  .exam-card.disabled { opacity: .5; pointer-events: none; }
+  .exam-card .ex-title { font-weight: 800; font-size: .95rem; }
+  .exam-card .ex-meta { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+  .exam-card .ex-count {
+    display: inline-block; margin-top: 8px; font-size: .78rem; font-weight: 700;
+    background: #fff; border: 1px solid #c3cff9; color: var(--primary-dark);
+    border-radius: 999px; padding: 1px 12px;
+  }
+
+  /* ─── تنظیمات ─── */
+  .settings { margin-top: 16px; border-top: 1px dashed #cbd5e1; padding-top: 14px; }
+  .settings h3 { margin: 0 0 10px; font-size: .95rem; color: var(--primary-dark); }
+  .setting-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px; border-radius: 10px; cursor: pointer;
+    font-size: .88rem; min-height: 52px; border: 1px solid transparent;
+  }
+  .setting-item:hover { background: #f6f8ff; border-color: #e3e9fb; }
+  .setting-item input { width: 22px; height: 22px; accent-color: var(--primary); flex-shrink: 0; margin-top: 4px; }
+  .setting-item small { display: block; color: var(--muted); font-size: .76rem; }
+
+  /* ─── بخش ۳: آمار ─── */
+  .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .stat {
+    border-radius: 12px; padding: 10px 6px; text-align: center; border: 1px solid;
+  }
+  .stat .num { font-size: 1.4rem; font-weight: 800; line-height: 1.2; }
+  .stat .lbl { font-size: .75rem; }
+  .stat-ok { background: var(--ok-bg); border-color: #8ce99a; color: #1e6b2e; }
+  .stat-del { background: var(--gold-bg); border-color: #f0c93f; color: #7a5c00; }
+  .stat-warn { background: #fff4e5; border-color: #ffc078; color: #8a4b00; }
+
+  /* ─── هشدارها ─── */
+  .issue-list { display: grid; gap: 8px; margin-bottom: 14px; }
+  .issue {
+    border-radius: 10px; padding: 8px 12px; font-size: .83rem; border: 1px solid;
+  }
+  .issue-warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn-ink); }
+  .issue-error { background: var(--err-bg); border-color: var(--err-border); color: var(--err-ink); }
+  .issue-ok { background: var(--ok-bg); border-color: #8ce99a; color: #1e6b2e; text-align: center; }
+
+  /* ─── کارت‌های پیش‌نمایش سؤال ─── */
+  .q-grid { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .q-grid { grid-template-columns: 1fr 1fr; } }
+  .q-card {
+    border: 1px solid #e3e9fb; border-radius: 12px; padding: 10px 12px;
+    background: #fbfcff; font-size: .83rem;
+  }
+  .q-card .q-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .q-num {
+    background: var(--primary); color: #fff; font-weight: 800; font-size: .75rem;
+    min-width: 30px; height: 30px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center; padding: 0 6px;
+  }
+  .q-type {
+    background: var(--gold-bg); color: var(--gold-dark); border: 1px solid var(--gold);
+    font-size: .72rem; font-weight: 700; border-radius: 999px; padding: 1px 10px;
+  }
+  .q-section {
+    background: var(--primary-soft); color: var(--primary-dark);
+    font-size: .72rem; border-radius: 999px; padding: 1px 10px;
+  }
+  .q-card .q-text { font-weight: 500; white-space: pre-line; margin: 4px 0; }
+  .q-card .q-ans { color: var(--ok); font-size: .8rem; margin-top: 6px; border-top: 1px dashed #dbe3f8; padding-top: 6px; }
+  .q-card .q-ans b { color: #1e6b2e; }
+  .q-score { float: left; color: var(--muted); font-size: .72rem; }
+
+  /* ─── پیش‌نمایش JSON با رنگ‌بندی ─── */
+  #jsonPanel { margin-top: 14px; }
+  #jsonPreview {
+    direction: ltr; text-align: left;
+    background: #0f172a; color: #e2e8f0;
+    border-radius: 12px; padding: 14px;
+    max-height: 420px; overflow: auto;
+    font-size: .78rem; line-height: 1.7;
+    font-family: "Vazirmatn", Consolas, monospace;
+    white-space: pre-wrap; word-break: break-word; margin: 0;
+  }
+  #jsonPreview .k { color: #7dd3fc; }   /* کلیدها: آبی */
+  #jsonPreview .s { color: #86efac; }   /* رشته‌ها: سبز */
+  #jsonPreview .n { color: #fbbf24; }   /* اعداد: طلایی */
+  #jsonPreview .b { color: #f0abfc; }   /* بولین/نال: صورتی */
+
+  /* ─── پیام شناور (toast) ─── */
+  #toast {
+    position: fixed; bottom: 24px; right: 50%; transform: translateX(50%) translateY(20px);
+    background: var(--ink); color: #fff; padding: 12px 24px; border-radius: 999px;
+    font-size: .88rem; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+    z-index: 99; max-width: 90vw; text-align: center;
+  }
+  #toast.show { opacity: 1; transform: translateX(50%) translateY(0); }
+
+  footer { text-align: center; color: var(--muted); font-size: .78rem; padding: 8px; }
+
+  /* ─── تم حکیمستان: لابی تاریک بنفش-نیلی ─── */
+
+  :root {
+    --bg: #0d0a1f;
+    --card: rgba(255,255,255,.055);
+    --ink: #f6f0ff;
+    --muted: #b9afd0;
+    --primary: #8d70d8;
+    --primary-dark: #6f50b8;
+    --primary-soft: rgba(141,112,216,.12);
+    --indigo: #9b83e6;
+    --gold: #e9b44c;
+    --gold-dark: #b98221;
+    --gold-bg: rgba(233,180,76,.10);
+    --shadow: 0 18px 50px rgba(0,0,0,.28);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 50% -10%, rgba(91,74,158,.22), transparent 38%),
+      linear-gradient(180deg, #0d0a1f 0%, #100c27 55%, #0d0a1f 100%);
+    color: var(--ink);
+  }
+
+  header {
+    background: linear-gradient(135deg, #17102f 0%, #211744 55%, #17102f 100%);
+    border-bottom: 2px solid rgba(233,180,76,.65);
+  }
+
+  header h1 {
+    font-family: "Lalezar", "Vazirmatn", Tahoma, sans-serif;
+    color: #f5c76a;
+    letter-spacing: .2px;
+  }
+
+  header p { color: #ddd4ee; }
+
+  .card {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .card h2,
+  .settings h3 {
+    color: #f5c76a;
+  }
+
+  .card .step-num {
+    background: linear-gradient(135deg, #e9b44c, #b98221);
+    color: #241700;
+  }
+
+  .card .desc,
+  .btn-hint,
+  footer,
+  #dropzone .dz-sub,
+  .exam-card .ex-meta,
+  .setting-item small {
+    color: #b9afd0;
+  }
+
+  #dropzone {
+    background: rgba(141,112,216,.08);
+    border-color: rgba(155,131,230,.55);
+  }
+
+  #dropzone:hover,
+  #dropzone.dragover {
+    background: rgba(233,180,76,.10);
+    border-color: #e9b44c;
+  }
+
+  .btn-primary,
+  .btn-gold {
+    background: linear-gradient(135deg, #f3cc78 0%, #e9b44c 48%, #b98221 100%);
+    color: #2b1b00;
+    box-shadow: 0 8px 22px rgba(233,180,76,.16);
+  }
+
+  .btn-outline {
+    background: rgba(255,255,255,.045);
+    border-color: rgba(255,255,255,.16);
+    color: #f0e8ff;
+  }
+
+  .btn-outline:hover:not(:disabled) {
+    border-color: rgba(233,180,76,.65);
+    background: rgba(233,180,76,.08);
+  }
+
+  .btn-ghost {
+    color: #b9afd0;
+    border-color: rgba(255,255,255,.16);
+  }
+
+  .sample-link {
+    color: #d8c7ff;
+  }
+
+  .merge-toggle,
+  .setting-item:hover,
+  .exam-card,
+  .q-card,
+  .stat,
+  .issue,
+  .file-chip,
+  .exam-card .ex-count {
+    background: rgba(255,255,255,.045);
+    border-color: rgba(255,255,255,.10);
+    color: var(--ink);
+  }
+
+  .merge-toggle {
+    border-color: rgba(233,180,76,.55);
+    background: rgba(233,180,76,.08);
+  }
+
+  .exam-card:hover {
+    border-color: rgba(155,131,230,.75);
+  }
+
+  .exam-card.selected {
+    border-color: #9b83e6;
+    background: rgba(141,112,216,.13);
+    box-shadow: 0 0 0 2px rgba(155,131,230,.22);
+  }
+
+  .exam-card .ex-count {
+    color: #d8c7ff;
+  }
+
+  .settings {
+    border-top-color: rgba(255,255,255,.12);
+  }
+
+  .q-num {
+    background: linear-gradient(135deg, #7b5cc6, #51378f);
+  }
+
+  .q-type {
+    background: rgba(233,180,76,.10);
+    color: #f5c76a;
+    border-color: rgba(233,180,76,.55);
+  }
+
+  .q-section {
+    background: rgba(141,112,216,.12);
+    color: #d8c7ff;
+  }
+
+  .q-card .q-ans {
+    color: #9fe2ad;
+    border-top-color: rgba(255,255,255,.10);
+  }
+
+  .stat-ok {
+    background: rgba(47,158,68,.12);
+    border-color: rgba(140,233,154,.45);
+    color: #9fe2ad;
+  }
+
+  .stat-del {
+    background: rgba(233,180,76,.10);
+    border-color: rgba(240,201,63,.45);
+    color: #f5c76a;
+  }
+
+  .stat-warn {
+    background: rgba(255,192,120,.09);
+    border-color: rgba(255,192,120,.40);
+    color: #ffc078;
+  }
+
+  .msg-error, .issue-error {
+    background: rgba(166,30,30,.16);
+    border-color: rgba(255,135,135,.45);
+    color: #ffb0b0;
+  }
+
+  .msg-ok, .issue-ok {
+    background: rgba(47,158,68,.13);
+    border-color: rgba(140,233,154,.40);
+    color: #a9e8b2;
+  }
+
+  .msg-error, .msg-ok { color: inherit; }
+
+  .issue-warn {
+    background: rgba(255,212,59,.10);
+    border-color: rgba(255,212,59,.40);
+    color: #ffe28a;
+  }
+
+  #jsonPreview {
+    background: rgba(4,3,13,.82);
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  #toast {
+    background: #241a3f;
+    border: 1px solid rgba(233,180,76,.28);
+  }
+
+  /* حکیم: کارت شیشه‌ای در بالای صفحه، نه گوشه */
+  #hakimMount {
+    max-width: 920px;
+    margin: 16px auto 0;
+    padding: 0 14px;
+  }
+
+  #hakimMount .hakim-panel {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 auto 18px !important;
+    background: rgba(255,255,255,.055) !important;
+    border: 1px solid rgba(255,255,255,.10) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 18px 50px rgba(0,0,0,.28) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  @media (max-width: 640px) {
+    #hakimMount {
+      padding: 0 14px;
+    }
+  }
+
+</style>
+</head>
+<body>
+<div id="hakimMount"></div>
+
+<header>
+  <h1>🔄 مبدل آزمون‌ساز به HQF</h1>
+  <p>سؤال‌های آزمون‌ساز حکیمستان را برای بازی‌ها (راز گنج، حکیم‌کوئست و…) آماده کنید</p>
+  <span class="badge-ver">نسخه‌ی ۲.۰ • خروجی استاندارد HQF v1.0</span>
+</header>
+
+<main class="container">
+
+  <!-- ═══════════ بخش ۱: بارگذاری فایل ═══════════ -->
+  <section class="card" id="sectionUpload">
+    <h2><span class="step-num">۱</span> بارگذاری فایل پشتیبان</h2>
+    <p class="desc">فایل JSON، CSV یا TXT آزمون‌ساز حکیمستان را انتخاب کنید. می‌توانید چند فایل را هم‌زمان بیندازید.</p>
+
+    <div id="dropzone" role="button" tabindex="0" aria-label="انتخاب فایل پشتیبان">
+      <div class="dz-icon">📥</div>
+      <div class="dz-title">فایل پشتیبان JSON آزمون‌ساز را اینجا بکشید یا کلیک کنید</div>
+      <div class="dz-sub">فرمت: <code>.json</code>، <code>.csv</code> یا <code>.txt</code> — حداکثر چند مگابایت</div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json,.csv,.txt,application/json,text/csv,text/plain" multiple>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btnChoose" type="button">📂 انتخاب فایل</button>
+      <button class="btn btn-outline" id="btnSample" type="button">🧪 تست با مثال آماده</button>
+    </div>
+
+    <button class="sample-link" id="btnSample2" type="button">بدون فایل؟ یک آزمون نمونه (ریاضی پنجم) را امتحان کنید ←</button>
+
+    <div id="uploadMsg"></div>
+    <div class="file-chips" id="fileChips"></div>
+  </section>
+
+  <!-- ═══════════ بخش ۲: انتخاب آزمون + تنظیمات ═══════════ -->
+  <section class="card hidden" id="sectionSelect">
+    <h2><span class="step-num">۲</span> انتخاب آزمون و تنظیمات</h2>
+    <p class="desc">یکی از آزمون‌ها را انتخاب کنید، یا همه را با هم ادغام کنید.</p>
+
+    <label class="merge-toggle">
+      <input type="checkbox" id="chkMerge">
+      <span>🧩 ادغام همه‌ی آزمون‌ها در یک فایل خروجی</span>
+    </label>
+
+    <div class="exam-grid" id="examGrid"></div>
+
+    <div class="settings">
+      <h3>⚙️ تنظیمات تبدیل</h3>
+      <label class="setting-item">
+        <input type="checkbox" id="chkSubs" checked>
+        <span>تبدیل زیرسؤال‌ها (subQuestions) به سؤالات جداگانه
+          <small>هر زیرسؤال یک سؤال مستقل HQF می‌شود و متن والد به‌عنوان زمینه بالای آن قرار می‌گیرد؛ نمره‌ی والد بین زیرسؤال‌ها تقسیم می‌شود (پیش‌فرض: فعال)</small>
+        </span>
+      </label>
+      <label class="setting-item">
+        <input type="checkbox" id="chkEssay">
+        <span>تبدیل سؤالات تشریحی به «پاسخ کوتاه»
+          <small>اگر خاموش باشد، سؤالات تشریحی با هشدار حذف می‌شوند (پیش‌فرض: حذف)</small>
+        </span>
+      </label>
+      <label class="setting-item">
+        <input type="checkbox" id="chkNormalize" checked>
+        <span>نرمال‌سازی متن (ی، ک، ارقام پاسخ‌ها)
+          <small>یکدست‌سازی ی/ک عربی و ارقام پاسخ‌ها؛ نیم‌فاصله حفظ می‌شود (پیش‌فرض: فعال)</small>
+        </span>
+      </label>
+      <label class="setting-item">
+        <input type="checkbox" id="chkNoEmptySection" checked>
+        <span>حذف بخش (section) خالی
+          <small>اگر سؤالی بخش نداشت، کلید section در خروجی نیاید</small>
+        </span>
+      </label>
+    </div>
+  </section>
+
+  <!-- ═══════════ بخش ۳: پیش‌نمایش و خروجی ═══════════ -->
+  <section class="card hidden" id="sectionResult">
+    <h2><span class="step-num">۳</span> پیش‌نمایش و خروجی</h2>
+    <p class="desc">نتیجه‌ی تبدیل را بررسی کنید، سپس فایل HQF را دانلود کنید.</p>
+
+    <div class="stats">
+      <div class="stat stat-ok"><div class="num" id="statOk">۰</div><div class="lbl">سؤال تبدیل شد</div></div>
+      <div class="stat stat-del"><div class="num" id="statDel">۰</div><div class="lbl">سؤال حذف شد</div></div>
+      <div class="stat stat-warn"><div class="num" id="statWarn">۰</div><div class="lbl">هشدار / خطا</div></div>
+    </div>
+
+    <div class="issue-list" id="issueList"></div>
+
+    <div class="q-grid" id="qGrid"></div>
+
+    <div class="btn-row cols-auto" style="margin-top:16px">
+      <button class="btn btn-gold" id="btnDownload" type="button">💾 دانلود فایل ‎.json</button>
+      <button class="btn btn-gold hidden" id="btnDownloadAll" type="button"
+              title="برای هر آزمون بارگذاری‌شده یک فایل HQF جداگانه ساخته و دانلود می‌شود">📦 دانلود جداگانه‌ی هر آزمون</button>
+      <button class="btn btn-outline" id="btnPreview" type="button">👁 پیش‌نمایش JSON</button>
+      <button class="btn btn-outline" id="btnCopy" type="button">📋 کپی JSON</button>
+      <button class="btn btn-outline" id="btnDownloadCsv" type="button">📊 دانلود CSV</button>
+      <button class="btn btn-outline" id="btnDownloadTxt" type="button">📄 دانلود متن ساده</button>
+      <button class="btn btn-outline" id="btnCopyTxt" type="button">📋 کپی متن ساده</button>
+      <button class="btn btn-ghost" id="btnReset" type="button">🔄 فایل جدید</button>
+    </div>
+    <p class="btn-hint hidden" id="downloadAllHint">📦 در حالت «دانلود جداگانه» برای هر آزمون یک فایل ساخته می‌شود. مرورگر ممکن است اجازه‌ی دانلود چند فایل پشت‌سرهم بخواهد — آن را بپذیرید.</p>
+
+    <div id="jsonPanel" class="hidden">
+      <pre id="jsonPreview" dir="ltr"></pre>
+    </div>
+  </section>
+
+</main>
+
+<footer style="text-align:center;padding:24px 16px;color:#b9afd0;font-size:.85rem;line-height:2">
+  <div style="height:1px;max-width:300px;margin:0 auto 14px;background:linear-gradient(90deg,transparent,rgba(233,180,76,.55),transparent)"></div>
+  <div>🧙 حکیمستان — دیار حکیم، سرزمین یادگیری</div>
+  <div>توسعه‌دهنده: <b style="color:#f5c76a;font-weight:800">مهدی شریفیان</b></div>
+  <div style="font-size:.75rem;opacity:.75;margin-top:6px">مبدل آزمون‌ساز به HQF — نسخه‌ی ۲.۰</div>
+  <div style="height:1px;max-width:300px;margin:14px auto 0;background:linear-gradient(90deg,transparent,rgba(233,180,76,.55),transparent)"></div>
+</footer>
+<div id="toast"></div>
+
+<script src="hakim-core.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  if (window.Hakim) {
+    Hakim.init({ container:'#hakimMount' });
+    Hakim.say('سلام! فایل آزمون‌ساز رو اینجا بکش.', { mood:'happy' });
+  }
+
+  /* ═══════════════════════════════════════════
+     وضعیت کلی برنامه
+  ═══════════════════════════════════════════ */
+  var APP_VERSION = '2.0';
+
+  var state = {
+    exams: [],          // همه‌ی آزمون‌های بارگذاری‌شده: {data, fileName}
+    selectedId: null,   // شناسه‌ی آزمون انتخاب‌شده
+    result: null,       // آخرین نتیجه‌ی تبدیل: {hqf, issues, totalInput}
+    loadedSigs: {}      // امضای فایل‌های بارگذاری‌شده برای جلوگیری از تکرار
+  };
+
+  /* مقادیر پیش‌فرض تنظیمات (برای دکمه‌ی «فایل جدید») */
+  var DEFAULTS = { chkMerge: false, chkSubs: true, chkEssay: false, chkNormalize: true, chkNoEmptySection: true };
+
+  /* ─── دسترسی سریع به عناصر ─── */
+  function $(sel) { return document.querySelector(sel); }
+  var dropzone = $('#dropzone'), fileInput = $('#fileInput'),
+      uploadMsg = $('#uploadMsg'), fileChips = $('#fileChips'),
+      sectionSelect = $('#sectionSelect'), sectionResult = $('#sectionResult'),
+      examGrid = $('#examGrid'),
+      chkMerge = $('#chkMerge'), chkEssay = $('#chkEssay'), chkSubs = $('#chkSubs'),
+      chkNormalize = $('#chkNormalize'), chkNoEmptySection = $('#chkNoEmptySection');
+
+  /* برچسب فارسی انواع سؤال برای نمایش */
+  var TYPE_LABELS = {
+    mcq: 'تستی', tf: 'صحیح / نادرست', multi: 'چندپاسخی',
+    short: 'پاسخ کوتاه', blank: 'جای خالی',
+    dropdown: 'کشویی', match: 'وصل‌کردنی'
+  };
+
+  /* ═══════════════════════════════════════════
+     نرمال‌سازی متن (اجباری طبق مشخصات)
+     - نمایشی: اصلاح ی/ک + تمیزکاری فاصله‌ها (ارقام فارسی می‌ماند)
+     - پاسخ‌ها: علاوه بر موارد بالا، ارقام فارسی/عربی ← انگلیسی
+     - نیم‌فاصله (U+200C) دست‌نخورده می‌ماند
+  ═══════════════════════════════════════════ */
+
+  // اصلاح حروف عربی به فارسی (بدون دست زدن به ارقام و نیم‌فاصله)
+  function fixChars(s) {
+    return s
+      .replace(/[\u064A\u0649\u0626]/g, '\u06CC') // ي، ى، ئ ← ی
+      .replace(/\u0643/g, '\u06A9');              // ك ← ک
+  }
+
+  // تبدیل ارقام فارسی و عربی به انگلیسی
+  function toEnglishDigits(s) {
+    return s
+      .replace(/[\u06F0-\u06F9]/g, function (d) { return String(d.charCodeAt(0) - 0x06F0); })
+      .replace(/[\u0660-\u0669]/g, function (d) { return String(d.charCodeAt(0) - 0x0660); });
+  }
+
+  // تمیزکاری فاصله‌ها با حفظ خط‌های جدید (متن سؤال می‌تواند \n داشته باشد)
+  function cleanSpaces(s) {
+    var lines = s.split('\n').map(function (line) {
+      return line.replace(/[\t ]+/g, ' ').trim(); // فاصله‌های تکراری ← یکی
+    });
+    return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  // نرمال‌سازی نمایشی (متن سؤال، گزینه‌ها، توضیح)
+  function normalizeDisplay(s) {
+    return cleanSpaces(fixChars(String(s == null ? '' : s)));
+  }
+
+  // نرمال‌سازی پاسخ‌های مقایسه‌ای (ارقام هم انگلیسی می‌شوند)
+  function normalizeAnswer(s) {
+    return cleanSpaces(toEnglishDigits(fixChars(String(s == null ? '' : s))));
+  }
+
+  // متن متا: همیشه حداقل fixChars اعمال می‌شود (مستقل از چک‌باکس نرمال‌سازی)
+  // تا عنوان/درس/پایه‌ی دارای حروف عربی در بازی عجیب دیده نشوند
+  function metaText(s, opts) {
+    var v = String(s == null ? '' : s);
+    return opts.normalize ? normalizeDisplay(v) : cleanSpaces(fixChars(v));
+  }
+
+  /* ═══════════════════════════════════════════
+     بخش ۱: خواندن فایل‌ها
+  ═══════════════════════════════════════════ */
+
+  // نمایش پیام در بخش بارگذاری
+  function showUploadMsg(html, kind) {
+    uploadMsg.innerHTML = html ? '<div class="msg msg-' + kind + '">' + html + '</div>' : '';
+  }
+
+  // استخراج آزمون‌ها از یک محتوای JSON (پشتیبانی از wrapper، آزمون تکی و آرایه)
+  function extractExams(parsed) {
+    if (parsed && parsed.hqf === '1.0' && Array.isArray(parsed.questions)) {
+      return { exams: [parsed], empty: false };
+    }
+    if (parsed && Array.isArray(parsed.exams)) return { exams: parsed.exams, empty: parsed.exams.length === 0 };
+    if (parsed && Array.isArray(parsed.questions)) return { exams: [parsed], empty: false };
+    if (Array.isArray(parsed)) {
+      var only = parsed.filter(function (e) { return e && Array.isArray(e.questions); });
+      if (only.length) return { exams: only, empty: false };
+    }
+    return { exams: [], empty: false, invalid: true };
+  }
+
+  function csvRows(text) {
+    var rows = [], row = [], cell = '', quoted = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (ch === '"') {
+        if (quoted && text[i + 1] === '"') { cell += '"'; i++; }
+        else quoted = !quoted;
+      } else if (ch === ',' && !quoted) { row.push(cell); cell = ''; }
+      else if ((ch === '\n' || ch === '\r') && !quoted) {
+        if (ch === '\r' && text[i + 1] === '\n') i++;
+        row.push(cell); cell = '';
+        if (row.some(function (v) { return v.trim() !== ''; })) rows.push(row);
+        row = [];
+      } else cell += ch;
+    }
+    row.push(cell);
+    if (row.some(function (v) { return v.trim() !== ''; })) rows.push(row);
+    return rows;
+  }
+
+  function csvToExam(text, fileName) {
+    var rows = csvRows(text);
+    var headers = ['نوع','متن','گزینه۱','گزینه۲','گزینه۳','گزینه۴','پاسخ','بارم','بخش','توضیح'];
+    if (rows.length && rows[0].some(function (v) { return /نوع|type|متن|text/i.test(v); })) rows.shift();
+    var questions = rows.map(function (r) {
+      var v = headers.map(function (_, i) { return String(r[i] == null ? '' : r[i]).trim(); });
+      var type = v[0] || 'mcq';
+      var q = { type: type, text: v[1], score: v[7] ? Number(v[7]) : 1, section: v[8], explanation: v[9] };
+      var opts = v.slice(2, 6).filter(Boolean);
+      if (opts.length) q.options = opts;
+      if (type === 'mcq' || type === 'dropdown') {
+        var a = v[6];
+        var idx = /^\d+$/.test(a) ? Number(a) : ['الف','ب','ج','د','a','b','c','d'].indexOf(a);
+        q.answer = idx >= 0 ? idx : a;
+        if (type === 'dropdown') { q.dropdownOptions = opts; q.dropdownAnswer = a; }
+      } else if (type === 'multi') {
+        q.answer = v[6].split(/[،,;\s]+/).filter(Boolean).map(function (x) { return Number(x); });
+      } else if (type === 'short' || type === 'blank') q.answer = v[6];
+      else if (type === 'tf') q.answer = v[6];
+      return q;
+    }).filter(function (q) { return q.text; });
+    return { exams: [{ title: fileName.replace(/\.[^.]+$/, ''), questions: questions }], empty: questions.length === 0 };
+  }
+
+  function txtToExam(text, fileName) {
+    var lines = text.replace(/\r/g, '').split('\n'), questions = [], current = null;
+    var qStart = /^\s*[۰-۹0-9]+[\)\.\-]\s*(.*)$/;
+    var optStart = /^\s*([الفبجددa-d])[\)\.\-]\s*(.*)$/i;
+    function finish() { if (current && current.text) questions.push(current); current = null; }
+    lines.forEach(function (line) {
+      var qm = line.match(qStart), om = line.match(optStart);
+      if (qm) { finish(); current = { type:'essay', text:qm[1].trim(), score:1 }; }
+      else if (current && om) {
+        if (!current.options) { current.options = []; current.type = 'mcq'; }
+        var val = om[2].trim(), correct = /\s*\*\s*$/.test(val);
+        val = val.replace(/\s*\*\s*$/, '').trim();
+        current.options.push(val);
+        if (correct) current.answer = current.options.length - 1;
+      } else if (current && line.trim()) {
+        if (!current.options) current.text += '\n' + line.trim();
+      }
+    });
+    finish();
+    questions.forEach(function (q) { if (!q.options) q.type = 'essay'; });
+    return { exams: [{ title: fileName.replace(/\.[^.]+$/, ''), questions: questions }], empty: questions.length === 0 };
+  }
+
+  // امضای فایل برای جلوگیری از بارگذاری تکراری (نام + طول + هش نمونه‌ی محتوا)
+  function fileSignature(name, text) {
+    var sample = text.length > 200000 ? text.slice(0, 200000) : text;
+    var h = 5381;
+    for (var i = 0; i < sample.length; i++) { h = ((h << 5) + h + sample.charCodeAt(i)) | 0; }
+    return name + '|' + text.length + '|' + h;
+  }
+
+  // خواندن لیست فایل‌ها
+  function handleFiles(fileList) {
+    if (!fileList || !fileList.length) return;
+    var files = Array.prototype.slice.call(fileList);
+    var pending = files.length;
+    var newExams = [];
+    var errors = [];
+
+    files.forEach(function (file) {
+      var reader = new FileReader();
+      reader.onload = function () {
+        var text = String(reader.result);
+        var sig = fileSignature(file.name, text);
+        if (state.loadedSigs[sig]) {
+          errors.push('فایل «' + escapeHtml(file.name) + '»: قبلاً بارگذاری شده است؛ دوباره اضافه نشد.');
+        } else {
+          try {
+            var ext = (file.name.split('.').pop() || '').toLowerCase();
+            var found;
+            if (ext === 'csv') found = csvToExam(text, file.name);
+            else if (ext === 'txt') found = txtToExam(text, file.name);
+            else {
+              var parsed = JSON.parse(text);
+              found = extractExams(parsed);
+            }
+            if (found.invalid) {
+              errors.push('فایل «' + escapeHtml(file.name) + '»: فرمت نامعتبر است (نه wrapper آزمون‌ساز است نه آزمون تکی).');
+            } else if (found.empty) {
+              errors.push('فایل «' + escapeHtml(file.name) + '»: آرایه‌ی exams خالی است و آزمونی ندارد.');
+            } else {
+              found.exams.forEach(function (ex, i) {
+                newExams.push({
+                  uid: 'f' + Date.now() + '_' + Math.random().toString(36).slice(2, 7) + '_' + i,
+                  fileName: file.name,
+                  data: ex
+                });
+              });
+              state.loadedSigs[sig] = true;
+            }
+          } catch (e) {
+            errors.push('فایل «' + escapeHtml(file.name) + '»: محتوای فایل معتبر نیست.');
+          }
+        }
+        if (--pending === 0) finishLoad(newExams, errors);
+      };
+      reader.onerror = function () {
+        errors.push('فایل «' + escapeHtml(file.name) + '»: خطا در خواندن فایل.');
+        if (--pending === 0) finishLoad(newExams, errors);
+      };
+      reader.readAsText(file, 'UTF-8');
+    });
+  }
+
+  // پایان بارگذاری: ذخیره در وضعیت و نمایش بخش ۲
+  function finishLoad(newExams, errors) {
+    if (newExams.length) {
+      state.exams = state.exams.concat(newExams);
+      if (!state.selectedId) state.selectedId = state.exams[0].uid;
+      renderExamList();
+      sectionSelect.classList.remove('hidden');
+    }
+    // چیپ‌های فایل
+    fileChips.innerHTML = state.exams.length
+      ? '<span class="file-chip">📁 ' + toFaNum(state.exams.length) + ' آزمون از فایل‌ها بارگذاری شد</span>'
+      : '';
+    // پیام‌ها
+    var html = '';
+    if (newExams.length) html += '✅ ' + toFaNum(newExams.length) + ' آزمون با موفقیت بارگذاری شد.<br>';
+    if (errors.length) html += errors.join('<br>');
+    showUploadMsg(html, errors.length ? 'error' : 'ok');
+    if (state.exams.length) {
+      convertAll();
+      sectionSelect.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     بخش ۲: رندر لیست آزمون‌ها
+  ═══════════════════════════════════════════ */
+
+  function examTitle(ex) { return (ex.title || (ex.meta && ex.meta.title) || 'بدون عنوان').toString(); }
+
+  function renderExamList() {
+    var merged = chkMerge.checked;
+    examGrid.innerHTML = '';
+    state.exams.forEach(function (item) {
+      var ex = item.data || {};
+      var qCount = Array.isArray(ex.questions) ? ex.questions.length : 0;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'exam-card' + (item.uid === state.selectedId && !merged ? ' selected' : '') + (merged ? ' disabled' : '');
+      btn.innerHTML =
+        '<div class="ex-title">' + escapeHtml(examTitle(ex)) + '</div>' +
+        '<div class="ex-meta">' +
+          escapeHtml([ex.subject, ex.grade].filter(Boolean).join(' • ') || '—') +
+          (ex.duration ? ' &nbsp;⏱ ' + escapeHtml(String(ex.duration)) + ' دقیقه' : '') +
+          '<br>📄 ' + escapeHtml(item.fileName) +
+        '</div>' +
+        '<span class="ex-count">❓ ' + toFaNum(qCount) + ' سؤال</span>';
+      btn.addEventListener('click', function () {
+        state.selectedId = item.uid;
+        renderExamList();
+        convertAll();
+      });
+      examGrid.appendChild(btn);
+    });
+  }
+
+  function getSelectedExams() {
+    if (chkMerge.checked) return state.exams;
+    var found = state.exams.filter(function (e) { return e.uid === state.selectedId; });
+    return found.length ? found : (state.exams.length ? [state.exams[0]] : []);
+  }
+
+  function getOptions() {
+    return {
+      essayToShort: chkEssay.checked,
+      normalize: chkNormalize.checked,
+      removeEmptySection: chkNoEmptySection.checked,
+      flattenSubs: chkSubs.checked
+    };
+  }
+
+  /* ═══════════════════════════════════════════
+     موتور تبدیل: آزمون‌ساز ← HQF v1.0
+  ═══════════════════════════════════════════ */
+
+  /* ─── ساخت خروجی HQF برای مجموعه‌ای از آزمون‌ها ───
+     خروجی: {hqf, issues, totalInput}
+     totalInput تعداد «واحدهای سؤال» پس از باز شدن زیرسؤال‌هاست
+     (تا آمار حذف‌شده‌ها منفی نشود). */
+  function buildHqf(selected, opts) {
+    var hqfQuestions = [];
+    var issues = [];
+    var totalUnits = 0;
+    var counter = 0;
+
+    selected.forEach(function (item) {
+      var ex = item.data || {};
+      var name = examTitle(ex);
+      var qs = Array.isArray(ex.questions) ? ex.questions : [];
+      qs.forEach(function (q, idx) {
+        var units = expandQuestion(q || {}, String(idx + 1), opts, issues, name);
+        totalUnits += units.length;
+        units.forEach(function (u) {
+          var res = convertQuestion(u.q, u.label, name, opts);
+          issues = issues.concat(res.issues);
+          if (res.out) {
+            counter++;
+            res.out.id = 'q' + counter;
+            hqfQuestions.push(res.out);
+          }
+        });
+      });
+    });
+
+    return {
+      hqf: { hqf: '1.0', meta: buildMeta(selected, opts), questions: hqfQuestions },
+      issues: issues,
+      totalInput: totalUnits
+    };
+  }
+
+  function convertAll() {
+    var selected = getSelectedExams();
+    if (!selected.length) return;
+    state.result = buildHqf(selected, getOptions());
+    renderResults();
+    if (window.Hakim && state.result) {
+      var ok = state.result.hqf.questions.length;
+      if (ok > 0) Hakim.say('آفرین! ' + ok + ' سؤال تبدیل شد.', { mood:'wise' });
+      else Hakim.say('هیچ سؤالی تبدیل نشد. فایل رو چک کن.', { mood:'sad' });
+    }
+  }
+
+  /* ─── باز کردن زیرسؤال‌ها (subQuestions) ───
+     هر زیرسؤال یک سؤال مستقل HQF می‌شود:
+     • فیلدهای مشترک (section/difficulty/image/reference/explanation) از والد به ارث می‌رسند
+     • نمره‌ی والد به‌طور مساوی تقسیم می‌شود (مگر زیرسؤال نمره‌ی خودش را داشته باشد)
+     • متن والد به‌عنوان زمینه (stem) بالای متن زیرسؤال می‌آید
+     • نوع سؤال در نبودِ نوعِ زیرسؤال، از والد گرفته می‌شود */
+  var SUB_INHERIT = ['section', 'difficulty', 'image', 'reference', 'explanation'];
+
+  function expandQuestion(q, numLabel, opts, issues, examName) {
+    function report(level, msg) {
+      issues.push({ level: level, message: 'سؤال ' + toFaNum(numLabel) + ' (' + examName + '): ' + msg });
+    }
+    var rawSubs = Array.isArray(q.subQuestions) ? q.subQuestions : [];
+    var subs = rawSubs.filter(function (s) { return s != null && (typeof s === 'object' || typeof s === 'string'); });
+    if (!subs.length) return [{ q: q, label: numLabel }];
+
+    if (!opts.flattenSubs) {
+      report('warn', toFaNum(subs.length) + ' زیرسؤال نادیده گرفته شد؛ برای تبدیل‌شان گزینه‌ی «تبدیل زیرسؤال‌ها به سؤالات جداگانه» را فعال کنید.');
+      return [{ q: q, label: numLabel }];
+    }
+
+    var parentText = String(q.text == null ? '' : q.text).trim();
+    var parentScore = Number(q.score);
+    var shareScore = (isFinite(parentScore) && parentScore > 0) ? round2(parentScore / subs.length) : 1;
+    var units = [];
+
+    subs.forEach(function (s, i) {
+      var src = (typeof s === 'string') ? { text: s } : s;
+      var merged = {};
+      SUB_INHERIT.forEach(function (k) { if (q[k] != null && q[k] !== '') merged[k] = q[k]; });
+      Object.keys(src).forEach(function (k) { if (src[k] != null && src[k] !== '') merged[k] = src[k]; });
+      if (merged.subQuestions) {
+        delete merged.subQuestions; // زیرسؤال تو در تو پشتیبانی نمی‌شود
+        report('warn', 'زیرسؤال ' + toFaNum(i + 1) + ' خودش زیرسؤال دارد؛ لایه‌ی دوم نادیده گرفته شد.');
+      }
+      if (!merged.type) merged.type = q.type;
+      if (merged.score == null || !isFinite(Number(merged.score))) merged.score = shareScore;
+      var subText = String(src.text == null ? '' : src.text).trim();
+      if (!subText) merged.text = parentText;
+      else if (parentText && parentText !== subText) merged.text = parentText + '\n' + subText;
+      else merged.text = subText;
+      units.push({ q: merged, label: numLabel + '/' + (i + 1) });
+    });
+
+    report('warn', 'به ' + toFaNum(units.length) + ' سؤال مستقل تبدیل شد.');
+    return units;
+  }
+
+  /* ─── ساخت متا: تکی ← از همان آزمون؛ ترکیبی ← عنوان ترکیبی ─── */
+  function buildMeta(selected, opts) {
+    var meta;
+    if (selected.length === 1) {
+      var e1 = selected[0].data || {};
+      // مدت آزمون بین ۱ تا ۶۰۰ دقیقه محدود می‌شود؛ ۰/منفی/نامعتبر از متا حذف می‌شود
+      var d1 = Number(e1.duration) || 0;
+      if (d1 > 0) d1 = Math.max(1, Math.min(600, d1)); else d1 = 0;
+      meta = {
+        title: metaText(e1.title || 'بدون عنوان', opts),
+        subject: metaText(e1.subject, opts), grade: metaText(e1.grade, opts),
+        teacher: metaText(e1.teacher, opts), school: metaText(e1.school, opts),
+        duration: d1,
+        created: new Date().toISOString(),
+        source: 'azmoon-saz'
+      };
+    } else {
+      var subjects = unique(selected.map(function (s) { return metaText((s.data || {}).subject, opts); }).filter(Boolean));
+      var grades = unique(selected.map(function (s) { return metaText((s.data || {}).grade, opts); }).filter(Boolean));
+      var dur = selected.reduce(function (a, s) { return a + (Number((s.data || {}).duration) || 0); }, 0);
+      if (dur > 0) dur = Math.max(1, Math.min(600, dur)); else dur = 0;
+      meta = {
+        title: 'مجموعه ترکیبی (' + toFaNum(selected.length) + ' آزمون)',
+        subject: subjects.length === 1 ? subjects[0] : 'ترکیبی',
+        grade: grades.length === 1 ? grades[0] : '',
+        teacher: metaText(firstNonEmpty(selected.map(function (s) { return (s.data || {}).teacher || ''; })), opts),
+        school: metaText(firstNonEmpty(selected.map(function (s) { return (s.data || {}).school || ''; })), opts),
+        duration: dur,
+        created: new Date().toISOString(),
+        source: 'azmoon-saz'
+      };
+    }
+    // حذف کلیدهای خالی متا (به‌جز title/created/source)
+    ['subject', 'grade', 'teacher', 'school'].forEach(function (k) { if (!meta[k]) delete meta[k]; });
+    if (!meta.duration) delete meta.duration;
+    return meta;
+  }
+
+  // تبدیل یک سؤال؛ خروجی: {out, issues}
+  function convertQuestion(q, qNum, examName, opts) {
+    var issues = [];
+    var rawText = q.text == null ? '' : String(q.text);
+    // برای سؤالات حذف‌شده، بخشی از متن در پیام می‌آید تا معلم بتواند پیدایش کند
+    function snippet() {
+      var t = rawText.replace(/\s+/g, ' ').trim();
+      if (!t && q.id) t = 'شناسه: ' + String(q.id);
+      if (!t) return '';
+      return ' — متن: «' + (t.length > 48 ? t.slice(0, 48) + '…' : t) + '»';
+    }
+    function warn(msg) { issues.push({ level: 'warn', message: 'سؤال ' + toFaNum(qNum) + ' (' + examName + '): ' + msg }); }
+    function err(msg) { issues.push({ level: 'error', message: 'سؤال ' + toFaNum(qNum) + ' (' + examName + '): ' + msg + snippet() }); }
+    function skip() { return { out: null, issues: issues }; }
+
+    var type = String(q.type || '').trim();
+    var text = opts.normalize ? normalizeDisplay(rawText) : rawText.trim();
+    if (!text) { err('متن خالی است؛ حذف شد.'); return skip(); }
+
+    // نمره و توضیح مشترک
+    var score = Number(q.score);
+    if (!isFinite(score)) score = 1;
+    var explanation = q.explanation ? (opts.normalize ? normalizeDisplay(q.explanation) : String(q.explanation).trim()) : '';
+    var section = q.section ? (opts.normalize ? normalizeDisplay(q.section) : String(q.section).trim()) : '';
+    var difficulty = q.difficulty ? String(q.difficulty).trim() : '';
+    var image = q.image || '';
+    var reference = q.reference ? (opts.normalize ? normalizeDisplay(q.reference) : String(q.reference).trim()) : '';
+
+    // افزودن فیلدهای اختیاری مشترک (section/difficulty/image/reference)
+    function attachCommon(out) {
+      if (section) out.section = section;
+      else if (!opts.removeEmptySection) out.section = '';
+      out.text = text;
+      return out;
+    }
+    function attachTail(out) {
+      out.score = score;
+      out.explanation = explanation;
+      if (difficulty) out.difficulty = difficulty;
+      if (image) out.image = image;
+      if (reference) out.reference = reference;
+      return out;
+    }
+    // ترتیب کلیدها: id، type، section، text، … (خوانایی خروجی)
+    function baseOut(newType) {
+      var o = { id: '', type: newType };
+      return attachCommon(o);
+    }
+
+    /* ─── mcq: تستی ─── */
+    if (type === 'mcq') {
+      if (!Array.isArray(q.options) || q.options.length < 2) { err('گزینه‌ها ناقص است (کمتر از ۲ گزینه)؛ حذف شد.'); return skip(); }
+      var options = q.options.map(function (o) { return opts.normalize ? normalizeDisplay(o) : String(o).trim(); });
+      var ans = q.answer;
+      if (typeof ans === 'string' && /^\d+$/.test(ans.trim())) ans = parseInt(ans.trim(), 10);
+      if (!isInt(ans) || ans < 0 || ans >= options.length) { err('پاسخ نامعتبر است (answer باید عدد ۰ تا ' + toFaNum(options.length - 1) + ' باشد)؛ حذف شد.'); return skip(); }
+      var outMcq = baseOut('mcq');
+      outMcq.options = options;
+      outMcq.answer = ans;
+      return { out: attachTail(outMcq), issues: issues };
+    }
+
+    /* ─── tf: صحیح/نادرست → options ثابت + answer صفر/یک ───
+       پاسخ منبع به «معنا» (درست/نادرست) ترجمه می‌شود، سپس به نمایه‌ی
+       گزینه‌های استاندارد HQF نگاشت می‌شود: درست→۰ و نادرست→۱.
+       عدد و رشته‌ی عددی هر دو «نمایه» تفسیر می‌شوند (۰=درست، ۱=نادرست). */
+    if (type === 'tf') {
+      var srcTfOptions = Array.isArray(q.options)
+        ? q.options.map(function (o) { return String(o == null ? '' : o).trim(); }).filter(Boolean)
+        : [];
+      var sem = trueFalseMeaning(q.answer, srcTfOptions);
+      if (sem === null) { err('پاسخ صحیح/نادرست نامشخص است؛ حذف شد.'); return skip(); }
+      var stdTfOptions = ['درست', 'نادرست'];
+      if (srcTfOptions.length && srcTfOptions.join('|') !== stdTfOptions.join('|')) {
+        warn('گزینه‌های منبع (' + srcTfOptions.join(' / ') + ') به «' + stdTfOptions.join(' / ') + '» استاندارد تبدیل شد.');
+      }
+      var outTf = baseOut('tf');
+      outTf.options = stdTfOptions;
+      outTf.answer = sem ? 0 : 1;
+      return { out: attachTail(outTf), issues: issues };
+    }
+
+    /* ─── multi: چندپاسخی ─── */
+    if (type === 'multi') {
+      if (!Array.isArray(q.options) || q.options.length < 2) { err('گزینه‌ها ناقص است؛ حذف شد.'); return skip(); }
+      var mOptions = q.options.map(function (o) { return opts.normalize ? normalizeDisplay(o) : String(o).trim(); });
+      var raw = q.answer;
+      if (isInt(raw)) raw = [raw];
+      if (!Array.isArray(raw) || !raw.length) { err('پاسخ چندپاسخی خالی است؛ حذف شد.'); return skip(); }
+      var idxs = [];
+      var bad = false;
+      raw.forEach(function (a) {
+        var v = (typeof a === 'string' && /^\d+$/.test(a.trim())) ? parseInt(a.trim(), 10) : a;
+        if (!isInt(v) || v < 0 || v >= mOptions.length) bad = true;
+        else if (idxs.indexOf(v) === -1) idxs.push(v);
+      });
+      if (bad || !idxs.length) { err('پاسخ چندپاسخی نامعتبر است؛ حذف شد.'); return skip(); }
+      idxs.sort(function (a, b) { return a - b; });
+      var outMulti = baseOut('multi');
+      outMulti.options = mOptions;
+      outMulti.answer = idxs;
+      return { out: attachTail(outMulti), issues: issues };
+    }
+
+    /* ─── short: پاسخ کوتاه ← shortAnswers ─── */
+    if (type === 'short') {
+      var sArr = toAnswerArray(q.shortAnswers != null ? q.shortAnswers : q.answer, opts);
+      if (!sArr.length) { err('پاسخ کوتاه خالی است؛ حذف شد.'); return skip(); }
+      var outShort = baseOut('short');
+      outShort.answer = sArr;
+      return { out: attachTail(outShort), issues: issues };
+    }
+
+    /* ─── blank: جای خالی ← blankAnswers ─── */
+    if (type === 'blank') {
+      var bArr = toAnswerArray(q.blankAnswers != null ? q.blankAnswers : q.answer, opts);
+      if (!bArr.length) { err('پاسخ جای خالی خالی است؛ حذف شد.'); return skip(); }
+      if (!/…|\.\.\.|___|\(\s*\)|«\s*»/.test(text)) warn('جای خالی (……) در متن یافت نشد؛ ولی تبدیل انجام شد.');
+      var outBlank = baseOut('blank');
+      outBlank.answer = bArr;
+      return { out: attachTail(outBlank), issues: issues };
+    }
+
+    /* ─── dropdown: کشویی ← options/dropdownOptions + answer/dropdownAnswer ─── */
+    if (type === 'dropdown') {
+      var dOptsRaw = q.options != null ? q.options : q.dropdownOptions;
+      if (!Array.isArray(dOptsRaw) || dOptsRaw.length < 2) { err('گزینه‌های کشویی ناقص است؛ حذف شد.'); return skip(); }
+      var dOptions = dOptsRaw.map(function (o) { return opts.normalize ? normalizeDisplay(o) : String(o).trim(); });
+      var dAns = q.answer;
+      if (typeof dAns === 'string' && /^\d+$/.test(dAns.trim())) dAns = parseInt(dAns.trim(), 10);
+      if (!isInt(dAns) && q.dropdownAnswer != null && q.dropdownAnswer !== '') {
+        var target = String(q.dropdownAnswer);
+        dAns = findOptionIndex(target, dOptions);
+        if (dAns === -1) { err('پاسخ کشویی «' + target.trim() + '» در گزینه‌ها یافت نشد؛ حذف شد.'); return skip(); }
+      }
+      if (!isInt(dAns) || dAns < 0 || dAns >= dOptions.length) { err('پاسخ کشویی نامعتبر است؛ حذف شد.'); return skip(); }
+      var outDd = baseOut('dropdown');
+      outDd.options = dOptions;
+      outDd.answer = dAns;
+      return { out: attachTail(outDd), issues: issues };
+    }
+
+    /* ─── match: وصل‌کردنی ← pairs + distractors ─── */
+    if (type === 'match') {
+      if (!Array.isArray(q.pairs) || !q.pairs.length) { err('جفت‌های وصل‌کردنی (pairs) خالی است؛ حذف شد.'); return skip(); }
+      var pairs = [];
+      var pairsBad = false;
+      q.pairs.forEach(function (p) {
+        if (!Array.isArray(p) || p.length < 2 || !String(p[0]).trim() || !String(p[1]).trim()) { pairsBad = true; return; }
+        pairs.push([
+          opts.normalize ? normalizeDisplay(p[0]) : String(p[0]).trim(),
+          opts.normalize ? normalizeDisplay(p[1]) : String(p[1]).trim()
+        ]);
+      });
+      if (!pairs.length) { err('هیچ جفت معتبری در pairs نیست؛ حذف شد.'); return skip(); }
+      if (pairsBad) warn('برخی جفت‌های ناقص نادیده گرفته شدند.');
+      var distractors = Array.isArray(q.distractors)
+        ? q.distractors.map(function (d) { return opts.normalize ? normalizeDisplay(d) : String(d).trim(); }).filter(Boolean)
+        : [];
+      var outMatch = baseOut('match');
+      outMatch.pairs = pairs;
+      if (distractors.length) outMatch.distractors = distractors;
+      return { out: attachTail(outMatch), issues: issues };
+    }
+
+    /* ─── essay: تشریحی ← حذف (یا تبدیل به short) ─── */
+    if (type === 'essay') {
+      if (opts.essayToShort) {
+        var sample = q.sampleAnswer != null ? String(q.sampleAnswer) : '';
+        var normSample = opts.normalize ? normalizeAnswer(sample) : sample.trim();
+        if (!normSample) { err('سؤال تشریحی پاسخ نمونه ندارد؛ حذف شد.'); return skip(); }
+        warn('سؤال تشریحی به «پاسخ کوتاه» تبدیل شد.');
+        var outEssay = baseOut('short');
+        outEssay.answer = [normSample];
+        return { out: attachTail(outEssay), issues: issues };
+      }
+      warn('سؤال تشریحی در بازی قابل استفاده نیست؛ حذف شد.');
+      return skip();
+    }
+
+    /* ─── نوع ناشناخته ─── */
+    err('نوع ناشناخته‌ی «' + (type || 'خالی') + '»؛ حذف شد.');
+    return skip();
+  }
+
+  /* ─── ابزارهای کمکی تبدیل ─── */
+  function isInt(v) { return typeof v === 'number' && isFinite(v) && Math.floor(v) === v; }
+  function round2(n) { return Math.round(n * 100) / 100; }
+
+  // جستجوی سه‌مرحله‌ای یک پاسخ متنی در گزینه‌ها (مستقل از چک‌باکس نرمال‌سازی):
+  // ۱) تطبیق دقیق ۲) با یکدست‌سازی ی/ک و فاصله‌ها ۳) با ارقام انگلیسی در هر دو سمت
+  // خروجی: نمایه‌ی گزینه یا ‎-1
+  function findOptionIndex(target, options) {
+    var t = String(target == null ? '' : target);
+    var i = options.indexOf(t.trim());
+    if (i !== -1) return i;
+    i = options.indexOf(cleanSpaces(fixChars(t)));
+    if (i !== -1) return i;
+    var normT = toEnglishDigits(fixChars(t)).trim();
+    for (var k = 0; k < options.length; k++) {
+      if (toEnglishDigits(fixChars(String(options[k]))).trim() === normT) return k;
+    }
+    return -1;
+  }
+
+  var TF_TRUE = /^(درست|صحیح|بلی|بله|آره|true|t|yes|y)$/i;
+  var TF_FALSE = /^(نادرست|غلط|خیر|نه|false|f|no|n)$/i;
+
+  // معنای یک عبارت گزینه‌ی صحیح/نادرست (true / false / null)
+  function trueFalseWord(txt) {
+    var t = String(txt == null ? '' : txt).trim();
+    if (!t) return null;
+    if (TF_TRUE.test(t)) return true;
+    if (TF_FALSE.test(t)) return false;
+    return null;
+  }
+
+  /* تفسیر پاسخ صحیح/نادرست آزمون‌ساز ← true (درست) / false (نادرست) / null (نامشخص)
+     • بولین: همان مقدار
+     • عدد یا رشته‌ی عددی: «نمایه‌ی گزینه» — ۰=درست و ۱=نادرست
+       (هر دو نوع داده یکسان تفسیر می‌شوند تا تناقض نسخه‌ی پیشین از بین برود)
+     • اگر گزینه‌های منبع داده شده باشند، معنا از متن همان گزینه خوانده می‌شود
+     • رشته‌ی متنی: نخست واژه‌های درست/نادرست، سپس تطبیق با متن گزینه‌های منبع */
+  function trueFalseMeaning(answer, srcOptions) {
+    var src = (Array.isArray(srcOptions) && srcOptions.length) ? srcOptions : null;
+
+    function meaningByIndex(n) {
+      if (src) {
+        if (n < 0 || n >= src.length) return null;
+        var w = trueFalseWord(src[n]);
+        return (w === null) ? (n === 0) : w; // گزینه‌ی نخست در نبودِ واژه‌ی شناخته‌شده «درست» فرض می‌شود
+      }
+      if (n === 0) return true;
+      if (n === 1) return false;
+      return null;
+    }
+
+    if (typeof answer === 'boolean') return answer;
+    if (isInt(answer)) return meaningByIndex(answer);
+    if (typeof answer === 'string') {
+      var s = answer.trim();
+      if (!s) return null;
+      if (/^\d+$/.test(s)) return meaningByIndex(parseInt(s, 10));
+      var w2 = trueFalseWord(s);
+      if (w2 !== null) return w2;
+      if (src) {
+        var idx = findOptionIndex(s, src);
+        if (idx !== -1) return meaningByIndex(idx);
+      }
+    }
+    return null;
+  }
+
+  // تبدیل پاسخ‌های متنی (short/blank) به آرایه‌ی تمیز و نرمال‌شده
+  function toAnswerArray(raw, opts) {
+    var arr = raw;
+    if (typeof arr === 'string') arr = [arr];
+    if (typeof arr === 'number' || typeof arr === 'boolean') arr = [String(arr)];
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .map(function (a) { return opts.normalize ? normalizeAnswer(a) : String(a).trim(); })
+      .filter(function (a) { return a !== ''; });
+  }
+
+  function unique(arr) {
+    return arr.filter(function (v, i) { return arr.indexOf(v) === i; });
+  }
+  function firstNonEmpty(arr) {
+    for (var i = 0; i < arr.length; i++) if (arr[i]) return arr[i];
+    return '';
+  }
+
+  /* ═══════════════════════════════════════════
+     بخش ۳: رندر نتایج
+  ═══════════════════════════════════════════ */
+
+  function renderResults() {
+    var res = state.result;
+    if (!res) return;
+    sectionResult.classList.remove('hidden');
+
+    var okCount = res.hqf.questions.length;
+    var delCount = res.totalInput - okCount;
+    var warnCount = res.issues.length;
+
+    $('#statOk').textContent = toFaNum(okCount);
+    $('#statDel').textContent = toFaNum(delCount);
+    $('#statWarn').textContent = toFaNum(warnCount);
+
+    // اگر هیچ سؤال معتبری نبود ← خطای جدی + غیرفعال کردن خروجی
+    var fatal = okCount === 0;
+    $('#btnDownload').disabled = fatal;
+    $('#btnCopy').disabled = fatal;
+    $('#btnPreview').disabled = fatal;
+    $('#btnDownloadCsv').disabled = fatal;
+    $('#btnDownloadTxt').disabled = fatal;
+    $('#btnCopyTxt').disabled = fatal;
+
+    // دانلود جداگانه تنها با بیش از یک آزمون معنی دارد
+    var multi = state.exams.length > 1;
+    $('#btnDownloadAll').classList.toggle('hidden', !multi);
+    $('#btnDownloadAll').disabled = fatal;
+    $('#downloadAllHint').classList.toggle('hidden', !multi);
+    // برچسب دکمه‌ی دانلود با حالت ادغام هماهنگ می‌شود
+    $('#btnDownload').textContent = (multi && chkMerge.checked)
+      ? '💾 دانلود فایل ادغام‌شده \u200e.json'
+      : '💾 دانلود فایل \u200e.json';
+
+    // لیست هشدارها و خطاها
+    var list = $('#issueList');
+    list.innerHTML = '';
+    if (fatal) {
+      list.appendChild(makeIssue('error', '⛔ هیچ سؤال معتبری برای تبدیل پیدا نشد! لطفاً فایل دیگری انتخاب کنید یا تنظیمات را تغییر دهید.'));
+    }
+    if (!res.issues.length && !fatal) {
+      list.appendChild(makeIssue('ok', '✅ بدون هیچ هشدار — همه‌ی سؤال‌ها سالم تبدیل شدند.'));
+    }
+    res.issues.forEach(function (it) {
+      list.appendChild(makeIssue(it.level, (it.level === 'error' ? '🔴 ' : '🟡 ') + escapeHtml(it.message)));
+    });
+
+    // کارت‌های پیش‌نمایش سؤال‌ها
+    var grid = $('#qGrid');
+    grid.innerHTML = '';
+    res.hqf.questions.forEach(function (q, i) {
+      grid.appendChild(makeQuestionCard(q, i + 1));
+    });
+
+    // اگر پنل JSON باز است، به‌روزرسانی‌اش کن
+    if (!$('#jsonPanel').classList.contains('hidden')) renderJsonPreview();
+  }
+
+  function makeIssue(level, html) {
+    var div = document.createElement('div');
+    div.className = 'issue issue-' + level;
+    div.innerHTML = html;
+    return div;
+  }
+
+  // ساخت کارت پیش‌نمایش یک سؤال
+  function makeQuestionCard(q, num) {
+    var card = document.createElement('div');
+    card.className = 'q-card';
+    var ansHtml = answerDisplay(q);
+    card.innerHTML =
+      '<div class="q-head">' +
+        '<span class="q-num">' + toFaNum(num) + '</span>' +
+        '<span class="q-type">' + escapeHtml(TYPE_LABELS[q.type] || q.type) + '</span>' +
+        (q.section ? '<span class="q-section">📁 ' + escapeHtml(q.section) + '</span>' : '') +
+        '<span class="q-score">⭐ ' + escapeHtml(String(q.score)) + ' نمره</span>' +
+      '</div>' +
+      '<div class="q-text">' + escapeHtml(q.text) + '</div>' +
+      '<div class="q-ans"><b>✅ پاسخ:</b> ' + ansHtml + '</div>';
+    return card;
+  }
+
+  // نمایش خوانا برای پاسخ هر نوع سؤال
+  function answerDisplay(q) {
+    try {
+      if (q.type === 'mcq' || q.type === 'dropdown') {
+        var opt = (q.options && q.options[q.answer] != null) ? q.options[q.answer] : '؟';
+        return escapeHtml(opt) + ' <span style="color:var(--muted)">(گزینه‌ی ' + toFaNum(q.answer + 1) + ')</span>';
+      }
+      if (q.type === 'tf') return escapeHtml(q.options[q.answer]);
+      if (q.type === 'multi') {
+        return q.answer.map(function (i) { return escapeHtml(q.options[i]); }).join(' <span style="color:var(--muted)">، </span>');
+      }
+      if (q.type === 'short' || q.type === 'blank') {
+        return q.answer.map(escapeHtml).join(' <span style="color:var(--muted)">/ </span>');
+      }
+      if (q.type === 'match') {
+        var d = q.distractors && q.distractors.length ? ' + ' + toFaNum(q.distractors.length) + ' گزینه‌ی اضافه' : '';
+        return toFaNum(q.pairs.length) + ' جفت' + d;
+      }
+    } catch (e) { /* نمایش امن در صورت داده‌ی عجیب */ }
+    return '—';
+  }
+
+  /* ═══════════════════════════════════════════
+     خروجی: پیش‌نمایش، کپی، دانلود
+  ═══════════════════════════════════════════ */
+
+  function resultJson() {
+    return JSON.stringify(state.result.hqf, null, 2);
+  }
+
+  // نکته: هایلایت روی متن escapeشده با کوتیشن واقعی انجام می‌شود.
+  function renderJsonPreview() {
+    var panel = $('#jsonPanel');
+    var pre = $('#jsonPreview');
+    // هایلایت روی متن escapeشده با کوتیشن واقعی
+    var json = resultJson();
+    var esc = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    pre.innerHTML = esc.replace(/("(\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*")(\s*:)?|\b(true|false|null)\b|-?\d+(\.\d*)?([eE][+\-]?\d+)?/g, function (m, str, _g2, colon, bool) {
+      if (bool) return '<span class="b">' + m + '</span>';
+      if (str) {
+        if (colon) return '<span class="k">' + str + '</span>' + colon;
+        return '<span class="s">' + str + '</span>';
+      }
+      return '<span class="n">' + m + '</span>';
+    });
+    panel.classList.remove('hidden');
+  }
+
+  // ساخت نام فایل امن از عنوان و درس
+  function slugify(s) {
+    s = String(s || '').trim().replace(/\s+/g, '-');
+    s = s.replace(/[^\u0600-\u06FFa-zA-Z0-9\-_]/g, '');
+    s = s.replace(/-+/g, '-').replace(/^-|-$/g, '');
+    return s.slice(0, 50) || 'exam';
+  }
+  function hqfFileName(meta) {
+    meta = meta || {};
+    var t = slugify(meta.title), s = slugify(meta.subject);
+    return s && s !== 'exam' ? 'hqf-' + t + '-' + s + '.json' : 'hqf-' + t + '.json';
+  }
+  function downloadFileName() { return hqfFileName(state.result.hqf.meta); }
+
+  function toast(msg) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function () { t.classList.remove('show'); }, 2500);
+  }
+
+  /* ═══════════════════════════════════════════
+     ابزارهای عمومی
+  ═══════════════════════════════════════════ */
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function toFaNum(n) {
+    return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[+d]; });
+  }
+
+  /* ═══════════════════════════════════════════
+     رویدادها
+  ═══════════════════════════════════════════ */
+
+  // انتخاب فایل
+  $('#btnChoose').addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+  });
+  fileInput.addEventListener('change', function () {
+    handleFiles(fileInput.files);
+    fileInput.value = ''; // امکان انتخاب دوباره‌ی همان فایل
+  });
+
+  // کشیدن و رها کردن
+  // اگر فایل بیرون از ناحیه‌ی مجاز رها شود، مرورگر همان فایل را باز می‌کند و
+  // صفحه از دست می‌رود؛ پس رویدادهای سطح صفحه خنثی می‌شوند.
+  ['dragover', 'drop'].forEach(function (ev) {
+    window.addEventListener(ev, function (e) { e.preventDefault(); }, false);
+  });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropzone.addEventListener(ev, function (e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dropzone.addEventListener(ev, function (e) { e.preventDefault(); dropzone.classList.remove('dragover'); });
+  });
+  dropzone.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+  });
+
+  // تغییر تنظیمات ← تبدیل مجدد خودکار
+  [chkMerge, chkSubs, chkEssay, chkNormalize, chkNoEmptySection].forEach(function (el) {
+    el.addEventListener('change', function () {
+      if (el === chkMerge) renderExamList();
+      if (state.exams.length) convertAll();
+    });
+  });
+
+  // پیش‌نمایش JSON
+  $('#btnPreview').addEventListener('click', function () {
+    var panel = $('#jsonPanel');
+    if (panel.classList.contains('hidden')) {
+      renderJsonPreview();
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+      panel.classList.add('hidden');
+    }
+  });
+
+  // کپی JSON
+  $('#btnCopy').addEventListener('click', function () {
+    var text = resultJson();
+    function done() { toast('✅ JSON در حافظه کپی شد'); }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); }
+      catch (e) { toast('⚠️ کپی نشد؛ از پیش‌نمایش JSON کپی کنید'); }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+  });
+
+  // ذخیره‌ی یک شیء HQF به‌صورت فایل (UTF-8 با BOM)؛ نام فایل را برمی‌گرداند
+  function saveHqf(hqf, fileName) {
+    var blob = new Blob(['\uFEFF' + JSON.stringify(hqf, null, 2)], { type: 'application/json;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 500);
+    return fileName;
+  }
+
+  function csvEscape(v) {
+    v = String(v == null ? '' : v);
+    return '"' + v.replace(/"/g, '""') + '"';
+  }
+  function simpleText() {
+    var qs = state.result && state.result.hqf.questions || [];
+    return qs.map(function (q, i) {
+      var score = q.score == null ? 1 : q.score;
+      var out = (i + 1) + ') ' + (q.text || '') + ' (' + score + ' نمره)';
+      (q.options || []).forEach(function (o, j) {
+        out += '\n' + ['الف','ب','ج','د','هـ','و'][j] + ') ' + o;
+      });
+      if (q.answer != null) {
+        var ans = Array.isArray(q.answer) ? q.answer.map(function (n) { return ['الف','ب','ج','د','هـ','و'][n] || n; }).join('، ') :
+          (typeof q.answer === 'number' ? (['الف','ب','ج','د','هـ','و'][q.answer] || q.answer) : q.answer);
+        out += '\nپاسخ: ' + ans;
+      }
+      return out;
+    }).join('\n\n');
+  }
+  function csvText() {
+    var rows = [['نوع','متن','گزینه۱','گزینه۲','گزینه۳','گزینه۴','پاسخ','بارم','بخش','توضیح']];
+    (state.result.hqf.questions || []).forEach(function (q) {
+      var opts = q.options || [];
+      rows.push([q.type || '', q.text || '', opts[0] || '', opts[1] || '', opts[2] || '', opts[3] || '',
+        Array.isArray(q.answer) ? q.answer.join('،') : (q.answer == null ? '' : q.answer),
+        q.score == null ? '' : q.score, q.section || '', q.explanation || '']);
+    });
+    return '\uFEFF' + rows.map(function (r) { return r.map(csvEscape).join(','); }).join('\r\n');
+  }
+  function saveText(content, fileName, mime) {
+    var blob = new Blob([content], { type: mime + ';charset=utf-8' });
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = fileName; document.body.appendChild(a); a.click();
+    setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 500);
+    return fileName;
+  }
+
+  // دانلود فایل خروجی فعلی (تکی یا ادغام‌شده)
+  $('#btnDownload').addEventListener('click', function () {
+    toast('💾 فایل دانلود شد: ' + saveHqf(state.result.hqf, downloadFileName()));
+    if (window.Hakim) Hakim.say('بفرما! ببرش تو بازی.', { mood:'happy' });
+  });
+  $('#btnDownloadCsv').addEventListener('click', function () { toast('📊 فایل CSV دانلود شد: ' + saveText(csvText(), 'hqf-export.csv', 'text/csv')); });
+  $('#btnDownloadTxt').addEventListener('click', function () { toast('📄 متن ساده دانلود شد: ' + saveText(simpleText(), 'hqf-export.txt', 'text/plain')); });
+  $('#btnCopyTxt').addEventListener('click', function () {
+    navigator.clipboard.writeText(simpleText()).then(function () { toast('📋 متن ساده کپی شد'); }, function () { toast('کپی متن ممکن نشد'); });
+  });
+
+  /* ─── دانلود جداگانه‌ی هر آزمون ───
+     برای هر آزمون بارگذاری‌شده یک فایل HQF مستقل ساخته می‌شود، با همان
+     تنظیمات فعال و متا گرفته‌شده از خودِ همان آزمون. آزمون‌هایی که هیچ
+     سؤال معتبری ندارند رد می‌شوند و در پیام پایانی گزارش می‌شوند. */
+  $('#btnDownloadAll').addEventListener('click', function () {
+    var opts = getOptions();
+    var ready = [], skipped = 0, usedNames = {};
+    state.exams.forEach(function (item) {
+      var built = buildHqf([item], opts);
+      if (!built.hqf.questions.length) { skipped++; return; }
+      var name = hqfFileName(built.hqf.meta);
+      if (usedNames[name]) name = name.replace(/\.json$/, '-' + (ready.length + 1) + '.json'); // نام تکراری
+      usedNames[name] = true;
+      ready.push({ built: built, name: name });
+    });
+    if (!ready.length) { toast('⚠️ هیچ آزمونی سؤال معتبری برای دانلود نداشت'); return; }
+    ready.forEach(function (job, i) {
+      // فاصله‌ی کوتاه میان دانلودها تا مرورگر آن‌ها را مسدود نکند
+      setTimeout(function () { saveHqf(job.built.hqf, job.name); }, i * 450);
+    });
+    toast('📦 ' + toFaNum(ready.length) + ' فایل دانلود می‌شود' +
+      (skipped ? ' — ' + toFaNum(skipped) + ' آزمون بدون سؤال معتبر رد شد' : ''));
+  });
+
+  // بارگذاری فایل جدید (شروع دوباره): وضعیت و همه‌ی تنظیمات به حالت اولیه برمی‌گردند
+  $('#btnReset').addEventListener('click', function () {
+    if (window.Hakim) Hakim.say('شروع تازه! فایل جدید بده.', { mood:'normal' });
+    state.exams = [];
+    state.selectedId = null;
+    state.result = null;
+    state.loadedSigs = {};
+    examGrid.innerHTML = '';
+    chkMerge.checked = DEFAULTS.chkMerge;
+    chkSubs.checked = DEFAULTS.chkSubs;
+    chkEssay.checked = DEFAULTS.chkEssay;
+    chkNormalize.checked = DEFAULTS.chkNormalize;
+    chkNoEmptySection.checked = DEFAULTS.chkNoEmptySection;
+    fileChips.innerHTML = '';
+    showUploadMsg('', 'ok');
+    sectionSelect.classList.add('hidden');
+    sectionResult.classList.add('hidden');
+    $('#jsonPanel').classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    fileInput.click();
+  });
+
+  /* ─── مثال آماده برای تست (مطابق مشخصات) ─── */
+  var SAMPLE_NAME = 'نمونه‌ی آزمایشی';
+  function loadSample() {
+    var sample = {
+      hakimestan: 2,
+      exams: [{
+        id: 'id_sample',
+        title: 'آزمون نمونه — ریاضی و فارسی پنجم',
+        subject: 'ریاضی و فارسی',
+        grade: 'پنجم دبستان',
+        duration: 45,
+        questions: [
+          {
+            id: 'id_1', type: 'mcq',
+            text: 'کوچک‌ترین عدد چهار رقمی کدام است؟',
+            options: ['۱۰۰۰', '۹۹۹۹', '۱۰۰۱', '۱۱۱۱'],
+            answer: 0, score: 1,
+            explanation: 'کوچک‌ترین عدد چهار رقمی ۱۰۰۰ است.',
+            section: 'عددنویسی'
+          },
+          {
+            id: 'id_2', type: 'tf',
+            text: 'صفر عددی زوج است.',
+            answer: true, score: 0.5,
+            section: 'عددنویسی'
+          },
+          {
+            id: 'id_3', type: 'multi',
+            text: 'کدام گزینه‌ها عدد اول هستند؟ (دو مورد)',
+            options: ['۲', '۴', '۷', '۹'],
+            answer: [0, 2], score: 1,
+            section: 'عدد اول'
+          },
+          {
+            id: 'id_4', type: 'short',
+            text: 'نویسنده‌ی کتاب «قابوس‌نامه» کیست؟',
+            shortAnswers: ['عنصرالمعالی کیکاووس', 'عنصرالمعالی'],
+            score: 1,
+            section: 'ادبیات'
+          },
+          {
+            id: 'id_5', type: 'blank',
+            text: 'آب در دمای ...... درجه سانتی‌گراد می‌جوشد.',
+            blankAnswers: ['۱۰۰'],
+            score: 0.5,
+            section: 'علوم'
+          },
+          {
+            id: 'id_6', type: 'dropdown',
+            text: 'حاصل ۲۵ + ۳۷ چند است؟',
+            dropdownOptions: ['۵۲', '۶۲', '۷۲', '۸۲'],
+            dropdownAnswer: '۶۲',
+            score: 0.5,
+            section: 'حساب'
+          },
+          {
+            id: 'id_7', type: 'match',
+            text: 'هر عدد را به مربع آن وصل کنید.',
+            pairs: [['۲', '۴'], ['۳', '۹'], ['۵', '۲۵']],
+            distractors: ['۱۶'],
+            score: 1.5,
+            section: 'مربع اعداد'
+          },
+          {
+            id: 'id_8', type: 'essay',
+            text: 'درباره‌ی اهمیت عدد صفر در ریاضی توضیح دهید.',
+            sampleAnswer: 'صفر نقش مهمی در ارزش مکانی اعداد دارد و بدون آن نوشتن اعداد بزرگ ممکن نیست.',
+            score: 2,
+            section: 'مفهوم صفر'
+          },
+          {
+            id: 'id_9', type: 'blank',
+            text: 'جمله‌های زیر را با عدد مناسب کامل کنید.',
+            score: 2,
+            section: 'زیرسؤال‌ها',
+            subQuestions: [
+              { type: 'blank', text: 'بزرگ‌ترین عدد دو رقمی ...... است.', blankAnswers: ['۹۹'] },
+              { type: 'mcq', text: 'کدام عدد بر ۳ بخش‌پذیر است؟', options: ['۱۰', '۱۲', '۱۴', '۱۶'], answer: 1 }
+            ]
+          }
+        ]
+      }]
+    };
+    // نمونه تکراری اضافه نمی‌شود؛ فقط همان آزمون انتخاب و نمایش داده می‌شود
+    var already = null;
+    state.exams.forEach(function (it) { if (!already && it.fileName === SAMPLE_NAME) already = it; });
+    if (already) {
+      state.selectedId = already.uid;
+      if (chkMerge.checked) { chkMerge.checked = false; }
+      renderExamList();
+      sectionSelect.classList.remove('hidden');
+      showUploadMsg('✅ آزمون نمونه پیش‌تر بارگذاری شده بود؛ دوباره اضافه نشد و همان انتخاب شد.', 'ok');
+      convertAll();
+      toast('🧪 نمونه‌ی تکراری اضافه نشد');
+      sectionSelect.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    state.exams = state.exams.concat([{
+      uid: 'sample_' + Date.now(),
+      fileName: SAMPLE_NAME,
+      data: sample.exams[0]
+    }]);
+    if (!state.selectedId) state.selectedId = state.exams[0].uid;
+    renderExamList();
+    sectionSelect.classList.remove('hidden');
+    fileChips.innerHTML = '<span class="file-chip">🧪 آزمون نمونه بارگذاری شد</span>';
+    showUploadMsg('✅ آزمون نمونه (ریاضی و فارسی، ۹ سؤال) بارگذاری شد.', 'ok');
+    convertAll();
+    sectionSelect.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  $('#btnSample').addEventListener('click', loadSample);
+  $('#btnSample2').addEventListener('click', loadSample);
+
+  /* ═══════════════════════════════════════════
+     دریچه‌ی خودکارسازی / آزمون
+     موتور تبدیل و وضعیت برنامه برای تست و یکپارچه‌سازی بیرونی
+     در دسترس قرار می‌گیرد (در استفاده‌ی عادی به آن نیازی نیست).
+  ═══════════════════════════════════════════ */
+  window.HQFConverter = {
+    version: APP_VERSION,
+    state: state,
+    options: getOptions,
+    convert: buildHqf,            // (examItems, opts) ← {hqf, issues, totalInput}
+    convertQuestion: convertQuestion,
+    expandQuestion: expandQuestion,
+    trueFalseMeaning: trueFalseMeaning,
+    findOptionIndex: findOptionIndex,
+    fileName: hqfFileName,
+    normalize: { display: normalizeDisplay, answer: normalizeAnswer, digits: toEnglishDigits, chars: fixChars },
+    // بارگذاری برنامه‌ای آزمون‌ها بدون نیاز به انتخاب فایل
+    loadExamObjects: function (examObjects, fileName) {
+      var arr = Array.isArray(examObjects) ? examObjects : [examObjects];
+      state.exams = state.exams.concat(arr.map(function (data, i) {
+        return { uid: 'api_' + Date.now() + '_' + i, fileName: fileName || 'api.json', data: data };
+      }));
+      if (!state.selectedId) state.selectedId = state.exams[0].uid;
+      renderExamList();
+      sectionSelect.classList.remove('hidden');
+      convertAll();
+      return state.result;
+    }
+  };
+
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3a66c69ddb26ffa',t:'MTc4OTI5NDg3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
