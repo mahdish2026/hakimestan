@@ -1008,12 +1008,20 @@ function doLogin(){
   if(!u||!p){ err.textContent='اسم و رمز رو کامل بنویس.'; return; }
   var btn=$('#btnLogin'); btn.disabled=true;
   toast('در حال ورود…');
-  postDB({action:'login', username:u, password:p}).then(function(){
-    getDB({action:'users'}).then(function(j){
-      var arr=asArray(j,'users').map(normUser);
-      if(arr.length) S.users=arr;
-      finishLogin(u,p,btn,err);
-    }).catch(function(){ finishLogin(u,p,btn,err); });
+
+  getDB({action:'checkPass', username:u, password:p}).then(function(j){
+    btn.disabled=false;
+    if(j && j.ok){
+      loginSuccess(j.username, j.role || 'student');
+      toast('خوش برگشتی '+j.username+'!','ok');
+    } else {
+      err.textContent = (j && j.error) ? j.error : 'نام کاربری یا رمز اشتباه است!';
+      toast('رمز اشتباه!','err');
+    }
+  }).catch(function(){
+    btn.disabled=false;
+    err.textContent='اتصال به سرور برقرار نشد.';
+    toast('خطای اتصال','err');
   });
 }
 function finishLogin(u,p,btn,err){
