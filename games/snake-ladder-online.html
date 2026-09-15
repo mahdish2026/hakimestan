@@ -1780,14 +1780,7 @@ async function submitOnline(choice){
       console.log('📦 سؤال محلی بود؛ سرور صدا زده نمی‌شود');
       verdict = (choice.localOk === true) ? true : (choice.localOk === false ? false : null);
     } else {
-      // سرور پاسخ رو چک نمی‌کنه (فقط نوبت رو می‌چرخونه)؛
-      // پس پاسخ رو محلی بررسی کن و sl_answer رو فقط برای چرخاندن نوبت صدا بزن.
-      try{
-        await slAnswer(room.code, room.myIndex, lastAnswer.qid, choice.payload);
-        console.log('📤 sl_answer فرستاده شد (فقط برای چرخاندن نوبت)');
-      }catch(e){
-        console.warn('⚠️ sl_answer خطا:', e && e.message);
-      }
+      // پاسخ همیشه محلی بررسی میشه (سرور پاسخ رو چک نمیکنه)
       if(choice.localOk === true || choice.localOk === false){
         verdict = choice.localOk;
         console.log('🧠 نتیجهٔ محلی: ' + (verdict ? 'درست ✅' : 'غلط ❌'));
