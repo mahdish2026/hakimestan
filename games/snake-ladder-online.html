@@ -2569,18 +2569,17 @@ function sessionPayload(name, correct, wrong, pos, iWon, wIdx, wName, duration){
     attempts: 1,
     started_at: new Date(room.startAt || Date.now()).toISOString(),
     finished_at: new Date(room.endAt || Date.now()).toISOString(),
-    details: JSON.stringify({
-      online: true,
-      roomCode: room.code,
-      finalPosition: pos,
-      correctAnswers: correct,
-      wrongAnswers: wrong,
-      totalRolls: room.rolls,
-      playerCount: room.players.length,
-      isWinner: iWon,
-      winnerName: wName,
-      standings: room.players.map(p => ({ name: p.name, position: p.pos }))
-    })
+details: JSON.stringify({
+  correct: correct,
+  wrong: wrong,
+  roomCode: room.code,
+  finalPosition: pos,
+  totalRolls: room.rolls,
+  playerCount: room.players.length,
+  isWinner: iWon,
+  winnerName: wName,
+  standings: room.players.map(p => p.name + ': خانه ' + p.pos).join(' • ')
+})
   };
 }
 function sendMyResult(wIdx, wName){
