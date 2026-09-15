@@ -879,6 +879,7 @@ function endGame(){
   document.getElementById('toast').classList.remove('show');
   announce('تمام جفت‌ها پیدا شدند.');
   const title=document.getElementById('resultTitle');title.tabIndex=-1;title.focus({preventScroll:true});
+  sendResultsToPanel();
 }
 
 function renderResult(){
