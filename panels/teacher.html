@@ -853,7 +853,7 @@ function showDetails(idx) {
   let details = {};
   try { details = JSON.parse(r.details); } catch(e) {}
 
-  const labels = {
+const labels = {
     cities: '🏙️ شهرهای فتحشده',
     totalCities: '🏙️ کل شهرها',
     hearts: '❤️ قلب باقیمانده',
@@ -863,7 +863,31 @@ function showDetails(idx) {
     correct: '✅ پاسخ درست',
     wrong: '❌ پاسخ غلط',
     questions: '📊 کل سؤالها',
-    stars: '⭐ ستارهها'
+    stars: '⭐ ستارهها',
+    roomCode: '🔢 کد اتاق',
+    finalPosition: '🏁 خانهٔ نهایی',
+    totalRolls: '🎲 تعداد تاسها',
+    playerCount: '👥 تعداد بازیکنها',
+    isWinner: '🏆 برنده',
+    winnerName: '🥇 نام برنده',
+    standings: '📊 ترتیب بازیکنها',
+    online: '🌐 آنلاین',
+    hintsUsed: '💡 راهنماهای استفادهشده',
+    bestStreak: '🔥 بهترین زنجیره',
+    accuracy: '🎯 دقت',
+    kindness: '💖 مهربانی',
+    bonus: '🎁 جایزه',
+    total: '🏅 امتیاز کل',
+    maxScore: '📈 بیشترین امتیاز',
+    errors: '❌ خطاها',
+    attempts: '🎯 تلاشها',
+    pairs: '🃏 جفتها',
+    seconds: '⏱️ زمان',
+    base: '📊 امتیاز پایه',
+    speed: '⚡ سرعت',
+    accuracyScore: '🎯 امتیاز دقت',
+    levelName: '📚 سطح',
+    level: '🎚️ درجه'
   };
 
   let rowsHtml = '';
