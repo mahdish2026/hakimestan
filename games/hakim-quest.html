@@ -2621,6 +2621,7 @@ function endGame(reason){
   clearProgress();
   showScreen('result');
   renderResult(reason);
+  sendResultToPanel(reason);
 }
 
 function renderResult(reason){
