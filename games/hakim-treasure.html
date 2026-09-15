@@ -2529,6 +2529,35 @@ document.addEventListener('visibilitychange', function(){
 });
 window.addEventListener('pagehide', function(){ if(S.started && !S.done) saveResume(); });
 
+     /* 📥 لود سؤالات از پنل معلم */
+function loadServerQuestions(callback){
+  const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'tpGetQuestions', gameId: 'hakim-treasure' }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res && res.ok && Array.isArray(res.questions) && res.questions.length > 0){
+        var stages = stagesFromQuestions(res.questions);
+        if(stages.length > 0){
+          customStages = stages;
+          customMeta = { title: 'گنج حکیم (از پنل معلم)' };
+          S.customTitle = customMeta.title;
+          S.journey = 'custom';
+          renderStartMeta();
+          console.log('✅ ' + stages.length + ' مرحله از پنل معلم لود شد');
+        }
+      }
+      if(callback) callback();
+    })
+    .catch(function(e){
+      console.warn('loadServerQuestions failed:', e);
+      if(callback) callback();
+    });
+}
+
 /* ------------------------------------------------------------------ */
 /* ۱۷) راه‌اندازی                                                      */
 /* ------------------------------------------------------------------ */
