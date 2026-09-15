@@ -1772,24 +1772,26 @@ async function submitOnline(choice){
   if(choice.lock) choice.lock();
   qmFeedback.innerHTML =
     '<div class="fb wait"><div class="fb-title">⏳ در حال بررسیٔ پاسخ…</div>' +
-    '<div class="fb-sub">یک لحظه؛ سرور جوابت را چک می‌کند…</div></div>';
+'<div class="fb-sub">یک لحظه؛ سرور جوابت را چک می‌کند…</div></div>';
 
-     if(room.localQuestion){
+  let verdict = null, correctText = '';
+  try{
+    if(room.localQuestion){
       console.log('📦 سؤال محلی بود؛ سرور صدا زده نمی‌شود');
       verdict = (choice.localOk === true) ? true : (choice.localOk === false ? false : null);
     } else {
-    const res = await slAnswer(room.code, room.myIndex, lastAnswer.qid, choice.payload);
-    console.log('🧠 sl_answer ←', { questionId: lastAnswer.qid, answer: choice.payload }, '→', res);
-    if(res && (res.ok === true || typeof res.correct === 'boolean')){
-      verdict = !!res.correct;
-      correctText = String(res.correctAnswer || res.answer || '');
-    } else {
-      console.warn('⚠️ پاسخ نامعتبر از sl_answer؛ بررسی محلی می‌شود:', res);
+      const res = await slAnswer(room.code, room.myIndex, lastAnswer.qid, choice.payload);
+      console.log('🧠 sl_answer ←', { questionId: lastAnswer.qid, answer: choice.payload }, '→', res);
+      if(res && (res.ok === true || typeof res.correct === 'boolean')){
+        verdict = !!res.correct;
+        correctText = String(res.correctAnswer || res.answer || '');
+      } else {
+        console.warn('⚠️ پاسخ نامعتبر از sl_answer؛ بررسی محلی می‌شود:', res);
+      }
     }
   }catch(e){
     console.warn('⚠️ sl_answer خطا (بررسی محلی می‌شود):', e && e.message);
   }
-       }
   if(verdict === null){
     if(choice.localOk === true || choice.localOk === false){
       verdict = choice.localOk;
