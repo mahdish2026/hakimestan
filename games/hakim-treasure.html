@@ -1957,6 +1957,7 @@ function finish(){
   Hakim.mood('excited');
   Store.del(K_RES);
   showResult();
+  sendResultsToPanel();
 }
 function endingFor(ratio){
   for(var i=0;i<ENDINGS.length;i++) if(ratio >= ENDINGS[i].min) return ENDINGS[i];
