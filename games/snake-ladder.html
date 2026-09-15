@@ -1731,7 +1731,8 @@ function gameWon(i){
   stats += '<div class="stat"><div class="num" id="stRoll">' + toFa(state.rolls) + '</div><div class="lbl">تاس‌ها 🎲</div></div>';
   document.getElementById('resultStats').innerHTML = stats;
   hakimReact('win', { name:winner.name });
-  
+    sendResultsToPanel();
+}
 /* 📤 ارسال نتایج همه‌ی بازیکن‌ها به پنل معلم */
 function sendResultsToPanel(){
   try {
