@@ -2409,13 +2409,14 @@ async function doOnlineRoll(){
 /* ------------------------------------------------------------------ */
 async function afterWrongAnswer(){
   room.answeredTurn = true;
-  // فوراً به سرور بگو نوبت رو بچرخونه (بدون تأخیر ۵ ثانیه)
-  try{
-    if(lastAnswer){
+  // اگه سؤال محلی بود → slAnswer هنوز صدا زده نشده → اینجا صدا بزن
+  // اگه سؤال از سرور بود → در submitOnline قبلاً صدا زده شده → دوباره نزن
+  if(room.localQuestion && lastAnswer){
+    try{
       await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload);
-      console.log('✅ sl_answer (جواب غلط) فوراً فرستاده شد');
-    }
-  }catch(e){ console.warn('sl_answer (afterWrong):', e && e.message); }
+      console.log('✅ sl_answer (جواب غلط - سؤال محلی) فرستاده شد');
+    }catch(e){ console.warn('sl_answer (afterWrong):', e && e.message); }
+  }
   pollNow();
 }
 
