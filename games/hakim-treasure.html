@@ -2573,6 +2573,10 @@ renderResumeBtn();
 applySky({ sky:{ a:'#ff9a56', b:'#ff6f91', c:'#8fb6ff' } });
 console.log('📖 راز گنج حکیم — نسخهٔ ۲ آماده است' + (Store.ok ? '' : ' (حافظهٔ محلی در دسترس نیست؛ از حافظهٔ موقت استفاده می‌شود)'));
 
+/* 🚀 در شروع، سؤالات رو از پنل معلم بگیر */
+loadServerQuestions(function(){
+  renderStartMeta();
+});
 /* دسترسی محدود برای اشکال‌زدایی و آزمون خودکار */
 window.HakimTreasure = {
   state:S, settings:SETTINGS, records:RECORDS, Store:Store,
