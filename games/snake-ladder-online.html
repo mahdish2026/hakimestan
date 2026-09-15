@@ -2403,7 +2403,7 @@ async function doOnlineRoll(){
 async function afterWrongAnswer(){
   room.answeredTurn = true;
   // جواب غلط → slAnswer نوبت رو میچرخونه (چه سؤال محلی چه سروری)
-  if(lastAnswer){                              ← ⚠️ شرط جدید: فقط lastAnswer
+  if(lastAnswer){
     try{
       await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload);
       console.log('✅ sl_answer (جواب غلط) فرستاده شد');
