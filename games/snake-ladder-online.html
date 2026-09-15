@@ -1789,6 +1789,7 @@ async function submitOnline(choice){
   }catch(e){
     console.warn('⚠️ sl_answer خطا (بررسی محلی می‌شود):', e && e.message);
   }
+       }
   if(verdict === null){
     if(choice.localOk === true || choice.localOk === false){
       verdict = choice.localOk;
