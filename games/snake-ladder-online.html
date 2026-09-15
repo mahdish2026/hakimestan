@@ -2405,11 +2405,17 @@ async function doOnlineRoll(){
 /* ------------------------------------------------------------------ */
 /* ۲۱) بعد از جواب غلط — نوبت باید بچرخد (واچ‌داگ ضد گیر)               */
 /* ------------------------------------------------------------------ */
-function afterWrongAnswer(){
+async function afterWrongAnswer(){
   room.answeredTurn = true;
-  pollNow();
   cancelWrongWatchdog();
-  room.wrongWatchdog = { tries: 0, timer: setTimeout(wrongWatchTick, 5000) };
+  // فوراً به سرور بگو نوبت رو بچرخونه (بدون تأخیر ۵ ثانیه)
+  try{
+    if(lastAnswer){
+      await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload);
+      console.log('✅ sl_answer (جواب غلط) فوراً فرستاده شد');
+    }
+  }catch(e){ console.warn('sl_answer (afterWrong):', e && e.message); }
+  pollNow();
 }
 async function wrongWatchTick(){
   const w = room.wrongWatchdog;
