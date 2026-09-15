@@ -1482,6 +1482,35 @@ document.addEventListener('keydown', function(){ ensureAudio(); }, { passive:tru
 
 window.addEventListener('resize', function(){ if(state.started) recalcCellSize(); });
 
+  /* 📥 لود کلمات از پنل معلم */
+function loadServerQuestions(callback){
+  const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'tpGetQuestions', gameId: 'jadval-hekmat' }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res && res.ok && Array.isArray(res.questions) && res.questions.length > 0){
+        const words = extractWords({ questions: res.questions });
+        if(words && words.length >= 3){
+          state.words = words;
+          state.customLoaded = true;
+          state.meta = { title: 'جدول حکمت (از پنل معلم)', subject: 'عمومی', grade: '' };
+          console.log('✅ ' + words.length + ' کلمه از پنل معلم لود شد');
+        } else {
+          console.log('⚠️ فقط ' + (words ? words.length : 0) + ' کلمه معتبر پیدا شد (حداقل ۳ لازم است)');
+        }
+      }
+      if(callback) callback();
+    })
+    .catch(function(e){
+      console.warn('loadServerQuestions failed:', e);
+      if(callback) callback();
+    });
+}
+
 /* ================================================================== */
 /* ۱۳) شروع اولیه                                                     */
 /* ================================================================== */
