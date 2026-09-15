@@ -879,6 +879,14 @@ function showDetails(idx) {
         }
       }
       val = lessonTxt || '—';
+    } else if (key === 'commander' && val) {
+      const CMDS = {
+        abumuslim: '⚔️ ابومسلم',
+        nizam: '📚 خواجه نظام‌الملک',
+        yaghub: '🏹 یعقوب لیث',
+        nasir: '🔭 خواجه نصیر'
+      };
+      val = CMDS[val] || val;
     } else if (typeof val === 'number') {
       val = fa(val);
     } else if (typeof val === 'string' && val.length > 0) {
