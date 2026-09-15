@@ -815,8 +815,7 @@ function renderResults(list){
     return '<tr>' +
       '<td>' + dateStr + '</td>' +
       '<td>' + esc(r.student || '—') + '</td>' +
-      '<td>' + esc(r.game || '—') + '</td>' +
-      '<td>' + esc(r.experiment || '—') + '</td>' +
+      '<td>' + esc(GAME_NAMES[r.game] || r.game || '—') + '</td>' +      '<td>' + esc(r.experiment || '—') + '</td>' +
       '<td>' + fa(r.score) + '</td>' +
       '<td>' + (r.completed ? '<span class="badge ok">تمام</span>' : '<span class="badge bad">ناقص</span>') + '</td>' +
       '<td>' + (hasDetails
