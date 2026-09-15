@@ -2279,6 +2279,7 @@ async function askTurnQuestionAsync(){
     if(!q || !q.text || !q.type){
       q = nextQuestion();
       console.log('📦 سؤال از مخزن محلی: ' + (q.id || 'بدون شناسه'));
+      room.localQuestion = true;
     }
     if(room.phase !== 'playing' || room.turn !== room.myIndex) return;
     currentQ = q;
