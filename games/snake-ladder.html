@@ -1968,6 +1968,75 @@ function loadCustomFile(file){
   };
   reader.readAsText(file);
 }
+   /* 📥 لود سؤالات از پنل معلم */
+function loadServerQuestions(callback){
+  const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'tpGetQuestions', gameId: 'snake-ladder' }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+    .then(r => r.json())
+    .then(res => {
+      if(res && res.ok && Array.isArray(res.questions) && res.questions.length > 0){
+        const converted = res.questions.map(convertServerQuestion).filter(q => q);
+        if(converted.length > 0){
+          state.questions = converted;
+          state.customLoaded = true;
+          state.meta = { title: 'مار و پله‌ی دانش (از پنل معلم)', subject: 'علوم', grade: 'پنجم دبستان' };
+          console.log('✅ ' + converted.length + ' سؤال از پنل معلم لود شد');
+        }
+      }
+      if(callback) callback();
+    })
+    .catch(e => {
+      console.warn('loadServerQuestions failed:', e);
+      if(callback) callback();
+    });
+}
+
+/* تبدیل سؤال سرور به فرمت بازی */
+function convertServerQuestion(q){
+  if(!q || !q.text || !q.type) return null;
+  const out = {
+    id: q.id || '',
+    type: q.type,
+    text: q.text,
+    section: q.section || '',
+    explanation: q.explanation || '',
+    score: 1
+  };
+  switch(q.type){
+    case 'mcq':
+    case 'dropdown':
+      out.options = q.options || [];
+      out.answer = q.answer;
+      break;
+    case 'tf':
+      out.answer = (q.answer === true || q.answer === 'true' || q.answer === 'درست');
+      break;
+    case 'multi':
+      out.options = q.options || [];
+      out.answer = Array.isArray(q.answer) ? q.answer : [q.answer];
+      break;
+    case 'short':
+    case 'blank':
+      out.answer = q.answer;
+      break;
+    case 'match':
+      if(Array.isArray(q.pairs)) out.pairs = q.pairs;
+      else if(Array.isArray(q.left) && Array.isArray(q.right)){
+        out.pairs = q.left.map((l, i) => [l, q.right[i]]);
+      } else {
+        return null;
+      }
+      break;
+    default:
+      return null;
+  }
+  return out;
+}
+
 function resetToDefault(){
   state.questions = clone(DEFAULT_HQF.questions);
   state.meta = clone(DEFAULT_HQF.meta);
