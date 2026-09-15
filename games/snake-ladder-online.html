@@ -1774,8 +1774,10 @@ async function submitOnline(choice){
     '<div class="fb wait"><div class="fb-title">⏳ در حال بررسیٔ پاسخ…</div>' +
     '<div class="fb-sub">یک لحظه؛ سرور جوابت را چک می‌کند…</div></div>';
 
-  let verdict = null, correctText = '';
-  try{
+     if(room.localQuestion){
+      console.log('📦 سؤال محلی بود؛ سرور صدا زده نمی‌شود');
+      verdict = (choice.localOk === true) ? true : (choice.localOk === false ? false : null);
+    } else {
     const res = await slAnswer(room.code, room.myIndex, lastAnswer.qid, choice.payload);
     console.log('🧠 sl_answer ←', { questionId: lastAnswer.qid, answer: choice.payload }, '→', res);
     if(res && (res.ok === true || typeof res.correct === 'boolean')){
