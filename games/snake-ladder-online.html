@@ -2272,6 +2272,7 @@ async function askTurnQuestionAsync(){
       if(res && res.ok !== false && res.question){
         q = normalizeQuestion(clone(res.question));
         console.log('✅ سؤال از سرور آمد: ' + (q.id || 'بدون شناسه') + ' (' + q.type + ')');
+        room.localQuestion = false;
       }
     }catch(e){
       console.warn('⚠️ sl_getQuestion ناموفق؛ از مخزن محلی استفاده می‌شود:', e && e.message);
