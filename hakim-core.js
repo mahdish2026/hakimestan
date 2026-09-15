@@ -1008,13 +1008,14 @@
     track, react, onCityConquered, onLowHearts,
     buildReport, createProfile,
     celebrate, burstConfetti,
+    saveSession, saveAnswer,
     FACES: HAKIM_FACES,
     PHRASES: HAKIM_PHRASES,
     EMOJI_TO_MOOD,
     MOODS,
     MOOD_ALIASES,
     utils: { fillTemplate, pickPhrase, toEnglishNum, getLessonFromQ },
-    VERSION: '3.0.0'
+    VERSION: '3.1.0'
   }, shortcuts, { moods: moodsObj });
 
   global.Hakim = api;
