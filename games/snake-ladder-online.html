@@ -2417,28 +2417,6 @@ async function afterWrongAnswer(){
   }catch(e){ console.warn('sl_answer (afterWrong):', e && e.message); }
   pollNow();
 }
-async function wrongWatchTick(){
-  const w = room.wrongWatchdog;
-  if(!w) return;
-  if(room.phase !== 'playing' || room.turn !== room.myIndex){ cancelWrongWatchdog(); return; }
-  if(w.tries === 0){
-    w.tries = 1;
-    console.warn('⏳ نوبت هنوز نچرخیده؛ پاسخ دوباره به سرور فرستاده می‌شود…');
-    try{
-      if(lastAnswer) await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload);
-    }catch(e){ console.warn('واچ‌داگ sl_answer:', e && e.message); }
-    w.timer = setTimeout(wrongWatchTick, 7000);
-  } else {
-    console.warn('⚠️ نوبت روی سرور نچرخید؛ دکمهٔ همگام‌سازی نمایش داده شد.');
-    toast('اگر بازی متوقف شده، دکمهٔ «🔄 همگام‌سازی» را بزن.');
-    document.getElementById('syncBtn').style.display = 'inline-flex';
-    cancelWrongWatchdog();
-  }
-}
-function cancelWrongWatchdog(){
-  if(room.wrongWatchdog && room.wrongWatchdog.timer) clearTimeout(room.wrongWatchdog.timer);
-  room.wrongWatchdog = null;
-}
 
 /* ------------------------------------------------------------------ */
 /* ۲۲) HUD و دکمهٔ اصلی                                                 */
