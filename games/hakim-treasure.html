@@ -1959,6 +1959,50 @@ function finish(){
   showResult();
   sendResultsToPanel();
 }
+     /* 📤 ارسال نتیجه به پنل معلم */
+function sendResultsToPanel(){
+  try {
+    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    const totalScore = S.score + S.bonus;
+    const accuracy = S.stages.length ? Math.round(((S.stages.length - Math.min(S.stages.length, S.errors)) / S.stages.length) * 100) : 0;
+    const payload = {
+      action: 'session',
+      student_name: S.name || 'سالک',
+      student_class: '',
+      student_school: '',
+      game_id: 'hakim-treasure',
+      experiment_id: '',
+      duration: S.seconds,
+      device: /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : 'دسکتاپ',
+      score: totalScore,
+      stars: S.stars,
+      completed: true,
+      attempts: S.errors + 1,
+      started_at: new Date(Date.now() - S.seconds * 1000).toISOString(),
+      finished_at: new Date().toISOString(),
+      details: JSON.stringify({
+        kindness: S.score,
+        bonus: S.bonus,
+        total: totalScore,
+        maxScore: S.maxScore,
+        stars: S.stars,
+        errors: S.errors,
+        accuracy: accuracy,
+        hintsUsed: S.hintsTotal - S.hintsLeft,
+        bestStreak: S.bestStreak,
+        journey: S.journey,
+        stages: S.stages.length,
+        sawNight: S.sawNight
+      })
+    };
+    fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).catch(function(e){ console.log('send result failed:', e); });
+  } catch(e) { console.log('sendResultsToPanel error:', e); }
+}
+
 function endingFor(ratio){
   for(var i=0;i<ENDINGS.length;i++) if(ratio >= ENDINGS[i].min) return ENDINGS[i];
   return ENDINGS[ENDINGS.length-1];
