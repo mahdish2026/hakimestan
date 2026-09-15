@@ -2737,7 +2737,7 @@ function exportResult(){
   const now = new Date();
   const jalali = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(now).replace(/\//g, '/');
   const data = {
-    game: 'حکیم‌کوئست',
+    game: 'ماجرای حکیم',
     student: name,
     score: state.score,
     correct: state.correct,
@@ -2962,7 +2962,7 @@ function loadServerQuestions(callback){
         if(converted.length > 0){
           state.questions = converted;
           state.customLoaded = true;
-          state.meta = { title: 'حکیم‌کوئست (از پنل معلم)', subject: 'ادبیات فارسی', grade: 'پنجم دبستان' };
+          state.meta = { title: 'ماجرای حکیم (از پنل معلم)', subject: 'ادبیات فارسی', grade: 'پنجم دبستان' };
           console.log('✅ ' + converted.length + ' سؤال از پنل معلم لود شد');
         }
       }
