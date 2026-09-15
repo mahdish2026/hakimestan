@@ -316,6 +316,86 @@ table.results tr:last-child td{border-bottom:none}
       </div>
     </section>
 
+    /* ============ جزئیات ============ */
+const GAME_NAMES = {
+  'kohan-diyar': 'فتح کهن دیار ایران',
+  'snake-ladder': 'مار و پله دانش',
+  'snake-ladder-online': 'مار و پله آنلاین',
+  'cheshm-hekim': 'چشم حکیم',
+  'hakim-quest': 'ماجرای حکیم',
+  'hakim-cards': 'کارتهای حکیم',
+  'jadval-hekmat': 'جدول حکمت',
+  'hakim-treasure': 'گنج حکیم',
+  'lab2d': 'آزمایشگاه ۲بعدی'
+};
+
+function showDetails(idx) {
+  const r = window.__resultsData && window.__resultsData[idx];
+  if (!r || !r.details) return;
+
+  let details = {};
+  try { details = JSON.parse(r.details); } catch(e) {}
+
+  const labels = {
+    cities: '🏙️ شهرهای فتحشده',
+    totalCities: '🏙️ کل شهرها',
+    hearts: '❤️ قلب باقیمانده',
+    combo: '🔥 بیشترین زنجیره',
+    commander: '⚔️ سردار',
+    lessons: '📚 آمار درسها',
+    correct: '✅ پاسخ درست',
+    wrong: '❌ پاسخ غلط',
+    questions: '📊 کل سؤالها',
+    stars: '⭐ ستارهها'
+  };
+
+  let rowsHtml = '';
+  for (const key in details) {
+    let val = details[key];
+    if (key === 'lessons' && typeof val === 'object') {
+      let lessonTxt = '';
+      for (const ln in val) {
+        const l = val[ln];
+        const total = (l.c || 0) + (l.w || 0);
+        if (total > 0) {
+          const pct = Math.round((l.c / total) * 100);
+          lessonTxt += 'درس ' + fa(ln) + ': ' + fa(l.c) + '/' + fa(total) + ' (' + fa(pct) + '٪)  ';
+        }
+      }
+      val = lessonTxt || '—';
+    } else if (typeof val === 'number') {
+      val = fa(val);
+    } else if (typeof val === 'string' && val.length > 0) {
+      val = esc(val);
+    }
+    rowsHtml += '<div style="display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">' +
+      '<span style="color:var(--dim);font-size:.82rem;font-weight:700">' + (labels[key] || esc(key)) + '</span>' +
+      '<span style="color:var(--gold);font-size:.85rem;font-weight:800;text-align:left;direction:rtl">' + val + '</span>' +
+    '</div>';
+  }
+
+  const html =
+    '<div class="modal" id="detailModal" onclick="if(event.target===this)this.remove()">' +
+      '<div class="modal-box">' +
+        '<h3>🔍 جزئیات نتیجه</h3>' +
+        '<div style="background:rgba(0,0,0,.2);border-radius:12px;padding:12px;margin-bottom:14px">' +
+          '<div style="font-size:.85rem;color:var(--txt);font-weight:800;margin-bottom:4px">' + esc(r.student) + '</div>' +
+          '<div style="font-size:.75rem;color:var(--dim)">' +
+            '🎮 ' + (GAME_NAMES[r.game] || r.game) +
+            ' — ' + fa(new Date(r.date).toLocaleDateString('fa-IR')) +
+            ' — ' + fa(r.duration) + ' ثانیه' +
+          '</div>' +
+        '</div>' +
+        '<div style="max-height:60vh;overflow-y:auto">' +
+          rowsHtml ||
+          '<div class="empty">جزئیاتی موجود نیست</div>' +
+        '</div>' +
+        '<button class="btn ghost" style="margin-top:14px" onclick="document.getElementById(\'detailModal\').remove()">بستن</button>' +
+      '</div>' +
+    '</div>';
+
+  document.body.insertAdjacentHTML('beforeend', html);
+}
     <!-- ============ کاربران ============ -->
     <section class="screen hidden" id="scUsers">
       <div class="card">
