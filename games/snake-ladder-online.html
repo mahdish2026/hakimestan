@@ -1246,6 +1246,7 @@ function showEnd(){
   $('resultStats').innerHTML = stats;
   SND.win();
   hakimSay('🎉 تبریک به ' + (state.winner||'برنده') + '! بازی تموم شد.', 'excited', 'hakimResult');
+  sendResultsToPanel();
 }
 
 $('btnPlayAgain').onclick = () => { leaveRoom(); };
