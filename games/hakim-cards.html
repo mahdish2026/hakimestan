@@ -1229,9 +1229,41 @@ function goHome(){
   if(musicOn)tryPlayMusic();
   document.getElementById('startBtn').focus({preventScroll:true});
 }
+/* 📥 لود سؤالات از پنل معلم */
+function loadServerQuestions(callback){
+  const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'tpGetQuestions', gameId: 'hakim-cards' }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res && res.ok && Array.isArray(res.questions) && res.questions.length > 0){
+        const checked = validateQuestions(res.questions);
+        if(checked.valid.length > 0){
+          state.questions = checked.valid;
+          state.customLoaded = true;
+          state.meta = { title: 'کارت‌های حکیم (از پنل معلم)', subject: 'عمومی', grade: '' };
+          console.log('✅ ' + checked.valid.length + ' سؤال از پنل معلم لود شد');
+        }
+      }
+      if(callback) callback();
+    })
+    .catch(function(e){
+      console.warn('loadServerQuestions failed:', e);
+      if(callback) callback();
+    });
+}
+
 renderHome();updateHUD();refreshSoundUI();
 document.getElementById('screen-game').inert=true;document.getElementById('screen-result').inert=true;
 hakimReact('welcome');
+  
+/* 🚀 در شروع، سؤالات رو از پنل معلم بگیر */
+loadServerQuestions(function(){
+  renderHome();
+});
 
 </script>
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3a826a0de35dcfc',t:'MTc4OTMxMjk4Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
