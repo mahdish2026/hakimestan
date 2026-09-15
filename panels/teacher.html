@@ -11,32 +11,65 @@
   --bg:#0d0a1f;--gold:#f5c76a;--gold-d:#c9913a;--violet:#8b5cf6;
   --teal:#5eead4;--txt:#f1ecff;--dim:#a99bd6;
   --glass:rgba(255,255,255,.055);--line:rgba(245,199,106,.22);
-  --ok:#4ade80;--bad:#fb7185;--font:'Vazirmatn',Tahoma,sans-serif;
+  --ok:#4ade80;--bad:#fb7185;--warn:#fbbf24;--info:#38bdf8;
+  --font:'Vazirmatn',Tahoma,sans-serif;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 body{font-family:var(--font);color:var(--txt);background:var(--bg);min-height:100vh;line-height:1.8;
   background:radial-gradient(1200px 700px at 80% -10%,rgba(139,92,246,.22),transparent 60%),
     radial-gradient(900px 600px at 8% 110%,rgba(94,234,212,.10),transparent 55%),
-    linear-gradient(180deg,#0d0a1f 0%,#151033 48%,#0d0a1f 100%)}
-.wrap{max-width:720px;margin:0 auto;padding:16px 14px 60px}
+    linear-gradient(180deg,#0d0a1f 0%,#151033 48%,#0d0a1f 100%);background-attachment:fixed}
+.wrap{max-width:800px;margin:0 auto;padding:16px 14px 60px}
+
+/* نوار بالا */
 .top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .btn-back{color:var(--txt);text-decoration:none;font-size:.85rem;background:var(--glass);border:1px solid var(--line);border-radius:99px;padding:7px 14px}
 .btn-back:hover{border-color:var(--gold);color:var(--gold)}
 .title{font-size:1.3rem;font-weight:900;color:var(--gold);margin-inline-start:auto}
+.icon-btn{width:38px;height:38px;border-radius:50%;background:var(--glass);border:1px solid var(--line);color:var(--txt);font-size:1rem;display:grid;place-items:center;cursor:pointer}
+.icon-btn:hover{border-color:var(--teal);color:var(--teal)}
+
+/* منو */
+.nav{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;background:var(--glass);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:6px}
+.nav-btn{flex:1;min-width:100px;padding:10px 12px;text-align:center;background:transparent;border:1.5px solid transparent;border-radius:12px;cursor:pointer;font-weight:800;font-size:.85rem;color:var(--dim);transition:.2s;font-family:inherit;min-height:44px}
+.nav-btn:hover{color:var(--txt)}
+.nav-btn.on{background:rgba(245,199,106,.12);color:var(--gold);border-color:var(--gold)}
+
+/* کارت */
 .card{background:var(--glass);border:1px solid rgba(255,255,255,.09);border-radius:20px;backdrop-filter:blur(14px);padding:16px;margin-bottom:14px}
-h2{font-size:1.05rem;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+h2{font-size:1.05rem;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:800}
+
+/* فیلدها */
 label.field{display:block;margin:12px 0;font-size:.85rem;color:var(--dim);font-weight:700}
 input,textarea,select{font-family:var(--font);width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:var(--txt);font-size:.95rem;outline:none;transition:.25s;font-weight:500}
 input:focus,textarea:focus,select:focus{border-color:var(--gold);background:rgba(245,199,106,.08)}
 textarea{min-height:80px;resize:vertical}
+
+/* دکمه */
 .btn{font-family:var(--font);font-weight:800;font-size:.95rem;cursor:pointer;border:0;color:#231803;background:linear-gradient(180deg,#ffe0a2,var(--gold) 55%,var(--gold-d));padding:12px 22px;border-radius:99px;transition:.2s;box-shadow:0 8px 22px rgba(245,199,106,.24);min-height:46px;width:100%}
 .btn:hover{transform:translateY(-2px)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .btn.ghost{background:transparent;color:var(--txt);border:1.5px solid var(--line);box-shadow:none}
 .btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
 .btn.danger{background:linear-gradient(180deg,#fca5a5,#dc2626);color:#fff}
+.btn.small{padding:8px 14px;font-size:.82rem;min-height:38px;width:auto}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .btn-row .btn{flex:1;min-width:120px}
+
+/* کارتهای آمار */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+@media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{background:linear-gradient(135deg,rgba(245,199,106,.12),rgba(139,92,246,.08));border:1px solid rgba(245,199,106,.25);border-radius:16px;padding:14px;text-align:center}
+.stat-card .val{font-size:1.8rem;font-weight:900;color:var(--gold);line-height:1.1;font-variant-numeric:tabular-nums}
+.stat-card .lbl{font-size:.72rem;color:var(--dim);font-weight:700;margin-top:4px}
+.stat-card.green{background:linear-gradient(135deg,rgba(74,222,128,.15),rgba(94,234,212,.05));border-color:rgba(74,222,128,.3)}
+.stat-card.green .val{color:var(--ok)}
+.stat-card.blue{background:linear-gradient(135deg,rgba(56,189,248,.15),rgba(139,92,246,.05));border-color:rgba(56,189,248,.3)}
+.stat-card.blue .val{color:var(--info)}
+.stat-card.pink{background:linear-gradient(135deg,rgba(244,114,182,.15),rgba(251,113,133,.05));border-color:rgba(244,114,182,.3)}
+.stat-card.pink .val{color:#f472b6}
+
+/* لیست بازیها */
 .game-list{display:flex;flex-direction:column;gap:10px}
 .game-item{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;cursor:pointer;transition:.25s}
 .game-item:hover{border-color:var(--gold);background:rgba(245,199,106,.08)}
@@ -45,40 +78,93 @@ textarea{min-height:80px;resize:vertical}
 .game-item .name{font-weight:800;color:var(--txt);font-size:.95rem}
 .game-item .desc{font-size:.76rem;color:var(--dim);margin-top:2px}
 .game-item .count{font-size:.72rem;font-weight:800;color:var(--gold);background:rgba(245,199,106,.12);border:1px solid rgba(245,199,106,.3);padding:3px 10px;border-radius:99px}
+
+/* تب */
 .tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.tab{flex:1;min-width:100px;padding:10px;text-align:center;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;font-weight:800;font-size:.85rem;color:var(--dim);transition:.2s;font-family:var(--font);min-height:44px}
+.tab{flex:1;min-width:100px;padding:10px;text-align:center;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;font-weight:800;font-size:.82rem;color:var(--dim);transition:.2s;font-family:inherit;min-height:44px}
 .tab:hover{border-color:var(--line);color:var(--txt)}
 .tab.on{border-color:var(--gold);color:var(--gold);background:rgba(245,199,106,.12)}
 .tab-body{display:none}
 .tab-body.on{display:block}
+
+/* گزینهها */
 .opt-row{display:flex;gap:8px;align-items:center;margin:8px 0}
 .opt-row input[type=text]{flex:1}
 .opt-row .radio{width:22px;height:22px;flex:none;cursor:pointer;accent-color:var(--gold)}
-.q-list{display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto}
-.q-item{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px}
+
+/* لیست سؤالات */
+.q-list{display:flex;flex-direction:column;gap:8px;max-height:500px;overflow-y:auto}
+.q-item{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;transition:.2s}
+.q-item:hover{border-color:rgba(245,199,106,.3)}
 .q-item .num{width:26px;height:26px;border-radius:50%;background:rgba(245,199,106,.15);color:var(--gold);font-weight:900;font-size:.75rem;display:grid;place-items:center;flex:none}
 .q-item .txt{flex:1;min-width:0;font-size:.85rem}
 .q-item .txt b{display:block;color:var(--txt);margin-bottom:3px;font-weight:700}
 .q-item .txt small{color:var(--dim);font-size:.74rem;display:block}
-.q-item .del{background:rgba(251,113,133,.15);color:var(--bad);border:1px solid rgba(251,113,133,.4);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.9rem;flex:none}
+.q-item .actions{display:flex;gap:6px;flex:none}
+.q-item .act{width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.9rem;display:grid;place-items:center;border:1px solid}
+.q-item .edit{background:rgba(56,189,248,.15);color:var(--info);border-color:rgba(56,189,248,.4)}
+.q-item .edit:hover{background:rgba(56,189,248,.3)}
+.q-item .del{background:rgba(251,113,133,.15);color:var(--bad);border-color:rgba(251,113,133,.4)}
 .q-item .del:hover{background:rgba(251,113,133,.3)}
+
+/* پیام */
 .fb{padding:12px 14px;border-radius:12px;font-size:.87rem;font-weight:700;margin:10px 0;display:none}
 .fb.on{display:block}
 .fb.ok{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.4);color:#d9ffea}
 .fb.err{background:rgba(251,113,133,.12);border:1px solid rgba(251,113,133,.4);color:#ffe0e5}
 .fb.info{background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.4);color:#d9fff6}
+.fb.warn{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);color:#fef3c7}
+
+/* Drop Zone */
 .drop-zone{border:2px dashed rgba(245,199,106,.4);border-radius:16px;padding:22px;text-align:center;cursor:pointer;transition:.25s;background:rgba(245,199,106,.05)}
 .drop-zone:hover,.drop-zone.drag{border-color:var(--gold);background:rgba(245,199,106,.12)}
 .drop-zone .em{font-size:2.4rem;display:block;margin-bottom:6px}
 .drop-zone .lbl{font-size:.87rem;color:var(--dim);font-weight:700}
 .drop-zone input[type=file]{display:none}
+
+/* جدول نتایج */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.15)}
+table.results{width:100%;border-collapse:collapse;font-size:.82rem;min-width:600px}
+table.results th{background:rgba(245,199,106,.1);color:var(--gold);padding:10px 12px;text-align:right;font-weight:800;font-size:.78rem;border-bottom:1px solid rgba(245,199,106,.2);white-space:nowrap}
+table.results td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.06);color:var(--txt);white-space:nowrap}
+table.results tr:hover td{background:rgba(245,199,106,.04)}
+table.results tr:last-child td{border-bottom:none}
+.badge{padding:2px 8px;border-radius:99px;font-size:.7rem;font-weight:800;white-space:nowrap}
+.badge.ok{background:rgba(74,222,128,.15);color:var(--ok);border:1px solid rgba(74,222,128,.4)}
+.badge.bad{background:rgba(251,113,133,.15);color:var(--bad);border:1px solid rgba(251,113,133,.4)}
+.badge.gold{background:rgba(245,199,106,.15);color:var(--gold);border:1px solid rgba(245,199,106,.4)}
+.badge.banned{background:rgba(251,113,133,.15);color:var(--bad);border:1px solid rgba(251,113,133,.4)}
+
+/* فیلتر */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:end}
+.filters .f{flex:1;min-width:120px}
+.filters label{display:block;font-size:.72rem;color:var(--dim);font-weight:700;margin-bottom:4px}
+.filters input,.filters select{padding:9px 11px;font-size:.85rem}
+
+/* اسپینر */
 .spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(245,199,106,.3);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite;vertical-align:middle;margin-left:6px}
 @keyframes sp{to{transform:rotate(360deg)}}
 .hint{font-size:.78rem;color:var(--dim);margin-top:8px;line-height:1.9}
 .hidden{display:none !important}
+.empty{padding:30px 20px;text-align:center;color:var(--dim);font-size:.85rem}
+
+/* Modal ویرایش */
+.modal{position:fixed;inset:0;background:rgba(5,3,15,.85);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal.hidden{display:none}
+.modal-box{background:linear-gradient(180deg,#1a1438,#0d0a1f);border:1.5px solid var(--line);border-radius:20px;padding:20px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 30px 70px -20px rgba(0,0,0,.7)}
+.modal-box h3{color:var(--gold);margin-bottom:14px;font-size:1.05rem}
+
+/* Chart */
+.chart{display:flex;align-items:flex-end;gap:8px;height:180px;padding:12px;background:rgba(0,0,0,.15);border-radius:12px;margin-top:10px}
+.chart .bar{flex:1;min-width:20px;background:linear-gradient(180deg,var(--gold),var(--gold-d));border-radius:6px 6px 0 0;position:relative;transition:height .5s ease;min-height:4px}
+.chart .bar .v{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:.7rem;color:var(--gold);font-weight:800;white-space:nowrap}
+.chart .bar .l{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:.65rem;color:var(--dim);font-weight:700;white-space:nowrap}
+
 @media(max-width:600px){
   .title{font-size:1.1rem}
-  .tab{font-size:.78rem;padding:8px}
+  .nav-btn{font-size:.75rem;padding:8px}
+  .stat-card .val{font-size:1.5rem}
+  .filters .f{min-width:100%}
 }
 </style>
 </head>
@@ -89,79 +175,182 @@ textarea{min-height:80px;resize:vertical}
   <div class="top">
     <a href="../index.html" class="btn-back">← لابی</a>
     <h1 class="title">🧑‍🏫 پنل معلم</h1>
+    <button class="icon-btn" id="btnRefresh" title="بازخوانی">🔄</button>
   </div>
 
+  <!-- صفحه ورود -->
   <section id="scLogin" class="card">
     <h2>🔐 ورود معلم</h2>
     <label class="field">رمز عبور:
-      <input type="password" id="passIn" placeholder="رمز پنل معلم" autocomplete="off">
+      <input type="password" id="passIn" placeholder="رمز" autocomplete="off">
     </label>
     <div class="fb" id="loginFb"></div>
     <button class="btn" id="btnLogin">ورود</button>
   </section>
 
-  <section id="scGames" class="card hidden">
-    <h2>🎮 یه بازی رو انتخاب کن</h2>
-    <div class="game-list" id="gameList"></div>
-    <button class="btn ghost" id="btnLogout" style="margin-top:14px">خروج</button>
-  </section>
-
-  <section id="scQuestions" class="hidden">
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <h2 id="qTitle">📚 سؤالات</h2>
-        <button class="btn ghost" id="btnBackGames" style="padding:6px 14px;min-height:auto;font-size:.8rem;width:auto">← بازیها</button>
-      </div>
-
-      <div class="tabs">
-        <button class="tab on" data-tab="manual">✍️ دستی</button>
-        <button class="tab" data-tab="hqf">📤 آپلود HQF</button>
-        <button class="tab" data-tab="list">📋 لیست</button>
-      </div>
-
-      <div class="fb" id="qFb"></div>
-
-      <div class="tab-body on" id="tabManual">
-        <label class="field">متن سؤال:
-          <textarea id="mText" placeholder="مثلاً: قرنیه کجای چشم قرار دارد؟"></textarea>
-        </label>
-        <label class="field">گزینهها (رادیوی زرد = جواب درست):</label>
-        <div class="opt-row"><input type="radio" name="mCorrect" value="0" class="radio" checked><input type="text" id="mOpt0" placeholder="گزینه ۱"></div>
-        <div class="opt-row"><input type="radio" name="mCorrect" value="1" class="radio"><input type="text" id="mOpt1" placeholder="گزینه ۲"></div>
-        <div class="opt-row"><input type="radio" name="mCorrect" value="2" class="radio"><input type="text" id="mOpt2" placeholder="گزینه ۳"></div>
-        <div class="opt-row"><input type="radio" name="mCorrect" value="3" class="radio"><input type="text" id="mOpt3" placeholder="گزینه ۴"></div>
-        <label class="field">توضیح (اختیاری):
-          <input type="text" id="mExpl" placeholder="مثلاً: لایهٔ شفاف جلوی چشم">
-        </label>
-        <label class="field">بخش/فصل (اختیاری):
-          <input type="text" id="mSection" placeholder="مثلاً: فصل ۵">
-        </label>
-        <button class="btn" id="btnAddManual">➕ اضافه کن</button>
-      </div>
-
-      <div class="tab-body" id="tabHqf">
-        <p class="hint" style="margin-bottom:10px">
-          فایل خروجی <b>آزمونساز</b> یا <b>مبدل HQF</b> رو اینجا آپلود کن.
-          <br>⚠️ <b>توجه:</b> این کار <b>همهی سؤالات فعلی این بازی رو جایگزین میکنه</b>.
-        </p>
-        <div class="drop-zone" id="dropZone">
-          <span class="em">📤</span>
-          <div class="lbl">فایل HQF رو بکش اینجا یا کلیک کن</div>
-          <input type="file" id="fileIn" accept=".json,.hqf,.txt,application/json">
-        </div>
-        <div id="hqfPreview" style="margin-top:14px"></div>
-      </div>
-
-      <div class="tab-body" id="tabList">
-        <div class="q-list" id="qList">
-          <p style="color:var(--dim);font-size:.85rem">در حال بارگذاری...</p>
-        </div>
-        <button class="btn ghost" id="btnRestore" style="margin-top:12px">🔄 بازیابی سؤالات پیشفرض</button>
-      </div>
-
+  <!-- منوی اصلی -->
+  <div id="mainMenu" class="hidden">
+    <div class="nav">
+      <button class="nav-btn on" data-scr="dashboard">📊 داشبورد</button>
+      <button class="nav-btn" data-scr="games">🎮 بازی‌ها</button>
+      <button class="nav-btn" data-scr="results">📈 نتایج</button>
+      <button class="nav-btn" data-scr="users">👥 کاربران</button>
+      <button class="nav-btn" id="btnLogout">🚪 خروج</button>
     </div>
-  </section>
 
+    <!-- ============ داشبورد ============ -->
+    <section class="screen" id="scDashboard">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="val" id="stTotal">—</div><div class="lbl">کل بازی‌ها</div></div>
+        <div class="stat-card green"><div class="val" id="stToday">—</div><div class="lbl">امروز</div></div>
+        <div class="stat-card blue"><div class="val" id="stWeek">—</div><div class="lbl">این هفته</div></div>
+        <div class="stat-card pink"><div class="val" id="stAvg">—</div><div class="lbl">میانگین امتیاز</div></div>
+      </div>
+
+      <div class="card">
+        <h2>🏆 برترین دانش‌آموزان</h2>
+        <div id="topStudents" class="empty">در حال بارگذاری...</div>
+      </div>
+
+      <div class="card">
+        <h2>🎮 بازی‌های محبوب</h2>
+        <div id="gamesChart" class="empty">در حال بارگذاری...</div>
+      </div>
+    </section>
+
+    <!-- ============ بازی‌ها ============ -->
+    <section class="screen hidden" id="scGames">
+      <div class="card">
+        <h2>🎮 یه بازی رو انتخاب کن</h2>
+        <div class="game-list" id="gameList"></div>
+      </div>
+    </section>
+
+    <!-- ============ ویرایش سؤالات بازی ============ -->
+    <section class="screen hidden" id="scQuestions">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <h2 id="qTitle">📚 سؤالات</h2>
+          <button class="btn ghost small" id="btnBackGames">← بازی‌ها</button>
+        </div>
+        <div class="tabs">
+          <button class="tab on" data-tab="manual">✍️ دستی</button>
+          <button class="tab" data-tab="hqf">📤 آپلود HQF</button>
+          <button class="tab" data-tab="list">📋 لیست</button>
+        </div>
+        <div class="fb" id="qFb"></div>
+
+        <div class="tab-body on" id="tabManual">
+          <label class="field">متن سؤال:
+            <textarea id="mText" placeholder="متن سؤال..."></textarea>
+          </label>
+          <label class="field">گزینه‌ها (رادیوی زرد = جواب درست):</label>
+          <div class="opt-row"><input type="radio" name="mCorrect" value="0" class="radio" checked><input type="text" id="mOpt0" placeholder="گزینه ۱"></div>
+          <div class="opt-row"><input type="radio" name="mCorrect" value="1" class="radio"><input type="text" id="mOpt1" placeholder="گزینه ۲"></div>
+          <div class="opt-row"><input type="radio" name="mCorrect" value="2" class="radio"><input type="text" id="mOpt2" placeholder="گزینه ۳"></div>
+          <div class="opt-row"><input type="radio" name="mCorrect" value="3" class="radio"><input type="text" id="mOpt3" placeholder="گزینه ۴"></div>
+          <label class="field">توضیح (اختیاری):
+            <input type="text" id="mExpl" placeholder="">
+          </label>
+          <label class="field">بخش/فصل (اختیاری):
+            <input type="text" id="mSection" placeholder="">
+          </label>
+          <button class="btn" id="btnAddManual">➕ اضافه کن</button>
+        </div>
+
+        <div class="tab-body" id="tabHqf">
+          <p class="hint" style="margin-bottom:10px">
+            فایل خروجی <b>آزمون‌ساز</b> یا <b>مبدل HQF</b> رو آپلود کن.
+            <br>⚠️ <b>این کار همه‌ی سؤالات فعلی این بازی رو جایگزین می‌کنه.</b>
+          </p>
+          <div class="drop-zone" id="dropZone">
+            <span class="em">📤</span>
+            <div class="lbl">فایل HQF رو بکش اینجا یا کلیک کن</div>
+            <input type="file" id="fileIn" accept=".json,.hqf,.txt">
+          </div>
+          <div id="hqfPreview" style="margin-top:14px"></div>
+        </div>
+
+        <div class="tab-body" id="tabList">
+          <div class="q-list" id="qList"><div class="empty">در حال بارگذاری...</div></div>
+          <button class="btn ghost" id="btnRestore" style="margin-top:12px">🔄 بازیابی سؤالات پیش‌فرض</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ نتایج ============ -->
+    <section class="screen hidden" id="scResults">
+      <div class="card">
+        <h2>📈 نتایج بازی‌ها</h2>
+        <div class="filters">
+          <div class="f">
+            <label>بازی</label>
+            <select id="fGame">
+              <option value="">همه‌ی بازی‌ها</option>
+              <option value="snake-ladder">مار و پله</option>
+              <option value="cheshm-hekim">چشم حکیم</option>
+              <option value="lab2d">آزمایشگاه ۲بعدی</option>
+              <option value="lab2d-pro">آزمایشگاه پیشرفته</option>
+              <option value="jadval-hekmat">جدول حکمت</option>
+            </select>
+          </div>
+          <div class="f">
+            <label>دانش‌آموز</label>
+            <input type="text" id="fStudent" placeholder="جستجو...">
+          </div>
+          <div class="f">
+            <label>بازه زمانی</label>
+            <select id="fDays">
+              <option value="0">همه</option>
+              <option value="1">امروز</option>
+              <option value="7">این هفته</option>
+              <option value="30">این ماه</option>
+            </select>
+          </div>
+          <div class="f" style="min-width:auto">
+            <button class="btn" id="btnApplyFilter">🔍 فیلتر</button>
+          </div>
+        </div>
+        <div id="resultsInfo" style="font-size:.8rem;color:var(--dim);margin-bottom:8px"></div>
+        <div id="resultsTable"><div class="empty">در حال بارگذاری...</div></div>
+      </div>
+    </section>
+
+    <!-- ============ کاربران ============ -->
+    <section class="screen hidden" id="scUsers">
+      <div class="card">
+        <h2>👥 کاربران</h2>
+        <div id="usersList"><div class="empty">در حال بارگذاری...</div></div>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<!-- Modal ویرایش سؤال -->
+<div class="modal hidden" id="editModal">
+  <div class="modal-box">
+    <h3>✏️ ویرایش سؤال</h3>
+    <label class="field">متن سؤال:
+      <textarea id="eText"></textarea>
+    </label>
+    <label class="field">گزینه‌ها (رادیوی زرد = جواب درست):</label>
+    <div class="opt-row"><input type="radio" name="eCorrect" value="0" class="radio"><input type="text" id="eOpt0"></div>
+    <div class="opt-row"><input type="radio" name="eCorrect" value="1" class="radio"><input type="text" id="eOpt1"></div>
+    <div class="opt-row"><input type="radio" name="eCorrect" value="2" class="radio"><input type="text" id="eOpt2"></div>
+    <div class="opt-row"><input type="radio" name="eCorrect" value="3" class="radio"><input type="text" id="eOpt3"></div>
+    <label class="field">توضیح (اختیاری):
+      <input type="text" id="eExpl">
+    </label>
+    <label class="field">بخش/فصل (اختیاری):
+      <input type="text" id="eSection">
+    </label>
+    <div class="fb" id="eFb"></div>
+    <div class="btn-row">
+      <button class="btn ghost" id="btnCancelEdit">لغو</button>
+      <button class="btn" id="btnSaveEdit">💾 ذخیره</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -170,25 +359,25 @@ textarea{min-height:80px;resize:vertical}
 const API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 let token = null;
 let currentGame = null;
+let editingQ = null;
 
 const $ = id => document.getElementById(id);
-function show(id){
-  ['scLogin','scGames','scQuestions'].forEach(x => $(x).classList.toggle('hidden', x !== id));
-}
-function fb(el, cls, msg){
-  el.className = 'fb on ' + cls;
-  el.innerHTML = msg;
-}
+const $$ = s => document.querySelectorAll(s);
+const esc = s => String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fa = n => String(n).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[+d]);
+
+function fb(el, cls, msg){ el.className = 'fb on ' + cls; el.innerHTML = msg; }
 function fbHide(el){ el.className = 'fb'; }
 
 function api(action, data){
   return fetch(API, {
     method: 'POST',
-    body: JSON.stringify(Object.assign({ action }, data || {})),
+    body: JSON.stringify(Object.assign({ action }, data||{})),
     headers: { 'Content-Type': 'text/plain;charset=utf-8' }
   }).then(r => r.json());
 }
 
+/* ============ ورود ============ */
 $('btnLogin').onclick = function(){
   const pass = $('passIn').value.trim();
   if (!pass){ fb($('loginFb'),'err','رمز رو وارد کن'); return; }
@@ -200,7 +389,9 @@ $('btnLogin').onclick = function(){
     if (!res.ok){ fb($('loginFb'),'err', res.error || 'خطا'); return; }
     token = res.token;
     fbHide($('loginFb'));
-    loadGames();
+    $('scLogin').classList.add('hidden');
+    $('mainMenu').classList.remove('hidden');
+    showScreen('dashboard');
   }).catch(e => {
     this.disabled = false;
     this.textContent = 'ورود';
@@ -209,11 +400,94 @@ $('btnLogin').onclick = function(){
 };
 $('passIn').addEventListener('keydown', e => { if(e.key === 'Enter') $('btnLogin').click(); });
 
+$('btnLogout').onclick = () => {
+  token = null;
+  $('passIn').value = '';
+  $('scLogin').classList.remove('hidden');
+  $('mainMenu').classList.add('hidden');
+};
+
+$('btnRefresh').onclick = () => {
+  if (!token) return;
+  const active = document.querySelector('.screen:not(.hidden)');
+  if (active) showScreen(active.id.replace('sc', '').toLowerCase());
+};
+
+/* ============ منو ============ */
+function showScreen(name){
+  ['scDashboard','scGames','scQuestions','scResults','scUsers'].forEach(id => {
+    $(id).classList.add('hidden');
+  });
+  const map = {
+    dashboard: 'scDashboard',
+    games: 'scGames',
+    questions: 'scQuestions',
+    results: 'scResults',
+    users: 'scUsers'
+  };
+  if (map[name]) $(map[name]).classList.remove('hidden');
+
+  // nav highlight
+  $$('.nav-btn').forEach(b => {
+    b.classList.toggle('on', b.dataset.scr === name);
+  });
+
+  // لود داده
+  if (name === 'dashboard') loadDashboard();
+  if (name === 'games') loadGames();
+  if (name === 'results') loadResults();
+  if (name === 'users') loadUsers();
+}
+
+$$('.nav-btn').forEach(b => {
+  if (b.dataset.scr) b.onclick = () => showScreen(b.dataset.scr);
+});
+
+/* ============ داشبورد ============ */
+function loadDashboard(){
+  api('tpGetStats', { token }).then(res => {
+    if (!res.ok){ return; }
+    const s = res.stats || {};
+    $('stTotal').textContent = fa(s.total || 0);
+    $('stToday').textContent = fa(s.today || 0);
+    $('stWeek').textContent = fa(s.week || 0);
+    $('stAvg').textContent = fa(s.avgScore || 0);
+
+    // برترین دانش‌آموزان
+    if (s.topStudents && s.topStudents.length){
+      $('topStudents').innerHTML = '<div class="q-list">' + s.topStudents.map((st, i) =>
+        '<div class="q-item">' +
+          '<div class="num">' + fa(i+1) + '</div>' +
+          '<div class="txt"><b>' + esc(st.name) + '</b>' +
+          '<small>' + fa(st.count) + ' بازی | میانگین ' + fa(st.avgScore) + ' | بهترین ' + fa(st.best) + '</small></div>' +
+        '</div>'
+      ).join('') + '</div>';
+    } else {
+      $('topStudents').innerHTML = '<div class="empty">هنوز داده‌ای نیست</div>';
+    }
+
+    // نمودار بازی‌ها
+    if (s.byGame && s.byGame.length){
+      const max = Math.max(...s.byGame.map(g => g.count));
+      const bars = s.byGame.map(g => {
+        const h = Math.max(4, (g.count / max) * 140);
+        return '<div class="bar" style="height:' + h + 'px">' +
+          '<span class="v">' + fa(g.count) + '</span>' +
+          '<span class="l">' + esc(g.game.substring(0, 10)) + '</span>' +
+        '</div>';
+      }).join('');
+      $('gamesChart').innerHTML = '<div class="chart">' + bars + '</div>';
+    } else {
+      $('gamesChart').innerHTML = '<div class="empty">هنوز بازی‌ای انجام نشده</div>';
+    }
+  });
+}
+
+/* ============ بازی‌ها ============ */
 function loadGames(){
-  show('scGames');
-  $('gameList').innerHTML = '<p style="color:var(--dim);text-align:center">در حال بارگذاری...</p>';
+  $('gameList').innerHTML = '<div class="empty">در حال بارگذاری...</div>';
   api('tpGetGames', {}).then(res => {
-    if (!res.ok){ $('gameList').innerHTML = '<p style="color:var(--bad)">خطا: ' + (res.error||'') + '</p>'; return; }
+    if (!res.ok){ $('gameList').innerHTML = '<div class="empty">خطا</div>'; return; }
     $('gameList').innerHTML = res.games.map(g => `
       <div class="game-item" data-id="${g.id}">
         <span class="ic">${g.name.split(' ')[0]}</span>
@@ -221,9 +495,9 @@ function loadGames(){
           <div class="name">${g.name.substring(g.name.indexOf(' ')+1)}</div>
           <div class="desc">${g.desc}</div>
         </div>
-        <span class="count">${g.count} سؤال</span>
+        <span class="count">${fa(g.count)} سؤال</span>
       </div>`).join('');
-    document.querySelectorAll('.game-item').forEach(el => {
+    $$('.game-item').forEach(el => {
       el.onclick = () => openGame(el.dataset.id, el.querySelector('.name').textContent);
     });
   });
@@ -232,77 +506,150 @@ function loadGames(){
 function openGame(gameId, gameName){
   currentGame = gameId;
   $('qTitle').textContent = '📚 ' + gameName;
-  show('scQuestions');
+  showScreen('questions');
   fbHide($('qFb'));
   switchTab('manual');
   loadQuestions();
 }
-$('btnBackGames').onclick = () => loadGames();
-$('btnLogout').onclick = () => { token = null; $('passIn').value=''; show('scLogin'); };
+$('btnBackGames').onclick = () => showScreen('games');
 
-document.querySelectorAll('.tab').forEach(t => {
-  t.onclick = () => switchTab(t.dataset.tab);
-});
+/* ============ تب‌ها ============ */
+$$('.tab').forEach(t => { t.onclick = () => switchTab(t.dataset.tab); });
 function switchTab(name){
-  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x.dataset.tab === name));
-  document.querySelectorAll('.tab-body').forEach(x => x.classList.remove('on'));
+  $$('.tab').forEach(x => x.classList.toggle('on', x.dataset.tab === name));
+  $$('.tab-body').forEach(x => x.classList.remove('on'));
   $('tab' + name.charAt(0).toUpperCase() + name.slice(1)).classList.add('on');
   if (name === 'list') loadQuestions();
 }
 
+/* ============ سؤالات ============ */
 function loadQuestions(){
-  $('qList').innerHTML = '<p style="color:var(--dim);text-align:center">در حال بارگذاری...</p>';
+  $('qList').innerHTML = '<div class="empty">در حال بارگذاری...</div>';
   api('tpGetQuestions', { gameId: currentGame }).then(res => {
-    if (!res.ok){ $('qList').innerHTML = '<p style="color:var(--bad)">خطا</p>'; return; }
+    if (!res.ok){ $('qList').innerHTML = '<div class="empty">خطا</div>'; return; }
     renderQuestions(res.questions);
   });
 }
+
 function renderQuestions(list){
   if (!list.length){
-    $('qList').innerHTML = '<p style="color:var(--dim);font-size:.85rem;text-align:center;padding:20px">هنوز سؤالی اضافه نشده. از تب «✍️ دستی» یا «📤 آپلود HQF» شروع کن.</p>';
+    $('qList').innerHTML = '<div class="empty">هنوز سؤالی نیست. از تب «✍️ دستی» یا «📤 آپلود HQF» اضافه کن.</div>';
     return;
   }
-  $('qList').innerHTML = list.map((q,i) => `
+  $('qList').innerHTML = list.map((q, i) => `
     <div class="q-item">
-      <div class="num">${toFa(i+1)}</div>
+      <div class="num">${fa(i+1)}</div>
       <div class="txt">
         <b>${esc(q.text)}</b>
         <small>نوع: ${q.type} | پاسخ: ${esc(answerText(q))}</small>
       </div>
-      <button class="del" data-qid="${q.id}">🗑️</button>
-    </div>`).join('');
-  document.querySelectorAll('.q-item .del').forEach(b => {
+      <div class="actions">
+        <button class="act edit" data-qid="${q.id}" title="ویرایش">✏️</button>
+        <button class="act del" data-qid="${q.id}" title="حذف">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+  $$('.q-item .edit').forEach(b => {
+    b.onclick = () => openEdit(b.dataset.qid);
+  });
+  $$('.q-item .del').forEach(b => {
     b.onclick = () => deleteQ(b.dataset.qid);
   });
 }
+
 function answerText(q){
   if (q.type === 'tf') return q.answer === true ? 'درست' : 'نادرست';
   const i = Number(q.answer);
   if (q.options && q.options[i] !== undefined) return q.options[i];
   return String(q.answer);
 }
-function toFa(n){ return String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]); }
-function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+/* ============ ویرایش سؤال ============ */
+let currentQList = [];
+
+function openEdit(qid){
+  api('tpGetQuestions', { gameId: currentGame }).then(res => {
+    if (!res.ok) return;
+    const q = res.questions.find(x => x.id === qid);
+    if (!q){ return; }
+    editingQ = q;
+    $('eText').value = q.text || '';
+    const opts = q.options || [];
+    $('eOpt0').value = opts[0] || '';
+    $('eOpt1').value = opts[1] || '';
+    $('eOpt2').value = opts[2] || '';
+    $('eOpt3').value = opts[3] || '';
+    const ans = Number(q.answer);
+    $$('input[name="eCorrect"]').forEach(r => {
+      r.checked = (Number(r.value) === ans);
+    });
+    $('eExpl').value = q.explanation || '';
+    $('eSection').value = q.section || '';
+    fbHide($('eFb'));
+    $('editModal').classList.remove('hidden');
+  });
+}
+
+$('btnCancelEdit').onclick = () => {
+  $('editModal').classList.add('hidden');
+  editingQ = null;
+};
+
+$('btnSaveEdit').onclick = function(){
+  if (!editingQ) return;
+  const text = $('eText').value.trim();
+  if (!text){ fb($('eFb'),'err','متن سؤال خالیه'); return; }
+  const opts = ['eOpt0','eOpt1','eOpt2','eOpt3'].map(id => $(id).value.trim());
+  if (opts.some(o => !o)){ fb($('eFb'),'err','همه‌ی ۴ گزینه رو پر کن'); return; }
+  const correct = document.querySelector('input[name="eCorrect"]:checked').value;
+  this.disabled = true;
+  this.innerHTML = '<span class="spinner"></span> ذخیره...';
+  api('tpUpdateQuestion', {
+    token, gameId: currentGame, qId: editingQ.id,
+    question: {
+      type: editingQ.type,
+      text: text,
+      options: opts,
+      answer: parseInt(correct, 10),
+      explanation: $('eExpl').value.trim(),
+      section: $('eSection').value.trim()
+    }
+  }).then(res => {
+    this.disabled = false;
+    this.textContent = '💾 ذخیره';
+    if (!res.ok){ fb($('eFb'),'err', res.error||'خطا'); return; }
+    $('editModal').classList.add('hidden');
+    loadQuestions();
+    fb($('qFb'),'ok','✏️ سؤال ویرایش شد');
+    setTimeout(()=>fbHide($('qFb')), 2500);
+  }).catch(e => {
+    this.disabled = false;
+    this.textContent = '💾 ذخیره';
+    fb($('eFb'),'err','خطای شبکه: '+e.message);
+  });
+};
+
+/* ============ حذف ============ */
 function deleteQ(qid){
   if (!confirm('این سؤال حذف بشه؟')) return;
   api('tpDeleteQuestion', { token, gameId: currentGame, qId: qid }).then(res => {
     if (res.ok){
       fb($('qFb'),'ok','🗑️ سؤال حذف شد');
       loadQuestions();
-      setTimeout(()=>fbHide($('qFb')),2500);
+      setTimeout(()=>fbHide($('qFb')), 2000);
     } else fb($('qFb'),'err', res.error||'خطا');
   });
 }
 
+/* ============ اضافه دستی ============ */
 $('btnAddManual').onclick = function(){
   const text = $('mText').value.trim();
   if (!text){ fb($('qFb'),'err','متن سؤال رو بنویس'); return; }
   const opts = ['mOpt0','mOpt1','mOpt2','mOpt3'].map(id => $(id).value.trim());
-  if (opts.some(o => !o)){ fb($('qFb'),'err','همهی ۴ گزینه رو پر کن'); return; }
+  if (opts.some(o => !o)){ fb($('qFb'),'err','همه‌ی ۴ گزینه رو پر کن'); return; }
   const correct = document.querySelector('input[name="mCorrect"]:checked').value;
   this.disabled = true;
-  this.innerHTML = '<span class="spinner"></span> در حال ذخیره...';
+  this.innerHTML = '<span class="spinner"></span> ذخیره...';
   api('tpAddQuestion', {
     token, gameId: currentGame,
     question: {
@@ -315,13 +662,12 @@ $('btnAddManual').onclick = function(){
     this.disabled = false;
     this.textContent = '➕ اضافه کن';
     if (!res.ok){ fb($('qFb'),'err', res.error||'خطا'); return; }
-    fb($('qFb'),'ok','✅ سؤال اضافه شد (ID: '+res.id+')');
+    fb($('qFb'),'ok','✅ سؤال اضافه شد');
     $('mText').value = '';
-    $('mOpt0').value = $('mOpt1').value = $('mOpt2').value = $('mOpt3').value = '';
-    $('mExpl').value = ''; $('mSection').value = '';
+    ['mOpt0','mOpt1','mOpt2','mOpt3','mExpl','mSection'].forEach(id => $(id).value = '');
     document.querySelector('input[name="mCorrect"][value="0"]').checked = true;
     $('mText').focus();
-    setTimeout(()=>fbHide($('qFb')), 3000);
+    setTimeout(()=>fbHide($('qFb')), 2500);
   }).catch(e => {
     this.disabled = false;
     this.textContent = '➕ اضافه کن';
@@ -329,6 +675,7 @@ $('btnAddManual').onclick = function(){
   });
 };
 
+/* ============ HQF ============ */
 $('dropZone').onclick = () => $('fileIn').click();
 $('dropZone').addEventListener('dragover', e => { e.preventDefault(); $('dropZone').classList.add('drag'); });
 $('dropZone').addEventListener('dragleave', () => $('dropZone').classList.remove('drag'));
@@ -351,11 +698,12 @@ function handleHQF(file){
     try { data = JSON.parse(ev.target.result); }
     catch(err){ fb($('qFb'),'err','فایل JSON معتبر نیست'); return; }
     const qs = extractQuestions(data);
-    if (!qs || !qs.length){ fb($('qFb'),'err','هیچ سؤالی توی فایل پیدا نشد'); return; }
+    if (!qs || !qs.length){ fb($('qFb'),'err','سؤالی پیدا نشد'); return; }
     showHQFPreview(qs, file.name);
   };
   reader.readAsText(file);
 }
+
 function extractQuestions(data){
   if (Array.isArray(data)) return data;
   if (data.hqf === '1.0' && Array.isArray(data.questions)) return data.questions;
@@ -368,14 +716,13 @@ function extractQuestions(data){
   }
   return null;
 }
+
 function normalizeQ(q){
   const n = Object.assign({}, q);
   if (!n.text && q.question) n.text = q.question;
   if (!n.options && Array.isArray(q.choices)) n.options = q.choices;
   if (n.answer === undefined && q.correct !== undefined) n.answer = q.correct;
-  if (!n.type){
-    n.type = Array.isArray(n.options) && n.options.length >= 2 ? 'mcq' : 'short';
-  }
+  if (!n.type) n.type = Array.isArray(n.options) && n.options.length >= 2 ? 'mcq' : 'short';
   if (n.type === 'mcq' && Array.isArray(n.options)){
     if (typeof n.answer === 'string'){
       const i = n.options.findIndex(o => String(o) === String(n.answer));
@@ -384,6 +731,7 @@ function normalizeQ(q){
   }
   return n;
 }
+
 function showHQFPreview(list, filename){
   const normalized = list.map(normalizeQ).filter(q => q.text);
   const valid = normalized.filter(q =>
@@ -393,51 +741,151 @@ function showHQFPreview(list, filename){
   $('hqfPreview').innerHTML = `
     <div class="fb info on">
       📄 فایل: <b>${esc(filename)}</b><br>
-      ✅ ${toFa(valid.length)} سؤال معتبر از ${toFa(normalized.length)} سؤال پیدا شد.
+      ✅ ${fa(valid.length)} سؤال معتبر از ${fa(normalized.length)} سؤال
     </div>
     <div class="q-list" style="margin-top:10px;max-height:240px">
       ${valid.slice(0,20).map((q,i) => `
         <div class="q-item">
-          <div class="num">${toFa(i+1)}</div>
+          <div class="num">${fa(i+1)}</div>
           <div class="txt"><b>${esc(q.text)}</b>
           <small>${esc(q.type)} | پاسخ: ${esc(answerText(q))}</small></div>
         </div>`).join('')}
-      ${valid.length > 20 ? '<p style="text-align:center;color:var(--dim);font-size:.8rem;margin-top:8px">... و ' + toFa(valid.length - 20) + ' سؤال دیگر</p>' : ''}
+      ${valid.length > 20 ? '<p style="text-align:center;color:var(--dim);font-size:.8rem;margin-top:8px">... و ' + fa(valid.length - 20) + ' سؤال دیگر</p>' : ''}
     </div>
     <button class="btn danger" id="btnConfirmReplace" style="margin-top:14px">
-      ⚠️ جایگزینی همهی سؤالات (${toFa(valid.length)} سؤال)
+      ⚠️ جایگزینی همه (${fa(valid.length)} سؤال)
     </button>
-    <p class="hint">با این کار، همهی سؤالات فعلی این بازی پاک میشن و این سؤالات جدید جاشون میاد.</p>
   `;
   $('btnConfirmReplace').onclick = () => {
-    if (!confirm('مطمئنی؟ همهی سؤالات فعلی این بازی پاک میشن!')) return;
+    if (!confirm('مطمئنی؟ همه‌ی سؤالات فعلی این بازی پاک می‌شن!')) return;
     const btn = $('btnConfirmReplace');
     btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> در حال ذخیره...';
+    btn.innerHTML = '<span class="spinner"></span> ذخیره...';
     api('tpReplaceQuestions', { token, gameId: currentGame, questions: valid }).then(res => {
-      if (!res.ok){ fb($('qFb'),'err', res.error||'خطا'); btn.disabled=false; btn.textContent='⚠️ تلاش مجدد'; return; }
-      fb($('qFb'),'ok','✅ ' + toFa(res.added) + ' سؤال جایگزین شد');
+      if (!res.ok){ fb($('qFb'),'err', res.error||'خطا'); btn.disabled=false; btn.textContent='⚠️ تلاش دوباره'; return; }
+      fb($('qFb'),'ok','✅ ' + fa(res.added) + ' سؤال جایگزین شد');
       $('hqfPreview').innerHTML = '';
       loadQuestions();
       setTimeout(()=>fbHide($('qFb')), 3500);
     }).catch(e => {
       fb($('qFb'),'err','خطای شبکه: '+e.message);
-      btn.disabled = false; btn.textContent='⚠️ تلاش مجدد';
+      btn.disabled = false; btn.textContent='⚠️ تلاش دوباره';
     });
   };
 }
 
 $('btnRestore').onclick = () => {
-  if (!confirm('سؤالات پیشفرض جایگزین بشن؟')) return;
+  if (!confirm('سؤالات پیش‌فرض جایگزین بشن؟')) return;
   api('tpRestoreDefaults', { token, gameId: currentGame }).then(res => {
     if (res.ok){
-      fb($('qFb'),'ok','🔄 ' + toFa(res.restored) + ' سؤال پیشفرض بازیابی شد');
+      fb($('qFb'),'ok','🔄 ' + fa(res.restored) + ' سؤال بازیابی شد');
       loadQuestions();
-      setTimeout(()=>fbHide($('qFb')), 3000);
+      setTimeout(()=>fbHide($('qFb')), 2500);
     } else fb($('qFb'),'err', res.error||'خطا');
   });
 };
 
+/* ============ نتایج ============ */
+$('btnApplyFilter').onclick = loadResults;
+
+function loadResults(){
+  $('resultsTable').innerHTML = '<div class="empty">در حال بارگذاری...</div>';
+  api('tpGetResults', {
+    token,
+    gameId: $('fGame').value,
+    student: $('fStudent').value,
+    days: $('fDays').value
+  }).then(res => {
+    if (!res.ok){ $('resultsTable').innerHTML = '<div class="empty">خطا</div>'; return; }
+    renderResults(res.results);
+  });
+}
+
+function renderResults(list){
+  if (!list.length){
+    $('resultsTable').innerHTML = '<div class="empty">نتیجه‌ای پیدا نشد</div>';
+    $('resultsInfo').textContent = '';
+    return;
+  }
+  $('resultsInfo').textContent = fa(list.length) + ' نتیجه پیدا شد';
+  const rows = list.slice(0, 100).map(r => {
+    const d = new Date(r.date);
+    const dateStr = fa(d.toLocaleDateString('fa-IR'));
+    return '<tr>' +
+      '<td>' + dateStr + '</td>' +
+      '<td>' + esc(r.student || '—') + '</td>' +
+      '<td>' + esc(r.game || '—') + '</td>' +
+      '<td>' + esc(r.experiment || '—') + '</td>' +
+      '<td>' + fa(r.score) + '</td>' +
+      '<td>' + (r.completed ? '<span class="badge ok">تمام</span>' : '<span class="badge bad">ناقص</span>') + '</td>' +
+    '</tr>';
+  }).join('');
+  $('resultsTable').innerHTML =
+    '<div class="table-wrap"><table class="results"><thead><tr>' +
+      '<th>تاریخ</th><th>دانش‌آموز</th><th>بازی</th><th>آزمایش</th><th>امتیاز</th><th>وضعیت</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    (list.length > 100 ? '<p class="hint">فقط ۱۰۰ نتیجه‌ی اول نشان داده شد. برای دیدن بیشتر، فیلتر رو دقیق‌تر کن.</p>' : '');
+}
+
+/* ============ کاربران ============ */
+function loadUsers(){
+  $('usersList').innerHTML = '<div class="empty">در حال بارگذاری...</div>';
+  api('tpGetUsers', { token }).then(res => {
+    if (!res.ok){ $('usersList').innerHTML = '<div class="empty">خطا</div>'; return; }
+    renderUsers(res.users);
+  });
+}
+
+function renderUsers(list){
+  if (!list.length){
+    $('usersList').innerHTML = '<div class="empty">هنوز کاربری نیست</div>';
+    return;
+  }
+  $('usersList').innerHTML = '<div class="q-list">' + list.map(u => {
+    const isTeacher = u.role === 'teacher';
+    const isBanned = u.status === 'banned';
+    const badge = isBanned ? '<span class="badge banned">مسدود</span>'
+                : isTeacher ? '<span class="badge gold">معلم</span>'
+                : '<span class="badge ok">فعال</span>';
+    return '<div class="q-item">' +
+      '<div class="num">' + (isTeacher?'🧑‍🏫':'👤') + '</div>' +
+      '<div class="txt"><b>' + esc(u.username) + ' ' + badge + '</b>' +
+      '<small>' + (u.lastSeen ? 'آخرین بازدید: ' + fa(new Date(u.lastSeen).toLocaleDateString('fa-IR')) : '—') + '</small></div>' +
+      (isTeacher ? '' :
+        '<div class="actions">' +
+          '<button class="act edit" data-u="' + esc(u.username) + '" data-action="toggle" title="مسدود/آزاد">' +
+            (isBanned ? '✅' : '🚫') +
+          '</button>' +
+          '<button class="act del" data-u="' + esc(u.username) + '" data-action="delete" title="حذف">🗑️</button>' +
+        '</div>'
+      ) +
+    '</div>';
+  }).join('') + '</div>';
+
+  $$('[data-action="toggle"]').forEach(b => {
+    b.onclick = () => toggleBan(b.dataset.u);
+  });
+  $$('[data-action="delete"]').forEach(b => {
+    b.onclick = () => deleteUser(b.dataset.u);
+  });
+}
+
+function toggleBan(username){
+  api('tpToggleBan', { token, username }).then(res => {
+    if (res.ok) loadUsers();
+    else alert(res.error||'خطا');
+  });
+}
+
+function deleteUser(username){
+  if (!confirm('کاربر «' + username + '» حذف بشه؟')) return;
+  api('tpDeleteUser', { token, username }).then(res => {
+    if (res.ok) loadUsers();
+    else alert(res.error||'خطا');
+  });
+}
+
+/* ============ شروع ============ */
 </script>
 </body>
 </html>
