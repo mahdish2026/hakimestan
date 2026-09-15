@@ -6215,25 +6215,25 @@ function animateTravelDot(fromIndex, toIndex) {
         }).catch(e => console.log('ارسال نشد:', e));
       } catch(e) { console.log(e); }
       
-// ارسال به پنل اصلی حکیمستان
-try {
-  if (typeof Hakim !== 'undefined' && Hakim.saveSession) {
-    let stars = 0;
-    if (s >= 15) stars = 3;
-    else if (s >= 11) stars = 2;
-    else if (s >= 6) stars = 1;
+      // ارسال به پنل اصلی حکیمستان
+      try {
+        if (typeof Hakim !== 'undefined' && Hakim.saveSession) {
+          let stars = 0;
+          if (s >= 15) stars = 3;
+          else if (s >= 11) stars = 2;
+          else if (s >= 6) stars = 1;
 
-    Hakim.saveSession({
-      student_name: name,          // ✅
-      student_class: '',           // ✅
-      game_id: 'kohan-diyar',      // ✅ (عوض شد)
-      score: s,                    // ✅
-      stars: stars,                // ✅
-      completed: (conquered === total),  // ✅
-      duration: elapsed            // ✅
-    });
-  }
-} catch(e) { console.log(e); }
+          Hakim.saveSession({
+            student_name: name,
+            student_class: '',
+            game_id: 'kohan-diyar',
+            score: s,
+            stars: stars,
+            completed: (conquered === total),
+            duration: elapsed
+          });
+        }
+      } catch(e) { console.log(e); }
       if (s >= 16) {
         playVictoryMusic();
       } else {
