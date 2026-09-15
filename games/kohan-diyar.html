@@ -6230,7 +6230,19 @@ function animateTravelDot(fromIndex, toIndex) {
             score: s,
             stars: stars,
             completed: (conquered === total),
-            duration: elapsed
+            duration: elapsed,
+            details: JSON.stringify({
+              cities: conquered,
+              totalCities: total,
+              hearts: state.hearts,
+              combo: maxCombo,
+              commander: state.commander || '',
+              correct: correctCount,
+              wrong: wrongCount,
+              questions: QUESTIONS.length,
+              stars: totalStarsEarned,
+              lessons: state.profile ? state.profile.lesson : {}
+            })
           });
         }
       } catch(e) { console.log(e); }
