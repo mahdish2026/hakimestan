@@ -808,9 +808,10 @@ function renderResults(list){
     return;
   }
   $('resultsInfo').textContent = fa(list.length) + ' نتیجه پیدا شد';
-  const rows = list.slice(0, 100).map(r => {
+  const rows = list.slice(0, 100).map((r, idx) => {
     const d = new Date(r.date);
     const dateStr = fa(d.toLocaleDateString('fa-IR'));
+    const hasDetails = r.details && r.details.length > 2;
     return '<tr>' +
       '<td>' + dateStr + '</td>' +
       '<td>' + esc(r.student || '—') + '</td>' +
@@ -818,13 +819,17 @@ function renderResults(list){
       '<td>' + esc(r.experiment || '—') + '</td>' +
       '<td>' + fa(r.score) + '</td>' +
       '<td>' + (r.completed ? '<span class="badge ok">تمام</span>' : '<span class="badge bad">ناقص</span>') + '</td>' +
+      '<td>' + (hasDetails
+        ? '<button class="btn small" onclick="showDetails(' + idx + ')" style="padding:4px 10px;font-size:.72rem">🔍</button>'
+        : '—') + '</td>' +
     '</tr>';
   }).join('');
+  window.__resultsData = list;
   $('resultsTable').innerHTML =
     '<div class="table-wrap"><table class="results"><thead><tr>' +
-      '<th>تاریخ</th><th>دانش‌آموز</th><th>بازی</th><th>آزمایش</th><th>امتیاز</th><th>وضعیت</th>' +
+      '<th>تاریخ</th><th>دانشآموز</th><th>بازی</th><th>آزمایش</th><th>امتیاز</th><th>وضعیت</th><th>جزئیات</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table></div>' +
-    (list.length > 100 ? '<p class="hint">فقط ۱۰۰ نتیجه‌ی اول نشان داده شد. برای دیدن بیشتر، فیلتر رو دقیق‌تر کن.</p>' : '');
+    (list.length > 100 ? '<p class="hint">فقط ۱۰۰ نتیجهی اول نشان داده شد. برای دیدن بیشتر، فیلتر رو دقیقتر کن.</p>' : '');
 }
 
 /* ============ کاربران ============ */
