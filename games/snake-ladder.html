@@ -1731,6 +1731,49 @@ function gameWon(i){
   stats += '<div class="stat"><div class="num" id="stRoll">' + toFa(state.rolls) + '</div><div class="lbl">تاس‌ها 🎲</div></div>';
   document.getElementById('resultStats').innerHTML = stats;
   hakimReact('win', { name:winner.name });
+  
+/* 📤 ارسال نتایج همه‌ی بازیکن‌ها به پنل معلم */
+function sendResultsToPanel(){
+  try {
+    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    const winner = state.players.find(p => p.pos === 100);
+    const winnerName = winner ? winner.name : '';
+    
+    state.players.forEach(p => {
+      const payload = {
+        action: 'session',
+        student_name: p.name,
+        student_class: '',
+        student_school: '',
+        game_id: 'snake-ladder',
+        experiment_id: '',
+        duration: 0,
+        device: /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : 'دسکتاپ',
+        score: p.correct,
+        stars: p.pos === 100 ? 3 : (p.correct >= 5 ? 2 : (p.correct >= 2 ? 1 : 0)),
+        completed: p.pos === 100,
+        attempts: 1,
+        started_at: new Date().toISOString(),
+        finished_at: new Date().toISOString(),
+        details: JSON.stringify({
+          finalPosition: p.pos,
+          correctAnswers: p.correct,
+          wrongAnswers: p.wrong,
+          totalQuestions: state.answered,
+          totalRolls: state.rolls,
+          playerCount: state.players.length,
+          isWinner: p.pos === 100,
+          winnerName: winnerName
+        })
+      };
+      fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+      }).catch(e => console.log('send result failed:', e));
+    });
+  } catch(e) { console.log('sendResultsToPanel error:', e); }
+} 
 }
 
 /* ------------------------------------------------------------------ */
