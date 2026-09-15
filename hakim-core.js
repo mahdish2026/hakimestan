@@ -1019,4 +1019,64 @@
 
   global.Hakim = api;
 
+    // ═══════════════════════════════════════════════════════════
+  //  📊 ثبت نتیجه بازی در Google Sheets (پنل معلم)
+  // ═══════════════════════════════════════════════════════════
+  var HAKIM_API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+
+  function detectDevice(){
+    var ua = navigator.userAgent || '';
+    if (/mobile|android|iphone/i.test(ua)) return 'موبایل';
+    if (/ipad|tablet/i.test(ua)) return 'تبلت';
+    return 'دسکتاپ';
+  }
+
+  function saveSession(data){
+    data = data || {};
+    var payload = {
+      action: 'session',
+      student_name: data.student_name || state.name || 'دانش‌آموز',
+      student_class: data.student_class || '',
+      student_school: data.student_school || '',
+      game_id: data.game_id || 'unknown',
+      experiment_id: data.experiment_id || '',
+      duration: Math.round(data.duration || 0),
+      device: detectDevice(),
+      score: Math.round(data.score || 0),
+      stars: Math.round(data.stars || 0),
+      completed: !!data.completed,
+      attempts: data.attempts || 1,
+      started_at: data.started_at || new Date().toISOString(),
+      finished_at: new Date().toISOString()
+    };
+    return fetch(HAKIM_API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).then(function(r){ return r.json(); })
+      .catch(function(e){ console.warn('saveSession failed:', e); return { ok:false }; });
+  }
+
+  function saveAnswer(data){
+    data = data || {};
+    var payload = {
+      action: 'answer',
+      student_name: data.student_name || state.name || 'دانش‌آموز',
+      game_id: data.game_id || 'unknown',
+      experiment_id: data.experiment_id || '',
+      question_id: data.question_id || '',
+      question_text: data.question_text || '',
+      student_answer: data.student_answer || '',
+      correct_answer: data.correct_answer || '',
+      is_correct: !!data.is_correct,
+      time_taken: Math.round(data.time_taken || 0)
+    };
+    return fetch(HAKIM_API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).then(function(r){ return r.json(); })
+      .catch(function(e){ console.warn('saveAnswer failed:', e); return { ok:false }; });
+  }
+
 })(typeof window !== 'undefined' ? window : this);
