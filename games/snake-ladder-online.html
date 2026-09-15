@@ -1916,6 +1916,13 @@ function normPlayers(raw){
 function detectPhase(res, players){
   let raw = res ? ((res.state !== undefined) ? res.state : res.phase) : '';
   if(raw && typeof raw === 'object') raw = raw.phase || raw.status || raw.stage || '';
+  /* حالت عددی سرور: 0=lobby, 1=playing, 2=question, 3=finished */
+  if(typeof raw === 'number' || (typeof raw === 'string' && /^\d+$/.test(raw.trim()))){
+    const n = Number(raw);
+    if(n === 0) return 'waiting';
+    if(n === 1 || n === 2) return 'playing';
+    if(n === 3) return 'finished';
+  }
   const t = String(raw == null ? '' : raw).trim().toLowerCase();
   if(/finish|over|won|done|complet|ended|پایان|تمام|برنده/.test(t)) return 'finished';
   const w = res ? res.winner : null;
@@ -1926,7 +1933,6 @@ function detectPhase(res, players){
   if(res && (res.finished === true || res.gameOver === true)) return 'finished';
   if(/play|start|progress|active|run|game|بازی|شروع|جریان/.test(t)) return 'playing';
   if(res && (res.started === true || res.inProgress === true)) return 'playing';
-  /* حدس: اگر مهره‌ای جلو رفته باشد، بازی در جریان است */
   const ps = players || ((res && Array.isArray(res.players)) ? res.players : []);
   if(ps.length >= 2 && ps.some(p => p && Number((p.pos != null ? p.pos : p.position) || 1) > 1)) return 'playing';
   return 'waiting';
