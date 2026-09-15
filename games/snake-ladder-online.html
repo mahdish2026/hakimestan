@@ -1251,8 +1251,7 @@ function showEnd(){
 /* 📤 ارسال نتیجه به پنل معلم */
 function sendResultsToPanel(){
   try {
-    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9lG5Uk_vrG28P1LbYgE/exec';
-    // برنده و بازیکن‌های این بازی
+    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';    // برنده و بازیکن‌های این بازی
     const winner = state.players.find(p => p.name === state.winner) || null;
     const myPlayer = state.players[state.playerIndex] || null;
     const isWinner = winner && myPlayer && (winner.name === myPlayer.name);
