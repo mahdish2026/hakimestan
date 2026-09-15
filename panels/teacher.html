@@ -914,8 +914,6 @@ function showDetails(idx) {
 
 /* ============ کاربران ============ */
 function loadUsers(){
-/* ============ کاربران ============ */
-function loadUsers(){
   $('usersList').innerHTML = '<div class="empty">در حال بارگذاری...</div>';
   api('tpGetUsers', { token }).then(res => {
     if (!res.ok){ $('usersList').innerHTML = '<div class="empty">خطا</div>'; return; }
