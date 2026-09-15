@@ -6224,9 +6224,10 @@ function animateTravelDot(fromIndex, toIndex) {
           else if (s >= 6) stars = 1;
 
           Hakim.saveSession({
+            student_name: name,
+            student_class: '',
             game: 'kohan-diyar',
-            gameName: 'فتح کهن دیار ایران',
-            player: name,
+            game_name: 'فتح کهن دیار ایران',
             score: s,
             stars: stars,
             completed: (conquered === total),
