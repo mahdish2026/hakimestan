@@ -1047,6 +1047,7 @@
       stars: Math.round(data.stars || 0),
       completed: !!data.completed,
       attempts: data.attempts || 1,
+      details: data.details || '',
       started_at: data.started_at || new Date().toISOString(),
       finished_at: new Date().toISOString()
     };
