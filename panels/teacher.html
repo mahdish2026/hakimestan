@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0d0a1f">
+<title>🧑‍🏫 پنل معلم — حکیمستان</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0a1f;--gold:#f5c76a;--gold-d:#c9913a;--violet:#8b5cf6;
+  --teal:#5eead4;--txt:#f1ecff;--dim:#a99bd6;
+  --glass:rgba(255,255,255,.055);--line:rgba(245,199,106,.22);
+  --ok:#4ade80;--bad:#fb7185;--font:'Vazirmatn',Tahoma,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+body{font-family:var(--font);color:var(--txt);background:var(--bg);min-height:100vh;line-height:1.8;
+  background:radial-gradient(1200px 700px at 80% -10%,rgba(139,92,246,.22),transparent 60%),
+    radial-gradient(900px 600px at 8% 110%,rgba(94,234,212,.10),transparent 55%),
+    linear-gradient(180deg,#0d0a1f 0%,#151033 48%,#0d0a1f 100%)}
+.wrap{max-width:720px;margin:0 auto;padding:16px 14px 60px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.btn-back{color:var(--txt);text-decoration:none;font-size:.85rem;background:var(--glass);border:1px solid var(--line);border-radius:99px;padding:7px 14px}
+.btn-back:hover{border-color:var(--gold);color:var(--gold)}
+.title{font-size:1.3rem;font-weight:900;color:var(--gold);margin-inline-start:auto}
+.card{background:var(--glass);border:1px solid rgba(255,255,255,.09);border-radius:20px;backdrop-filter:blur(14px);padding:16px;margin-bottom:14px}
+h2{font-size:1.05rem;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+label.field{display:block;margin:12px 0;font-size:.85rem;color:var(--dim);font-weight:700}
+input,textarea,select{font-family:var(--font);width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:var(--txt);font-size:.95rem;outline:none;transition:.25s;font-weight:500}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);background:rgba(245,199,106,.08)}
+textarea{min-height:80px;resize:vertical}
+.btn{font-family:var(--font);font-weight:800;font-size:.95rem;cursor:pointer;border:0;color:#231803;background:linear-gradient(180deg,#ffe0a2,var(--gold) 55%,var(--gold-d));padding:12px 22px;border-radius:99px;transition:.2s;box-shadow:0 8px 22px rgba(245,199,106,.24);min-height:46px;width:100%}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--txt);border:1.5px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
+.btn.danger{background:linear-gradient(180deg,#fca5a5,#dc2626);color:#fff}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn-row .btn{flex:1;min-width:120px}
+.game-list{display:flex;flex-direction:column;gap:10px}
+.game-item{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;cursor:pointer;transition:.25s}
+.game-item:hover{border-color:var(--gold);background:rgba(245,199,106,.08)}
+.game-item .ic{font-size:1.7rem;flex:none}
+.game-item .meta{flex:1;min-width:0}
+.game-item .name{font-weight:800;color:var(--txt);font-size:.95rem}
+.game-item .desc{font-size:.76rem;color:var(--dim);margin-top:2px}
+.game-item .count{font-size:.72rem;font-weight:800;color:var(--gold);background:rgba(245,199,106,.12);border:1px solid rgba(245,199,106,.3);padding:3px 10px;border-radius:99px}
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tab{flex:1;min-width:100px;padding:10px;text-align:center;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;font-weight:800;font-size:.85rem;color:var(--dim);transition:.2s;font-family:var(--font);min-height:44px}
+.tab:hover{border-color:var(--line);color:var(--txt)}
+.tab.on{border-color:var(--gold);color:var(--gold);background:rgba(245,199,106,.12)}
+.tab-body{display:none}
+.tab-body.on{display:block}
+.opt-row{display:flex;gap:8px;align-items:center;margin:8px 0}
+.opt-row input[type=text]{flex:1}
+.opt-row .radio{width:22px;height:22px;flex:none;cursor:pointer;accent-color:var(--gold)}
+.q-list{display:flex;flex-direction:column;gap:8px;max-height:400px;overflow-y:auto}
+.q-item{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px}
+.q-item .num{width:26px;height:26px;border-radius:50%;background:rgba(245,199,106,.15);color:var(--gold);font-weight:900;font-size:.75rem;display:grid;place-items:center;flex:none}
+.q-item .txt{flex:1;min-width:0;font-size:.85rem}
+.q-item .txt b{display:block;color:var(--txt);margin-bottom:3px;font-weight:700}
+.q-item .txt small{color:var(--dim);font-size:.74rem;display:block}
+.q-item .del{background:rgba(251,113,133,.15);color:var(--bad);border:1px solid rgba(251,113,133,.4);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.9rem;flex:none}
+.q-item .del:hover{background:rgba(251,113,133,.3)}
+.fb{padding:12px 14px;border-radius:12px;font-size:.87rem;font-weight:700;margin:10px 0;display:none}
+.fb.on{display:block}
+.fb.ok{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.4);color:#d9ffea}
+.fb.err{background:rgba(251,113,133,.12);border:1px solid rgba(251,113,133,.4);color:#ffe0e5}
+.fb.info{background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.4);color:#d9fff6}
+.drop-zone{border:2px dashed rgba(245,199,106,.4);border-radius:16px;padding:22px;text-align:center;cursor:pointer;transition:.25s;background:rgba(245,199,106,.05)}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--gold);background:rgba(245,199,106,.12)}
+.drop-zone .em{font-size:2.4rem;display:block;margin-bottom:6px}
+.drop-zone .lbl{font-size:.87rem;color:var(--dim);font-weight:700}
+.drop-zone input[type=file]{display:none}
+.spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(245,199,106,.3);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite;vertical-align:middle;margin-left:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.hint{font-size:.78rem;color:var(--dim);margin-top:8px;line-height:1.9}
+.hidden{display:none !important}
+@media(max-width:600px){
+  .title{font-size:1.1rem}
+  .tab{font-size:.78rem;padding:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <a href="../index.html" class="btn-back">← لابی</a>
+    <h1 class="title">🧑‍🏫 پنل معلم</h1>
+  </div>
+
+  <section id="scLogin" class="card">
+    <h2>🔐 ورود معلم</h2>
+    <label class="field">رمز عبور:
+      <input type="password" id="passIn" placeholder="رمز پنل معلم" autocomplete="off">
+    </label>
+    <div class="fb" id="loginFb"></div>
+    <button class="btn" id="btnLogin">ورود</button>
+    <p class="hint">رمز پیشفرض: <code>hakim-teacher-1404</code></p>
+  </section>
+
+  <section id="scGames" class="card hidden">
+    <h2>🎮 یه بازی رو انتخاب کن</h2>
+    <div class="game-list" id="gameList"></div>
+    <button class="btn ghost" id="btnLogout" style="margin-top:14px">خروج</button>
+  </section>
+
+  <section id="scQuestions" class="hidden">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <h2 id="qTitle">📚 سؤالات</h2>
+        <button class="btn ghost" id="btnBackGames" style="padding:6px 14px;min-height:auto;font-size:.8rem;width:auto">← بازیها</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab on" data-tab="manual">✍️ دستی</button>
+        <button class="tab" data-tab="hqf">📤 آپلود HQF</button>
+        <button class="tab" data-tab="list">📋 لیست</button>
+      </div>
+
+      <div class="fb" id="qFb"></div>
+
+      <div class="tab-body on" id="tabManual">
+        <label class="field">متن سؤال:
+          <textarea id="mText" placeholder="مثلاً: قرنیه کجای چشم قرار دارد؟"></textarea>
+        </label>
+        <label class="field">گزینهها (رادیوی زرد = جواب درست):</label>
+        <div class="opt-row"><input type="radio" name="mCorrect" value="0" class="radio" checked><input type="text" id="mOpt0" placeholder="گزینه ۱"></div>
+        <div class="opt-row"><input type="radio" name="mCorrect" value="1" class="radio"><input type="text" id="mOpt1" placeholder="گزینه ۲"></div>
+        <div class="opt-row"><input type="radio" name="mCorrect" value="2" class="radio"><input type="text" id="mOpt2" placeholder="گزینه ۳"></div>
+        <div class="opt-row"><input type="radio" name="mCorrect" value="3" class="radio"><input type="text" id="mOpt3" placeholder="گزینه ۴"></div>
+        <label class="field">توضیح (اختیاری):
+          <input type="text" id="mExpl" placeholder="مثلاً: لایهٔ شفاف جلوی چشم">
+        </label>
+        <label class="field">بخش/فصل (اختیاری):
+          <input type="text" id="mSection" placeholder="مثلاً: فصل ۵">
+        </label>
+        <button class="btn" id="btnAddManual">➕ اضافه کن</button>
+      </div>
+
+      <div class="tab-body" id="tabHqf">
+        <p class="hint" style="margin-bottom:10px">
+          فایل خروجی <b>آزمونساز</b> یا <b>مبدل HQF</b> رو اینجا آپلود کن.
+          <br>⚠️ <b>توجه:</b> این کار <b>همهی سؤالات فعلی این بازی رو جایگزین میکنه</b>.
+        </p>
+        <div class="drop-zone" id="dropZone">
+          <span class="em">📤</span>
+          <div class="lbl">فایل HQF رو بکش اینجا یا کلیک کن</div>
+          <input type="file" id="fileIn" accept=".json,.hqf,.txt,application/json">
+        </div>
+        <div id="hqfPreview" style="margin-top:14px"></div>
+      </div>
+
+      <div class="tab-body" id="tabList">
+        <div class="q-list" id="qList">
+          <p style="color:var(--dim);font-size:.85rem">در حال بارگذاری...</p>
+        </div>
+        <button class="btn ghost" id="btnRestore" style="margin-top:12px">🔄 بازیابی سؤالات پیشفرض</button>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+'use strict';
+
+const API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+let token = null;
+let currentGame = null;
+
+const $ = id => document.getElementById(id);
+function show(id){
+  ['scLogin','scGames','scQuestions'].forEach(x => $(x).classList.toggle('hidden', x !== id));
+}
+function fb(el, cls, msg){
+  el.className = 'fb on ' + cls;
+  el.innerHTML = msg;
+}
+function fbHide(el){ el.className = 'fb'; }
+
+function api(action, data){
+  return fetch(API, {
+    method: 'POST',
+    body: JSON.stringify(Object.assign({ action }, data || {})),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  }).then(r => r.json());
+}
+
+$('btnLogin').onclick = function(){
+  const pass = $('passIn').value.trim();
+  if (!pass){ fb($('loginFb'),'err','رمز رو وارد کن'); return; }
+  this.disabled = true;
+  this.innerHTML = '<span class="spinner"></span> در حال ورود...';
+  api('tpLogin', { password: pass }).then(res => {
+    this.disabled = false;
+    this.textContent = 'ورود';
+    if (!res.ok){ fb($('loginFb'),'err', res.error || 'خطا'); return; }
+    token = res.token;
+    fbHide($('loginFb'));
+    loadGames();
+  }).catch(e => {
+    this.disabled = false;
+    this.textContent = 'ورود';
+    fb($('loginFb'),'err','خطای شبکه: '+e.message);
+  });
+};
+$('passIn').addEventListener('keydown', e => { if(e.key === 'Enter') $('btnLogin').click(); });
+
+function loadGames(){
+  show('scGames');
+  $('gameList').innerHTML = '<p style="color:var(--dim);text-align:center">در حال بارگذاری...</p>';
+  api('tpGetGames', {}).then(res => {
+    if (!res.ok){ $('gameList').innerHTML = '<p style="color:var(--bad)">خطا: ' + (res.error||'') + '</p>'; return; }
+    $('gameList').innerHTML = res.games.map(g => `
+      <div class="game-item" data-id="${g.id}">
+        <span class="ic">${g.name.split(' ')[0]}</span>
+        <div class="meta">
+          <div class="name">${g.name.substring(g.name.indexOf(' ')+1)}</div>
+          <div class="desc">${g.desc}</div>
+        </div>
+        <span class="count">${g.count} سؤال</span>
+      </div>`).join('');
+    document.querySelectorAll('.game-item').forEach(el => {
+      el.onclick = () => openGame(el.dataset.id, el.querySelector('.name').textContent);
+    });
+  });
+}
+
+function openGame(gameId, gameName){
+  currentGame = gameId;
+  $('qTitle').textContent = '📚 ' + gameName;
+  show('scQuestions');
+  fbHide($('qFb'));
+  switchTab('manual');
+  loadQuestions();
+}
+$('btnBackGames').onclick = () => loadGames();
+$('btnLogout').onclick = () => { token = null; $('passIn').value=''; show('scLogin'); };
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.onclick = () => switchTab(t.dataset.tab);
+});
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x.dataset.tab === name));
+  document.querySelectorAll('.tab-body').forEach(x => x.classList.remove('on'));
+  $('tab' + name.charAt(0).toUpperCase() + name.slice(1)).classList.add('on');
+  if (name === 'list') loadQuestions();
+}
+
+function loadQuestions(){
+  $('qList').innerHTML = '<p style="color:var(--dim);text-align:center">در حال بارگذاری...</p>';
+  api('tpGetQuestions', { gameId: currentGame }).then(res => {
+    if (!res.ok){ $('qList').innerHTML = '<p style="color:var(--bad)">خطا</p>'; return; }
+    renderQuestions(res.questions);
+  });
+}
+function renderQuestions(list){
+  if (!list.length){
+    $('qList').innerHTML = '<p style="color:var(--dim);font-size:.85rem;text-align:center;padding:20px">هنوز سؤالی اضافه نشده. از تب «✍️ دستی» یا «📤 آپلود HQF» شروع کن.</p>';
+    return;
+  }
+  $('qList').innerHTML = list.map((q,i) => `
+    <div class="q-item">
+      <div class="num">${toFa(i+1)}</div>
+      <div class="txt">
+        <b>${esc(q.text)}</b>
+        <small>نوع: ${q.type} | پاسخ: ${esc(answerText(q))}</small>
+      </div>
+      <button class="del" data-qid="${q.id}">🗑️</button>
+    </div>`).join('');
+  document.querySelectorAll('.q-item .del').forEach(b => {
+    b.onclick = () => deleteQ(b.dataset.qid);
+  });
+}
+function answerText(q){
+  if (q.type === 'tf') return q.answer === true ? 'درست' : 'نادرست';
+  const i = Number(q.answer);
+  if (q.options && q.options[i] !== undefined) return q.options[i];
+  return String(q.answer);
+}
+function toFa(n){ return String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]); }
+function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function deleteQ(qid){
+  if (!confirm('این سؤال حذف بشه؟')) return;
+  api('tpDeleteQuestion', { token, gameId: currentGame, qId: qid }).then(res => {
+    if (res.ok){
+      fb($('qFb'),'ok','🗑️ سؤال حذف شد');
+      loadQuestions();
+      setTimeout(()=>fbHide($('qFb')),2500);
+    } else fb($('qFb'),'err', res.error||'خطا');
+  });
+}
+
+$('btnAddManual').onclick = function(){
+  const text = $('mText').value.trim();
+  if (!text){ fb($('qFb'),'err','متن سؤال رو بنویس'); return; }
+  const opts = ['mOpt0','mOpt1','mOpt2','mOpt3'].map(id => $(id).value.trim());
+  if (opts.some(o => !o)){ fb($('qFb'),'err','همهی ۴ گزینه رو پر کن'); return; }
+  const correct = document.querySelector('input[name="mCorrect"]:checked').value;
+  this.disabled = true;
+  this.innerHTML = '<span class="spinner"></span> در حال ذخیره...';
+  api('tpAddQuestion', {
+    token, gameId: currentGame,
+    question: {
+      type: 'mcq', text: text, options: opts,
+      answer: parseInt(correct, 10),
+      explanation: $('mExpl').value.trim(),
+      section: $('mSection').value.trim()
+    }
+  }).then(res => {
+    this.disabled = false;
+    this.textContent = '➕ اضافه کن';
+    if (!res.ok){ fb($('qFb'),'err', res.error||'خطا'); return; }
+    fb($('qFb'),'ok','✅ سؤال اضافه شد (ID: '+res.id+')');
+    $('mText').value = '';
+    $('mOpt0').value = $('mOpt1').value = $('mOpt2').value = $('mOpt3').value = '';
+    $('mExpl').value = ''; $('mSection').value = '';
+    document.querySelector('input[name="mCorrect"][value="0"]').checked = true;
+    $('mText').focus();
+    setTimeout(()=>fbHide($('qFb')), 3000);
+  }).catch(e => {
+    this.disabled = false;
+    this.textContent = '➕ اضافه کن';
+    fb($('qFb'),'err','خطای شبکه: '+e.message);
+  });
+};
+
+$('dropZone').onclick = () => $('fileIn').click();
+$('dropZone').addEventListener('dragover', e => { e.preventDefault(); $('dropZone').classList.add('drag'); });
+$('dropZone').addEventListener('dragleave', () => $('dropZone').classList.remove('drag'));
+$('dropZone').addEventListener('drop', e => {
+  e.preventDefault();
+  $('dropZone').classList.remove('drag');
+  const f = e.dataTransfer.files[0];
+  if (f) handleHQF(f);
+});
+$('fileIn').onchange = e => {
+  const f = e.target.files[0];
+  if (f) handleHQF(f);
+  e.target.value = '';
+};
+
+function handleHQF(file){
+  const reader = new FileReader();
+  reader.onload = ev => {
+    let data;
+    try { data = JSON.parse(ev.target.result); }
+    catch(err){ fb($('qFb'),'err','فایل JSON معتبر نیست'); return; }
+    const qs = extractQuestions(data);
+    if (!qs || !qs.length){ fb($('qFb'),'err','هیچ سؤالی توی فایل پیدا نشد'); return; }
+    showHQFPreview(qs, file.name);
+  };
+  reader.readAsText(file);
+}
+function extractQuestions(data){
+  if (Array.isArray(data)) return data;
+  if (data.hqf === '1.0' && Array.isArray(data.questions)) return data.questions;
+  if (Array.isArray(data.questions)) return data.questions;
+  if (data.hakimestan === 2 && Array.isArray(data.exams) && data.exams.length){
+    const ex = data.exams[0];
+    if (Array.isArray(ex)) return ex;
+    if (ex && Array.isArray(ex.questions)) return ex.questions;
+    if (ex && Array.isArray(ex.items)) return ex.items;
+  }
+  return null;
+}
+function normalizeQ(q){
+  const n = Object.assign({}, q);
+  if (!n.text && q.question) n.text = q.question;
+  if (!n.options && Array.isArray(q.choices)) n.options = q.choices;
+  if (n.answer === undefined && q.correct !== undefined) n.answer = q.correct;
+  if (!n.type){
+    n.type = Array.isArray(n.options) && n.options.length >= 2 ? 'mcq' : 'short';
+  }
+  if (n.type === 'mcq' && Array.isArray(n.options)){
+    if (typeof n.answer === 'string'){
+      const i = n.options.findIndex(o => String(o) === String(n.answer));
+      if (i >= 0) n.answer = i;
+    }
+  }
+  return n;
+}
+function showHQFPreview(list, filename){
+  const normalized = list.map(normalizeQ).filter(q => q.text);
+  const valid = normalized.filter(q =>
+    q.type === 'mcq' ? (Array.isArray(q.options) && q.options.length >= 2 && q.answer !== undefined)
+    : q.answer !== undefined
+  );
+  $('hqfPreview').innerHTML = `
+    <div class="fb info on">
+      📄 فایل: <b>${esc(filename)}</b><br>
+      ✅ ${toFa(valid.length)} سؤال معتبر از ${toFa(normalized.length)} سؤال پیدا شد.
+    </div>
+    <div class="q-list" style="margin-top:10px;max-height:240px">
+      ${valid.slice(0,20).map((q,i) => `
+        <div class="q-item">
+          <div class="num">${toFa(i+1)}</div>
+          <div class="txt"><b>${esc(q.text)}</b>
+          <small>${esc(q.type)} | پاسخ: ${esc(answerText(q))}</small></div>
+        </div>`).join('')}
+      ${valid.length > 20 ? '<p style="text-align:center;color:var(--dim);font-size:.8rem;margin-top:8px">... و ' + toFa(valid.length - 20) + ' سؤال دیگر</p>' : ''}
+    </div>
+    <button class="btn danger" id="btnConfirmReplace" style="margin-top:14px">
+      ⚠️ جایگزینی همهی سؤالات (${toFa(valid.length)} سؤال)
+    </button>
+    <p class="hint">با این کار، همهی سؤالات فعلی این بازی پاک میشن و این سؤالات جدید جاشون میاد.</p>
+  `;
+  $('btnConfirmReplace').onclick = () => {
+    if (!confirm('مطمئنی؟ همهی سؤالات فعلی این بازی پاک میشن!')) return;
+    const btn = $('btnConfirmReplace');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> در حال ذخیره...';
+    api('tpReplaceQuestions', { token, gameId: currentGame, questions: valid }).then(res => {
+      if (!res.ok){ fb($('qFb'),'err', res.error||'خطا'); btn.disabled=false; btn.textContent='⚠️ تلاش مجدد'; return; }
+      fb($('qFb'),'ok','✅ ' + toFa(res.added) + ' سؤال جایگزین شد');
+      $('hqfPreview').innerHTML = '';
+      loadQuestions();
+      setTimeout(()=>fbHide($('qFb')), 3500);
+    }).catch(e => {
+      fb($('qFb'),'err','خطای شبکه: '+e.message);
+      btn.disabled = false; btn.textContent='⚠️ تلاش مجدد';
+    });
+  };
+}
+
+$('btnRestore').onclick = () => {
+  if (!confirm('سؤالات پیشفرض جایگزین بشن؟')) return;
+  api('tpRestoreDefaults', { token, gameId: currentGame }).then(res => {
+    if (res.ok){
+      fb($('qFb'),'ok','🔄 ' + toFa(res.restored) + ' سؤال پیشفرض بازیابی شد');
+      loadQuestions();
+      setTimeout(()=>fbHide($('qFb')), 3000);
+    } else fb($('qFb'),'err', res.error||'خطا');
+  });
+};
+
+</script>
+</body>
+</html>
