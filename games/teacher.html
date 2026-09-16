@@ -1025,6 +1025,10 @@ if (isAuthenticated()) {
 } else {
   document.getElementById('loginPassword').focus();
 }
+ 
+// ===== قطع/وصل لحظه‌ای =====
+window.addEventListener('offline', () => setConnStatus(false));
+window.addEventListener('online',  () => setConnStatus(true));
 </script>
 <script src="../back-to-lobby.js"></script>
 </body>
