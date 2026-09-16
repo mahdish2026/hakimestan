@@ -219,7 +219,9 @@ const TITLES={
   teachers:['معلم‌های دفتر','مدیریت معلم‌های دفتر معلم'],
   settings:['تنظیمات پنل','تغییر رمز ورود به پنل']
 };function showScreen(name){$$('.screen').forEach(s=>s.classList.add('hidden'));const el=$('sc'+name.charAt(0).toUpperCase()+name.slice(1));if(el)el.classList.remove('hidden');$$('.nav-btn[data-screen]').forEach(b=>b.classList.toggle('on',b.dataset.screen===name));const t=TITLES[name]||TITLES.dashboard;$('pageTitle').textContent=t[0];$('pageSubtitle').textContent=t[1];try{if(name==='dashboard')loadDashboard();if(name==='games')loadGames();if(name==='results')loadResults();if(name==='users')loadUsers()}catch(e){console.error(e)}}
-$$('.nav-btn[data-screen]').forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
+      if(name==='teachers')loadTeachers();
+      if(name==='settings'){ $('oldPanelPass').value=''; $('newPanelPass').value=''; $('newPanelPass2').value=''; hideAlert($('settingsAlert')); }
+  $$('.nav-btn[data-screen]').forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
 
 /* داشبورد */
 async function loadDashboard(){try{const res=await api('tpGetStats',{token});if(!res.ok)return;const s=res.stats||{};$('stTotal').textContent=fa(s.total||0);$('stToday').textContent=fa(s.today||0);$('stWeek').textContent=fa(s.week||0);$('stAvg').textContent=fa(s.avgScore||0);const top=s.topStudents||[];$('topStudents').innerHTML=top.length?'<div class="rank-list">'+top.map((st,i)=>`<div class="rank-row"><div class="rank-no">${fa(i+1)}</div><div class="rank-main"><b>${esc(st.name||'بدون نام')}</b><small>${fa(st.count||0)} بازی · میانگین ${fa(st.avgScore||0)} · بهترین ${fa(st.best||0)}</small></div><div class="rank-score">${fa(st.best||0)}</div></div>`).join('')+'</div>':'<div class="empty">هنوز داده‌ای ثبت نشده است.</div>';renderGameChart(s.byGame||[])}catch(e){$('topStudents').innerHTML='<div class="empty">خطا در دریافت اطلاعات</div>';console.error(e)}}
