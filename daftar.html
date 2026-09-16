@@ -516,16 +516,24 @@ render();initHakim();
       errEl.style.display = 'none';
       if(!u || !p) return showErr(new Error('نام کاربری و رمز را وارد کن.'));
       
-      const btn = ov.querySelector('#btnReg');
+            const btn = ov.querySelector('#btnReg');
       btn.disabled = true; btn.textContent = 'در حال ثبت‌نام…';
       try {
         const r = await api('tRegister', {username: u, password: p, name: n});
         setAuth({username: r.username, token: r.token, remember: rem}, rem);
         localStorage.setItem(K_LAST_USER, r.username);
+        
+        // ★ حساب جدید خالیه؛ هر دادهٔ محلی از حساب قبلی باید پاک بشه
+        // تا اشتباهی روی حساب جدید آپلود نشه
+        localStorage.removeItem(K_DATA);
+        localStorage.removeItem(K_LAST);
+        
         ov.remove();
         showToast('✅ حساب ساخته شد. خوش آمدی ' + (r.name || r.username) + '!');
         updateUI();
         startAutoSync();
+        // ★ رفرش کن تا دفتر کاملاً خالی باز بشه
+        setTimeout(() => location.reload(), 800);
       } catch(e) {
         showErr(e); btn.disabled = false; btn.textContent = 'ساخت حساب و ورود';
       }
