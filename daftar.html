@@ -349,4 +349,238 @@ async function exportAs(format){if(exportBusy)return;exportBusy=true;const butto
 render();initHakim();
 
 </script>
+  <script>
+/* ══════════════════════════════════════════════════════════
+ * همگامسازی دفتر معلم با Google Sheets
+ * کاملاً مستقل است؛ نیازی به تغییر کد اصلی ندارد.
+ * ══════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+  
+  const API    = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  const K_PASS = 'hakimestan_daftar_pass';
+  const K_DATA = 'hakimestan_daftar_v1';
+  const K_LAST = 'hakimestan_daftar_last_sync';
+  
+  const ls = {
+    get: k => { try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set: (k,v) => { try { v ? localStorage.setItem(k,v) : localStorage.removeItem(k); } catch(e){} }
+  };
+  
+  const isConnected = () => !!ls.get(K_PASS);
+  const getLastSync  = () => ls.get(K_LAST);
+  
+  async function api(action, payload) {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(Object.assign({action: action}, payload || {})),
+      redirect: 'follow'
+    });
+    if (!res.ok) throw new Error('ارتباط با سرور برقرار نشد (کد ' + res.status + ')');
+    let data;
+    try { data = await res.json(); }
+    catch(e) { throw new Error('پاسخ سرور ناخوانا است.'); }
+    if (data && data.ok === false) throw new Error(data.error || 'خطای نامشخص');
+    return data;
+  }
+  
+  async function login() {
+    const pw = ls.get(K_PASS);
+    if (!pw) throw new Error('رمز معلم ذخیره نشده است.');
+    const r = await api('tpLogin', {password: pw});
+    if (!r.token) throw new Error('توکن دریافت نشد.');
+    return r.token;
+  }
+  
+  function showToast(msg, err) {
+    const area = document.getElementById('toasts') || document.body;
+    const el = document.createElement('div');
+    el.className = 'toast' + (err ? ' error' : '');
+    el.setAttribute('role', err ? 'alert' : 'status');
+    const span = document.createElement('span'); span.textContent = msg;
+    const close = document.createElement('button'); close.textContent = '×';
+    close.setAttribute('aria-label','بستن');
+    close.onclick = () => el.remove();
+    el.appendChild(span); el.appendChild(close);
+    while (area.children.length >= 3) area.firstElementChild.remove();
+    area.appendChild(el);
+    setTimeout(() => el.remove(), err ? 12000 : 6000);
+  }
+  
+  function buildModalBody() {
+    const connected = isConnected();
+    const last = getLastSync();
+    const lastText = last ? ('آخرین همگامسازی: ' + new Date(last).toLocaleString('fa-IR')) : 'هنوز همگامسازی نشده';
+    return `
+      <p class="modal-copy">اطلاعات دفتر در شیت <b>class_data</b> در فایل <b>hakimestan-data</b> ذخیره میشود.</p>
+      <div id="syncAlert" class="modal-error" role="alert" hidden></div>
+      <div id="syncNotConnected" ${connected ? 'hidden' : ''}>
+        <label for="syncPass">رمز معلم</label>
+        <input id="syncPass" type="password" placeholder="رمز معلم را وارد کنید" autocomplete="current-password">
+        <p class="small muted" style="margin-top:8px">رمز فقط در همین مرورگر ذخیره میشود.</p>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="syncCancelBtn">انصراف</button>
+          <button type="button" class="btn primary" id="syncConnectBtn">اتصال</button>
+        </div>
+      </div>
+      <div id="syncConnected" ${connected ? '' : 'hidden'}>
+        <div class="row" style="gap:10px;flex-wrap:wrap">
+          <button type="button" class="btn primary" id="syncUploadBtn">
+            <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>
+            آپلود به شیت
+          </button>
+          <button type="button" class="btn soft" id="syncDownloadBtn">
+            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+            دریافت از شیت
+          </button>
+        </div>
+        <p class="small muted" style="margin-top:14px">${lastText}</p>
+        <div class="note-box" style="margin-top:15px">
+          <strong>آپلود:</strong> اطلاعات این مرورگر روی شیت نوشته میشود (نسخهٔ قبلی شیت پاک میشود).<br>
+          <strong>دریافت:</strong> اطلاعات شیت جایگزین اطلاعات این مرورگر میشود؛ صفحه دوباره بارگذاری میشود.
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn danger" id="syncDisconnectBtn">قطع اتصال</button>
+        </div>
+      </div>
+    `;
+  }
+  
+  function bindModalEvents() {
+    const alertEl = document.getElementById('syncAlert');
+    const showErr = (e) => {
+      alertEl.textContent = e && e.message ? e.message : String(e);
+      alertEl.hidden = false;
+      alertEl.scrollIntoView({block:'nearest'});
+    };
+    const hideErr = () => { alertEl.hidden = true; };
+    
+    const passEl = document.getElementById('syncPass');
+    if (passEl) passEl.focus();
+    
+    const connect = document.getElementById('syncConnectBtn');
+    if (connect) connect.onclick = async () => {
+      hideErr();
+      const pw = document.getElementById('syncPass').value.trim();
+      if (!pw) { showErr(new Error('رمز معلم را وارد کنید.')); return; }
+      connect.disabled = true;
+      connect.textContent = 'در حال اتصال…';
+      try {
+        ls.set(K_PASS, pw);
+        await login();
+        document.getElementById('modalBody').innerHTML = buildModalBody();
+        bindModalEvents();
+        updateSyncBtnStyle();
+        showToast('✅ اتصال برقرار شد.');
+      } catch (e) {
+        ls.set(K_PASS, '');
+        showErr(e);
+        connect.disabled = false;
+        connect.textContent = 'اتصال';
+      }
+    };
+    
+    const cancel = document.getElementById('syncCancelBtn');
+    if (cancel) cancel.onclick = () => document.getElementById('modal').close();
+    
+    const upload = document.getElementById('syncUploadBtn');
+    if (upload) upload.onclick = async () => {
+      hideErr();
+      upload.disabled = true;
+      const oldHTML = upload.innerHTML;
+      upload.innerHTML = 'در حال ارسال…';
+      try {
+        const raw = ls.get(K_DATA);
+        if (!raw) throw new Error('اطلاعاتی برای ارسال یافت نشد.');
+        const db = JSON.parse(raw);
+        const token = await login();
+        const r = await api('tpClassSaveAll', {token: token, data: db});
+        ls.set(K_LAST, new Date().toISOString());
+        showToast('✅ دادهها روی شیت ذخیره شد (' + Math.round((r.size||0)/1024) + ' کیلوبایت)');
+        document.getElementById('modalBody').innerHTML = buildModalBody();
+        bindModalEvents();
+      } catch (e) {
+        showErr(e);
+        upload.disabled = false;
+        upload.innerHTML = oldHTML;
+      }
+    };
+    
+    const download = document.getElementById('syncDownloadBtn');
+    if (download) download.onclick = async () => {
+      hideErr();
+      if (!confirm('اطلاعات فعلی این مرورگر با اطلاعات شیت جایگزین میشود. ادامه میدهید؟\n\nپیشنهاد: اول پشتیبان JSON بگیرید.')) return;
+      download.disabled = true;
+      const oldHTML = download.innerHTML;
+      download.innerHTML = 'در حال دریافت…';
+      try {
+        const token = await login();
+        const r = await api('tpClassGetAll', {token: token});
+        if (!r.data) throw new Error('در شیت دادهای ذخیره نشده است. اول یک بار آپلود کنید.');
+        ls.set(K_DATA, JSON.stringify(r.data));
+        ls.set(K_LAST, new Date().toISOString());
+        showToast('✅ دادهها دریافت شد. صفحه در حال بارگذاری…');
+        setTimeout(() => location.reload(), 900);
+      } catch (e) {
+        showErr(e);
+        download.disabled = false;
+        download.innerHTML = oldHTML;
+      }
+    };
+    
+    const disconnect = document.getElementById('syncDisconnectBtn');
+    if (disconnect) disconnect.onclick = () => {
+      if (!confirm('اتصال قطع میشود. اطلاعات محلی دستنخورده باقی میماند.')) return;
+      ls.set(K_PASS, '');
+      document.getElementById('modalBody').innerHTML = buildModalBody();
+      bindModalEvents();
+      updateSyncBtnStyle();
+      showToast('اتصال قطع شد.');
+    };
+  }
+  
+  function openSyncModal() {
+    const dialog = document.getElementById('modal');
+    document.getElementById('modalTitle').textContent = 'همگامسازی با Google Sheets';
+    document.getElementById('modalBody').innerHTML = buildModalBody();
+    dialog.showModal();
+    bindModalEvents();
+  }
+  
+  function updateSyncBtnStyle() {
+    const btn = document.getElementById('syncBtn');
+    if (!btn) return;
+    if (isConnected()) {
+      btn.classList.remove('soft');
+      btn.classList.add('primary');
+    } else {
+      btn.classList.remove('primary');
+      btn.classList.add('soft');
+    }
+  }
+  
+  function injectHeaderButton() {
+    if (document.getElementById('syncBtn')) return;
+    const backupBtn = document.querySelector('[data-action="backup"]');
+    if (!backupBtn) return;
+    const btn = document.createElement('button');
+    btn.id = 'syncBtn';
+    btn.type = 'button';
+    btn.className = 'btn soft';
+    btn.title = 'همگامسازی با Google Sheets';
+    btn.setAttribute('aria-label', 'همگامسازی با Google Sheets');
+    btn.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span class="sync-label">همگامسازی</span>';
+    btn.onclick = openSyncModal;
+    backupBtn.parentNode.insertBefore(btn, backupBtn);
+    updateSyncBtnStyle();
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectHeaderButton);
+  } else {
+    injectHeaderButton();
+  }
+})();
+</script>
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3a8694b59b8237d',t:'MTc4OTMxNTcxMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
