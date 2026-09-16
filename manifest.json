@@ -4,8 +4,8 @@
   "description": "پلتفرم آموزشی حکیمستان",
   "start_url": "/hakimestan/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#245baa",
+  "background_color": "#120a1e",
+  "theme_color": "#5b4a9e",
   "icons": [
     {
       "src": "icon.svg",
