@@ -1,6 +1,6 @@
 /*!
- * back-to-lobby.js — دکمهٔ بازگشت که فقط توی صفحهٔ اول دیده می‌شه
- * نسخه: 3.0.0
+ * back-to-lobby.js — نوار بازگشت به لابی (بالای صفحه)
+ * نسخه: 2.0.0
  * ساخته مهدی شریفیان
  */
 (function () {
@@ -14,110 +14,108 @@
     return;
   }
 
+  // ── استایل ──
   var css = ''
-    + '.btl-wrap{'
+    + '.btl-bar{'
     +   'position:fixed;'
-    +   'bottom:calc(20px + env(safe-area-inset-bottom,0px));'
-    +   'right:calc(20px + env(safe-area-inset-right,0px));'
-    +   'z-index:9999;'
+    +   'top:0;left:0;right:0;'
+    +   'z-index:99999;'
+    +   'display:flex;align-items:center;'
+    +   'padding:8px 14px;'
+    +   'padding-top:calc(8px + env(safe-area-inset-top,0px));'
+    +   'background:linear-gradient(180deg,rgba(13,10,31,.92),rgba(13,10,31,.78));'
+    +   'backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);'
+    +   'border-bottom:1px solid rgba(245,199,106,.2);'
     +   'font-family:Vazirmatn,Tahoma,sans-serif;'
     +   'direction:rtl;'
-    +   'transition:opacity .5s ease,transform .5s ease;'
-    +   'opacity:1;transform:translateY(0);'
+    +   'transition:transform .3s,opacity .3s;'
     + '}'
-    + '.btl-wrap.btl-hidden{'
-    +   'opacity:0;'
-    +   'transform:translateY(20px);'
-    +   'pointer-events:none;'
-    + '}'
-    + '.btl-btn{'
-    +   'display:inline-flex;align-items:center;justify-content:center;gap:8px;'
-    +   'padding:12px 20px;'
-    +   'background:linear-gradient(145deg,#8b5cf6,#6d28d9);'
-    +   'color:#fff;'
-    +   'font-size:.85rem;font-weight:800;'
-    +   'text-decoration:none;'
+    + '.btl-bar.btl-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}'
+    + '.btl-link{'
+    +   'display:inline-flex;align-items:center;gap:6px;'
+    +   'padding:6px 14px;'
+    +   'background:linear-gradient(145deg,rgba(139,92,246,.25),rgba(109,40,217,.15));'
+    +   'border:1.5px solid rgba(167,139,250,.5);'
+    +   'color:#e0d4ff;'
     +   'border-radius:99px;'
-    +   'border:2px solid rgba(255,255,255,.35);'
-    +   'box-shadow:0 10px 30px rgba(109,40,217,.5);'
+    +   'font-size:.8rem;font-weight:800;'
+    +   'text-decoration:none;'
+    +   'transition:transform .2s,box-shadow .2s,border-color .2s;'
     +   'cursor:pointer;'
-    +   'transition:transform .2s,box-shadow .2s;'
-    +   'animation:btlPulse 2.5s ease-in-out infinite;'
     + '}'
-    + '.btl-btn:hover{'
-    +   'transform:translateY(-2px) scale(1.03);'
-    +   'box-shadow:0 14px 36px rgba(109,40,217,.7);'
+    + '.btl-link:hover{'
+    +   'transform:translateY(-1px);'
+    +   'border-color:#a78bfa;'
+    +   'box-shadow:0 4px 14px rgba(139,92,246,.4);'
     + '}'
-    + '.btl-btn:active{transform:translateY(0) scale(.97)}'
-    + '@keyframes btlPulse{'
-    +   '0%,100%{box-shadow:0 10px 30px rgba(109,40,217,.5),0 0 0 0 rgba(139,92,246,.45)}'
-    +   '50%{box-shadow:0 10px 30px rgba(109,40,217,.5),0 0 0 12px rgba(139,92,246,0)}'
+    + '.btl-link:active{transform:translateY(0) scale(.97)}'
+    + '.btl-title{'
+    +   'flex:1;text-align:center;'
+    +   'color:#f5c76a;'
+    +   'font-size:.82rem;font-weight:800;'
+    +   'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'
+    +   'padding:0 10px;'
     + '}'
+    + '.btl-spacer{width:90px;flex-shrink:0}'
+    + 'body{padding-top:52px !important}'
     + '@media(max-width:480px){'
-    +   '.btl-wrap{bottom:calc(14px + env(safe-area-inset-bottom,0px));right:calc(14px + env(safe-area-inset-right,0px))}'
-    +   '.btl-btn{padding:10px 16px;font-size:.78rem}'
-    + '}'
-    + '@media (prefers-reduced-motion:reduce){'
-    +   '.btl-btn{animation:none}'
+    +   '.btl-bar{padding:6px 10px;padding-top:calc(6px + env(safe-area-inset-top,0px))}'
+    +   '.btl-link{padding:5px 10px;font-size:.72rem}'
+    +   '.btl-title{font-size:.74rem}'
+    +   '.btl-spacer{width:70px}'
+    +   'body{padding-top:46px !important}'
     + '}';
 
+  // ── تزریق استایل ──
   var style = document.createElement('style');
   style.textContent = css;
   document.head.appendChild(style);
 
-  function attach() {
+  // ── ساخت نوار ──
+  function makeBar() {
+    // اگه body نبود، صبر کن
     if (!document.body) {
-      document.addEventListener('DOMContentLoaded', attach);
+      document.addEventListener('DOMContentLoaded', makeBar);
       return;
     }
-    if (document.querySelector('.btl-wrap')) return;
 
-    var wrap = document.createElement('div');
-    wrap.className = 'btl-wrap';
-    var link = document.createElement('a');
-    link.className = 'btl-btn';
-    link.href = LOBBY_URL;
-    link.setAttribute('aria-label', 'بازگشت به لابی حکیمستان');
-    link.innerHTML = '🏠 بازگشت به لابی';
-    wrap.appendChild(link);
-    document.body.appendChild(wrap);
+    // اگه قبلاً اضافه شده، تکرار نکن
+    if (document.querySelector('.btl-bar')) return;
 
-    // ── مخفی کردن دکمه وقتی کاربر با صفحه تعامل می‌کنه ──
-    var hidden = false;
-    function hideOnce() {
-      if (hidden) return;
-      hidden = true;
-      wrap.classList.add('btl-hidden');
-      // پاک‌کردن listener ها بعد از اولین تعامل
-      document.removeEventListener('click', hideOnce, true);
-      document.removeEventListener('touchstart', hideOnce, true);
-      document.removeEventListener('keydown', hideOnce, true);
-    }
+    var title = document.title || 'حکیمستان';
+    // حذف ایموجی‌های اول عنوان برای تمیزی
+    title = title.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]+\s*/u, '').trim();
+    if (title.length > 40) title = title.slice(0, 38) + '…';
 
-    // با اولین کلیک، لمس، یا کلید → محو شو
-    // ولی اگه کاربر روی خود دکمه کلیک کرد، محو نشو (که کار کنه)
-    document.addEventListener('click', function (e) {
-      if (e.target.closest('.btl-wrap')) return;
-      hideOnce();
-    }, true);
-    document.addEventListener('touchstart', function (e) {
-      if (e.target.closest('.btl-wrap')) return;
-      hideOnce();
-    }, true);
-    document.addEventListener('keydown', function (e) {
-      // کلیدهای حرکتی رو نادیده بگیر
-      if (['Tab', 'Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) return;
-      hideOnce();
-    }, true);
+    var bar = document.createElement('div');
+    bar.className = 'btl-bar';
+    bar.setAttribute('role', 'navigation');
+    bar.setAttribute('aria-label', 'نوار بازگشت به لابی');
+    bar.innerHTML =
+      '<a class="btl-link" href="' + LOBBY_URL + '" aria-label="بازگشت به لابی حکیمستان">🏠 بازگشت به لابی</a>' +
+      '<div class="btl-title">' + title.replace(/[<>&]/g, '') + '</div>' +
+      '<div class="btl-spacer"></div>';
 
-    // اگه کاربر اسکرول کرد، هم محو شو
-    var lastY = window.scrollY;
+    document.body.insertBefore(bar, document.body.firstChild);
+
+    // اگه کاربر اسکرول کرد پایین، نوار محو بشه
+    var lastY = 0;
+    var ticking = false;
     window.addEventListener('scroll', function () {
-      if (Math.abs(window.scrollY - lastY) > 60) {
-        hideOnce();
-      }
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY;
+        if (y > 300 && y > lastY) {
+          bar.classList.add('btl-hidden');
+        } else {
+          bar.classList.remove('btl-hidden');
+        }
+        lastY = y;
+        ticking = false;
+      });
     }, { passive: true });
   }
 
-  attach();
+  makeBar();
 })();
