@@ -251,5 +251,747 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
 
 /* آغاز */
 </script>
+  <script>
+/* ══════════════════════════════════════════════════════════════════
+ * دفتر معلم کامل در پنل معلم
+ * CRUD: کلاس‌ها، دانش‌آموزان، نمره‌ها، حضور و غیاب
+ * فقط از tpClassGetAll و tpClassSaveAll استفاده می‌کند
+ * ══════════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+  
+  const API    = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  const K_PASS = 'hakimestan_daftar_pass';
+  const K_LAST = 'hakimestan_daftar_last_sync';
+  const K_DATA = 'hakimestan_daftar_v1';
+  
+  const ls = {
+    get: k => { try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set: (k,v) => { try { v ? localStorage.setItem(k,v) : localStorage.removeItem(k); } catch(e){} }
+  };
+  
+  let cache = null;
+  let cacheToken = null;
+  let busy = false;
+  
+  async function api(action, payload) {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(Object.assign({action}, payload || {})),
+      redirect: 'follow'
+    });
+    if (!res.ok) throw new Error('ارتباط برقرار نشد (' + res.status + ')');
+    const data = await res.json();
+    if (data && data.ok === false) throw new Error(data.error || 'خطای نامشخص');
+    return data;
+  }
+  
+  async function login() {
+    const pw = ls.get(K_PASS);
+    if (!pw) throw new Error('رمز معلم ذخیره نشده است. اول در دفتر معلم، روی 🛡️ همگام‌سازی بزن.');
+    if (cacheToken) return cacheToken;
+    const r = await api('tpLogin', {password: pw});
+    if (!r.token) throw new Error('توکن دریافت نشد.');
+    cacheToken = r.token;
+    return cacheToken;
+  }
+  
+  async function loadDB(force) {
+    if (cache && !force) return cache;
+    const token = await login();
+    const r = await api('tpClassGetAll', {token});
+    cache = r.data || {version:1, settings:{}, classes:[], students:[], schedule:[], attendance:{}, grades:[], reminders:[]};
+    ['classes','students','grades','schedule','reminders'].forEach(k => {
+      if (!Array.isArray(cache[k])) cache[k] = [];
+    });
+    if (!cache.attendance || typeof cache.attendance !== 'object') cache.attendance = {};
+    return cache;
+  }
+  
+  async function saveDB(db) {
+    if (busy) throw new Error('در حال ذخیره...');
+    busy = true;
+    try {
+      const token = await login();
+      db.updatedAt = new Date().toISOString();
+      await api('tpClassSaveAll', {token, data: db});
+      cache = db;
+      try { localStorage.setItem(K_LAST, new Date().toISOString()); } catch(e){}
+      try { localStorage.setItem(K_DATA, JSON.stringify(db)); } catch(e){}
+    } finally { busy = false; }
+  }
+  
+  function fa(s) { return String(s).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[Number(c)]); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function uid() { return window.crypto?.randomUUID ? crypto.randomUUID() : 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2); }
+  function fmtDate(iso) { if (!iso) return '—'; try { return new Date(iso).toLocaleString('fa-IR'); } catch(e){ return iso; } }
+  function avg(gs) {
+    const w = gs.reduce((s,g)=>s+(Number(g.weight)||1), 0);
+    if (!w) return null;
+    return gs.reduce((s,g)=>s+(Number(g.score)||0)*(Number(g.weight)||1), 0) / w;
+  }
+  function fullName(s) { return [s.first, s.last].filter(Boolean).join(' '); }
+  function klass(id) { return (cache?.classes||[]).find(c => c.id === id); }
+  function student(id) { return (cache?.students||[]).find(s => s.id === id); }
+  function notify(msg, err) {
+    const t = document.getElementById('dkToast');
+    if (!t) return;
+    t.textContent = msg;
+    t.style.background = err ? '#c53030' : '#1e6f47';
+    t.style.opacity = '1';
+    t.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(t._t);
+    t._t = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(20px)'; }, 3500);
+  }
+  function v(id) { return document.getElementById(id)?.value ?? ''; }
+  function num(s) {
+    return Number(String(s).replace(/[۰-۹]/g, c => '۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).replace(/[٠-٩]/g, c => '٠١٢٣٤٥٦٧٨٩'.indexOf(c)).replace('٫','.').trim());
+  }
+  function req(s, label) { s = String(s||'').trim(); if (!s) throw new Error(label + ' را وارد کنید.'); return s; }
+  function todayISO() {
+    const p = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+    const o = Object.fromEntries(p.map(x => [x.type, x.value]));
+    return `${o.year}-${o.month}-${o.day}`;
+  }
+  function jalali(iso) {
+    if (!iso) return '—';
+    try {
+      return new Intl.DateTimeFormat('fa-IR-u-ca-persian', {dateStyle:'short', timeZone:'UTC'}).format(new Date(iso + 'T12:00:00Z'));
+    } catch(e){ return iso; }
+  }
+  function parseDateToISO(s) {
+    s = String(s||'').trim();
+    if (!s) return todayISO();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    const norm = s.replace(/[۰-۹]/g, c => '۰۱۲۳۴۵۶۷۸۹'.indexOf(c));
+    const m = norm.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/);
+    if (!m) return todayISO();
+    let [y, mo, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
+    if (y < 1500) {
+      // شمسی به میلادی (تقریبی)
+      y += 621;
+    }
+    return `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+  
+  const CSS = `
+    .dk-overlay{position:fixed;inset:0;background:rgba(4,3,13,.78);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;direction:rtl;font-family:var(--font,'Vazirmatn',Tahoma,sans-serif)}
+    .dk-modal{background:var(--card,#17122f);border:1px solid var(--line,rgba(245,199,106,.24));border-radius:22px;max-width:960px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.5);color:var(--text,#f7f3ff);overflow:hidden}
+    .dk-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .dk-head-icon{width:42px;height:42px;border-radius:13px;background:color-mix(in srgb,var(--gold,#f5c76a) 14%,transparent);color:var(--gold);display:grid;place-items:center;font-size:20px;flex-shrink:0}
+    .dk-head-title{font-size:18px;font-weight:800;line-height:1.3;color:var(--gold)}
+    .dk-head-sub{font-size:11px;color:var(--muted,#afa5d0);margin-top:2px}
+    .dk-close{border:1px solid var(--line);background:var(--input,rgba(255,255,255,.065));color:var(--text);width:40px;height:40px;border-radius:11px;font-size:20px;cursor:pointer;flex-shrink:0;margin-inline-start:auto}
+    .dk-tabs{display:flex;gap:2px;padding:0 12px;border-bottom:1px solid var(--line);overflow-x:auto;flex-shrink:0}
+    .dk-tab{border:0;background:none;padding:13px 14px;font-size:12px;font-family:inherit;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
+    .dk-tab.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:700;background:linear-gradient(transparent,color-mix(in srgb,var(--gold) 8%,transparent))}
+    .dk-body{padding:20px 22px;overflow-y:auto;flex:1;min-height:0}
+    .dk-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
+    .dk-stat{background:var(--input);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:center;gap:10px}
+    .dk-stat-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+    .dk-stat-num{font-size:20px;font-weight:800;line-height:1.2;color:var(--gold)}
+    .dk-stat-lbl{font-size:10px;color:var(--muted);margin-top:2px}
+    .dk-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;border:1px solid var(--line);background:var(--input);color:var(--text);border-radius:11px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;min-height:38px;transition:.2s}
+    .dk-btn:hover{border-color:var(--gold);color:var(--gold)}
+    .dk-btn:disabled{opacity:.5;cursor:not-allowed}
+    .dk-btn-primary{background:linear-gradient(155deg,var(--gold),var(--gold-2,#c9913a));border-color:transparent;color:#241506;font-weight:800}
+    .dk-btn-primary:hover{transform:translateY(-1px);filter:brightness(1.05);color:#241506}
+    .dk-btn-danger{background:color-mix(in srgb,var(--bad,#fb7185) 14%,transparent);border-color:color-mix(in srgb,var(--bad) 38%,transparent);color:var(--bad)}
+    .dk-btn-danger:hover{border-color:var(--bad);color:var(--bad)}
+    .dk-btn-soft{background:color-mix(in srgb,var(--info,#38bdf8) 12%,transparent);border-color:transparent;color:var(--info)}
+    .dk-btn-soft:hover{border-color:var(--info);color:var(--info)}
+    .dk-btn-icon{padding:8px;width:36px;min-height:36px;justify-content:center}
+    .dk-btn-sm{padding:6px 10px;font-size:11px;min-height:32px}
+    .dk-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+    .dk-grow{flex:1;min-width:180px}
+    .dk-field{margin-bottom:12px}
+    .dk-label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+    .dk-input{width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:11px;background:var(--input);color:var(--text);font-family:inherit;font-size:13px;min-height:42px;box-sizing:border-box;outline:none}
+    .dk-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 11%,transparent)}
+    .dk-input option{background:var(--card);color:var(--text)}
+    .dk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:600px){.dk-grid{grid-template-columns:1fr}}
+    .dk-card{background:var(--input);border:1px solid var(--line);border-radius:14px;padding:14px;border-top:4px solid var(--cc,var(--gold))}
+    .dk-card+.dk-card{margin-top:10px}
+    .dk-card-title{font-weight:800;font-size:14px;color:var(--text)}
+    .dk-card-meta{font-size:11px;color:var(--muted);margin-top:3px}
+    .dk-table{width:100%;border-collapse:collapse;font-size:12px}
+    .dk-table th{background:color-mix(in srgb,var(--gold) 10%,transparent);color:var(--gold);font-weight:600;padding:10px 12px;text-align:right;font-size:11px;white-space:nowrap}
+    .dk-table td{padding:10px 12px;border-top:1px solid color-mix(in srgb,var(--line) 70%,transparent);color:var(--text)}
+    .dk-table tr:hover td{background:color-mix(in srgb,var(--gold) 6%,transparent)}
+    .dk-empty{text-align:center;padding:34px 16px;color:var(--muted);font-size:13px}
+    .dk-empty-icon{font-size:42px;margin-bottom:10px;opacity:.55}
+    .dk-form-title{font-size:16px;font-weight:800;margin:0 0 14px;color:var(--gold)}
+    .dk-form-actions{display:flex;gap:8px;justify-content:flex-end;padding-top:14px;border-top:1px solid var(--line);margin-top:16px}
+    .dk-alert{background:color-mix(in srgb,var(--bad) 12%,transparent);border:1px solid color-mix(in srgb,var(--bad) 38%,transparent);color:var(--bad);padding:11px 14px;border-radius:11px;font-size:12px;margin-bottom:14px;line-height:1.8}
+    .dk-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;font-size:10px;font-weight:600;background:color-mix(in srgb,var(--info) 14%,transparent);color:var(--info)}
+    .dk-pill-green{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+    #dkToast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e6f47;color:#fff;padding:12px 22px;border-radius:14px;font-size:13px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;transition:all .3s;z-index:100000;pointer-events:none;max-width:90vw;text-align:center}
+    @media (max-width:600px){
+      .dk-body{padding:16px}
+      .dk-head{padding:14px 16px}
+      .dk-tab{padding:11px 10px;font-size:11px}
+      .dk-btn{padding:8px 11px;font-size:11px;min-height:36px}
+    }
+  `;
+  
+  const ui = { tab:'classes', editingClass:null, editingStudent:null, editingGrade:null, filterClass:'' };
+  
+  function openModal() {
+    document.getElementById('dkOverlay')?.remove();
+    const el = document.createElement('div');
+    el.className = 'dk-overlay';
+    el.id = 'dkOverlay';
+    el.innerHTML = `
+      <div class="dk-modal" role="dialog" aria-modal="true">
+        <div class="dk-head">
+          <div class="dk-head-icon">📓</div>
+          <div>
+            <div class="dk-head-title">دفتر معلم</div>
+            <div class="dk-head-sub" id="dkLastSync"></div>
+          </div>
+          <button class="dk-close" id="dkClose" aria-label="بستن">×</button>
+        </div>
+        <div class="dk-tabs" id="dkTabs">
+          <button class="dk-tab" data-tab="classes">📚 کلاس‌ها</button>
+          <button class="dk-tab" data-tab="students">👥 دانش‌آموزان</button>
+          <button class="dk-tab" data-tab="grades">📝 نمره‌ها</button>
+          <button class="dk-tab" data-tab="attendance">✅ حضور و غیاب</button>
+        </div>
+        <div class="dk-body" id="dkBody"></div>
+      </div>
+      <div id="dkToast"></div>
+    `;
+    document.body.appendChild(el);
+    document.getElementById('dkClose').onclick = closeModal;
+    el.onclick = e => { if (e.target === el) closeModal(); };
+    document.addEventListener('keydown', escClose);
+    document.querySelectorAll('#dkTabs .dk-tab').forEach(b => {
+      b.onclick = () => { ui.tab = b.dataset.tab; ui.editingClass = null; ui.editingStudent = null; ui.editingGrade = null; renderTabs(); renderBody(); };
+    });
+    renderTabs();
+    loadAndRender();
+  }
+  
+  function escClose(e) { if (e.key === 'Escape') closeModal(); }
+  function closeModal() {
+    document.getElementById('dkOverlay')?.remove();
+    document.removeEventListener('keydown', escClose);
+  }
+  
+  function renderTabs() {
+    document.querySelectorAll('#dkTabs .dk-tab').forEach(b => {
+      b.classList.toggle('on', b.dataset.tab === ui.tab);
+    });
+    const last = ls.get(K_LAST);
+    const el = document.getElementById('dkLastSync');
+    if (el) el.textContent = 'آخرین همگام‌سازی: ' + (last ? fmtDate(last) : '—');
+  }
+  
+  async function loadAndRender() {
+    const body = document.getElementById('dkBody');
+    body.innerHTML = '<div class="dk-empty"><div class="dk-empty-icon">⏳</div><div>در حال بارگذاری…</div></div>';
+    try {
+      await loadDB(!cache);
+      renderBody();
+    } catch(e) {
+      body.innerHTML = `<div class="dk-alert"><b>خطا:</b> ${esc(e.message)}</div>`;
+    }
+  }
+  
+  function renderBody() {
+    const body = document.getElementById('dkBody');
+    if (ui.tab === 'classes') return renderClasses(body);
+    if (ui.tab === 'students') return renderStudents(body);
+    if (ui.tab === 'grades') return renderGrades(body);
+    if (ui.tab === 'attendance') return renderAttendance(body);
+  }
+  
+  function renderStats() {
+    const classes = cache.classes||[];
+    const students = cache.students||[];
+    const grades = cache.grades||[];
+    let att = 0;
+    for (const cid of Object.keys(cache.attendance||{})) {
+      const days = cache.attendance[cid]||{};
+      for (const d of Object.keys(days)) att += Object.keys(days[d]||{}).length;
+    }
+    const s = (icon, val, lbl, color) => `
+      <div class="dk-stat"><div class="dk-stat-icon" style="background:${color}22;color:${color}">${icon}</div>
+      <div><div class="dk-stat-num">${fa(val)}</div><div class="dk-stat-lbl">${lbl}</div></div></div>`;
+    return `<div class="dk-stat-grid">
+      ${s('📚', classes.length, 'کلاس', '#3b82f6')}
+      ${s('👥', students.length, 'دانش‌آموز', '#22c55e')}
+      ${s('📝', grades.length, 'نمره', '#a855f7')}
+      ${s('✅', att, 'ثبت حضور', '#f97316')}
+    </div>`;
+  }
+  
+  function renderClasses(body) {
+    const classes = cache.classes||[];
+    let html = renderStats();
+    if (ui.editingClass !== null) {
+      const c = ui.editingClass === '__new__'
+        ? {id:uid(), name:'', grade:'', subject:'', color:'#3b82f6'}
+        : classes.find(x => x.id === ui.editingClass);
+      if (!c) { ui.editingClass = null; return renderClasses(body); }
+      html += `
+        <h3 class="dk-form-title">${ui.editingClass === '__new__' ? '➕ کلاس جدید' : '✏️ ویرایش کلاس'}</h3>
+        <div class="dk-grid">
+          <div class="dk-field"><label class="dk-label">نام کلاس *</label><input class="dk-input" id="dkCName" value="${esc(c.name)}" placeholder="مثلاً پنجم الف"></div>
+          <div class="dk-field"><label class="dk-label">پایه</label><input class="dk-input" id="dkCGrade" value="${esc(c.grade||'')}" placeholder="مثلاً پنجم"></div>
+          <div class="dk-field"><label class="dk-label">درس اصلی</label><input class="dk-input" id="dkCSubject" value="${esc(c.subject||'')}" placeholder="مثلاً ریاضی"></div>
+          <div class="dk-field"><label class="dk-label">رنگ کلاس</label><input class="dk-input" type="color" id="dkCColor" value="${esc(c.color||'#3b82f6')}" style="height:42px;padding:4px"></div>
+        </div>
+        <div id="dkCErr"></div>
+        <div class="dk-form-actions">
+          <button class="dk-btn" id="dkCCancel">انصراف</button>
+          <button class="dk-btn dk-btn-primary" id="dkCSave">${ui.editingClass === '__new__' ? 'افزودن کلاس' : 'ذخیره'}</button>
+        </div>
+      `;
+      body.innerHTML = html;
+      document.getElementById('dkCCancel').onclick = () => { ui.editingClass = null; renderBody(); };
+      document.getElementById('dkCSave').onclick = async () => {
+        const errEl = document.getElementById('dkCErr');
+        try {
+          const name = req(v('dkCName'), 'نام کلاس');
+          const obj = {id: c.id, name, grade: v('dkCGrade').trim(), subject: v('dkCSubject').trim(), color: v('dkCColor')};
+          const db = JSON.parse(JSON.stringify(cache));
+          if (ui.editingClass === '__new__') {
+            db.classes.push(obj);
+          } else {
+            const i = db.classes.findIndex(x => x.id === c.id);
+            db.classes[i] = obj;
+          }
+          await saveDB(db);
+          notify('✅ کلاس ذخیره شد');
+          ui.editingClass = null;
+          renderBody();
+        } catch(e) {
+          errEl.innerHTML = `<div class="dk-alert">${esc(e.message)}</div>`;
+        }
+      };
+      return;
+    }
+    html += `
+      <div class="dk-toolbar">
+        <button class="dk-btn dk-btn-primary" id="dkCNew">➕ کلاس جدید</button>
+        <div class="dk-grow"></div>
+        <button class="dk-btn dk-btn-soft" id="dkCRefresh">🔄 دریافت مجدد</button>
+      </div>
+    `;
+    if (!classes.length) {
+      html += `<div class="dk-empty"><div class="dk-empty-icon">📚</div><div>هنوز کلاسی نیست</div><div style="margin-top:6px;font-size:11px">با دکمهٔ بالا اولین کلاس را بساز</div></div>`;
+    } else {
+      html += classes.map(c => {
+        const roster = (cache.students||[]).filter(s => s.classId === c.id);
+        const gs = (cache.grades||[]).filter(g => g.classId === c.id);
+        const mean = avg(gs);
+        return `
+          <div class="dk-card" style="--cc:${esc(c.color||'#3b82f6')}">
+            <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start">
+              <div style="min-width:0">
+                <div class="dk-card-title">${esc(c.name)}</div>
+                <div class="dk-card-meta">پایه ${esc(c.grade||'—')} · ${esc(c.subject||'—')}</div>
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+                  <span class="dk-pill">👥 ${fa(roster.length)} نفر</span>
+                  <span class="dk-pill">📝 ${fa(gs.length)} نمره</span>
+                  ${mean !== null ? `<span class="dk-pill dk-pill-green">📊 ${fa(mean.toFixed(2))}</span>` : ''}
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;flex-shrink:0">
+                <button class="dk-btn dk-btn-icon" data-act="edit" data-id="${c.id}" title="ویرایش">✏️</button>
+                <button class="dk-btn dk-btn-icon dk-btn-danger" data-act="del" data-id="${c.id}" title="حذف">🗑️</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    body.innerHTML = html;
+    document.getElementById('dkCNew').onclick = () => { ui.editingClass = '__new__'; renderBody(); };
+    document.getElementById('dkCRefresh').onclick = async () => { cache = null; cacheToken = null; await loadAndRender(); };
+    body.querySelectorAll('[data-act="edit"]').forEach(b => b.onclick = () => { ui.editingClass = b.dataset.id; renderBody(); });
+    body.querySelectorAll('[data-act="del"]').forEach(b => b.onclick = async () => {
+      const c = klass(b.dataset.id);
+      if (!c) return;
+      const nS = (cache.students||[]).filter(s => s.classId === c.id).length;
+      const nG = (cache.grades||[]).filter(g => g.classId === c.id).length;
+      if (!confirm(`حذف کلاس «${c.name}»؟\n\nهمراهش ${nS} دانش‌آموز و ${nG} نمره و همهٔ حضورهای این کلاس پاک می‌شود.\n\nمطمئنی؟`)) return;
+      try {
+        const db = JSON.parse(JSON.stringify(cache));
+        db.classes = db.classes.filter(x => x.id !== c.id);
+        db.students = db.students.filter(x => x.classId !== c.id);
+        db.grades = db.grades.filter(x => x.classId !== c.id);
+        if (db.attendance && db.attendance[c.id]) delete db.attendance[c.id];
+        db.schedule = (db.schedule||[]).filter(x => x.classId !== c.id);
+        await saveDB(db);
+        notify('✅ کلاس حذف شد');
+        renderBody();
+      } catch(e) { notify('❌ ' + e.message, true); }
+    });
+  }
+  
+  function renderStudents(body) {
+    const classes = cache.classes||[];
+    const allStudents = cache.students||[];
+    let html = renderStats();
+    if (ui.editingStudent !== null) {
+      const s = ui.editingStudent === '__new__'
+        ? {id:uid(), classId: ui.filterClass || classes[0]?.id || '', first:'', last:'', code:'', phone:'', note:''}
+        : allStudents.find(x => x.id === ui.editingStudent);
+      if (!s) { ui.editingStudent = null; return renderStudents(body); }
+      html += `
+        <h3 class="dk-form-title">${ui.editingStudent === '__new__' ? '➕ دانش‌آموز جدید' : '✏️ ویرایش دانش‌آموز'}</h3>
+        <div class="dk-grid">
+          <div class="dk-field"><label class="dk-label">کلاس *</label>
+            <select class="dk-input" id="dkSClass">
+              ${classes.map(c => `<option value="${c.id}" ${c.id===s.classId?'selected':''}>${esc(c.name)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="dk-field"><label class="dk-label">نام *</label><input class="dk-input" id="dkSFirst" value="${esc(s.first)}"></div>
+          <div class="dk-field"><label class="dk-label">نام خانوادگی</label><input class="dk-input" id="dkSLast" value="${esc(s.last||'')}"></div>
+          <div class="dk-field"><label class="dk-label">کد دانش‌آموز</label><input class="dk-input" id="dkSCode" value="${esc(s.code||'')}" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">تلفن والدین</label><input class="dk-input" id="dkSPhone" value="${esc(s.phone||'')}" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">یادداشت</label><input class="dk-input" id="dkSNote" value="${esc(s.note||'')}"></div>
+        </div>
+        <div id="dkSErr"></div>
+        <div class="dk-form-actions">
+          <button class="dk-btn" id="dkSCancel">انصراف</button>
+          <button class="dk-btn dk-btn-primary" id="dkSSave">${ui.editingStudent === '__new__' ? 'افزودن' : 'ذخیره'}</button>
+        </div>
+      `;
+      body.innerHTML = html;
+      document.getElementById('dkSCancel').onclick = () => { ui.editingStudent = null; renderBody(); };
+      document.getElementById('dkSSave').onclick = async () => {
+        const errEl = document.getElementById('dkSErr');
+        try {
+          const obj = {
+            id: s.id,
+            classId: req(v('dkSClass'), 'کلاس'),
+            first: req(v('dkSFirst'), 'نام'),
+            last: v('dkSLast').trim(),
+            code: v('dkSCode').trim(),
+            phone: v('dkSPhone').trim(),
+            note: v('dkSNote').trim(),
+            reportNote: s.reportNote || ''
+          };
+          const db = JSON.parse(JSON.stringify(cache));
+          if (ui.editingStudent === '__new__') db.students.push(obj);
+          else {
+            const i = db.students.findIndex(x => x.id === s.id);
+            db.students[i] = obj;
+          }
+          await saveDB(db);
+          notify('✅ دانش‌آموز ذخیره شد');
+          ui.editingStudent = null;
+          renderBody();
+        } catch(e) { errEl.innerHTML = `<div class="dk-alert">${esc(e.message)}</div>`; }
+      };
+      return;
+    }
+    const filtered = ui.filterClass ? allStudents.filter(s => s.classId === ui.filterClass) : allStudents;
+    html += `
+      <div class="dk-toolbar">
+        <select class="dk-input dk-grow" id="dkSFilter">
+          <option value="">همهٔ کلاس‌ها (${fa(allStudents.length)} نفر)</option>
+          ${classes.map(c => {
+            const n = allStudents.filter(s => s.classId === c.id).length;
+            return `<option value="${c.id}" ${c.id===ui.filterClass?'selected':''}>${esc(c.name)} (${fa(n)} نفر)</option>`;
+          }).join('')}
+        </select>
+        <button class="dk-btn dk-btn-primary" id="dkSNew" ${!classes.length?'disabled':''}>➕ افزودن</button>
+        <button class="dk-btn dk-btn-soft" id="dkSRefresh">🔄</button>
+      </div>
+    `;
+    if (!filtered.length) {
+      html += `<div class="dk-empty"><div class="dk-empty-icon">👥</div><div>${allStudents.length ? 'در این کلاس دانش‌آموزی نیست' : 'هنوز دانش‌آموزی نیست'}</div></div>`;
+    } else {
+      html += `
+        <div style="overflow-x:auto;border:1px solid var(--line);border-radius:12px">
+          <table class="dk-table">
+            <thead><tr>
+              <th>نام</th><th>کلاس</th><th>کد</th><th>تلفن</th><th style="width:90px">عملیات</th>
+            </tr></thead>
+            <tbody>
+              ${filtered.map(s => {
+                const c = klass(s.classId);
+                return `<tr>
+                  <td>${esc(fullName(s))}</td>
+                  <td>${esc(c?c.name:'—')}</td>
+                  <td style="direction:ltr;text-align:right;color:var(--muted);font-size:11px">${esc(s.code||'—')}</td>
+                  <td style="direction:ltr;text-align:right;color:var(--muted);font-size:11px">${esc(s.phone||'—')}</td>
+                  <td>
+                    <div style="display:flex;gap:4px">
+                      <button class="dk-btn dk-btn-icon dk-btn-sm" data-act="edit" data-id="${s.id}" title="ویرایش">✏️</button>
+                      <button class="dk-btn dk-btn-icon dk-btn-sm dk-btn-danger" data-act="del" data-id="${s.id}" title="حذف">🗑️</button>
+                    </div>
+                  </td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+    body.innerHTML = html;
+    document.getElementById('dkSFilter').onchange = e => { ui.filterClass = e.target.value; renderBody(); };
+    document.getElementById('dkSNew').onclick = () => { ui.editingStudent = '__new__'; renderBody(); };
+    document.getElementById('dkSRefresh').onclick = async () => { cache = null; cacheToken = null; await loadAndRender(); };
+    body.querySelectorAll('[data-act="edit"]').forEach(b => b.onclick = () => { ui.editingStudent = b.dataset.id; renderBody(); });
+    body.querySelectorAll('[data-act="del"]').forEach(b => b.onclick = async () => {
+      const s = student(b.dataset.id);
+      if (!s) return;
+      if (!confirm(`حذف «${fullName(s)}»؟\n\nهمهٔ نمره‌ها و حضورهای این دانش‌آموز هم پاک می‌شود.`)) return;
+      try {
+        const db = JSON.parse(JSON.stringify(cache));
+        db.students = db.students.filter(x => x.id !== s.id);
+        db.grades = db.grades.filter(x => x.studentId !== s.id);
+        for (const cid of Object.keys(db.attendance||{})) {
+          for (const d of Object.keys(db.attendance[cid]||{})) {
+            if (db.attendance[cid][d]) delete db.attendance[cid][d][s.id];
+          }
+        }
+        await saveDB(db);
+        notify('✅ دانش‌آموز حذف شد');
+        renderBody();
+      } catch(e) { notify('❌ ' + e.message, true); }
+    });
+  }
+  
+  function renderGrades(body) {
+    const classes = cache.classes||[];
+    const allGrades = cache.grades||[];
+    const students = cache.students||[];
+    let html = renderStats();
+    if (ui.editingGrade !== null) {
+      const g = ui.editingGrade === '__new__'
+        ? {id:uid(), classId: ui.filterClass || classes[0]?.id || '', studentId:'', subject:'', title:'', type:'امتحان', date: todayISO(), score:'', weight:1, note:''}
+        : allGrades.find(x => x.id === ui.editingGrade);
+      if (!g) { ui.editingGrade = null; return renderGrades(body); }
+      const classStudents = students.filter(s => s.classId === g.classId);
+      html += `
+        <h3 class="dk-form-title">${ui.editingGrade === '__new__' ? '➕ نمرهٔ جدید' : '✏️ ویرایش نمره'}</h3>
+        <div class="dk-grid">
+          <div class="dk-field"><label class="dk-label">کلاس *</label>
+            <select class="dk-input" id="dkGClass">
+              ${classes.map(c => `<option value="${c.id}" ${c.id===g.classId?'selected':''}>${esc(c.name)}</option>`).join('')}
+            </select>
+          </div>
+          <div class="dk-field"><label class="dk-label">دانش‌آموز *</label>
+            <select class="dk-input" id="dkGStudent">
+              ${classStudents.map(s => `<option value="${s.id}" ${s.id===g.studentId?'selected':''}>${esc(fullName(s))}</option>`).join('')}
+            </select>
+          </div>
+          <div class="dk-field"><label class="dk-label">عنوان *</label><input class="dk-input" id="dkGTitle" value="${esc(g.title)}" placeholder="مثلاً فصل ۲"></div>
+          <div class="dk-field"><label class="dk-label">درس *</label><input class="dk-input" id="dkGSubject" value="${esc(g.subject)}" placeholder="مثلاً ریاضی"></div>
+          <div class="dk-field"><label class="dk-label">نوع</label>
+            <select class="dk-input" id="dkGType">
+              ${['امتحان','پرسش','تکلیف','فعالیت','انضباط'].map(t => `<option ${t===g.type?'selected':''}>${t}</option>`).join('')}
+            </select>
+          </div>
+          <div class="dk-field"><label class="dk-label">تاریخ (شمسی یا میلادی)</label><input class="dk-input" id="dkGDate" value="${esc(g.date)}" placeholder="۱۴۰۵/۰۶/۲۵" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">نمره (۰ تا ۲۰) *</label><input class="dk-input" id="dkGScore" value="${esc(g.score)}" inputmode="decimal" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">وزن</label><input class="dk-input" id="dkGWeight" value="${esc(g.weight||1)}" inputmode="decimal" style="direction:ltr"></div>
+          <div class="dk-field" style="grid-column:1/-1"><label class="dk-label">توضیح</label><input class="dk-input" id="dkGNote" value="${esc(g.note||'')}"></div>
+        </div>
+        <div id="dkGErr"></div>
+        <div class="dk-form-actions">
+          <button class="dk-btn" id="dkGCancel">انصراف</button>
+          <button class="dk-btn dk-btn-primary" id="dkGSave">${ui.editingGrade === '__new__' ? 'افزودن' : 'ذخیره'}</button>
+        </div>
+      `;
+      body.innerHTML = html;
+      const classSel = document.getElementById('dkGClass');
+      classSel.onchange = () => {
+        const cid = classSel.value;
+        const list = students.filter(s => s.classId === cid);
+        document.getElementById('dkGStudent').innerHTML = list.map(s => `<option value="${s.id}">${esc(fullName(s))}</option>`).join('');
+      };
+      document.getElementById('dkGCancel').onclick = () => { ui.editingGrade = null; renderBody(); };
+      document.getElementById('dkGSave').onclick = async () => {
+        const errEl = document.getElementById('dkGErr');
+        try {
+          const cid = req(v('dkGClass'), 'کلاس');
+          const sid = req(v('dkGStudent'), 'دانش‌آموز');
+          if (!student(sid) || student(sid).classId !== cid) throw new Error('دانش‌آموز با کلاس هم‌خوانی ندارد.');
+          const sc = num(v('dkGScore'));
+          if (!Number.isFinite(sc) || sc < 0 || sc > 20) throw new Error('نمره باید ۰ تا ۲۰ باشد.');
+          const wt = num(v('dkGWeight'));
+          if (!Number.isFinite(wt) || wt <= 0 || wt > 100) throw new Error('وزن باید بیشتر از ۰ و حداکثر ۱۰۰ باشد.');
+          const date = parseDateToISO(v('dkGDate'));
+          const obj = {
+            id: g.id, classId: cid, studentId: sid,
+            subject: req(v('dkGSubject'), 'درس'),
+            title: req(v('dkGTitle'), 'عنوان'),
+            type: v('dkGType'),
+            date, score: sc, weight: wt,
+            note: v('dkGNote').trim()
+          };
+          const db = JSON.parse(JSON.stringify(cache));
+          if (ui.editingGrade === '__new__') db.grades.push(obj);
+          else {
+            const i = db.grades.findIndex(x => x.id === g.id);
+            db.grades[i] = obj;
+          }
+          await saveDB(db);
+          notify('✅ نمره ذخیره شد');
+          ui.editingGrade = null;
+          renderBody();
+        } catch(e) { errEl.innerHTML = `<div class="dk-alert">${esc(e.message)}</div>`; }
+      };
+      return;
+    }
+    const filtered = ui.filterClass ? allGrades.filter(g => g.classId === ui.filterClass) : allGrades;
+    const sorted = filtered.slice().sort((a,b) => (b.date||'').localeCompare(a.date||''));
+    html += `
+      <div class="dk-toolbar">
+        <select class="dk-input dk-grow" id="dkGFilter">
+          <option value="">همهٔ کلاس‌ها (${fa(allGrades.length)} نمره)</option>
+          ${classes.map(c => {
+            const n = allGrades.filter(g => g.classId === c.id).length;
+            return `<option value="${c.id}" ${c.id===ui.filterClass?'selected':''}>${esc(c.name)} (${fa(n)})</option>`;
+          }).join('')}
+        </select>
+        <button class="dk-btn dk-btn-primary" id="dkGNew" ${(!classes.length||!students.length)?'disabled':''}>➕ نمره</button>
+        <button class="dk-btn dk-btn-soft" id="dkGRefresh">🔄</button>
+      </div>
+    `;
+    if (!sorted.length) {
+      html += `<div class="dk-empty"><div class="dk-empty-icon">📝</div><div>نمره‌ای ثبت نشده</div></div>`;
+    } else {
+      html += `
+        <div style="overflow-x:auto;border:1px solid var(--line);border-radius:12px">
+          <table class="dk-table">
+            <thead><tr><th>دانش‌آموز</th><th>عنوان</th><th>نوع</th><th>تاریخ</th><th>نمره</th><th style="width:90px">عملیات</th></tr></thead>
+            <tbody>
+              ${sorted.slice(0, 200).map(g => {
+                const s = student(g.studentId);
+                return `<tr>
+                  <td>${esc(s?fullName(s):'—')}</td>
+                  <td>${esc(g.title)}<div style="font-size:10px;color:var(--muted)">${esc(g.subject)}</div></td>
+                  <td>${esc(g.type)}</td>
+                  <td style="font-size:11px">${jalali(g.date)}</td>
+                  <td style="font-weight:700;color:var(--gold)">${fa(g.score)}</td>
+                  <td>
+                    <div style="display:flex;gap:4px">
+                      <button class="dk-btn dk-btn-icon dk-btn-sm" data-act="edit" data-id="${g.id}">✏️</button>
+                      <button class="dk-btn dk-btn-icon dk-btn-sm dk-btn-danger" data-act="del" data-id="${g.id}">🗑️</button>
+                    </div>
+                  </td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+        ${sorted.length > 200 ? `<div style="text-align:center;padding:12px;font-size:11px;color:var(--muted)">۲۰۰ نمرهٔ اول از ${fa(sorted.length)} نمایش داده می‌شود</div>` : ''}
+      `;
+    }
+    body.innerHTML = html;
+    document.getElementById('dkGFilter').onchange = e => { ui.filterClass = e.target.value; renderBody(); };
+    document.getElementById('dkGNew').onclick = () => { ui.editingGrade = '__new__'; renderBody(); };
+    document.getElementById('dkGRefresh').onclick = async () => { cache = null; cacheToken = null; await loadAndRender(); };
+    body.querySelectorAll('[data-act="edit"]').forEach(b => b.onclick = () => { ui.editingGrade = b.dataset.id; renderBody(); });
+    body.querySelectorAll('[data-act="del"]').forEach(b => b.onclick = async () => {
+      const g = allGrades.find(x => x.id === b.dataset.id);
+      if (!g) return;
+      if (!confirm(`حذف نمرهٔ «${g.title}»؟`)) return;
+      try {
+        const db = JSON.parse(JSON.stringify(cache));
+        db.grades = db.grades.filter(x => x.id !== g.id);
+        await saveDB(db);
+        notify('✅ نمره حذف شد');
+        renderBody();
+      } catch(e) { notify('❌ ' + e.message, true); }
+    });
+  }
+  
+  function renderAttendance(body) {
+    const classes = cache.classes||[];
+    const students = cache.students||[];
+    let html = renderStats();
+    const filter = ui.filterClass || classes[0]?.id || '';
+    const att = cache.attendance[filter] || {};
+    const dates = Object.keys(att).sort().reverse();
+    html += `
+      <div class="dk-toolbar">
+        <select class="dk-input dk-grow" id="dkAFilter">
+          ${classes.map(c => `<option value="${c.id}" ${c.id===filter?'selected':''}>${esc(c.name)}</option>`).join('')}
+        </select>
+        <button class="dk-btn dk-btn-soft" id="dkARefresh">🔄</button>
+      </div>
+    `;
+    if (!classes.length) {
+      html += `<div class="dk-empty"><div class="dk-empty-icon">✅</div><div>اول کلاس بساز</div></div>`;
+    } else if (!dates.length) {
+      html += `<div class="dk-empty"><div class="dk-empty-icon">✅</div><div>حضوری برای این کلاس ثبت نشده</div></div>`;
+    } else {
+      const roster = students.filter(s => s.classId === filter);
+      html += `<div style="font-size:12px;color:var(--muted);margin-bottom:10px">مجموع <b>${fa(dates.length)}</b> روز ثبت‌شده · <b>${fa(roster.length)}</b> دانش‌آموز</div>`;
+      html += `
+        <div style="overflow-x:auto;border:1px solid var(--line);border-radius:12px">
+          <table class="dk-table">
+            <thead><tr>
+              <th>دانش‌آموز</th>
+              <th>حاضر</th>
+              <th>غایب</th>
+              <th>تأخیر</th>
+              <th>بدون ثبت</th>
+            </tr></thead>
+            <tbody>
+              ${roster.map(s => {
+                let p=0, a=0, l=0, n=0;
+                dates.forEach(d => {
+                  const st = att[d][s.id];
+                  if (st === 'present') p++;
+                  else if (st === 'absent') a++;
+                  else if (st === 'late') l++;
+                  else n++;
+                });
+                return `<tr>
+                  <td>${esc(fullName(s))}</td>
+                  <td style="color:var(--ok);font-weight:600">${fa(p)}</td>
+                  <td style="color:var(--bad);font-weight:600">${fa(a)}</td>
+                  <td style="color:var(--warning);font-weight:600">${fa(l)}</td>
+                  <td style="color:var(--muted)">${fa(n)}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+    body.innerHTML = html;
+    const aFilter = document.getElementById('dkAFilter');
+    if (aFilter) aFilter.onchange = e => { ui.filterClass = e.target.value; renderBody(); };
+    const aRef = document.getElementById('dkARefresh');
+    if (aRef) aRef.onclick = async () => { cache = null; cacheToken = null; await loadAndRender(); };
+  }
+  
+  function injectButton() {
+    if (document.getElementById('daftarPanelBtn')) return;
+    const style = document.createElement('style');
+    style.textContent = CSS;
+    document.head.appendChild(style);
+    const btn = document.createElement('button');
+    btn.id = 'daftarPanelBtn';
+    btn.type = 'button';
+    btn.title = 'دفتر معلم';
+    btn.style.cssText = 'position:fixed;bottom:22px;left:22px;z-index:900;background:linear-gradient(155deg,var(--gold),var(--gold-2));color:#241506;border:0;border-radius:16px;padding:14px 20px;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 10px 30px color-mix(in srgb,var(--gold) 30%,transparent);display:flex;align-items:center;gap:8px;transition:transform .15s';
+    btn.innerHTML = '<span style="font-size:18px">📓</span><span>دفتر معلم</span>';
+    btn.onmouseenter = () => btn.style.transform = 'translateY(-2px)';
+    btn.onmouseleave = () => btn.style.transform = 'translateY(0)';
+    btn.onclick = openModal;
+    document.body.appendChild(btn);
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectButton);
+  } else {
+    injectButton();
+  }
+})();
+</script>
 </body>
 </html>
