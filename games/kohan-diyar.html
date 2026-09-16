@@ -2294,7 +2294,9 @@
   .intro-emblem {
     width: 5.5rem;
     height: 5.5rem;
-    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
     animation: introEmblem 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     opacity: 0;
     filter: drop-shadow(0 0 40px rgba(245, 200, 66, 0.65));
