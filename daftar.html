@@ -351,41 +351,80 @@ render();initHakim();
 </script>
 
 <script>
-/* ══════════════════════════════════════════════════════════
- * همگامسازی دفتر معلم با Google Sheets
- * نسخهٔ ۲ — با همگامسازی خودکار و چراغ وضعیت
- * ══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════════
+ * احراز هویت و همگام‌سازی دفتر معلم با Google Sheets
+ * نسخهٔ ۳ — با ثبت‌نام، ورود، تغییر رمز، خروج، "مرا به خاطر بسپار"
+ * ══════════════════════════════════════════════════════════════════ */
 (function(){
   'use strict';
   
   const API    = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
-  const K_PASS = 'hakimestan_daftar_pass';
+  const K_AUTH = 'hakimestan_daftar_auth';
   const K_DATA = 'hakimestan_daftar_v1';
   const K_LAST = 'hakimestan_daftar_last_sync';
+  const K_LAST_USER = 'hakimestan_daftar_last_user';
   
-  const AUTO_SYNC_DELAY = 30000; // ۳۰ ثانیه بعد از آخرین تغییر
-  const POLL_INTERVAL   = 3000;  // هر ۳ ثانیه تغییرات رو چک کن
+  const AUTO_SYNC_DELAY = 30000;
+  const POLL_INTERVAL   = 3000;
   
-  const ls = {
-    get: k => { try { return localStorage.getItem(k); } catch(e){ return null; } },
-    set: (k,v) => { try { v ? localStorage.setItem(k,v) : localStorage.removeItem(k); } catch(e){} }
+  const store = {
+    get: (k) => {
+      try { return localStorage.getItem(k) || sessionStorage.getItem(k); }
+      catch(e) { return null; }
+    },
+    set: (k, v, remember) => {
+      try {
+        if (remember) {
+          localStorage.setItem(k, v);
+          sessionStorage.removeItem(k);
+        } else {
+          sessionStorage.setItem(k, v);
+          localStorage.removeItem(k);
+        }
+      } catch(e) {}
+    },
+    del: (k) => {
+      try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch(e) {}
+    }
   };
   
-  const isConnected = () => !!ls.get(K_PASS);
-  const getLastSync  = () => ls.get(K_LAST);
-  
-  let lastKnownData = ls.get(K_DATA);
+  let auth = null;
+  let lastKnownData = null;
   let autoSyncTimer = null;
   let isSyncing = false;
+  
+  function loadStoredAuth() {
+    try {
+      const raw = store.get(K_AUTH);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !parsed.token || !parsed.username) return null;
+      return parsed;
+    } catch(e) { return null; }
+  }
+  
+  function saveAuth(username, token, remember) {
+    auth = {username, token, remember};
+    store.set(K_AUTH, JSON.stringify(auth), remember);
+  }
+  
+  function clearAuth() {
+    auth = null;
+    store.del(K_AUTH);
+  }
+  
+  const isLoggedIn = () => !!auth;
+  const getToken = () => auth ? auth.token : null;
+  const getUsername = () => auth ? auth.username : '';
   
   async function api(action, payload) {
     const res = await fetch(API, {
       method: 'POST',
       headers: {'Content-Type': 'text/plain;charset=utf-8'},
-      body: JSON.stringify(Object.assign({action: action}, payload || {})),
+      body: JSON.stringify(Object.assign({action}, payload || {})),
       redirect: 'follow'
     });
-    if (!res.ok) throw new Error('ارتباط با سرور برقرار نشد (کد ' + res.status + ')');
+    if (!res.ok) throw new Error('ارتباط برقرار نشد (کد ' + res.status + ')');
     let data;
     try { data = await res.json(); }
     catch(e) { throw new Error('پاسخ سرور ناخوانا است.'); }
@@ -393,17 +432,7 @@ render();initHakim();
     return data;
   }
   
-  async function login() {
-    const pw = ls.get(K_PASS);
-    if (!pw) throw new Error('رمز معلم ذخیره نشده است.');
-    const r = await api('tpLogin', {password: pw});
-    if (!r.token) throw new Error('توکن دریافت نشد.');
-    return r.token;
-  }
-  
-  function fa(s) {
-    return String(s).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[Number(c)]);
-  }
+  function fa(s) { return String(s).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[Number(c)]); }
   
   function formatTimeAgo(iso) {
     if (!iso) return 'هنوز همگام نشده';
@@ -416,6 +445,21 @@ render();initHakim();
     const h = Math.floor(m / 60);
     if (h < 24) return fa(h) + ' ساعت پیش';
     return fa(Math.floor(h / 24)) + ' روز پیش';
+  }
+  
+  function showToast(msg, err) {
+    const area = document.getElementById('toasts') || document.body;
+    const el = document.createElement('div');
+    el.className = 'toast' + (err ? ' error' : '');
+    el.setAttribute('role', err ? 'alert' : 'status');
+    const span = document.createElement('span'); span.textContent = msg;
+    const close = document.createElement('button'); close.textContent = '×';
+    close.setAttribute('aria-label', 'بستن');
+    close.onclick = () => el.remove();
+    el.appendChild(span); el.appendChild(close);
+    while (area.children.length >= 3) area.firstElementChild.remove();
+    area.appendChild(el);
+    setTimeout(() => el.remove(), err ? 12000 : 6000);
   }
   
   function updateStatusDot(state, message) {
@@ -431,48 +475,53 @@ render();initHakim();
     if (label) {
       if (message) label.textContent = message;
       else {
-        if (!isConnected())            label.textContent = 'غیرفعال';
-        else if (state === 'syncing')  label.textContent = 'در حال همگامسازی…';
+        if (!isLoggedIn())             label.textContent = 'غیرفعال';
+        else if (state === 'syncing')  label.textContent = 'در حال همگام‌سازی…';
         else if (state === 'pending')  label.textContent = 'در انتظار…';
         else if (state === 'error')    label.textContent = 'خطا';
-        else                           label.textContent = formatTimeAgo(getLastSync());
+        else                           label.textContent = formatTimeAgo(store.get(K_LAST));
       }
     }
   }
   
   function scheduleAutoSync() {
-    if (!isConnected()) return;
+    if (!isLoggedIn()) return;
     clearTimeout(autoSyncTimer);
     updateStatusDot('pending');
     autoSyncTimer = setTimeout(doAutoSync, AUTO_SYNC_DELAY);
   }
   
   async function doAutoSync() {
-    if (isSyncing || !isConnected()) return;
-    const raw = ls.get(K_DATA);
+    if (isSyncing || !isLoggedIn()) return;
+    const raw = store.get(K_DATA);
     if (!raw) return;
     isSyncing = true;
     updateStatusDot('syncing');
     try {
       const db = JSON.parse(raw);
-      const token = await login();
-      await api('tpClassSaveAll', {token: token, data: db});
-      ls.set(K_LAST, new Date().toISOString());
+      await api('tpClassSaveAll', {token: getToken(), data: db});
+      store.set(K_LAST, new Date().toISOString(), true);
       updateStatusDot('synced');
-      console.log('✅ همگامسازی خودکار انجام شد');
+      console.log('✅ همگام‌سازی خودکار انجام شد');
     } catch (e) {
-      updateStatusDot('error', 'خطا در همگامسازی');
-      console.warn('⚠️ همگامسازی خودکار شکست خورد:', e.message);
+      const msg = String(e.message || '');
+      if (msg.includes('منقضی') || msg.includes('توکن')) {
+        clearAuth();
+        showAuthModal('نشست منقضی شد. لطفاً دوباره وارد شو.');
+        return;
+      }
+      updateStatusDot('error', 'خطا در همگام‌سازی');
+      console.warn('⚠️ همگام‌سازی خودکار شکست خورد:', e.message);
     } finally {
       isSyncing = false;
     }
   }
   
   function startWatcher() {
-    if (!isConnected()) return;
+    if (!isLoggedIn()) return;
     setInterval(() => {
-      if (!isConnected()) return;
-      const current = ls.get(K_DATA);
+      if (!isLoggedIn()) return;
+      const current = store.get(K_DATA);
       if (current && current !== lastKnownData) {
         lastKnownData = current;
         scheduleAutoSync();
@@ -480,98 +529,207 @@ render();initHakim();
     }, POLL_INTERVAL);
   }
   
-  function showToast(msg, err) {
-    const area = document.getElementById('toasts') || document.body;
-    const el = document.createElement('div');
-    el.className = 'toast' + (err ? ' error' : '');
-    el.setAttribute('role', err ? 'alert' : 'status');
-    const span = document.createElement('span'); span.textContent = msg;
-    const close = document.createElement('button'); close.textContent = '×';
-    close.setAttribute('aria-label','بستن');
-    close.onclick = () => el.remove();
-    el.appendChild(span); el.appendChild(close);
-    while (area.children.length >= 3) area.firstElementChild.remove();
-    area.appendChild(el);
-    setTimeout(() => el.remove(), err ? 12000 : 6000);
+  /* ═══════════ Auth Modal ═══════════ */
+  function showAuthModal(errorMsg) {
+    const old = document.getElementById('dkAuthOverlay');
+    if (old) old.remove();
+    
+    const overlay = document.createElement('div');
+    overlay.id = 'dkAuthOverlay';
+    overlay.innerHTML = `
+      <style>
+        #dkAuthOverlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);display:flex;align-items:center;justify-content:center;padding:20px;direction:rtl;font-family:Vazirmatn,Tahoma,sans-serif}
+        .dk-auth-card{background:#fff;border-radius:24px;padding:32px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);color:#1e293b}
+        .dk-auth-logo{display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+        .dk-auth-logo svg{width:56px;height:56px}
+        .dk-auth-title{text-align:center;font-size:22px;font-weight:800;margin:0 0 6px 0;color:#1e293b}
+        .dk-auth-sub{text-align:center;color:#64748b;font-size:13px;margin:0 0 24px 0}
+        .dk-auth-tabs{display:flex;gap:4px;background:#f1f5f9;padding:4px;border-radius:12px;margin-bottom:20px}
+        .dk-auth-tab{flex:1;border:0;background:none;padding:10px;font-size:13px;font-weight:700;cursor:pointer;border-radius:9px;color:#64748b;font-family:inherit;transition:.2s}
+        .dk-auth-tab.on{background:#fff;color:#1e3a8a;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+        .dk-auth-field{margin-bottom:14px}
+        .dk-auth-field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155}
+        .dk-auth-field input{width:100%;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:.2s;box-sizing:border-box;color:#1e293b;background:#fff}
+        .dk-auth-field input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+        .dk-auth-check{display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:13px;color:#475569;cursor:pointer}
+        .dk-auth-check input{width:18px;height:18px;accent-color:#3b82f6;cursor:pointer;margin:0}
+        .dk-auth-btn{width:100%;padding:13px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+        .dk-auth-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 20px rgba(59,130,246,.35)}
+        .dk-auth-btn:disabled{opacity:.5;cursor:not-allowed}
+        .dk-auth-error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:10px;padding:10px 12px;font-size:12px;margin-bottom:14px;line-height:1.7}
+        .dk-auth-hint{font-size:11px;color:#94a3b8;margin-top:4px}
+        .dk-auth-footer{text-align:center;font-size:11px;color:#94a3b8;margin-top:20px;padding-top:16px;border-top:1px solid #f1f5f9}
+      </style>
+      <div class="dk-auth-card">
+        <div class="dk-auth-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z"/>
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          </svg>
+        </div>
+        <h2 class="dk-auth-title">دفتر معلم حکیمستان</h2>
+        <p class="dk-auth-sub">ورود یا ثبت‌نام برای ذخیرهٔ اطلاعات</p>
+        <div class="dk-auth-tabs">
+          <button type="button" class="dk-auth-tab on" data-tab="login">ورود</button>
+          <button type="button" class="dk-auth-tab" data-tab="register">ثبت‌نام</button>
+        </div>
+        <div id="dkAuthError" class="dk-auth-error" hidden></div>
+        <form id="dkLoginForm">
+          <div class="dk-auth-field">
+            <label for="dkLoginUser">نام کاربری</label>
+            <input id="dkLoginUser" type="text" autocomplete="username" placeholder="مثلاً mahdi" dir="ltr" style="text-align:left">
+          </div>
+          <div class="dk-auth-field">
+            <label for="dkLoginPass">رمز عبور</label>
+            <input id="dkLoginPass" type="password" autocomplete="current-password" placeholder="رمز خود را وارد کن">
+          </div>
+          <label class="dk-auth-check">
+            <input id="dkLoginRemember" type="checkbox" checked>
+            <span>مرا به خاطر بسپار (تا خروج خودکار نکنم)</span>
+          </label>
+          <button class="dk-auth-btn" type="submit" id="dkLoginBtn">ورود به دفتر</button>
+        </form>
+        <form id="dkRegisterForm" style="display:none">
+          <div class="dk-auth-field">
+            <label for="dkRegUser">نام کاربری *</label>
+            <input id="dkRegUser" type="text" autocomplete="username" placeholder="مثلاً zahra" dir="ltr" style="text-align:left">
+            <div class="dk-auth-hint">حروف کوچک انگلیسی و اعداد، حداقل ۳ کاراکتر</div>
+          </div>
+          <div class="dk-auth-field">
+            <label for="dkRegName">نام و نام خانوادگی</label>
+            <input id="dkRegName" type="text" autocomplete="name" placeholder="مثلاً زهرا احمدی">
+          </div>
+          <div class="dk-auth-field">
+            <label for="dkRegPass">رمز عبور *</label>
+            <input id="dkRegPass" type="password" autocomplete="new-password" placeholder="حداقل ۶ کاراکتر">
+          </div>
+          <label class="dk-auth-check">
+            <input id="dkRegRemember" type="checkbox" checked>
+            <span>مرا به خاطر بسپار (تا خروج خودکار نکنم)</span>
+          </label>
+          <button class="dk-auth-btn" type="submit" id="dkRegBtn">ساخت حساب و ورود</button>
+        </form>
+        <div class="dk-auth-footer">🧙 حکیمستان — دفتر معلم هوشمند</div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    
+    overlay.querySelectorAll('.dk-auth-tab').forEach(tab => {
+      tab.onclick = () => {
+        const name = tab.dataset.tab;
+        overlay.querySelectorAll('.dk-auth-tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
+        overlay.querySelector('#dkLoginForm').style.display = name === 'login' ? 'block' : 'none';
+        overlay.querySelector('#dkRegisterForm').style.display = name === 'register' ? 'block' : 'none';
+        overlay.querySelector('#dkAuthError').hidden = true;
+      };
+    });
+    
+    const errEl = overlay.querySelector('#dkAuthError');
+    if (errorMsg) { errEl.textContent = errorMsg; errEl.hidden = false; }
+    
+    overlay.querySelector('#dkLoginForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const btn = overlay.querySelector('#dkLoginBtn');
+      const u = overlay.querySelector('#dkLoginUser').value.trim().toLowerCase();
+      const p = overlay.querySelector('#dkLoginPass').value;
+      const rem = overlay.querySelector('#dkLoginRemember').checked;
+      errEl.hidden = true;
+      if (!u || !p) { errEl.textContent = 'نام کاربری و رمز را وارد کن.'; errEl.hidden = false; return; }
+      btn.disabled = true; btn.textContent = 'در حال ورود…';
+      try {
+        const r = await api('tLogin', {username: u, password: p});
+        saveAuth(r.username, r.token, rem);
+        overlay.remove();
+        onAuthSuccess(r);
+        showToast('✅ خوش آمدی ' + (r.name || r.username) + '!');
+      } catch(err) {
+        errEl.textContent = err.message; errEl.hidden = false;
+        btn.disabled = false; btn.textContent = 'ورود به دفتر';
+      }
+    };
+    
+    overlay.querySelector('#dkRegisterForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const btn = overlay.querySelector('#dkRegBtn');
+      const u = overlay.querySelector('#dkRegUser').value.trim().toLowerCase();
+      const n = overlay.querySelector('#dkRegName').value.trim();
+      const p = overlay.querySelector('#dkRegPass').value;
+      const rem = overlay.querySelector('#dkRegRemember').checked;
+      errEl.hidden = true;
+      if (!u || !p) { errEl.textContent = 'نام کاربری و رمز را وارد کن.'; errEl.hidden = false; return; }
+      btn.disabled = true; btn.textContent = 'در حال ثبت‌نام…';
+      try {
+        const r = await api('tRegister', {username: u, password: p, name: n});
+        saveAuth(r.username, r.token, rem);
+        overlay.remove();
+        onAuthSuccess(r);
+        showToast('✅ حساب ساخته شد. خوش آمدی ' + (r.name || r.username) + '!');
+      } catch(err) {
+        errEl.textContent = err.message; errEl.hidden = false;
+        btn.disabled = false; btn.textContent = 'ساخت حساب و ورود';
+      }
+    };
+    
+    setTimeout(() => { overlay.querySelector('#dkLoginUser')?.focus(); }, 100);
   }
   
-  function buildModalBody() {
-    const connected = isConnected();
-    const last = getLastSync();
-    const lastText = last ? ('آخرین همگامسازی: ' + new Date(last).toLocaleString('fa-IR')) : 'هنوز همگامسازی نشده';
+  function onAuthSuccess(userInfo) {
+    // چک کاربر قبلی
+    const lastUser = store.get(K_LAST_USER);
+    if (lastUser && lastUser !== getUsername()) {
+      store.del(K_DATA);
+      store.del(K_LAST);
+      showToast('دفتر برای حساب جدید بازنشانی شد. برای دریافت داده‌های سرور روی 🛡️ بزن.');
+    }
+    store.set(K_LAST_USER, getUsername(), true);
+    lastKnownData = store.get(K_DATA);
+    updateSyncBtnStyle();
+    updateStatusDot('synced');
+    startWatcher();
+  }
+  
+  /* ═══════════ Sync Modal ═══════════ */
+  function buildSyncModalBody() {
+    const last = store.get(K_LAST);
+    const lastText = last ? ('آخرین همگام‌سازی: ' + new Date(last).toLocaleString('fa-IR')) : 'هنوز همگام‌سازی نشده';
     return `
-      <p class="modal-copy">اطلاعات دفتر در شیت <b>class_data</b> در فایل <b>hakimestan-data</b> ذخیره میشود.</p>
-      <div id="syncAlert" class="modal-error" role="alert" hidden></div>
-      <div id="syncNotConnected" ${connected ? 'hidden' : ''}>
-        <label for="syncPass">رمز معلم</label>
-        <input id="syncPass" type="password" placeholder="رمز معلم را وارد کنید" autocomplete="current-password">
-        <p class="small muted" style="margin-top:8px">رمز فقط در همین مرورگر ذخیره میشود.</p>
-        <div class="modal-actions">
-          <button type="button" class="btn" id="syncCancelBtn">انصراف</button>
-          <button type="button" class="btn primary" id="syncConnectBtn">اتصال</button>
-        </div>
+      <p class="modal-copy">اطلاعات دفتر تو در شیت <b>class_data</b> ذخیره می‌شود. فقط خودت به این اطلاعات دسترسی داری.</p>
+      <div style="background:var(--soft);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:13px">
+        <b>👤 کاربر:</b> ${getUsername()}
       </div>
-      <div id="syncConnected" ${connected ? '' : 'hidden'}>
-        <div class="row" style="gap:10px;flex-wrap:wrap">
-          <button type="button" class="btn primary" id="syncUploadBtn">
-            <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>
-            آپلود به شیت
-          </button>
-          <button type="button" class="btn soft" id="syncDownloadBtn">
-            <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
-            دریافت از شیت
-          </button>
-        </div>
-        <p class="small muted" style="margin-top:14px">${lastText}</p>
-        <div class="note-box" style="margin-top:15px">
-          <strong>همگامسازی خودکار فعال است:</strong> هر بار چیزی در دفتر تغییر دهد، پس از ۳۰ ثانیه خودکار روی شیت ذخیره میشود.<br><br>
-          <strong>آپلود دستی:</strong> همین حالا اطلاعات را روی شیت مینویسد.<br>
-          <strong>دریافت:</strong> اطلاعات شیت جایگزین اطلاعات این مرورگر میشود؛ صفحه دوباره بارگذاری میشود.
-        </div>
-        <div class="modal-actions">
-          <button type="button" class="btn danger" id="syncDisconnectBtn">قطع اتصال</button>
-        </div>
+      <div id="syncAlert" class="modal-error" role="alert" hidden></div>
+      <div class="row" style="gap:10px;flex-wrap:wrap">
+        <button type="button" class="btn primary" id="syncUploadBtn">
+          <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>
+          آپلود به شیت
+        </button>
+        <button type="button" class="btn soft" id="syncDownloadBtn">
+          <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+          دریافت از شیت
+        </button>
+      </div>
+      <p class="small muted" style="margin-top:14px">${lastText}</p>
+      <div class="note-box" style="margin-top:15px">
+        <strong>همگام‌سازی خودکار فعال است:</strong> هر بار چیزی در دفتر تغییر دهد، پس از ۳۰ ثانیه خودکار روی شیت ذخیره می‌شود.<br><br>
+        <strong>آپلود دستی:</strong> همین حالا اطلاعات را روی شیت می‌نویسد.<br>
+        <strong>دریافت:</strong> اطلاعات شیت جایگزین اطلاعات این مرورگر می‌شود.
+      </div>
+      <div class="modal-actions" style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <button type="button" class="btn danger" id="syncLogoutBtn">🚪 خروج از حساب</button>
+        <button type="button" class="btn ghost" id="syncChangePassBtn">🔑 تغییر رمز</button>
       </div>
     `;
   }
   
-  function bindModalEvents() {
+  function bindSyncModalEvents() {
     const alertEl = document.getElementById('syncAlert');
     const showErr = (e) => {
+      if (!alertEl) return;
       alertEl.textContent = e && e.message ? e.message : String(e);
       alertEl.hidden = false;
       alertEl.scrollIntoView({block:'nearest'});
     };
-    const hideErr = () => { alertEl.hidden = true; };
-    const passEl = document.getElementById('syncPass');
-    if (passEl) passEl.focus();
-    
-    const connect = document.getElementById('syncConnectBtn');
-    if (connect) connect.onclick = async () => {
-      hideErr();
-      const pw = document.getElementById('syncPass').value.trim();
-      if (!pw) { showErr(new Error('رمز معلم را وارد کنید.')); return; }
-      connect.disabled = true;
-      connect.textContent = 'در حال اتصال…';
-      try {
-        ls.set(K_PASS, pw);
-        await login();
-        lastKnownData = ls.get(K_DATA);
-        startWatcher();
-        document.getElementById('modalBody').innerHTML = buildModalBody();
-        bindModalEvents();
-        updateStatusDot('synced');
-        showToast('✅ اتصال برقرار شد. همگامسازی خودکار فعال است.');
-      } catch (e) {
-        ls.set(K_PASS, '');
-        showErr(e);
-        connect.disabled = false;
-        connect.textContent = 'اتصال';
-      }
-    };
-    
-    const cancel = document.getElementById('syncCancelBtn');
-    if (cancel) cancel.onclick = () => document.getElementById('modal').close();
+    const hideErr = () => { if (alertEl) alertEl.hidden = true; };
     
     const upload = document.getElementById('syncUploadBtn');
     if (upload) upload.onclick = async () => {
@@ -580,66 +738,118 @@ render();initHakim();
       const oldHTML = upload.innerHTML;
       upload.innerHTML = 'در حال ارسال…';
       try {
-        const raw = ls.get(K_DATA);
+        const raw = store.get(K_DATA);
         if (!raw) throw new Error('اطلاعاتی برای ارسال یافت نشد.');
         const db = JSON.parse(raw);
-        const token = await login();
-        const r = await api('tpClassSaveAll', {token: token, data: db});
-        ls.set(K_LAST, new Date().toISOString());
+        const r = await api('tpClassSaveAll', {token: getToken(), data: db});
+        store.set(K_LAST, new Date().toISOString(), true);
         lastKnownData = raw;
         updateStatusDot('synced');
-        showToast('✅ دادهها روی شیت ذخیره شد (' + Math.max(1, Math.round((r.size||0)/1024)) + ' کیلوبایت)');
-        document.getElementById('modalBody').innerHTML = buildModalBody();
-        bindModalEvents();
-      } catch (e) {
-        showErr(e);
-        upload.disabled = false;
-        upload.innerHTML = oldHTML;
+        showToast('✅ داده روی شیت ذخیره شد (' + Math.max(1, Math.round((r.size||0)/1024)) + ' کیلوبایت)');
+        const mb = document.getElementById('modalBody');
+        if (mb) { mb.innerHTML = buildSyncModalBody(); bindSyncModalEvents(); }
+      } catch(e) {
+        showErr(e); upload.disabled = false; upload.innerHTML = oldHTML;
       }
     };
     
     const download = document.getElementById('syncDownloadBtn');
     if (download) download.onclick = async () => {
       hideErr();
-      if (!confirm('اطلاعات فعلی این مرورگر با اطلاعات شیت جایگزین میشود. ادامه میدهید؟\n\nپیشنهاد: اول پشتیبان JSON بگیرید.')) return;
+      if (!confirm('اطلاعات فعلی این مرورگر با اطلاعات شیت جایگزین می‌شود. ادامه می‌دهی؟\n\nپیشنهاد: اول پشتیبان JSON بگیر.')) return;
       download.disabled = true;
       const oldHTML = download.innerHTML;
       download.innerHTML = 'در حال دریافت…';
       try {
-        const token = await login();
-        const r = await api('tpClassGetAll', {token: token});
-        if (!r.data) throw new Error('در شیت دادهای ذخیره نشده است. اول یک بار آپلود کنید.');
+        const r = await api('tpClassGetAll', {token: getToken()});
+        if (!r.data) throw new Error('در شیت داده‌ای ذخیره نشده. اول یک بار آپلود کن.');
         const json = JSON.stringify(r.data);
-        ls.set(K_DATA, json);
+        store.set(K_DATA, json, true);
         lastKnownData = json;
-        ls.set(K_LAST, new Date().toISOString());
-        showToast('✅ دادهها دریافت شد. صفحه در حال بارگذاری…');
+        store.set(K_LAST, new Date().toISOString(), true);
+        showToast('✅ داده دریافت شد. صفحه در حال بارگذاری…');
         setTimeout(() => location.reload(), 900);
-      } catch (e) {
-        showErr(e);
-        download.disabled = false;
-        download.innerHTML = oldHTML;
+      } catch(e) {
+        showErr(e); download.disabled = false; download.innerHTML = oldHTML;
       }
     };
     
-    const disconnect = document.getElementById('syncDisconnectBtn');
-    if (disconnect) disconnect.onclick = () => {
-      if (!confirm('اتصال قطع میشود. اطلاعات محلی دستنخورده باقی میماند.')) return;
-      ls.set(K_PASS, '');
-      clearTimeout(autoSyncTimer);
-      document.getElementById('modalBody').innerHTML = buildModalBody();
-      bindModalEvents();
-      updateStatusDot('idle');
-      showToast('اتصال قطع شد.');
+    const logout = document.getElementById('syncLogoutBtn');
+    if (logout) logout.onclick = async () => {
+      if (!confirm('از حسابت خارج می‌شوی. اطلاعات محلی دست‌نخورده می‌ماند.\n\nمطمئنی؟')) return;
+      try { await api('tLogout', {token: getToken()}); } catch(e) {}
+      clearAuth();
+      const dialog = document.getElementById('modal');
+      if (dialog) dialog.close();
+      showAuthModal('با موفقیت خارج شدی. برای استفاده دوباره وارد شو.');
+    };
+    
+    const changePass = document.getElementById('syncChangePassBtn');
+    if (changePass) changePass.onclick = () => showChangePasswordModal();
+  }
+  
+  function showChangePasswordModal() {
+    const dialog = document.getElementById('modal');
+    if (!dialog) return;
+    document.getElementById('modalTitle').textContent = 'تغییر رمز عبور';
+    document.getElementById('modalBody').innerHTML = `
+      <p class="modal-copy">برای امنیت بیشتر، رمز فعلی را وارد کن، بعد رمز جدید بذار.</p>
+      <div id="chPassError" class="modal-error" role="alert" hidden></div>
+      <div class="form-grid">
+        <div class="field" style="grid-column:1/-1"><label for="chOldPass">رمز فعلی</label><input id="chOldPass" type="password" autocomplete="current-password"></div>
+        <div class="field" style="grid-column:1/-1"><label for="chNewPass">رمز جدید</label><input id="chNewPass" type="password" autocomplete="new-password" placeholder="حداقل ۶ کاراکتر"></div>
+        <div class="field" style="grid-column:1/-1"><label for="chNewPass2">تکرار رمز جدید</label><input id="chNewPass2" type="password" autocomplete="new-password"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="chCancelBtn">انصراف</button>
+        <button type="button" class="btn primary" id="chSaveBtn">🔑 ذخیرهٔ رمز جدید</button>
+      </div>
+    `;
+    if (!dialog.open) dialog.showModal();
+    
+    const errEl = document.getElementById('chPassError');
+    const showErr = (e) => { errEl.textContent = e && e.message ? e.message : String(e); errEl.hidden = false; };
+    
+    document.getElementById('chCancelBtn').onclick = () => {
+      document.getElementById('modalTitle').textContent = 'همگام‌سازی با Google Sheets';
+      document.getElementById('modalBody').innerHTML = buildSyncModalBody();
+      bindSyncModalEvents();
+    };
+    
+    document.getElementById('chSaveBtn').onclick = async () => {
+      errEl.hidden = true;
+      const oldP = document.getElementById('chOldPass').value;
+      const newP = document.getElementById('chNewPass').value;
+      const newP2 = document.getElementById('chNewPass2').value;
+      if (!oldP || !newP || !newP2) return showErr(new Error('همهٔ فیلدها را پر کن.'));
+      if (newP.length < 6) return showErr(new Error('رمز جدید باید حداقل ۶ کاراکتر باشد.'));
+      if (newP !== newP2) return showErr(new Error('رمز جدید و تکرارش یکسان نیستند.'));
+      const btn = document.getElementById('chSaveBtn');
+      btn.disabled = true; btn.textContent = 'در حال ذخیره…';
+      try {
+        await api('tChangePassword', {token: getToken(), oldPassword: oldP, newPassword: newP});
+        dialog.close();
+        showToast('✅ رمز با موفقیت تغییر کرد.');
+      } catch(e) {
+        showErr(e); btn.disabled = false; btn.textContent = '🔑 ذخیرهٔ رمز جدید';
+      }
     };
   }
   
   function openSyncModal() {
     const dialog = document.getElementById('modal');
-    document.getElementById('modalTitle').textContent = 'همگامسازی با Google Sheets';
-    document.getElementById('modalBody').innerHTML = buildModalBody();
-    dialog.showModal();
-    bindModalEvents();
+    if (!dialog) return;
+    document.getElementById('modalTitle').textContent = 'همگام‌سازی با Google Sheets';
+    document.getElementById('modalBody').innerHTML = buildSyncModalBody();
+    if (!dialog.open) dialog.showModal();
+    bindSyncModalEvents();
+  }
+  
+  function updateSyncBtnStyle() {
+    const btn = document.getElementById('syncBtn');
+    if (!btn) return;
+    if (isLoggedIn()) { btn.classList.remove('soft'); btn.classList.add('primary'); }
+    else { btn.classList.remove('primary'); btn.classList.add('soft'); }
   }
   
   function createStatusDot() {
@@ -657,20 +867,15 @@ render();initHakim();
     const style = document.createElement('style');
     style.id = 'syncStyles';
     style.textContent = `
-      .sync-status { display:flex; align-items:center; gap:6px; padding:6px 10px; background:#fff; border:1px solid var(--line); border-radius:12px; font-size:11px; color:var(--muted); }
-      .sync-dot { width:8px; height:8px; border-radius:50%; background:#cbd5e1; flex-shrink:0; }
-      .sync-dot.green  { background:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,.15); }
-      .sync-dot.amber  { background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.15); animation:syncPulse 1.2s infinite; }
-      .sync-dot.red    { background:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.15); }
-      .sync-dot.gray   { background:#94a3b8; }
-      .sync-status-label { white-space:nowrap; }
-      @keyframes syncPulse { 0%,100%{ opacity:1 } 50%{ opacity:.4 } }
-      @media (max-width: 760px) {
-        #syncBtn .sync-label { display: none; }
-        #syncBtn { padding: 9px 12px; }
-        .sync-status { padding: 5px 8px; font-size: 10px; }
-        .sync-status-label { display: none; }
-      }
+      .sync-status{display:flex;align-items:center;gap:6px;padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:11px;color:var(--muted)}
+      .sync-dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;flex-shrink:0}
+      .sync-dot.green{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.15)}
+      .sync-dot.amber{background:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.15);animation:syncPulse 1.2s infinite}
+      .sync-dot.red{background:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.15)}
+      .sync-dot.gray{background:#94a3b8}
+      .sync-status-label{white-space:nowrap}
+      @keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.4}}
+      @media(max-width:760px){#syncBtn .sync-label{display:none}#syncBtn{padding:9px 12px}.sync-status{padding:5px 8px;font-size:10px}.sync-status-label{display:none}}
     `;
     document.head.appendChild(style);
   }
@@ -683,25 +888,49 @@ render();initHakim();
     btn.id = 'syncBtn';
     btn.type = 'button';
     btn.className = 'btn soft';
-    btn.title = 'همگامسازی با Google Sheets';
-    btn.setAttribute('aria-label', 'همگامسازی با Google Sheets');
-    btn.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span class="sync-label">همگامسازی</span>';
-    btn.onclick = openSyncModal;
+    btn.title = 'همگام‌سازی با Google Sheets';
+    btn.setAttribute('aria-label', 'همگام‌سازی با Google Sheets');
+    btn.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span class="sync-label">همگام‌سازی</span>';
+    btn.onclick = () => { if (!isLoggedIn()) showAuthModal(); else openSyncModal(); };
     backupBtn.parentNode.insertBefore(btn, backupBtn);
     createStatusDot();
-    if (isConnected()) {
-      updateStatusDot('synced');
-      startWatcher();
+    updateSyncBtnStyle();
+    updateStatusDot(isLoggedIn() ? 'synced' : 'idle');
+  }
+  
+  async function start() {
+    injectStyles();
+    injectHeaderButton();
+    
+    const stored = loadStoredAuth();
+    if (stored) {
+      auth = stored;
+      try {
+        await api('tWhoAmI', {token: stored.token});
+        // چک کاربر قبلی
+        const lastUser = store.get(K_LAST_USER);
+        if (lastUser && lastUser !== stored.username) {
+          store.del(K_DATA);
+          store.del(K_LAST);
+        }
+        store.set(K_LAST_USER, stored.username, true);
+        lastKnownData = store.get(K_DATA);
+        updateSyncBtnStyle();
+        updateStatusDot('synced');
+        startWatcher();
+      } catch(e) {
+        clearAuth();
+        showAuthModal('نشست قبلی منقضی شده. لطفاً دوباره وارد شو.');
+      }
     } else {
-      updateStatusDot('idle');
+      showAuthModal();
     }
   }
   
-  injectStyles();
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectHeaderButton);
+    document.addEventListener('DOMContentLoaded', start);
   } else {
-    injectHeaderButton();
+    start();
   }
   
   setInterval(() => {
