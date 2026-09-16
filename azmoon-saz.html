@@ -1430,5 +1430,6 @@ render();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(tab==='design')render()});
 setTimeout(()=>{if(tab==='questions'&&exam().questions.length===1&&!has(exam().questions[0].text))hakimSay('سلام! من حکیم هستم. برای شروع، اطلاعات آزمون را پر کن و اولین سؤال را بنویس. اگر عجله داری، «نمونه آماده» را بزن.',8000,'happy')},600);
 </script>
+<script src="back-to-lobby.js"></script>
 </body>
 </html>
