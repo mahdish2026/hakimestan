@@ -372,6 +372,10 @@ render();initHakim();
   function delAuth(){
     localStorage.removeItem(K_AUTH);
     sessionStorage.removeItem(K_AUTH);
+    // ★ پاک کردن داده‌های دفتر تا به حساب بعدی منتقل نشوند
+    localStorage.removeItem(K_DATA);
+    localStorage.removeItem(K_LAST);
+    localStorage.removeItem(K_LAST_USER);
   }
   
   async function api(action, payload){
