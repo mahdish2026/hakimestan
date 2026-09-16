@@ -136,7 +136,39 @@ a{color:inherit}
     <section id="scResults" class="screen hidden"><div class="card"><div class="toolbar"><div class="card-head" style="margin:0"><div><h2><svg class="icon"><use href="#i-chart"/></svg> نتایج بازی‌ها</h2><p>فیلتر، پشتیبان‌گیری، وارد کردن یا حذف نتایج</p></div></div><div class="toolbar-actions"><button id="btnExport" class="btn small"><svg class="icon sm"><use href="#i-download"/></svg> دانلود پشتیبان</button><button id="btnImport" class="btn info small"><svg class="icon sm"><use href="#i-upload"/></svg> بازگردانی از فایل</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="btnDeleteAll" class="btn danger small"><svg class="icon sm"><use href="#i-trash"/></svg> پاک کردن همه</button></div></div><div class="filters"><div><label>بازی</label><select id="fGame"><option value="">همه بازی‌ها</option><option value="snake-ladder">مار و پله</option><option value="cheshm-hekim">چشم حکیم</option><option value="lab2d">آزمایشگاه ۲بعدی</option><option value="lab2d-pro">آزمایشگاه پیشرفته</option><option value="jadval-hekmat">جدول حکمت</option><option value="kohan-diyar">فتح کهن دیار ایران</option><option value="hakim-quest">ماجرای حکیم</option></select></div><div class="filter-wide"><label>دانش‌آموز</label><input id="fStudent" type="search" placeholder="نام دانش‌آموز..."></div><div><label>بازه زمانی</label><select id="fDays"><option value="0">همه</option><option value="1">امروز</option><option value="7">این هفته</option><option value="30">این ماه</option></select></div><div class="filter-btn"><button id="btnApplyFilter" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-search"/></svg> فیلتر</button></div></div><div id="resultsAlert" class="alert"></div><div id="resultsInfo" class="results-info"></div><div id="resultsTable"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><div id="resultCards" class="result-cards"></div></div></section>
 
     <section id="scUsers" class="screen hidden"><div class="card"><div class="card-head"><div><h2><svg class="icon"><use href="#i-users"/></svg> کاربران</h2><p>مدیریت کاربران و وضعیت دسترسی</p></div></div><div id="usersList"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div></div></section>
-<p style="text-align:center;color:var(--muted);font-size:.75rem;margin:20px 0 10px;padding-top:16px;border-top:1px solid var(--line)">🧙 حکیمستان — طراحی و توسعه: <b style="color:var(--gold)">مهدی شریفیان</b></p>
+<section id="scTeachers" class="screen hidden">
+  <div class="card">
+    <div class="card-head">
+      <div><h2><svg class="icon"><use href="#i-users"/></svg> معلم‌های دفتر</h2>
+      <p>مدیریت معلم‌هایی که در دفتر معلم ثبت‌نام کرده‌اند</p></div>
+      <button id="btnRefreshTeachers" class="btn ghost small"><svg class="icon sm"><use href="#i-refresh"/></svg> بازخوانی</button>
+    </div>
+    <div id="teachersAlert" class="alert"></div>
+    <div id="teachersList"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div>
+  </div>
+</section>
+
+<section id="scSettings" class="screen hidden">
+  <div class="card">
+    <div class="card-head">
+      <div><h2><svg class="icon"><use href="#i-settings"/></svg> تنظیمات پنل</h2>
+      <p>تغییر رمز ورود به پنل معلم</p></div>
+    </div>
+    <div id="settingsAlert" class="alert"></div>
+    <div style="max-width:520px">
+      <label class="field">رمز فعلی پنل<input id="oldPanelPass" type="password" autocomplete="current-password"></label>
+      <label class="field">رمز جدید پنل (حداقل ۶ کاراکتر)<input id="newPanelPass" type="password" autocomplete="new-password"></label>
+      <label class="field">تکرار رمز جدید<input id="newPanelPass2" type="password" autocomplete="new-password"></label>
+      <div class="btn-row">
+        <button id="btnChangePanelPass" class="btn"><svg class="icon sm"><use href="#i-check"/></svg> ذخیرهٔ رمز جدید</button>
+      </div>
+      <p class="muted" style="font-size:.7rem;margin-top:14px">
+        بعد از تغییر رمز، دفعهٔ بعدی که وارد پنل می‌شوی باید رمز جدید را وارد کنی.
+      </p>
+    </div>
+  </div>
+</section>
+    <p style="text-align:center;color:var(--muted);font-size:.75rem;margin:20px 0 10px;padding-top:16px;border-top:1px solid var(--line)">🧙 حکیمستان — طراحی و توسعه: <b style="color:var(--gold)">مهدی شریفیان</b></p>
   </div></main>
 </div>
 
