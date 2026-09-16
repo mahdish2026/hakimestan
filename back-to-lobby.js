@@ -1,6 +1,6 @@
 /*!
- * back-to-lobby.js — دکمه‌ای که فقط توی صفحهٔ اول دیده می‌شه
- * نسخه: 6.0.0
+ * back-to-lobby.js — دکمهٔ بازگشت به لابی (رنگ لابی)
+ * نسخه: 9.0.0
  * ساخته مهدی شریفیان
  */
 (function () {
@@ -13,133 +13,171 @@
     return;
   }
 
-  // ── کلماتی که نشون می‌ده کاربر می‌خواد بازی رو شروع کنه ──
-  var START_WORDS = [
-    'شروع بازی', 'شروع ماجرا', 'شروع سفر', 'شروع کنیم', 'شروع کن',
-    'آغاز بازی', 'آغاز سفر',
-    'بزن بریم', 'بریم بازی', 'بریم شروع',
-    'بازی رو شروع',
-    'start game', 'play game', 'start'
+  // ── لیست دکمه‌هایی که باید زیرشون دکمهٔ لابی بیاد ──
+  var TARGET_BUTTONS = [
+    'بازنشانی کامل',
+    'بارگذاری سؤال‌ها',
+    'بارگذاری سوال‌ها',
+    'سؤال‌های خودت را بازی کن',
+    'سوال‌های خودت را بازی کن',
+    'ورود به اتاق',
+    'تست با مثال آماده'
   ];
 
-  // ── کلماتی که نشون می‌ده کاربر برگشته به صفحهٔ اول ──
-  var BACK_WORDS = [
-    'بازی دوباره', 'بازی مجدد', 'دوباره بازی', 'از نو بازی',
-    'دوباره شروع', 'شروع دوباره',
-    'منوی اصلی', 'صفحه اصلی', 'به منو', 'بازگشت به منو', 'برگشت به خانه',
-    'خروج از بازی', 'پایان بازی', 'خانه',
-    'replay', 'again', 'restart', 'menu', 'home', 'back to menu'
-  ];
-
-  // ── CSS ──
+  // ── CSS: دقیقاً مثل تم لابی (بنفش + طلایی) ──
   var css = ''
-    + '.btl-btn{'
-    +   'position:fixed;'
-    +   'top:calc(14px + env(safe-area-inset-top,0px));'
-    +   'left:calc(14px + env(safe-area-inset-left,0px));'
-    +   'z-index:99999;'
-    +   'width:44px;height:44px;'
-    +   'display:flex;align-items:center;justify-content:center;'
-    +   'background:linear-gradient(145deg,#8b5cf6,#6d28d9);'
-    +   'color:#fff;'
-    +   'font-size:1.2rem;'
+    + '.btl-lobby-btn{'
+    +   'display:inline-flex;align-items:center;justify-content:center;gap:9px;'
+    +   'padding:12px 24px;'
+    +   'margin:10px 0;'
+    +   /* پس‌زمینهٔ بنفش عمیق مثل لابی */
+    +   'background:linear-gradient(145deg, #2a1a4a 0%, #1a0f33 100%);'
+    +   /* متن طلایی روشن مثل لابی */
+    +   'color:#ffd98a;'
+    +   'font-size:.9rem;font-weight:800;'
+    +   'font-family:Vazirmatn,Tahoma,sans-serif;'
+    +   'letter-spacing:.3px;'
     +   'text-decoration:none;'
-    +   'border-radius:50%;'
-    +   'border:2px solid rgba(255,255,255,.35);'
-    +   'box-shadow:0 8px 24px rgba(109,40,217,.5);'
+    +   'border-radius:14px;'
+    +   /* حاشیهٔ طلایی-بنفش مثل کارت‌های لابی */
+    +   'border:1.5px solid rgba(167,139,250,.55);'
+    /* درخشش بنفش و طلایی مثل لابی */
+    +   'box-shadow:0 6px 20px rgba(109,40,217,.35), 0 0 0 0 rgba(245,199,106,.3);'
     +   'cursor:pointer;'
-    +   'transition:opacity .3s ease,transform .3s ease,box-shadow .2s;'
+    +   'transition:transform .25s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s, border-color .3s, background .3s;'
+    +   'direction:rtl;'
+    +   'position:relative;'
+    +   'overflow:hidden;'
     + '}'
-    + '.btl-btn:hover{transform:translateY(-2px) scale(1.08);box-shadow:0 12px 30px rgba(109,40,217,.7)}'
-    + '.btl-btn:active{transform:translateY(0) scale(.95)}'
-    + '.btl-btn.btl-hide{'
-    +   'opacity:0;'
-    +   'transform:scale(.7);'
-    +   'pointer-events:none;'
+    /* هالهٔ طلایی مثل کارت‌های لابی */
+    + '.btl-lobby-btn::before{'
+    +   'content:"";'
+    +   'position:absolute;'
+    +   'top:0;right:0;left:0;'
+    +   'height:3px;'
+    +   'background:linear-gradient(90deg, transparent, #a78bfa, #ffd98a, #a78bfa, transparent);'
+    +   'opacity:.85;'
     + '}'
-    + '@media(max-width:520px){'
-    +   '.btl-btn{width:38px;height:38px;font-size:1rem;top:calc(10px + env(safe-area-inset-top,0px));left:calc(10px + env(safe-area-inset-left,0px))}'
+    + '.btl-lobby-btn:hover{'
+    +   'transform:translateY(-3px);'
+    +   'border-color:#ffd98a;'
+    +   'background:linear-gradient(145deg, #34205c 0%, #221540 100%);'
+    +   'box-shadow:0 12px 30px rgba(109,40,217,.55), 0 0 30px rgba(245,199,106,.35);'
     + '}'
-    + '@media (prefers-reduced-motion:reduce){'
-    +   '.btl-btn{transition:none}'
+    + '.btl-lobby-btn:active{'
+    +   'transform:translateY(0) scale(.97);'
+    + '}'
+    + '.btl-lobby-btn .btl-icon{'
+    +   'font-size:1.15rem;'
+    +   'filter:drop-shadow(0 0 6px rgba(245,199,106,.5));'
+    + '}'
+    + '@media(max-width:480px){'
+    +   '.btl-lobby-btn{padding:10px 18px;font-size:.82rem;border-radius:12px}'
+    +   '.btl-lobby-btn .btl-icon{font-size:1rem}'
     + '}';
 
   var style = document.createElement('style');
   style.textContent = css;
   document.head.appendChild(style);
 
-  function attach() {
-    if (!document.body) {
-      document.addEventListener('DOMContentLoaded', attach);
-      return;
-    }
-    if (document.querySelector('.btl-btn')) return;
-
-    var btn = document.createElement('a');
-    btn.className = 'btl-btn';
-    btn.href = LOBBY_URL;
-    btn.setAttribute('aria-label', 'بازگشت به لابی حکیمستان');
-    btn.setAttribute('title', 'بازگشت به لابی');
-    btn.innerHTML = '🏠';
-    document.body.appendChild(btn);
-
-    var hidden = false;
-
-    function show() {
-      if (!hidden) return;
-      hidden = false;
-      btn.classList.remove('btl-hide');
-    }
-
-    function hide() {
-      if (hidden) return;
-      hidden = true;
-      btn.classList.add('btl-hide');
-    }
-
-    // ── API سراسری برای کنترل دستی ──
-    window.btlControl = {
-      show: show,
-      hide: hide,
-      isHidden: function () { return hidden; }
-    };
-
-    // ── متن دکمه رو نرمال‌سازی کن ──
-    function normalize(s) {
-      return (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
-    }
-    function matchesAny(text, words) {
-      for (var i = 0; i < words.length; i++) {
-        if (text.indexOf(words[i].toLowerCase()) !== -1) return true;
-      }
-      return false;
-    }
-
-    // ── رصد کلیک کاربر روی دکمه‌های داخل صفحه ──
-    document.addEventListener('click', function (e) {
-      var target = e.target.closest(
-        'button, a, [role="button"], [role="menuitem"], input[type="button"], input[type="submit"], .btn, .button, [data-action]'
-      );
-      if (!target) return;
-      if (target === btn || target.classList.contains('btl-btn')) return;
-
-      var text = normalize(target.textContent || target.value || '');
-      if (!text || text.length > 60) return;
-
-      // اول چک کن دکمهٔ برگشت (چون ممکنه با کلمات شروع همپوشانی داشته باشه)
-      if (matchesAny(text, BACK_WORDS)) {
-        show();
-        return;
-      }
-      if (matchesAny(text, START_WORDS)) {
-        hide();
-      }
-    }, true);
-
-    // ── پشتیبانی از رویدادهای سفارشی ──
-    window.addEventListener('btl:hide', hide);
-    window.addEventListener('btl:show', show);
+  // ── نرمال‌سازی متن ──
+  function normalizeText(s) {
+    return (s || '')
+      .replace(/\s+/g, ' ')
+      .replace(/[يى]/g, 'ی')
+      .replace(/[كک]/g, 'ک')
+      .replace(/[ةه]/g, 'ه')
+      .trim()
+      .toLowerCase();
   }
 
-  attach();
+  function findTargetButtons() {
+    var selector = 'button, a, [role="button"], input[type="button"], input[type="submit"], .btn';
+    var all = document.querySelectorAll(selector);
+    var found = [];
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.classList.contains('btl-lobby-btn')) continue;
+      if (el.hasAttribute('data-btl-processed')) continue;
+      var text = normalizeText(el.textContent || el.value || '');
+      if (!text) continue;
+      for (var j = 0; j < TARGET_BUTTONS.length; j++) {
+        var target = normalizeText(TARGET_BUTTONS[j]);
+        if (text === target || text.indexOf(target) !== -1) {
+          found.push(el);
+          break;
+        }
+      }
+    }
+    return found;
+  }
+
+  function buildLobbyButton() {
+    var btn = document.createElement('a');
+    btn.href = LOBBY_URL;
+    btn.className = 'btl-lobby-btn';
+    btn.setAttribute('aria-label', 'بازگشت به لابی حکیمستان');
+    btn.setAttribute('title', 'بازگشت به لابی حکیمستان');
+    btn.innerHTML = '<span class="btl-icon">🏠</span><span>بازگشت به لابی</span>';
+    return btn;
+  }
+
+  function attachButtons() {
+    var targets = findTargetButtons();
+    for (var i = 0; i < targets.length; i++) {
+      var target = targets[i];
+      target.setAttribute('data-btl-processed', '1');
+
+      var lobbyBtn = buildLobbyButton();
+      var parent = target.parentNode;
+      if (!parent) continue;
+
+      var cs = window.getComputedStyle(target);
+      var marginTop = parseFloat(cs.marginBottom) || 10;
+      lobbyBtn.style.marginTop = marginTop + 'px';
+
+      // اگه دکمهٔ اصلی block/flex هست، دکمهٔ ما رو توی یه wrapper وسط‌چین بذار
+      if (cs.display.indexOf('block') !== -1 || cs.display.indexOf('flex') !== -1) {
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;';
+        wrapper.appendChild(lobbyBtn);
+        if (target.nextSibling) {
+          parent.insertBefore(wrapper, target.nextSibling);
+        } else {
+          parent.appendChild(wrapper);
+        }
+      } else {
+        var br = document.createElement('br');
+        if (target.nextSibling) {
+          parent.insertBefore(br, target.nextSibling);
+          parent.insertBefore(lobbyBtn, br.nextSibling);
+        } else {
+          parent.appendChild(br);
+          parent.appendChild(lobbyBtn);
+        }
+      }
+    }
+  }
+
+  function init() { attachButtons(); }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  if (typeof MutationObserver !== 'undefined') {
+    var timer = null;
+    function setupObserver() {
+      if (!document.body) return;
+      var observer = new MutationObserver(function () {
+        clearTimeout(timer);
+        timer = setTimeout(attachButtons, 200);
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+    if (document.body) setupObserver();
+    else document.addEventListener('DOMContentLoaded', setupObserver);
+  }
 })();
