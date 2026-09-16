@@ -603,7 +603,21 @@ function attachTilt() {
   });
 }
 
-// ===== State =====
+// ===== وضعیت اتصال =====
+function setConnStatus(online) {
+  const badge = document.getElementById('connBadge');
+  const text = document.getElementById('connText');
+  if (!badge || !text) return;
+  if (online) {
+    badge.classList.remove('offline');
+    text.textContent = 'آنلاین';
+  } else {
+    badge.classList.add('offline');
+    text.textContent = 'قطع ارتباط';
+  }
+}
+
+ // ===== State =====
 let allStudents = [];       // همه داده‌ها از سرور
 let filteredStudents = [];  // بعد از فیلتر
 let selectedIds = new Set(); // برای حذف گروهی
