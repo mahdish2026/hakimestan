@@ -735,7 +735,103 @@ function onAuthSuccess(userInfo) {
   updateStatusDot('synced');
   startWatcher();
 }
-  
+
+    /* ═══════════ Force Password Change Modal (پنجرهٔ قفل) ═══════════ */
+  function showForcePasswordChangeModal(userInfo) {
+    const old = document.getElementById('dkForcePassOverlay');
+    if (old) old.remove();
+    
+    const overlay = document.createElement('div');
+    overlay.id = 'dkForcePassOverlay';
+    overlay.innerHTML = `
+      <style>
+        #dkForcePassOverlay{position:fixed;inset:0;z-index:10000;background:linear-gradient(135deg,#7c2d12 0%,#991b1b 50%,#0f172a 100%);display:flex;align-items:center;justify-content:center;padding:20px;direction:rtl;font-family:Vazirmatn,Tahoma,sans-serif}
+        .dk-force-card{background:#fff;border-radius:24px;padding:32px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);color:#1e293b}
+        .dk-force-logo{display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+        .dk-force-logo svg{width:60px;height:60px}
+        .dk-force-title{text-align:center;font-size:22px;font-weight:800;margin:0 0 6px 0;color:#991b1b}
+        .dk-force-sub{text-align:center;color:#64748b;font-size:13px;margin:0 0 22px 0;line-height:1.9}
+        .dk-force-warn{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.9;margin-bottom:20px}
+        .dk-force-field{margin-bottom:14px}
+        .dk-force-field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155}
+        .dk-force-field input{width:100%;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:.2s;box-sizing:border-box;color:#1e293b;background:#fff}
+        .dk-force-field input:focus{border-color:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.15)}
+        .dk-force-btn{width:100%;padding:13px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+        .dk-force-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 20px rgba(220,38,38,.35)}
+        .dk-force-btn:disabled{opacity:.5;cursor:not-allowed}
+        .dk-force-error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:10px;padding:10px 12px;font-size:12px;margin-bottom:14px;line-height:1.7}
+        .dk-force-hint{font-size:11px;color:#94a3b8;margin-top:10px;text-align:center;line-height:1.7}
+      </style>
+      <div class="dk-force-card">
+        <div class="dk-force-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h2 class="dk-force-title">🔒 تغییر اجباری رمز عبور</h2>
+        <p class="dk-force-sub">سلام <b>${userInfo && userInfo.name ? userInfo.name : 'معلم عزیز'}</b>!<br>مدیر رمز عبورت را ریست کرده است. برای ادامه باید همین حالا رمز جدید تعیین کنی.</p>
+        <div class="dk-force-warn">
+          ⚠️ تا زمانی که رمز جدید را ذخیره نکنی، دسترسی به دفتر ممکن نیست. این پنجره قابل بستن نیست.
+        </div>
+        <div id="dkForceError" class="dk-force-error" hidden></div>
+        <div class="dk-force-field">
+          <label for="dkForcePass">رمز جدید (حداقل ۶ کاراکتر)</label>
+          <input id="dkForcePass" type="password" autocomplete="new-password" placeholder="رمز جدید خود را وارد کن">
+        </div>
+        <div class="dk-force-field">
+          <label for="dkForcePass2">تکرار رمز جدید</label>
+          <input id="dkForcePass2" type="password" autocomplete="new-password" placeholder="دوباره وارد کن">
+        </div>
+        <button class="dk-force-btn" type="button" id="dkForceSaveBtn">ذخیرهٔ رمز جدید و ادامه</button>
+        <div class="dk-force-hint">رمز جدید باید با رمز موقت فرق داشته باشد.</div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    
+    const errEl = overlay.querySelector('#dkForceError');
+    const showErr = (e) => { errEl.textContent = e && e.message ? e.message : String(e); errEl.hidden = false; };
+    
+    const saveBtn = overlay.querySelector('#dkForceSaveBtn');
+    const pass1 = overlay.querySelector('#dkForcePass');
+    const pass2 = overlay.querySelector('#dkForcePass2');
+    
+    setTimeout(() => pass1.focus(), 100);
+    
+    saveBtn.onclick = async () => {
+      errEl.hidden = true;
+      const p1 = pass1.value, p2 = pass2.value;
+      if (!p1 || !p2) return showErr(new Error('همهٔ فیلدها را پر کن.'));
+      if (p1.length < 6) return showErr(new Error('رمز جدید باید حداقل ۶ کاراکتر باشد.'));
+      if (p1.length > 100) return showErr(new Error('رمز جدید بیش از حد بلند است.'));
+      if (p1 !== p2) return showErr(new Error('رمز جدید و تکرارش یکسان نیستند.'));
+      saveBtn.disabled = true;
+      const oldText = saveBtn.textContent;
+      saveBtn.textContent = 'در حال ذخیره…';
+      try {
+        await api('tSetPasswordAfterReset', {token: getToken(), newPassword: p1});
+        showToast('✅ رمز جدید ذخیره شد. صفحه در حال بارگذاری…');
+        setTimeout(() => location.reload(), 900);
+      } catch(e) {
+        showErr(e);
+        saveBtn.disabled = false;
+        saveBtn.textContent = oldText;
+      }
+    };
+    
+    // Enter برای ذخیره
+    overlay.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); saveBtn.click(); }
+      });
+    });
+    
+    // جلوگیری از بسته‌شدن با ESC (این overlay دیالوگ نیست، پس ESC کاری نمی‌کند، ولی برای اطمینان)
+    overlay.addEventListener('keydown', e => {
+      if (e.key === 'Escape') e.preventDefault();
+    });
+  }
+
   /* ═══════════ Sync Modal ═══════════ */
   function buildSyncModalBody() {
     const last = store.get(K_LAST);
