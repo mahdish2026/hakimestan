@@ -438,7 +438,13 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
   
   const ui = { tab:'classes', editingClass:null, editingStudent:null, editingGrade:null, filterClass:'' };
   
-  function openModal() {
+      function openModal() {
+    // چک امنیتی: فقط اگر کاربر لاگین کرده
+    const loginView = document.getElementById('loginView');
+    if (!loginView || !loginView.classList.contains('hidden')) {
+      alert('ابتدا باید به پنل معلم وارد شوی.');
+      return;
+    }
     document.getElementById('dkOverlay')?.remove();
     const el = document.createElement('div');
     el.className = 'dk-overlay';
