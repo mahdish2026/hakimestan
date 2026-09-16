@@ -686,6 +686,7 @@ async function loadData(isAutoRefresh) {
     document.getElementById('lastUpdate').textContent =
       'آخرین به‌روزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
   } catch (e) {
+    setConnStatus(false);
     content.innerHTML = '<div class="empty-state">❌ خطا در ارتباط با سرور<br><small>' + e.message + '</small></div>';
   }
 }
