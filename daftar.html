@@ -634,11 +634,17 @@ render();initHakim();
     }
   }
   
-  function startAutoSync(){
+   function startAutoSync(){
     const a = getAuth();
     if(!a || !a.token) return;
     
-    // watch تغییرات
+    // ★ sync اولیه فقط اگه واقعاً داده‌ای هست
+    const initialData = localStorage.getItem(K_DATA);
+    if(initialData){
+      setTimeout(doSync, 2000);
+    }
+    
+    // watch تغییرات بعدی
     let lastData = localStorage.getItem(K_DATA);
     setInterval(() => {
       const curr = localStorage.getItem(K_DATA);
@@ -648,9 +654,6 @@ render();initHakim();
         syncTimer = setTimeout(doSync, 5000);
       }
     }, 3000);
-    
-    // sync اولیه
-    setTimeout(doSync, 2000);
   }
   
   /* ═══════ پنجرهٔ sync ═══════ */
