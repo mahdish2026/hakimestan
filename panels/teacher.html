@@ -510,9 +510,23 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     if (busy) throw new Error('در حال ذخیره...');
     busy = true;
     try {
-      const token = await login();
+      // اطمینان از کامل بودن settings
+      if (!db.version) db.version = 1;
+      if (!db.settings) db.settings = {};
+      if (!db.settings.teacher) db.settings.teacher = '';
+      if (!db.settings.school) db.settings.school = '';
+      if (!db.settings.year) db.settings.year = '1405–1406';
+      if (!db.settings.theme) db.settings.theme = 'blue';
+      if (!Array.isArray(db.classes)) db.classes = [];
+      if (!Array.isArray(db.students)) db.students = [];
+      if (!Array.isArray(db.schedule)) db.schedule = [];
+      if (!Array.isArray(db.grades)) db.grades = [];
+      if (!Array.isArray(db.reminders)) db.reminders = [];
+      if (!db.attendance || typeof db.attendance !== 'object') db.attendance = {};
+
+      const tkn = await login();
       db.updatedAt = new Date().toISOString();
-      await api('tpClassSaveAll', {token, data: db});
+      await api('tpClassSaveAll', {token: tkn, data: db});
       cache = db;
       try { localStorage.setItem(K_LAST, new Date().toISOString()); } catch(e){}
       try { localStorage.setItem(K_DATA, JSON.stringify(db)); } catch(e){}
