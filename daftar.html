@@ -551,6 +551,8 @@ const AUTO_SYNC_DELAY = 5000;
   });
   function startWatcher() {
     if (!isLoggedIn()) return;
+    
+    // watcher برای تشخیص تغییرات
     setInterval(() => {
       if (!isLoggedIn()) return;
       const current = store.get(K_DATA);
@@ -559,6 +561,16 @@ const AUTO_SYNC_DELAY = 5000;
         scheduleAutoSync();
       }
     }, POLL_INTERVAL);
+    
+    // ✅ هر ۱۵ ثانیه چک کن اگه تغییری هست فوراً sync کن
+    setInterval(() => {
+      if (!isLoggedIn() || isSyncing) return;
+      const current = store.get(K_DATA);
+      if (current && current !== lastKnownData) {
+        lastKnownData = current;
+        doAutoSync();
+      }
+    }, 15000);
   }
   
   /* ═══════════ Auth Modal ═══════════ */
