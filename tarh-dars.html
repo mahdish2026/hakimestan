@@ -538,7 +538,8 @@ $('#fileInput').addEventListener('change',async e=>{const files=[...e.target.fil
 const baseCopies=applyCopies;applyCopies=function(){const mappings=store.settings.uiText;$$('[data-copy]').forEach(el=>{if(Object.prototype.hasOwnProperty.call(mappings,el.dataset.copy))el.textContent=mappings[el.dataset.copy]});for(const n of rawTextNodes($('#main')).concat(rawTextNodes($('#nav')))){n.__base=n.textContent;const key='raw:'+n.textContent;if(Object.prototype.hasOwnProperty.call(mappings,key))n.textContent=String(mappings[key])}};
 render();weekly();
 
-if(typeof ResizeObserver!=='undefined'){new ResizeObserver(entries=>document.documentElement.style.setProperty('--header-height',Math.ceil(entries[0].borderBoxSize?.[0]?.blockSize||document.querySelector('.topbar').getBoundingClientRect().height)+'px')).observe(document.querySelector('.topbar'));}
-
+if(typeof ResizeObserver!=='undefined'){...}
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3a940935d5ad14a',t:'MTc4OTMyNDUzMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+<script src="back-to-lobby.js"></script>
+</body>
+</html>
