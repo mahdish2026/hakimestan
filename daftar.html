@@ -673,20 +673,24 @@ render();initHakim();
     setTimeout(() => { overlay.querySelector('#dkLoginUser')?.focus(); }, 100);
   }
   
-  function onAuthSuccess(userInfo) {
-    // چک کاربر قبلی
-    const lastUser = store.get(K_LAST_USER);
-    if (lastUser && lastUser !== getUsername()) {
-      store.del(K_DATA);
-      store.del(K_LAST);
-      showToast('دفتر برای حساب جدید بازنشانی شد. برای دریافت داده‌های سرور روی 🛡️ بزن.');
-    }
+function onAuthSuccess(userInfo) {
+  // چک کاربر قبلی
+  const lastUser = store.get(K_LAST_USER);
+  if (lastUser && lastUser !== getUsername()) {
+    // کاربر عوض شده — دادهٔ کاربر قبلی رو پاک کن و صفحه رو دوباره بارگذاری کن
+    store.del(K_DATA);
+    store.del(K_LAST);
     store.set(K_LAST_USER, getUsername(), true);
-    lastKnownData = store.get(K_DATA);
-    updateSyncBtnStyle();
-    updateStatusDot('synced');
-    startWatcher();
+    showToast('دفتر برای حساب جدید بازنشانی شد. برای دریافت دادههای سرور روی دکمهٔ همگامسازی بزن.');
+    setTimeout(() => location.reload(), 1200);
+    return;
   }
+  store.set(K_LAST_USER, getUsername(), true);
+  lastKnownData = store.get(K_DATA);
+  updateSyncBtnStyle();
+  updateStatusDot('synced');
+  startWatcher();
+}
   
   /* ═══════════ Sync Modal ═══════════ */
   function buildSyncModalBody() {
