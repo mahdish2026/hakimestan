@@ -230,7 +230,20 @@
   }
   [data-theme="royal"] .header-badge, [data-theme="midnight"] .header-badge, [data-theme="emerald"] .header-badge { color: #6fe6a6; }
   .header-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #34d17f; box-shadow: 0 0 10px #34d17f; animation: blink 1.6s infinite; }
-  @keyframes blink { 50% { opacity: 0.3; } }
+  .header-badge.offline {
+  background: rgba(208, 72, 58, 0.16);
+  border-color: rgba(255, 111, 97, 0.4);
+  color: #d0483a;
+}
+[data-theme="royal"] .header-badge.offline,
+[data-theme="midnight"] .header-badge.offline,
+[data-theme="emerald"] .header-badge.offline { color: #ff9d9d; }
+.header-badge.offline .dot {
+  background: #d0483a;
+  box-shadow: 0 0 10px #d0483a;
+  animation: none;
+}
+ @keyframes blink { 50% { opacity: 0.3; } }
 
   /* =========================================================
      LOGIN
