@@ -744,22 +744,6 @@ function onAuthSuccess(userInfo) {
   startWatcher();
 }
   
-  if (lastUser && lastUser !== getUsername()) {
-    // کاربر عوض شده — دادهٔ کاربر قبلی رو پاک کن و صفحه رو دوباره بارگذاری کن
-    store.del(K_DATA);
-    store.del(K_LAST);
-    store.set(K_LAST_USER, getUsername(), true);
-    showToast('دفتر برای حساب جدید بازنشانی شد. برای دریافت دادههای سرور روی دکمهٔ همگامسازی بزن.');
-    setTimeout(() => location.reload(), 1200);
-    return;
-  }
-  store.set(K_LAST_USER, getUsername(), true);
-  lastKnownData = store.get(K_DATA);
-  updateSyncBtnStyle();
-  updateStatusDot('synced');
-  startWatcher();
-}
-
     /* ═══════════ Force Password Change Modal (پنجرهٔ قفل) ═══════════ */
   function showForcePasswordChangeModal(userInfo) {
     const old = document.getElementById('dkForcePassOverlay');
