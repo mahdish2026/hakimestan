@@ -538,8 +538,7 @@ $('#fileInput').addEventListener('change',async e=>{const files=[...e.target.fil
 const baseCopies=applyCopies;applyCopies=function(){const mappings=store.settings.uiText;$$('[data-copy]').forEach(el=>{if(Object.prototype.hasOwnProperty.call(mappings,el.dataset.copy))el.textContent=mappings[el.dataset.copy]});for(const n of rawTextNodes($('#main')).concat(rawTextNodes($('#nav')))){n.__base=n.textContent;const key='raw:'+n.textContent;if(Object.prototype.hasOwnProperty.call(mappings,key))n.textContent=String(mappings[key])}};
 render();weekly();
 
-if(typeof ResizeObserver!=='undefined'){...}
-</script>
+if(typeof ResizeObserver!=='undefined'){new ResizeObserver(entries=>document.documentElement.style.setProperty('--header-height',Math.ceil(entries[0].borderBoxSize?.[0]?.blockSize||document.querySelector('.topbar').getBoundingClientRect().height)+'px')).observe(document.querySelector('.topbar'));}</script>
 <script src="back-to-lobby.js"></script>
 </body>
 </html>
