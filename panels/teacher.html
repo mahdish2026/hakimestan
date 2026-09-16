@@ -986,6 +986,47 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     document.body.appendChild(btn);
   }
   
+  function shouldShowButton() {
+    const loginView = document.getElementById('loginView');
+    const appShell = document.getElementById('appShell');
+    if (!loginView || !appShell) return false;
+    // فقط وقتی پنل نمایان است (کاربر لاگین کرده)
+    return loginView.classList.contains('hidden')
+        && !appShell.classList.contains('hidden');
+  }
+  
+  function watchLoginState() {
+    const btn = document.getElementById('daftarPanelBtn');
+    if (btn) btn.style.display = shouldShowButton() ? 'flex' : 'none';
+  }
+  
+  function injectButton() {
+    if (document.getElementById('daftarPanelBtn')) return;
+    const style = document.createElement('style');
+    style.textContent = CSS;
+    document.head.appendChild(style);
+    const btn = document.createElement('button');
+    btn.id = 'daftarPanelBtn';
+    btn.type = 'button';
+    btn.title = 'دفتر معلم';
+    btn.style.cssText = 'position:fixed;bottom:22px;left:22px;z-index:900;background:linear-gradient(155deg,var(--gold),var(--gold-2));color:#241506;border:0;border-radius:16px;padding:14px 20px;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 10px 30px color-mix(in srgb,var(--gold) 30%,transparent);display:none;align-items:center;gap:8px;transition:transform .15s';
+    btn.innerHTML = '<span style="font-size:18px">📓</span><span>دفتر معلم</span>';
+    btn.onmouseenter = () => btn.style.transform = 'translateY(-2px)';
+    btn.onmouseleave = () => btn.style.transform = 'translateY(0)';
+    btn.onclick = openModal;
+    document.body.appendChild(btn);
+    
+    // هر تغییری در کلاس‌های loginView و appShell رو زیر نظر بگیر
+    const observer = new MutationObserver(watchLoginState);
+    const loginView = document.getElementById('loginView');
+    const appShell = document.getElementById('appShell');
+    if (loginView) observer.observe(loginView, {attributes:true, attributeFilter:['class']});
+    if (appShell) observer.observe(appShell, {attributes:true, attributeFilter:['class']});
+    
+    // یک‌بار هم چک کن
+    watchLoginState();
+  }
+  
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectButton);
   } else {
