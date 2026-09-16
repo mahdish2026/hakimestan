@@ -515,7 +515,40 @@ const AUTO_SYNC_DELAY = 5000;
       isSyncing = false;
     }
   }
-  
+
+    /* ✅ sync نهایی موقع بستن یا مخفی شدن تب */
+  function syncBeforeUnload() {
+    if (!isLoggedIn()) return;
+    const raw = store.get(K_DATA);
+    if (!raw || raw === lastKnownData) return;
+    const a = JSON.parse(store.get(K_AUTH) || '{}');
+    if (!a.token) return;
+    try {
+      const payload = JSON.stringify({
+        action: 'tpClassSaveAll',
+        token: a.token,
+        data: JSON.parse(raw)
+      });
+      navigator.sendBeacon(API, new Blob([payload], {type: 'text/plain;charset=utf-8'}));
+      console.log('📤 تلاش برای sync نهایی موقع بستن تب');
+    } catch(e) {
+      console.warn('sync نهایی نشد:', e);
+    }
+  }
+  window.addEventListener('beforeunload', syncBeforeUnload);
+  window.addEventListener('pagehide', syncBeforeUnload);
+
+  /* ✅ sync وقتی کاربر برمی‌گرده به تب */
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && isLoggedIn()) {
+      const current = store.get(K_DATA);
+      if (current && current !== lastKnownData) {
+        lastKnownData = current;
+        clearTimeout(autoSyncTimer);
+        autoSyncTimer = setTimeout(doAutoSync, 500);
+      }
+    }
+  });
   function startWatcher() {
     if (!isLoggedIn()) return;
     setInterval(() => {
