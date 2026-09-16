@@ -350,755 +350,423 @@ render();initHakim();
 </script>
 
 <script>
-/* ══════════════════════════════════════════════════════════════════
- * احراز هویت و همگام‌سازی دفتر معلم با Google Sheets
- * نسخهٔ ۳ — با ثبت‌نام، ورود، تغییر رمز، خروج، "مرا به خاطر بسپار"
- * ══════════════════════════════════════════════════════════════════ */
+/* نسخهٔ ساده و مطمئن همگام‌سازی */
 (function(){
   'use strict';
   
-  const API    = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  const API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
   const K_AUTH = 'hakimestan_daftar_auth';
   const K_DATA = 'hakimestan_daftar_v1';
   const K_LAST = 'hakimestan_daftar_last_sync';
   const K_LAST_USER = 'hakimestan_daftar_last_user';
   
-const AUTO_SYNC_DELAY = 5000;
-  const POLL_INTERVAL   = 3000;
-  
-  const store = {
-    get: (k) => {
-      try { return localStorage.getItem(k) || sessionStorage.getItem(k); }
-      catch(e) { return null; }
-    },
-    set: (k, v, remember) => {
-      try {
-        if (remember) {
-          localStorage.setItem(k, v);
-          sessionStorage.removeItem(k);
-        } else {
-          sessionStorage.setItem(k, v);
-          localStorage.removeItem(k);
-        }
-      } catch(e) {}
-    },
-    del: (k) => {
-      try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch(e) {}
-    }
-  };
-  
-  let auth = null;
-  let lastKnownData = null;
-  let autoSyncTimer = null;
-  let isSyncing = false;
-  
-  function loadStoredAuth() {
-    try {
-      const raw = store.get(K_AUTH);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (!parsed || !parsed.token || !parsed.username) return null;
-      return parsed;
-    } catch(e) { return null; }
+  function getAuth(){
+    try { return JSON.parse(localStorage.getItem(K_AUTH) || sessionStorage.getItem(K_AUTH) || 'null'); }
+    catch(e) { return null; }
+  }
+  function setAuth(auth, remember){
+    const str = JSON.stringify(auth);
+    if(remember){ localStorage.setItem(K_AUTH, str); sessionStorage.removeItem(K_AUTH); }
+    else { sessionStorage.setItem(K_AUTH, str); localStorage.removeItem(K_AUTH); }
+  }
+  function delAuth(){
+    localStorage.removeItem(K_AUTH);
+    sessionStorage.removeItem(K_AUTH);
   }
   
-  function saveAuth(username, token, remember) {
-    auth = {username, token, remember};
-    store.set(K_AUTH, JSON.stringify(auth), remember);
-  }
-  
-  function clearAuth() {
-    auth = null;
-    store.del(K_AUTH);
-  }
-  
-  const isLoggedIn = () => !!auth;
-  const getToken = () => auth ? auth.token : null;
-  const getUsername = () => auth ? auth.username : '';
-  
-  async function api(action, payload) {
+  async function api(action, payload){
     const res = await fetch(API, {
       method: 'POST',
       headers: {'Content-Type': 'text/plain;charset=utf-8'},
-      body: JSON.stringify(Object.assign({action}, payload || {})),
+      body: JSON.stringify(Object.assign({action}, payload||{})),
       redirect: 'follow'
     });
-    if (!res.ok) throw new Error('ارتباط برقرار نشد (کد ' + res.status + ')');
-    let data;
-    try { data = await res.json(); }
-    catch(e) { throw new Error('پاسخ سرور ناخوانا است.'); }
-    if (data && data.ok === false) throw new Error(data.error || 'خطای نامشخص');
+    const data = await res.json();
+    if(data && data.ok === false) throw new Error(data.error || 'خطا');
     return data;
   }
   
-  function fa(s) { return String(s).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[Number(c)]); }
-  
-  function formatTimeAgo(iso) {
-    if (!iso) return 'هنوز همگام نشده';
-    const diff = Date.now() - new Date(iso).getTime();
-    const s = Math.floor(diff / 1000);
-    if (s < 10) return 'همین الان';
-    if (s < 60) return fa(s) + ' ثانیه پیش';
-    const m = Math.floor(s / 60);
-    if (m < 60) return fa(m) + ' دقیقه پیش';
-    const h = Math.floor(m / 60);
-    if (h < 24) return fa(h) + ' ساعت پیش';
-    return fa(Math.floor(h / 24)) + ' روز پیش';
-  }
-  
-  function showToast(msg, err) {
-    const area = document.getElementById('toasts') || document.body;
+  function showToast(text, err){
+    const area = document.getElementById('toasts');
+    if(!area) return alert(text);
     const el = document.createElement('div');
     el.className = 'toast' + (err ? ' error' : '');
-    el.setAttribute('role', err ? 'alert' : 'status');
-    const span = document.createElement('span'); span.textContent = msg;
-    const close = document.createElement('button'); close.textContent = '×';
-    close.setAttribute('aria-label', 'بستن');
-    close.onclick = () => el.remove();
-    el.appendChild(span); el.appendChild(close);
-    while (area.children.length >= 3) area.firstElementChild.remove();
+    el.textContent = text;
+    el.style.cssText = 'padding:14px 18px;border-radius:14px;background:' + (err?'#873535':'#234c40') + ';color:#fff;font-size:13px;margin-top:10px';
     area.appendChild(el);
-    setTimeout(() => el.remove(), err ? 12000 : 6000);
+    setTimeout(() => el.remove(), 4000);
   }
   
-  function updateStatusDot(state, message) {
-    const dot = document.getElementById('syncDot');
-    const label = document.getElementById('syncStatusLabel');
-    if (!dot) return;
-    dot.className = 'sync-dot';
-    if (state === 'synced')       dot.classList.add('green');
-    else if (state === 'syncing') dot.classList.add('amber');
-    else if (state === 'pending') dot.classList.add('amber');
-    else if (state === 'error')   dot.classList.add('red');
-    else                          dot.classList.add('gray');
-    if (label) {
-      if (message) label.textContent = message;
-      else {
-        if (!isLoggedIn())             label.textContent = 'غیرفعال';
-        else if (state === 'syncing')  label.textContent = 'در حال همگام‌سازی…';
-        else if (state === 'pending')  label.textContent = 'در انتظار…';
-        else if (state === 'error')    label.textContent = 'خطا';
-        else                           label.textContent = formatTimeAgo(store.get(K_LAST));
-      }
-    }
-  }
-  
-  function scheduleAutoSync() {
-    if (!isLoggedIn()) return;
-    clearTimeout(autoSyncTimer);
-    updateStatusDot('pending');
-    autoSyncTimer = setTimeout(doAutoSync, AUTO_SYNC_DELAY);
-  }
-  
-  async function doAutoSync() {
-    if (isSyncing || !isLoggedIn()) return;
-    const raw = store.get(K_DATA);
-    if (!raw) return;
-    isSyncing = true;
-    updateStatusDot('syncing');
-    try {
-      const db = JSON.parse(raw);
-      await api('tpClassSaveAll', {token: getToken(), data: db});
-      store.set(K_LAST, new Date().toISOString(), true);
-      updateStatusDot('synced');
-      console.log('✅ همگام‌سازی خودکار انجام شد');
-    } catch (e) {
-      const msg = String(e.message || '');
-      if (msg.includes('منقضی') || msg.includes('توکن')) {
-        clearAuth();
-        showAuthModal('نشست منقضی شد. لطفاً دوباره وارد شو.');
-        return;
-      }
-      updateStatusDot('error', 'خطا در همگام‌سازی');
-      console.warn('⚠️ همگام‌سازی خودکار شکست خورد:', e.message);
-    } finally {
-      isSyncing = false;
-    }
-  }
-
-    /* ✅ sync نهایی موقع بستن یا مخفی شدن تب */
-  function syncBeforeUnload() {
-    if (!isLoggedIn()) return;
-    const raw = store.get(K_DATA);
-    if (!raw || raw === lastKnownData) return;
-    const a = JSON.parse(store.get(K_AUTH) || '{}');
-    if (!a.token) return;
-    try {
-      const payload = JSON.stringify({
-        action: 'tpClassSaveAll',
-        token: a.token,
-        data: JSON.parse(raw)
-      });
-      navigator.sendBeacon(API, new Blob([payload], {type: 'text/plain;charset=utf-8'}));
-      console.log('📤 تلاش برای sync نهایی موقع بستن تب');
-    } catch(e) {
-      console.warn('sync نهایی نشد:', e);
-    }
-  }
-  window.addEventListener('beforeunload', syncBeforeUnload);
-  window.addEventListener('pagehide', syncBeforeUnload);
-
-  /* ✅ sync وقتی کاربر برمی‌گرده به تب */
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && isLoggedIn()) {
-      const current = store.get(K_DATA);
-      if (current && current !== lastKnownData) {
-        lastKnownData = current;
-        clearTimeout(autoSyncTimer);
-        autoSyncTimer = setTimeout(doAutoSync, 500);
-      }
-    }
-  });
-  function startWatcher() {
-    if (!isLoggedIn()) return;
-    
-    // watcher برای تشخیص تغییرات
-    setInterval(() => {
-      if (!isLoggedIn()) return;
-      const current = store.get(K_DATA);
-      if (current && current !== lastKnownData) {
-        lastKnownData = current;
-        scheduleAutoSync();
-      }
-    }, POLL_INTERVAL);
-    
-    // ✅ هر ۱۵ ثانیه چک کن اگه تغییری هست فوراً sync کن
-    setInterval(() => {
-      if (!isLoggedIn() || isSyncing) return;
-      const current = store.get(K_DATA);
-      if (current && current !== lastKnownData) {
-        lastKnownData = current;
-        doAutoSync();
-      }
-    }, 15000);
-  }
-  
-  /* ═══════════ Auth Modal ═══════════ */
-  function showAuthModal(errorMsg) {
+  /* ═══════ پنجرهٔ ورود/ثبت‌نام ═══════ */
+  function openAuthModal(msg){
     const old = document.getElementById('dkAuthOverlay');
-    if (old) old.remove();
+    if(old) old.remove();
     
-    const overlay = document.createElement('div');
-    overlay.id = 'dkAuthOverlay';
-    overlay.innerHTML = `
-      <style>
-        #dkAuthOverlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);display:flex;align-items:center;justify-content:center;padding:20px;direction:rtl;font-family:Vazirmatn,Tahoma,sans-serif}
-        .dk-auth-card{background:#fff;border-radius:24px;padding:32px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);color:#1e293b}
-        .dk-auth-logo{display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-        .dk-auth-logo svg{width:56px;height:56px}
-        .dk-auth-title{text-align:center;font-size:22px;font-weight:800;margin:0 0 6px 0;color:#1e293b}
-        .dk-auth-sub{text-align:center;color:#64748b;font-size:13px;margin:0 0 24px 0}
-        .dk-auth-tabs{display:flex;gap:4px;background:#f1f5f9;padding:4px;border-radius:12px;margin-bottom:20px}
-        .dk-auth-tab{flex:1;border:0;background:none;padding:10px;font-size:13px;font-weight:700;cursor:pointer;border-radius:9px;color:#64748b;font-family:inherit;transition:.2s}
-        .dk-auth-tab.on{background:#fff;color:#1e3a8a;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-        .dk-auth-field{margin-bottom:14px}
-        .dk-auth-field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155}
-        .dk-auth-field input{width:100%;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:.2s;box-sizing:border-box;color:#1e293b;background:#fff}
-        .dk-auth-field input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
-        .dk-auth-check{display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:13px;color:#475569;cursor:pointer}
-        .dk-auth-check input{width:18px;height:18px;accent-color:#3b82f6;cursor:pointer;margin:0}
-        .dk-auth-btn{width:100%;padding:13px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
-        .dk-auth-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 20px rgba(59,130,246,.35)}
-        .dk-auth-btn:disabled{opacity:.5;cursor:not-allowed}
-        .dk-auth-error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:10px;padding:10px 12px;font-size:12px;margin-bottom:14px;line-height:1.7}
-        .dk-auth-hint{font-size:11px;color:#94a3b8;margin-top:4px}
-        .dk-auth-footer{text-align:center;font-size:11px;color:#94a3b8;margin-top:20px;padding-top:16px;border-top:1px solid #f1f5f9}
-      </style>
-      <div class="dk-auth-card">
-        <div class="dk-auth-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5v-16Z"/>
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-          </svg>
-        </div>
-        <h2 class="dk-auth-title">دفتر معلم حکیمستان</h2>
-        <p class="dk-auth-sub">ورود یا ثبت‌نام برای ذخیرهٔ اطلاعات</p>
-        <div class="dk-auth-tabs">
-          <button type="button" class="dk-auth-tab on" data-tab="login">ورود</button>
-          <button type="button" class="dk-auth-tab" data-tab="register">ثبت‌نام</button>
-        </div>
-        <div id="dkAuthError" class="dk-auth-error" hidden></div>
-        <form id="dkLoginForm">
-          <div class="dk-auth-field">
-            <label for="dkLoginUser">نام کاربری</label>
-            <input id="dkLoginUser" type="text" autocomplete="username" placeholder="مثلاً mahdi" dir="ltr" style="text-align:left">
-          </div>
-          <div class="dk-auth-field">
-            <label for="dkLoginPass">رمز عبور</label>
-            <input id="dkLoginPass" type="password" autocomplete="current-password" placeholder="رمز خود را وارد کن">
-          </div>
-          <label class="dk-auth-check">
-            <input id="dkLoginRemember" type="checkbox" checked>
-            <span>مرا به خاطر بسپار (تا خروج خودکار نکنم)</span>
-          </label>
-          <button class="dk-auth-btn" type="submit" id="dkLoginBtn">ورود به دفتر</button>
-        </form>
-        <form id="dkRegisterForm" style="display:none">
-          <div class="dk-auth-field">
-            <label for="dkRegUser">نام کاربری *</label>
-            <input id="dkRegUser" type="text" autocomplete="username" placeholder="مثلاً zahra" dir="ltr" style="text-align:left">
-            <div class="dk-auth-hint">حروف کوچک انگلیسی و اعداد، حداقل ۳ کاراکتر</div>
-          </div>
-          <div class="dk-auth-field">
-            <label for="dkRegName">نام و نام خانوادگی</label>
-            <input id="dkRegName" type="text" autocomplete="name" placeholder="مثلاً زهرا احمدی">
-          </div>
-          <div class="dk-auth-field">
-            <label for="dkRegPass">رمز عبور *</label>
-            <input id="dkRegPass" type="password" autocomplete="new-password" placeholder="حداقل ۶ کاراکتر">
-          </div>
-          <label class="dk-auth-check">
-            <input id="dkRegRemember" type="checkbox" checked>
-            <span>مرا به خاطر بسپار (تا خروج خودکار نکنم)</span>
-          </label>
-          <button class="dk-auth-btn" type="submit" id="dkRegBtn">ساخت حساب و ورود</button>
-        </form>
-        <div class="dk-auth-footer">🧙 حکیمستان — دفتر معلم هوشمند</div>
-      </div>
-    `;
-    document.body.appendChild(overlay);
+    const ov = document.createElement('div');
+    ov.id = 'dkAuthOverlay';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#0f172a;display:flex;align-items:center;justify-content:center;padding:20px;direction:rtl;font-family:Vazirmatn,Tahoma,sans-serif';
     
-    overlay.querySelectorAll('.dk-auth-tab').forEach(tab => {
-      tab.onclick = () => {
-        const name = tab.dataset.tab;
-        overlay.querySelectorAll('.dk-auth-tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
-        overlay.querySelector('#dkLoginForm').style.display = name === 'login' ? 'block' : 'none';
-        overlay.querySelector('#dkRegisterForm').style.display = name === 'register' ? 'block' : 'none';
-        overlay.querySelector('#dkAuthError').hidden = true;
-      };
-    });
+    ov.innerHTML = '<div style="background:#fff;border-radius:24px;padding:32px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4)">'
+      + '<h2 style="text-align:center;font-size:22px;font-weight:800;margin:0 0 6px;color:#1e293b">دفتر معلم حکیمستان</h2>'
+      + '<p style="text-align:center;color:#64748b;font-size:13px;margin:0 0 22px">ورود یا ثبت‌نام برای ذخیرهٔ اطلاعات</p>'
+      + '<div id="dkErr" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:10px;padding:10px 12px;font-size:12px;margin-bottom:14px;display:none;line-height:1.8"></div>'
+      + '<div style="display:flex;gap:4px;background:#f1f5f9;padding:4px;border-radius:12px;margin-bottom:18px">'
+      +   '<button id="tabLogin" style="flex:1;border:0;background:#fff;padding:10px;font-size:13px;font-weight:700;cursor:pointer;border-radius:9px;color:#1e3a8a;font-family:inherit">ورود</button>'
+      +   '<button id="tabReg" style="flex:1;border:0;background:none;padding:10px;font-size:13px;font-weight:700;cursor:pointer;border-radius:9px;color:#64748b;font-family:inherit">ثبت‌نام</button>'
+      + '</div>'
+      + '<div id="frmLogin">'
+      +   '<label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155">نام کاربری</label>'
+      +   '<input id="lu" type="text" dir="ltr" placeholder="mahdi" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;box-sizing:border-box;margin-bottom:12px;font-family:inherit">'
+      +   '<label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155">رمز عبور</label>'
+      +   '<input id="lp" type="password" placeholder="رمز" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;box-sizing:border-box;margin-bottom:12px;font-family:inherit">'
+      +   '<label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#475569;margin-bottom:16px;cursor:pointer"><input id="lrem" type="checkbox" checked style="width:18px;height:18px">مرا به خاطر بسپار</label>'
+      +   '<button id="btnLogin" style="width:100%;padding:13px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">ورود به دفتر</button>'
+      + '</div>'
+      + '<div id="frmReg" style="display:none">'
+      +   '<label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155">نام کاربری * (حروف کوچک انگلیسی)</label>'
+      +   '<input id="ru" type="text" dir="ltr" placeholder="zahra" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;box-sizing:border-box;margin-bottom:12px;font-family:inherit">'
+      +   '<label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155">نام و نام خانوادگی</label>'
+      +   '<input id="rn" type="text" placeholder="زهرا احمدی" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;box-sizing:border-box;margin-bottom:12px;font-family:inherit">'
+      +   '<label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155">رمز عبور * (حداقل ۶ کاراکتر)</label>'
+      +   '<input id="rp" type="password" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;box-sizing:border-box;margin-bottom:12px;font-family:inherit">'
+      +   '<label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#475569;margin-bottom:16px;cursor:pointer"><input id="rrem" type="checkbox" checked style="width:18px;height:18px">مرا به خاطر بسپار</label>'
+      +   '<button id="btnReg" style="width:100%;padding:13px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">ساخت حساب و ورود</button>'
+      + '</div>'
+      + '</div>';
     
-    const errEl = overlay.querySelector('#dkAuthError');
-    if (errorMsg) { errEl.textContent = errorMsg; errEl.hidden = false; }
+    document.body.appendChild(ov);
     
-    overlay.querySelector('#dkLoginForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const btn = overlay.querySelector('#dkLoginBtn');
-      const u = overlay.querySelector('#dkLoginUser').value.trim().toLowerCase();
-      const p = overlay.querySelector('#dkLoginPass').value;
-      const rem = overlay.querySelector('#dkLoginRemember').checked;
-      errEl.hidden = true;
-      if (!u || !p) { errEl.textContent = 'نام کاربری و رمز را وارد کن.'; errEl.hidden = false; return; }
+    const errEl = ov.querySelector('#dkErr');
+    const showErr = (e) => { errEl.textContent = e && e.message ? e.message : String(e); errEl.style.display = 'block'; };
+    
+    if(msg) showErr(new Error(msg));
+    
+    ov.querySelector('#tabLogin').onclick = () => {
+      ov.querySelector('#tabLogin').style.background = '#fff';
+      ov.querySelector('#tabLogin').style.color = '#1e3a8a';
+      ov.querySelector('#tabReg').style.background = 'none';
+      ov.querySelector('#tabReg').style.color = '#64748b';
+      ov.querySelector('#frmLogin').style.display = 'block';
+      ov.querySelector('#frmReg').style.display = 'none';
+      errEl.style.display = 'none';
+    };
+    ov.querySelector('#tabReg').onclick = () => {
+      ov.querySelector('#tabReg').style.background = '#fff';
+      ov.querySelector('#tabReg').style.color = '#1e3a8a';
+      ov.querySelector('#tabLogin').style.background = 'none';
+      ov.querySelector('#tabLogin').style.color = '#64748b';
+      ov.querySelector('#frmLogin').style.display = 'none';
+      ov.querySelector('#frmReg').style.display = 'block';
+      errEl.style.display = 'none';
+    };
+    
+    ov.querySelector('#btnLogin').onclick = async () => {
+      const u = ov.querySelector('#lu').value.trim().toLowerCase();
+      const p = ov.querySelector('#lp').value;
+      const rem = ov.querySelector('#lrem').checked;
+      errEl.style.display = 'none';
+      if(!u || !p) return showErr(new Error('نام کاربری و رمز را وارد کن.'));
+      
+      const btn = ov.querySelector('#btnLogin');
       btn.disabled = true; btn.textContent = 'در حال ورود…';
       try {
         const r = await api('tLogin', {username: u, password: p});
-        saveAuth(r.username, r.token, rem);
-        overlay.remove();
-        onAuthSuccess(r);
+        setAuth({username: r.username, token: r.token, remember: rem}, rem);
+        localStorage.setItem(K_LAST_USER, r.username);
+        ov.remove();
         showToast('✅ خوش آمدی ' + (r.name || r.username) + '!');
-      } catch(err) {
-        errEl.textContent = err.message; errEl.hidden = false;
-        btn.disabled = false; btn.textContent = 'ورود به دفتر';
+        if(r.mustChangePassword){
+          openForcePassModal(r);
+        } else {
+          updateUI();
+          startAutoSync();
+        }
+      } catch(e) {
+        showErr(e); btn.disabled = false; btn.textContent = 'ورود به دفتر';
       }
     };
     
-    overlay.querySelector('#dkRegisterForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const btn = overlay.querySelector('#dkRegBtn');
-      const u = overlay.querySelector('#dkRegUser').value.trim().toLowerCase();
-      const n = overlay.querySelector('#dkRegName').value.trim();
-      const p = overlay.querySelector('#dkRegPass').value;
-      const rem = overlay.querySelector('#dkRegRemember').checked;
-      errEl.hidden = true;
-      if (!u || !p) { errEl.textContent = 'نام کاربری و رمز را وارد کن.'; errEl.hidden = false; return; }
+    ov.querySelector('#btnReg').onclick = async () => {
+      const u = ov.querySelector('#ru').value.trim().toLowerCase();
+      const n = ov.querySelector('#rn').value.trim();
+      const p = ov.querySelector('#rp').value;
+      const rem = ov.querySelector('#rrem').checked;
+      errEl.style.display = 'none';
+      if(!u || !p) return showErr(new Error('نام کاربری و رمز را وارد کن.'));
+      
+      const btn = ov.querySelector('#btnReg');
       btn.disabled = true; btn.textContent = 'در حال ثبت‌نام…';
       try {
         const r = await api('tRegister', {username: u, password: p, name: n});
-        saveAuth(r.username, r.token, rem);
-        overlay.remove();
-        onAuthSuccess(r);
+        setAuth({username: r.username, token: r.token, remember: rem}, rem);
+        localStorage.setItem(K_LAST_USER, r.username);
+        ov.remove();
         showToast('✅ حساب ساخته شد. خوش آمدی ' + (r.name || r.username) + '!');
-      } catch(err) {
-        errEl.textContent = err.message; errEl.hidden = false;
-        btn.disabled = false; btn.textContent = 'ساخت حساب و ورود';
+        updateUI();
+        startAutoSync();
+      } catch(e) {
+        showErr(e); btn.disabled = false; btn.textContent = 'ساخت حساب و ورود';
       }
     };
-    
-    setTimeout(() => { overlay.querySelector('#dkLoginUser')?.focus(); }, 100);
   }
   
-function onAuthSuccess(userInfo) {
-  // ✅ اگر مدیر رمز را ریست کرده، پنجرهٔ قفل باز کن
-  if (userInfo && userInfo.mustChangePassword) {
-    updateSyncBtnStyle();
-    updateStatusDot('pending', 'نیاز به تغییر رمز');
-    showForcePasswordChangeModal(userInfo);
-    return;
-  }
-  
-  // چک کاربر قبلی
-  const lastUser = store.get(K_LAST_USER);
-  if (lastUser && lastUser !== getUsername()) {
-    // کاربر عوض شده — دادهٔ کاربر قبلی رو پاک کن و صفحه رو دوباره بارگذاری کن
-    store.del(K_DATA);
-    store.del(K_LAST);
-    store.set(K_LAST_USER, getUsername(), true);
-    showToast('دفتر برای حساب جدید بازنشانی شد. برای دریافت داده‌های سرور روی دکمهٔ همگام‌سازی بزن.');
-    setTimeout(() => location.reload(), 1200);
-    return;
-  }
-  store.set(K_LAST_USER, getUsername(), true);
-  lastKnownData = store.get(K_DATA);
-  updateSyncBtnStyle();
-  updateStatusDot('synced');
-  startWatcher();
-}
-  
-    /* ═══════════ Force Password Change Modal (پنجرهٔ قفل) ═══════════ */
-  function showForcePasswordChangeModal(userInfo) {
+  /* ═══════ پنجرهٔ قفل ═══════ */
+  function openForcePassModal(user){
     const old = document.getElementById('dkForcePassOverlay');
-    if (old) old.remove();
+    if(old) old.remove();
     
-    const overlay = document.createElement('div');
-    overlay.id = 'dkForcePassOverlay';
-    overlay.innerHTML = `
-      <style>
-        #dkForcePassOverlay{position:fixed;inset:0;z-index:10000;background:linear-gradient(135deg,#7c2d12 0%,#991b1b 50%,#0f172a 100%);display:flex;align-items:center;justify-content:center;padding:20px;direction:rtl;font-family:Vazirmatn,Tahoma,sans-serif}
-        .dk-force-card{background:#fff;border-radius:24px;padding:32px;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);color:#1e293b}
-        .dk-force-logo{display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-        .dk-force-logo svg{width:60px;height:60px}
-        .dk-force-title{text-align:center;font-size:22px;font-weight:800;margin:0 0 6px 0;color:#991b1b}
-        .dk-force-sub{text-align:center;color:#64748b;font-size:13px;margin:0 0 22px 0;line-height:1.9}
-        .dk-force-warn{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.9;margin-bottom:20px}
-        .dk-force-field{margin-bottom:14px}
-        .dk-force-field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#334155}
-        .dk-force-field input{width:100%;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-family:inherit;outline:none;transition:.2s;box-sizing:border-box;color:#1e293b;background:#fff}
-        .dk-force-field input:focus{border-color:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.15)}
-        .dk-force-btn{width:100%;padding:13px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-        .dk-force-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 20px rgba(220,38,38,.35)}
-        .dk-force-btn:disabled{opacity:.5;cursor:not-allowed}
-        .dk-force-error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:10px;padding:10px 12px;font-size:12px;margin-bottom:14px;line-height:1.7}
-        .dk-force-hint{font-size:11px;color:#94a3b8;margin-top:10px;text-align:center;line-height:1.7}
-      </style>
-      <div class="dk-force-card">
-        <div class="dk-force-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-          </svg>
-        </div>
-        <h2 class="dk-force-title">🔒 تغییر اجباری رمز عبور</h2>
-        <p class="dk-force-sub">سلام <b>${userInfo && userInfo.name ? userInfo.name : 'معلم عزیز'}</b>!<br>مدیر رمز عبورت را ریست کرده است. برای ادامه باید همین حالا رمز جدید تعیین کنی.</p>
-        <div class="dk-force-warn">
-          ⚠️ تا زمانی که رمز جدید را ذخیره نکنی، دسترسی به دفتر ممکن نیست. این پنجره قابل بستن نیست.
-        </div>
-        <div id="dkForceError" class="dk-force-error" hidden></div>
-        <div class="dk-force-field">
-          <label for="dkForcePass">رمز جدید (حداقل ۶ کاراکتر)</label>
-          <input id="dkForcePass" type="password" autocomplete="new-password" placeholder="رمز جدید خود را وارد کن">
-        </div>
-        <div class="dk-force-field">
-          <label for="dkForcePass2">تکرار رمز جدید</label>
-          <input id="dkForcePass2" type="password" autocomplete="new-password" placeholder="دوباره وارد کن">
-        </div>
-        <button class="dk-force-btn" type="button" id="dkForceSaveBtn">ذخیرهٔ رمز جدید و ادامه</button>
-        <div class="dk-force-hint">رمز جدید باید با رمز موقت فرق داشته باشد.</div>
-      </div>
-    `;
-    document.body.appendChild(overlay);
+    const ov = document.createElement('div');
+    ov.id = 'dkForcePassOverlay';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:10000;background:#7c2d12;display:flex;align-items:center;justify-content:center;padding:20px;direction:rtl;font-family:Vazirmatn,Tahoma,sans-serif';
+    ov.innerHTML = '<div style="background:#fff;border-radius:24px;padding:32px;max-width:460px;width:100%">'
+      + '<h2 style="text-align:center;color:#991b1b;font-size:22px;margin:0 0 8px">🔒 تغییر اجباری رمز</h2>'
+      + '<p style="text-align:center;color:#64748b;font-size:13px;line-height:1.9;margin:0 0 20px">سلام <b>' + (user.name||'معلم عزیز') + '</b>!<br>مدیر رمز عبورت را ریست کرده. باید همین حالا رمز جدید تعیین کنی.</p>'
+      + '<div style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:12px;padding:12px;font-size:12px;line-height:1.9;margin-bottom:18px">⚠️ تا رمز جدید نذاری، دسترسی ممکن نیست.</div>'
+      + '<div id="fErr" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;border-radius:10px;padding:10px;font-size:12px;margin-bottom:12px;display:none"></div>'
+      + '<label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px">رمز جدید (حداقل ۶ کاراکتر)</label>'
+      + '<input id="fp1" type="password" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;box-sizing:border-box;margin-bottom:12px;font-family:inherit">'
+      + '<label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px">تکرار رمز جدید</label>'
+      + '<input id="fp2" type="password" style="width:100%;padding:12px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;box-sizing:border-box;margin-bottom:16px;font-family:inherit">'
+      + '<button id="fSave" style="width:100%;padding:13px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">ذخیرهٔ رمز جدید</button>'
+      + '<button id="fOut" style="width:100%;padding:13px;background:#fff;color:#991b1b;border:1px solid #fecaca;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;margin-top:10px;font-family:inherit">🚪 خروج از حساب</button>'
+      + '</div>';
+    document.body.appendChild(ov);
     
-    const errEl = overlay.querySelector('#dkForceError');
-    const showErr = (e) => { errEl.textContent = e && e.message ? e.message : String(e); errEl.hidden = false; };
+    const errEl = ov.querySelector('#fErr');
     
-    const saveBtn = overlay.querySelector('#dkForceSaveBtn');
-    const pass1 = overlay.querySelector('#dkForcePass');
-    const pass2 = overlay.querySelector('#dkForcePass2');
-    
-    setTimeout(() => pass1.focus(), 100);
-    
-    saveBtn.onclick = async () => {
-      errEl.hidden = true;
-      const p1 = pass1.value, p2 = pass2.value;
-      if (!p1 || !p2) return showErr(new Error('همهٔ فیلدها را پر کن.'));
-      if (p1.length < 6) return showErr(new Error('رمز جدید باید حداقل ۶ کاراکتر باشد.'));
-      if (p1.length > 100) return showErr(new Error('رمز جدید بیش از حد بلند است.'));
-      if (p1 !== p2) return showErr(new Error('رمز جدید و تکرارش یکسان نیستند.'));
-      saveBtn.disabled = true;
-      const oldText = saveBtn.textContent;
-      saveBtn.textContent = 'در حال ذخیره…';
-      try {
-        await api('tSetPasswordAfterReset', {token: getToken(), newPassword: p1});
-        showToast('✅ رمز جدید ذخیره شد. صفحه در حال بارگذاری…');
-        setTimeout(() => location.reload(), 900);
-      } catch(e) {
-        showErr(e);
-        saveBtn.disabled = false;
-        saveBtn.textContent = oldText;
-      }
-    };
-    
-    // Enter برای ذخیره
-    overlay.querySelectorAll('input').forEach(inp => {
-      inp.addEventListener('keydown', e => {
-        if (e.key === 'Enter') { e.preventDefault(); saveBtn.click(); }
-      });
-    });
-    
-    // جلوگیری از بسته‌شدن با ESC (این overlay دیالوگ نیست، پس ESC کاری نمی‌کند، ولی برای اطمینان)
-    overlay.addEventListener('keydown', e => {
-      if (e.key === 'Escape') e.preventDefault();
-    });
-  }
-
-  /* ═══════════ Sync Modal ═══════════ */
-  function buildSyncModalBody() {
-    const last = store.get(K_LAST);
-    const lastText = last ? ('آخرین همگام‌سازی: ' + new Date(last).toLocaleString('fa-IR')) : 'هنوز همگام‌سازی نشده';
-    return `
-      <p class="modal-copy">اطلاعات دفتر تو در شیت <b>class_data</b> ذخیره می‌شود. فقط خودت به این اطلاعات دسترسی داری.</p>
-      <div style="background:var(--soft);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:13px">
-        <b>👤 کاربر:</b> ${getUsername()}
-      </div>
-      <div id="syncAlert" class="modal-error" role="alert" hidden></div>
-      <div class="row" style="gap:10px;flex-wrap:wrap">
-        <button type="button" class="btn primary" id="syncUploadBtn">
-          <svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>
-          آپلود به شیت
-        </button>
-        <button type="button" class="btn soft" id="syncDownloadBtn">
-          <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
-          دریافت از شیت
-        </button>
-      </div>
-      <p class="small muted" style="margin-top:14px">${lastText}</p>
-      <div class="note-box" style="margin-top:15px">
-        <strong>همگام‌سازی خودکار فعال است:</strong> هر بار چیزی در دفتر تغییر دهد، پس از ۳۰ ثانیه خودکار روی شیت ذخیره می‌شود.<br><br>
-        <strong>آپلود دستی:</strong> همین حالا اطلاعات را روی شیت می‌نویسد.<br>
-        <strong>دریافت:</strong> اطلاعات شیت جایگزین اطلاعات این مرورگر می‌شود.
-      </div>
-      <div class="modal-actions" style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
-        <button type="button" class="btn danger" id="syncLogoutBtn">🚪 خروج از حساب</button>
-        <button type="button" class="btn ghost" id="syncChangePassBtn">🔑 تغییر رمز</button>
-      </div>
-    `;
-  }
-  
-  function bindSyncModalEvents() {
-    const alertEl = document.getElementById('syncAlert');
-    const showErr = (e) => {
-      if (!alertEl) return;
-      alertEl.textContent = e && e.message ? e.message : String(e);
-      alertEl.hidden = false;
-      alertEl.scrollIntoView({block:'nearest'});
-    };
-    const hideErr = () => { if (alertEl) alertEl.hidden = true; };
-    
-    const upload = document.getElementById('syncUploadBtn');
-    if (upload) upload.onclick = async () => {
-      hideErr();
-      upload.disabled = true;
-      const oldHTML = upload.innerHTML;
-      upload.innerHTML = 'در حال ارسال…';
-      try {
-        const raw = store.get(K_DATA);
-        if (!raw) throw new Error('اطلاعاتی برای ارسال یافت نشد.');
-        const db = JSON.parse(raw);
-        const r = await api('tpClassSaveAll', {token: getToken(), data: db});
-        store.set(K_LAST, new Date().toISOString(), true);
-        lastKnownData = raw;
-        updateStatusDot('synced');
-        showToast('✅ داده روی شیت ذخیره شد (' + Math.max(1, Math.round((r.size||0)/1024)) + ' کیلوبایت)');
-        const mb = document.getElementById('modalBody');
-        if (mb) { mb.innerHTML = buildSyncModalBody(); bindSyncModalEvents(); }
-      } catch(e) {
-        showErr(e); upload.disabled = false; upload.innerHTML = oldHTML;
-      }
-    };
-    
-    const download = document.getElementById('syncDownloadBtn');
-    if (download) download.onclick = async () => {
-      hideErr();
-      if (!confirm('اطلاعات فعلی این مرورگر با اطلاعات شیت جایگزین می‌شود. ادامه می‌دهی؟\n\nپیشنهاد: اول پشتیبان JSON بگیر.')) return;
-      download.disabled = true;
-      const oldHTML = download.innerHTML;
-      download.innerHTML = 'در حال دریافت…';
-      try {
-        const r = await api('tpClassGetAll', {token: getToken()});
-        if (!r.data) throw new Error('در شیت داده‌ای ذخیره نشده. اول یک بار آپلود کن.');
-        const json = JSON.stringify(r.data);
-        store.set(K_DATA, json, true);
-        lastKnownData = json;
-        store.set(K_LAST, new Date().toISOString(), true);
-        showToast('✅ داده دریافت شد. صفحه در حال بارگذاری…');
-        setTimeout(() => location.reload(), 900);
-      } catch(e) {
-        showErr(e); download.disabled = false; download.innerHTML = oldHTML;
-      }
-    };
-    
-    const logout = document.getElementById('syncLogoutBtn');
-    if (logout) logout.onclick = async () => {
-      if (!confirm('از حسابت خارج می‌شوی. اطلاعات محلی دست‌نخورده می‌ماند.\n\nمطمئنی؟')) return;
-      try { await api('tLogout', {token: getToken()}); } catch(e) {}
-      clearAuth();
-      const dialog = document.getElementById('modal');
-      if (dialog) dialog.close();
-      showAuthModal('با موفقیت خارج شدی. برای استفاده دوباره وارد شو.');
-    };
-    
-    const changePass = document.getElementById('syncChangePassBtn');
-    if (changePass) changePass.onclick = () => showChangePasswordModal();
-  }
-  
-  function showChangePasswordModal() {
-    const dialog = document.getElementById('modal');
-    if (!dialog) return;
-    document.getElementById('modalTitle').textContent = 'تغییر رمز عبور';
-    document.getElementById('modalBody').innerHTML = `
-      <p class="modal-copy">برای امنیت بیشتر، رمز فعلی را وارد کن، بعد رمز جدید بذار.</p>
-      <div id="chPassError" class="modal-error" role="alert" hidden></div>
-      <div class="form-grid">
-        <div class="field" style="grid-column:1/-1"><label for="chOldPass">رمز فعلی</label><input id="chOldPass" type="password" autocomplete="current-password"></div>
-        <div class="field" style="grid-column:1/-1"><label for="chNewPass">رمز جدید</label><input id="chNewPass" type="password" autocomplete="new-password" placeholder="حداقل ۶ کاراکتر"></div>
-        <div class="field" style="grid-column:1/-1"><label for="chNewPass2">تکرار رمز جدید</label><input id="chNewPass2" type="password" autocomplete="new-password"></div>
-      </div>
-      <div class="modal-actions">
-        <button type="button" class="btn" id="chCancelBtn">انصراف</button>
-        <button type="button" class="btn primary" id="chSaveBtn">🔑 ذخیرهٔ رمز جدید</button>
-      </div>
-    `;
-    if (!dialog.open) dialog.showModal();
-    
-    const errEl = document.getElementById('chPassError');
-    const showErr = (e) => { errEl.textContent = e && e.message ? e.message : String(e); errEl.hidden = false; };
-    
-    document.getElementById('chCancelBtn').onclick = () => {
-      document.getElementById('modalTitle').textContent = 'همگام‌سازی با Google Sheets';
-      document.getElementById('modalBody').innerHTML = buildSyncModalBody();
-      bindSyncModalEvents();
-    };
-    
-    document.getElementById('chSaveBtn').onclick = async () => {
-      errEl.hidden = true;
-      const oldP = document.getElementById('chOldPass').value;
-      const newP = document.getElementById('chNewPass').value;
-      const newP2 = document.getElementById('chNewPass2').value;
-      if (!oldP || !newP || !newP2) return showErr(new Error('همهٔ فیلدها را پر کن.'));
-      if (newP.length < 6) return showErr(new Error('رمز جدید باید حداقل ۶ کاراکتر باشد.'));
-      if (newP !== newP2) return showErr(new Error('رمز جدید و تکرارش یکسان نیستند.'));
-      const btn = document.getElementById('chSaveBtn');
+    ov.querySelector('#fSave').onclick = async () => {
+      errEl.style.display = 'none';
+      const p1 = ov.querySelector('#fp1').value, p2 = ov.querySelector('#fp2').value;
+      if(!p1 || !p2) return (errEl.textContent = 'همه را پر کن.', errEl.style.display='block');
+      if(p1.length < 6) return (errEl.textContent = 'حداقل ۶ کاراکتر.', errEl.style.display='block');
+      if(p1 !== p2) return (errEl.textContent = 'رمزها یکسان نیستند.', errEl.style.display='block');
+      
+      const btn = ov.querySelector('#fSave');
       btn.disabled = true; btn.textContent = 'در حال ذخیره…';
       try {
-        await api('tChangePassword', {token: getToken(), oldPassword: oldP, newPassword: newP});
-        dialog.close();
-        showToast('✅ رمز با موفقیت تغییر کرد.');
+        const a = getAuth();
+        await api('tSetPasswordAfterReset', {token: a.token, newPassword: p1});
+        showToast('✅ رمز جدید ذخیره شد.');
+        setTimeout(() => location.reload(), 800);
       } catch(e) {
-        showErr(e); btn.disabled = false; btn.textContent = '🔑 ذخیرهٔ رمز جدید';
+        errEl.textContent = e.message; errEl.style.display = 'block';
+        btn.disabled = false; btn.textContent = 'ذخیرهٔ رمز جدید';
       }
+    };
+    
+    ov.querySelector('#fOut').onclick = async () => {
+      if(!confirm('از حساب خارج می‌شی؟')) return;
+      try { const a = getAuth(); await api('tLogout', {token: a.token}); } catch(e){}
+      delAuth();
+      ov.remove();
+      location.reload();
     };
   }
   
-  function openSyncModal() {
-    const dialog = document.getElementById('modal');
-    if (!dialog) return;
-    document.getElementById('modalTitle').textContent = 'همگام‌سازی با Google Sheets';
-    document.getElementById('modalBody').innerHTML = buildSyncModalBody();
-    if (!dialog.open) dialog.showModal();
-    bindSyncModalEvents();
-  }
-  
-  function updateSyncBtnStyle() {
+  /* ═══════ UI ═══════ */
+  function updateUI(){
+    const a = getAuth();
+    const dot = document.getElementById('syncDot');
+    const label = document.getElementById('syncStatusLabel');
     const btn = document.getElementById('syncBtn');
-    if (!btn) return;
-    if (isLoggedIn()) { btn.classList.remove('soft'); btn.classList.add('primary'); }
-    else { btn.classList.remove('primary'); btn.classList.add('soft'); }
-  }
-  
-  function createStatusDot() {
-    const btn = document.getElementById('syncBtn');
-    if (!btn || document.getElementById('syncStatus')) return;
-    const wrapper = document.createElement('div');
-    wrapper.id = 'syncStatus';
-    wrapper.className = 'sync-status';
-    wrapper.innerHTML = '<span id="syncDot" class="sync-dot"></span><span id="syncStatusLabel" class="sync-status-label">غیرفعال</span>';
-    btn.parentNode.insertBefore(wrapper, btn.nextSibling);
-  }
-  
-  function injectStyles() {
-    if (document.getElementById('syncStyles')) return;
-    const style = document.createElement('style');
-    style.id = 'syncStyles';
-    style.textContent = `
-      .sync-status{display:flex;align-items:center;gap:6px;padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:11px;color:var(--muted)}
-      .sync-dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;flex-shrink:0}
-      .sync-dot.green{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.15)}
-      .sync-dot.amber{background:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.15);animation:syncPulse 1.2s infinite}
-      .sync-dot.red{background:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.15)}
-      .sync-dot.gray{background:#94a3b8}
-      .sync-status-label{white-space:nowrap}
-      @keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.4}}
-      @media(max-width:760px){#syncBtn .sync-label{display:none}#syncBtn{padding:9px 12px}.sync-status{padding:5px 8px;font-size:10px}.sync-status-label{display:none}}
-    `;
-    document.head.appendChild(style);
-  }
-  
-  function injectHeaderButton() {
-    if (document.getElementById('syncBtn')) return;
-    const backupBtn = document.querySelector('[data-action="backup"]');
-    if (!backupBtn) return;
-    const btn = document.createElement('button');
-    btn.id = 'syncBtn';
-    btn.type = 'button';
-    btn.className = 'btn soft';
-    btn.title = 'همگام‌سازی با Google Sheets';
-    btn.setAttribute('aria-label', 'همگام‌سازی با Google Sheets');
-    btn.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span class="sync-label">همگام‌سازی</span>';
-    btn.onclick = () => { if (!isLoggedIn()) showAuthModal(); else openSyncModal(); };
-    backupBtn.parentNode.insertBefore(btn, backupBtn);
-    createStatusDot();
-    updateSyncBtnStyle();
-    updateStatusDot(isLoggedIn() ? 'synced' : 'idle');
-  }
-  
-  async function start() {
-    injectStyles();
-    injectHeaderButton();
     
-    const stored = loadStoredAuth();
-    if (stored) {
-      auth = stored;
-           try {
-        const who = await api('tWhoAmI', {token: stored.token});
-        
-        // ✅ اگر مدیر رمز را ریست کرده، پنجرهٔ قفل باز کن
-        if (who && who.mustChangePassword) {
-          updateSyncBtnStyle();
-          updateStatusDot('pending', 'نیاز به تغییر رمز');
-          showForcePasswordChangeModal(who);
-          return;
-        }
-        
-        // چک کاربر قبلی
-        const lastUser = store.get(K_LAST_USER);
-        if (lastUser && lastUser !== stored.username) {
-          store.del(K_DATA);
-          store.del(K_LAST);
-        }
-        store.set(K_LAST_USER, stored.username, true);
-        lastKnownData = store.get(K_DATA);
-        updateSyncBtnStyle();
-        updateStatusDot('synced');
-        startWatcher();
-      } catch(e) {
-        clearAuth();
-        showAuthModal('نشست قبلی منقضی شده. لطفاً دوباره وارد شو.');
-      }
- 
+    if(a && a.token){
+      if(dot){ dot.className = 'sync-dot green'; }
+      if(label){ label.textContent = 'وارد شده'; }
+      if(btn){ btn.classList.remove('soft'); btn.classList.add('primary'); }
     } else {
-      showAuthModal();
+      if(dot){ dot.className = 'sync-dot gray'; }
+      if(label){ label.textContent = 'غیرفعال'; }
+      if(btn){ btn.classList.remove('primary'); btn.classList.add('soft'); }
     }
   }
   
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
+  /* ═══════ همگام‌سازی ═══════ */
+  let syncTimer = null;
+  
+  async function doSync(){
+    const a = getAuth();
+    if(!a || !a.token) return;
+    const raw = localStorage.getItem(K_DATA);
+    if(!raw) return;
+    
+    try {
+      const data = JSON.parse(raw);
+      await api('tpClassSaveAll', {token: a.token, data});
+      localStorage.setItem(K_LAST, new Date().toISOString());
+      const dot = document.getElementById('syncDot');
+      if(dot) dot.className = 'sync-dot green';
+      console.log('✅ sync شد');
+    } catch(e){
+      console.warn('sync خطا:', e.message);
+      const dot = document.getElementById('syncDot');
+      if(dot) dot.className = 'sync-dot red';
+    }
   }
   
-  setInterval(() => {
-    const dot = document.getElementById('syncDot');
-    if (dot && dot.classList.contains('green')) updateStatusDot('synced');
-  }, 15000);
+  function startAutoSync(){
+    const a = getAuth();
+    if(!a || !a.token) return;
+    
+    // watch تغییرات
+    let lastData = localStorage.getItem(K_DATA);
+    setInterval(() => {
+      const curr = localStorage.getItem(K_DATA);
+      if(curr && curr !== lastData){
+        lastData = curr;
+        clearTimeout(syncTimer);
+        syncTimer = setTimeout(doSync, 5000);
+      }
+    }, 3000);
+    
+    // sync اولیه
+    setTimeout(doSync, 2000);
+  }
+  
+  /* ═══════ پنجرهٔ sync ═══════ */
+  function openSyncModal(){
+    const dlg = document.getElementById('modal');
+    if(!dlg) return;
+    
+    const a = getAuth();
+    const last = localStorage.getItem(K_LAST);
+    const lastText = last ? 'آخرین همگام‌سازی: ' + new Date(last).toLocaleString('fa-IR') : 'هنوز همگام نشده';
+    
+    document.getElementById('modalTitle').textContent = 'همگام‌سازی با Google Sheets';
+    document.getElementById('modalBody').innerHTML = 
+      '<p class="modal-copy">اطلاعات دفتر در شیت ذخیره می‌شود.</p>'
+      + '<div style="background:#eff6ff;border-radius:12px;padding:12px;margin-bottom:16px;font-size:13px"><b>👤 کاربر:</b> ' + (a?a.username:'-') + '</div>'
+      + '<div id="syncAlert" class="modal-error" style="display:none"></div>'
+      + '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">'
+      +   '<button type="button" class="btn primary" id="syncUp">☁️ آپلود به شیت</button>'
+      +   '<button type="button" class="btn soft" id="syncDown">⬇️ دریافت از شیت</button>'
+      + '</div>'
+      + '<p style="font-size:12px;color:#64748b">' + lastText + '</p>'
+      + '<div class="modal-actions" style="display:flex;justify-content:space-between;gap:8px;margin-top:20px">'
+      +   '<button type="button" class="btn danger" id="syncOut">🚪 خروج از حساب</button>'
+      +   '<button type="button" class="btn" id="syncChPass">🔑 تغییر رمز</button>'
+      + '</div>';
+    
+    if(!dlg.open) dlg.showModal();
+    
+    const alertEl = document.getElementById('syncAlert');
+    
+    document.getElementById('syncUp').onclick = async () => {
+      alertEl.style.display = 'none';
+      try {
+        const raw = localStorage.getItem(K_DATA);
+        if(!raw) throw new Error('داده‌ای نیست');
+        await api('tpClassSaveAll', {token: a.token, data: JSON.parse(raw)});
+        localStorage.setItem(K_LAST, new Date().toISOString());
+        showToast('✅ روی شیت ذخیره شد');
+        dlg.close();
+      } catch(e){ alertEl.textContent = e.message; alertEl.style.display = 'block'; }
+    };
+    
+    document.getElementById('syncDown').onclick = async () => {
+      if(!confirm('داده‌های محلی جایگزین می‌شوند. ادامه؟')) return;
+      alertEl.style.display = 'none';
+      try {
+        const r = await api('tpClassGetAll', {token: a.token});
+        if(!r.data) throw new Error('شیت خالیه');
+        localStorage.setItem(K_DATA, JSON.stringify(r.data));
+        showToast('✅ دریافت شد. رفرش می‌شه.');
+        setTimeout(() => location.reload(), 800);
+      } catch(e){ alertEl.textContent = e.message; alertEl.style.display = 'block'; }
+    };
+    
+    document.getElementById('syncOut').onclick = async () => {
+      if(!confirm('از حساب خارج می‌شی؟')) return;
+      try { await api('tLogout', {token: a.token}); } catch(e){}
+      delAuth();
+      dlg.close();
+      openAuthModal('خارج شدی. دوباره وارد شو.');
+    };
+    
+    document.getElementById('syncChPass').onclick = () => {
+      document.getElementById('modalTitle').textContent = 'تغییر رمز';
+      document.getElementById('modalBody').innerHTML = 
+        '<div id="chErr" class="modal-error" style="display:none"></div>'
+        + '<div class="field"><label>رمز فعلی</label><input id="chOld" type="password"></div>'
+        + '<div class="field"><label>رمز جدید</label><input id="chNew" type="password"></div>'
+        + '<div class="field"><label>تکرار رمز جدید</label><input id="chNew2" type="password"></div>'
+        + '<div class="modal-actions"><button class="btn" id="chCancel">انصراف</button><button class="btn primary" id="chSave">ذخیره</button></div>';
+      
+      document.getElementById('chCancel').onclick = () => openSyncModal();
+      document.getElementById('chSave').onclick = async () => {
+        const o = document.getElementById('chOld').value;
+        const n = document.getElementById('chNew').value;
+        const n2 = document.getElementById('chNew2').value;
+        const err = document.getElementById('chErr');
+        err.style.display = 'none';
+        if(!o||!n||!n2) return (err.textContent='پر کن', err.style.display='block');
+        if(n.length<6) return (err.textContent='حداقل ۶', err.style.display='block');
+        if(n!==n2) return (err.textContent='یکسان نیستند', err.style.display='block');
+        try {
+          await api('tChangePassword', {token: a.token, oldPassword: o, newPassword: n});
+          showToast('✅ رمز تغییر کرد');
+          dlg.close();
+        } catch(e){ err.textContent = e.message; err.style.display = 'block'; }
+      };
+    };
+  }
+  
+  /* ═══════ راه‌اندازی ═══════ */
+  function init(){
+    // استایل
+    if(!document.getElementById('syncStyles')){
+      const st = document.createElement('style');
+      st.id = 'syncStyles';
+      st.textContent = '.sync-status{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;background:#fff;border:1px solid #e1e7ec;border-radius:12px;font-size:11px;color:#627187}.sync-dot{width:8px;height:8px;border-radius:50%;background:#94a3b8}.sync-dot.green{background:#22c55e}.sync-dot.amber{background:#f59e0b}.sync-dot.red{background:#ef4444}';
+      document.head.appendChild(st);
+    }
+    
+    // دکمه
+    if(!document.getElementById('syncBtn')){
+      const backupBtn = document.querySelector('[data-action="backup"]');
+      if(backupBtn){
+        const btn = document.createElement('button');
+        btn.id = 'syncBtn';
+        btn.type = 'button';
+        btn.className = 'btn soft';
+        btn.innerHTML = '<span>☁️ همگام‌سازی</span>';
+        btn.onclick = () => {
+          const a = getAuth();
+          if(!a || !a.token) openAuthModal();
+          else openSyncModal();
+        };
+        backupBtn.parentNode.insertBefore(btn, backupBtn);
+        
+        const status = document.createElement('div');
+        status.id = 'syncStatus';
+        status.className = 'sync-status';
+        status.innerHTML = '<span id="syncDot" class="sync-dot gray"></span><span id="syncStatusLabel">غیرفعال</span>';
+        btn.parentNode.insertBefore(status, btn.nextSibling);
+      }
+    }
+    
+    // بررسی ورود
+    const a = getAuth();
+    if(a && a.token){
+      api('tWhoAmI', {token: a.token}).then(r => {
+        if(r.mustChangePassword){ openForcePassModal(r); return; }
+        updateUI();
+        startAutoSync();
+      }).catch(e => {
+        delAuth();
+        updateUI();
+        openAuthModal('نشست قبلی منقضی شده. دوباره وارد شو.');
+      });
+    } else {
+      openAuthModal();
+    }
+  }
+  
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
   
 })();
 </script>
