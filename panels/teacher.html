@@ -279,6 +279,125 @@ const DETAIL_LABELS={cities:'شهرهای فتح‌شده',totalCities:'کل ش�
 function showDetails(idx){const r=window.__resultsData?.[idx];if(!r)return;let details={};try{details=typeof r.details==='string'?JSON.parse(r.details):r.details||{}}catch(e){}const entries=Object.entries(details);const cards=entries.map(([k,v])=>{if(k==='lessons'&&typeof v==='object')v=Object.entries(v).map(([n,x])=>`درس ${fa(n)}: ${fa(x.c||0)}/${fa((x.c||0)+(x.w||0))}`).join(' · ');if(typeof v==='boolean')v=v?'بله':'خیر';if(typeof v==='object')v=JSON.stringify(v);return `<div class="detail-card"><div class="detail-key">${esc(DETAIL_LABELS[k]||k)}</div><div class="detail-val">${esc(v??'—')}</div></div>`}).join('');$('detailBody').innerHTML=`<div class="detail-grid" style="margin-bottom:12px"><div class="detail-card"><div class="detail-key">دانش‌آموز</div><div class="detail-val">${esc(r.student||'—')}</div></div><div class="detail-card"><div class="detail-key">بازی</div><div class="detail-val">${esc(GAME_NAMES[r.game]||r.game||'—')}</div></div><div class="detail-card"><div class="detail-key">تاریخ</div><div class="detail-val">${resultDate(r)}</div></div><div class="detail-card"><div class="detail-key">امتیاز</div><div class="detail-val">${fa(r.score??0)}</div></div></div>${cards?'<div class="detail-grid">'+cards+'</div>':'<div class="empty">جزئیاتی برای این رکورد موجود نیست.</div>'}`;$('detailModal').classList.remove('hidden')}
 $$('[data-close-detail]').forEach(b=>b.onclick=()=>$('detailModal').classList.add('hidden'));$('detailModal').onclick=e=>{if(e.target===$('detailModal'))$('detailModal').classList.add('hidden')};$('editModal').onclick=e=>{if(e.target===$('editModal'))closeEdit()};
 
+  /* ═══════ معلم‌های دفتر ═══════ */
+async function loadTeachers(){
+  loading($('teachersList'));
+  try {
+    const res = await api('tpListTeachers', {token});
+    if (!res.ok) {
+      $('teachersList').innerHTML = '<div class="empty">خطا در دریافت معلم‌ها</div>';
+      return;
+    }
+    renderTeachers(res.teachers || []);
+  } catch(e) {
+    $('teachersList').innerHTML = '<div class="empty">خطای شبکه</div>';
+  }
+}
+
+function renderTeachers(list) {
+  if (!list.length) {
+    $('teachersList').innerHTML = '<div class="empty">هنوز معلمی در دفتر ثبت‌نام نکرده است.</div>';
+    return;
+  }
+  $('teachersList').innerHTML = '<div class="user-list">' + list.map(t => {
+    const badges = [];
+    if (t.isAdmin) badges.push('<span class="badge ok">مدیر</span>');
+    if (t.banned) badges.push('<span class="badge bad">مسدود</span>');
+    if (t.mustChange) badges.push('<span class="badge bad">باید رمز عوض کند</span>');
+    const badgeHtml = badges.join(' ');
+    const lastLogin = t.lastLogin ? fa(new Date(t.lastLogin).toLocaleDateString('fa-IR')) : 'بدون ورود';
+    return `<div class="user-row">
+      <div class="avatar"><svg class="icon"><use href="#i-book"/></svg></div>
+      <div class="user-info">
+        <b>${esc(t.username)} ${badgeHtml}</b>
+        <small>${esc(t.name || 'بدون نام')} · آخرین ورود: ${lastLogin}</small>
+      </div>
+      <div class="user-actions">
+        <button class="circle-btn edit" data-treset="${attr(t.username)}" title="ریست رمز"><svg class="icon sm"><use href="#i-refresh"/></svg></button>
+        <button class="circle-btn edit" data-tview="${attr(t.username)}" title="مشاهدهٔ دفتر"><svg class="icon sm"><use href="#i-eye"/></svg></button>
+        <button class="circle-btn edit" data-tban="${attr(t.username)}" title="${t.banned ? 'آزاد کردن' : 'مسدود کردن'}"><svg class="icon sm"><use href="#i-${t.banned ? 'check' : 'lock'}"/></svg></button>
+        <button class="circle-btn delete" data-tdel="${attr(t.username)}" title="حذف"><svg class="icon sm"><use href="#i-trash"/></svg></button>
+      </div>
+    </div>`;
+  }).join('') + '</div>';
+
+  $$('[data-treset]').forEach(b => b.onclick = () => resetTeacherPassword(b.dataset.treset));
+  $$('[data-tview]').forEach(b => b.onclick = () => viewTeacherData(b.dataset.tview));
+  $$('[data-tban]').forEach(b => b.onclick = () => toggleTeacherBan(b.dataset.tban));
+  $$('[data-tdel]').forEach(b => b.onclick = () => deleteTeacher(b.dataset.tdel));
+}
+
+async function resetTeacherPassword(username) {
+  if (!confirm('رمز «' + username + '» به یک رمز موقت تغییر کند؟\n\nمعلم با این رمز وارد می‌شود و باید رمز جدید بسازد.')) return;
+  try {
+    const res = await api('tpAdminResetTeacherPassword', {token, username});
+    if (!res.ok) { alert(res.error || 'خطا'); return; }
+    alert('✅ رمز موقت: ' + res.tempPassword + '\n\nاین را به معلم بدهید.');
+    loadTeachers();
+  } catch(e) { alert('خطای شبکه: ' + e.message); }
+}
+
+async function toggleTeacherBan(username) {
+  try {
+    const res = await api('tpAdminToggleTeacherBan', {token, username});
+    if (!res.ok) { alert(res.error || 'خطا'); return; }
+    loadTeachers();
+  } catch(e) { alert('خطای شبکه'); }
+}
+
+async function deleteTeacher(username) {
+  if (!confirm('حذف کامل «' + username + '»؟\n\nهمهٔ کلاس‌ها، دانش‌آموزان و نمراتش هم پاک می‌شود.')) return;
+  if (!confirm('این کار برگشت‌پذیر نیست. یک بار دیگر تأیید کن.')) return;
+  try {
+    const res = await api('tpAdminDeleteTeacher', {token, username});
+    if (!res.ok) { alert(res.error || 'خطا'); return; }
+    loadTeachers();
+  } catch(e) { alert('خطای شبکه'); }
+}
+
+async function viewTeacherData(username) {
+  try {
+    const res = await api('tpAdminViewTeacherData', {token, username});
+    if (!res.ok) { alert(res.error || 'خطا'); return; }
+    if (!res.data) { alert('این معلم هنوز داده‌ای ذخیره نکرده است.'); return; }
+    const s = res.stats || {};
+    const classes = (res.data.classes || []).map(c => '<li>' + esc(c.name) + (c.grade ? ' (' + esc(c.grade) + ')' : '') + '</li>').join('');
+    const html = '<h3 style="color:var(--gold)">دفتر ' + esc(username) + '</h3>' +
+      '<div class="detail-grid" style="margin:14px 0">' +
+        '<div class="detail-card"><div class="detail-key">کلاس‌ها</div><div class="detail-val">' + fa(s.classes || 0) + '</div></div>' +
+        '<div class="detail-card"><div class="detail-key">دانش‌آموزان</div><div class="detail-val">' + fa(s.students || 0) + '</div></div>' +
+        '<div class="detail-card"><div class="detail-key">نمرات</div><div class="detail-val">' + fa(s.grades || 0) + '</div></div>' +
+      '</div>' +
+      (classes ? '<h4 style="color:var(--gold);margin-top:14px">کلاس‌ها:</h4><ul>' + classes + '</ul>' : '') +
+      '<p class="muted" style="font-size:.7rem;margin-top:12px">این فقط خلاصه است. برای مشاهدهٔ کامل، از معلم بخواه پشتیبان دفترش را بدهد.</p>';
+    document.getElementById('detailBody').innerHTML = html;
+    document.getElementById('detailModal').classList.remove('hidden');
+  } catch(e) { alert('خطای شبکه: ' + e.message); }
+}
+
+/* ═══════ تغییر رمز پنل ═══════ */
+async function changePanelPassword() {
+  const oldPass = $('oldPanelPass').value;
+  const newPass = $('newPanelPass').value;
+  const newPass2 = $('newPanelPass2').value;
+  const alertEl = $('settingsAlert');
+  hideAlert(alertEl);
+  if (!oldPass || !newPass || !newPass2) {
+    showAlert(alertEl, 'err', 'همهٔ فیلدها را پر کن.');
+    return;
+  }
+  if (newPass.length < 6) { showAlert(alertEl, 'err', 'رمز جدید حداقل ۶ کاراکتر.'); return; }
+  if (newPass !== newPass2) { showAlert(alertEl, 'err', 'رمز جدید و تکرارش یکسان نیستند.'); return; }
+  try {
+    const res = await api('tpChangePanelPassword', {token, oldPassword: oldPass, newPassword: newPass});
+    if (!res.ok) { showAlert(alertEl, 'err', esc(res.error || 'خطا')); return; }
+    showAlert(alertEl, 'ok', '✅ رمز پنل با موفقیت تغییر کرد.');
+    $('oldPanelPass').value = '';
+    $('newPanelPass').value = '';
+    $('newPanelPass2').value = '';
+  } catch(e) { showAlert(alertEl, 'err', 'خطای شبکه: ' + esc(e.message)); }
+}
+
 /* کاربران */
 async function loadUsers(){loading($('usersList'));try{const res=await api('tpGetUsers',{token});if(!res.ok){$('usersList').innerHTML='<div class="empty">خطا در دریافت کاربران</div>';return}renderUsers(res.users||[])}catch(e){$('usersList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
 function renderUsers(list){if(!list.length){$('usersList').innerHTML='<div class="empty">هنوز کاربری ثبت نشده است.</div>';return}$('usersList').innerHTML='<div class="user-list">'+list.map(u=>{const teacher=u.role==='teacher',banned=u.status==='banned',badge=banned?'<span class="badge bad">مسدود</span>':teacher?'<span class="badge ok">معلم</span>':'<span class="badge ok">فعال</span>';return `<div class="user-row"><div class="avatar">${icon(teacher?'book':'users')}</div><div class="user-info"><b>${esc(u.username||'—')} ${badge}</b><small>${u.lastSeen?'آخرین بازدید: '+fa(new Date(u.lastSeen).toLocaleDateString('fa-IR')):'بدون بازدید'}</small></div>${teacher?'':`<div class="user-actions"><button class="circle-btn edit toggle-ban" data-user="${attr(u.username)}" title="مسدود/آزاد">${icon(banned?'check':'lock')}</button><button class="circle-btn delete delete-user" data-user="${attr(u.username)}" title="حذف">${icon('trash')}</button></div>`}</div>`}).join('')+'</div>';$$('.toggle-ban').forEach(b=>b.onclick=()=>toggleBan(b.dataset.user));$$('.delete-user').forEach(b=>b.onclick=()=>deleteUser(b.dataset.user))}
