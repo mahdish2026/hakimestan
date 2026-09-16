@@ -487,13 +487,11 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
   }
   
   async function login() {
-    const pw = ls.get(K_PASS);
-    if (!pw) throw new Error('رمز معلم ذخیره نشده است. اول در دفتر معلم، روی 🛡️ همگام‌سازی بزن.');
-    if (cacheToken) return cacheToken;
-    const r = await api('tpLogin', {password: pw});
-    if (!r.token) throw new Error('توکن دریافت نشد.');
-    cacheToken = r.token;
-    return cacheToken;
+    // از همون توکن پنل استفاده کن — نیازی به لاگین جداگانه نیست
+    if (typeof token === 'undefined' || !token) {
+      throw new Error('ابتدا به پنل معلم وارد شو.');
+    }
+    return token;
   }
   
   async function loadDB(force) {
