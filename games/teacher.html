@@ -674,6 +674,7 @@ async function loadData(isAutoRefresh) {
     const students = await listRes.json();
     const stats = await statsRes.json();
     allStudents = students || [];
+   setConnStatus(true);
 
     if (!allStudents.length) {
       content.innerHTML = '<div class="empty-state">📭 هنوز هیچ دانش‌آموزی بازی نکرده</div>';
