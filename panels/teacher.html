@@ -251,6 +251,38 @@ function renderUsers(list){if(!list.length){$('usersList').innerHTML='<div class
 async function toggleBan(username){try{const res=await api('tpToggleBan',{token,username});if(res.ok)loadUsers();else alert(res.error||'خطا')}catch(e){alert('خطای شبکه')}}async function deleteUser(username){if(!confirm(`کاربر «${username}» حذف شود؟`))return;try{const res=await api('tpDeleteUser',{token,username});if(res.ok)loadUsers();else alert(res.error||'خطا')}catch(e){alert('خطای شبکه')}}
 
 /* آغاز */
+  /* ═══════ حکیم، همراه معلم ═══════ */
+(function(){
+  function startHakim() {
+    if (typeof Hakim === 'undefined') {
+      console.log('hakim-core.js لود نشد');
+      return;
+    }
+    try {
+      Hakim.init({container:'#hakimMount', name:'معلم', font:false, autoHideMs:6000});
+      // موقع لود: سلام
+      Hakim.say('سلام معلم عزیز! به پنلت خوش آمدی. 😊', {mood:'happy'});
+      
+      // وقتی کاربر وارد پنل شد، دوباره سلام کن
+      const appShell = document.getElementById('appShell');
+      if (appShell) {
+        const observer = new MutationObserver(() => {
+          if (!appShell.classList.contains('hidden')) {
+            setTimeout(() => {
+              Hakim.say('چه خبر معلم؟ امروز چه کلاسی داری؟ 📚', {mood:'normal'});
+            }, 1500);
+          }
+        });
+        observer.observe(appShell, {attributes:true, attributeFilter:['class']});
+      }
+    } catch(e) { console.warn('Hakim init failed:', e); }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startHakim);
+  } else {
+    startHakim();
+  }
+})();
 </script>
   <script src="../hakim-core.js" onerror="console.log('no hakim-core')"></script>
   <script>
