@@ -210,8 +210,15 @@ $('passIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('btnLogin').clic
 $('btnLogout').onclick=()=>{token=null;$('appShell').classList.add('hidden');$('loginView').classList.remove('hidden');$('passIn').value='';$('passIn').focus()};
 $('btnTheme').onclick=()=>{$('themePanel').classList.toggle('hidden')};$('btnCloseTheme').onclick=()=>$('themePanel').classList.add('hidden');renderThemePicker();
 $('btnRefresh').onclick=()=>{const active=$$('.screen').find(s=>!s.classList.contains('hidden'));if(active)showScreen(active.id.replace('sc','').toLowerCase())};
-const TITLES={dashboard:['داشبورد','نمای کلی فعالیت‌های آموزشی'],games:['بازی‌ها و سؤال‌ها','مدیریت محتوای آموزشی'],questions:['مدیریت سؤال‌ها','افزودن و ویرایش سؤال'],results:['نتایج بازی‌ها','گزارش عملکرد دانش‌آموزان'],users:['کاربران','مدیریت دسترسی کاربران']};
-function showScreen(name){$$('.screen').forEach(s=>s.classList.add('hidden'));const el=$('sc'+name.charAt(0).toUpperCase()+name.slice(1));if(el)el.classList.remove('hidden');$$('.nav-btn[data-screen]').forEach(b=>b.classList.toggle('on',b.dataset.screen===name));const t=TITLES[name]||TITLES.dashboard;$('pageTitle').textContent=t[0];$('pageSubtitle').textContent=t[1];try{if(name==='dashboard')loadDashboard();if(name==='games')loadGames();if(name==='results')loadResults();if(name==='users')loadUsers()}catch(e){console.error(e)}}
+const TITLES={
+  dashboard:['داشبورد','نمای کلی فعالیت‌های آموزشی'],
+  games:['بازی‌ها و سؤال‌ها','مدیریت محتوای آموزشی'],
+  questions:['مدیریت سؤال‌ها','افزودن و ویرایش سؤال'],
+  results:['نتایج بازی‌ها','گزارش عملکرد دانش‌آموزان'],
+  users:['کاربران','مدیریت دسترسی کاربران'],
+  teachers:['معلم‌های دفتر','مدیریت معلم‌های دفتر معلم'],
+  settings:['تنظیمات پنل','تغییر رمز ورود به پنل']
+};function showScreen(name){$$('.screen').forEach(s=>s.classList.add('hidden'));const el=$('sc'+name.charAt(0).toUpperCase()+name.slice(1));if(el)el.classList.remove('hidden');$$('.nav-btn[data-screen]').forEach(b=>b.classList.toggle('on',b.dataset.screen===name));const t=TITLES[name]||TITLES.dashboard;$('pageTitle').textContent=t[0];$('pageSubtitle').textContent=t[1];try{if(name==='dashboard')loadDashboard();if(name==='games')loadGames();if(name==='results')loadResults();if(name==='users')loadUsers()}catch(e){console.error(e)}}
 $$('.nav-btn[data-screen]').forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
 
 /* داشبورد */
