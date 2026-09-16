@@ -1073,10 +1073,32 @@ function onAuthSuccess(userInfo) {
     const stored = loadStoredAuth();
     if (stored) {
       auth = stored;
-      try {
-        await api('tWhoAmI', {token: stored.token});
+           try {
+        const who = await api('tWhoAmI', {token: stored.token});
+        
+        // ✅ اگر مدیر رمز را ریست کرده، پنجرهٔ قفل باز کن
+        if (who && who.mustChangePassword) {
+          updateSyncBtnStyle();
+          updateStatusDot('pending', 'نیاز به تغییر رمز');
+          showForcePasswordChangeModal(who);
+          return;
+        }
+        
         // چک کاربر قبلی
         const lastUser = store.get(K_LAST_USER);
+        if (lastUser && lastUser !== stored.username) {
+          store.del(K_DATA);
+          store.del(K_LAST);
+        }
+        store.set(K_LAST_USER, stored.username, true);
+        lastKnownData = store.get(K_DATA);
+        updateSyncBtnStyle();
+        updateStatusDot('synced');
+        startWatcher();
+      } catch(e) {
+        clearAuth();
+        showAuthModal('نشست قبلی منقضی شده. لطفاً دوباره وارد شو.');
+      }
         if (lastUser && lastUser !== stored.username) {
           store.del(K_DATA);
           store.del(K_LAST);
