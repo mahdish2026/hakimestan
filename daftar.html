@@ -464,7 +464,7 @@ render();initHakim();
       errEl.style.display = 'none';
     };
     
-    ov.querySelector('#btnLogin').onclick = async () => {
+     ov.querySelector('#btnLogin').onclick = async () => {
       const u = ov.querySelector('#lu').value.trim().toLowerCase();
       const p = ov.querySelector('#lp').value;
       const rem = ov.querySelector('#lrem').checked;
@@ -477,6 +477,22 @@ render();initHakim();
         const r = await api('tLogin', {username: u, password: p});
         setAuth({username: r.username, token: r.token, remember: rem}, rem);
         localStorage.setItem(K_LAST_USER, r.username);
+        
+        // ★ مهم: قبل از هر کاری، داده‌های این حساب رو از سرور بگیر
+        // تا کلاس‌های حساب قبلی روی این حساب آپلود نشن
+        try {
+          const dr = await api('tpClassGetAll', {token: r.token});
+          if(dr.data) {
+            localStorage.setItem(K_DATA, JSON.stringify(dr.data));
+          } else {
+            // حساب کاملاً خالیه — پاک‌سازی محلی
+            localStorage.removeItem(K_DATA);
+          }
+        } catch(err) {
+          console.warn('خطا در دریافت داده اولیه:', err);
+          localStorage.removeItem(K_DATA);  // محض احتیاط پاک کن
+        }
+        
         ov.remove();
         showToast('✅ خوش آمدی ' + (r.name || r.username) + '!');
         if(r.mustChangePassword){
@@ -484,6 +500,8 @@ render();initHakim();
         } else {
           updateUI();
           startAutoSync();
+          // ★ صفحه رو رفرش کن تا داده‌های حساب جدید نمایش داده بشن
+          setTimeout(() => location.reload(), 800);
         }
       } catch(e) {
         showErr(e); btn.disabled = false; btn.textContent = 'ورود به دفتر';
