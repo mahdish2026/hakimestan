@@ -349,10 +349,11 @@ async function exportAs(format){if(exportBusy)return;exportBusy=true;const butto
 render();initHakim();
 
 </script>
-  <script>
+
+<script>
 /* ══════════════════════════════════════════════════════════
  * همگامسازی دفتر معلم با Google Sheets
- * کاملاً مستقل است؛ نیازی به تغییر کد اصلی ندارد.
+ * نسخهٔ ۲ — با همگامسازی خودکار و چراغ وضعیت
  * ══════════════════════════════════════════════════════════ */
 (function(){
   'use strict';
@@ -362,6 +363,9 @@ render();initHakim();
   const K_DATA = 'hakimestan_daftar_v1';
   const K_LAST = 'hakimestan_daftar_last_sync';
   
+  const AUTO_SYNC_DELAY = 30000; // ۳۰ ثانیه بعد از آخرین تغییر
+  const POLL_INTERVAL   = 3000;  // هر ۳ ثانیه تغییرات رو چک کن
+  
   const ls = {
     get: k => { try { return localStorage.getItem(k); } catch(e){ return null; } },
     set: (k,v) => { try { v ? localStorage.setItem(k,v) : localStorage.removeItem(k); } catch(e){} }
@@ -369,6 +373,10 @@ render();initHakim();
   
   const isConnected = () => !!ls.get(K_PASS);
   const getLastSync  = () => ls.get(K_LAST);
+  
+  let lastKnownData = ls.get(K_DATA);
+  let autoSyncTimer = null;
+  let isSyncing = false;
   
   async function api(action, payload) {
     const res = await fetch(API, {
@@ -391,6 +399,85 @@ render();initHakim();
     const r = await api('tpLogin', {password: pw});
     if (!r.token) throw new Error('توکن دریافت نشد.');
     return r.token;
+  }
+  
+  function fa(s) {
+    return String(s).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[Number(c)]);
+  }
+  
+  function formatTimeAgo(iso) {
+    if (!iso) return 'هنوز همگام نشده';
+    const diff = Date.now() - new Date(iso).getTime();
+    const s = Math.floor(diff / 1000);
+    if (s < 10) return 'همین الان';
+    if (s < 60) return fa(s) + ' ثانیه پیش';
+    const m = Math.floor(s / 60);
+    if (m < 60) return fa(m) + ' دقیقه پیش';
+    const h = Math.floor(m / 60);
+    if (h < 24) return fa(h) + ' ساعت پیش';
+    return fa(Math.floor(h / 24)) + ' روز پیش';
+  }
+  
+  function updateStatusDot(state, message) {
+    const dot = document.getElementById('syncDot');
+    const label = document.getElementById('syncStatusLabel');
+    if (!dot) return;
+    dot.className = 'sync-dot';
+    if (state === 'synced')       dot.classList.add('green');
+    else if (state === 'syncing') dot.classList.add('amber');
+    else if (state === 'pending') dot.classList.add('amber');
+    else if (state === 'error')   dot.classList.add('red');
+    else                          dot.classList.add('gray');
+    if (label) {
+      if (message) label.textContent = message;
+      else {
+        if (!isConnected())            label.textContent = 'غیرفعال';
+        else if (state === 'syncing')  label.textContent = 'در حال همگامسازی…';
+        else if (state === 'pending')  label.textContent = 'در انتظار…';
+        else if (state === 'error')    label.textContent = 'خطا';
+        else                           label.textContent = formatTimeAgo(getLastSync());
+      }
+    }
+  }
+  
+  function scheduleAutoSync() {
+    if (!isConnected()) return;
+    clearTimeout(autoSyncTimer);
+    updateStatusDot('pending');
+    autoSyncTimer = setTimeout(doAutoSync, AUTO_SYNC_DELAY);
+  }
+  
+  async function doAutoSync() {
+    if (isSyncing || !isConnected()) return;
+    const raw = ls.get(K_DATA);
+    if (!raw) return;
+    isSyncing = true;
+    updateStatusDot('syncing');
+    try {
+      const db = JSON.parse(raw);
+      const token = await login();
+      await api('tpClassSaveAll', {token: token, data: db});
+      ls.set(K_LAST, new Date().toISOString());
+      updateStatusDot('synced');
+      console.log('✅ همگامسازی خودکار انجام شد');
+    } catch (e) {
+      updateStatusDot('error', 'خطا در همگامسازی');
+      console.warn('⚠️ همگامسازی خودکار شکست خورد:', e.message);
+    } finally {
+      isSyncing = false;
+    }
+  }
+  
+  function startWatcher() {
+    if (!isConnected()) return;
+    setInterval(() => {
+      if (!isConnected()) return;
+      const current = ls.get(K_DATA);
+      if (current && current !== lastKnownData) {
+        lastKnownData = current;
+        scheduleAutoSync();
+      }
+    }, POLL_INTERVAL);
   }
   
   function showToast(msg, err) {
@@ -437,7 +524,8 @@ render();initHakim();
         </div>
         <p class="small muted" style="margin-top:14px">${lastText}</p>
         <div class="note-box" style="margin-top:15px">
-          <strong>آپلود:</strong> اطلاعات این مرورگر روی شیت نوشته میشود (نسخهٔ قبلی شیت پاک میشود).<br>
+          <strong>همگامسازی خودکار فعال است:</strong> هر بار چیزی در دفتر تغییر دهد، پس از ۳۰ ثانیه خودکار روی شیت ذخیره میشود.<br><br>
+          <strong>آپلود دستی:</strong> همین حالا اطلاعات را روی شیت مینویسد.<br>
           <strong>دریافت:</strong> اطلاعات شیت جایگزین اطلاعات این مرورگر میشود؛ صفحه دوباره بارگذاری میشود.
         </div>
         <div class="modal-actions">
@@ -455,7 +543,6 @@ render();initHakim();
       alertEl.scrollIntoView({block:'nearest'});
     };
     const hideErr = () => { alertEl.hidden = true; };
-    
     const passEl = document.getElementById('syncPass');
     if (passEl) passEl.focus();
     
@@ -469,10 +556,12 @@ render();initHakim();
       try {
         ls.set(K_PASS, pw);
         await login();
+        lastKnownData = ls.get(K_DATA);
+        startWatcher();
         document.getElementById('modalBody').innerHTML = buildModalBody();
         bindModalEvents();
-        updateSyncBtnStyle();
-        showToast('✅ اتصال برقرار شد.');
+        updateStatusDot('synced');
+        showToast('✅ اتصال برقرار شد. همگامسازی خودکار فعال است.');
       } catch (e) {
         ls.set(K_PASS, '');
         showErr(e);
@@ -497,7 +586,9 @@ render();initHakim();
         const token = await login();
         const r = await api('tpClassSaveAll', {token: token, data: db});
         ls.set(K_LAST, new Date().toISOString());
-        showToast('✅ دادهها روی شیت ذخیره شد (' + Math.round((r.size||0)/1024) + ' کیلوبایت)');
+        lastKnownData = raw;
+        updateStatusDot('synced');
+        showToast('✅ دادهها روی شیت ذخیره شد (' + Math.max(1, Math.round((r.size||0)/1024)) + ' کیلوبایت)');
         document.getElementById('modalBody').innerHTML = buildModalBody();
         bindModalEvents();
       } catch (e) {
@@ -518,7 +609,9 @@ render();initHakim();
         const token = await login();
         const r = await api('tpClassGetAll', {token: token});
         if (!r.data) throw new Error('در شیت دادهای ذخیره نشده است. اول یک بار آپلود کنید.');
-        ls.set(K_DATA, JSON.stringify(r.data));
+        const json = JSON.stringify(r.data);
+        ls.set(K_DATA, json);
+        lastKnownData = json;
         ls.set(K_LAST, new Date().toISOString());
         showToast('✅ دادهها دریافت شد. صفحه در حال بارگذاری…');
         setTimeout(() => location.reload(), 900);
@@ -533,9 +626,10 @@ render();initHakim();
     if (disconnect) disconnect.onclick = () => {
       if (!confirm('اتصال قطع میشود. اطلاعات محلی دستنخورده باقی میماند.')) return;
       ls.set(K_PASS, '');
+      clearTimeout(autoSyncTimer);
       document.getElementById('modalBody').innerHTML = buildModalBody();
       bindModalEvents();
-      updateSyncBtnStyle();
+      updateStatusDot('idle');
       showToast('اتصال قطع شد.');
     };
   }
@@ -548,16 +642,37 @@ render();initHakim();
     bindModalEvents();
   }
   
-  function updateSyncBtnStyle() {
+  function createStatusDot() {
     const btn = document.getElementById('syncBtn');
-    if (!btn) return;
-    if (isConnected()) {
-      btn.classList.remove('soft');
-      btn.classList.add('primary');
-    } else {
-      btn.classList.remove('primary');
-      btn.classList.add('soft');
-    }
+    if (!btn || document.getElementById('syncStatus')) return;
+    const wrapper = document.createElement('div');
+    wrapper.id = 'syncStatus';
+    wrapper.className = 'sync-status';
+    wrapper.innerHTML = '<span id="syncDot" class="sync-dot"></span><span id="syncStatusLabel" class="sync-status-label">غیرفعال</span>';
+    btn.parentNode.insertBefore(wrapper, btn.nextSibling);
+  }
+  
+  function injectStyles() {
+    if (document.getElementById('syncStyles')) return;
+    const style = document.createElement('style');
+    style.id = 'syncStyles';
+    style.textContent = `
+      .sync-status { display:flex; align-items:center; gap:6px; padding:6px 10px; background:#fff; border:1px solid var(--line); border-radius:12px; font-size:11px; color:var(--muted); }
+      .sync-dot { width:8px; height:8px; border-radius:50%; background:#cbd5e1; flex-shrink:0; }
+      .sync-dot.green  { background:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,.15); }
+      .sync-dot.amber  { background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.15); animation:syncPulse 1.2s infinite; }
+      .sync-dot.red    { background:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.15); }
+      .sync-dot.gray   { background:#94a3b8; }
+      .sync-status-label { white-space:nowrap; }
+      @keyframes syncPulse { 0%,100%{ opacity:1 } 50%{ opacity:.4 } }
+      @media (max-width: 760px) {
+        #syncBtn .sync-label { display: none; }
+        #syncBtn { padding: 9px 12px; }
+        .sync-status { padding: 5px 8px; font-size: 10px; }
+        .sync-status-label { display: none; }
+      }
+    `;
+    document.head.appendChild(style);
   }
   
   function injectHeaderButton() {
@@ -573,14 +688,27 @@ render();initHakim();
     btn.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span class="sync-label">همگامسازی</span>';
     btn.onclick = openSyncModal;
     backupBtn.parentNode.insertBefore(btn, backupBtn);
-    updateSyncBtnStyle();
+    createStatusDot();
+    if (isConnected()) {
+      updateStatusDot('synced');
+      startWatcher();
+    } else {
+      updateStatusDot('idle');
+    }
   }
   
+  injectStyles();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectHeaderButton);
   } else {
     injectHeaderButton();
   }
+  
+  setInterval(() => {
+    const dot = document.getElementById('syncDot');
+    if (dot && dot.classList.contains('green')) updateStatusDot('synced');
+  }, 15000);
+  
 })();
 </script>
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3a8694b59b8237d',t:'MTc4OTMxNTcxMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
