@@ -1083,19 +1083,7 @@ function onAuthSuccess(userInfo) {
         clearAuth();
         showAuthModal('نشست قبلی منقضی شده. لطفاً دوباره وارد شو.');
       }
-        if (lastUser && lastUser !== stored.username) {
-          store.del(K_DATA);
-          store.del(K_LAST);
-        }
-        store.set(K_LAST_USER, stored.username, true);
-        lastKnownData = store.get(K_DATA);
-        updateSyncBtnStyle();
-        updateStatusDot('synced');
-        startWatcher();
-      } catch(e) {
-        clearAuth();
-        showAuthModal('نشست قبلی منقضی شده. لطفاً دوباره وارد شو.');
-      }
+ 
     } else {
       showAuthModal();
     }
