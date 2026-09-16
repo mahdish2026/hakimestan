@@ -1,6 +1,6 @@
 /*!
- * back-to-lobby.js — نوار بازگشت به لابی (بالای صفحه)
- * نسخه: 2.0.0
+ * back-to-lobby.js — دکمهٔ کوچیک بازگشت به لابی
+ * نسخه: 5.0.0 — همیشه در دسترس، کم‌مزاحم
  * ساخته مهدی شریفیان
  */
 (function () {
@@ -8,114 +8,84 @@
 
   var LOBBY_URL = '/hakimestan/index.html';
 
-  // اگه توی لابی هستیم، کاری نکن
   var path = location.pathname.replace(/\/$/, '');
   if (path === '/hakimestan' || path === '/hakimestan/index.html' || path === '' || path === '/') {
     return;
   }
 
-  // ── استایل ──
   var css = ''
-    + '.btl-bar{'
+    + '.btl-btn{'
     +   'position:fixed;'
-    +   'top:0;left:0;right:0;'
+    +   'top:calc(14px + env(safe-area-inset-top,0px));'
+    +   'left:calc(14px + env(safe-area-inset-left,0px));'
     +   'z-index:99999;'
-    +   'display:flex;align-items:center;'
-    +   'padding:8px 14px;'
-    +   'padding-top:calc(8px + env(safe-area-inset-top,0px));'
-    +   'background:linear-gradient(180deg,rgba(13,10,31,.92),rgba(13,10,31,.78));'
-    +   'backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);'
-    +   'border-bottom:1px solid rgba(245,199,106,.2);'
-    +   'font-family:Vazirmatn,Tahoma,sans-serif;'
-    +   'direction:rtl;'
-    +   'transition:transform .3s,opacity .3s;'
-    + '}'
-    + '.btl-bar.btl-hidden{transform:translateY(-100%);opacity:0;pointer-events:none}'
-    + '.btl-link{'
-    +   'display:inline-flex;align-items:center;gap:6px;'
-    +   'padding:6px 14px;'
-    +   'background:linear-gradient(145deg,rgba(139,92,246,.25),rgba(109,40,217,.15));'
-    +   'border:1.5px solid rgba(167,139,250,.5);'
-    +   'color:#e0d4ff;'
-    +   'border-radius:99px;'
-    +   'font-size:.8rem;font-weight:800;'
+    +   'width:44px;height:44px;'
+    +   'display:flex;align-items:center;justify-content:center;'
+    +   'background:rgba(20,14,40,.7);'
+    +   'color:#ffd98a;'
+    +   'font-size:1.15rem;'
     +   'text-decoration:none;'
-    +   'transition:transform .2s,box-shadow .2s,border-color .2s;'
+    +   'border-radius:50%;'
+    +   'border:1.5px solid rgba(245,199,106,.3);'
+    +   'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);'
+    +   'box-shadow:0 4px 14px rgba(0,0,0,.25);'
+    +   'opacity:.5;'
+    +   'transition:opacity .25s,transform .25s,border-color .25s,box-shadow .25s;'
     +   'cursor:pointer;'
     + '}'
-    + '.btl-link:hover{'
-    +   'transform:translateY(-1px);'
-    +   'border-color:#a78bfa;'
-    +   'box-shadow:0 4px 14px rgba(139,92,246,.4);'
+    + '.btl-btn:hover,.btl-btn:focus-visible{'
+    +   'opacity:1;'
+    +   'transform:scale(1.1);'
+    +   'border-color:#ffd98a;'
+    +   'box-shadow:0 6px 20px rgba(245,199,106,.45);'
     + '}'
-    + '.btl-link:active{transform:translateY(0) scale(.97)}'
-    + '.btl-title{'
-    +   'flex:1;text-align:center;'
-    +   'color:#f5c76a;'
-    +   'font-size:.82rem;font-weight:800;'
-    +   'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'
-    +   'padding:0 10px;'
+    + '.btl-btn:active{transform:scale(.94)}'
+    + '.btl-btn::after{'
+    +   'content:"بازگشت به لابی";'
+    +   'position:absolute;'
+    +   'left:calc(100% + 10px);'
+    +   'top:50%;'
+    +   'transform:translateY(-50%);'
+    +   'background:rgba(20,14,40,.95);'
+    +   'color:#ffd98a;'
+    +   'padding:6px 12px;'
+    +   'border-radius:10px;'
+    +   'font-family:Vazirmatn,Tahoma,sans-serif;'
+    +   'font-size:.75rem;font-weight:800;'
+    +   'white-space:nowrap;'
+    +   'opacity:0;'
+    +   'pointer-events:none;'
+    +   'transition:opacity .2s;'
+    +   'border:1px solid rgba(245,199,106,.35);'
     + '}'
-    + '.btl-spacer{width:90px;flex-shrink:0}'
-    + 'body{padding-top:52px !important}'
-    + '@media(max-width:480px){'
-    +   '.btl-bar{padding:6px 10px;padding-top:calc(6px + env(safe-area-inset-top,0px))}'
-    +   '.btl-link{padding:5px 10px;font-size:.72rem}'
-    +   '.btl-title{font-size:.74rem}'
-    +   '.btl-spacer{width:70px}'
-    +   'body{padding-top:46px !important}'
+    + '.btl-btn:hover::after{opacity:1}'
+    + '@media(max-width:520px){'
+    +   '.btl-btn{width:38px;height:38px;font-size:1rem;top:calc(10px + env(safe-area-inset-top,0px));left:calc(10px + env(safe-area-inset-left,0px))}'
+    +   '.btl-btn::after{display:none}'
+    + '}'
+    + '@media (prefers-reduced-motion:reduce){'
+    +   '.btl-btn{transition:none}'
     + '}';
 
-  // ── تزریق استایل ──
   var style = document.createElement('style');
   style.textContent = css;
   document.head.appendChild(style);
 
-  // ── ساخت نوار ──
-  function makeBar() {
-    // اگه body نبود، صبر کن
+  function attach() {
     if (!document.body) {
-      document.addEventListener('DOMContentLoaded', makeBar);
+      document.addEventListener('DOMContentLoaded', attach);
       return;
     }
+    if (document.querySelector('.btl-btn')) return;
 
-    // اگه قبلاً اضافه شده، تکرار نکن
-    if (document.querySelector('.btl-bar')) return;
-
-    var title = document.title || 'حکیمستان';
-    // حذف ایموجی‌های اول عنوان برای تمیزی
-    title = title.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]+\s*/u, '').trim();
-    if (title.length > 40) title = title.slice(0, 38) + '…';
-
-    var bar = document.createElement('div');
-    bar.className = 'btl-bar';
-    bar.setAttribute('role', 'navigation');
-    bar.setAttribute('aria-label', 'نوار بازگشت به لابی');
-    bar.innerHTML =
-      '<a class="btl-link" href="' + LOBBY_URL + '" aria-label="بازگشت به لابی حکیمستان">🏠 بازگشت به لابی</a>' +
-      '<div class="btl-title">' + title.replace(/[<>&]/g, '') + '</div>' +
-      '<div class="btl-spacer"></div>';
-
-    document.body.insertBefore(bar, document.body.firstChild);
-
-    // اگه کاربر اسکرول کرد پایین، نوار محو بشه
-    var lastY = 0;
-    var ticking = false;
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        var y = window.scrollY;
-        if (y > 300 && y > lastY) {
-          bar.classList.add('btl-hidden');
-        } else {
-          bar.classList.remove('btl-hidden');
-        }
-        lastY = y;
-        ticking = false;
-      });
-    }, { passive: true });
+    var link = document.createElement('a');
+    link.className = 'btl-btn';
+    link.href = LOBBY_URL;
+    link.setAttribute('aria-label', 'بازگشت به لابی حکیمستان');
+    link.setAttribute('title', 'بازگشت به لابی');
+    link.innerHTML = '🏠';
+    document.body.appendChild(link);
   }
 
-  makeBar();
+  attach();
 })();
