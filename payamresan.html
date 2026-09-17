@@ -1320,7 +1320,7 @@ function msgAction(act,id,btn){
   else if(act==='del'&&S.role==='teacher'){
     confirmDlg('حذف پیام','این پیام برای همیشه پاک بشه؟','حذف').then(function(ok){
       if(!ok) return;
-      postDB({action:'deleteMsg', text:m.text, from:m.from, role:'teacher'});
+      postDB({action:'deleteMsg', id:m.id, text:m.text, from:m.from, role:'teacher'});
       S.messages=S.messages.filter(function(x){ return x.id!==id; });
       toast('پیام پاک شد','ok'); renderAll();
     });
@@ -1614,7 +1614,7 @@ function renderTeacher(){
         if(!m) return;
         confirmDlg('حذف پیام','پیام «'+m.text.slice(0,40)+'» پاک بشه؟','حذف').then(function(ok){
           if(!ok) return;
-          postDB({action:'deleteMsg', text:m.text, from:m.from, role:'teacher'});
+          postDB({action:'deleteMsg', id:m.id, text:m.text, from:m.from, role:'teacher'});
           S.messages=S.messages.filter(function(a){return a.id!==m.id;});
           toast('پاک شد','ok'); renderTeacher();
         });
