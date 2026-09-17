@@ -1407,7 +1407,26 @@ body[data-theme="candy"] #hakimChat{--hkc-user:linear-gradient(145deg, rgba(236,
   #hakimChat *,#hakimChat *::before,#hakimChat *::after{animation:none !important;transition:none !important;}
   .chat-wrap{transition:none !important;}
 }
-@media (prefers-contrast: high){
+/* ---------- اصلاح دید در تم‌های روشن ---------- */
+body.light-cards .hkc-row.err .hkc-bubble,
+body[data-theme="modern"] .hkc-row.err .hkc-bubble{
+  background:rgba(239,68,68,.10);
+  border-color:rgba(220,38,38,.55);
+  color:#7f1d1d;
+}
+
+body.light-cards .hkc-time,
+body[data-theme="modern"] .hkc-time{
+  opacity:.85;
+  color:#475569;
+}
+
+body.light-cards .hkc-row.me .hkc-time,
+body[data-theme="modern"] .hkc-row.me .hkc-time{
+  color:#f5f3ff;
+  opacity:.85;
+}
+   @media (prefers-contrast: high){
   .hkc-row.bot .hkc-bubble{color:#fff;}
   .hkc-time{opacity:.9;}
 }
