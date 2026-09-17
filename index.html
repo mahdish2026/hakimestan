@@ -2661,31 +2661,43 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
     elInput.value = ''; autoGrow(); scrollDown(true);
     setBusy(true); applyMood('thinking'); showTyping();
 
-    // ۱) Cloudflare → ۲) آروان → ۳) پاسخ آفلاین
+    var source = '';
+
     fetchAI(API_CF, msg, API_FALLBACK_TIMEOUT)
+      .then(function(data){
+        source = 'CF';
+        return data;
+      })
       .catch(function(cfErr){
-        console.log('CF failed, falling back to Arvan:', cfErr.message);
-        return fetchAI(API_ARVAN, msg, TIMEOUT);
+        console.log('CF failed:', cfErr.message);
+        return fetchAI(API_ARVAN, msg, TIMEOUT)
+          .then(function(data){
+            source = 'Arvan';
+            return data;
+          });
       })
       .catch(function(arvanErr){
-        console.log('Arvan failed, using offline reply:', arvanErr.message);
+        console.log('Arvan failed:', arvanErr.message);
+        source = 'Offline';
         return { reply: getOfflineReply(msg), offline: true };
       })
       .then(function(data){
         var reply = (data && data.reply) ? String(data.reply).trim() : '';
         if (!reply) throw new Error('empty');
         var mood = detectMood(reply);
-        hideTyping(); addBubble('bot', reply, Date.now());
+        hideTyping();
+        addBubble('bot', reply, Date.now(), false, source);
         push('bot', reply, mood); applyMood(mood); scrollDown(true);
       })
       .catch(function(err){
         hideTyping();
         addBubble('bot', '⚠️ حکیم الان در دسترس نیست. لطفاً دوباره تلاش کن.',
-          Date.now(), true);
+          Date.now(), true, 'Error');
         applyMood('sad'); scrollDown(true);
       })
       .then(function(){ setBusy(false); });
   }
+   
 
   function autoGrow(){
     elInput.style.height = 'auto';
