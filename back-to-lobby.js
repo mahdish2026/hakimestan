@@ -8,10 +8,12 @@
 
   var LOBBY_URL = location.pathname.indexOf('/hakimestan') === 0   ? '/hakimestan/index.html'   : '/index.html';
 
-  var path = location.pathname.replace(/\/$/, '');
-  if (path === '/hakimestan' || path === '/hakimestan/index.html' || path === '' || path === '/') {
-    return;
-  }
+var path = location.pathname;
+if (path === '/hakimestan' || path === '/hakimestan/' ||
+    path === '/hakimestan/index.html' ||
+    path === '/' || path === '/index.html') {
+  return;
+}
 
   /* ── لیست دکمه‌هایی که باید زیرشون دکمهٔ لابی بیاد ── */
   var TARGET_BUTTONS = [
