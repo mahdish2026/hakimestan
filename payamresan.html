@@ -736,51 +736,10 @@ function fetchWithTimeout(url, options, timeoutMs) {
     .catch(function(e){ clearTimeout(timer); throw e; });
 }
 function callAPI(action, data, isPost) {
-  if (isPost === undefined) isPost = true;
-  data = data || {};
-  var now = Date.now();
-  if (googleDisabled && (now - lastGoogleCheck) > RETRY_GOOGLE_MS) {
-    lastGoogleCheck = now;
-    fetchWithTimeout(GOOGLE_API_URL + '?action=ping', { method: 'GET' }, 3000)
-      .then(function(r){ return r.json(); })
-      .then(function(j){
-        if (j && (j.ok || j.msg === 'alive')) {
-          googleDisabled = false;
-          googleFailCount = 0;
-          console.log('✅ گوگل برگشت');
-        }
-      })
-      .catch(function(){});
-  }
-  if (!googleDisabled) {
-    var gUrl, gOpts;
-    if (isPost) {
-      gUrl = GOOGLE_API_URL;
-      gOpts = { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(Object.assign({ action: action }, data)) };
-    } else {
-      gUrl = GOOGLE_API_URL + '?' + new URLSearchParams(Object.assign({ action: action }, data)).toString();
-      gOpts = { method: 'GET' };
-    }
-    return fetchWithTimeout(gUrl, gOpts, 3000)
-      .then(function(r){ return r.json(); })
-      .then(function(j){
-        googleFailCount = 0;
-        return j;
-      })
-      .catch(function(err){
-        googleFailCount++;
-        console.warn('⚠️ گوگل خطا (' + googleFailCount + '/' + FAIL_THRESHOLD + ')');
-        if (googleFailCount >= FAIL_THRESHOLD) {
-          googleDisabled = true;
-          lastGoogleCheck = Date.now();
-          console.warn('🚫 گوگل غیرفعال شد — فقط PHP');
-        }
-        return callPHP(action, data, isPost);
-      });
-  }
   return callPHP(action, data, isPost);
 }
 function callPHP(action, data, isPost) {
+   
   var pUrl, pOpts;
   if (isPost) {
     pUrl = PHP_API_URL;
