@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  var LOBBY_URL = '/hakimestan/index.html';
+  var LOBBY_URL = location.pathname.indexOf('/hakimestan') === 0   ? '/hakimestan/index.html'   : '/index.html';
 
   var path = location.pathname.replace(/\/$/, '');
   if (path === '/hakimestan' || path === '/hakimestan/index.html' || path === '' || path === '/') {
