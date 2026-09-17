@@ -2619,6 +2619,34 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
   }
 
   /* ---------- ارسال ---------- */
+  // ✅ تابع کمکی: درخواست به یه سرویس با timeout مشخص
+  function fetchAI(url, msg, timeoutMs){
+    return new Promise(function(resolve, reject){
+      var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var timer = setTimeout(function(){
+        if (ctrl) ctrl.abort();
+        reject(new Error('timeout'));
+      }, timeoutMs);
+
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg, studentName: getStudentName() }),
+        signal: ctrl ? ctrl.signal : undefined
+      })
+      .then(function(res){
+        clearTimeout(timer);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(resolve)
+      .catch(function(e){
+        clearTimeout(timer);
+        reject(e);
+      });
+    });
+  }
+
   function send(text){
     var msg = String(text||'').trim();
     if (!msg || busy) return;
@@ -2626,33 +2654,30 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
     elInput.value = ''; autoGrow(); scrollDown(true);
     setBusy(true); applyMood('thinking'); showTyping();
 
-    var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-    var timer = setTimeout(function(){ if (ctrl) ctrl.abort(); }, TIMEOUT);
-
-    fetch(API, {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ message: msg, studentName: getStudentName() }),
-      signal: ctrl ? ctrl.signal : undefined
-    })
-    .then(function(res){ if(!res.ok) throw new Error('HTTP '+res.status); return res.json(); })
-    .then(function(data){
-      var reply = (data && data.reply) ? String(data.reply).trim() : '';
-      if (!reply) throw new Error('empty');
-      var mood = detectMood(reply);
-      hideTyping(); addBubble('bot', reply, Date.now());
-      push('bot', reply, mood); applyMood(mood); scrollDown(true);
-    })
-    .catch(function(err){
-      hideTyping();
-      var aborted = err && err.name === 'AbortError';
-      addBubble('bot', aborted
-        ? '⏳ پاسخ دیر شد. لطفاً یک بار دیگر بپرس.'
-        : '⚠️ ارتباط با حکیم برقرار نشد. اینترنتت را بررسی کن و دوباره تلاش کن.',
-        Date.now(), true);
-      applyMood('sad'); scrollDown(true);
-    })
-    .then(function(){ clearTimeout(timer); setBusy(false); });
+    // ۱) Cloudflare → ۲) آروان → ۳) پاسخ آفلاین
+    fetchAI(API_CF, msg, API_FALLBACK_TIMEOUT)
+      .catch(function(cfErr){
+        console.log('CF failed, falling back to Arvan:', cfErr.message);
+        return fetchAI(API_ARVAN, msg, TIMEOUT);
+      })
+      .catch(function(arvanErr){
+        console.log('Arvan failed, using offline reply:', arvanErr.message);
+        return { reply: getOfflineReply(msg), offline: true };
+      })
+      .then(function(data){
+        var reply = (data && data.reply) ? String(data.reply).trim() : '';
+        if (!reply) throw new Error('empty');
+        var mood = detectMood(reply);
+        hideTyping(); addBubble('bot', reply, Date.now());
+        push('bot', reply, mood); applyMood(mood); scrollDown(true);
+      })
+      .catch(function(err){
+        hideTyping();
+        addBubble('bot', '⚠️ حکیم الان در دسترس نیست. لطفاً دوباره تلاش کن.',
+          Date.now(), true);
+        applyMood('sad'); scrollDown(true);
+      })
+      .then(function(){ setBusy(false); });
   }
 
   function autoGrow(){
