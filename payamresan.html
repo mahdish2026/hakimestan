@@ -879,19 +879,18 @@ var S = {
 if(S.notif===null) S.notif=true;
 
 /* ─── ۶. ارتباط با دیتابیس (با Fallback هوشمند) ─── */
-function postDB(payload){
-  var action = payload.action || payload.type;
-  var data = Object.assign({}, payload);
-  delete data.action; delete data.type;
-  return callAPI(action, data, true)
-    .then(function(){ return true; })
-    .catch(function(){ return false; });
+
+   function postDB(payload){
+  return fetch(API_URL, {
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify(payload)
+  }).then(function(){ return true; })
+   .catch(function(){ return false; });
 }
 function getDB(params){
-  var action = params.action;
-  var data = Object.assign({}, params);
-  delete data.action;
-  return callAPI(action, data, false);
+  var url=API_URL+'?'+new URLSearchParams(params).toString();
+  return fetch(url).then(function(r){ return r.json(); });
 }
    
 // نرمال‌سازی شکل‌های مختلف پاسخ سرور
