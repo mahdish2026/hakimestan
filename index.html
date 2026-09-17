@@ -2539,7 +2539,7 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
   }
 
   /* ---------- حباب پیام ---------- */
-  function addBubble(who, text, ts, isError){
+  function addBubble(who, text, ts, isError, source){
     var row = document.createElement('div');
     row.className = 'hkc-row ' + (who === 'me' ? 'me' : 'bot') + (isError ? ' err' : '');
     var mini = document.createElement('span');
@@ -2549,12 +2549,19 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
     var sr = document.createElement('span'); sr.className = 'sr-only';
     sr.textContent = (who === 'me' ? 'پیام تو: ' : 'پاسخ حکیم: ');
     var body = document.createElement('span'); body.textContent = text;
-    var time = document.createElement('span'); time.className = 'hkc-time'; time.textContent = faTime(ts);
+    var time = document.createElement('span'); time.className = 'hkc-time';
+    time.textContent = faTime(ts);
+    if (source && who !== 'me'){
+      var dot = document.createElement('span');
+      dot.className = 'hkc-src-dot hkc-src-' + String(source).toLowerCase();
+      dot.setAttribute('title', 'منبع: ' + source);
+      time.appendChild(dot);
+    }
     bubble.appendChild(sr); bubble.appendChild(body); bubble.appendChild(time);
     row.appendChild(mini); row.appendChild(bubble); elLog.appendChild(row);
     return row;
   }
-
+   
   /* ---------- نشانگر تایپ ---------- */
   var typingRow = null;
   function showTyping(){
