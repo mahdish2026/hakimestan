@@ -807,9 +807,9 @@ var S = {
 };
 if(S.notif===null) S.notif=true;
 
-/* ─── ۶. ارتباط با دیتابیس (با Fallback هوشمند) ─── */
-
-   function postDB(payload){
+/* ─── ۶. ارتباط با دیتابیس ─── */
+// ارسال داده (no-cors: پاسخ خوانده نمی‌شود، موفقیت فرض می‌شود)
+function postDB(payload){
   return fetch(API_URL, {
     method:'POST', mode:'no-cors',
     headers:{'Content-Type':'text/plain'},
@@ -817,10 +817,12 @@ if(S.notif===null) S.notif=true;
   }).then(function(){ return true; })
    .catch(function(){ return false; });
 }
+// خواندن داده (پاسخ JSON)
 function getDB(params){
   var url=API_URL+'?'+new URLSearchParams(params).toString();
   return fetch(url).then(function(r){ return r.json(); });
 }
+   
    
 // نرمال‌سازی شکل‌های مختلف پاسخ سرور
 function asArray(j, key){
