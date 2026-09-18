@@ -4342,7 +4342,7 @@ var Compose = (function(){
     var to_group = S.chat.type==='group'? S.chat.id : '';
     var to_user  = S.chat.type==='pv'? S.chat.id : '';
     var clientId = U.uid('q');
-    var date = new Date().toISOString();
+    var date = new Date(Date.now() + (S.serverOffset||0)).toISOString();
 
     // اگر بک‌اند فیلدهای اضافه را پشتیبانی نکند، متادیتا به انتهای متن می‌چسبد
     var wireSuffix = (S.wire.metaOk===true)? '' : Wire.encode(meta);
