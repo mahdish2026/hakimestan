@@ -2104,8 +2104,12 @@ var U = (function(){
   }
    
   // کلید روز (میلادی، وقت محلی) برای گروه‌بندی پیام‌ها
-  function dayKey(v){ var d=parseDate(v); if(!d) return ''; return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
-  // فاصله روزها بر اساس تقویم (نه تقسیم میلی‌ثانیه) → رفع باگ تاریخ‌های عجیب
+  function dayKey(v){
+    var d=parseDate(v); if(!d) return '';
+    try{ return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran', year:'numeric', month:'2-digit', day:'2-digit'}).format(d); }
+    catch(e){ return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+  }
+     // فاصله روزها بر اساس تقویم (نه تقسیم میلی‌ثانیه) → رفع باگ تاریخ‌های عجیب
   function dayDiff(v){
     var d=parseDate(v); if(!d) return null;
     var a=new Date(d.getFullYear(), d.getMonth(), d.getDate());
