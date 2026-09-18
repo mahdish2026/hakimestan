@@ -2100,8 +2100,9 @@ var U = (function(){
    
   function faWeekday(v){
     var d = parseDate(v); if(!d) return '';
-    try{ return new Intl.DateTimeFormat('fa-IR',{weekday:'long'}).format(d); }catch(e){ return ''; }
+    try{ return new Intl.DateTimeFormat('fa-IR',{weekday:'long', timeZone:'Asia/Tehran'}).format(d); }catch(e){ return ''; }
   }
+   
   // کلید روز (میلادی، وقت محلی) برای گروه‌بندی پیام‌ها
   function dayKey(v){ var d=parseDate(v); if(!d) return ''; return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
   // فاصله روزها بر اساس تقویم (نه تقسیم میلی‌ثانیه) → رفع باگ تاریخ‌های عجیب
