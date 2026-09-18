@@ -2189,7 +2189,7 @@ loadServerQuestions(() => {
       body: JSON.stringify({
         action: 'logVisit',
         userId: userId,
-        page: (location.pathname.replace(/^\//, '') || 'index.html'),
+        page: (function(){   var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean);   if (p.length === 0) return 'index.html';   if (p.length === 1) return p[0];   return p.slice(-2).join('/'); })(),
         device: device,
         browser: browser,
         os: os,
