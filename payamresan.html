@@ -5688,14 +5688,19 @@ var Teacher = (function(){
   }
 
   /* ── ابزارها: پشتیبان‌گیری، پاک‌سازی، عیب‌یابی ── */
-  function renderTools(b){
-    b.innerHTML =
+function renderTools(b){
+  b.innerHTML =
+    '<div class="card"><b>پشتیبان‌گیری</b><div class="hint">همه پیام‌های موجود در حافظه را ذخیره کن.</div>'+
+    '<div class="row" style="margin-top:10px"><button class="btn btn-primary btn-sm" id="tExportJson">خروجی JSON</button>'+
+    '<button class="btn btn-primary btn-sm" id="tExportCsv">خروجی CSV</button></div></div>'+
+    '<div class="card"><b>وضعیت سیستم</b><div id="tDiag" class="vstack" style="margin-top:8px"></div>'+
+    '<button class="btn btn-ghost btn-sm" id="tDiagBtn" style="margin-top:10px">به‌روزرسانی وضعیت</button></div>'+
     '<div class="card"><b>پاک‌سازی</b><div class="hint">حافظه محلی پیام‌ها، صف ارسال و نشانگرها پاک می‌شود (نشست و تنظیمات می‌ماند).</div>'+
-'<button class="btn btn-danger btn-sm" id="tWipe" style="margin-top:10px">پاک کردن حافظه محلی</button></div>'+
-'<div class="card" style="border:2px solid #ff5b5b"><b style="color:#ff5b5b">🔴 پاک‌سازی کامل پیام‌ها (از سرور)</b>'+
-'<div class="hint">همه پیام‌ها از Google Sheets پاک می‌شن و برای همه کاربران ناپدید می‌شن. برگشت‌پذیر نیست!</div>'+
-'<button class="btn btn-danger" id="tWipeAll" style="margin-top:12px"><svg class="ic"><use href="#i-trash"/></svg> پاک کردن همه پیام‌ها</button></div>';
-    function diag(){
+    '<button class="btn btn-danger btn-sm" id="tWipe" style="margin-top:10px">پاک کردن حافظه محلی</button></div>'+
+    '<div class="card" style="border:2px solid #ff5b5b"><b style="color:#ff5b5b">🔴 پاک‌سازی کامل پیام‌ها (از سرور)</b>'+
+    '<div class="hint">همه پیام‌ها از Google Sheets پاک می‌شن و برای همه کاربران ناپدید می‌شن. برگشت‌پذیر نیست!</div>'+
+    '<button class="btn btn-danger" id="tWipeAll" style="margin-top:12px"><svg class="ic"><use href="#i-trash"/></svg> پاک کردن همه پیام‌ها</button></div>';
+  function diag(){
       var rows = [
         ['نسخه برنامه', CFG.VERSION],
         ['آدرس API', CFG.API_URL.slice(0, 48)+'…'],
