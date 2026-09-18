@@ -2112,10 +2112,15 @@ var U = (function(){
      // فاصله روزها بر اساس تقویم (نه تقسیم میلی‌ثانیه) → رفع باگ تاریخ‌های عجیب
   function dayDiff(v){
     var d=parseDate(v); if(!d) return null;
-    var a=new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    var n=new Date(); var b=new Date(n.getFullYear(), n.getMonth(), n.getDate());
-    return Math.round((b.getTime()-a.getTime())/86400000);
+    var fmt = function(dt){
+      try{ return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran', year:'numeric', month:'2-digit', day:'2-digit'}).format(dt); }
+      catch(e){ return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate(); }
+    };
+    var a = fmt(d);
+    var b = fmt(new Date());
+    return Math.round((new Date(b+'T00:00:00Z').getTime() - new Date(a+'T00:00:00Z').getTime())/86400000);
   }
+   
   // برچسب روز: امروز / دیروز / تاریخ شمسی
   function dayLabel(v){
     var diff=dayDiff(v);
