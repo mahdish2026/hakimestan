@@ -4113,9 +4113,18 @@ var App = (function(){
         if($('#page-chat').classList.contains('active')) renderMsgs(false);
       }
       Notify.markTitle();
-      if(S.messages.length) DB.set('cache', S.messages.slice(-250).map(function(m){
-        return {id:m.id, from:m.from, to_group:m.to_group, to_user:m.to_user, text:Wire.strip(m.text), date:m.date, meta:m.meta};
-      }));
+       // ✅ اگه سرور پیام نداره، کش رو هم پاک کن
+      if(S.messages.length){
+        DB.set('cache', S.messages.slice(-250).map(function(m){
+          return {id:m.id, from:m.from, to_group:m.to_group, to_user:m.to_user, text:Wire.strip(m.text), date:m.date, meta:m.meta};
+        }));
+      } else if(S.conn === 'on'){
+        // سرور وصله ولی پیامی نیست — پس همه چیز از سمت سرور پاک شده
+        DB.del('cache');
+        DB.del('controls');
+        DB.del('tomb');
+      }
+       
       Auth.checkMyBan();
       Upd.badge();
     } finally { renderLock=false; }
