@@ -2722,9 +2722,8 @@ var Data = (function(){
   function fetchMessages(opt){
     opt = opt||{};
     if(!S.me) return Promise.resolve(false);
-    // دریافت افزایشی: از کمی قبل از آخرین پیام (برای گرفتن پیام‌های ازدست‌رفته)
-    var sinceMs = lastMsgTime ? (lastMsgTime - 15000) : (Date.now() - 7*CFG.DAY_MS);
-    var sinceIso = new Date(Math.max(sinceMs, Date.now()-30*CFG.DAY_MS)).toISOString();
+    // ✅ همیشه ۷ روز آخر رو می‌گیریم تا پیام‌های قدیمی از دست نرن
+    var sinceIso = new Date(Date.now() - 7*CFG.DAY_MS).toISOString();    
     return getDB({action:'messages', user:S.me, since:sinceIso, limit:300}).then(function(j){
       var arr = Norm.asArray(j,'messages').map(Norm.msg);
       // حذف پیام‌های قدیمی‌تر از ۷ روز، مگر روزهای ذخیره‌شده معلم
