@@ -2081,9 +2081,10 @@ var U = (function(){
   // ساعت فارسی
   function faTime(v){
     var d = parseDate(v); if(!d) return '';
-    try{ return fa(d.toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})); }
+    try{ return fa(d.toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit', timeZone:'Asia/Tehran'})); }
     catch(e){ return fa(('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)); }
   }
+   
   // تاریخ کامل فارسی (تقویم شمسی)
   function faDate(v){
     var d = parseDate(v); if(!d) return '';
