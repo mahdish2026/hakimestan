@@ -2208,7 +2208,7 @@ var S = {
   wire: { mode: DB.get('wiremode', 'auto'), metaOk: null },
   upload: { provider: DB.get('upload_provider', 'inline'), imgbb: DB.get('imgbb_key',''), endpoint: DB.get('upload_endpoint','') },
   render: { ids: [], sig: '' },
-  queueRunning: false, bootAt: Date.now()
+  queueRunning: false, bootAt: Date.now(),   serverOffset: 0
 };
 S.initialsDone = false;
 
