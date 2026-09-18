@@ -2094,9 +2094,10 @@ var U = (function(){
    
   function faDateShort(v){
     var d = parseDate(v); if(!d) return '';
-    try{ return new Intl.DateTimeFormat('fa-IR',{calendar:'persian',month:'long',day:'numeric'}).format(d); }
+    try{ return new Intl.DateTimeFormat('fa-IR',{calendar:'persian',month:'long',day:'numeric', timeZone:'Asia/Tehran'}).format(d); }
     catch(e){ var j=dateToJalali(d); return fa(j.jm+'/'+j.jd); }
   }
+   
   function faWeekday(v){
     var d = parseDate(v); if(!d) return '';
     try{ return new Intl.DateTimeFormat('fa-IR',{weekday:'long'}).format(d); }catch(e){ return ''; }
