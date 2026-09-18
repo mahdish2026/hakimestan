@@ -5731,6 +5731,52 @@ function renderTools(b){
       DB.softClear(); S.messages=[]; S.render.ids=[]; S.outbox=[]; Typing.stopAll();
       toast('حافظه پاک شد','ok'); App.renderAll('all'); diag();
     });
+   $('#tWipeAll').addEventListener('click', async function(){
+  var ok = await Ui.confirmDlg(
+    'پاک‌سازی کامل',
+    'همه پیام‌ها از سرور پاک می‌شن و برای همه کاربران ناپدید می‌شن. مطمئنی؟',
+    'بله، همه رو پاک کن',
+    true
+  );
+  if(!ok) return;
+  
+  var btn = this;
+  btn.disabled = true;
+  btn.innerHTML = 'در حال پاک کردن…';
+  
+  try{
+    await Net.postDB({action:'wipeAll', role:'teacher', by:S.me});
+    await U.sleep(2000);
+    
+    DB.del('cache');
+    DB.del('controls');
+    DB.del('tomb');
+    DB.del('outbox');
+    DB.del('saved');
+    DB.del('starred');
+    DB.del('reacts');
+    S.messages = [];
+    S.saved = [];
+    S.starred = [];
+    S.reactions = {};
+    S.controls = {};
+    S.tomb = {};
+    S.outbox = [];
+    S.render.ids = [];
+    S.render.sigMap = {};
+    S.render.lastDay = '';
+    
+    toast('همه پیام‌ها پاک شدن ✅','ok', 4000);
+    
+    await Data.fetchMessages().catch(function(){});
+    App.renderAll('all');
+    render();
+  }catch(e){
+    toast('پاک‌سازی ناقص موند! دوباره امتحان کن','err', 5000);
+    btn.disabled = false;
+    btn.innerHTML = '<svg class="ic"><use href="#i-trash"/></svg> پاک کردن همه پیام‌ها';
+  }
+});
     diag();
   }
 
