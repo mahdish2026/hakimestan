@@ -2086,11 +2086,12 @@ var U = (function(){
   }
    
   // تاریخ کامل فارسی (تقویم شمسی)
-  function faDate(v){
+   function faDate(v){
     var d = parseDate(v); if(!d) return '';
-    try{ return new Intl.DateTimeFormat('fa-IR',{calendar:'persian',year:'numeric',month:'long',day:'numeric'}).format(d); }
+    try{ return new Intl.DateTimeFormat('fa-IR',{calendar:'persian',year:'numeric',month:'long',day:'numeric', timeZone:'Asia/Tehran'}).format(d); }
     catch(e){ var j=dateToJalali(d); return fa(j.jy+'/'+j.jm+'/'+j.jd); }
   }
+   
   function faDateShort(v){
     var d = parseDate(v); if(!d) return '';
     try{ return new Intl.DateTimeFormat('fa-IR',{calendar:'persian',month:'long',day:'numeric'}).format(d); }
