@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#ff7d3b">
+<title>معرفی پروژه — حکیمستان</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff7d3b'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Tahoma, sans-serif' fill='white' text-anchor='middle'%3Eح%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#ff7d3b;
+    --primary-dark:#e35d18;
+    --secondary:#3ba7ff;
+    --bg:#faf8f5;
+    --text:#2b2320;
+    --card:#ffffff;
+    --border:#f0e3da;
+    --shadow: 0 10px 30px -14px rgba(120,70,30,.16);
+    --radius:20px;
+  }
+
+  *{box-sizing:border-box;}
+
+  ::selection{
+    background: rgba(255,125,59,.28);
+    color:var(--text);
+  }
+
+  html,body{
+    margin:0;
+    padding:0;
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Vazirmatn", Tahoma, sans-serif;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+    padding:24px 16px 60px;
+  }
+
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:24px;
+    margin-bottom:18px;
+  }
+
+  .card h2, .card h3, .card h4{
+    margin-top:0;
+    color:var(--primary-dark);
+  }
+
+  /* Header */
+  header.card{
+    text-align:center;
+    padding:36px 24px;
+  }
+
+  .logo{
+    width:72px;
+    height:72px;
+    border-radius:18px;
+    background:linear-gradient(145deg, var(--primary), #ff9a63);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+    font-weight:800;
+    margin:0 auto 16px;
+    box-shadow:var(--shadow);
+  }
+
+  header h1{
+    margin:8px 0 6px;
+    font-size:1.7rem;
+    font-weight:800;
+    color:var(--text);
+  }
+
+  header .subtitle{
+    color:var(--primary-dark);
+    font-weight:600;
+    font-size:1.05rem;
+    margin:0;
+  }
+
+  .badge{
+    display:inline-block;
+    background:rgba(59,167,255,.12);
+    color:#1f6fb8;
+    border:1px solid rgba(59,167,255,.35);
+    border-radius:999px;
+    padding:6px 16px;
+    font-size:.9rem;
+    font-weight:600;
+  }
+
+  /* Designer card */
+  .designer-card{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    border:1.5px solid var(--primary);
+    background:linear-gradient(135deg, #fff6ef, #ffffff);
+  }
+
+  .designer-card .icon{
+    font-size:2.6rem;
+    flex:0 0 auto;
+  }
+
+  .designer-card h3{
+    margin:0 0 4px;
+    color:var(--text);
+    font-size:1.15rem;
+  }
+
+  .designer-card p{
+    margin:0;
+    color:#6b5b4d;
+  }
+
+  /* Section title */
+  .section-title{
+    font-size:1.15rem;
+    font-weight:800;
+    color:var(--primary-dark);
+    margin:0 0 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .sub-heading{
+    font-size:1rem;
+    font-weight:700;
+    color:var(--text);
+    margin:20px 0 10px;
+  }
+
+  .sub-heading:first-of-type{
+    margin-top:6px;
+  }
+
+  p{
+    margin:0 0 12px;
+  }
+  p:last-child{margin-bottom:0;}
+
+  /* Table */
+  .table-wrap{
+    overflow-x:auto;
+    margin-bottom:8px;
+  }
+
+  .table-wrap:last-child{margin-bottom:0;}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:560px;
+    font-size:.95rem;
+  }
+
+  th, td{
+    padding:12px 14px;
+    text-align:right;
+    border-bottom:1px solid var(--border);
+  }
+
+  th{
+    background:#fff3ea;
+    color:var(--primary-dark);
+    font-weight:700;
+    white-space:nowrap;
+  }
+
+  tr:last-child td{
+    border-bottom:none;
+  }
+
+  .tag{
+    display:inline-block;
+    padding:3px 10px;
+    border-radius:999px;
+    font-size:.8rem;
+    font-weight:600;
+    white-space:nowrap;
+  }
+
+  .tag-fixed{
+    background:#eef1f4;
+    color:#5a6472;
+  }
+
+  .tag-custom{
+    background:rgba(255,125,59,.12);
+    color:var(--primary-dark);
+  }
+
+  /* Experience card */
+  .experience-card{
+    background:#eef9ee;
+    border-color:#cdeccd;
+  }
+
+  blockquote{
+    margin:16px 0;
+    padding:14px 18px;
+    border-right:4px solid #4caf50;
+    background:#fff;
+    border-radius:10px;
+    font-style:normal;
+    color:#2f4a2f;
+  }
+
+  blockquote cite{
+    display:block;
+    margin-top:8px;
+    font-size:.85rem;
+    color:#5a7a5a;
+    font-style:normal;
+  }
+
+  /* Bullet list (checklist with ticks) */
+  .checklist{
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+
+  .checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:8px 0;
+    border-bottom:1px dashed var(--border);
+  }
+
+  .checklist li:last-child{
+    border-bottom:none;
+  }
+
+  .checklist .tick{
+    color:var(--primary);
+    font-weight:900;
+    flex:0 0 auto;
+    margin-top:2px;
+  }
+
+  /* Plain feature list (with leading emoji already in text) */
+  .feature-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:2px;
+  }
+
+  .feature-list li{
+    padding:8px 0;
+    border-bottom:1px dashed var(--border);
+  }
+
+  .feature-list li:last-child{
+    border-bottom:none;
+  }
+
+  /* Tech grid */
+  .tech-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+  }
+
+  .tech-item{
+    background:#fff8f3;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px 10px;
+    text-align:center;
+  }
+
+  .tech-item .num{
+    font-size:1.5rem;
+    font-weight:800;
+    color:var(--primary);
+    display:block;
+    margin-bottom:4px;
+  }
+
+  .tech-item .label{
+    font-size:.85rem;
+    color:#6b5b4d;
+  }
+
+  /* Links / Contact cards */
+  .highlight-card{
+    border:1.5px solid var(--primary);
+    background:#fffaf6;
+  }
+
+  .highlight-card .line{
+    padding:6px 0;
+    font-size:1rem;
+  }
+
+  .highlight-card a{
+    color:var(--secondary);
+    text-decoration:none;
+    font-weight:600;
+    word-break:break-all;
+  }
+
+  .highlight-card a:hover{
+    text-decoration:underline;
+  }
+
+  .contact-star{
+    color:var(--primary-dark);
+    font-weight:700;
+  }
+
+  /* Footer */
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    color:#8a7a6c;
+  }
+
+  footer .icon{
+    font-size:2.4rem;
+    margin-bottom:8px;
+  }
+
+  footer .brand{
+    font-weight:800;
+    color:var(--text);
+    font-size:1.1rem;
+    margin-bottom:6px;
+  }
+
+  footer .dev{
+    font-size:.9rem;
+    margin-bottom:10px;
+  }
+
+  footer .note{
+    font-size:.8rem;
+    color:#a99a8c;
+  }
+
+  @media (max-width:600px){
+    header.card{padding:28px 16px;}
+    header h1{font-size:1.35rem;}
+    .tech-grid{grid-template-columns:repeat(2, 1fr);}
+    .designer-card{flex-direction:column;text-align:center;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ۱. هدر -->
+  <header class="card">
+    <div class="logo">ح</div>
+    <h1>معرفی پروژه حکیمستان</h1>
+    <p class="subtitle">حکیمستان — دیار حکیم، سرزمین یادگیری</p>
+  </header>
+
+  <!-- ۲. کارت طراح -->
+  <section class="card designer-card">
+    <div class="icon">👨‍🏫</div>
+    <div>
+      <h3>مهدی شریفیان</h3>
+      <p>معلم پایه پنجم ابتدایی — استان گلستان، گنبدکاووس</p>
+    </div>
+  </section>
+
+  <!-- ۳. این پروژه چیه؟ -->
+  <section class="card">
+    <h2 class="section-title">📖 این پروژه چیه؟</h2>
+    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل ۷ بازی آموزشی، ۶ ابزار برای معلمان، یک پیام‌رسان کلاسی و یک دستیار هوش مصنوعی («حکیم») می‌باشد.</p>
+    <p>این سامانه برای پایه پنجم ابتدایی طراحی شده و هدفش این است که مفاهیم درسی از طریق بازی، یادگیری فعال و بازخورد فوری به دانش‌آموز منتقل شود.</p>
+    <p>تمام محتوا با HTML، CSS و JavaScript خالص ساخته شده و روی هر مرورگر و هر دستگاهی (موبایل، تبلت، رایانه) بدون نیاز به نصب اجرا می‌شود.</p>
+  </section>
+
+  <!-- ۴. برای کدوم درس‌ها؟ -->
+  <section class="card">
+    <h2 class="section-title">📚 برای کدوم درس‌ها؟</h2>
+
+    <h3 class="sub-heading">بازی‌ها</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>بازی</th>
+            <th>درس</th>
+            <th>پایه</th>
+            <th>نوع</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>فتح کهن دیار ایران</td>
+            <td>مطالعات اجتماعی (دروس ۱۸-۲۱)</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-fixed">سوال‌های ثابت</span></td>
+          </tr>
+          <tr>
+            <td>ماجرای حکیم</td>
+            <td>ادبیات فارسی</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
+          </tr>
+          <tr>
+            <td>مار و پله‌ی دانش</td>
+            <td>علوم</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
+          </tr>
+          <tr>
+            <td>کارت‌های حکیم</td>
+            <td>چند درس</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
+          </tr>
+          <tr>
+            <td>جدول حکمت</td>
+            <td>هدیه + علوم</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
+          </tr>
+          <tr>
+            <td>راز گنج حکیم</td>
+            <td>اخلاق + ریاضی</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
+          </tr>
+          <tr>
+            <td>مار و پله آنلاین</td>
+            <td>هر درس (۲ تا ۴ نفره)</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-heading">ابزارهای معلم</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ابزار</th>
+            <th>توضیح</th>
+            <th>پایه</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>آزمون‌ساز</td>
+            <td>ساخت آزمون + تصحیح خودکار</td>
+            <td>همه</td>
+          </tr>
+          <tr>
+            <td>دفتر معلم</td>
+            <td>حضور غیاب + نمرات</td>
+            <td>همه</td>
+          </tr>
+          <tr>
+            <td>کارگاه طرح درس</td>
+            <td>بانک نمونه + ویرایشگر</td>
+            <td>همه</td>
+          </tr>
+          <tr>
+            <td>مبدل سؤال</td>
+            <td>اتصال به بازی‌ها</td>
+            <td>همه</td>
+          </tr>
+          <tr>
+            <td>پیام‌رسان کلاسی</td>
+            <td>چت امن</td>
+            <td>همه</td>
+          </tr>
+          <tr>
+            <td>پنل معلم</td>
+            <td>مدیریت کامل</td>
+            <td>همه</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ۵. قابلیت شخصی‌سازی -->
+  <section class="card">
+    <h2 class="section-title">⚙️ قابلیت شخصی‌سازی</h2>
+    <p>همه‌ی بازی‌ها به جز «فتح کهن دیار ایران»، به صورت یک قالب آموزشی طراحی شده‌اند. یعنی معلم می‌تواند بدون دانش برنامه‌نویسی، سوال‌های هر بازی را مطابق درس خودش بسازد و تغییر دهد.</p>
+    <p><strong>این ویژگی باعث می‌شود:</strong></p>
+    <ul class="checklist">
+      <li><span class="tick">✓</span><span>یک بازی، برای همه‌ی درس‌ها قابل استفاده باشد</span></li>
+      <li><span class="tick">✓</span><span>معلم بتواند هر سال محتوای جدید بسازد</span></li>
+      <li><span class="tick">✓</span><span>دانش‌آموزان هر پایه‌ای از آن استفاده کنند</span></li>
+    </ul>
+    <p style="margin-top:14px;"><strong>استثنا:</strong> بازی «فتح کهن دیار ایران» به دلیل محتوای اختصاصی تاریخی، با سوال‌های ثابت ارائه می‌شود.</p>
+  </section>
+
+  <!-- ۶. تجربه‌ی واقعی در کلاس درس -->
+  <section class="card experience-card">
+    <h2 class="section-title">🏫 تجربه‌ی واقعی در کلاس درس</h2>
+    <p>این بازی‌ها در سال تحصیلی گذشته در کلاس پایه پنجم استفاده شدند و بازخورد مثبتی از دانش‌آموزان گرفته شد.</p>
+    <blockquote>
+      💬 «خیلی دوست داشتیم — کاش بازی‌های بیشتری هم بسازی!»
+      <cite>— بازخورد دانش‌آموزان پایه پنجم</cite>
+    </blockquote>
+    <p><strong>تأثیر بر آمادگی امتحان:</strong> سوالات امتحان با محتوای بازی‌ها مشابه بود و دانش‌آموزان با آمادگی بیشتری در جلسه‌ی امتحان حاضر شدند.</p>
+    <p><strong>مشاهده‌ی معلم:</strong> دانش‌آموزان مفاهیم درسی را با اشتیاق بیشتری یاد گرفتند و درخواست ادامه‌ی این روش داشتند.</p>
+  </section>
+
+  <!-- ۷. پیام‌رسان کلاسی حکیمستان -->
+  <section class="card">
+    <h2 class="section-title">💬 پیام‌رسان کلاسی حکیمستان</h2>
+    <p>یکی از ابزارهای مهم حکیمستان، پیام‌رسان کلاسی است که امکان ارتباط امن و ساده بین معلم و دانش‌آموزان را فراهم می‌کند.</p>
+    <p><strong>قابلیت‌ها:</strong></p>
+    <ul class="feature-list">
+      <li>💬 چت گروهی برای کلاس</li>
+      <li>🔒 چت خصوصی بین دو نفر</li>
+      <li>📷 ارسال عکس</li>
+      <li>🎤 ارسال پیام صوتی</li>
+      <li>📁 ارسال فایل</li>
+      <li>↩️ پاسخ به پیام (Reply)</li>
+      <li>✏️ ویرایش پیام</li>
+      <li>⭐ ستاره‌دار کردن پیام‌های مهم</li>
+      <li>🛡️ پنل مدیریت برای معلم</li>
+      <li>🎨 ۴ تم رنگی قابل انتخاب</li>
+      <li>🔐 فیلتر کلمات نامناسب</li>
+    </ul>
+  </section>
+
+  <!-- ۸. گفت‌وگو با حکیم (هوش مصنوعی) -->
+  <section class="card">
+    <h2 class="section-title">🧙 گفت‌وگو با حکیم (هوش مصنوعی)</h2>
+    <p>«حکیم» یک شخصیت هوشمند مبتنی بر هوش مصنوعی است که در لابی حکیمستان حضور دارد. دانش‌آموزان می‌توانند با او گفت‌وگو کنند و درباره‌ی درس‌ها، تاریخ ایران، ریاضی و موضوعات دیگر بپرسند.</p>
+    <p>حکیم با چهره‌ی متحرک، حالت‌های احساسی مختلف (شاد، متفکر، دانا و...) و پاسخ‌های آموزشی، محیطی گرم و دوستانه برای دانش‌آموزان ایجاد می‌کند.</p>
+  </section>
+
+  <!-- ۹. چطور یادگیری فعال ایجاد می‌کند؟ -->
+  <section class="card">
+    <h2 class="section-title">⚡ چطور یادگیری فعال ایجاد می‌کند؟</h2>
+    <ul class="checklist">
+      <li><span class="tick">✓</span><span>هر بازی، یک قالب آموزشی است که معلم می‌تواند سوال‌های آن را مطابق درس خودش بسازد.</span></li>
+      <li><span class="tick">✓</span><span>دانش‌آموز با حل مسئله و تفکر، به جای حفظ کردن، یاد می‌گیرد.</span></li>
+      <li><span class="tick">✓</span><span>پس از هر پاسخ، بازخورد فوری به دانش‌آموز نمایش داده می‌شود.</span></li>
+      <li><span class="tick">✓</span><span>سامانه کاملاً واکنش‌گرا است و روی موبایل، تبلت و رایانه کار می‌کند.</span></li>
+      <li><span class="tick">✓</span><span>بدون نیاز به نصب — فقط با باز کردن لینک، بازی در دسترس است.</span></li>
+      <li><span class="tick">✓</span><span>پیام‌رسان کلاسی برای تعامل بین معلم و دانش‌آموز در نظر گرفته شده است.</span></li>
+    </ul>
+  </section>
+
+  <!-- ۱۰. ویژگی‌های فنی -->
+  <section class="card">
+    <h2 class="section-title">🛠️ ویژگی‌های فنی</h2>
+    <div class="tech-grid">
+      <div class="tech-item"><span class="num">۷</span><span class="label">بازی تعاملی</span></div>
+      <div class="tech-item"><span class="num">۶</span><span class="label">ابزار معلم</span></div>
+      <div class="tech-item"><span class="num">HTML</span><span class="label">پایه‌ی فنی</span></div>
+      <div class="tech-item"><span class="num">PWA</span><span class="label">قابل نصب</span></div>
+      <div class="tech-item"><span class="num">AI</span><span class="label">گفت‌وگو با حکیم</span></div>
+      <div class="tech-item"><span class="num">۵</span><span class="label">تم رنگی</span></div>
+      <div class="tech-item"><span class="num">📱</span><span class="label">موبایل‌پسند</span></div>
+      <div class="tech-item"><span class="num">🎨</span><span class="label">قابل شخصی‌سازی</span></div>
+    </div>
+  </section>
+
+  <!-- ۱۱. لینک‌های پروژه -->
+  <section class="card highlight-card">
+    <h2 class="section-title">🔗 لینک‌های پروژه</h2>
+    <div class="line">🌐 سایت اصلی: <a href="https://hakimistan.ir" target="_blank" rel="noopener">https://hakimistan.ir</a></div>
+  </section>
+
+  <!-- ۱۲. اطلاعات تماس -->
+  <section class="card highlight-card">
+    <h2 class="section-title">📇 اطلاعات تماس</h2>
+    <div class="line">👨‍🏫 نام: مهدی شریفیان</div>
+    <div class="line">📱 شماره تماس: <span class="contact-star">***</span></div>
+    <div class="line">🏫 مدرسه: <span class="contact-star">***</span></div>
+    <div class="line">📍 منطقه: <span class="contact-star">***</span></div>
+  </section>
+
+  <!-- ۱۳. فوتر -->
+  <footer>
+    <div class="icon">🧙</div>
+    <div class="brand">حکیمستان — دیار حکیم، سرزمین یادگیری</div>
+    <div class="dev">طراح و توسعه‌دهنده: مهدی شریفیان — معلم پایه پنجم، استان گلستان</div>
+    <div class="note">حکیمستان — مهدی شریفیان</div>
+  </footer>
+
+</div>
+</body>
+</html>
