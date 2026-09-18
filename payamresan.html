@@ -403,84 +403,125 @@ textarea.code{direction:ltr;text-align:left}
 .skip-link{position:fixed;top:-70px;right:12px;z-index:200;background:var(--accent);color:#fff;font-weight:800;padding:12px 20px;border-radius:0 0 18px 18px;transition:top .25s;box-shadow:var(--shadow)}
 .skip-link:focus{top:0}
 .is-hidden{display:none!important}
-/* ─── موبایل: پنهان کردن سایدبار وقتی داخل چت هستیم ─── */
+/* ─── موبایل: سربرگ فشرده + چت تمام‌صفحه + کادر پیام چسبیده پایین ─── */
 @media (max-width: 919px){
-  html, body{width:100vw!important;overflow-x:hidden!important}
-  #page-chat{width:100vw!important;overflow-x:hidden!important}
-  #chatShell{width:100vw!important;max-width:100vw!important}
+  html, body{width:100vw!important;overflow-x:hidden!important;height:100dvh!important;margin:0!important;padding:0!important}
+  #page-chat{width:100vw!important;height:100dvh!important;overflow:hidden!important}
+  #chatShell{width:100vw!important;height:auto!important;display:flex!important;flex-direction:column!important;min-height:0!important}
 
-  .chat-shell.in-chat{width:100vw!important;padding:0!important;margin:0!important}
-  .chat-shell.in-chat .chat-body{width:100vw!important;max-width:100vw!important;padding:0!important;margin:0!important;gap:0!important}
-
-  .chat-shell.in-chat #sideList,
-  .chat-shell.in-chat .side{
-    display:none!important;
-    visibility:hidden!important;
-    width:0!important;
-    max-width:0!important;
-    min-width:0!important;
-    padding:0!important;
-    margin:0!important;
-    overflow:hidden!important;
-    pointer-events:none!important;
-    flex:0 0 0!important;
-  }
-
-  .chat-shell.in-chat .main{
-    width:100vw!important;
-    max-width:100vw!important;
-    flex:1 1 100vw!important;
-    margin:0!important;
-    padding:0!important;
-    border-radius:0!important;
-    border:none!important;
-  }
-
+  /* سربرگ کوتاه و فشرده */
   .chat-shell.in-chat .topbar{
     width:100vw!important;
-    padding:8px 8px 12px!important;
-    gap:6px!important;
-    border-radius:0 0 20px 20px!important;
+    padding:6px 8px!important;
+    gap:4px!important;
+    border-radius:0 0 16px 16px!important;
+    min-height:0!important;
+    align-items:center!important;
   }
-
-  /* دکمه برگشت: حتی با کلاس is-hidden هم باز دیده میشه */
-#btnBackToList,
-#btnBackToList.is-hidden{
-  display:inline-flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-  color:#ff7d3b!important;
-  background:#ffffff!important;
-  border:2px solid rgba(255,255,255,.9)!important;
-  box-shadow:0 2px 8px rgba(0,0,0,.25)!important;
-  min-width:44px!important;
-  min-height:44px!important;
-  width:44px!important;
-  height:44px!important;
-  align-items:center!important;
-  justify-content:center!important;
-  border-radius:14px!important;
-  margin-inline-end:4px!important;
-}
-
-  #btnBackToList svg{
-    width:22px!important;
-    height:22px!important;
-    stroke:#ff7d3b!important;
-    stroke-width:3!important;
+  .topbar .avatar.sm{
+    width:34px!important;height:34px!important;
+    border-radius:11px!important;font-size:.85rem!important;
   }
+  .topbar h1{font-size:.92rem!important;line-height:1.2!important}
+  .topbar .sub{font-size:.62rem!important;line-height:1.2!important}
+  .topbar .conn{font-size:.62rem!important;padding:2px 8px!important}
+  .topbar .conn i{width:7px!important;height:7px!important}
 
+  /* دکمه‌های سربرگ: کوچیک‌تر ولی همه موجود */
   .topbar .icon-btn{
-    min-width:42px!important;
-    min-height:42px!important;
-    width:42px!important;
-    height:42px!important;
+    min-width:36px!important;min-height:36px!important;
+    width:36px!important;height:36px!important;
+    border-radius:11px!important;
+  }
+  .topbar .icon-btn svg{width:18px!important;height:18px!important}
+
+  /* دکمه برگشت: کوچیک ولی واضح */
+  #btnBackToList,
+  #btnBackToList.is-hidden{
+    display:inline-flex!important;visibility:visible!important;opacity:1!important;
+    color:#ff7d3b!important;background:#ffffff!important;
+    border:2px solid rgba(255,255,255,.9)!important;
+    box-shadow:0 2px 6px rgba(0,0,0,.18)!important;
+    min-width:36px!important;min-height:36px!important;
+    width:36px!important;height:36px!important;
+    align-items:center!important;justify-content:center!important;
+    border-radius:11px!important;
+  }
+  #btnBackToList svg{
+    width:18px!important;height:18px!important;
+    stroke:#ff7d3b!important;stroke-width:3!important;
   }
 
-  .topbar h1{font-size:1.05rem!important}
-  .topbar .sub{font-size:.72rem!important}
-}
-   
+  /* سایدبار کاملاً مخفی */
+  .chat-shell.in-chat #sideList,
+  .chat-shell.in-chat .side{
+    display:none!important;visibility:hidden!important;
+    width:0!important;max-width:0!important;min-width:0!important;
+    padding:0!important;margin:0!important;overflow:hidden!important;
+  }
+
+  /* بدنه چت: تمام‌فضا */
+  .chat-shell.in-chat .chat-body{
+    width:100vw!important;padding:0!important;margin:0!important;gap:0!important;
+    flex:1 1 auto!important;display:flex!important;min-height:0!important;
+  }
+  .chat-shell.in-chat .main{
+    width:100vw!important;max-width:100vw!important;
+    flex:1 1 auto!important;margin:0!important;padding:0!important;
+    border-radius:0!important;border:none!important;
+    display:flex!important;flex-direction:column!important;
+    height:100%!important;min-height:0!important;overflow:hidden!important;
+  }
+
+  /* پیام‌ها: تمام فضای خالی رو پر کنن */
+  .msgs{
+    flex:1 1 auto!important;
+    max-height:none!important;min-height:0!important;
+    padding:10px 8px!important;
+    overflow-y:auto!important;
+  }
+
+  /* کادر پیام: بچسبه پایین */
+  .composer-wrap{
+    flex:none!important;
+    position:sticky!important;bottom:0!important;
+    width:100%!important;padding:0!important;
+    background:var(--bg)!important;z-index:5!important;
+  }
+  .chat-notices{padding:0 6px!important}
+  .chat-foot{flex:none!important;padding:2px!important;font-size:.62rem!important}
+  .typing, .scroll-down{flex:none!important}
+
+  /* نوار پیام: کوچیک‌تر و فشرده‌تر */
+  .composer{
+    padding:6px 6px 4px!important;gap:4px!important;
+    align-items:flex-end!important;
+  }
+  .composer .box{
+    border-radius:16px!important;
+    padding:2px 4px 2px 10px!important;
+    min-height:0!important;
+  }
+  .composer textarea{
+    min-height:34px!important;max-height:80px!important;
+    padding:7px 4px!important;font-size:.88rem!important;line-height:1.5!important;
+  }
+  .char-count{font-size:.58rem!important;padding-bottom:6px!important}
+
+  /* دکمه ارسال */
+  .send-btn{
+    width:42px!important;height:42px!important;min-width:42px!important;
+    border-radius:13px!important;
+  }
+  .send-btn svg{width:18px!important;height:18px!important}
+
+  /* دکمه‌های پیوست و استیکر */
+  #btnAttach, #btnSticker{
+    min-width:38px!important;min-height:38px!important;
+    width:38px!important;height:38px!important;border-radius:12px!important;
+  }
+  #btnAttach svg, #btnSticker svg{width:17px!important;height:17px!important}
+}     
    
 [aria-busy="true"]{cursor:progress}
 button[aria-disabled="true"],.is-disabled{opacity:.5;pointer-events:none}
