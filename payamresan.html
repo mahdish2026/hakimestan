@@ -220,7 +220,7 @@ body[data-mode="dark"]{
 /* سایدبار */
 .side{width:100%;display:flex;flex-direction:column;gap:10px;padding:12px;overflow-y:auto;max-height:calc(100dvh - 170px)}
 .chat-shell.in-chat .side{display:none}
-.side-search{position:sticky;top:0;z-index:5}
+.side-search{position:sticky;top:0;z-index:20;background:var(--card);padding:8px 4px}
 .side-search .input{min-height:52px;border-radius:99px}
 .side-sec{font-weight:900;font-size:.88rem;color:var(--muted);padding:12px 8px 6px;display:flex;align-items:center;gap:8px;position:relative;z-index:1;scroll-margin-top:70px}
 .side-item{
@@ -575,7 +575,7 @@ body[data-mode="dark"] .bubble .quote{background:rgba(255,255,255,.08)}
 .mention{color:var(--accent2);font-weight:900;background:rgba(61,139,255,.12);border-radius:8px;padding:0 4px}
 
 /* ─── ۱۰. سایدبار: نوار فیلتر ─── */
-.side-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 2px;background:transparent;flex:none}
+.side-tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 4px;position:sticky;top:60px;z-index:15;background:var(--card);box-shadow:0 4px 8px -4px rgba(0,0,0,.12);flex:none;border-bottom:2px solid var(--line)}
 .chip-btn{flex:none;min-height:42px;padding:6px 14px;border-radius:99px;background:var(--card);border:2px solid var(--line);font-weight:800;font-size:.8rem;color:var(--muted);transition:all .18s}
 .chip-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:var(--shadow)}
 .chip-btn:hover{border-color:var(--accent)}
