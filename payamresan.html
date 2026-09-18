@@ -405,49 +405,57 @@ textarea.code{direction:ltr;text-align:left}
 .is-hidden{display:none!important}
 /* موبایل: وقتی داخل چت هستیم، سایدبار کاملاً مخفی بشه */
 @media (max-width: 919px){
+  html, body{width:100vw!important;overflow-x:hidden!important}
+  #page-chat{width:100vw!important;overflow-x:hidden!important}
+  #chatShell{width:100vw!important;max-width:100vw!important}
+  .chat-shell.in-chat{width:100vw!important;padding:0!important;margin:0!important}
+  .chat-shell.in-chat .chat-body{width:100vw!important;max-width:100vw!important;padding:0!important;margin:0!important;gap:0!important}
   .chat-shell.in-chat #sideList{
-    display:none !important;
-    width:0 !important;
-    max-width:0 !important;
-    padding:0 !important;
-    margin:0 !important;
-    overflow:hidden !important;
-    visibility:hidden !important;
+    display:none!important;
+    position:absolute!important;
+    inset-inline-start:-100vw!important;
+    width:0!important;max-width:0!important;min-width:0!important;
+    padding:0!important;margin:0!important;
+    overflow:hidden!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+    flex:0 0 0!important;
   }
   .chat-shell.in-chat .main{
-    width:100% !important;
-    max-width:100% !important;
-    margin:0 !important;
-    padding:0 !important;
+    width:100vw!important;
+    max-width:100vw!important;
+    flex:1 1 100vw!important;
+    margin:0!important;
+    padding:0!important;
+    border-radius:0!important;
+    border:none!important;
   }
-  .chat-shell.in-chat{
-    padding:0 !important;
-    margin:0 !important;
+  .chat-shell.in-chat .topbar{
+    width:100vw!important;
+    padding:8px 8px 12px!important;
+    gap:6px!important;
+    border-radius:0 0 20px 20px!important;
   }
-  /* دکمه برگشت توی موبایل واضح‌تر */
   #btnBackToList{
-    background:rgba(255,255,255,.35) !important;
-    border:2px solid rgba(255,255,255,.55) !important;
-    color:#fff !important;
-    margin-inline-end:6px;
+    background:#fff!important;
+    color:var(--accent)!important;
+    border:2px solid #fff!important;
+    box-shadow:0 2px 8px rgba(0,0,0,.2)!important;
+    margin-inline-end:4px;
   }
   #btnBackToList svg{
-    width:26px !important;
-    height:26px !important;
-    stroke-width:3 !important;
+    width:24px!important;height:24px!important;
+    stroke:var(--accent)!important;
+    stroke-width:3!important;
   }
-  /* سربرگ توی موبایل کمی فشرده‌تر */
-  .topbar{
-    padding:10px 10px 14px !important;
-    gap:8px !important;
-  }
+  #btnBackToList:hover{background:#fff!important}
   .topbar .icon-btn{
-    min-width:44px; min-height:44px; width:44px; height:44px;
+    min-width:42px;min-height:42px;width:42px;height:42px;
   }
-  .topbar h1{
-    font-size:1.1rem !important;
-  }
-} 
+  .topbar h1{font-size:1.05rem!important}
+  .topbar .sub{font-size:.72rem!important}
+}
+   
 [aria-busy="true"]{cursor:progress}
 button[aria-disabled="true"],.is-disabled{opacity:.5;pointer-events:none}
 .tap-44{min-width:44px;min-height:44px}
