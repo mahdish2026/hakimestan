@@ -2725,7 +2725,10 @@ var Data = (function(){
     // ✅ همیشه ۷ روز آخر رو می‌گیریم تا پیام‌های قدیمی از دست نرن
     var sinceIso = new Date(Date.now() - 7*CFG.DAY_MS).toISOString();    
     return getDB({action:'messages', user:S.me, since:sinceIso, limit:300}).then(function(j){
-      var arr = Norm.asArray(j,'messages').map(Norm.msg);
+            if(j.serverTime){
+        S.serverOffset = new Date(j.serverTime).getTime() - Date.now();
+      }
+       var arr = Norm.asArray(j,'messages').map(Norm.msg);
       // حذف پیام‌های قدیمی‌تر از ۷ روز، مگر روزهای ذخیره‌شده معلم
       var weekAgo = Date.now() - 7*CFG.DAY_MS;
       arr = arr.filter(function(m){
