@@ -279,7 +279,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const attr=v=>esc(v).replace(/`/g,'&#96;');
 const fa=v=>String(v??'').replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
 const icon=n=>`<svg class="icon sm"><use href="#i-${n}"></use></svg>`;
-const GAME_NAMES={'kohan-diyar':'فتح کهن دیار ایران','snake-ladder':'مار و پله دانش','snake-ladder-online':'مار و پله آنلاین','cheshm-hekim':'چشم حکیم','hakim-quest':'ماجرای حکیم','hakim-cards':'کارت‌های حکیم','jadval-hekmat':'جدول حکمت','hakim-treasure':'گنج حکیم','lab2d':'آزمایشگاه ۲بعدی','lab2d-pro':'آزمایشگاه پیشرفته','mancheh-online':'منچ دانش آنلاین'};
+const GAME_NAMES={'kohan-diyar':'فتح کهن دیار ایران','snake-ladder':'مار و پله دانش','snake-ladder-online':'مار و پله آنلاین','hakim-quest':'ماجرای حکیم','hakim-cards':'کارت‌های حکیم','jadval-hekmat':'جدول حکمت','hakim-treasure':'گنج حکیم','lab2d':'آزمایشگاه ۲بعدی','lab2d-pro':'آزمایشگاه پیشرفته','mancheh-online':'منچ دانش آنلاین'};
 const THEMES=[
   {id:'indigo',name:'نیلی ـ طلایی',desc:'تیره و رسمی',bg:'#0d0a1f',accent:'#f5c76a'},
   {id:'purple',name:'شب بنفش',desc:'بنفش و صورتی',bg:'#170b21',accent:'#ff73c8'},
