@@ -3574,11 +3574,7 @@ window.addEventListener('beforeunload', ()=>{
 if(window.Hakim && typeof window.Hakim.renderFace === 'function'){ window.Hakim.renderFace('normal', $('hakim-fig')); }
 renderLobby();
 </script>
-// در پس‌زمینه، سؤالات رو از پنل معلم بگیر
-loadServerQuestions(() => {
-  renderHome();
-});
-</script>
+
 <script src="../back-to-lobby.js"></script>
 <!-- 📊 ردیاب بازدید حکیمستان -->
 <script>
@@ -3647,7 +3643,5 @@ loadServerQuestions(() => {
 })();
 </script>
 
-</body>
-</html>
 </body>
 </html>
