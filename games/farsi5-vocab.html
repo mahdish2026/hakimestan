@@ -5849,7 +5849,7 @@
       }
 
 
-      async function downloadCertificateImage() {
+async function downloadCertificateImage() {
   const target = document.getElementById('certificateRenderTarget');
   const btn = document.getElementById('btnDownloadCertImg');
   if (!target) return;
@@ -5859,49 +5859,17 @@
     if (document.fonts && document.fonts.ready) {
       await document.fonts.ready;
     }
-    await new Promise(function(r){ setTimeout(r, 300); });
-
-    let canvas = null;
-
-    if (typeof window.html2canvas === 'function') {
-      try {
-        canvas = await window.html2canvas(target, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: '#fffdf7',
-          foreignObjectRendering: true,
-          letterRendering: true,
-          logging: false
-        });
-      } catch (e1) {
-        try {
-          canvas = await window.html2canvas(target, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#fffdf7',
-            letterRendering: true,
-            logging: false
-          });
-        } catch (e2) {
-          canvas = null;
-        }
-      }
-    }
-
-    if (!canvas) {
-      canvas = renderCertificateFallbackCanvas();
-    }
-
+    await new Promise(function(r){ setTimeout(r, 250); });
+    const canvas = renderCertificateFallbackCanvas();
     triggerCanvasDownload(canvas, 'hakimistan-certificate.png');
     showToast('✅ تصویر گواهی‌نامه دانلود شد.');
   } catch (e) {
-    var fallbackCanvas = renderCertificateFallbackCanvas();
-    triggerCanvasDownload(fallbackCanvas, 'hakimistan-certificate.png');
-    showToast('✅ تصویر گواهی‌نامه دانلود شد.');
+    showToast('⚠️ خطا در ساخت تصویر.');
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = '🖼️ دانلود تصویر (PNG)'; }
   }
 }
+      
 
       function renderCertificateFallbackCanvas() {
         const c = document.createElement('canvas');
