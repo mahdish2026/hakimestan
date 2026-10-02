@@ -5871,56 +5871,153 @@ async function downloadCertificateImage() {
 }
       
 
-      function renderCertificateFallbackCanvas() {
-        const c = document.createElement('canvas');
-        c.width = 1000;
-        c.height = 680;
-        const ctx = c.getContext('2d');
-        ctx.fillStyle = '#fffdf5';
-        ctx.fillRect(0, 0, c.width, c.height);
-        ctx.strokeStyle = '#c69214';
-        ctx.lineWidth = 12;
-        ctx.strokeRect(24, 24, c.width - 48, c.height - 48);
-        ctx.strokeStyle = '#5b21b6';
-        ctx.lineWidth = 3;
-        ctx.strokeRect(40, 40, c.width - 80, c.height - 80);
+function renderCertificateFallbackCanvas() {
+  var W = 1000, H = 720;
+  var c = document.createElement('canvas');
+  c.width = W * 2;
+  c.height = H * 2;
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
 
-        ctx.direction = 'rtl';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#854d0e';
-        ctx.font = 'bold 44px Vazirmatn, Tahoma, sans-serif';
-        ctx.fillText('گواهی‌نامهٔ موفقیت', 500, 125);
+  var bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#fffdf7');
+  bg.addColorStop(1, '#f9f1db');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
 
-        ctx.fillStyle = '#5b21b6';
-        ctx.font = 'bold 24px Vazirmatn, Tahoma, sans-serif';
-        ctx.fillText('آموزش لغات فارسی پنجم ابتدایی — حکیمستان', 500, 175);
+  ctx.strokeStyle = '#c69214';
+  ctx.lineWidth = 8;
+  ctx.strokeRect(18, 18, W - 36, H - 36);
 
-        ctx.fillStyle = '#1e1b4b';
-        ctx.font = 'bold 36px Vazirmatn, Tahoma, sans-serif';
-        ctx.fillText('دانش‌آموز گرامی: ' + (document.getElementById('certStudentName').textContent || ''), 500, 260);
+  ctx.strokeStyle = 'rgba(198,146,20,0.45)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(34, 34, W - 68, H - 68);
 
-        ctx.fillStyle = '#334155';
-        ctx.font = '24px Vazirmatn, Tahoma, sans-serif';
-        ctx.fillText('دامنه: ' + (document.getElementById('certScopeLabel').textContent || ''), 500, 330);
-        ctx.fillText('بازی: ' + (document.getElementById('certGameName').textContent || ''), 500, 375);
+  function txt(id, fallback) {
+    var el = document.getElementById(id);
+    var t = el ? el.textContent.trim() : '';
+    return t || fallback || '';
+  }
 
-        ctx.fillStyle = '#15803d';
-        ctx.font = 'bold 30px Vazirmatn, Tahoma, sans-serif';
-        ctx.fillText(
-          'امتیاز: ' + document.getElementById('certPercentText').textContent +
-          '  |  درجه: ' + document.getElementById('certGradeText').textContent,
-          500, 455
-        );
+  var studentName = txt('certStudentName', 'دانش‌آموز دانا');
+  var gameName = txt('certGameName', 'چهارگزینه‌ای هوشمند');
+  var scopeLabel = txt('certScopeLabel', 'تمام لغات کتاب فارسی پنجم ابتدایی');
+  var percentText = txt('certPercentText', '۱۰۰٪');
+  var scoreText = txt('certScoreText', '۱۰ از ۱۰');
+  var gradeText = txt('certGradeText', 'عالی (طلایی)');
+  var shamsiDate = txt('certShamsiDate', '');
+  var serialNum = txt('certSerialNum', '');
+  var medalEmoji = txt('certMedalEmoji', '🏆');
 
-        ctx.fillStyle = '#475569';
-        ctx.font = '20px Vazirmatn, Tahoma, sans-serif';
-        ctx.fillText(
-          'تاریخ شمسی: ' + document.getElementById('certShamsiDate').textContent +
-          '   |   شماره سریال: ' + document.getElementById('certSerialNum').textContent,
-          500, 565
-        );
-        return c;
-      }
+  var fa = 'Vazirmatn, Tahoma, sans-serif';
+  var cx = W / 2;
+
+  ctx.direction = 'rtl';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  ctx.font = '56px "Segoe UI Emoji","Apple Color Emoji",sans-serif';
+  ctx.fillText(medalEmoji, cx, 88);
+
+  ctx.fillStyle = '#854d0e';
+  ctx.font = 'bold 52px ' + fa;
+  ctx.fillText('گواهی‌نامهٔ موفقیت', cx, 152);
+
+  ctx.fillStyle = '#5b21b6';
+  ctx.font = 'bold 22px ' + fa;
+  ctx.fillText('آموزش لغات فارسی پنجم ابتدایی — حکیمستان', cx, 200);
+
+  ctx.fillStyle = '#334155';
+  ctx.font = '20px ' + fa;
+  ctx.fillText('بدین‌وسیله گواهی می‌شود دانش‌آموز گرامی و پرتلاش:', cx, 248);
+
+  ctx.fillStyle = '#1e1b4b';
+  ctx.font = 'bold 40px ' + fa;
+  ctx.fillText(studentName, cx, 305);
+
+  ctx.strokeStyle = '#c69214';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([7, 6]);
+  ctx.beginPath();
+  ctx.moveTo(cx - 190, 336);
+  ctx.lineTo(cx + 190, 336);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = '#334155';
+  ctx.font = '18px ' + fa;
+  ctx.fillText('در آزمون و بازی آموزشی ' + gameName + ' در دامنهٔ', cx, 378);
+  ctx.fillText(scopeLabel + ' با موفقیت شرکت نموده و نتیجه زیر را کسب کرده است:', cx, 408);
+
+  var boxY = 448;
+  var boxH = 100;
+  var gap = 12;
+  var boxW = (W - 160 - gap * 3) / 4;
+  var startX = 80;
+
+  var boxes = [
+    { label: 'درصد موفقیت', value: percentText, color: '#15803d' },
+    { label: 'امتیاز و پاسخ صحیح', value: scoreText, color: '#1e293b' },
+    { label: 'درجه و رتبه', value: gradeText, color: '#7c3aed' },
+    { label: 'تاریخ شمسی', value: shamsiDate, color: '#1e293b' }
+  ];
+
+  for (var i = 0; i < boxes.length; i++) {
+    var bx = startX + i * (boxW + gap);
+    ctx.fillStyle = 'rgba(255,255,255,0.82)';
+    ctx.fillRect(bx, boxY, boxW, boxH);
+    ctx.strokeStyle = 'rgba(198,146,20,0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(bx, boxY, boxW, boxH);
+    var bcx = bx + boxW / 2;
+    ctx.fillStyle = '#64748b';
+    ctx.font = '13px ' + fa;
+    ctx.fillText(boxes[i].label, bcx, boxY + 26);
+    ctx.fillStyle = boxes[i].color;
+    ctx.font = 'bold 19px ' + fa;
+    ctx.fillText(boxes[i].value, bcx, boxY + 66);
+  }
+
+  ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(60, 585);
+  ctx.lineTo(W - 60, 585);
+  ctx.stroke();
+
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#475569';
+  ctx.font = '14px ' + fa;
+  ctx.fillText('شماره سریال یکتا: ' + serialNum, W - 70, 622);
+  ctx.fillText('صادرشده توسط سامانه هوشمند آموزشی حکیمستان', W - 70, 648);
+
+  ctx.textAlign = 'center';
+  var sealX = 130, sealY = 630, sealR = 44;
+
+  ctx.beginPath();
+  ctx.arc(sealX, sealY, sealR, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(124,58,237,0.12)';
+  ctx.fill();
+  ctx.strokeStyle = '#5b21b6';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(sealX, sealY, sealR - 6, 0, Math.PI * 2);
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  ctx.font = '20px "Segoe UI Emoji","Apple Color Emoji",sans-serif';
+  ctx.fillStyle = '#5b21b6';
+  ctx.fillText('🧙‍♂️', sealX, sealY - 22);
+  ctx.font = 'bold 12px ' + fa;
+  ctx.fillText('مهر تأیید', sealX, sealY - 2);
+  ctx.font = 'bold 13px ' + fa;
+  ctx.fillText('حکیمستان', sealX, sealY + 18);
+
+  return c;
+}
+      
 
       function triggerCanvasDownload(canvas, filename) {
         const link = document.createElement('a');
