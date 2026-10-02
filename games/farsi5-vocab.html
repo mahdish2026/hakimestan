@@ -5855,7 +5855,7 @@
         if (btn) { btn.disabled = true; btn.textContent = '⏳ در حال ساخت تصویر...'; }
 
         try {
-          if (typeof window.html2canvas === 'function') {
+          if (false) {
             await document.fonts.ready; const canvas = await window.html2canvas(target, {   scale: 2,   useCORS: true,   backgroundColor: '#fffdf7',   letterRendering: true });
             triggerCanvasDownload(canvas, 'hakimistan-certificate.png');
             showToast('✅ تصویر گواهی‌نامه دانلود شد.');
