@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>حکیمستان — دیار حکیم، سرزمین یادگیری</title>
+<link rel="icon" href="icon.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d0a1f">
+<style>
+:root{--bg:#0d0a1f;--card:rgba(255,255,255,.06);--brd:rgba(255,255,255,.14);--gold:#f5c76a;--ink:#f1ecff;--muted:#a99bd6;--r:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Vazirmatn,Tahoma,system-ui,sans-serif;background:radial-gradient(1000px 600px at 80% -10%,rgba(139,92,246,.25),transparent 60%),radial-gradient(800px 500px at 5% 110%,rgba(94,234,212,.12),transparent 55%),linear-gradient(180deg,#0d0a1f,#151033 50%,#0d0a1f);color:var(--ink);min-height:100vh;line-height:1.9;padding:20px 16px 60px}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:760px;margin:0 auto}
+header{text-align:center;padding:14px 0 6px}
+h1{font-size:clamp(1.9rem,7vw,2.6rem);font-weight:900;background:linear-gradient(180deg,#fff8e7,#ffd98a 45%,#f0a94b);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.4}
+.slogan{color:var(--muted);font-size:.9rem;font-weight:600}
+.rule{height:1px;max-width:340px;margin:16px auto;background:linear-gradient(90deg,transparent,rgba(245,199,106,.5),transparent)}
+h2{font-size:1.25rem;margin:26px 0 14px;display:flex;align-items:center;gap:10px}
+h2 .line{flex:1;height:1px;background:linear-gradient(90deg,rgba(245,199,106,.45),transparent)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{display:block;background:var(--card);border:1.5px solid var(--brd);border-radius:var(--r);padding:16px;backdrop-filter:blur(10px);transition:transform .15s,border-color .2s,box-shadow .2s}
+.card:hover,.card:focus-visible{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 16px 40px -20px rgba(245,199,106,.5)}
+.top{display:flex;gap:12px;align-items:flex-start}
+.ico{font-size:1.9rem;line-height:1;flex:0 0 auto}
+.name{font-size:1.05rem;font-weight:800}
+.desc{color:var(--muted);font-size:.84rem;margin-top:3px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{font-size:.7rem;color:var(--gold);background:rgba(245,199,106,.10);border:1px solid rgba(245,199,106,.35);border-radius:99px;padding:2px 9px}
+.gold{border-color:#e8b35f;box-shadow:0 10px 30px -16px rgba(232,179,95,.5)}
+footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:36px;border-top:1px solid var(--brd);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>🧙 حکیمستان</h1>
+  <p class="slogan">دیار حکیم، سرزمین یادگیری</p>
+  <div class="rule"></div>
+  <p class="desc">بازی‌های آموزشی، ابزارهای معلم و مدرسهٔ ریاضی — رایگان، بدون نصب، روی موبایل و رایانه.</p>
+</header>
+
+<h2>🎮 بازی‌ها<span class="line"></span></h2>
+<div class="grid">
+
+  <a class="card gold" href="math-learning.html">
+    <div class="top"><span class="ico">🧮</span>
+      <div><div class="name">مدرسه ریاضی</div>
+      <p class="desc">تقسیم چکشی و ماموریت زمان — ریاضی پایه پنجم</p></div></div>
+    <div class="tags"><span class="tag">🆕 جدید</span><span class="tag">🧮 ریاضی</span><span class="tag">پایه پنجم</span></div>
+  </a>
+
+  <a class="card" href="games/kohan-diyar.html">
+    <div class="top"><span class="ico">🏛️</span>
+      <div><div class="name">فتح کهن دیار ایران</div>
+      <p class="desc">سفری در تاریخ ایران؛ شهر به شهر پیش برو.</p></div></div>
+    <div class="tags"><span class="tag">📘 مطالعات</span><span class="tag">درس ۱۸ تا ۲۱</span></div>
+  </a>
+
+  <a class="card" href="games/hakim-quest.html">
+    <div class="top"><span class="ico">🧙</span>
+      <div><div class="name">ماجرای حکیم</div>
+      <p class="desc">سفری در پنج وادی دانش؛ گنج دانایی را کشف کن.</p></div></div>
+    <div class="tags"><span class="tag">📖 ادبیات</span><span class="tag">✨ ۵ وادی</span></div>
+  </a>
+
+  <a class="card" href="games/snake-ladder.html">
+    <div class="top"><span class="ico">🐍</span>
+      <div><div class="name">مار و پله‌ی دانش</div>
+      <p class="desc">جواب بده، تاس بنداز، اول به خانهٔ ۱۰۰ برس.</p></div></div>
+    <div class="tags"><span class="tag">🔬 علوم</span><span class="tag">🎲 دو نفره</span></div>
+  </a>
+
+  <a class="card" href="games/hakim-cards.html">
+    <div class="top"><span class="ico">🎴</span>
+      <div><div class="name">کارت‌های حکیم</div>
+      <p class="desc">بازی حافظه؛ جفت‌های سؤال و پاسخ را پیدا کن.</p></div></div>
+    <div class="tags"><span class="tag">🧠 حافظه</span><span class="tag">⏱️ سرعتی</span></div>
+  </a>
+
+  <a class="card" href="games/jadval-hekmat.html">
+    <div class="top"><span class="ico">🧩</span>
+      <div><div class="name">جدول حکمت</div>
+      <p class="desc">جدول کلمات متقاطع آموزشی؛ آرام و فکری.</p></div></div>
+    <div class="tags"><span class="tag">📚 هدیه و علوم</span><span class="tag">✏️ کلمات</span></div>
+  </a>
+
+  <a class="card" href="games/hakim-treasure.html">
+    <div class="top"><span class="ico">📖</span>
+      <div><div class="name">راز گنج حکیم</div>
+      <p class="desc">ماجراجویی داستانی؛ انتخاب کن، یاد بگیر.</p></div></div>
+    <div class="tags"><span class="tag">🎯 ۷ مرحله</span><span class="tag">🧠 اخلاق و ریاضی</span></div>
+  </a>
+
+  <a class="card" href="games/lab2d.html">
+    <div class="top"><span class="ico">🔬</span>
+      <div><div class="name">آزمایشگاه ۲بعدی</div>
+      <p class="desc">۹ آزمایش تعاملی علوم پنجم — فسیل، اهرم، آب و…</p></div></div>
+    <div class="tags"><span class="tag">🔬 علوم پنجم</span><span class="tag">🎮 تعاملی</span></div>
+  </a>
+
+  <a class="card" href="games/mancheh-online.html">
+    <div class="top"><span class="ico">🎲</span>
+      <div><div class="name">منچِ دانش آنلاین</div>
+      <p class="desc">منچ با سؤال درسی — ۲ تا ۴ نفره آنلاین.</p></div></div>
+    <div class="tags"><span class="tag">🌐 آنلاین</span><span class="tag">📚 سؤال درسی</span></div>
+  </a>
+
+  <a class="card" href="games/snake-ladder-online.html">
+    <div class="top"><span class="ico">🎲</span>
+      <div><div class="name">مار و پله آنلاین</div>
+      <p class="desc">بازی کلاسیک با سؤال درسی — ۲ تا ۴ نفره.</p></div></div>
+    <div class="tags"><span class="tag">🌐 آنلاین</span><span class="tag">🎯 ۱۰۰ خانه</span></div>
+  </a>
+
+  <a class="card" href="games/farsi5-vocab.html">
+    <div class="top"><span class="ico">📖</span>
+      <div><div class="name">واژه‌ستان فارسی پنجم</div>
+      <p class="desc">فلش‌کارت و ۸ بازی هوشمند واژگان — ۱۷ درس.</p></div></div>
+    <div class="tags"><span class="tag">📚 فارسی</span><span class="tag">🎮 ۸ بازی</span></div>
+  </a>
+
+</div>
+
+<h2>🧑‍🏫 ابزارهای معلم<span class="line"></span></h2>
+<div class="grid">
+
+  <a class="card" href="azmoon-saz.html">
+    <div class="top"><span class="ico">📝</span>
+      <div><div class="name">آزمون‌ساز حکیمستان</div>
+      <p class="desc">ساخت آزمون، برگهٔ چاپی و آزمون آنلاین — آفلاین.</p></div></div>
+    <div class="tags"><span class="tag">🖨️ Word و PDF</span><span class="tag">🎮 آزمون آنلاین</span></div>
+  </a>
+
+  <a class="card" href="daftar.html">
+    <div class="top"><span class="ico">📋</span>
+      <div><div class="name">دفتر معلم حکیمستان</div>
+      <p class="desc">حضور و غیاب، نمرات، کارنامه و گزارش — آفلاین.</p></div></div>
+    <div class="tags"><span class="tag">📊 نمرات</span><span class="tag">📁 خروجی Excel</span></div>
+  </a>
+
+  <a class="card" href="tarh-dars.html">
+    <div class="top"><span class="ico">📚</span>
+      <div><div class="name">کارگاه طرح درس</div>
+      <p class="desc">بانک نمونه، ویرایشگر آزاد و کتاب‌سازی.</p></div></div>
+    <div class="tags"><span class="tag">✏️ ویرایش</span><span class="tag">📖 کتاب‌سازی</span></div>
+  </a>
+
+  <a class="card" href="hqf-converter.html">
+    <div class="top"><span class="ico">🔄</span>
+      <div><div class="name">مبدل سؤال</div>
+      <p class="desc">آزمون‌ساز را به بازی‌ها وصل کن (خروجی HQF).</p></div></div>
+    <div class="tags"><span class="tag">🎮 سازگار با بازی‌ها</span></div>
+  </a>
+
+  <a class="card" href="payamresan.html">
+    <div class="top"><span class="ico">💬</span>
+      <div><div class="name">پیام‌رسان حکیمستان</div>
+      <p class="desc">چت گروهی و خصوصی با پنل مدیریت معلم.</p></div></div>
+    <div class="tags"><span class="tag">🛡️ پنل معلم</span></div>
+  </a>
+
+  <a class="card" href="panels/teacher.html">
+    <div class="top"><span class="ico">🧑‍🏫</span>
+      <div><div class="name">پنل معلم</div>
+      <p class="desc">مدیریت سؤال‌ها، دیدن نتایج دانش‌آموزان و کاربران.</p></div></div>
+    <div class="tags"><span class="tag">🔐 رمزدار</span><span class="tag">📈 نتایج</span></div>
+  </a>
+
+  <a class="card" href="darsgah.html">
+    <div class="top"><span class="ico">📹</span>
+      <div><div class="name">درسگاه حکیمستان</div>
+      <p class="desc">ضبط تدریس از روی کتاب PDF + وب‌کم.</p></div></div>
+    <div class="tags"><span class="tag">📚 ۹ کتاب</span><span class="tag">🎥 وب‌کم</span></div>
+  </a>
+
+</div>
+
+<h2>📚 بیشتر<span class="line"></span></h2>
+<div class="grid">
+  <a class="card" href="videos.html"><div class="top"><span class="ico">🎬</span>
+    <div><div class="name">فیلم‌های راهنما</div><p class="desc">۱۶ فیلم آموزش استفاده از حکیمستان.</p></div></div></a>
+  <a class="card" href="judges.html"><div class="top"><span class="ico">📋</span>
+    <div><div class="name">معرفی تفصیلی</div><p class="desc">معرفی پروژه برای داوری و بازدید.</p></div></div></a>
+  <a class="card" href="install-pwa.html"><div class="top"><span class="ico">📱</span>
+    <div><div class="name">نصب اپلیکیشن</div><p class="desc">نصب حکیمستان روی گوشی و رایانه.</p></div></div></a>
+</div>
+
+<footer>
+  طراح و توسعه‌دهنده: <strong>مهدی شریفیان</strong> — معلم پایه پنجم<br>
+  🧙 حکیمستان — دیار حکیم، سرزمین یادگیری
+</footer>
+
+</div>
+</body>
+</html>
