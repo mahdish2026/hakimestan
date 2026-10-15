@@ -18,11 +18,11 @@
 <link rel="stylesheet" media="print" onload="this.media='all'"
       href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Estedad:wght@300;400;500;700;900&family=Harmattan:wght@400;700&family=Katibeh&family=Lalezar&family=Markazi+Text:wght@400;600;700&family=Mirza:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Estedad:wght@300;400;500;700;900&family=Harmattan:wght@400;700&family=Katibeh&family=Lalezar&family=Markazi+Text:wght@400;600;700&family=Mirza:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"></noscript>
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/samim-font@v4.0.5/dist/font-face.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/parastoo-font@v2.0.1/dist/font-face.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/gandom-font@v0.6/dist/font-face.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/samim-font@v4.0.5/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/parastoo-font@v2.0.1/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/gandom-font@v0.6/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
 <script src="assets/vendor/html2canvas.min.js" defer></script>
 <style>
 /* ============ فونت‌های محلی (اگر روی دستگاه نصب باشند) ============ */
@@ -53,8 +53,8 @@ body[data-theme="light"]{
   --bg:#f7f1e4;--bg-grad:radial-gradient(1000px 500px at 100% -10%,#fbe7b8 0%,transparent 60%),radial-gradient(800px 500px at -10% 100%,#f3dfc0 0%,transparent 55%),#f7f1e4;
   --card:#fffdf8;--card-2:#f6eedc;--input:#fff;--top:rgba(255,253,248,.86);
   --border:#e0d2b4;--border-2:#c9b58a;--text:#2a1c0a;--muted:#7a6a52;
-  --accent:#b27a12;--accent-2:#8f6210;--accent-ink:#fff;--accent-soft:rgba(178,122,18,.12);
-  --danger:#d33;--danger-soft:rgba(221,51,51,.12);--success:#1f9d55;--success-soft:rgba(31,157,85,.12);--info:#2b7cd3;--info-soft:rgba(43,124,211,.12);
+  --accent:#8a5d0b;--accent-2:#6f4a08;--accent-ink:#fff;--accent-soft:rgba(178,122,18,.12);
+  --danger:#a32e2e;--danger-soft:rgba(163,46,46,.12);--success:#1f9d55;--success-soft:rgba(31,157,85,.12);--info:#2b7cd3;--info-soft:rgba(43,124,211,.12);
   --shadow:0 10px 30px rgba(90,60,10,.12);--shadow-sm:0 3px 10px rgba(90,60,10,.08);color-scheme:light;
 }
 body[data-theme="ocean"]{
@@ -203,7 +203,7 @@ select{appearance:none;-webkit-appearance:none;background-image:url("data:image/
 .btn.xs{padding:3px 8px;min-height:28px;font-size:.75rem;border-radius:8px}
 .btn.block{width:100%}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;padding:2px 9px;border:1px solid var(--border);border-radius:99px;color:var(--accent);background:var(--accent-soft);font-weight:700;white-space:nowrap}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;padding:2px 9px;border:1px solid var(--border);border-radius:99px;color:var(--accent-2);background:var(--accent-soft);font-weight:700;white-space:nowrap}
 .badge.warn{color:#f0a020;background:rgba(240,160,32,.14);border-color:transparent}
 .badge.ok{color:var(--success);background:var(--success-soft);border-color:transparent}
 .badge.gray{color:var(--muted);background:var(--card-2)}
@@ -707,7 +707,7 @@ document.addEventListener('click',e=>{const p=e.target.closest('[data-theme-pick
 /* ---------- رندر اصلی ---------- */
 const TABS=[['questions','سؤالات','i-edit'],['design','طراحی برگه','i-palette'],['preview','پیش‌نمایش','i-eye'],['export','خروجی','i-download'],['online','آزمون آنلاین','i-play'],['grading','تصحیح و نتایج','i-check-circle']];
 function render(){
-  $('#tabs').innerHTML=TABS.map(t=>`<button type="button" class="tab ${tab===t[0]?'active':''}" data-tab="${t[0]}">${icon(t[2])}<span class="tl">${t[1]}</span></button>`).join('');
+  $('#tabs').innerHTML=TABS.map(t=>`<button type="button" class="tab ${tab===t[0]?'active':''}" data-tab="${t[0]}" aria-label="${t[1]}">${icon(t[2])}<span class="tl">${t[1]}</span></button>`).join('');
   const views={questions:viewQuestions,design:viewDesign,preview:viewPreview,export:viewExport,online:viewOnline,grading:viewGrading};
   const app=$('#app');const sy=window.scrollY;app.innerHTML=(views[tab]||viewQuestions)();
   if(tab==='questions'&&render._keepScroll){try{window.scrollTo(0,sy)}catch(e){}}
@@ -726,7 +726,7 @@ let pendingOnlineRun=false;
 
 /* ---------- کنترل‌های فرم عمومی ---------- */
 function inp(label,key,val,type='text',extra=''){return `<div><label>${label}</label><input type="${type}" data-e="${key}" value="${escAttr(val)}" ${extra}></div>`}
-function sel(label,key,val,opts,attr='data-e'){return `<div><label>${label}</label><select ${attr}="${key}">${opts.map(o=>`<option value="${escAttr(o[0])}" ${String(val)===String(o[0])?'selected':''}>${esc(o[1])}</option>`).join('')}</select></div>`}
+function sel(label,key,val,opts,attr='data-e'){return `<div><label>${label}</label><select ${attr}="${key}" aria-label="${esc(label)}">${opts.map(o=>`<option value="${escAttr(o[0])}" ${String(val)===String(o[0])?'selected':''}>${esc(o[1])}</option>`).join('')}</select></div>`}
 
 /* =====================================================================
    تب سؤالات
@@ -743,7 +743,7 @@ function viewQuestions(){
   <div class="card">
     <div class="card-head"><div><h2>${icon('i-folder')} آزمون‌های من</h2><div class="desc">می‌توانید چند آزمون جداگانه داشته باشید و بین آن‌ها جابه‌جا شوید.</div></div>
       <div class="btnrow"><button class="btn primary" data-act="newExam">${icon('i-plus')} آزمون جدید</button><button class="btn" data-act="dupExam">${icon('i-copy')} کپی</button><button class="btn" data-act="sampleExam">${icon('i-wand')} نمونه آماده</button><button class="btn danger" data-act="delExam">${icon('i-trash')} حذف</button></div></div>
-    <select id="examPicker">${examOpts}</select>
+    <select id="examPicker" aria-label="انتخاب آزمون">${examOpts}</select>
   </div>
   <div class="card">
     <div class="card-head"><div><h2>${icon('i-info')} اطلاعات آزمون</h2><div class="desc">این اطلاعات در سربرگ برگه چاپ می‌شود؛ هر فیلد خالی باشد، خودکار حذف می‌شود.</div></div><span class="badge">${icon('i-award')} جمع بارم: ${faNum(total)}</span></div>
@@ -785,7 +785,7 @@ function editor(x,i){
   if(x.type==='short')extra=`<label>پاسخ‌های قابل‌قبول <span class="muted">(چند پاسخ را با «،» یا «,» جدا کنید)</span></label><input data-q="shortAnswers" value="${escAttr(x.shortAnswers.join('، '))}" placeholder="مثال: تهران، Tehran"><label>تعداد خط پاسخ روی برگه</label><input type="number" min="0" max="20" data-q="lines" value="${x.lines}">`;
   if(x.type==='blank'){const n=(x.text.match(/__+/g)||[]).length;extra=`<div class="note info">${icon('i-info')}<div>در متن سؤال، جای خالی را با دو خط زیر <span class="kbd">__</span> مشخص کنید. اکنون <b>${fa(n)}</b> جای خالی در متن هست.</div></div><label>پاسخ جاهای خالی به ترتیب <span class="muted">(با «،» جدا کنید)</span></label><input data-q="blankAnswers" value="${escAttr(x.blankAnswers.join('، '))}" placeholder="مثال: فردوسی، توس">`}
   if(x.type==='match')extra=`<label>جفت‌های تطبیقی <span class="muted">(ستون «ب» روی برگه به‌صورت درهم چاپ می‌شود)</span></label><div class="grid" style="gap:8px">${x.pairs.map((p,j)=>`<div class="pair"><input data-pair="${j},0" value="${escAttr(p[0])}" placeholder="ستون الف — مورد ${fa(j+1)}"><span class="arrow">⟵</span><input data-pair="${j},1" value="${escAttr(p[1])}" placeholder="ستون ب — پاسخ"><button class="btn danger xs" data-act="delPair" data-i="${j}" ${x.pairs.length<=1?'disabled':''}>${icon('i-x')}</button></div>`).join('')}</div><div class="btnrow mt"><button class="btn sm" data-act="addPair" ${x.pairs.length>=12?'disabled':''}>${icon('i-plus')} افزودن جفت</button></div><label>گزینه‌های اضافی ستون ب (انحرافی، اختیاری — با «،» جدا کنید)</label><input data-q="distractors" value="${escAttr((x.distractors||[]).join('، '))}">`;
-  if(x.type==='dropdown')extra=`<label>گزینه‌های لیست</label><div class="options">${x.dropdownOptions.map((o,j)=>`<div class="option"><span class="olabel">${fa(j+1)}</span><input data-dd="${j}" value="${escAttr(o)}" placeholder="گزینه ${fa(j+1)}"><button class="btn danger xs" data-act="delDD" data-i="${j}" ${x.dropdownOptions.length<=2?'disabled':''}>${icon('i-x')}</button></div>`).join('')}</div><div class="btnrow mt"><button class="btn sm" data-act="addDD" ${x.dropdownOptions.length>=8?'disabled':''}>${icon('i-plus')} افزودن گزینه</button></div><label>پاسخ درست</label><select data-q="dropdownAnswer"><option value="">انتخاب کنید…</option>${x.dropdownOptions.map(o=>`<option value="${escAttr(o)}" ${x.dropdownAnswer===o&&has(o)?'selected':''}>${esc(o)||'(خالی)'}</option>`).join('')}</select>`;
+  if(x.type==='dropdown')extra=`<label>گزینه‌های لیست</label><div class="options">${x.dropdownOptions.map((o,j)=>`<div class="option"><span class="olabel">${fa(j+1)}</span><input data-dd="${j}" value="${escAttr(o)}" placeholder="گزینه ${fa(j+1)}"><button class="btn danger xs" data-act="delDD" data-i="${j}" ${x.dropdownOptions.length<=2?'disabled':''}>${icon('i-x')}</button></div>`).join('')}</div><div class="btnrow mt"><button class="btn sm" data-act="addDD" ${x.dropdownOptions.length>=8?'disabled':''}>${icon('i-plus')} افزودن گزینه</button></div><label>پاسخ درست</label><select data-q="dropdownAnswer" aria-label="پاسخ درست"><option value="">انتخاب کنید…</option>${x.dropdownOptions.map(o=>`<option value="${escAttr(o)}" ${x.dropdownAnswer===o&&has(o)?'selected':''}>${esc(o)||'(خالی)'}</option>`).join('')}</select>`;
   if(x.type==='essay')extra=`<label>پاسخ نمونه / راهنمای تصحیح (در کلید پاسخ چاپ می‌شود)</label><textarea data-q="sampleAnswer">${esc(x.sampleAnswer)}</textarea><label>تعداد خط پاسخ روی برگه</label><input type="number" min="0" max="20" data-q="lines" value="${x.lines}">`;
 
   return `<div class="card-head"><h2>ویرایش سؤال ${fa(i+1)}</h2><div class="btnrow"><button class="btn sm" data-act="dupQ">${icon('i-copy')} کپی سؤال</button><button class="btn danger sm" data-act="delQ">${icon('i-trash')} حذف</button></div></div>
@@ -1502,7 +1502,7 @@ function viewGrading(){
     <div class="grid g2"><div class="card"><h3 class="mb">${icon('i-award')} توزیع نمرات</h3>${['۰–۱۹','۲۰–۳۹','۴۰–۵۹','۶۰–۷۹','۸۰–۱۰۰'].map((l,i)=>`<div style="display:grid;grid-template-columns:70px 1fr 40px;gap:8px;align-items:center;margin:6px 0"><span class="muted">${l}٪</span><div class="bar"><i style="width:${list.length?dist[i]/list.length*100:0}%"></i></div><b>${fa(dist[i])}</b></div>`).join('')}</div>
     <div class="card"><h3 class="mb">${icon('i-list')} تحلیل سؤال‌ها <span class="muted">(درصد پاسخ درست)</span></h3><div style="max-height:320px;overflow:auto">${qrows.map((s,i)=>{const p=s.n?Math.round(s.ok/s.n*100):0;return `<div style="display:grid;grid-template-columns:28px 1fr 44px;gap:8px;align-items:center;margin:6px 0" title="${escAttr(s.q)}"><span class="qnum" style="width:26px;height:26px;font-size:.75rem">${fa(i+1)}</span><div><div class="muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.75rem">${esc(s.q)||'—'}</div><div class="bar"><i style="width:${p}%;background:${p<40?'var(--danger)':p<70?'var(--info)':'var(--success)'}"></i></div></div><b class="${p<40?'bad':p<70?'mid':'good'}">${fa(p)}٪</b></div>`}).join('')||'<div class="muted">جزئیات سؤال در نتایج موجود نیست</div>'}</div><div class="tip">سؤال‌های با درصد پایین (قرمز) احتمالاً دشوار یا مبهم بوده‌اند.</div></div></div>`;
   }
-  return `<div class="card"><div class="card-head"><div><h2>${icon('i-check-circle')} تصحیح و نتایج</h2><div class="desc">فایل‌های نتیجه‌ی JSON که دانش‌آموزان از آزمون آنلاین گرفته‌اند را اینجا بیندازید. سؤال‌های تشریحی را می‌توانید دستی نمره دهید.</div></div><div class="btnrow">${titles.length>1?`<select id="gFilter" style="min-width:180px"><option value="">همه‌ی آزمون‌ها</option>${titles.map(t=>`<option value="${escAttr(t)}" ${filter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}${klasses.length>1?`<select id="gKlass" style="min-width:150px"><option value="">همه‌ی کلاس‌ها</option>${klasses.map(t=>`<option value="${escAttr(t)}" ${kFilter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}<button class="btn sm danger" data-act="gClear">${icon('i-trash')} پاک کردن همه</button></div></div>
+  return `<div class="card"><div class="card-head"><div><h2>${icon('i-check-circle')} تصحیح و نتایج</h2><div class="desc">فایل‌های نتیجه‌ی JSON که دانش‌آموزان از آزمون آنلاین گرفته‌اند را اینجا بیندازید. سؤال‌های تشریحی را می‌توانید دستی نمره دهید.</div></div><div class="btnrow">${titles.length>1?`<select id="gFilter" style="min-width:180px" aria-label="فیلتر آزمون"><option value="">همه‌ی آزمون‌ها</option>${titles.map(t=>`<option value="${escAttr(t)}" ${filter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}${klasses.length>1?`<select id="gKlass" style="min-width:150px" aria-label="فیلتر کلاس"><option value="">همه‌ی کلاس‌ها</option>${klasses.map(t=>`<option value="${escAttr(t)}" ${kFilter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}<button class="btn sm danger" data-act="gClear">${icon('i-trash')} پاک کردن همه</button></div></div>
   <div id="drop" class="drop" data-act="gPick">${icon('i-upload','')} <div style="font-weight:800;margin-top:6px">فایل‌های نتیجه را اینجا بکشید یا کلیک کنید</div><div class="muted">می‌توانید چند فایل را هم‌زمان انتخاب کنید</div></div><input id="resultFiles" class="hide" type="file" accept=".json,application/json" multiple></div>${body||`<div class="card empty">${icon('i-users')}<div>هنوز نتیجه‌ای ثبت نشده. از تب «آزمون آنلاین» یک اجرای آزمایشی انجام دهید تا نتیجه‌اش همین‌جا ظاهر شود.</div></div>`}`;
 }
 $('#app').addEventListener('change',e=>{if(e.target.id==='gFilter'){ui.gradeFilter=e.target.value;save();render()}if(e.target.id==='gKlass'){ui.klassFilter=e.target.value;save();render()}});

@@ -14,7 +14,6 @@ Disallow: /.git/
 # صفحه‌هایی که ارزش جست‌وجو ندارند
 Disallow: /offline.html
 Disallow: /404.html
-Disallow: /judges.html
 
 # ---------- خزنده‌های خاص ----------
 

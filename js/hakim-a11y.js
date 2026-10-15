@@ -719,9 +719,9 @@
     var items = [
       { pref: 'contrast', icon: '◐', label: 'کنتراست بالا' },
       { pref: 'reduceMotion', icon: '⏯', label: 'کاهش انیمیشن' },
-      { zoom: 1.15, icon: 'A+', label: 'بزرگ‌کردن متن' },
-      { zoom: 0.87, icon: 'A−', label: 'کوچک‌کردن متن' },
-      { reset: true, icon: '↺', label: 'بازنشانی تنظیمات دسترس‌پذیری' }
+      { zoom: 1.15, icon: 'A+', label: 'A+ بزرگ‌کردن متن' },
+      { zoom: 0.87, icon: 'A−', label: 'A− کوچک‌کردن متن' },
+      { reset: true, icon: '↺', label: '↺ بازنشانی تنظیمات' }
     ];
 
     items.forEach(function (it) {

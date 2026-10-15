@@ -202,6 +202,9 @@
       var el = all[i];
       if (el.classList.contains('btl-lobby-btn')) continue;
       if (el.hasAttribute('data-btl-processed')) continue;
+      /* داخل نوارهای ناوبری (تب/منو/ابزار) دکمهٔ لابی درج نمی‌شود؛
+         هم چیدمان را خراب می‌کند و هم معنای role=tablist و مانند آن را */
+      if (el.closest && el.closest('nav, [role="tablist"], [role="menu"], [role="toolbar"], [role="tab"], [role="menuitem"]')) continue;
       var text = normalizeText(el.textContent || el.value || '');
       if (!text) continue;
       for (var j = 0; j < TARGET_BUTTONS.length; j++) {
