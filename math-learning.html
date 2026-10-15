@@ -72,6 +72,10 @@ body {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 40; /* بالای عنوان/زیرعنوان بماند؛ انیمیشن .reveal آن‌ها را
+                  لایهٔ رنگ‌شدگی بالاتر می‌دهد و بدون z-index صریح، جعبهٔ
+                  نامرئیِ تمام‌عرضِ h1 وسط دکمه را در عرض‌های بالای ۶۰۰px
+                  (مثل گوشیِ چرخانده) می‌پوشاند */
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -350,7 +354,9 @@ body {
 .theme-opt.active .theme-check{opacity:1}
 @media(max-width:600px){
   .theme-btn{width:40px;height:40px;font-size:1.05rem}
-  .back-link{position:static;transform:none;margin-bottom:10px}
+  /* position:relative (نه static) تا هم z-index اثر کند و هم ناحیهٔ
+     لمسِ .a11y-hit::after به خودِ دکمه لنگر شود، نه به کل هدر */
+  .back-link{position:relative;transform:none;margin-bottom:10px;z-index:40}
   .back-link:hover{transform:translateX(-3px)}
 }
 
@@ -545,7 +551,7 @@ body[data-theme="shad"]{
 
     <!-- Footer -->
     <footer class="page-footer reveal d4">
-      <p>طراح و توسعه‌دهنده: <strong>مهدی شریفیان — دبستان حکمت</strong></p>
+      <p>طراح و توسعه‌دهنده: <strong>مهدی شریفیان</strong></p>
       <p><a href="index.html">حکیمستان</a> | بازی‌های آموزشی هوشمند</p>
     </footer>
   </div>

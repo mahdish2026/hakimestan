@@ -1,7 +1,12 @@
 /*!
  * hakim-core.js — هسته‌ی شخصیت «حکیم» برای پروژه‌ی حکیمستان
- * نسخه: 3.1.0 (Universal)
+ * نسخه: 3.1.1 (Universal)
  * ساخته مهدی شریفیان
+ *
+ * ─── تغییرات v3.1.1 ─────────────────────────────────────────
+ *  • renderFace/setMood حالا در هر فراخوانی SVG تازه با شناسه‌های
+ *    گرادیان یکتا می‌سازند (رفع چهره‌ی نامرئی/ناقص در برخی مرورگرهای
+ *    موبایل به‌خاطر شناسه‌های تکراری داخل صفحه‌های مخفی)
  *
  * ─── تغییرات v3 ───────────────────────────────────────────────
  *  • چهره‌ی SVG کاملاً بازطراحی‌شده: کلاه جادوگر بنفش، ریش سفید،
@@ -738,7 +743,7 @@
     state.mood = m;
     state.faceEl.dataset.mood = m;
     if (state.panelEl) state.panelEl.dataset.mood = m;
-    state.faceEl.innerHTML = HAKIM_FACES[m];
+    state.faceEl.innerHTML = buildFaceSVG(m);
     state.faceEl.classList.remove('face-change');
     void state.faceEl.offsetWidth;
     state.faceEl.classList.add('face-change');
@@ -747,7 +752,12 @@
   function renderFace(mood, element) {
     if (!element) return;
     const m = resolveMood(mood);
-    element.innerHTML = HAKIM_FACES[m];
+    // هر بار SVG تازه با شناسه‌های گرادیان یکتا ساخته می‌شود.
+    // استفاده از رشته‌ی کش‌شده (HAKIM_FACES) شناسه‌های تکراری در سند
+    // ایجاد می‌کرد؛ وقتی اولین نسخه داخل صفحه‌ی مخفی یا حذف‌شده بود،
+    // برخی مرورگرهای موبایل ارجاع url(#id) را گم می‌کردند و چهره
+    // بی‌رنگ/ناقص (یا نامرئی) رندر می‌شد.
+    element.innerHTML = buildFaceSVG(m);
     element.classList.remove('face-change');
     void element.offsetWidth;
     element.classList.add('face-change');
@@ -1027,7 +1037,7 @@
     MOODS,
     MOOD_ALIASES,
     utils: { fillTemplate, pickPhrase, toEnglishNum, getLessonFromQ },
-    VERSION: '3.1.0'
+    VERSION: '3.1.1'
   }, shortcuts, { moods: moodsObj });
 
   global.Hakim = api;

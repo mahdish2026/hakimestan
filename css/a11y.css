@@ -212,7 +212,7 @@ html.hk-high-contrast img {
   filter: contrast(1.15);
 }
 
-/* خطوط اضافه برای جداسازی بهتر */}
+/* خطوط اضافه برای جداسازی بهتر */
 html.hk-high-contrast button,
 html.hk-high-contrast a.btn,
 html.hk-high-contrast input,
@@ -234,12 +234,19 @@ html.hk-high-contrast select {
   }
 }
 
-/* خاموش‌کردن دستی انیمیشن */
+/* خاموش‌کردن دستی انیمیشن — الگوی امن: انیمیشن‌ها در ۰.۰۱ms به
+   فریم پایانی می‌رسند. (الگوی قبلی animation-play-state:paused بود که
+   انیمیشن را در فریم اول قفل می‌کرد؛ انیمیشن‌هایی که با opacity:0 یا
+   scale کوچک شروع می‌شوند — مثل چهرهٔ حکیم، نتیجهٔ سؤال یا دکمهٔ
+   بازگشت — در دستگاه کاربر نامرئی می‌ماندند.) */
 html.hk-reduce-motion *,
 html.hk-reduce-motion *::before,
 html.hk-reduce-motion *::after {
-  animation-play-state: paused !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+  scroll-behavior: auto !important;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -256,21 +263,21 @@ html.hk-reduce-motion *::after {
 }
 
 #a11y-fab {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background-color: #0e0a22;
   background-color: rgba(14, 10, 34, 0.96);
   /* #ffe9a8 روی #0e0a22 ≈ 13.8:1 — بالاتر از آستانهٔ AA */
   color: #ffe9a8;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   line-height: 1;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
   padding: 0;
 }
 
@@ -332,9 +339,9 @@ html.hk-reduce-motion *::after {
     inset-inline-end: 10px;
   }
   #a11y-fab {
-    width: 40px;
-    height: 40px;
-    font-size: 1.05rem;
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
   }
   #a11y-tools button {
     width: 34px;
