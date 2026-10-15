@@ -3261,6 +3261,9 @@ html { scrollbar-gutter: stable; }
 }
 </style>
 <script src="../hakim-core.js"></script>
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
 </head>
 <body>
 <!-- ===== Intro presentation panel ===== -->
@@ -3376,7 +3379,7 @@ html { scrollbar-gutter: stable; }
 </div>
 </div>
 <div class="story-video-wrap">
-<video class="story-video" controls="" id="storyVideo" playsinline="" preload="metadata">
+<video class="story-video" controls="" id="storyVideo" playsinline="" preload="metadata" aria-label="ویدیوی داستان تاریخی">
 <source id="storyVideoSource" src="story1.mp4" type="video/mp4"/>
         مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
       </video>
@@ -3394,7 +3397,7 @@ html { scrollbar-gutter: stable; }
 <div class="start-title">فتح کهن دیار ایران</div>
 <div class="start-subtitle">مطالعات اجتماعی کلاس پنجم • دروس ۱۸ تا ۲۱</div>
 <!-- 3. Intro video - video.mp4 -->
-<video class="game-video" controls="" id="startVideo" muted="" playsinline="" preload="metadata">
+<video class="game-video" controls="" id="startVideo" muted="" playsinline="" preload="metadata" aria-label="ویدیوی معرفی بازی فتح کهن‌دیار">
 <source src="video.mp4" type="video/mp4"/>
       مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
     </video>
@@ -7099,5 +7102,10 @@ function animateTravelDot(fromIndex, toIndex) {
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

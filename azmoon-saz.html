@@ -1491,7 +1491,10 @@ function resultDetailModal(r){
   $('#mdCard').onclick=()=>printCards([r]);
   $('#mdClose').onclick=closeModal;
 }
-function reportHTML(list,title){const css=`body{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111;padding:14px}h1{text-align:center;font-size:18px;margin:0 0 4px}h2{font-size:15px;margin:0 0 8px}.m{text-align:center;color:#555;font-size:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #666;padding:5px 7px;text-align:center}th{background:#eee}td.r{text-align:right}.card{border:2px solid #333;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid}.big{font-size:26px;font-weight:900;text-align:center;padding:8px;background:#f3f3f3;border-radius:8px;margin:8px 0}.sig{display:flex;justify-content:space-between;margin-top:14px;font-size:12px}@media print{@page{size:A4;margin:10mm}}`;return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title><link href="${GOOGLE_FONTS_URL}" rel="stylesheet"><style>${css}</style></head><body>`}
+function reportHTML(list,title){const css=`body{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111;padding:14px}h1{text-align:center;font-size:18px;margin:0 0 4px}h2{font-size:15px;margin:0 0 8px}.m{text-align:center;color:#555;font-size:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #666;padding:5px 7px;text-align:center}th{background:#eee}td.r{text-align:right}.card{border:2px solid #333;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid}.big{font-size:26px;font-weight:900;text-align:center;padding:8px;background:#f3f3f3;border-radius:8px;margin:8px 0}.sig{display:flex;justify-content:space-between;margin-top:14px;font-size:12px}@media print{@page{size:A4;margin:10mm}}`;return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title><link href="${GOOGLE_FONTS_URL}" rel="stylesheet"><style>${css}</style><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+</head><body>`}
 async function gradingAct(n,b){
   const id=b?.dataset.id;const r=results.find(x=>x._id===id);
   switch(n){
@@ -1581,5 +1584,10 @@ setTimeout(()=>{if(tab==='questions'&&exam().questions.length===1&&!has(exam().q
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

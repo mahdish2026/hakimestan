@@ -502,7 +502,10 @@ function bookExportDialog(){modal('کتاب را با خودت ببر',`<p class
 ACT['book-export-dialog']=bookExportDialog;ACT['book-export']=el=>exportBook(el.dataset.format);
 let bookExporting=false;
 async function exportBook(format){if(bookExporting)return;bookExporting=true;try{syncBookDate();validateBook(bookDraft);if(!bookPlans().length)throw Error('دست‌کم یک طرح به کتاب اضافه کن.');if(bookDraft.chapters.some(c=>c.planIds.some(pid=>!store.myPlans.some(p=>p.id===pid))))throw Error('طرح حذف‌شده را از فصل‌بندی بردار و دوباره خروجی بگیر.');if(bookDirty)saveBook(true);clearTimeout(bookTimer);const b=clone(bookDraft),layout=await prepareBook(b),name='hakimestan-book-'+today();if(format==='txt'||format==='md')IO.download((format==='txt'?'\uFEFF':'')+bookText(b,format==='md'),name+'.'+format,'text/plain;charset=utf-8');else if(format==='html')IO.download(bookHTML(layout),name+'.html','text/html;charset=utf-8');else if(format==='docx')IO.download(await createDocx(bookPlans(b).map(personalizePlan),{book:b,anchors:layout.anchors}),name+'.docx');else if(format==='pdf'){let st=$('#pageStyle');if(!st){st=document.createElement('style');st.id='pageStyle';document.head.append(st)}st.textContent=BOOK_CSS+`@page{size:${BOOK_SIZES[b.size][0]}mm ${BOOK_SIZES[b.size][1]}mm;margin:0;@bottom-center{content:none}} #printArea .book-page{display:block!important}`;$('#printArea').innerHTML=layout.pages.join('');close();window.print()}else throw Error('خروجی کتاب شناخته نشد.');store.stats.exportCount++;persist();if(format!=='pdf')toast('کتاب آمادهٔ دریافت شد.')}catch(e){if(e.message!=='cancelled')error(e)}finally{bookExporting=false}}
-function bookHTML(layout){const b=layout.book,[w,h]=BOOK_SIZES[b.size];return `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="author" content="${E(b.author)}"><meta name="designer" content="مهدی شریفیان"><title>${E(b.title)}</title><style>*{box-sizing:border-box}body{margin:0;background:#e9ece5}.book-page{margin:25px auto;box-shadow:0 8px 35px #183b231c}${BOOK_CSS}@page{size:${w}mm ${h}mm;margin:0}@media print{body{background:white}.book-page{margin:0}}@media screen and (max-width:700px){body{overflow-x:auto}.book-page{margin:12px}}</style></head><body>${layout.pages.join('')}</body></html>`}
+function bookHTML(layout){const b=layout.book,[w,h]=BOOK_SIZES[b.size];return `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="author" content="${E(b.author)}"><meta name="designer" content="مهدی شریفیان"><title>${E(b.title)}</title><style>*{box-sizing:border-box}body{margin:0;background:#e9ece5}.book-page{margin:25px auto;box-shadow:0 8px 35px #183b231c}${BOOK_CSS}@page{size:${w}mm ${h}mm;margin:0}@media print{body{background:white}.book-page{margin:0}}@media screen and (max-width:700px){body{overflow-x:auto}.book-page{margin:12px}}</style><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+</head><body>${layout.pages.join('')}</body></html>`}
 
 </script>
 
@@ -540,5 +543,10 @@ render();weekly();
 
 if(typeof ResizeObserver!=='undefined'){new ResizeObserver(entries=>document.documentElement.style.setProperty('--header-height',Math.ceil(entries[0].borderBoxSize?.[0]?.blockSize||document.querySelector('.topbar').getBoundingClientRect().height)+'px')).observe(document.querySelector('.topbar'));}</script>
 <script src="back-to-lobby.js"></script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

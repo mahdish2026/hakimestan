@@ -443,6 +443,9 @@
     .gallery{grid-template-columns:1fr;}
   }
 </style>
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
 </head>
 <body>
 <div class="wrap">
@@ -472,8 +475,12 @@
 
     <!-- اسکرین‌شات لابی -->
     <figure class="shot">
-      <img src="screenshots/lobby.jpg" alt="لابی حکیمستان" loading="lazy"
-           onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+      <picture>
+        <source srcset="screenshots/lobby.webp" type="image/webp">
+        <img src="screenshots/lobby.jpg" alt="نمای لابی حکیمستان با کارت‌های بازی‌ها و پنج وادی دانش"
+             width="1280" height="720" loading="lazy" decoding="async"
+             onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+      </picture>
       <figcaption>لابی حکیمستان — صفحه‌ی اصلی سامانه</figcaption>
     </figure>
   </section>
@@ -646,18 +653,30 @@
     <p>نمایی از محیط حکیمستان:</p>
     <div class="gallery">
       <figure class="shot">
-        <img src="screenshots/mancheh.jpg" alt="منچِ دانش آنلاین" loading="lazy"
-             onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+        <picture>
+          <source srcset="screenshots/mancheh.webp" type="image/webp">
+          <img src="screenshots/mancheh.jpg" alt="نمای بازی منچِ دانش آنلاین روی صفحهٔ بازی"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+        </picture>
         <figcaption>منچِ دانش آنلاین</figcaption>
       </figure>
       <figure class="shot">
-        <img src="screenshots/lab.jpg" alt="آزمایشگاه ۲بعدی" loading="lazy"
-             onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+        <picture>
+          <source srcset="screenshots/lab.webp" type="image/webp">
+          <img src="screenshots/lab.jpg" alt="نمای آزمایشگاه دو‌بعدی علوم با ابزارهای آزمایش"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+        </picture>
         <figcaption>آزمایشگاه ۲بعدی</figcaption>
       </figure>
       <figure class="shot">
-        <img src="screenshots/teacher-panel.jpg" alt="پنل معلم" loading="lazy"
-             onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+        <picture>
+          <source srcset="screenshots/teacher-panel.webp" type="image/webp">
+          <img src="screenshots/teacher-panel.jpg" alt="نمای پنل معلم با آمار کلاس و فهرست دانش‌آموزان"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+        </picture>
         <figcaption>پنل معلم</figcaption>
       </figure>
     </div>
@@ -815,5 +834,10 @@
   } catch(e){}
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3f3a4fbafc835a6',t:'MTc5MDEwNDU5MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3f3a4fbafc835a6',t:'MTc5MDEwNDU5MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
 </html>

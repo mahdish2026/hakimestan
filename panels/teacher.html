@@ -91,6 +91,9 @@ a{color:inherit}
 @media(max-width:700px){body{background:var(--bg)}.app-shell{display:block}.sidebar{position:fixed;inset:auto 0 0 0;width:100%;height:auto;padding:6px 8px;background:color-mix(in srgb,var(--sidebar) 96%,transparent);border:0;border-top:1px solid var(--line);z-index:500;backdrop-filter:blur(15px)}.brand,.user-mini,.nav-label,.sidebar-footer{display:none}.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}.nav-btn{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:7px 2px;border-radius:10px;text-align:center;font-size:.6rem;min-height:52px}.nav-btn.on{box-shadow:inset 0 -3px var(--gold)}.nav-btn .icon{width:19px;height:19px}.nav-btn .badge-count{position:absolute;display:none}.main{padding:15px 12px 83px}.topbar{margin-bottom:15px}.topbar-title h1{font-size:1.05rem}.topbar-title p{font-size:.65rem}.top-actions{gap:5px}.icon-btn{width:36px;height:36px;border-radius:11px}.menu-toggle{display:none}.stats-grid{gap:8px}.stat-card{padding:13px}.stat-value{font-size:1.45rem}.stat-icon{width:32px;height:32px;margin-bottom:8px}.stat-label{font-size:.65rem}.stat-trend{font-size:.6rem}.card{padding:14px;border-radius:16px}.game-list{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters .filter-wide{grid-column:1/-1}.filters .filter-btn{grid-column:1/-1}.toolbar{align-items:stretch}.toolbar-actions{width:100%}.toolbar-actions .btn{flex:1}.table-wrap{display:none}.result-cards{display:block}.detail-grid{grid-template-columns:1fr}.theme-panel{top:62px;inset-inline-start:12px;width:calc(100vw - 24px)}}
 @media(max-width:430px){.filters{grid-template-columns:1fr}.filters .filter-wide,.filters .filter-btn{grid-column:auto}.topbar-title p{display:none}.theme-grid{grid-template-columns:1fr 1fr}.btn-row .btn{min-width:110px}}
 </style>
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
 </head>
 <body data-theme="indigo">
 <!-- نمادهای SVG داخلی -->
@@ -1588,5 +1591,10 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

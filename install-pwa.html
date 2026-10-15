@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0a1f">
+<meta name="description" content="راهنمای نصب اپلیکیشن حکیمستان روی گوشی، تبلت و رایانه — بدون فروشگاه، بدون حجم اضافه.">
+<title>نصب اپلیکیشن حکیمستان</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/a11y.css">
+<style>
+:root{
+  --bg:#0d0a1f; --bg2:#171033; --violet:#8b5cf6; --violet-deep:#6d28d9;
+  --gold:#f5c76a; --gold-light:#ffd98a; --teal:#5eead4;
+  --ink:#f1ecff; --muted:#b6a9db; --card:rgba(255,255,255,.055);
+  --line:rgba(255,255,255,.14);
+  --font:'Vazirmatn','Vazir',Tahoma,'Segoe UI',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:var(--font); color:var(--ink); line-height:1.9;
+  background:
+    radial-gradient(1100px 650px at 82% -12%, rgba(139,92,246,.24), transparent 60%),
+    radial-gradient(800px 550px at 6% 108%, rgba(94,234,212,.11), transparent 55%),
+    linear-gradient(180deg,#0d0a1f,#151033 50%,#0d0a1f);
+  min-height:100vh;
+}
+.wrap{max-width:960px; margin:0 auto; padding:34px 18px 70px}
+header.hero{text-align:center; margin-bottom:34px}
+.hero-art{width:128px; height:128px; margin:0 auto 14px; display:block; filter:drop-shadow(0 14px 30px rgba(139,92,246,.5))}
+h1{font-size:2.1rem; margin:0 0 10px; font-weight:900; letter-spacing:-.5px}
+.sub{color:var(--muted); max-width:600px; margin:0 auto; font-size:1rem}
+.install-cta{
+  display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:24px 0 8px;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:9px; justify-content:center;
+  padding:13px 26px; border-radius:15px; font-weight:800; font-size:.95rem;
+  text-decoration:none; border:2px solid transparent; cursor:pointer; font-family:inherit;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.btn-primary{background:linear-gradient(145deg,#f5c76a,#e9a94d); color:#1b1035; border-color:#ffd98a; box-shadow:0 10px 28px -10px rgba(245,199,106,.7)}
+.btn-ghost{background:rgba(255,255,255,.07); color:var(--ink); border-color:var(--line)}
+.btn:hover{transform:translateY(-2px)}
+.btn[hidden]{display:none}
+.note{font-size:.82rem; color:var(--muted); text-align:center}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:30px}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:22px;
+  padding:24px 22px; backdrop-filter:blur(6px);
+}
+.card h2{font-size:1.12rem; margin:0 0 14px; display:flex; align-items:center; gap:9px; font-weight:800}
+.card h2 span[aria-hidden]{font-size:1.35rem}
+ol,ul{padding-inline-start:22px; margin:0; color:#dcd3ff; font-size:.92rem}
+li{margin-bottom:9px}
+li b{color:var(--gold-light)}
+kbd{
+  background:rgba(255,255,255,.12); border:1px solid var(--line); border-radius:7px;
+  padding:1px 8px; font-family:inherit; font-size:.85em; font-weight:700; color:var(--gold-light);
+}
+.feature-list{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:32px}
+.feature{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px}
+.feature strong{display:block; font-size:.95rem; margin-bottom:5px}
+.feature small{color:var(--muted); font-size:.8rem; line-height:1.8}
+.status-strip{
+  margin-top:28px; padding:14px 18px; border-radius:16px; font-size:.88rem;
+  background:rgba(94,234,212,.09); border:1px solid rgba(94,234,212,.28);
+  display:flex; gap:11px; align-items:center; justify-content:center; flex-wrap:wrap; text-align:center;
+}
+footer{text-align:center; margin-top:44px; color:var(--muted); font-size:.82rem}
+footer a{color:var(--gold)}
+@media(max-width:560px){
+  h1{font-size:1.6rem}
+  .wrap{padding:24px 14px 54px}
+  .btn{width:100%}
+}
+</style>
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+</head>
+<body>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+<div class="wrap">
+  <header class="hero">
+    <svg class="hero-art" viewBox="0 0 200 200" role="img" aria-label="آیکون اپلیکیشن حکیمستان">
+      <circle cx="100" cy="100" r="88" fill="#120a1e" stroke="rgba(245,199,106,.5)" stroke-width="3"/>
+      <path d="M50 96 L100 34 L150 96 Z" fill="#5b4a9e" stroke="#7a68c9" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="42" y="94" width="116" height="13" rx="6.5" fill="#e9b44c"/>
+      <circle cx="100" cy="26" r="8" fill="#f7d88a"/>
+      <ellipse cx="100" cy="128" rx="44" ry="40" fill="#f3c98b"/>
+      <circle cx="84" cy="120" r="4.6" fill="#2a1a0a"/>
+      <circle cx="116" cy="120" r="4.6" fill="#2a1a0a"/>
+      <path d="M92 138 q9 9 18 0" stroke="#7a3b2e" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M56 152 q44 44 88 0 q-13 32 -44 32 q-31 0 -44 -32 Z" fill="#fff7ef" stroke="#e7dcc6" stroke-width="2"/>
+      <path d="M158 66 l7 16 7 -16 z" fill="rgba(94,234,212,.6)"/>
+    </svg>
+    <h1>حکیمستان را نصب کنید</h1>
+    <p class="sub">بدون فروشگاه برنامه، بدون فایل نصبی و بدون حجم اضافه. یک اپلیکیشن سبک روی گوشی، تبلت یا رایانهٔ شما — با دسترسی آفلاین به بازی‌ها و ابزارها.</p>
+
+    <div class="install-cta">
+      <button class="btn btn-primary" type="button" id="installBtn" aria-describedby="installHint">
+        <span aria-hidden="true">⬇️</span> نصب روی این دستگاه
+      </button>
+      <a class="btn btn-ghost" href="index.html"><span aria-hidden="true">🏠</span> بازگشت به لابی</a>
+    </div>
+    <p class="note" id="installHint">اگر دکمهٔ نصب فعال نیست، از راهنمای پایین برای مرورگر خود استفاده کنید.</p>
+  </header>
+
+  <main id="main">
+    <div class="grid">
+      <section class="card" aria-labelledby="h-android">
+        <h2 id="h-android"><span aria-hidden="true">🤖</span> اندروید (Chrome، Edge، Samsung)</h2>
+        <ol>
+          <li>مرورگر را باز کنید و به <b>hakimestan</b> بروید.</li>
+          <li>منوی سه‌نقطهٔ بالا را بزنید.</li>
+          <li>گزینهٔ <b>«افزودن به صفحهٔ اصلی»</b> یا <b>«نصب برنامه»</b> را انتخاب کنید.</li>
+          <li>روی <b>«نصب»</b> بزنید. آیکون حکیمستان روی صفحهٔ اصلی ظاهر می‌شود.</li>
+        </ol>
+      </section>
+
+      <section class="card" aria-labelledby="h-ios">
+        <h2 id="h-ios"><span aria-hidden="true">🍎</span> آیفون و آیپد (Safari)</h2>
+        <ol>
+          <li>سایت را در مرورگر <b>Safari</b> باز کنید.</li>
+          <li>دکمهٔ <b>اشتراک‌گذاری</b> (مربع با فلش رو به بالا) را بزنید.</li>
+          <li>گزینهٔ <b>«Add to Home Screen»</b> را انتخاب کنید.</li>
+          <li>نام «حکیمستان» را ببینید و روی <b>«Add»</b> بزنید.</li>
+        </ol>
+      </section>
+
+      <section class="card" aria-labelledby="h-desktop">
+        <h2 id="h-desktop"><span aria-hidden="true">💻</span> ویندوز و مک (Chrome، Edge)</h2>
+        <ol>
+          <li>به نوار آدرس نگاه کنید؛ آیکون <b>⊕ «نصب»</b> کنار آن ظاهر می‌شود.</li>
+          <li>روی همان آیکون بزنید.</li>
+          <li>میان‌بر: در Chrome کلیدهای <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>، در Edge منوی <b>Apps</b> → <b>Install this site</b>.</li>
+          <li>حکیمستان مثل یک برنامهٔ جدا در پنجرهٔ مستقل باز می‌شود.</li>
+        </ol>
+      </section>
+
+      <section class="card" aria-labelledby="h-faq">
+        <h2 id="h-faq"><span aria-hidden="true">❓</span> پرسش‌های رایج</h2>
+        <ul>
+          <li><b>حجم دانلود چقدر است؟</b> فقط چند صد کیلوبایت؛ بازی‌ها و ابزارها به‌صورت تدریجی کش می‌شوند.</li>
+          <li><b>چطور حذف کنم؟</b> آیکون را نگه دارید و «حذف» را بزنید — مثل هر برنامهٔ دیگر.</li>
+          <li><b>آفلاین کار می‌کند؟</b> بله. لابی، بازی‌های آفلاین و آزمون‌ساز بدون اینترنت کار می‌کنند.</li>
+          <li><b>اطلاعات من کجاست؟</b> همهٔ داده‌ها روی دستگاه خودتان ذخیره می‌شود (localStorage).</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="feature-list">
+      <div class="feature"><strong>⚡ راه‌اندازی سریع</strong><small>بارگذاری فوری پس از نصب، حتی با اینترنت ضعیف.</small></div>
+      <div class="feature"><strong>📴 کارکرد آفلاین</strong><small>بازی‌ها و آزمون‌ساز بدون اینترنت هم در دسترس‌اند.</small></div>
+      <div class="feature"><strong>🔒 بدون دنبال‌کردن</strong><small>بدون تبلیغ، بدون ردیاب و بدون ارسال داده به بیرون.</small></div>
+      <div class="feature"><strong>♿ دسترس‌پذیری</strong><small>پشتیبانی از صفحه‌خوان، کنتراست بالا و کاهش انیمیشن.</small></div>
+    </div>
+
+    <p class="status-strip" id="pwaStatus" role="status" aria-live="polite">
+      <span aria-hidden="true">⏳</span> در حال بررسی وضعیت نصب…
+    </p>
+  </main>
+
+  <footer>
+    <p>پروژهٔ آموزشی حکیمستان — ساختهٔ مهدی شریفیان · <a href="judges.html">معرفی پروژه</a></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var btn = document.getElementById('installBtn');
+  var status = document.getElementById('pwaStatus');
+
+  function setStatus(html) { status.innerHTML = html; }
+
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+  if (standalone) {
+    btn.hidden = true;
+    setStatus('<span aria-hidden="true">✅</span> حکیمستان همین حالا نصب است و در حالت برنامه اجرا می‌شود.');
+  } else if (window.HakimPWA && window.HakimPWA.installable) {
+    setStatus('<span aria-hidden="true">🎉</span> دستگاه شما از نصب پشتیبانی می‌کند — دکمهٔ «نصب روی این دستگاه» را بزنید.');
+  } else {
+    setStatus('<span aria-hidden="true">ℹ️</span> مرورگر شما دکمهٔ نصب خودکار را نشان نمی‌دهد؛ از راهنمای بالا استفاده کنید.');
+  }
+
+  btn.addEventListener('click', function () {
+    if (window.HakimPWA && window.HakimPWA.installable) {
+      window.HakimPWA.promptInstall();
+    } else {
+      setStatus('<span aria-hidden="true">ℹ️</span> نصب خودکار در دسترس نیست. راهنمای مرورگر خود را در بالا ببینید.');
+      if (window.HakimA11y) window.HakimA11y.announce('نصب خودکار در دسترس نیست؛ راهنمای بالا را بخوانید.');
+    }
+  });
+
+  window.addEventListener('beforeinstallprompt', function () {
+    btn.hidden = false;
+    setStatus('<span aria-hidden="true">🎉</span> دستگاه شما از نصب پشتیبانی می‌کند — دکمهٔ «نصب روی این دستگاه» را بزنید.');
+  });
+
+  window.addEventListener('appinstalled', function () {
+    btn.hidden = true;
+    setStatus('<span aria-hidden="true">✅</span> آفرین! حکیمستان با موفقیت نصب شد.');
+  });
+
+  // آمار کش برای کنجکاوها
+  if (window.HakimPWA && window.HakimPWA.getCacheStats) {
+    window.HakimPWA.getCacheStats().then(function (stats) {
+      if (!stats) return;
+      var total = Object.keys(stats).reduce(function (a, k) { return a + stats[k]; }, 0);
+      if (total > 0) {
+        setStatus(status.innerHTML + ' <br><small style="opacity:.75">' + total + ' فایل برای استفادهٔ آفلاین ذخیره شده است.</small>');
+      }
+    });
+  }
+})();
+</script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
+</html>
