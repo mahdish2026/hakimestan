@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
      <link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ff9a56">
 <meta name="color-scheme" content="light dark">
@@ -14,9 +18,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>📖 راز گنج حکیم — حکیمستان</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <!-- اختیاری: اگر حکیم‌کور کنار همین فایل باشد استفاده می‌شود، وگرنه آواتار داخلی جایگزین می‌شود -->
 <!-- آواتار و گفتار حکیم کاملاً داخل همین فایل است؛ به هیچ فایل بیرونی نیاز نیست.
      اگر «hakim-core.js» خودت را داری، خط زیر را از حالت توضیح بیرون بیاور تا به آن هم متصل شود:
@@ -492,7 +493,7 @@ body.calm *, body.calm *::before, body.calm *::after{
 </style>
 </head>
 <body>
-<audio id="bgMusic" src="music8.mp3" loop preload="auto"></audio>
+<audio id="bgMusic" src="music8.mp3" loop preload="none"></audio>
 
 <!-- ═══════════ لایه‌های پس‌زمینه ═══════════ -->
 <div id="sky" aria-hidden="true"></div>
@@ -2656,5 +2657,10 @@ window.HakimTreasure = {
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

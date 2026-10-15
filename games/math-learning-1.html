@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>بازی تقسیم چکشی 🧮</title>
+<meta name="description" content="بازی تقسیم چکشی — تمرین تعاملی و سرگرم‌کننده تقسیم ریاضی پایه پنجم دبستان در مدرسه ریاضی حکیمستان.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{ --cell: clamp(30px, 8.5vw, 54px); }
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -227,16 +229,11 @@ body::before{
 @keyframes zoomin{ from{ transform:scale(.6); opacity:0; } to{ transform:scale(1); opacity:1; } }
 @keyframes fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.75; } }
 </style>
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/main.min.css">
-  <link rel="stylesheet" href="../css/validation.css">
-  <link rel="stylesheet" href="../css/accessibility.css">
-  <link rel="manifest" href="../manifest.json">
+<link rel="manifest" href="../manifest.json">
   <meta name="theme-color" content="#4a5fd0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon" href="../icons/icon-192x192.png">
+  <link rel="apple-touch-icon" href="../icons/icon-192.png">
 </head>
 <body>
 <div class="app" id="app">
@@ -1125,15 +1122,11 @@ function init(){
 }
 init();
 </script>
-  <script src="../js/security.js" defer></script>
-  <script src="../js/main.js" defer></script>
-  <script src="../js/pwa-register.js" defer></script>
-  <script src="../js/lazyload.js" defer></script>
-  <script src="../js/accessibility.js" defer></script>
-  <script src="../js/webp-support.js" defer></script>
-  <script src="../js/analytics.js" defer></script>
-  <script src="../js/themes.js" defer></script>
-  <script src="../js/utils.js" defer></script>
-  <section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a488d2979d36cce4',t:'MTc5MTY2ODgzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
 </html>

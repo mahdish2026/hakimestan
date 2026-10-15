@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="utf-8">
+<link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>آزمایشگاه حکیمستان — علوم پنجم دبستان</title>
 <meta name="description" content="بازی آموزشی دوبعدی شش‌آزمایشی علوم پنجم دبستان — طراح: مهدی شریفیان">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
@@ -93,7 +94,6 @@ img{max-width:100%}
 }
 .muted{color:var(--muted)}
 .center{text-align:center}
-
 
 /* ---------- forms ---------- */
 .field{display:block;margin:0 0 1rem}
@@ -636,7 +636,6 @@ table.res tr:last-child td{border-bottom:0}
 </div>
 
 <div id="toast" role="status"></div>
-
 
 <script>
 /*!
@@ -1351,11 +1350,23 @@ table.res tr:last-child td{border-bottom:0}
 
   function injectFont() {
     if (document.getElementById('hakim-font')) return;
+    // فونت محلی از قبل بارگذاری شده است — نیازی به CDN نیست
+    if (document.querySelector('link[href*="css/fonts.css"]')) return;
     try {
+      // مسیر فونت محلی نسبت به جایگاه هسته یا صفحهٔ جاری
+      let href = '';
+      try {
+        const s = document.currentScript && document.currentScript.src;
+        if (s) href = new URL('css/fonts.css', s).href;
+      } catch (e) {}
+      if (!href) {
+        const dirs = location.pathname.replace(/^\/|\/[^/]*$/g, '').split('/').filter(Boolean);
+        href = '../'.repeat(dirs.length) + 'css/fonts.css';
+      }
       const link = document.createElement('link');
       link.id = 'hakim-font';
       link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap';
+      link.href = href;
       document.head.appendChild(link);
     } catch (e) { /* آفلاین: فونت fallback استفاده می‌شود */ }
   }
@@ -2586,7 +2597,6 @@ BUILDERS['arm'] = function(taskbar, cv, c){
   };
 };
 
-
 /* ---------- ۶) فرسایش خاک ---------- */
 BUILDERS['erosion'] = function(taskbar, cv, c){
   let slope=20, rain=45, plants=20, raining=true, lost=0, parts=[], time=0;
@@ -3558,7 +3568,6 @@ $('btn-logout').onclick = ()=>{
   if(confirm('از آزمایشگاه خارج می‌شی؟ پیشرفتت پاک می‌شه.')) location.reload();
 };
 
-
 /* ============================================================
    init
    ============================================================ */
@@ -3643,5 +3652,10 @@ renderLobby();
 })();
 </script>
 
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

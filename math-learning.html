@@ -1,7 +1,11 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="utf-8">
+<link rel="stylesheet" href="css/fonts.css">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>مدرسه ریاضی | حکیمستان</title>
 <meta name="description" content="بازی‌های آموزشی ریاضی پایه پنجم - تقسیم چکشی و ماموریت زمان">
@@ -11,15 +15,10 @@
 <link rel="manifest" href="manifest.json">
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 
 <!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <!-- CSS -->
-<link rel="stylesheet" href="css/main.min.css">
 <style>
 :root {
   color-scheme: light;
@@ -415,7 +414,11 @@ body {
   <div id="hakimPanelMount"></div>
 
   <!-- JS -->
-  <script src="js/themes.js"></script>
-  <script src="hakim-core.js"></script>
+<script src="hakim-core.js"></script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss:; manifest-src 'self'; worker-src 'self' blob:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss:; manifest-src 'self'; worker-src 'self' blob:">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0d0a1f">
 <meta name="description" content="حکیمستان — دیار حکیم، سرزمین یادگیری. پلتفرم آموزشی رایگان برای معلمان و دانش‌آموزان.">
@@ -2136,7 +2136,7 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
 <button type="button" class="music-btn" id="musicBtn" aria-label="روشن یا خاموش کردن موسیقی پس‌زمینه" title="موسیقی پس‌زمینه">
   <span class="music-icon" id="musicIcon">🔇</span>
 </button>
-<audio id="lobbyMusic" src="lobby-music.mp3" loop preload="auto"></audio>
+<audio id="lobbyMusic" src="lobby-music.mp3" loop preload="none"></audio>
 
 <!-- ================= دکمه و پنل انتخاب تم ================= -->
 <button type="button" class="theme-btn" id="themeBtn" aria-label="انتخاب تم صفحه" title="تم صفحه">🎨</button>
@@ -2389,7 +2389,6 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
       <span class="gc-arrow" aria-hidden="true">←</span>
     </div>
   </a>
-
 
   <!-- کارت جدید: آزمایشگاه ۲بعدی -->
   <a href="games/lab2d.html" class="game-card lab2d-card reveal d14" aria-label="شروع آزمایشگاه ۲بعدی">
@@ -2728,7 +2727,6 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
       <span class="gc-arrow" aria-hidden="true">←</span>
     </div>
   </a>
-
 
   <!-- کارت ۱۰: پنل معلم -->
   <a href="panels/teacher.html" class="game-card teacher-card reveal d12" aria-label="ورود به پنل معلم">
@@ -3675,7 +3673,6 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
       .then(function(){ setBusy(false); });
   }
 
-
   function autoGrow(){
     elInput.style.height = 'auto';
     elInput.style.height = Math.min(elInput.scrollHeight, 120) + 'px';
@@ -3962,5 +3959,5 @@ body[data-theme="modern"] .chat-tab .hint{color:#7b6d63}
 .survey-type, body[data-theme="modern"] .survey-type{color:#7c6e64}
 </style>
 <!-- hakim-contrast:end -->
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4b04294b9a13dd9',t:'MTc5MjA4MjM2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>

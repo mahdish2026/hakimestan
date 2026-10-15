@@ -1,9 +1,14 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="utf-8">
+<link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ماموریتِ زمان | بازی آموزشی ساعت</title>
+<meta name="description" content="ماموریت زمان — بازی آموزشی خواندن ساعت برای دانش‌آموزان پایه پنجم دبستان در مدرسه ریاضی حکیمستان.">
 <style>
 /* رنگ‌ها با متغیرها تعریف شده‌اند تا تغییر تم ساده بماند. */
 :root{
@@ -210,16 +215,11 @@ body[data-theme="dark"] .clock-panel{background:radial-gradient(circle at 50% 42
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media print{@page{size:A4 portrait;margin:10mm}body{background:#fff!important}body *{visibility:hidden!important}#certificateView,#certificateView *{visibility:visible!important}#certificateView{display:block!important;position:absolute!important;inset:0!important;width:100%!important;padding:0!important;margin:0!important}.global-topbar,.certificate-toolbar,.no-print{display:none!important}.certificate-page{max-width:none;width:100%;box-shadow:none;border-width:6px;padding:10mm;border-radius:0;outline-offset:-12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cert-stage,.score-ring,.cert-badge,.cert-achievement{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/main.min.css">
-  <link rel="stylesheet" href="../css/validation.css">
-  <link rel="stylesheet" href="../css/accessibility.css">
-  <link rel="manifest" href="../manifest.json">
+<link rel="manifest" href="../manifest.json">
   <meta name="theme-color" content="#4a5fd0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon" href="../icons/icon-192x192.png">
+  <link rel="apple-touch-icon" href="../icons/icon-192.png">
 </head>
 <body>
 <main class="app-shell">
@@ -1122,15 +1122,11 @@ body[data-theme="dark"] .clock-panel{background:radial-gradient(circle at 50% 42
   showScreen('startView');
 })();
 </script>
-  <script src="../js/security.js" defer></script>
-  <script src="../js/main.js" defer></script>
-  <script src="../js/pwa-register.js" defer></script>
-  <script src="../js/lazyload.js" defer></script>
-  <script src="../js/accessibility.js" defer></script>
-  <script src="../js/webp-support.js" defer></script>
-  <script src="../js/analytics.js" defer></script>
-  <script src="../js/themes.js" defer></script>
-  <script src="../js/utils.js" defer></script>
-  <section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
+<section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

@@ -1212,40 +1212,51 @@ function buildCard(video) {
   body.appendChild(actions);
   card.appendChild(body);
 
-  /* — probe video — */
-  const probe = document.createElement('video');
-  probe.preload = 'metadata';   // metadata (not 'none')
-  probe.src = 'videos/' + video.id + '.mp4';
-  probe.style.display = 'none';
+  /* — probe video —
+     فقط یک درخواست HEAD سبک (بدون دانلود ویدیو) بررسی می‌کند که
+     فایل موجود است یا نه؛ و فقط وقتی کارت در دیدرس کاربر است. */
+  var settled = false;   // نتیجه فقط یک بار اعمال می‌شود
 
   function markReady() {
-    if (videoStatus[video.id]) return;
+    if (settled) return;
+    settled = true;
     videoStatus[video.id] = 'ready';
     clearTimeout(timer);
     soonOverlay.classList.remove('visible');
     playOverlay.classList.add('visible');
     playBtn.disabled = false;
-    probe.remove();
   }
 
   function markSoon() {
-    if (videoStatus[video.id]) return;
+    if (settled) return;
+    settled = true;
     videoStatus[video.id] = 'soon';
     clearTimeout(timer);
     soonOverlay.classList.add('visible');
     playOverlay.classList.remove('visible');
     playBtn.disabled = true;
-    probe.remove();
   }
 
-  probe.addEventListener('loadedmetadata', markReady);
-  probe.addEventListener('canplay',        markReady);
-  probe.addEventListener('error',          markSoon);
+  var timer = null;
 
-  const timer = setTimeout(markSoon, 5000);   // 5-second timeout
+  function startProbe() {
+    if (videoStatus[video.id] || settled) return;
+    timer = setTimeout(markSoon, 6000);   // timeout
+    fetch('videos/' + video.id + '.mp4', { method: 'HEAD' })
+      .then(function (r) { r.ok ? markReady() : markSoon(); })
+      .catch(markSoon);
+  }
 
-  document.body.appendChild(probe);
-  probe.load();
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) { io.disconnect(); startProbe(); }
+      }
+    }, { rootMargin: '150px' });
+    io.observe(card);
+  } else {
+    startProbe();
+  }
 
   /* — click handlers — */
   function tryPlay() {
