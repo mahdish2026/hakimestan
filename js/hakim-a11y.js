@@ -698,15 +698,23 @@
     document.dispatchEvent(new CustomEvent('hakim:a11y-pref', { detail: { name: name, prefs: prefs } }));
   }
 
-  /* ── نوار ابزار دسترس‌پذیری (اختیاری) ───────────────────── */
+  /* ── نوار ابزار دسترس‌پذیری (اختیاری) ─────────────────────
+     یک دکمهٔ کوچک جمع‌شونده (FAB) در گوشهٔ پایین؛ گروه ابزارها
+     فقط وقتی باز شود دیده می‌شوند تا چیدمان صفحه را اشغال نکند
+     و با دکمه‌های ثابت دیگر (مثل دکمهٔ تم لابی) تلاقی نداشته باشد. */
   function buildToolbar() {
     if (document.getElementById('a11y-toolbar')) return;
     if (document.body.getAttribute('data-a11y-toolbar') === 'off') return;
 
     var bar = document.createElement('div');
     bar.id = 'a11y-toolbar';
-    bar.setAttribute('role', 'toolbar');
-    bar.setAttribute('aria-label', 'ابزارهای دسترس‌پذیری');
+
+    /* گروه ابزارها — پیش‌فرض جمع‌شده */
+    var tools = document.createElement('div');
+    tools.id = 'a11y-tools';
+    tools.setAttribute('role', 'toolbar');
+    tools.setAttribute('aria-label', 'ابزارهای دسترس‌پذیری');
+    tools.hidden = true;
 
     var items = [
       { pref: 'contrast', icon: '◐', label: 'کنتراست بالا' },
@@ -741,11 +749,95 @@
           announce('تنظیمات دسترس‌پذیری بازنشانی شد');
         });
       }
-      bar.appendChild(b);
+      tools.appendChild(b);
     });
 
+    /* دکمهٔ اصلی جمع‌شونده */
+    var fab = document.createElement('button');
+    fab.type = 'button';
+    fab.id = 'a11y-fab';
+    fab.textContent = '♿';
+    fab.setAttribute('aria-label', 'ابزارهای دسترس‌پذیری');
+    fab.setAttribute('aria-expanded', 'false');
+    fab.setAttribute('aria-controls', 'a11y-tools');
+    fab.title = 'ابزارهای دسترس‌پذیری';
+
+    function setOpen(open) {
+      bar.classList.toggle('open', open);
+      tools.hidden = !open;
+      fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    fab.addEventListener('click', function () {
+      setOpen(!bar.classList.contains('open'));
+    });
+
+    /* بستن با Escape و کلیک بیرون از نوار */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && bar.classList.contains('open')) {
+        setOpen(false);
+        fab.focus();
+      }
+    });
+    document.addEventListener('pointerdown', function (e) {
+      if (bar.classList.contains('open') && !bar.contains(e.target)) {
+        setOpen(false);
+      }
+    });
+
+    bar.appendChild(tools);
+    bar.appendChild(fab);
     document.body.appendChild(bar);
     applyPrefs();
+
+    /* ── جابه‌جایی هوشمند: اگر دکمهٔ ثابت دیگری (مثل دکمهٔ موسیقی
+       بازی‌ها) همین گوشه را گرفته باشد، نوار کمی بالاتر می‌نشیند. ── */
+    var BASE_OFFSET = 14;
+    var liftRaf = 0;
+
+    function collidingTops() {
+      var fr = fab.getBoundingClientRect();
+      var tops = [];
+      var els = document.querySelectorAll('body *');
+      for (var i = 0; i < els.length; i++) {
+        var el = els[i];
+        if (el.closest && el.closest('#a11y-toolbar')) continue;
+        if (!el.matches || !el.matches('button, a[href], input, select, textarea, [role="button"], [contenteditable="true"]')) continue;
+        var cs = getComputedStyle(el);
+        if (cs.position !== 'fixed' && cs.position !== 'sticky') continue;
+        if (cs.pointerEvents === 'none' || cs.visibility === 'hidden' || cs.display === 'none' || el.disabled) continue;
+        var r = el.getBoundingClientRect();
+        if (r.width < 10 || r.height < 10) continue;
+        if (!(r.right < fr.left || r.left > fr.right || r.bottom < fr.top || r.top > fr.bottom)) {
+          tops.push(r.top);
+        }
+      }
+      return tops;
+    }
+
+    function positionToolbar() {
+      if (liftRaf) cancelAnimationFrame(liftRaf);
+      liftRaf = requestAnimationFrame(function () {
+        liftRaf = 0;
+        bar.style.removeProperty('inset-block-end');
+        var tops = collidingTops();
+        if (!tops.length) return;
+        var fr = fab.getBoundingClientRect();
+        var lift = fr.bottom - (Math.min.apply(null, tops) - 10);
+        if (lift > 0) {
+          bar.style.setProperty('inset-block-end', (BASE_OFFSET + lift) + 'px');
+        }
+      });
+    }
+
+    if (document.readyState === 'complete') positionToolbar();
+    else window.addEventListener('load', positionToolbar, { once: true });
+    setTimeout(positionToolbar, 2000);
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(positionToolbar, 200);
+    });
   }
 
   /* ── بررسی خودکار ──────────────────────────────────────── */
