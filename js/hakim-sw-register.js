@@ -1,11 +1,11 @@
 /*!
  * hakim-sw-register.js — ثبت Service Worker و منطق نصب PWA
- * نسخه: 1.0.0
+ * نسخه: 1.1.0
  * ساخته مهدی شریفیان
  *
  * کارها:
  *   • ثبت sw.js با مسیر درست (ریشه یا زیرپوشه)
- *   • دکمهٔ «نصب برنامه» فقط در جایگاه صریح [data-pwa-install] صفحه
+ *   • دکمهٔ «نصب برنامه» در جایگاه‌های ترجیحی و هدر صفحه
  *   • بنر پیشنهاد نصب در پایین صفحه (تأخیر ۴ ثانیه، قابل بستن برای ۷ روز)
  *   • اعلان «نسخهٔ جدید آماده است» + به‌روزرسانی با یک کلیک
  *   • نمایش وضعیت آنلاین/آفلاین به کاربر
@@ -192,21 +192,37 @@
     return b;
   }
 
-  /* دکمهٔ برچسب‌دار — فقط اگر صفحه جایگاه صریح [data-pwa-install] داشته باشد
-     همان‌جا نشانده می‌شود؛ وگرنه هیچ دکمه‌ای به هدر صفحه‌ها تزریق نمی‌کنیم
-     (دایرهٔ بنفش مبهم گوشهٔ صفحه حذف شد). */
   function showInstallButton() {
     if (isStandalone) return;
     if (document.getElementById('hk-install-btn')) return;
 
-    var host = document.querySelector('[data-pwa-install]');
-    if (!host || host.querySelector('#hk-install-btn')) return;
-
     var b = makeInstallButton();
     if (!b) return;
 
+    // جایگاه‌های ترجیحی برای قرارگیری دکمه
+    var hosts = [
+      '[data-pwa-install]',
+      '.topbar .toptools',
+      'header .nav',
+      'header .actions',
+      '.hero .row',
+      '.hero-actions',
+      'header',
+      '.topbar'
+    ];
+    var host = null;
+    for (var i = 0; i < hosts.length; i++) {
+      var found = document.querySelector(hosts[i]);
+      if (found && !found.querySelector('#hk-install-btn')) { host = found; break; }
+    }
+
     injectStyle();
-    host.appendChild(b);
+
+    if (host) {
+      host.appendChild(b);
+    } else {
+      scheduleInstallSuggestion();
+    }
   }
 
   /* بنر پیشنهاد نصب — نوار ثابت پایین صفحه، با تأخیر ۴ ثانیه.
@@ -215,6 +231,7 @@
   function showInstallSuggestion() {
     if (isStandalone) return;
     if (document.getElementById('hk-install-banner')) return;
+    if (document.getElementById('hk-install-btn')) return;
     if (installDismissed()) return;
     if (!document.body) return;
 
@@ -237,11 +254,13 @@
     var yes = document.createElement('button');
     yes.type = 'button';
     yes.id = 'hk-ib-yes';
+    yes.className = 'hk-ib-yes';
     yes.textContent = '⬇️ نصب برنامه';
 
     var no = document.createElement('button');
     no.type = 'button';
     no.id = 'hk-ib-no';
+    no.className = 'hk-ib-no';
     no.setAttribute('aria-label', 'فعلاً نه');
     no.title = 'فعلاً نه';
     no.textContent = '✕';
@@ -263,16 +282,16 @@
     bar.appendChild(yes);
     bar.appendChild(no);
     document.body.appendChild(bar);
+    setTimeout(function () { bar.classList.add('hk-ib-show'); }, 30);
 
     if (global.HakimA11y) {
       global.HakimA11y.announce('می‌توانید حکیمستان را مثل یک برنامهٔ واقعی روی این دستگاه نصب کنید.');
     }
   }
 
-  /* پیشنهاد نصب را با تأخیر نشان می‌دهد (اگر جایگاه صریحی وجود ندارد) */
+  /* پیشنهاد نصب را با تأخیر نشان می‌دهد (اگر هیچ میزبانی وجود ندارد) */
   function scheduleInstallSuggestion() {
     if (isStandalone) return;
-    if (document.querySelector('[data-pwa-install]')) return;
     global.setTimeout(showInstallSuggestion, SUGGEST_DELAY);
   }
 
@@ -287,25 +306,22 @@
       'font:800 .85rem Vazirmatn,Tahoma,sans-serif;cursor:pointer;white-space:nowrap}',
       '.hk-install-btn:hover{filter:brightness(1.12)}',
       '.hk-install-btn:focus-visible{outline:3px solid #5eead4;outline-offset:3px}',
-      /* بنر پیشنهاد نصب: نوار تیرهٔ ثابت پایین صفحه */
-      '#hk-install-banner{position:fixed;inset-inline:0;inset-block-end:0;z-index:2147482000;',
-      'display:flex;align-items:center;gap:10px;flex-wrap:wrap;direction:rtl;',
-      'padding:12px 14px;padding-block-end:calc(12px + env(safe-area-inset-bottom,0px));',
-      'background:#141033;color:#f1ecff;border-block-start:1px solid rgba(255,255,255,.22);',
-      'box-shadow:0 -10px 30px rgba(0,0,0,.45);',
-      'font:600 .86rem/1.7 Vazirmatn,Tahoma,sans-serif;',
-      'animation:hk-ib-in .35s ease-out both}',
-      '.hk-ib-text{display:flex;flex-direction:column;gap:2px;flex:1 1 220px;min-width:0}',
-      '.hk-ib-text strong{color:#ffffff;font-size:.95rem}',
-      '.hk-ib-text span{color:#cfc6f2}',
-      '#hk-ib-yes{padding:9px 16px;border:0;border-radius:11px;cursor:pointer;white-space:nowrap;',
-      'background:#f5c76a;color:#1b1035;font:800 .85rem Vazirmatn,Tahoma,sans-serif}',
-      '#hk-ib-yes:hover{filter:brightness(1.08)}',
-      '#hk-ib-no{padding:4px 8px;border:0;border-radius:8px;background:transparent;color:inherit;',
-      'cursor:pointer;font-size:1.05rem;line-height:1}',
-      '#hk-ib-yes:focus-visible,#hk-ib-no:focus-visible{outline:3px solid #5eead4;outline-offset:3px}',
-      '@keyframes hk-ib-in{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}',
-      '@media print{#hk-install-banner,.hk-install-btn{display:none!important}}'
+      '@media(max-width:600px){.hk-install-btn{padding:8px 12px;font:800 .78rem Vazirmatn,Tahoma,sans-serif}}',
+      '#hk-install-banner{position:fixed;inset-inline:0;inset-block-end:0;z-index:9998;',
+      'display:flex;align-items:center;gap:10px;padding:10px 14px;',
+      'padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));',
+      'background:#141033;color:#f1ecff;border-top:1px solid rgba(255,255,255,.22);',
+      'box-shadow:0 -12px 32px rgba(0,0,0,.4);direction:rtl;',
+      'font:600 .85rem/1.6 Vazirmatn,Tahoma,sans-serif;',
+      'transform:translateY(110%);transition:transform .3s ease}',
+      '#hk-install-banner.hk-ib-show{transform:translateY(0)}',
+      '#hk-install-banner .hk-ib-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}',
+      '#hk-install-banner .hk-ib-text span{font-size:.75rem;font-weight:500;color:#cfc6f2}',
+      '.hk-ib-yes{padding:9px 14px;border-radius:12px;border:0;cursor:pointer;',
+      'background:#f5c76a;color:#1b1035;font:800 .82rem Vazirmatn,Tahoma,sans-serif;white-space:nowrap}',
+      '.hk-ib-no{padding:8px;border-radius:10px;border:0;background:transparent;',
+      'color:inherit;cursor:pointer;font-size:1rem}',
+      '@media print{.hk-install-btn,#hk-install-banner{display:none!important}}'
     ].join('');
     document.head.appendChild(s);
   }
@@ -320,6 +336,7 @@
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(function (choice) {
       if (baseDebug()) console.log('[PWA] انتخاب کاربر:', choice.outcome);
+      if (choice.outcome === 'dismissed') rememberDismiss(DAY_MS);
       deferredPrompt = null;
       var btn = document.getElementById('hk-install-btn');
       if (btn && choice.outcome === 'accepted') {
@@ -379,9 +396,7 @@
     global.addEventListener('beforeinstallprompt', function (e) {
       e.preventDefault();
       deferredPrompt = e;
-      // جایگاه صریح → دکمهٔ برچسب‌دار همان‌جا؛ وگرنه بنر پیشنهاد پایین صفحه
-      if (document.querySelector('[data-pwa-install]')) showInstallButton();
-      else scheduleInstallSuggestion();
+      showInstallButton();
     });
 
     global.addEventListener('appinstalled', function () {
@@ -396,8 +411,7 @@
     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !global.MSStream;
     if (isIOS && !isStandalone) {
       global.setTimeout(function () {
-        if (document.querySelector('[data-pwa-install]')) showInstallButton();
-        else scheduleInstallSuggestion();
+        showInstallButton();
       }, 1200);
     }
   }
@@ -409,7 +423,7 @@
   }
 
   global.HakimPWA = {
-    version: '1.0.0',
+    version: '1.1.0',
     supported: true,
     get installable() { return !!deferredPrompt; },
     get standalone() { return isStandalone; },

@@ -193,10 +193,12 @@ html.hk-high-contrast .panel-group-label {
 }
 
 /* اگر صفحه روشن است، متن تیره می‌شود (به‌جای سفید) */
-html.hk-high-contrast body[data-theme='sunny'] .muted,
-html.hk-high-contrast body[data-theme='sky'] .muted,
-html.hk-high-contrast body[data-theme='candy'] .muted,
-html.hk-high-contrast body[data-theme='shad'] .muted {
+html.hk-high-contrast.hk-hc-light body,
+html.hk-high-contrast.hk-hc-light .muted,
+html.hk-high-contrast.hk-hc-light small,
+html.hk-high-contrast.hk-hc-light figcaption,
+html.hk-high-contrast.hk-hc-light .slogan,
+html.hk-high-contrast.hk-hc-light .panel-group-label {
   color: #10131c !important;
 }
 
