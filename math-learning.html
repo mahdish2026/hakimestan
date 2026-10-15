@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>یادگیری ریاضی | حکیمستان</title>
+<meta name="description" content="بازی‌های آموزشی ریاضی پایه پنجم - تقسیم چکشی و ماموریت زمان">
+
+<!-- PWA Meta -->
+<meta name="theme-color" content="#6654e8">
+<link rel="manifest" href="manifest.json">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- CSS -->
+<style>
+:root {
+  color-scheme: light;
+  --page: #f4f6ff;
+  --surface: #fff;
+  --surface-soft: #f8f8ff;
+  --surface-line: #e5e8f5;
+  --ink: #202943;
+  --muted: #67718a;
+  --purple: #6654e8;
+  --purple-dark: #4c3cc7;
+  --teal: #18a99d;
+  --yellow: #ffd45d;
+  --coral: #ff776f;
+  --green: #27a66e;
+  --shadow: 0 14px 36px rgba(37,43,95,.10);
+  --soft-purple: #f1f0ff;
+  --soft-green: #edfff4;
+  --transition: all .3s cubic-bezier(.4,0,.2,1);
+}
+
+body[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #111426;
+  --surface: #1c2037;
+  --surface-soft: #242942;
+  --surface-line: #373d5c;
+  --ink: #f1f2ff;
+  --muted: #aab1ca;
+  --purple: #a69bff;
+  --purple-dark: #c2baff;
+  --shadow: 0 15px 38px rgba(0,0,0,.28);
+  --soft-purple: #302b54;
+  --soft-green: #173c35;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 9% 8%, rgba(255,212,93,.16), transparent 25rem),
+              radial-gradient(circle at 95% 26%, rgba(117,201,244,.15), transparent 27rem),
+              var(--page);
+  color: var(--ink);
+  font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+  line-height: 1.65;
+  transition: background .2s, color .2s;
+}
+
+.app-shell {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+  padding: clamp(12px, 3vw, 28px);
+}
+
+/* Header */
+.page-header {
+  text-align: center;
+  padding: clamp(20px, 5vw, 40px) 0;
+  position: relative;
+}
+
+.back-link {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: 12px;
+  padding: 8px 14px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.back-link:hover {
+  background: var(--surface-soft);
+  border-color: var(--purple);
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.back-link:active {
+  transform: translateY(-50%) translateX(0);
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.page-title .icon {
+  font-size: 1.3em;
+}
+
+.page-subtitle {
+  color: var(--muted);
+  margin-top: 8px;
+  font-size: .95rem;
+}
+
+/* Games Grid */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(16px, 3vw, 24px);
+  margin-top: clamp(20px, 4vw, 32px);
+}
+
+.game-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--surface-line);
+  border-radius: 20px;
+  padding: clamp(18px, 4vw, 26px);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(77,61,196,.18);
+  border-color: var(--purple);
+}
+
+.game-card:active {
+  transform: translateY(0);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+  flex: 0 0 auto;
+  box-shadow: 0 8px 20px rgba(102,84,232,.25);
+}
+
+.card-icon svg {
+  width: 32px;
+  height: 32px;
+  fill: white;
+}
+
+.card-info {
+  flex: 1;
+}
+
+.card-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-name .badge {
+  font-size: .7rem;
+  padding: 2px 6px;
+  background: var(--soft-purple);
+  color: var(--purple);
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.card-desc {
+  font-size: .85rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--surface-soft);
+  border: 1px solid var(--surface-line);
+  border-radius: 8px;
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.tag.new {
+  background: #fff4c6;
+  color: #73550b;
+  border-color: #f1df9a;
+}
+
+.tag.math {
+  background: #edfff4;
+  color: #18a66e;
+  border-color: #a6e8c8;
+}
+
+.tag.educational {
+  background: #f1f0ff;
+  color: #4c3cc7;
+  border-color: #d1cfff;
+}
+
+.card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--purple);
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+.card-cta .arrow {
+  transition: transform .2s;
+}
+
+.game-card:hover .card-cta .arrow {
+  transform: translateX(-4px);
+}
+
+/* Footer */
+.page-footer {
+  text-align: center;
+  padding: clamp(24px, 5vw, 40px) 0;
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.page-footer a {
+  color: var(--purple);
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .card-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+  
+  .card-name {
+    justify-content: center;
+  }
+  
+  .card-cta {
+    justify-content: center;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  animation: fadeIn .4s ease forwards;
+  opacity: 0;
+}
+
+.reveal.d1 { animation-delay: .05s; }
+.reveal.d2 { animation-delay: .1s; }
+.reveal.d3 { animation-delay: .15s; }
+.reveal.d4 { animation-delay: .2s; }
+</style>
+
+  <!-- Hakim Character -->
+  <link rel="preload" href="hakim-core.js" as="script">
+
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Header -->
+    <header class="page-header">
+      <a href="index.html" class="back-link reveal d1">
+        <span>←</span>
+        <span>بازگشت به لابی</span>
+      </a>
+      <h1 class="page-title reveal d2">
+        <span class="icon" aria-hidden="true">🧮</span>
+        <span>یادگیری ریاضی</span>
+      </h1>
+      <p class="page-subtitle reveal d3">بازی‌های آموزشی ریاضی پایه پنجم دبستان حکمت</p>
+    </header>
+
+    <!-- Games Grid -->
+    <main class="games-grid">
+      <!-- Game 1: تقسیم چکشی -->
+      <a href="games/math-learning-1.html" class="game-card reveal d1">
+        <div class="card-top">
+          <div class="card-icon" aria-hidden="true">
+            <span class="gc-emoji">🔨</span>
+          </div>
+          <div class="card-info">
+            <h2 class="card-name">
+              تقسیم چکشی
+              <span class="badge">جدید</span>
+            </h2>
+            <p class="card-desc">یادگیری تقسیم با روش چکشی - تمرین و تسلط بر تقسیم اعداد</p>
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag math">🧮 ریاضی</span>
+          <span class="tag educational">📚 آموزشی</span>
+          <span class="tag">پایه پنجم</span>
+          <span class="tag">✨ ۵ مرحله</span>
+        </div>
+        <span class="card-cta">
+          شروع بازی
+          <span class="arrow" aria-hidden="true">←</span>
+        </span>
+      </a>
+
+      <!-- Game 2: ماموریت زمان -->
+      <a href="games/math-time-mission.html" class="game-card reveal d2">
+        <div class="card-top">
+          <div class="card-icon" aria-hidden="true">
+            <span class="gc-emoji">⏰</span>
+          </div>
+          <div class="card-info">
+            <h2 class="card-name">
+              ماموریت زمان
+              <span class="badge">جدید</span>
+            </h2>
+            <p class="card-desc">یادگیری خواندن ساعت با چالش‌های متنوع و سرگرم کننده</p>
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag math">🧮 ریاضی</span>
+          <span class="tag educational">📚 آموزشی</span>
+          <span class="tag">پایه پنجم</span>
+          <span class="tag">⏱️ ۸ مرحله</span>
+        </div>
+        <span class="card-cta">
+          شروع بازی
+          <span class="arrow" aria-hidden="true">←</span>
+        </span>
+      </a>
+
+      <!-- Game 3: مدرسه ریاضی -->
+      <a href="math-school.html" class="game-card reveal d3">
+        <div class="card-top">
+          <div class="card-icon" aria-hidden="true">
+            <span class="gc-emoji">📚</span>
+          </div>
+          <div class="card-info">
+            <h2 class="card-name">
+              مدرسه ریاضی
+            </h2>
+            <p class="card-desc">مجموعه کامل یادگیری ریاضی پایه پنجم با بازی‌های متنوع</p>
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag math">🧮 ریاضی</span>
+          <span class="tag educational">📚 آموزشی</span>
+          <span class="tag">پایه پنجم</span>
+          <span class="tag">🎮 چندین بازی</span>
+        </div>
+        <span class="card-cta">
+          ورود به مدرسه
+          <span class="arrow" aria-hidden="true">←</span>
+        </span>
+      </a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer reveal d4">
+      <p>طراح و توسعه‌دهنده: <strong>مهدی شریفیان — دبستان حکمت</strong></p>
+      <p><a href="index.html">حکیمستان</a> | بازی‌های آموزشی هوشمند</p>
+    </footer>
+  </div>
+
+  <!-- Hakim Character -->
+  <div id="hakimPanelMount"></div>
+
+  <!-- JS -->
+  <script src="js/themes.js"></script>
+  <script src="hakim-core.js"></script>
+</body>
+</html>
