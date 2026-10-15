@@ -268,6 +268,7 @@ body::before{
         <button id="btnHelp" class="btn ghost">❓ راهنما</button>
         <button id="btnSound" class="btn ghost">🔊 صدا</button>
         <button id="btnStepMenu" class="btn ghost">⚡ نمایش خودکار</button>
+        <button id="btnReset" class="btn ghost">↻ شروع مجدد</button>
       </div>
       <div class="credit">
         <div>طراحی و توسعه‌دهنده: <b>مهدی شریفیان</b></div>
@@ -991,27 +992,34 @@ function showCertificate(){
   $('#overlay').classList.remove('hidden');
 }
 
-// تابع ارسال نتایج به پنل معلم
+// ارسال نتایج به پنل معلم — همان قالب استاندارد «session» که بقیهٔ بازی‌ها
+// می‌فرستند (action + فیلدهای Sessions) تا بدون تغییر در Apps Script ثبت شود.
 function sendResultsToPanel(gameId, score, stars, level, duration, details = {}) {
-  const studentName = playerName();
-  const data = {
-    student_name: studentName,
-    game_id: gameId,
-    score: score,
-    stars: stars,
-    level: level,
-    duration: duration,
-    device: window.innerWidth <= 768 ? 'mobile' : 'desktop',
-    details: details,
-    timestamp: new Date().toISOString()
-  };
-  
-  fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).catch(() => {});
+  try {
+    const ua = navigator.userAgent;
+    const payload = {
+      action: 'session',
+      student_name: playerName(),
+      student_class: '',
+      student_school: '',
+      game_id: gameId,
+      experiment_id: '',
+      duration: Math.round(duration || 0),
+      device: /mobile|android|iphone/i.test(ua) ? 'موبایل' : (/ipad|tablet/i.test(ua) ? 'تبلت' : 'دسکتاپ'),
+      score: Math.round(score || 0),
+      stars: Math.round(stars || 0),
+      completed: true,
+      attempts: 1,
+      started_at: new Date().toISOString(),
+      finished_at: new Date().toISOString(),
+      details: JSON.stringify(Object.assign({ level: level }, details))
+    };
+    fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).catch(() => {});
+  } catch (e) {}
 }
 
 function levelComplete(){
@@ -1031,7 +1039,7 @@ function levelComplete(){
     G.levelStarsEarned,
     idx + 1,
     Math.round(levelDuration),
-    { mistakes: G.levelMistakes, perfect: G.levelMistakes === 0 }
+    { levelName: LEVELS[idx].name, mistakes: G.levelMistakes, perfect: G.levelMistakes === 0, totalQuestions: 5 }
   );
   
   const total = saved.stars.reduce((a, b) => a + b, 0);
@@ -1150,6 +1158,13 @@ function init(){
   $('#btnCert').onclick = () => { if(!$('#btnCert').disabled) showCertificate(); };
   $('#btnHome').onclick = goMenu;
   $('#btnHelp').onclick = () => $('#help').classList.remove('hidden');
+  $('#btnReset').onclick = () => {
+    if(!window.confirm('همهٔ ستاره‌ها و پیشرفت این بازی پاک شود و از نو شروع کنی؟')) return;
+    saved = { next: 1, stars: [0,0,0,0,0], sound: saved.sound, name: saved.name,
+              perfect: [false,false,false,false,false], stepMode: saved.stepMode };
+    persist();
+    renderMenu();
+  };
   $('#btnHelpClose').onclick = () => $('#help').classList.add('hidden');
   $('#btnSound').onclick = toggleSound;
   $('#btnSound2').onclick = toggleSound;
@@ -1159,6 +1174,60 @@ function init(){
 init();
 </script>
 <section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
+<!-- 📊 ردیاب بازدید حکیمستان -->
+<script>
+(function(){
+  try {
+    var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    var userId = localStorage.getItem('hk_uid');
+    var isNew = false;
+    if (!userId) {
+      userId = 'hk_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('hk_uid', userId);
+      isNew = true;
+    }
+    var ua = navigator.userAgent;
+    var device = 'دسکتاپ';
+    if (/mobile|android|iphone|ipod/i.test(ua)) device = 'موبایل';
+    else if (/ipad|tablet/i.test(ua)) device = 'تبلت';
+    var browser = 'سایر';
+    if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+    else if (ua.indexOf('Edg') > -1) browser = 'Edge';
+    else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+    else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+    var os = 'سایر';
+    if (/android/i.test(ua)) os = 'Android';
+    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+    else if (/windows/i.test(ua)) os = 'Windows';
+    else if (/mac/i.test(ua)) os = 'Mac';
+    else if (/linux/i.test(ua)) os = 'Linux';
+    var ref = 'مستقیم';
+    if (document.referrer) {
+      if (document.referrer.indexOf('hakimistan.ir') > -1) ref = 'داخلی';
+      else if (document.referrer.indexOf('google') > -1) ref = 'گوگل';
+      else if (document.referrer.indexOf('eitaa') > -1) ref = 'ایتا';
+      else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
+      else ref = 'سایر';
+    }
+    fetch(API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'logVisit',
+        userId: userId,
+        page: (function(){ var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean); if (p.length === 0) return 'index.html'; if (p.length === 1) return p[0]; return p.slice(-2).join('/'); })(),
+        device: device,
+        browser: browser,
+        os: os,
+        lang: navigator.language || 'fa',
+        ref: ref,
+        isNew: isNew
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
 <!-- hakim-core:start -->
 <script src="../js/hakim-security.js" defer></script>
 <script src="../js/hakim-a11y.js" defer></script>
