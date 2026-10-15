@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بازی تقسیم چکشی 🧮</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{ --cell: clamp(30px, 8.5vw, 54px); }
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family: Vazirmatn, 'Segoe UI', Tahoma, sans-serif;
+  min-height:100vh; color:#0f172a;
+  background: linear-gradient(180deg,#38bdf8 0%, #bae6fd 34%, #e0f2fe 55%, #fefce8 100%) fixed;
+}
+body::before{
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.75) 0 34px, transparent 35px),
+    radial-gradient(circle at 20% 24%, rgba(255,255,255,.75) 0 26px, transparent 27px),
+    radial-gradient(circle at 85% 12%, rgba(255,255,255,.7) 0 30px, transparent 31px),
+    radial-gradient(circle at 78% 18%, rgba(255,255,255,.7) 0 22px, transparent 23px);
+}
+.app{ position:relative; z-index:1; max-width:780px; margin:0 auto; padding:14px 12px 48px; }
+.hidden{ display:none !important; }
+
+/* ---------- buttons ---------- */
+.btn{ cursor:pointer; border:none; font-family:inherit; font-weight:800; border-radius:16px; padding:12px 20px; font-size:1rem;
+  transition: transform .12s, box-shadow .12s, background .2s; color:#334155; }
+.btn:hover{ transform:translateY(-2px); }
+.btn:active{ transform:translateY(2px) !important; }
+.btn.primary{ background:linear-gradient(180deg,#fbbf24,#f59e0b); color:#451a03; box-shadow:0 5px 0 #b45309; }
+.btn.primary:hover{ box-shadow:0 7px 0 #b45309; }
+.btn.primary:active{ box-shadow:0 1px 0 #b45309; }
+.btn.secondary{ background:linear-gradient(180deg,#60a5fa,#3b82f6); color:#fff; box-shadow:0 5px 0 #1d4ed8; }
+.btn.secondary:active{ box-shadow:0 1px 0 #1d4ed8; }
+.btn.ghost{ background:#f1f5f9; color:#334155; box-shadow:0 3px 0 #cbd5e1; }
+.btn.ghost:active{ box-shadow:0 1px 0 #cbd5e1; }
+.btn.icon{ background:#f1f5f9; font-size:1.2rem; padding:7px 11px; box-shadow:0 3px 0 #cbd5e1; }
+.btn.big{ font-size:1.12rem; padding:14px 26px; width:100%; margin:7px 0; }
+
+/* ---------- menu ---------- */
+.menu-card{ background:#fff; border-radius:28px; padding:26px 22px; text-align:center; box-shadow:0 12px 34px rgba(2,132,199,.18); }
+.mascot-big{ font-size:82px; display:inline-block; animation:bob 2.6s ease-in-out infinite; filter:drop-shadow(0 8px 10px rgba(0,0,0,.15)); }
+.menu-card h1{ font-size:clamp(1.7rem,6vw,2.35rem); margin:6px 0 4px; color:#0c4a6e; font-weight:900; }
+.menu-card .sub{ color:#475569; margin:0 0 16px; line-height:1.9; }
+.lv-title{ margin-top:14px; font-weight:900; color:#0c4a6e; }
+.level-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:10px; margin-top:10px; }
+.lv-card{ background:#f8fafc; border:2px solid #e2e8f0; border-radius:16px; padding:10px 6px; cursor:pointer; text-align:center;
+  transition: transform .15s, border-color .2s, background .2s; }
+.lv-card:hover{ transform:translateY(-3px); border-color:#7dd3fc; background:#f0f9ff; }
+.lv-card .ic{ font-size:30px; }
+.lv-card .nm{ font-weight:900; font-size:.92rem; margin-top:2px; color:#0f172a; }
+.lv-card .ds{ font-size:.72rem; color:#64748b; min-height:2.4em; line-height:1.5; }
+.lv-card .st{ font-size:.82rem; color:#b45309; font-weight:800; margin-top:4px; min-height:1.2em; }
+.menu-foot{ display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+
+/* ---------- name input ---------- */
+.name-row{ display:flex; align-items:center; gap:10px; background:#f0f9ff; border:2px solid #bae6fd; border-radius:16px;
+  padding:8px 14px; margin:0 0 14px; transition:border-color .2s, box-shadow .2s; }
+.name-row:focus-within{ border-color:#38bdf8; box-shadow:0 0 0 4px rgba(56,189,248,.22); }
+.name-row .name-ic{ font-size:1.2rem; }
+.name-row input{ flex:1; min-width:0; border:none; outline:none; background:transparent; font:inherit; font-weight:800; font-size:1rem; color:#0c4a6e; }
+.name-row input::placeholder{ color:#7dd3fc; font-weight:600; }
+.name-row.err{ border-color:#fca5a5; background:#fef2f2; }
+.name-err{ display:none; color:#dc2626; font-size:.85rem; font-weight:800; margin:-6px 0 12px; }
+.name-err.show{ display:block; }
+.btn[disabled]{ opacity:.55; cursor:not-allowed; box-shadow:none; }
+.btn[disabled]:hover{ transform:none; }
+.credit{ margin-top:16px; padding-top:12px; border-top:2px dashed #e2e8f0; font-size:.8rem; color:#64748b; font-weight:600; line-height:1.9; }
+.credit b{ color:#475569; }
+
+/* ---------- HUD ---------- */
+.hud{ display:flex; align-items:center; gap:8px; background:#fff; border-radius:18px; padding:8px 10px; margin-bottom:10px;
+  box-shadow:0 8px 22px rgba(2,132,199,.14); }
+.hud-title{ flex:1; text-align:center; font-weight:900; font-size:1.02rem; color:#0c4a6e; line-height:1.4; }
+.hud-title small{ display:block; font-weight:700; color:#64748b; font-size:.72rem; }
+.hud-stars{ font-weight:900; color:#b45309; background:#fffbeb; border:2px solid #fde68a; padding:4px 10px; border-radius:12px; font-size:.95rem; white-space:nowrap; }
+.dots{ display:flex; gap:8px; justify-content:center; margin:2px 0 0; }
+.dot{ width:16px; height:16px; border-radius:50%; background:#e2e8f0; border:2px solid #cbd5e1; }
+.dot.done{ background:#4ade80; border-color:#22c55e; }
+.dot.cur{ background:#fbbf24; border-color:#f59e0b; animation:pulse 1.2s infinite; }
+.prob-count{ text-align:center; font-size:.78rem; font-weight:800; color:#64748b; margin:4px 0 10px; min-height:1.2em; }
+@keyframes starpop{ 0%{ transform:scale(1); } 40%{ transform:scale(1.22); } 100%{ transform:scale(1); } }
+.hud-stars.pop{ animation:starpop .5s cubic-bezier(.34,1.56,.64,1); }
+@keyframes mpop{ 0%{ transform:scale(.55); } 70%{ transform:scale(1.14); } 100%{ transform:scale(1); } }
+.mascot.pop{ animation:bob 2.6s ease-in-out infinite, mpop .45s cubic-bezier(.34,1.56,.64,1); }
+@media (max-width:400px){
+  .hud{ gap:6px; padding:7px 8px; }
+  .hud-title small{ display:none; }
+  .hud-stars{ font-size:.85rem; padding:3px 8px; }
+  .btn.icon{ padding:6px 9px; }
+}
+
+/* ---------- stage (worksheet) ---------- */
+.stage-card{ background:#fff; border-radius:22px; padding:10px 8px; box-shadow:0 8px 22px rgba(2,132,199,.14); margin-bottom:12px; }
+.board{ direction:ltr; overflow:auto; max-height:60vh; min-height:230px; display:flex; justify-content:center; align-items:flex-start; padding:6px 2px; }
+.worksheet{ display:flex; align-items:flex-start; --cell:2.5rem; --fs:1.4rem; user-select:none; }
+.left-col{ display:flex; }
+.ladder{ display:grid; grid-auto-rows:var(--cell); }
+.vline{ width:3px; background:#334155; border-radius:2px; margin:0 12px; align-self:stretch; }
+.right-col{ display:flex; flex-direction:column; align-items:flex-end; }
+.divisor-box{ font-size:var(--fs); font-weight:900; height:var(--cell); display:flex; align-items:center; color:#0f172a; }
+.hline{ width:100%; height:3px; background:#334155; border-radius:2px; margin:calc((var(--cell) - 3px)/2) 0; }
+.quotient{ display:flex; justify-content:flex-end; height:var(--cell); align-items:center; font-weight:900; }
+.quotient span{ width:var(--cell); text-align:center; font-size:var(--fs); color:#4338ca; animation:qpop .4s cubic-bezier(.34,1.56,.64,1); }
+.cell{
+  height:var(--cell);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-size:var(--fs); font-weight:800; font-variant-numeric:tabular-nums;
+  border-radius:8px;
+  opacity:0; transform:translateY(-8px);
+  transition:opacity .3s ease, transform .3s ease, background .2s;
+}
+.cell.show{ opacity:1; transform:translateY(0); }
+.cell.active{ background:#fef9c3; box-shadow:inset 0 0 0 2px #fde047; }
+.cell.line{ height:3px; align-self:center; border-radius:2px; transform:scaleX(0); transform-origin:left center; transition:transform .4s ease; }
+.cell.line.show{ transform:scaleX(1); }
+.cell .arr{ font-size:calc(var(--fs)*.5); line-height:1; margin-bottom:-3px; font-weight:900; }
+@keyframes qpop{ from{ transform:scale(0) translateY(-8px); opacity:0; } to{ transform:scale(1) translateY(0); opacity:1; } }
+@media (max-width:430px){ .vline{ margin:0 8px; } }
+
+/* ---------- bubble ---------- */
+.bubble-card{ background:#fff; border-radius:22px; padding:14px; display:flex; gap:12px; box-shadow:0 8px 22px rgba(2,132,199,.14); }
+.mascot{ font-size:62px; display:flex; align-items:center; justify-content:center; min-width:78px; animation:bob 2.6s ease-in-out infinite; user-select:none; }
+.bubble{ flex:1; display:flex; flex-direction:column; min-width:0; }
+#bubbleText{ font-size:1.05rem; line-height:2.05; min-height:76px; padding:2px 2px 6px; font-weight:600; text-align:center; }
+/* هر عبارت ریاضی داخل توضیحات: جزیره‌ی مستقلِ چپ‌به‌راست */
+#bubbleText .m{ direction:ltr; unicode-bidi:isolate; white-space:nowrap; }
+#bubbleText .num{ background:#eef2ff; color:#4330a3; border-radius:8px; padding:1px 7px; font-weight:900; white-space:nowrap; }
+#bubbleText .warn{ color:#dc2626; font-weight:800; margin-top:2px; }
+#bubbleText .check{ color:#059669; font-weight:800; }
+.bigans{ background:linear-gradient(180deg,#fde68a,#fcd34d); padding:3px 12px; border-radius:12px; font-weight:900; font-size:1.18em; display:inline-block; direction:ltr; unicode-bidi:isolate; white-space:nowrap; }
+.opts{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:4px; }
+.opt{ font-family:inherit; font-size:1.55rem; font-weight:900; min-width:68px; min-height:68px; border-radius:20px;
+  background:#eef2ff; border:3px solid #c7d2fe; color:#3730a3; cursor:pointer; box-shadow:0 5px 0 #a5b4fc;
+  transition:transform .12s, box-shadow .12s, background .2s; }
+.opt:hover{ transform:translateY(-2px); }
+.opt:active{ transform:translateY(3px); box-shadow:0 1px 0 #a5b4fc; }
+.opt.correct{ background:#dcfce7; border-color:#4ade80; box-shadow:0 5px 0 #22c55e; color:#166534; }
+.opt.wrong{ animation:shake .45s; background:#fee2e2; border-color:#fca5a5; color:#991b1b; }
+.actions{ margin-top:10px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+
+/* ---------- overlay ---------- */
+.overlay{ position:fixed; inset:0; background:rgba(8,47,73,.55); display:flex; align-items:center; justify-content:center;
+  z-index:50; padding:16px; backdrop-filter:blur(2px); }
+.ov-card{ background:#fff; border-radius:28px; padding:26px 22px; max-width:450px; width:100%; text-align:center;
+  animation:zoomin .4s cubic-bezier(.2,1.4,.4,1); box-shadow:0 20px 60px rgba(0,0,0,.3); max-height:94vh; overflow:auto; }
+.ov-emoji{ font-size:68px; line-height:1.1; }
+.ov-card h2{ color:#0c4a6e; margin:8px 0 4px; font-size:1.5rem; font-weight:900; }
+.ov-card p{ color:#475569; margin:6px 0; font-weight:700; line-height:1.9; }
+.ov-stars{ font-size:46px; letter-spacing:8px; margin:6px 0; }
+.ov-credit{ font-size:.82rem; color:#64748b; font-weight:600; margin-top:10px; padding-top:10px; border-top:2px dashed #e2e8f0; line-height:1.8; }
+.ov-card .unlock-hint{ color:#b45309; background:#fffbeb; border:2px dashed #fde68a; border-radius:12px;
+  padding:7px 10px; font-size:.9rem; margin-top:10px; }
+.ov-card .actions{ margin-top:16px; }
+
+/* ---------- certificate ---------- */
+.cert{ background:linear-gradient(165deg,#fffef8,#fdf6df); border:3px solid #d4af37; border-radius:18px;
+  padding:16px 14px 14px; box-shadow:inset 0 0 0 3px #fffef8, inset 0 0 0 5px rgba(212,175,55,.4); text-align:center; }
+.cert-orn{ color:#d4af37; letter-spacing:12px; font-size:.85rem; margin-bottom:2px; }
+.cert .ov-emoji{ font-size:54px; }
+.cert .cert-title{ font-size:1.8rem; font-weight:900; color:#92400e; margin:4px 0 0; }
+.cert .cert-sub{ color:#a16207; font-weight:800; margin-top:2px; font-size:.95rem; }
+.cert .cert-to{ margin:12px 0 2px; color:#475569; font-weight:700; line-height:1.9; }
+.cert .cert-name{ display:inline-block; font-size:1.45rem; font-weight:900; color:#4338ca; padding:2px 14px 4px;
+  border-bottom:3px dotted #a5b4fc; background:#eef2ff; border-radius:10px 10px 0 0; }
+.cert .cert-note{ color:#64748b; font-size:.88rem; font-weight:600; line-height:2; margin:10px 4px 12px; }
+@keyframes certrow{ from{ opacity:0; transform:translateX(16px); } to{ opacity:1; transform:translateX(0); } }
+.cert-list{ list-style:none; margin:0; padding:0; text-align:right; }
+.cert-list li{ display:flex; align-items:center; gap:8px; padding:8px 8px; border-bottom:1px dashed rgba(212,175,55,.55);
+  font-weight:700; color:#334155; font-size:.95rem; animation:certrow .5s both; animation-delay:calc(var(--i, 0) * .1s + .2s); }
+.cert-list li:last-child{ border-bottom:none; }
+.cert-list .c-ic{ font-size:1.2rem; }
+.cert-list .c-nm{ flex:1; }
+.cert-list .c-ok{ color:#16a34a; font-size:1.15rem; }
+.cert-list .c-no{ color:#f59e0b; font-size:1.15rem; }
+.cert-list .c-res{ font-weight:900; color:#b45309; white-space:nowrap; }
+.cert-list li.c-pending{ opacity:.62; }
+.cert-list .c-lock{ color:#94a3b8; font-size:1.1rem; }
+.cert-list li.c-pending .c-res{ color:#94a3b8; font-weight:700; }
+.cert-legend{ color:#94a3b8; font-size:.75rem; font-weight:600; margin-top:8px; }
+.cert-total{ margin-top:10px; font-weight:900; color:#4338ca; font-size:1.08rem; }
+.cert-seal{ width:86px; height:86px; margin:14px auto 2px; border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, #fde68a, #f59e0b 75%);
+  border:3px solid #d97706; box-shadow:0 4px 14px rgba(180,83,9,.4), inset 0 0 0 4px rgba(255,255,255,.4);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  transform:rotate(-8deg); opacity:.96; }
+.cert-seal .seal-ic{ font-size:28px; line-height:1; }
+.cert-seal .seal-tx{ font-size:.6rem; font-weight:900; color:#78350f; line-height:1.3; text-align:center; max-width:72px; }
+.cert-foot{ margin-top:12px; padding-top:10px; border-top:2px solid rgba(212,175,55,.45); color:#64748b; font-size:.8rem; line-height:1.8; font-weight:600; }
+.cert-date{ font-weight:800; color:#0c4a6e; margin-bottom:4px; }
+
+/* ---------- print certificate ---------- */
+@page{ margin:12mm; }
+@media print{
+  html, body{ background:#fff !important; }
+  body::before{ display:none !important; }
+  #menu, #game, #help{ display:none !important; }
+  #app{ display:block !important; max-width:none !important; padding:0 !important; }
+  #overlay{ position:static !important; background:none !important; display:block !important;
+    padding:24px; z-index:1; backdrop-filter:none; }
+  #ovCard{ box-shadow:none; animation:none; max-height:none; overflow:visible; background:transparent;
+    max-width:660px; margin:0 auto; padding:0; }
+  #ovCard .actions{ display:none !important; }
+  .cert{ box-shadow:inset 0 0 0 3px #fffef8, inset 0 0 0 5px rgba(212,175,55,.4); font-size:1.05em; }
+  .cert-list li{ animation:none !important; opacity:1 !important; }
+  .cert-seal{ box-shadow:none; opacity:1; }
+}
+.help-card{ text-align:right; max-height:86vh; overflow:auto; }
+.help-card h2{ text-align:center; }
+.help-card ol{ line-height:2.2; font-weight:600; padding-right:22px; margin:10px 0; }
+.help-card .tip{ background:#fffbeb; border:2px solid #fde68a; border-radius:14px; padding:10px 14px; font-size:.92rem; line-height:1.9; font-weight:600; color:#78350f; }
+
+/* ---------- confetti ---------- */
+.confetti{ position:fixed; top:-24px; z-index:99; pointer-events:none; animation:fall linear forwards; }
+
+/* ---------- keyframes ---------- */
+@keyframes pop{ 0%{ transform:scale(.2); opacity:0; } 70%{ transform:scale(1.18); } 100%{ transform:scale(1); opacity:1; } }
+@keyframes bob{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
+@keyframes shake{ 0%,100%{ transform:translateX(0); } 20%{ transform:translateX(-8px); } 40%{ transform:translateX(8px); } 60%{ transform:translateX(-6px); } 80%{ transform:translateX(6px); } }
+@keyframes pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.28); } }
+@keyframes zoomin{ from{ transform:scale(.6); opacity:0; } to{ transform:scale(1); opacity:1; } }
+@keyframes fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.75; } }
+</style>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/main.min.css">
+  <link rel="stylesheet" href="../css/validation.css">
+  <link rel="stylesheet" href="../css/accessibility.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#4a5fd0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="../icons/icon-192x192.png">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ============ MENU ============ -->
+  <section id="menu" class="screen">
+    <div class="menu-card">
+      <div class="mascot-big">👨‍🏫</div>
+      <h1>بازی تقسیم چکشی</h1>
+      <p class="sub">مرحله به مرحله، قدم‌به‌قدم یاد بگیر<br>و قهرمانِ تقسیم شو! 🏆</p>
+      <div class="name-row" id="nameRow">
+        <span class="name-ic">✏️</span>
+        <input id="nameInput" type="text" maxlength="20" placeholder="اسمت را بنویس تا روی گواهی بیاید!" autocomplete="off">
+      </div>
+      <div class="name-err" id="nameErr">اول اسمت را بنویس تا گواهی‌ات کامل باشد! 😊</div>
+      <button id="btnPlay" class="btn primary big">🎮 شروع بازی</button>
+      <button id="btnLearn" class="btn secondary big">📖 آموزش: یک مثال کامل</button>
+      <button id="btnCert" class="btn ghost big">🔒 گواهی من</button>
+      <div class="lv-title">مرحله‌ها:</div>
+      <div id="levelGrid" class="level-grid"></div>
+      <div class="menu-foot">
+        <button id="btnHelp" class="btn ghost">❓ راهنما</button>
+        <button id="btnSound" class="btn ghost">🔊 صدا</button>
+        <button id="btnStepMenu" class="btn ghost">⚡ نمایش خودکار</button>
+      </div>
+      <div class="credit">
+        <div>طراحی و توسعه‌دهنده: <b>مهدی شریفیان</b></div>
+        <div>آموزگار پایه‌ی پنجم • دبستان حکمت</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section id="game" class="screen hidden">
+    <header class="hud">
+      <button id="btnHome" class="btn icon" title="منو">🏠</button>
+      <div class="hud-title"><span id="lvName"></span><small id="lvSub"></small></div>
+      <div class="hud-stars">⭐ <span id="starCount">۰</span>/۱۵</div>
+      <button id="btnStep" class="btn icon" title="نحوه‌ی نمایش مراحل">⚡</button>
+      <button id="btnSound2" class="btn icon">🔊</button>
+    </header>
+    <div id="dots" class="dots"></div>
+    <div id="probCount" class="prob-count"></div>
+    <div class="stage-card">
+      <div class="board" id="board">
+        <div class="worksheet" id="worksheet">
+          <div class="left-col">
+            <div class="ladder" id="ladder"></div>
+          </div>
+          <div class="vline"></div>
+          <div class="right-col" id="rightCol">
+            <div class="divisor-box" id="divisorBox"></div>
+            <div class="hline"></div>
+            <div class="quotient" id="quotient"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bubble-card">
+      <div class="mascot" id="mascot">👨‍🏫</div>
+      <div class="bubble">
+        <div id="bubbleText"></div>
+        <div id="opts" class="opts"></div>
+        <div id="actions" class="actions"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OVERLAY ============ -->
+  <div id="overlay" class="overlay hidden"><div class="ov-card" id="ovCard"></div></div>
+
+  <!-- ============ HELP ============ -->
+  <div id="help" class="overlay hidden">
+    <div class="ov-card help-card">
+      <h2>چطور بازی کنیم؟ 🤓</h2>
+      <ol>
+        <li>عدد بزرگ <b>(مقسوم)</b> زیر خط و عدد کوچیک <b>(مقسوم‌علیه)</b> کنارش نوشته شده. جواب <b>(پاسخ)</b> بالای خط می‌نویسیم.</li>
+        <li>از <b>سمت چپ</b> شروع می‌کنیم: کوچک‌ترین تیکه‌ای که مقسوم‌علیه توش جا می‌شود را می‌خوانیم.</li>
+        <li>می‌فهمیم مقسوم‌علیه <b>چند بار</b> توش جا می‌شود و همان رقم را <b>بالای خط</b> می‌نویسیم ✍️</li>
+        <li>ضربِ آن رقم در مقسوم‌علیه را <b>زیرش</b> می‌نویسیم و <b>تفریق</b> می‌کنیم ➖</li>
+        <li><b>رقم بعدی</b> را از مقسوم پایین می‌آوریم ⬇️ و دوباره تکرار می‌کنیم تا به آخر برسیم.</li>
+      </ol>
+      <div class="tip">💡 هرچه کمتر اشتباه کنی، <b>ستاره‌ی بیشتری</b> می‌گیری! ⭐ اگر عددی از مقسوم‌علیه کوچیک‌تر بود، حتی یک بار هم جا نمی‌شود — برایش <b>صفر</b> می‌نویسیم!</div>
+      <div class="actions"><button id="btnHelpClose" class="btn primary">باشه، آماده‌ام! ✅</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ================= PURE (testable) ================= */
+const FA = '۰۱۲۳۴۵۶۷۸۹';
+const toFa = s => String(s).replace(/\d/g, d => FA[d]);
+const rnd = n => Math.floor(Math.random() * n);
+const pick = a => a[rnd(a.length)];
+function shuffle(a){ a=[...a]; for(let i=a.length-1;i>0;i--){ const j=rnd(i+1); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+/* Simulate long division (chekeshi) — returns every step with column positions */
+function simulate(divStr, divisor){
+  const digits = [...divStr].map(Number);
+  const N = digits.length, dLen = String(divisor).length, off = dLen + 1;
+  const steps = [];
+  let rem = 0, i = 0, first = true;
+  while(true){
+    if(i >= N) break;
+    let working, endCol, m0 = 0, brought = null;
+    if(first){
+      let acc = 0, j = 0;
+      for(j = 0; j < N; j++){ acc = acc*10 + digits[j]; if(acc >= divisor) break; }
+      working = acc; m0 = j + 1; endCol = off + m0 - 1;
+      i = m0; first = false;
+    } else {
+      brought = digits[i];
+      working = rem*10 + brought;
+      endCol = off + i;
+      i++;
+    }
+    const q = Math.floor(working / divisor);
+    const prod = q * divisor;
+    const r = working - prod;
+    steps.push({ working, endCol, q, prod, rem: r, brought, m0, isFinal: i >= N });
+    rem = r;
+  }
+  return { steps, quotient: steps.map(s => s.q).join(''), remainder: rem, N, dLen, off, cols: off + N, divStr, divi: divisor };
+}
+
+function optionsFor(q){
+  const set = new Set([q]);
+  for(const x of shuffle([q-1, q+1, q-2, q+2, q+3, q-3])){
+    if(set.size >= 4) break;
+    if(x >= 0 && x <= 9) set.add(x);
+  }
+  let x = 0;
+  while(set.size < 4){ if(!set.has(x)) set.add(x); x = (x + 1) % 10; }
+  return shuffle([...set]);
+}
+
+const LEVELS = [
+  { name:'شروع ماجرا',    icon:'🌱', desc:'دو رقمی بر یک رقمی، بدون باقیمانده' },
+  { name:'با باقیمانده',  icon:'🎯', desc:'یه باقیمانده هم باقی می‌مونه!' },
+  { name:'رمزِ صفر',       icon:'🌀', desc:'وقتی صفر وسط جواب می‌آید' },
+  { name:'مقسوم‌علیه بزرگ',icon:'🚀', desc:'تقسیم بر عدد دو رقمی' },
+  { name:'استاد تقسیم',   icon:'🏆', desc:'چند رقمی بر چند رقمی؛ ویژه‌ی قهرمان‌ها!' },
+];
+
+function genLevelProblems(lv){
+  const seen = new Set(); const out = [];
+  const push = (d, di) => {
+    const k = d + '|' + di;
+    if(!seen.has(k) && d >= 10 && d < 100000){ seen.add(k); out.push({ d, di }); }
+  };
+  let guard = 0;
+  while(out.length < 5 && guard++ < 6000){
+    let d, di, S = null, ok = false;
+    if(lv === 1){
+      di = 2 + rnd(8); const q = 10 + rnd(89); d = q * di;
+      S = simulate(String(d), di);
+      ok = d < 100 && S.steps.length === 2 && S.remainder === 0 && S.steps[0].m0 === 1;
+    } else if(lv === 2){
+      di = 2 + rnd(8); const q = 10 + rnd(89); d = q * di + 1 + rnd(di - 1);
+      S = simulate(String(d), di);
+      ok = d < 1000 && S.steps.length >= 2 && S.remainder > 0;
+    } else if(lv === 3){
+      di = 2 + rnd(8); const q = 100 + rnd(899); d = q * di;
+      S = simulate(String(d), di);
+      ok = d < 1000 && S.steps.length === 3 && S.remainder === 0 && S.quotient.includes('0');
+    } else if(lv === 4){
+      di = 11 + rnd(9);
+      const q = 100 + rnd(Math.floor(9999 / di) - 100);
+      d = q * di + rnd(di);
+      S = simulate(String(d), di);
+      ok = d >= 1000 && d < 10000 && S.steps.length === 3;
+    } else if(Math.random() < 0.5){
+      di = 21 + rnd(19);
+      const q = 100 + rnd(Math.floor(9999 / di) - 100);
+      d = q * di + rnd(di);
+      S = simulate(String(d), di);
+      ok = d >= 1000 && d < 10000 && S.steps.length === 3;
+    } else {
+      // چند رقمی بر چند رقمی: ۵ رقمی بر ۳ رقمی
+      di = 100 + rnd(100); const q = 100 + rnd(899); d = q * di + rnd(di);
+      S = simulate(String(d), di);
+      ok = d >= 10000 && d < 100000 && S.steps.length === 3;
+    }
+    if(ok) push(d, di);
+  }
+  const FB = {
+    1: [[24,2],[36,3],[48,4],[63,3],[84,4]],
+    2: [[37,2],[46,3],[58,4],[79,5],[86,7]],
+    3: [[306,3],[408,4],[204,2],[505,5],[606,6]],
+    4: [[1368,12],[2457,15],[4125,13],[3276,18],[5160,17]],
+    5: [[4812,24],[7358,31],[8642,29],[45678,125],[23456,128],[56789,145],[67890,168]],
+  };
+  for(const [d, di] of FB[lv]){ if(out.length < 5) push(d, di); }
+  while(out.length < 5){ const di = lv >= 4 ? 15 : 3; const d = (lv >= 4 ? 45 : 15) * di + (out.length % di); push(d, di); }
+  return out;
+}
+/* ================= END PURE ================= */
+
+/* ================= DOM / GAME ================= */
+const $ = s => document.querySelector(s);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const N = x => `<b class="num">${toFa(x)}</b>`;
+
+const PRAISE = ['آفرین! 👏','درسته! 🌟','عالی بود! 🎯','دمت گرم! 🧡','ایول! 🎉','به‌به! 😍'];
+const WRONGS = ['نه‌خیر! دوباره فکر کن 🤔','اشکال نداره، دوباره! 💪','یه کم بیشتر فکر کن… 🧐','تو می‌تونی، دوباره! 🌈'];
+
+const G = {
+  sound: true, mode: 'game', stepMode: 'auto', levelIdx: 0, probs: [], pi: 0,
+  S: null, mistakes: 0, levelMistakes: 0, levelStarsEarned: 0,
+  token: 0, lastText: '',
+};
+let saved = { next: 1, stars: [0,0,0,0,0], sound: true, name: '', perfect: [false,false,false,false,false], stepMode: 'auto' };
+try{
+  const raw = localStorage.getItem('tagsim-game-v1');
+  if(raw) saved = Object.assign(saved, JSON.parse(raw));
+} catch(e){}
+if(!Array.isArray(saved.stars) || saved.stars.length !== 5) saved.stars = [0,0,0,0,0];
+if(!Array.isArray(saved.perfect) || saved.perfect.length !== 5) saved.perfect = [false,false,false,false,false];
+if(typeof saved.name !== 'string') saved.name = '';
+function persist(){ try{ localStorage.setItem('tagsim-game-v1', JSON.stringify(saved)); }catch(e){} }
+function playerName(){
+  const n = (saved.name || '').trim();
+  return n.replace(/</g, '&lt;').replace(/>/g, '&gt;') || 'دانش‌آموزِ گرامی';
+}
+function requireName(){
+  if((saved.name || '').trim()) return true;
+  const row = $('#nameRow'), err = $('#nameErr');
+  if(row){ row.classList.add('err'); row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); }
+  if(err) err.classList.add('show');
+  const ni = $('#nameInput');
+  if(ni && ni.focus) ni.focus();
+  return false;
+}
+
+/* ---------- sound ---------- */
+let AC = null;
+function ac(){
+  if(!AC){ try{ AC = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){} }
+  if(AC && AC.state === 'suspended'){ try{ AC.resume(); }catch(e){} }
+  return AC;
+}
+function beep(f, d = 0.12, type = 'sine', g = 0.15, delay = 0){
+  if(!G.sound) return;
+  const a = ac(); if(!a) return;
+  try{
+    const t = a.currentTime + delay;
+    const o = a.createOscillator(), gn = a.createGain();
+    o.type = type; o.frequency.value = f; o.connect(gn); gn.connect(a.destination);
+    gn.gain.setValueAtTime(0.0001, t);
+    gn.gain.exponentialRampToValueAtTime(g, t + 0.02);
+    gn.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.start(t); o.stop(t + d + 0.05);
+  }catch(e){}
+}
+const SFX = {
+  tick:    () => beep(620, .08, 'triangle', .12),
+  write:   () => beep(520, .07, 'triangle', .10),
+  bring:   () => beep(440, .09, 'sine', .10),
+  correct: () => { beep(660, .1); beep(880, .14, 'sine', .15, .1); },
+  wrong:   () => beep(200, .18, 'sawtooth', .07),
+  win:     () => [523,659,784].forEach((f,i) => beep(f, .15, 'triangle', .14, i*.12)),
+  level:   () => [523,659,784,1047,1319].forEach((f,i) => beep(f, .17, 'triangle', .14, i*.13)),
+};
+
+/* ---------- confetti ---------- */
+function confetti(n = 40){
+  const colors = ['#f87171','#fbbf24','#34d399','#60a5fa','#a78bfa','#f472b6'];
+  for(let i = 0; i < n; i++){
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.left = (Math.random()*100) + 'vw';
+    el.style.background = pick(colors);
+    const sz = 6 + Math.random()*8;
+    el.style.width = sz + 'px'; el.style.height = sz + 'px';
+    el.style.animationDuration = (1.8 + Math.random()*1.6) + 's';
+    el.style.animationDelay = (Math.random()*.4) + 's';
+    if(Math.random() < .5) el.style.borderRadius = '50%';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4200);
+  }
+}
+
+/* ---------- screens ---------- */
+function showScreen(name){
+  $('#menu').classList.toggle('hidden', name !== 'menu');
+  $('#game').classList.toggle('hidden', name !== 'game');
+  if(name === 'game') window.scrollTo(0, 0);
+}
+
+/* ---------- HUD ---------- */
+function updateHud(){
+  const L = LEVELS[G.levelIdx];
+  $('#lvName').textContent = `${L.icon} مرحله‌ی ${toFa(G.levelIdx+1)}: ${L.name}`;
+  $('#lvSub').textContent = L.desc;
+  $('#starCount').textContent = toFa(G.levelStarsEarned);
+}
+function updateDots(){
+  const d = $('#dots'); d.innerHTML = '';
+  for(let i = 0; i < 5; i++){
+    const s = document.createElement('span');
+    s.className = 'dot' + (i < G.pi ? ' done' : i === G.pi ? ' cur' : '');
+    d.appendChild(s);
+  }
+  const pc = $('#probCount');
+  if(pc) pc.textContent = G.pi < 5 ? `مسئله‌ی ${toFa(G.pi + 1)} از ۵` : 'همه‌ی مسائل تمام شد! 🎉';
+}
+function setMascot(e){
+  const m = $('#mascot');
+  if(m.textContent === e) return;
+  m.textContent = e;
+  m.classList.remove('pop'); void m.offsetWidth; m.classList.add('pop');
+}
+function popStars(){
+  const hs = $('.hud-stars');
+  hs.classList.remove('pop'); void hs.offsetWidth; hs.classList.add('pop');
+}
+function setBubbleText(t){ G.lastText = t; $('#bubbleText').innerHTML = t; }
+
+function showBubble(html, spec = []){
+  G.lastText = html;
+  $('#bubbleText').innerHTML = html;
+  const opts = $('#opts'), acts = $('#actions');
+  opts.innerHTML = ''; acts.innerHTML = '';
+  spec.forEach(s => {
+    const b = document.createElement('button');
+    b.className = s.cls; b.innerHTML = s.label;
+    (s.zone === 'act' ? acts : opts).appendChild(b);
+    b.addEventListener('click', () => s.on && s.on(b));
+  });
+}
+function waitAction(label, on, cls = 'primary'){
+  return new Promise(r => {
+    showBubble(G.lastText, [{ label, cls, zone: 'act', on: el => { r(); on && on(); } }]);
+  });
+}
+
+/* ---------- stage (worksheet layout) ---------- */
+const PALETTE = ['#9333ea', '#ea580c', '#16a34a', '#0284c7', '#be123c', '#b45309'];
+let ROWS = [], rowEls = [];
+
+function buildStage(){
+  const S = G.S;
+  ROWS = [];
+  // ردیف مقسوم
+  ROWS.push({ type:'dividend', color:'#1e293b', cells: [...S.divStr].map((ch, i) => ({ col: i, text: toFa(ch) })) });
+  S.steps.forEach((st, k) => {
+    const col = st.endCol - S.off;
+    const curStr = (k === 0) ? S.divStr.slice(0, st.m0) : String(S.steps[k-1].rem) + String(st.brought);
+    st._col = col; st._curStr = curStr; st._rows = {};
+    const color = PALETTE[k % PALETTE.length];
+    // ردیف ضرب (با علامت −)
+    const prodStr = String(st.prod);
+    const pStart = col - prodStr.length + 1;
+    const pCells = [];
+    for(let j = 0; j < prodStr.length; j++) pCells.push({ col: pStart + j, text: (j === 0 ? '−' : '') + toFa(prodStr[j]) });
+    ROWS.push({ type:'product', color, cells:pCells, startCol:pStart, endCol:col });
+    st._rows.product = ROWS.length - 1;
+    // خط تفریق
+    ROWS.push({ type:'line', color, startCol:pStart, endCol:col });
+    st._rows.line = ROWS.length - 1;
+    if(k < S.steps.length - 1){
+      // عدد جاری بعدی (باقی‌مانده + رقم پایین‌آمده)
+      const ns = S.steps[k+1];
+      const ncol = ns.endCol - S.off;
+      const ncur = String(st.rem) + String(ns.brought);
+      const cStart = ncol - ncur.length + 1;
+      const cCells = [];
+      for(let j = 0; j < ncur.length; j++) cCells.push({ col: cStart + j, text: toFa(ncur[j]), arr: j === ncur.length - 1 });
+      ROWS.push({ type:'current', color, cells:cCells, startCol:cStart, endCol:ncol });
+      st._rows.next = ROWS.length - 1;
+    } else {
+      // باقی‌مانده نهایی
+      const remStr = String(st.rem).padStart(curStr.length, '0');
+      const rStart = col - remStr.length + 1;
+      const rCells = [];
+      for(let j = 0; j < remStr.length; j++) rCells.push({ col: rStart + j, text: toFa(remStr[j]) });
+      ROWS.push({ type:'remainder', color, cells:rCells, startCol:rStart, endCol:col });
+      st._rows.rem = ROWS.length - 1;
+    }
+  });
+  applySizing();
+  renderLadder();
+  revealRow(0);
+  highlightStep(0);
+}
+
+function applySizing(){
+  const t = ROWS.length;
+  let cell, fs;
+  if(t <= 8)      { cell = 2.7;  fs = 1.55; }
+  else if(t <= 11){ cell = 2.4;  fs = 1.4; }
+  else if(t <= 15){ cell = 2.1;  fs = 1.22; }
+  else if(t <= 19){ cell = 1.85; fs = 1.08; }
+  else            { cell = 1.6;  fs = 0.95; }
+  if(window.innerWidth < 430){ cell *= 0.72; fs *= 0.72; }
+  const ws = $('#worksheet');
+  ws.style.setProperty('--cell', cell + 'rem');
+  ws.style.setProperty('--fs', fs + 'rem');
+}
+
+function renderLadder(){
+  const S = G.S;
+  const ladder = $('#ladder');
+  ladder.innerHTML = '';
+  ladder.style.gridTemplateColumns = `repeat(${S.N}, var(--cell))`;
+  rowEls = ROWS.map(() => []);
+  ROWS.forEach((row, r) => {
+    if(row.type === 'line'){
+      const el = document.createElement('div');
+      el.className = 'cell line';
+      el.style.gridRow = r + 1;
+      el.style.gridColumn = `${row.startCol + 1} / ${row.endCol + 2}`;
+      el.style.background = row.color;
+      ladder.appendChild(el);
+      rowEls[r].push(el);
+    } else {
+      row.cells.forEach(c => {
+        const el = document.createElement('div');
+        el.className = 'cell';
+        el.style.gridRow = r + 1;
+        el.style.gridColumn = c.col + 1;
+        el.style.color = row.color;
+        if(c.arr){ el.innerHTML = `<span class="arr">↓</span><span>${c.text}</span>`; }
+        else { el.textContent = c.text; }
+        ladder.appendChild(el);
+        rowEls[r].push(el);
+      });
+    }
+  });
+  $('#divisorBox').textContent = toFa(S.divi);
+  $('#quotient').innerHTML = '';
+  $('#rightCol').style.width = `calc(var(--cell) * ${Math.max(S.dLen, S.steps.length) + 0.6})`;
+}
+
+function revealRow(r){
+  rowEls[r].forEach(el => el.classList.add('show'));
+  const el = rowEls[r][rowEls[r].length - 1];
+  if(el) ensureVisible(el);
+}
+
+function highlightStep(k){
+  const actives = document.querySelectorAll('#ladder .cell.active');
+  actives.forEach(e => e.classList.remove('active'));
+  const S = G.S; if(!S) return;
+  const st = S.steps[k]; if(!st) return;
+  const r = (k === 0) ? 0 : S.steps[k-1]._rows.next;
+  if(!(r in rowEls)) return;
+  rowEls[r].forEach(el => el.classList.add('active'));
+  const act = document.querySelector('#ladder .cell.active');
+  if(act) ensureVisible(act);
+}
+
+function ensureVisible(el){
+  const board = $('#board');
+  if(typeof board.getBoundingClientRect !== 'function') return;
+  const br = board.getBoundingClientRect();
+  const er = (typeof el.getBoundingClientRect === 'function') ? el.getBoundingClientRect() : null;
+  if(!br || !er) return;
+  const base = board.scrollTop || 0;
+  if(er.top < br.top + 10) board.scrollTop = base - (br.top + 10 - er.top);
+  else if(er.bottom > br.bottom - 10) board.scrollTop = base + (er.bottom - br.bottom + 10);
+}
+
+function doWriteQ(st){
+  const q = $('#quotient');
+  const span = document.createElement('span');
+  span.textContent = toFa(st.q);
+  q.appendChild(span);
+  ensureVisible(q);
+}
+function doProd(st){ revealRow(st._rows.product); }
+function doRes(st){ revealRow(st._rows.line); }
+function doBring(st){ revealRow(st._rows.next); }
+function doRem(st){ revealRow(st._rows.rem); }
+
+/* ---------- messages ---------- */
+function askText(st){
+  const S = G.S, D = S.divi;
+  if(st.m0 > 1){
+    return `شروع از سمت چپ! 👈 ${N(S.divStr[0])} از ${N(D)} کوچیک‌تره؛ حتی یک بار هم توش جا نمی‌شه 😅<br>پس با رقم بعدی می‌خونیم: <b>${N(st.working)}</b>!<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
+  }
+  if(st.working < D){
+    return `اوپس! ${N(st.working)} از ${N(D)} کوچیک‌تره! 🙈<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
+  }
+  if(st.m0 === 1 && S.steps.indexOf(st) === 0){
+    return `شروع از سمت چپ! 👈<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
+  }
+  return `🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
+}
+function writeQMsg(st){
+  return `چون <span class="m">${N(G.S.divi)} × ${N(st.q)} = ${N(st.prod)}</span> → پس <b>${N(st.q)}</b> تا جا می‌شود!<br>✍️ ${N(st.q)} را بالای خط می‌نویسیم.`;
+}
+function prodMsg(st){ return `✏️ <span class="m">${N(st.q)} × ${N(G.S.divi)} = ${N(st.prod)}</span> را زیرش می‌نویسیم.`; }
+function resMsg(st){ return `➖ تفریق: <span class="m">${N(st.working)} − ${N(st.prod)} = ${N(st.rem)}</span>`; }
+function bringMsg(st){
+  const S = G.S;
+  const ni = S.steps.indexOf(st) + 1;
+  const nd = S.steps[ni] ? S.steps[ni].brought : st.brought;
+  return `⬇️ رقم بعدی (${N(nd)}) را از مقسوم پایین می‌آوریم و کنارش می‌نویسیم: <b>${toFa(String(st.rem) + String(nd))}</b>`;
+}
+function finalMsg(S, stars){
+  let t;
+  if(S.remainder === 0){
+    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span><br>باقیمانده ${N(0)} — تقسیم «بر جا» شد! ⭐`;
+  } else {
+    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span> و باقیمانده ${N(S.remainder)} 🌟`;
+  }
+  if(G.mode === 'game'){
+    t += `<br><span class="check">✅ بررسی: <span class="m">${N(S.quotient)} × ${N(S.divi)} + ${N(S.remainder)} = ${N(S.divStr)}</span></span>`;
+    t += `<br>⭐ ستاره‌های این مسئله: ${'⭐'.repeat(stars)}${'☆'.repeat(3 - stars)}`;
+  }
+  return t;
+}
+
+/* ---------- asking ---------- */
+function askQuestion(st){
+  return new Promise(resolve => {
+    let wrongs = 0, done = false;
+    const draw = () => {
+      let extra = '';
+      if(wrongs === 1) extra = `<div class="warn">${pick(WRONGS)}</div>`;
+      if(wrongs >= 2) extra = `<div class="warn">💡 راهنمایی: <span class="m">${N(G.S.divi)} × ${N(st.q)} = ${N(st.prod)}</span> → پس جواب ${N(st.q)} است!</div>`;
+      showBubble(askText(st) + extra, optionsFor(st.q).map(v => ({
+        label: toFa(v), cls: 'opt', zone: 'opt',
+        on: b => {
+          if(done) return;
+          if(v === st.q){
+            done = true;
+            b.classList.add('correct');
+            SFX.correct(); setMascot('🤩');
+            setTimeout(() => { $('#opts').innerHTML = ''; resolve(); }, 380);
+          } else {
+            wrongs++; G.mistakes++; G.levelMistakes++;
+            SFX.wrong(); setMascot('🥺');
+            b.classList.add('wrong');
+            setTimeout(() => { if(!done) draw(); }, 380);
+          }
+        }
+      })));
+    };
+    draw();
+  });
+}
+
+/* ---------- flow ---------- */
+async function animStep(st, tok){
+  const S = G.S, k = S.steps.indexOf(st);
+  setBubbleText(pick(PRAISE) + ' <span style="font-size:.95em">حالا با هم می‌نویسیم:</span>');
+  await sleep(620); if(tok !== G.token) return;
+  setBubbleText(writeQMsg(st)); doWriteQ(st); SFX.write();
+  await sleep(950); if(tok !== G.token) return;
+  setBubbleText(prodMsg(st)); doProd(st); SFX.tick();
+  await sleep(950); if(tok !== G.token) return;
+  setBubbleText(resMsg(st)); doRes(st); SFX.tick();
+  await sleep(700); if(tok !== G.token) return;
+  if(st.isFinal){
+    doRem(st);
+    highlightStep(S.steps.length);
+    return;
+  }
+  doBring(st); SFX.bring();
+  highlightStep(k + 1);
+  setBubbleText(bringMsg(st));
+  await sleep(1000);
+}
+async function tutStep(st, tok){
+  const S = G.S, k = S.steps.indexOf(st);
+  await waitAction('ادامه ➜', null, 'secondary'); if(tok !== G.token) return;
+  setBubbleText(writeQMsg(st)); doWriteQ(st); SFX.write();
+  await waitAction('ادامه ➜', null, 'secondary'); if(tok !== G.token) return;
+  setBubbleText(prodMsg(st)); doProd(st); SFX.tick();
+  await waitAction('ادامه ➜', null, 'secondary'); if(tok !== G.token) return;
+  setBubbleText(resMsg(st)); doRes(st); SFX.tick();
+  await waitAction('ادامه ➜', null, 'secondary'); if(tok !== G.token) return;
+  if(!st.isFinal){
+    doBring(st); SFX.bring();
+    highlightStep(k + 1);
+    setBubbleText(bringMsg(st));
+    await waitAction('ادامه ➜', null, 'secondary'); if(tok !== G.token) return;
+  } else {
+    doRem(st);
+    highlightStep(S.steps.length);
+  }
+}
+/* حالت دستی: دانش‌آموز خودش با دکمه هر مرحله را پیش می‌برد */
+async function manualStep(st, tok){
+  const S = G.S, k = S.steps.indexOf(st);
+  setBubbleText('حالا با هم می‌نویسیم! روی هر دکمه بزن تا مرحله‌ی بعدی نوشته شود ✋');
+  await waitAction('✍️ نوشتنِ رقمِ جواب', null, 'secondary'); if(tok !== G.token) return;
+  setBubbleText(writeQMsg(st)); doWriteQ(st); SFX.write();
+  await waitAction('✏️ نوشتنِ ضرب', null, 'secondary'); if(tok !== G.token) return;
+  setBubbleText(prodMsg(st)); doProd(st); SFX.tick();
+  await waitAction('➖ تفریق', null, 'secondary'); if(tok !== G.token) return;
+  setBubbleText(resMsg(st)); doRes(st); SFX.tick();
+  if(!st.isFinal){
+    await waitAction('⬇️ آوردنِ رقمِ بعدی', null, 'secondary'); if(tok !== G.token) return;
+    doBring(st); SFX.bring();
+    highlightStep(k + 1);
+    setBubbleText(bringMsg(st));
+  } else {
+    await waitAction('🏁 نوشتنِ باقی‌مانده', null, 'secondary'); if(tok !== G.token) return;
+    doRem(st);
+    highlightStep(S.steps.length);
+  }
+}
+
+async function playProblem(){
+  const P = G.probs[G.pi];
+  G.S = simulate(String(P.d), P.di);
+  G.mistakes = 0;
+  buildStage();
+  updateDots();
+  setMascot('👨‍🏫');
+  const tok = G.token;
+  for(let s = 0; s < G.S.steps.length; s++){
+    if(tok !== G.token) return;
+    const st = G.S.steps[s];
+    if(G.mode === 'game'){
+      await askQuestion(st);
+      if(tok !== G.token) return;
+      if(G.stepMode === 'manual') await manualStep(st, tok);
+      else await animStep(st, tok);
+    } else {
+      setBubbleText(askText(st));
+      await tutStep(st, tok);
+    }
+    if(tok !== G.token) return;
+  }
+  if(tok !== G.token) return;
+  await finishProblem();
+}
+
+async function finishProblem(){
+  const S = G.S, tok = G.token;
+  const stars = G.mistakes === 0 ? 3 : G.mistakes === 1 ? 2 : 1;
+  G.levelStarsEarned += stars;
+  $('#starCount').textContent = toFa(G.levelStarsEarned);
+  popStars();
+  SFX.win(); confetti(36); setMascot('🥳');
+  setBubbleText(finalMsg(S, stars));
+  if(G.mode === 'tutorial'){
+    await waitAction('بریم بازی! 🎮', () => { showScreen('menu'); renderMenu(); });
+    return;
+  }
+  G.pi++;
+  const last = G.pi >= 5;
+  await waitAction(last ? 'تقدیر! 🏆' : 'مسئله‌ی بعدی ➜', () => {
+    setMascot('👨‍🏫');
+    if(G.pi >= 5) levelComplete();
+    else playProblem();
+  });
+}
+
+function startGame(li, mode = 'game'){
+  G.mode = mode; G.levelIdx = li;
+  G.levelStarsEarned = 0; G.levelMistakes = 0; G.pi = 0;
+  G.levelStartTime = Date.now();
+  if(mode === 'tutorial'){ G.probs = [{ d: 204, di: 4 }]; }
+  else { G.probs = genLevelProblems(li + 1); }
+  showScreen('game');
+  updateHud(); updateDots();
+  const tok = ++G.token;
+  setMascot('👨‍🏫');
+  const intro = mode === 'tutorial'
+    ? `سلام! من حکیم هستم 👨‍🏫 امروز با هم تقسیم چکشی یاد می‌گیریم!<br>عدد بزرگ (مقسوم) زیر خط، عدد کوچیک (مقسوم‌علیه) کنارش، و جواب بالای خط می‌نویسیم.<br>حالا مرحله به مرحله <span class="m">${N(204)} ÷ ${N(4)}</span> را انجام می‌دیم. آماده‌ای؟`
+    : `سلام <b>${playerName()}</b>! ${LEVELS[li].icon} <b>مرحله‌ی ${toFa(li+1)}: ${LEVELS[li].name}</b><br>${LEVELS[li].desc}<br>۵ مسئله داریم. تو بگو مقسوم‌علیه چند بار جا می‌شود، ما با هم می‌نویسیمش! بزن بریم! 🚀`;
+  setBubbleText(intro);
+  waitAction(mode === 'tutorial' ? 'بزن بریم! 🚀' : 'شروع! 🚀', () => { if(tok === G.token) playProblem(); });
+}
+
+/* ---------- certificate ---------- */
+function buildCertHTML(){
+  const total = saved.stars.reduce((a, b) => a + b, 0);
+  const done = saved.stars.filter(s => s > 0).length;
+  const champion = done === 5;
+  let certDate = '';
+  try{ certDate = new Date().toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric' }); }catch(e){}
+  const rows = LEVELS.map((L, i) => {
+    const st = saved.stars[i] || 0;
+    let li, mark, res;
+    if(st > 0){
+      mark = saved.perfect[i] ? '<span class="c-ok">✅</span>' : '<span class="c-no">✏️</span>';
+      res = `${toFa(st)} از ۱۵ ⭐`;
+      li = `<li style="--i:${i}">`;
+    } else {
+      mark = '<span class="c-lock">🔒</span>';
+      res = 'هنوز بازی نشده';
+      li = `<li class="c-pending" style="--i:${i}">`;
+    }
+    return `${li}<span class="c-ic">${L.icon}</span><span class="c-nm">مرحله‌ی ${toFa(i+1)}: ${L.name}</span>${mark}<span class="c-res">${res}</span></li>`;
+  }).join('');
+  return `
+    <div class="cert" id="certCard">
+      <div class="cert-orn">✦ ✦ ✦</div>
+      <div class="ov-emoji">${champion ? '🏆' : '🎖️'}</div>
+      <h2 class="cert-title">${champion ? 'گواهیِ قهرمانی' : 'گواهیِ تلاش'}</h2>
+      <div class="cert-sub">بازیِ تقسیم چکشی • پایه‌ی پنجم</div>
+      <p class="cert-to">${champion ? 'تو استادِ تقسیم شدی!' : 'تلاشِ قشنگت را ستایش می‌کنیم!'}<br>این گواهی با افتخار اهدا می‌شود به:</p>
+      <span class="cert-name">${playerName()}</span>
+      <p class="cert-note">به پاسِ پشت‌کار و دقتِ او در آموختنِ «تقسیم چکشی»،<br>مرحله به مرحله 👨‍🏫💚</p>
+      <ul class="cert-list">${rows}</ul>
+      <div class="cert-legend">✅ = بدونِ هیچ اشتباهی • ✏️ = با کمی تلاش و تمرین • 🔒 = هنوز بازی نشده</div>
+      <div class="cert-total">مجموع امتیازها: <b>${toFa(total)} از ۷۵</b> ⭐${champion ? '' : ' — ادامه بده تا قهرمان شوی! 🚀'}</div>
+      <div class="cert-seal"><span class="seal-ic">👨‍🏫</span><span class="seal-tx">گواهیِ رسمی<br>تقسیم چکشی</span></div>
+      <div class="cert-foot">
+        ${certDate ? `<div class="cert-date">📅 ${certDate}</div>` : ''}
+        <div>طراحی و توسعه: <b>مهدی شریفیان</b><br>آموزگار پایه‌ی پنجم • دبستان حکمت</div>
+      </div>
+    </div>`;
+}
+function showCertificate(){
+  const ov = $('#ovCard');
+  ov.innerHTML = buildCertHTML() + `
+    <div class="actions">
+      <button class="btn primary" id="ovPrint">🖨️ چاپِ گواهی</button>
+      <button class="btn ghost" id="ovCloseCert">بستن ✖️</button>
+    </div>`;
+  $('#ovPrint').onclick = () => window.print();
+  $('#ovCloseCert').onclick = hideOverlay;
+  $('#overlay').classList.remove('hidden');
+}
+
+// تابع ارسال نتایج به پنل معلم
+function sendResultsToPanel(gameId, score, stars, level, duration, details = {}) {
+  const studentName = playerName();
+  const data = {
+    student_name: studentName,
+    game_id: gameId,
+    score: score,
+    stars: stars,
+    level: level,
+    duration: duration,
+    device: window.innerWidth <= 768 ? 'mobile' : 'desktop',
+    details: details,
+    timestamp: new Date().toISOString()
+  };
+  
+  fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(() => {});
+}
+
+function levelComplete(){
+  const idx = G.levelIdx;
+  SFX.level(); confetti(90);
+  saved.stars[idx] = Math.max(saved.stars[idx] || 0, G.levelStarsEarned);
+  saved.perfect[idx] = saved.perfect[idx] || G.levelMistakes === 0;
+  saved.next = Math.max(saved.next, Math.min(idx + 2, 5));
+  persist();
+  
+  // ارسال نتایج به پنل معلم
+  const endTime = Date.now();
+  const levelDuration = (endTime - (G.levelStartTime || endTime)) / 1000;
+  sendResultsToPanel(
+    'math-learning-1',
+    G.levelStarsEarned,
+    G.levelStarsEarned,
+    idx + 1,
+    Math.round(levelDuration),
+    { mistakes: G.levelMistakes, perfect: G.levelMistakes === 0 }
+  );
+  
+  const total = saved.stars.reduce((a, b) => a + b, 0);
+  const k = Math.max(1, Math.min(3, Math.round(G.levelStarsEarned / 5)));
+  const justUnlocked = saved.stars.filter(s => s > 0).length === 1;
+  const ov = $('#ovCard');
+  if(idx === 4){
+    ov.innerHTML = buildCertHTML() + `
+      <div class="actions">
+        <button class="btn primary" id="ovPrint">🖨️ چاپِ گواهی</button>
+        <button class="btn ghost" id="ovNext">از اول دوباره 🔄</button>
+        <button class="btn ghost" id="ovMenu">منو 🏠</button>
+      </div>`;
+    $('#ovPrint').onclick = () => window.print();
+    $('#ovNext').onclick = () => { hideOverlay(); startGame(0); };
+    $('#ovMenu').onclick = () => { hideOverlay(); goMenu(); };
+  } else {
+    ov.innerHTML = `
+      <div class="ov-emoji">🎊</div>
+      <h2>آفرین! مرحله‌ی ${toFa(idx+1)} تموم شد!</h2>
+      <div class="ov-stars">${'⭐'.repeat(k)}${'☆'.repeat(3-k)}</div>
+      <p>ستاره‌های این مرحله: ${toFa(G.levelStarsEarned)} از ۱۵</p>
+      <p>کل ستاره‌ها: ${toFa(total)} از ۷۵</p>
+      ${justUnlocked ? '<p class="unlock-hint">🏅 آفرین! با این برد، <b>گواهی‌ات</b> از منو باز شد 📜</p>' : ''}
+      <div class="actions">
+        <button class="btn primary" id="ovNext">مرحله‌ی بعد ➜</button>
+        <button class="btn ghost" id="ovRetry">دوباره 🔄</button>
+        <button class="btn ghost" id="ovMenu">منو 🏠</button>
+      </div>`;
+    $('#ovNext').onclick = () => { hideOverlay(); startGame(idx + 1); };
+    $('#ovRetry').onclick = () => { hideOverlay(); startGame(idx); };
+    $('#ovMenu').onclick = () => { hideOverlay(); goMenu(); };
+  }
+  $('#overlay').classList.remove('hidden');
+}
+function hideOverlay(){ $('#overlay').classList.add('hidden'); }
+function goMenu(){ G.token++; showScreen('menu'); renderMenu(); }
+
+/* ---------- menu ---------- */
+function renderMenu(){
+  $('#btnPlay').innerHTML = `🎮 شروع بازی${saved.next > 1 ? ' (مرحله‌ی ' + toFa(saved.next) + ')' : ''}`;
+  const doneCount = saved.stars.filter(s => s > 0).length;
+  const bc = $('#btnCert');
+  if(doneCount === 0){
+    bc.innerHTML = '🔒 گواهی من';
+    bc.disabled = true;
+    bc.title = 'با تکمیلِ موفقِ یک مرحله باز می‌شود';
+  } else {
+    bc.innerHTML = doneCount === 5 ? '🏆 گواهیِ قهرمانی' : '🏅 گواهی من';
+    bc.disabled = false;
+    bc.title = '';
+  }
+  const g = $('#levelGrid'); g.innerHTML = '';
+  LEVELS.forEach((L, i) => {
+    const st = saved.stars[i] || 0;
+    const card = document.createElement('div');
+    card.className = 'lv-card';
+    card.innerHTML = `
+      <div class="ic">${L.icon}</div>
+      <div class="nm">مرحله‌ی ${toFa(i+1)}</div>
+      <div class="ds">${L.desc}</div>
+      <div class="st">${st > 0 ? '⭐'.repeat(Math.max(1, Math.min(3, Math.round(st/5)))) + ' ' + toFa(st) + '/۱۵' : 'هنوز بازی نشده'}</div>`;
+    card.onclick = () => { if(requireName()) startGame(i); };
+    g.appendChild(card);
+  });
+  updateSoundBtns();
+}
+function updateSoundBtns(){
+  const t = G.sound ? '🔊 صدا' : '🔇 بی‌صدا';
+  $('#btnSound').textContent = t;
+  $('#btnSound2').textContent = G.sound ? '🔊' : '🔇';
+}
+function toggleSound(){
+  G.sound = !G.sound; saved.sound = G.sound; persist();
+  updateSoundBtns();
+  if(G.sound) beep(660, .08);
+}
+function updateStepBtn(){
+  const auto = G.stepMode === 'auto';
+  const b = $('#btnStep');
+  if(b){
+    b.textContent = auto ? '⚡' : '✋';
+    b.title = auto ? 'نمایش خودکار — برای «قدم‌به‌قدم» بزن' : 'نمایش قدم‌به‌قدم — برای «خودکار» بزن';
+  }
+  const m = $('#btnStepMenu');
+  if(m) m.innerHTML = auto ? '⚡ نمایش خودکار' : '✋ نمایش قدم‌به‌قدم';
+}
+function toggleStepMode(){
+  G.stepMode = G.stepMode === 'auto' ? 'manual' : 'auto';
+  saved.stepMode = G.stepMode; persist();
+  updateStepBtn();
+  beep(520, .07);
+}
+
+/* ---------- init ---------- */
+function init(){
+  G.sound = saved.sound !== false;
+  G.stepMode = saved.stepMode === 'manual' ? 'manual' : 'auto';
+  $('#btnStep').onclick = toggleStepMode;
+  $('#btnStepMenu').onclick = toggleStepMode;
+  updateStepBtn();
+  const ni = $('#nameInput');
+  ni.value = saved.name;
+  ni.addEventListener('input', () => {
+    saved.name = ni.value.trim(); persist();
+    if(saved.name){
+      $('#nameRow').classList.remove('err');
+      $('#nameErr').classList.remove('show');
+    }
+  });
+  ni.addEventListener('keydown', e => { if(e.key === 'Enter') ni.blur(); });
+  $('#btnPlay').onclick = () => { if(requireName()) startGame(Math.min(saved.next, 5) - 1); };
+  $('#btnLearn').onclick = () => startGame(0, 'tutorial');
+  $('#btnCert').onclick = () => { if(!$('#btnCert').disabled) showCertificate(); };
+  $('#btnHome').onclick = goMenu;
+  $('#btnHelp').onclick = () => $('#help').classList.remove('hidden');
+  $('#btnHelpClose').onclick = () => $('#help').classList.add('hidden');
+  $('#btnSound').onclick = toggleSound;
+  $('#btnSound2').onclick = toggleSound;
+  renderMenu();
+  showScreen('menu');
+}
+init();
+</script>
+  <script src="../js/security.js" defer></script>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/pwa-register.js" defer></script>
+  <script src="../js/lazyload.js" defer></script>
+  <script src="../js/accessibility.js" defer></script>
+  <script src="../js/webp-support.js" defer></script>
+  <script src="../js/analytics.js" defer></script>
+  <script src="../js/themes.js" defer></script>
+  <script src="../js/utils.js" defer></script>
+  <section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a488d2979d36cce4',t:'MTc5MTY2ODgzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
