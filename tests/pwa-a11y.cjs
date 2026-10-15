@@ -67,5 +67,26 @@ function page(html = '') {
   assert(!w.document.documentElement.classList.contains('hk-hc-light'));
   await new Promise(resolve => setTimeout(resolve, 10));
   dom.window.close();
-  console.log('PASS: PWA hosts, labels, banner dismissal/storage, installation cleanup; contrast light/dark/theme/off; CSS guards');
+  /* پس‌زمینهٔ شفاف (مثل لابی که فقط گرادیان دارد): حدس از رنگ متن تم */
+  dom = page('<main>test</main>'); w = dom.window;
+  w.document.body.style.backgroundImage = 'radial-gradient(#1b1035, #07040f)';
+  w.document.body.style.color = 'rgb(241, 236, 255)'; // متن روشن ⇒ تم تیره
+  w.eval(a11y);
+  w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
+  w.HakimA11y.toggleContrast();
+  assert(w.getComputedStyle(w.document.body).backgroundColor === 'rgba(0, 0, 0, 0)');
+  assert(!w.document.documentElement.classList.contains('hk-hc-light'), 'تم تیرهٔ پس‌زمینهٔ شفاف نباید hk-hc-light بگیرد');
+  w.document.body.style.color = 'rgb(32, 41, 67)'; // متن تیره ⇒ تم روشن
+  await new Promise(resolve => setTimeout(resolve, 10));
+  assert(w.document.documentElement.classList.contains('hk-hc-light'), 'تم روشنِ پس‌زمینهٔ شفاف باید hk-hc-light بگیرد');
+  // بدون هیچ سرنخی (متن هم رنگ سیستم) → بوم سفید مرورگر فرض می‌شود
+  w.document.body.style.removeProperty('color');
+  w.document.body.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+  await new Promise(resolve => setTimeout(resolve, 10));
+  assert(w.document.documentElement.classList.contains('hk-hc-light'), 'حالت پیش‌فرض باید روشن بماند');
+  w.HakimA11y.toggleContrast(); // خاموش‌کردن کنتراست → حذف کلاس
+  assert(!w.document.documentElement.classList.contains('hk-hc-light'));
+  await new Promise(resolve => setTimeout(resolve, 10));
+  dom.window.close();
+  console.log('PASS: PWA hosts, labels, banner dismissal/storage, installation cleanup; contrast light/dark/theme/off, transparent-bg text inference; CSS guards');
 })().catch(error => { console.error(error); process.exit(1); });

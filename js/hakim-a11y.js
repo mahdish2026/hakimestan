@@ -61,10 +61,16 @@
 
   function pageIsLight() {
     try {
-      var l = luminanceOf(getComputedStyle(document.body).backgroundColor);
+      var cs = getComputedStyle(document.body);
+      var l = luminanceOf(cs.backgroundColor);
       if (l === null) l = luminanceOf(getComputedStyle(document.documentElement).backgroundColor);
-      if (l === null) return true; // بوم پیش‌فرض مرورگر سفید است
-      return l > 0.5;
+      if (l !== null) return l > 0.5;
+      /* پس‌زمینهٔ شفاف (مثل لابی که پس‌زمینه‌اش فقط گرادیان است):
+         از رنگ متن خودِ صفحه حدس بزن — تم‌ها رنگ متن را هماهنگ با
+         پس‌زمینه ست می‌کنند: متن روشن ⇒ پس‌زمینه تیره ⇒ صفحه تیره */
+      var t = luminanceOf(cs.color);
+      if (t !== null) return t < 0.5;
+      return true; /* بوم پیش‌فرض مرورگر سفید است */
     } catch (e) { return true; }
   }
 
