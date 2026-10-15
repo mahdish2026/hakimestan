@@ -234,12 +234,19 @@ html.hk-high-contrast select {
   }
 }
 
-/* خاموش‌کردن دستی انیمیشن */
+/* خاموش‌کردن دستی انیمیشن — الگوی امن: انیمیشن‌ها در ۰.۰۱ms به
+   فریم پایانی می‌رسند. (الگوی قبلی animation-play-state:paused بود که
+   انیمیشن را در فریم اول قفل می‌کرد؛ انیمیشن‌هایی که با opacity:0 یا
+   scale کوچک شروع می‌شوند — مثل چهرهٔ حکیم، نتیجهٔ سؤال یا دکمهٔ
+   بازگشت — در دستگاه کاربر نامرئی می‌ماندند.) */
 html.hk-reduce-motion *,
 html.hk-reduce-motion *::before,
 html.hk-reduce-motion *::after {
-  animation-play-state: paused !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
+  animation-delay: 0s !important;
+  scroll-behavior: auto !important;
 }
 
 /* ══════════════════════════════════════════════════════════
