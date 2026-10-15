@@ -13,6 +13,14 @@
  *     ساده پیش از آن، مرورگر قدیمی رنگ تخمینی می‌گیرد و مرورگر نو
  *     همچنان از color-mix استفاده می‌کند.
  *
+ * ⚠ هشدار حیاتی:
+ *   برخی صفحه‌ها داخل <script> خود رشتهٔ «<style>» و «</style>» دارند
+ *   (قالب Word و HTML برای خروجی گرفتن). اگر محتوای <script> را مثل CSS
+ *   پردازش کنیم، کد جاوااسکریپت آسیب می‌بیند (مثلاً `for(;;)` به `for()` تبدیل می‌شود).
+ *
+ *   بنابراین این ابزار <script>…</script> را کامل کنار می‌گذارد
+ *   و فقط <style>های واقعی را ویرایش می‌کند.
+ *
  * idempotent است. اجرا: node tools/css-compat.mjs [--dry]
  */
 import { readFile, writeFile, readdir } from 'node:fs/promises';
@@ -409,7 +417,16 @@ async function main() {
     let text = await readFile(file, 'utf8');
     const original = text;
 
+    // ── گام ۰: پوشاندن محدودهٔ <script>…</script> تا دست‌نخورده بماند ──
+    //    (بعضی صفحه‌ها داخل JS رشتهٔ <style> دارند)
+    const shielded = [];
+
     if (file.endsWith('.html')) {
+      text = text.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, (m) => {
+        shielded.push(m);
+        return `\u0000HKSCRIPT${shielded.length - 1}\u0000`;
+      });
+
       // فقط داخل <style> ها دست می‌بریم
       text = text.replace(/<style([^>]*)>([\s\S]*?)<\/style>/gi, (full, attrs, css) => {
         const vars = collectVars(css);
@@ -428,6 +445,11 @@ async function main() {
       totalFallback += r2.count;
       totalSkipped += r2.skipped;
       text = r2.css;
+    }
+
+    // ── بازگردانی محدودهٔ <script> که دست‌نخورده نگه داشته شد ──
+    if (shielded.length) {
+      text = text.replace(/\u0000HKSCRIPT(\d+)\u0000/g, (m, i) => shielded[Number(i)]);
     }
 
     if (text !== original) {

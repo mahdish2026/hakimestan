@@ -2,6 +2,10 @@
 /**
  * gen-contrast-layer.mjs — تولید لایهٔ «اصلاح کنتراست» به‌صورت خودکار
  *
+ * ⚠ هشدار: بعضی صفحه‌ها داخل <script> خود رشتهٔ «<style>» و «</body>» دارند
+ * (قالب Word و HTML برای خروجی گرفتن). این ابزار آن محدوده‌ها را کامل
+ * نادیده می‌گیرد تا نه از کد جعلی تحلیل بسازد و نه بلوک را درون JS بگذارد.
+ *
  * چرا لایه و نه ویرایش درجا؟
  *   • صفحه‌ها چند تم دارند (روشن / تیره / کلاس‌های data-theme).
  *     ویرایش مستقیم رنگ‌ها در جای خودشان می‌تواند یک تم را خراب کند.
@@ -219,8 +223,16 @@ async function main() {
     const hadLayer = prev.test(text);
     text = text.replace(prev, '');
 
+    // ── پوشاندن <script>…</script> ──
+    //    رشته‌های <style> داخل جاوااسکریپت نباید تحلیل شوند
+    const shielded = [];
+    let scannable = text.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, (m) => {
+      shielded.push(m);
+      return `\u0000HKSCRIPT${shielded.length - 1}\u0000`;
+    });
+
     const allFindings = [];
-    for (const cssBlock of [...text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)]) {
+    for (const cssBlock of [...scannable.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)]) {
       allFindings.push(...analyze(cssBlock[1]));
     }
     // حذف تکراری‌ها (یک گزینشگر چند بار)
@@ -254,7 +266,10 @@ async function main() {
     total += unique.length;
     report.push([rel, unique.length]);
     if (!DRY) {
-      text = text.replace(/<\/body>/i, `${block}</body>`);
+      // آخرین </body> واقعی (نه آن‌هایی که داخل رشته‌های جاوااسکریپت هستند)
+      const lb = text.toLowerCase().lastIndexOf('</body>');
+      if (lb === -1) { report.push([rel, 'بدون </body>']); continue; }
+      text = text.slice(0, lb) + block + text.slice(lb);
       await writeFile(file, text, 'utf8');
     }
   }

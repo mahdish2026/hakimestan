@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>آزمایشگاه حکیمستان — علوم پنجم دبستان</title>
@@ -95,7 +98,6 @@ img{max-width:100%}
 }
 .muted{color:var(--muted)}
 .center{text-align:center}
-
 
 /* ---------- forms ---------- */
 .field{display:block;margin:0 0 1rem}
@@ -364,9 +366,24 @@ table.res tr:last-child td{border-bottom:0}
 .timer i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--teal));transition:width .2s}
 
 </style>
-<!-- hakim-core:start -->
-<link rel="stylesheet" href="../css/a11y.css">
-<!-- hakim-core:end -->
+<!-- hakim-meta:start -->
+<meta name="theme-color" content="#08140a">
+<link rel="canonical" href="https://hakimistan.ir/games/lab2d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="آزمایشگاه حکیمستان — علوم پنجم دبستان">
+<meta property="og:description" content="بازی آموزشی دوبعدی شش‌آزمایشی علوم پنجم دبستان — طراح: مهدی شریفیان">
+<meta property="og:url" content="https://hakimistan.ir/games/lab2d.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="آزمایشگاه حکیمستان — علوم پنجم دبستان">
+<meta name="twitter:description" content="بازی آموزشی دوبعدی شش‌آزمایشی علوم پنجم دبستان — طراح: مهدی شریفیان">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 
 <body>
@@ -642,7 +659,6 @@ table.res tr:last-child td{border-bottom:0}
 </div>
 
 <div id="toast" role="status"></div>
-
 
 <script>
 /*!
@@ -2592,7 +2608,6 @@ BUILDERS['arm'] = function(taskbar, cv, c){
   };
 };
 
-
 /* ---------- ۶) فرسایش خاک ---------- */
 BUILDERS['erosion'] = function(taskbar, cv, c){
   let slope=20, rain=45, plants=20, raining=true, lost=0, parts=[], time=0;
@@ -3564,7 +3579,6 @@ $('btn-logout').onclick = ()=>{
   if(confirm('از آزمایشگاه خارج می‌شی؟ پیشرفتت پاک می‌شه.')) location.reload();
 };
 
-
 /* ============================================================
    init
    ============================================================ */
@@ -3648,9 +3662,6 @@ renderLobby();
   } catch(e){}
 })();
 </script>
-
-
-
 <!-- hakim-core:start -->
 <script src="../js/hakim-security.js" defer></script>
 <script src="../js/hakim-a11y.js" defer></script>

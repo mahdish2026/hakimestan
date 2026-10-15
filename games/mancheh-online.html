@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
 <link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
@@ -448,9 +451,23 @@ details.help[open] summary::before{transform:rotate(90deg);}
 }
 *:focus-visible{outline:3px solid var(--turq-lite);outline-offset:2px;border-radius:10px;}
 </style>
-<!-- hakim-core:start -->
-<link rel="stylesheet" href="../css/a11y.css">
-<!-- hakim-core:end -->
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/games/mancheh-online.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="🎲 منچِ دانش آنلاین — حکیمستان">
+<meta property="og:description" content="منچِ دانش آنلاین — بازی آموزشی ۲ تا ۴ نفره از حکیمستان. هر کس با گوشی خودش با کد اتاق وارد می‌شود؛ جواب درست بدهی، تاس می‌اندازی!">
+<meta property="og:url" content="https://hakimistan.ir/games/mancheh-online.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🎲 منچِ دانش آنلاین — حکیمستان">
+<meta name="twitter:description" content="منچِ دانش آنلاین — بازی آموزشی ۲ تا ۴ نفره از حکیمستان. هر کس با گوشی خودش با کد اتاق وارد می‌شود؛ جواب درست بدهی، تاس می‌اندازی!">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body>
 
@@ -1454,7 +1471,7 @@ function applyState(res){
   }
 }
 
-function playersSig(ps){ return (ps || room.players).map(p => p.name + '|' + p.color).join(';'); }
+function playersSig(ps){ return (ps || room.players).map(p => p.name + '|' + p.color).join(';;'); }
 function rebuildBoard(){
   room.builtFor = playersSig();
   room.disp = room.players.map(p => p.tokens.slice());
@@ -2517,13 +2534,6 @@ console.log('سرور:', API_URL);
   } catch(e){}
 })();
 </script>
-
-
-
-
-
-
-
 <!-- hakim-core:start -->
 <script src="../js/hakim-security.js" defer></script>
 <script src="../js/hakim-a11y.js" defer></script>

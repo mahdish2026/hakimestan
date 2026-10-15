@@ -57,10 +57,21 @@ function buildScripts(prefix) {
 ${MARKER_END}`;
 }
 
-function inject(html, block, beforeTag) {
-  const idx = html.lastIndexOf(beforeTag);
+/**
+ * تزریق پیش از یک تگ.
+ *
+ * ⚠ نکتهٔ مهم: بعضی صفحه‌ها داخل رشته‌های جاوااسکریپت خود «</head>» دارند
+ * (قالب‌های Word و HTML برای خروجی گرفتن). اگر از lastIndexOf استفاده کنیم،
+ * بلوک داخل کد جاوااسکریپت می‌افتد و در <head> واقعی هیچ‌چیز اضافه نمی‌شود.
+ *
+ * بنابراین برای </head> از «نخستین» رخداد و برای </body> از «آخرین»
+ * رخداد استفاده می‌شود.
+ */
+function inject(html, block, tag, { first = false, after = false } = {}) {
+  const idx = first ? html.indexOf(tag) : html.lastIndexOf(tag);
   if (idx === -1) return null;
-  return html.slice(0, idx) + block + '\n' + html.slice(idx);
+  const at = after ? idx + tag.length : idx;
+  return html.slice(0, at) + block + '\n' + html.slice(at);
 }
 
 async function main() {
@@ -79,18 +90,31 @@ async function main() {
     const scripts = buildScripts(prefix);
 
     // حذف نسخه‌های قبلی (اگر با همان نشانگر تزریق شده بودند)
-    html = html.replace(new RegExp(`\\s*${escapeRe(MARKER_START)}[\\s\\S]*?${escapeRe(MARKER_END)}`, 'g'), '');
+    // حذف کامل بلوک قبلی همراه با فاصله‌های اطرافش تا خط خالی تکرار نشود
+    html = html.replace(
+      new RegExp(`\\s*${escapeRe(MARKER_START)}[\\s\\S]*?${escapeRe(MARKER_END)}\\s*`, 'g'), '\n');
+    html = html.replace(/\n{3,}/g, '\n\n');
 
-    if (!/<\/head\s*>/i.test(html)) {
-      report.push(['بدون </head>', rel]);
+    if (!/<head[\s>]/i.test(html)) {
+      report.push(['بدون <head>', rel]);
       continue;
     }
     if (!/<\/body\s*>/i.test(html)) {
       report.push(['بدون </body>', rel]);
       continue;
     }
+    // سلامت: </head> واقعی باید پیش از <body> باشد
+    const headAt = html.indexOf('</head>');
+    const bodyAt = html.search(/<body[\s>]/i);
+    if (headAt === -1 || (bodyAt !== -1 && headAt > bodyAt)) {
+      report.push(['</head> نامعتبر', rel]);
+      continue;
+    }
 
-    const withHead = inject(html, block, '</head>');
+    // CSS دسترس‌پذیری بلافاصله بعد از باز شدن <head> می‌آید تا با
+    // بلوک متادیتا (که پیش از </head> تزریق می‌شود) هیچ‌وقت جابه‌جا نشود.
+    let withHead = inject(html, block, '<head>', { first: true, after: true });
+    if (withHead === null) withHead = inject(html, block, '</head>', { first: true });
     // اسکریپت‌ها پیش از لایهٔ کنتراست بیایند تا آن لایه همیشه آخرین چیز در سند بماند
     const contrastMarker = '<!-- hakim-contrast:start -->';
     const anchor = html.includes(contrastMarker) ? contrastMarker : '</body>';

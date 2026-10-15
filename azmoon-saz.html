@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#160c05">
@@ -355,6 +358,23 @@ iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px 
 @media(max-width:420px){.tpl-grid{grid-template-columns:repeat(2,1fr)}.tab .tl{display:none}.tab{padding:8px 10px}.tab.active .tl{display:inline}}
 @media print{body{background:#fff}.top,.footer,.hakim,.toast-wrap,.no-print{display:none!important}.wrap{padding:0;max-width:none}.card{border:0;box-shadow:none;padding:0}}
 </style>
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/azmoon-saz.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="آزمون‌ساز حکیمستان">
+<meta property="og:description" content="آزمون‌ساز حکیمستان — ابزار حرفه‌ای طراحی، چاپ و برگزاری آزمون برای معلمان">
+<meta property="og:url" content="https://hakimistan.ir/azmoon-saz.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="آزمون‌ساز حکیمستان">
+<meta name="twitter:description" content="آزمون‌ساز حکیمستان — ابزار حرفه‌ای طراحی، چاپ و برگزاری آزمون برای معلمان">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body data-theme="dark">
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -1492,9 +1512,6 @@ function resultDetailModal(r){
   $('#mdClose').onclick=closeModal;
 }
 function reportHTML(list,title){const css=`body{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111;padding:14px}h1{text-align:center;font-size:18px;margin:0 0 4px}h2{font-size:15px;margin:0 0 8px}.m{text-align:center;color:#555;font-size:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #666;padding:5px 7px;text-align:center}th{background:#eee}td.r{text-align:right}.card{border:2px solid #333;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid}.big{font-size:26px;font-weight:900;text-align:center;padding:8px;background:#f3f3f3;border-radius:8px;margin:8px 0}.sig{display:flex;justify-content:space-between;margin-top:14px;font-size:12px}@media print{@page{size:A4;margin:10mm}}`;return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title><link href="${GOOGLE_FONTS_URL}" rel="stylesheet"><style>${css}</style>
-<!-- hakim-core:start -->
-<link rel="stylesheet" href="css/a11y.css">
-<!-- hakim-core:end -->
 </head><body>`}
 async function gradingAct(n,b){
   const id=b?.dataset.id;const r=results.find(x=>x._id===id);

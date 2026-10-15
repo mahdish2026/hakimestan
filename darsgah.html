@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <link rel="preload" href="assets/fonts/vazirmatn-100-900.woff2" as="font" type="font/woff2" crossorigin>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,7 +81,6 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
 @media(max-width:360px){.record-bar #pauseBtn span{font-size:9px}.record-bar #pauseBtn{padding:5px}.record-bar .btn-danger{font-size:10px}.record-bar .timer{font-size:17px}.record-bar .rec-size{font-size:8px}.mobile-top-tools{flex-wrap:wrap}.mobile-top-tools #mobileCamera{min-width:70px}}
 @media(max-height:520px) and (orientation:landscape){.focus-mode .preview-stage{height:calc(100dvh - 164px);min-height:110px;max-height:none;width:auto}.focus-mode .book-toolbar{min-height:35px}.focus-mode .pdf-controls{padding:4px}.focus-mode .pdf-controls .btn{min-height:31px;height:31px}.focus-mode .page-counter input{height:29px}.focus-mode .pan-hint,.focus-mode .book-bottom{display:none}.focus-mode .record-bar{min-height:60px;padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}}
 
-
 /* Edition 3: adaptive video geometry, ink layers and safe WebM editing. */
 :root{--dock-height:174px}.preview-stage{width:min(100%,calc(72vh * var(--frame-ratio,1.7777778)));height:auto;aspect-ratio:var(--frame-ratio,1.7777778);max-height:none;margin-inline:auto}.preview-stage canvas{position:absolute;inset:0;width:100%;height:100%}.output-video{max-height:62vh;object-fit:contain;background:#e9eee3}.record-dock{position:sticky;bottom:10px;z-index:30;border-radius:15px;background:#fffefa;box-shadow:0 5px 25px #273e171a}.record-dock .record-bar{position:static;box-shadow:none;border-radius:15px 15px 0 0;min-height:62px;padding:10px 14px}.drawing-toolbar{border:1px solid var(--line);border-top:0;border-radius:0 0 15px 15px;background:#fffefa;padding:9px 12px;display:flex;flex-direction:column;gap:7px}.ink-tools,.ink-options,.ink-colors{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.ink-tool{min-height:35px;padding:5px 8px;border:1px solid transparent;border-radius:8px;background:transparent;display:inline-flex;align-items:center;gap:4px;font-size:13px}.ink-tool span{font-size:10px}.ink-tool:hover{background:#f0f2e9}.ink-tool[aria-pressed=true]{border-color:#ffb180;background:#fff0e6;color:#a54d1e}.clear-ink{margin-right:auto}.ink-colors{gap:6px}.ink-color{background:var(--ink-color);border:3px solid #fff;border-radius:50%;width:23px;height:23px;box-shadow:0 0 0 1px #daddd1;position:relative}.ink-color[aria-pressed=true]{box-shadow:0 0 0 2px var(--orange);transform:scale(1.08)}.stroke-select{display:flex;gap:5px;align-items:center;font-size:10px;margin-right:9px}.stroke-select select{font-size:11px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink);padding:3px 5px;min-height:30px}.ink-help{font-size:9px;color:var(--muted);margin-right:auto}.trim-hint{font-size:10px;color:#956b38;padding:5px 12px;background:#fff4e4;border-radius:0 0 12px 12px;line-height:1.8}.trim-button{border-color:#edd8bd;background:#fffbef;color:#8c602d}.trim-play-tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:12px 0 17px}.trim-play-tools span{font-size:11px;color:var(--muted);margin-right:auto}.trim-range{width:100%;accent-color:var(--orange);direction:ltr;min-height:35px}.trim-picks{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:9px}.trim-picks label{font-size:11px;margin-right:auto}.trim-picks input{width:65px;border:1px solid var(--line);border-radius:8px;padding:6px;text-align:center;background:white;color:var(--ink)}.trim-result{font-size:14px;margin:16px 0 10px;padding:10px 14px;background:var(--green-light);border-radius:10px;color:var(--green);font-variant-numeric:tabular-nums}#processingProgress{width:100%;height:12px;accent-color:var(--orange)}#processingStatus{text-align:center;margin-top:12px;font-size:14px;color:var(--green)}#focusOverlay{position:relative;z-index:92}.focus-mode{overflow:hidden;padding-bottom:0}.focus-mode .preview-stage{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;max-height:none!important;min-height:0!important;aspect-ratio:auto!important;z-index:80;margin:0!important;cursor:crosshair;background:#e9eee3}.focus-mode .preview-stage canvas{height:100%;width:100%;outline:none}.focus-mode .book-card{overflow:visible;border:0;box-shadow:none}.focus-mode .book-toolbar,.focus-mode .pdf-controls,.focus-mode .pan-hint,.focus-mode .book-bottom,.focus-mode .result-card{display:none!important}.focus-mode .pdf-studio{background:transparent}.focus-mode #recordDock{position:fixed;bottom:0;left:0;right:0;z-index:95;border-radius:0;display:flex;flex-direction:column-reverse;background:transparent;box-shadow:none}.focus-mode #recordBar{background:rgba(255,255,255,.87);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);min-height:50px;padding:5px 15px calc(5px + env(safe-area-inset-bottom));border-radius:0;border:0;flex-wrap:nowrap}.focus-mode #recordBar .btn{min-height:34px;padding:5px 10px;font-size:11px}.focus-mode #recordBar .record-btn{min-width:120px}.focus-mode #recordBar .rec-status,.focus-mode #recordBar .timer-label,.focus-mode #recordBar .rec-size{display:none!important}.focus-mode #recordBar .timer{font-size:18px}.focus-mode #drawingToolbar{display:none;border-radius:12px 12px 0 0;background:#fffef9f2;max-width:850px;width:100%;margin:auto;box-shadow:0 -4px 22px #39492916}.focus-mode.focus-tools-open #drawingToolbar{display:flex;animation:enter .18s ease-out}.focus-mode .trim-hint{border-radius:0;max-width:none;text-align:center;background:#fff7e5f0}.focus-exit-float{position:fixed;right:12px;top:max(12px,env(safe-area-inset-top));z-index:92;background:#fffff2c9;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-color:#d6ddcc;font-size:11px}.focus-page-tools{position:fixed;top:max(12px,env(safe-area-inset-top));left:12px;z-index:92;display:flex;align-items:center;gap:4px;background:#fffff2c9;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid #dde1d4;border-radius:11px;padding:4px}.focus-page-tools .btn{background:transparent;border-color:transparent}.focus-page-tools>span{font-size:11px;padding:0 4px;white-space:nowrap;direction:ltr}.focus-palette{position:fixed;right:15px;bottom:calc(var(--dock-height) + 14px);width:48px;height:48px;border:1px solid #9baf94;border-radius:50%;font-size:24px;background:#fffefa;opacity:.4;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:94;box-shadow:0 3px 15px #30492b14;transition:opacity .2s}.focus-palette:hover,.focus-palette:focus-visible,.focus-palette[aria-expanded=true]{opacity:1}.focus-mode .toasts{z-index:110;bottom:calc(var(--dock-height) + 14px);max-width:440px}.focus-mode #cameraVideo{visibility:visible}#dimensionInfo{direction:rtl;line-height:1.9}.rec-controls{flex-wrap:wrap}
 @media(max-width:1050px){.ink-tool span{display:none}.ink-help{font-size:9px}.record-dock .record-bar{padding:10px}.rec-controls{gap:5px}.rec-controls .btn{padding:7px 9px;font-size:11px}.rec-controls .record-btn{min-width:125px}.rec-info .rec-status{font-size:9px}}
@@ -137,12 +139,10 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   .record-dock .rec-controls .btn{min-width:0;max-width:100%}.focus-mode #recordBar .record-btn{min-height:34px}.trim-result{font-size:12px}}
 @media(max-width:360px){.record-dock .record-bar .rec-controls .icon{display:none}.record-dock .record-bar #pauseBtn{font-size:9px}.record-dock .record-bar .btn-danger{font-size:9px}.record-dock .record-bar{padding:8px;gap:4px}.ink-tools{gap:3px}.ink-tool{min-width:32px;padding:5px}.focus-page-tools .btn{padding:2px 6px}.record-dock .timer{font-size:15px}}
 
-
 /* Shapes, text and stickers: controls remain DOM-only; committed marks live on drawingCanvas. */
 .ink-tools{flex-wrap:wrap;gap:4px}.ink-tool b{font-weight:400;font-size:16px;line-height:1}.picker-trigger{position:relative}.picker-trigger::after{content:'⌃';font-size:10px;color:var(--muted);margin-right:1px}.ink-picker{position:fixed;z-index:150;width:310px;max-height:55vh;overflow:auto;border:1px solid #e0e5d5;border-radius:14px;padding:12px;background:#fffefa;box-shadow:0 -6px 30px #233a2321;text-align:right;line-height:1.7}.picker-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;font-weight:650;margin-bottom:9px;color:var(--green)}.picker-close{border:0;background:transparent;width:27px;height:27px;color:var(--muted);border-radius:6px}.picker-close:hover{background:#f0eee3}.shape-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}.shape-grid button{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;background:white;min-height:38px;padding:6px 9px;font-size:18px;color:var(--ink);text-align:right}.shape-grid button span{font-size:11px}.shape-grid button[aria-pressed=true],.sticker-grid button[aria-pressed=true]{border-color:var(--orange);background:var(--orange-soft)}.ink-picker p{font-size:9px;color:var(--muted);margin:9px 0 0}.sticker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.sticker-grid button{border:1px solid var(--line);border-radius:9px;background:white;min-height:42px;font-size:24px;padding:4px}.text-settings{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:7px;font-size:10px}.text-settings label{display:flex;align-items:center;gap:6px}.text-settings select{min-height:30px;padding:3px 6px;font-size:11px;border:1px solid var(--line);border-radius:7px;background:white;color:var(--ink)}#textToolHelp{font-size:9px;color:var(--muted)}#stickerCursor{position:absolute;z-index:3;transform:translate(-50%,-50%);pointer-events:none;opacity:.62;line-height:1;text-shadow:0 1px 3px #fff;user-select:none}.canvas-text-editor{position:absolute;z-index:5;transform-origin:top left;direction:rtl;text-align:right;min-width:0}.canvas-text-editor textarea{font-family:Vazirmatn,Tahoma,sans-serif;display:block;width:100%;min-height:50px;resize:none;overflow:hidden;border:0;outline:2px dashed var(--orange);outline-offset:0;border-radius:3px;padding:8px;line-height:1.5;box-shadow:0 0 0 2px #ffffff99;white-space:pre-wrap;overflow-wrap:break-word;color:var(--ink);background:transparent}.canvas-text-editor textarea::placeholder{color:#797e6d88}.text-drag-handle{position:absolute;bottom:100%;right:0;border:1px solid #edb17d;border-radius:7px 7px 0 0;padding:4px 8px;background:#fff6e9e8;color:#975728;cursor:move;touch-action:none;font-size:12px;line-height:1.4;white-space:nowrap}.text-edit-hint{background:#fff9ecdd;color:#866646;border-radius:0 0 5px 5px;font-size:10px;padding:3px 5px;line-height:1.7;pointer-events:none}.trim-preview-clock{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 7px;font-size:11px;color:var(--muted)}#trimPlayClock{direction:ltr;font-variant-numeric:tabular-nums}.trim-seek{margin-top:10px;min-height:22px}.trim-modes{border:0;padding:0;margin:16px 0 12px;display:flex;gap:8px;flex-wrap:wrap}.trim-modes legend{font-size:12px;margin-bottom:8px;font-weight:600}.trim-mode{flex:1 1 200px;display:flex;gap:8px;align-items:flex-start;background:#fafbf6;border:1px solid #dfe5d6;border-radius:10px;padding:11px;cursor:pointer}.trim-mode:has(input:checked){border-color:var(--orange);background:#fff6ec}.trim-mode input{accent-color:var(--orange);margin:4px 0 0;flex-shrink:0}.trim-mode strong{display:block;font-size:12px;font-weight:650}.trim-mode small{font-weight:400;color:var(--muted);font-size:10px;margin-right:5px}.trim-mode>span>span{display:block;font-size:10px;line-height:1.9;color:var(--muted);margin-top:4px}.trim-mode-warning{font-size:11px;line-height:2;background:#fff0de;color:#93652e;border:1px solid #f3d2a5;border-radius:10px;padding:10px 13px}.trim-mode-warning.fast-mode-note{background:#eff5e9;color:#536947;border-color:#dce8ce}.focus-mode .ink-picker{z-index:160;background:#fffefa}.focus-mode #drawingToolbar{overflow:visible}.focus-mode .canvas-text-editor{z-index:5}.preview-stage{isolation:isolate}
 @media(max-width:1050px){.ink-tools{gap:4px}.ink-tool{padding:5px 7px}.ink-tool span{display:none}.picker-trigger::after{margin-right:0;font-size:9px}}
 @media(max-width:760px){.ink-tools{display:flex;flex-wrap:nowrap;justify-content:flex-start;max-width:100%;overflow-x:auto;scrollbar-width:thin;overscroll-behavior-x:contain;gap:3px;padding:2px 1px}.ink-tool{flex:0 0 34px;min-width:34px;min-height:35px;padding:4px;justify-content:center;font-size:16px}.ink-tool span{display:none}.ink-tool b{font-size:16px}.picker-trigger::after{font-size:8px}.clear-ink{margin-right:auto}.text-settings{gap:8px;padding-top:5px}.text-settings select{font-size:10px;min-height:32px}.text-settings label{gap:4px;font-size:10px}#textToolHelp{font-size:9px;width:100%}.drawing-toolbar{max-width:100vw;min-width:0}.ink-picker{max-height:52dvh;padding:10px}.shape-grid button{min-height:39px}.sticker-grid button{min-height:43px}.trim-modes{gap:7px}.trim-mode{flex-basis:100%;padding:10px}.trim-mode-warning{font-size:10px}.trim-preview-clock{font-size:10px}.focus-mode .ink-tools{max-width:100%;overflow-x:auto}.canvas-text-editor textarea{outline-width:2px}.focus-mode .focus-palette{transition:opacity .2s}}
-
 
 /* v4 additions: designer badge, footer designer, about-box, cam shape, library grid responsive, switch camera */
 .designer-badge{font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
@@ -164,7 +164,6 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
 #mobileSwitchCamera[hidden], #switchCamera[hidden]{display:none!important}
 @media(max-width:760px){.designer-badge{display:none} .library-grid{grid-template-columns:repeat(2,1fr)} .footer-designer{font-size:9px}}
 @media(max-width:470px){.library-grid{grid-template-columns:1fr}}
-
 
 .theme-grid{
   display:grid;
@@ -207,7 +206,6 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   .theme-grid{grid-template-columns:1fr}
 }
 
-
   .mobile-top-tools{flex-wrap:wrap;min-width:0}
   .mobile-top-tools .btn{min-width:0;max-width:100%}
   .mobile-top-tools .btn-primary{flex:1 1 100%}
@@ -222,9 +220,23 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
     }catch(_){}
   })();
   </script>
-<!-- hakim-core:start -->
-<link rel="stylesheet" href="css/a11y.css">
-<!-- hakim-core:end -->
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/darsgah.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="درسگاه حکیمستان | استودیوی تدریس شما">
+<meta property="og:description" content="درسگاه حکیمستان؛ ضبط تدریس از PDF، صدای معلم و وب‌کم روی موبایل و لپ‌تاپ؛ بدون ضبط صفحه.">
+<meta property="og:url" content="https://hakimistan.ir/darsgah.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="درسگاه حکیمستان | استودیوی تدریس شما">
+<meta name="twitter:description" content="درسگاه حکیمستان؛ ضبط تدریس از PDF، صدای معلم و وب‌کم روی موبایل و لپ‌تاپ؛ بدون ضبط صفحه.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body>
 <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden"><defs>
@@ -339,7 +351,6 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
 <dialog id="processingDialog" aria-labelledby="processingTitle"><div class="dialog-head"><h2 id="processingTitle">آماده‌سازی فیلم</h2></div><div class="dialog-body"><p>فیلم در خود دستگاه پردازش می‌شود؛ چیزی آپلود نمی‌شود. این مرحله ممکن است به اندازهٔ زمان فیلم طول بکشد. لطفاً برگه را باز و فعال نگه دارید.</p><progress id="processingProgress" max="100" value="0"></progress><p id="processingStatus" role="status">در حال آماده‌سازی…</p><p class="field-note">با لغو، قطعات اصلی حفظ می‌شوند و می‌توانید دوباره تلاش کنید یا ضبط را ادامه دهید.</p></div><div class="dialog-footer"><button id="cancelProcessing" class="btn">لغو پردازش</button></div></dialog>
 
 <script>
-
 
 'use strict';
 (() => {
@@ -1046,15 +1057,12 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  setOutputSize(false);updateDrawingUI();updateCameraAppearance();updateCameraUI();updateSwitchCameraUI();updateZoomUI();updatePageUI();showEnvironment();refreshUI();updateDockHeight();ensurePdfJs().catch(()=>{});checkCameraCount().then(c=>{if(c>=2){$('switchCamera').hidden=false;$('mobileSwitchCamera').hidden=false;}}).catch(()=>{});
 })();
 
-
-
 </script>
 <!-- Embedded Vazirmatn font. Copyright 2015 The Vazirmatn Project Authors (https://github.com/rastikerdar/vazirmatn)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 http://scripts.sil.org/OFL
-
 
 —————————————————————————————-
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
@@ -1287,13 +1295,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 })();
 </script>
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3d95ca4ed16dbc8',t:'MTc4OTgyODk5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-
-
-
-
-
-
-
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>
