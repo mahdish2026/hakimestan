@@ -1,6 +1,6 @@
 /*!
  * hakim-a11y.js — ماژول دسترس‌پذیری حکیمستان
- * نسخه: 1.0.0
+ * نسخه: 1.0.1
  * ساخته مهدی شریفیان
  *
  * کارها:
@@ -530,6 +530,16 @@
         if (getComputedStyle(el, '::before').position === 'absolute') continue;
       } catch (e) {}
       el.classList.add('a11y-hit');
+      /* اگر استایل خودِ صفحه position را static نگه داشته باشد (برندهٔ
+         ترتیب cascade)، شبه‌عنصر ::after به نزدیک‌ترین جدِ موقعیت‌دار
+         لنگر می‌شود و یک ناحیهٔ کلیک نامرئیِ بزرگ روی بخشی از صفحه
+         می‌سازد. با position:relative درون‌خطی، ناحیهٔ لمس همیشه به
+         خودِ عنصر لنگر می‌شود (بدون جابه‌جایی در چیدمان). */
+      try {
+        if (getComputedStyle(el).position === 'static') {
+          el.style.position = 'relative';
+        }
+      } catch (e2) {}
       changed++;
     }
     return changed;
@@ -984,7 +994,7 @@
   }
 
   global.HakimA11y = {
-    version: '1.0.0',
+    version: '1.0.1',
     announce: announce,
     audit: audit,
     nameIcons: nameIcons,
