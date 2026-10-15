@@ -168,6 +168,8 @@ audio:focus-visible {
 
   * {
     border-color: currentColor;
+    font-weight: bolder;
+    text-shadow: none;
   }
 }
 
@@ -188,7 +190,6 @@ html.hk-high-contrast figcaption,
 html.hk-high-contrast .slogan,
 html.hk-high-contrast .panel-group-label {
   color: #ffffff !important;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 /* اگر صفحه روشن است، متن تیره می‌شود (به‌جای سفید) */
@@ -197,7 +198,18 @@ html.hk-high-contrast body[data-theme='sky'] .muted,
 html.hk-high-contrast body[data-theme='candy'] .muted,
 html.hk-high-contrast body[data-theme='shad'] .muted {
   color: #10131c !important;
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+/* به‌جای سایهٔ پشت متن (که خوانایی را کم می‌کرد) از وزن قلم استفاده می‌کنیم:
+   bolder نسبت به وزن خودِ عنصر یک پله ضخیم‌تر می‌شود، پس تیترهای ۸۰۰/۹۰۰
+   هم ضخیم‌تر می‌مانند و متن روی هر پس‌زمینه‌ای جدا می‌شود. */
+html.hk-high-contrast * {
+  font-weight: bolder !important;
+  text-shadow: none !important;
+}
+
+html.hk-high-contrast a {
+  text-decoration: underline !important;
 }
 
 html.hk-high-contrast a:focus-visible,
@@ -290,12 +302,16 @@ html.hk-reduce-motion *::after {
   }
 }
 
-/* گروه ابزارها — فقط با بازکردن دکمهٔ اصلی دیده می‌شود */
+/* گروه ابزارها — فقط با بازکردن دکمهٔ اصلی دیده می‌شود.
+   ⚠ نکتهٔ مهم: اینجا display:none است (نه flex)، چون قانون [hidden]
+   مرورگر در UA-sheet قرار دارد و اگر #a11y-tools با display:flex
+   تعریف شود، بر صفت hidden غلبه می‌کند و ردیف ابزارها همیشه باز می‌ماند
+   (کاربر «دو دکمه» می‌بیند). بازکردن فقط با کلاس open روی نوار انجام می‌شود. */
 #a11y-tools {
   position: absolute;
   inset-block-end: calc(100% + 10px);
   inset-inline-end: 0;
-  display: flex;
+  display: none;
   gap: 4px;
   padding: 5px;
   border-radius: 999px;
@@ -303,6 +319,15 @@ html.hk-reduce-motion *::after {
   background-color: rgba(14, 10, 34, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+}
+
+#a11y-toolbar.open #a11y-tools {
+  display: flex;
+}
+
+/* صفت hidden همیشه برنده است (JS هنگام بستن، hidden را ست می‌کند) */
+#a11y-tools[hidden] {
+  display: none !important;
 }
 
 #a11y-fab:focus-visible,
