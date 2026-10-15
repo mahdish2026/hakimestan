@@ -1,0 +1,68 @@
+/* ============================================================
+   حکیمستان — فونت‌های محلی
+   ------------------------------------------------------------
+   چرا محلی و نه Google Fonts؟
+
+   ۱) سرعت — هر بازدید به دو دامنهٔ دیگر (fonts.googleapis.com و
+      fonts.gstatic.com) وابسته بود: DNS + TLS + درخواست. روی
+      اینترنت ضعیف یا اشتراکی جشنواره، همین چند صد میلی‌ثانیه
+      تفاوت محسوسی در «روان بودن» می‌سازد.
+
+   ۲) دسترس‌پذیری — بعضی شبکه‌ها دسترسی به سرویس‌های گوگل را
+      محدود یا کند می‌کنند. در آن حالت، کل تایپوگرافی سایت به
+      Tahoma برمی‌گشت و طرح صفحه به‌هم می‌ریخت.
+
+   ۳) حریم خصوصی — با فونت محلی، آی‌پی بازدیدکننده به دامنهٔ
+      سوم‌واردی نمی‌رسد.
+
+   ۴) آفلاین — بدون این فایل، اولین بازدید آفلاین فونت نداشت.
+
+   فایل‌ها در assets/fonts/ قرار دارند و مسیرها نسبت به همین
+   پوشهٔ css/ نوشته شده‌اند.
+   ============================================================ */
+
+/* ── Vazirmatn — فونت متنی اصلی ──
+   نسخهٔ متغیر (variable) تمام وزن‌های ۱۰۰ تا ۹۰۰ را با یک فایل
+   پوشش می‌دهد؛ پس یک درخواست جای پنج درخواست. */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../assets/fonts/vazirmatn-100-900.woff2') format('woff2-variations'),
+       url('../assets/fonts/vazirmatn-100-900.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Lalezar — فونت عنوان‌های تزئینی ── */
+@font-face {
+  font-family: 'Lalezar';
+  src: url('../assets/fonts/lalezar-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Amiri — فونت خطی و ادبی (متن‌های نقل‌قول و شعر) ── */
+@font-face {
+  font-family: 'Amiri';
+  src: url('../assets/fonts/amiri-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amiri';
+  src: url('../assets/fonts/amiri-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* در حالت «کم‌مصرف» یا چاپ، از دانلود فونت‌های تزئینی صرف‌نظر کن */
+@media print {
+  @font-face {
+    font-family: 'Lalezar';
+    src: local('Tahoma');
+  }
+}
