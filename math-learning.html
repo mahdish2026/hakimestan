@@ -1,25 +1,24 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="utf-8">
+<link rel="stylesheet" href="css/fonts.css">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>مدرسه ریاضی | حکیمستان</title>
-<meta name="description" content="بازی‌های آموزشی ریاضی پایه پنجم - تقسیم چکشی و ماموریت زمان">
+<meta name="description" content="مدرسهٔ ریاضی حکیمستان — بازی‌های آموزشی ریاضی پایهٔ پنجم: تقسیم، ساعت، کسر، هندسه و مباحث کتاب درسی.">
 
 <!-- PWA Meta -->
 <meta name="theme-color" content="#6654e8">
 <link rel="manifest" href="manifest.json">
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 
 <!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <!-- CSS -->
-<link rel="stylesheet" href="css/main.min.css">
 <style>
 :root {
   color-scheme: light;
@@ -312,6 +311,150 @@ body {
 .reveal.d2 { animation-delay: .1s; }
 .reveal.d3 { animation-delay: .15s; }
 .reveal.d4 { animation-delay: .2s; }
+
+/* ══════════════════════════════════════════════════
+   انتخاب‌گر تم — دکمه و پنل
+   ══════════════════════════════════════════════════ */
+.theme-btn{
+  position:absolute; right:0; top:50%; transform:translateY(-50%);
+  width:46px;height:46px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--surface-line);
+  font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);transition:var(--transition);z-index:30;
+}
+.theme-btn:hover{transform:translateY(-50%) scale(1.08)}
+.theme-btn:active{transform:translateY(-50%) scale(.94)}
+
+.theme-panel{
+  position:absolute; top:calc(100% + 10px); right:0; z-index:60;
+  width:min(310px, calc(100vw - 40px));
+  background:var(--surface);border:1px solid var(--surface-line);border-radius:18px;
+  box-shadow:var(--shadow);padding:14px;
+  display:none; flex-direction:column; gap:6px; text-align:right;
+}
+.theme-panel.open{display:flex;animation:fadeIn .18s ease}
+.theme-title{font-weight:800;font-size:.95rem;margin-bottom:2px}
+.theme-group{font-size:.72rem;color:var(--muted);margin:7px 2px 2px;font-weight:800;letter-spacing:.3px}
+.theme-opt{
+  display:flex;align-items:center;gap:10px;width:100%;text-align:right;
+  background:var(--surface-soft);border:1.5px solid var(--surface-line);
+  border-radius:12px;padding:9px 12px;cursor:pointer;font:inherit;color:var(--ink);
+  transition:var(--transition);
+}
+.theme-opt:hover{border-color:var(--purple);transform:translateX(-2px)}
+.theme-opt.active{border-color:var(--purple);background:var(--soft-purple)}
+.theme-dot{width:22px;height:22px;border-radius:50%;background:var(--sw);border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25);flex-shrink:0}
+.theme-name{font-weight:700;font-size:.88rem;flex:1}
+.theme-check{opacity:0;color:var(--purple);font-weight:900;font-size:1rem}
+.theme-opt.active .theme-check{opacity:1}
+@media(max-width:600px){
+  .theme-btn{width:40px;height:40px;font-size:1.05rem}
+  .back-link{position:static;transform:none;margin-bottom:10px}
+  .back-link:hover{transform:translateX(-3px)}
+}
+
+/* ══════════════════════════════════════════════════
+   پالت تم‌ها — هم‌نام با تم‌های لابی حکیمستان
+   (ذخیرهٔ انتخاب کاربر بین لابی و این صفحه مشترک است)
+   ══════════════════════════════════════════════════ */
+
+/* شب عرفانی — بنفش تیره و طلایی */
+body[data-theme="night"]{
+  color-scheme:dark;
+  --page:#171233;--surface:#211a44;--surface-soft:#1a1538;--surface-line:#342a60;
+  --ink:#f3edff;--muted:#a99fd6;
+  --purple:#9d8ff5;--purple-dark:#7a68c9;
+  --shadow:0 14px 36px rgba(0,0,0,.45);
+  --soft-purple:#2a2153;--soft-green:#152c22;
+  background:
+    radial-gradient(circle at 9% 8%, rgba(245,199,106,.14), transparent 25rem),
+    radial-gradient(circle at 95% 26%, rgba(122,104,201,.20), transparent 27rem),
+    var(--page);
+}
+
+/* اقیانوس نیمه‌شب — آبی تیره */
+body[data-theme="ocean"]{
+  color-scheme:dark;
+  --page:#07202f;--surface:#0d2c41;--surface-soft:#0a2436;--surface-line:#1c4259;
+  --ink:#eaf6ff;--muted:#8fb8d0;
+  --purple:#38bdf8;--purple-dark:#0ea5e9;
+  --shadow:0 14px 36px rgba(0,0,0,.45);
+  --soft-purple:#10314a;--soft-green:#0e2f26;
+  background:
+    radial-gradient(circle at 9% 8%, rgba(56,189,248,.16), transparent 25rem),
+    radial-gradient(circle at 95% 26%, rgba(14,165,233,.12), transparent 27rem),
+    var(--page);
+}
+
+/* جنگل اسرارآمیز — سبز تیره */
+body[data-theme="forest"]{
+  color-scheme:dark;
+  --page:#0b221a;--surface:#122e21;--surface-soft:#0e261b;--surface-line:#24503a;
+  --ink:#ecfdf5;--muted:#93bfa8;
+  --purple:#34d399;--purple-dark:#10b981;
+  --shadow:0 14px 36px rgba(0,0,0,.45);
+  --soft-purple:#16342a;--soft-green:#163a28;
+  background:
+    radial-gradient(circle at 9% 8%, rgba(52,211,153,.14), transparent 25rem),
+    radial-gradient(circle at 95% 26%, rgba(16,185,129,.10), transparent 27rem),
+    var(--page);
+}
+
+/* صبح روشن — گرم و روشن */
+body[data-theme="sunny"]{
+  --page:#fff8ec;--surface:#fffdf8;--surface-soft:#fdf3e3;--surface-line:#f3e3c8;
+  --ink:#43320f;--muted:#8a744c;
+  --purple:#f59e0b;--purple-dark:#d97706;
+  --shadow:0 14px 36px rgba(146,64,14,.12);
+  --soft-purple:#fdf0dc;--soft-green:#effaf0;
+  background:
+    radial-gradient(circle at 9% 8%, rgba(245,158,11,.18), transparent 25rem),
+    radial-gradient(circle at 95% 26%, rgba(251,191,36,.14), transparent 27rem),
+    var(--page);
+}
+
+/* آسمان آبی — روشن و آبی */
+body[data-theme="sky"]{
+  --page:#f0f9ff;--surface:#ffffff;--surface-soft:#e8f4fd;--surface-line:#d3e9f8;
+  --ink:#16324f;--muted:#5b7a9e;
+  --purple:#0ea5e9;--purple-dark:#0369a1;
+  --shadow:0 14px 36px rgba(2,100,160,.14);
+  --soft-purple:#e0f2fe;--soft-green:#e8f7f0;
+  background:
+    radial-gradient(circle at 9% 8%, rgba(56,189,248,.22), transparent 25rem),
+    radial-gradient(circle at 95% 26%, rgba(99,102,241,.12), transparent 27rem),
+    var(--page);
+}
+
+/* آب‌نباتی — پاستلی */
+body[data-theme="candy"]{
+  --page:#fdf2fb;--surface:#ffffff;--surface-soft:#faeaf8;--surface-line:#f2d8ef;
+  --ink:#45243e;--muted:#93648a;
+  --purple:#d946ef;--purple-dark:#c026d3;
+  --shadow:0 14px 36px rgba(157,23,77,.12);
+  --soft-purple:#fae8fb;--soft-green:#e9faf1;
+  background:
+    radial-gradient(circle at 9% 8%, rgba(217,70,239,.14), transparent 25rem),
+    radial-gradient(circle at 95% 26%, rgba(167,139,250,.16), transparent 27rem),
+    var(--page);
+}
+
+/* حکیمستان شاد — نارنجی و آبی */
+body[data-theme="shad"]{
+  --page:#fff4ed;--surface:#ffffff;--surface-soft:#ffeadd;--surface-line:#f8dcc8;
+  --ink:#3b2412;--muted:#94715a;
+  --purple:#ff7d3b;--purple-dark:#ea580c;
+  --shadow:0 14px 36px rgba(120,53,15,.14);
+  --soft-purple:#ffedd9;--soft-green:#eafaf0;
+  background:
+    radial-gradient(circle at 9% 8%, rgba(255,125,59,.16), transparent 25rem),
+    radial-gradient(circle at 95% 26%, rgba(61,139,255,.16), transparent 27rem),
+    var(--page);
+}
+
+/* مدرن = پالت پیش‌فرض صفحه (:root) — نیازی به بازنویسی نیست */
+
 </style>
 
   <!-- Hakim Character -->
@@ -322,7 +465,7 @@ body {
   <div class="app-shell">
     <!-- Header -->
     <header class="page-header">
-      <button type="button" class="theme-btn" id="themeBtn" aria-label="انتخاب تم صفحه" title="تم صفحه">🎨</button>
+      <button type="button" class="theme-btn" id="themeBtn" aria-label="انتخاب تم صفحه" title="تم صفحه" aria-expanded="false" aria-haspopup="true">🎨</button>
 <div class="theme-panel" id="themePanel" role="dialog" aria-label="انتخاب تم صفحه">
   <div class="theme-title">🎨 تم صفحه رو انتخاب کن</div>
   <div class="theme-group">تیره</div>
@@ -346,7 +489,7 @@ body {
         <span class="icon" aria-hidden="true">🧮</span>
         <span>مدرسه ریاضی</span>
       </h1>
-      <p class="page-subtitle reveal d3">بازی‌های آموزشی ریاضی پایه پنجم - تقسیم چکشی و ماموریت زمان</p>
+      <p class="page-subtitle reveal d3">بازی‌های آموزشی ریاضی پایهٔ پنجم — بازی کن، تمرین کن، ستاره بگیر</p>
     </header>
 
     <!-- Games Grid -->
@@ -358,17 +501,15 @@ body {
             <span class="gc-emoji">🔨</span>
           </div>
           <div class="card-info">
-            <h2 class="card-name">
-              تقسیم چکشی
-              <span class="badge">جدید</span>
-            </h2>
-            <p class="card-desc">یادگیری تقسیم با روش چکشی - تمرین و تسلط بر تقسیم اعداد</p>
+            <h2 class="card-name">تقسیم چکشی</h2>
+            <p class="card-desc">تقسیم را قدم‌به‌قدم یاد بگیر؛ حکیم کنارت می‌نشیند، راهنمایی‌ات می‌کند و با هر پاسخ درست خوشحال می‌شود. ۵ مرحله — از عدد دو رقمی تا استادِ تقسیم — ۱۵ ستاره و در پایان گواهیِ قهرمانی!</p>
           </div>
         </div>
         <div class="card-tags">
           <span class="tag math">🧮 ریاضی</span>
           <span class="tag educational">📚 آموزشی</span>
           <span class="tag">پایه پنجم</span>
+          <span class="tag">🧙 همراهِ حکیم</span>
           <span class="tag">✨ ۵ مرحله</span>
         </div>
         <span class="card-cta">
@@ -384,17 +525,15 @@ body {
             <span class="gc-emoji">⏰</span>
           </div>
           <div class="card-info">
-            <h2 class="card-name">
-              ماموریت زمان
-              <span class="badge">جدید</span>
-            </h2>
-            <p class="card-desc">یادگیری خواندن ساعت با چالش‌های متنوع و سرگرم کننده</p>
+            <h2 class="card-name">ماموریت زمان</h2>
+            <p class="card-desc">خواندن ساعت، جمع و تفریق زمان و تبدیل واحدها در ۸ مرحله‌ی ماجراجویی؛ حکیم همراهت است — با هر پاسخ درست تشویقت می‌کند و وقتی جایی اشتباه کنی، کنارت حل می‌کند. ستاره جمع کن و نشان بگیر!</p>
           </div>
         </div>
         <div class="card-tags">
           <span class="tag math">🧮 ریاضی</span>
           <span class="tag educational">📚 آموزشی</span>
           <span class="tag">پایه پنجم</span>
+          <span class="tag">🧙 همراهِ حکیم</span>
           <span class="tag">⏱️ ۸ مرحله</span>
         </div>
         <span class="card-cta">
@@ -415,7 +554,123 @@ body {
   <div id="hakimPanelMount"></div>
 
   <!-- JS -->
-  <script src="js/themes.js"></script>
-  <script src="hakim-core.js"></script>
+<script>
+/* ── انتخاب‌گر تم مدرسهٔ ریاضی ──
+   هم‌نام و هم‌کلید با لابی (hakimestan_lobby_theme) تا انتخاب
+   کاربر بین صفحات حفظ شود. */
+(function () {
+  'use strict';
+  var KEY = 'hakimestan_lobby_theme';
+  var btn = document.getElementById('themeBtn');
+  var panel = document.getElementById('themePanel');
+  if (!btn || !panel) return;
+
+  function apply(id) {
+    if (!/^[a-z]+$/.test(id)) id = 'modern';
+    document.body.setAttribute('data-theme', id);
+    var opts = panel.querySelectorAll('.theme-opt');
+    for (var i = 0; i < opts.length; i++) {
+      var on = opts[i].getAttribute('data-theme') === id;
+      opts[i].classList.toggle('active', on);
+      opts[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    try { localStorage.setItem(KEY, id); } catch (e) {}
+  }
+
+  function close() {
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+
+  var saved = 'modern';
+  try { saved = localStorage.getItem(KEY) || 'modern'; } catch (e) {}
+  apply(saved);
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  panel.addEventListener('click', function (e) {
+    var opt = e.target.closest ? e.target.closest('.theme-opt') : null;
+    if (opt) {
+      apply(opt.getAttribute('data-theme'));
+      close();
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) close();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      close();
+      btn.focus();
+    }
+  });
+})();
+</script>
+<script src="hakim-core.js"></script>
+<!-- 📊 ردیاب بازدید حکیمستان -->
+<script>
+(function(){
+  try {
+    var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    var userId = localStorage.getItem('hk_uid');
+    var isNew = false;
+    if (!userId) {
+      userId = 'hk_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('hk_uid', userId);
+      isNew = true;
+    }
+    var ua = navigator.userAgent;
+    var device = 'دسکتاپ';
+    if (/mobile|android|iphone|ipod/i.test(ua)) device = 'موبایل';
+    else if (/ipad|tablet/i.test(ua)) device = 'تبلت';
+    var browser = 'سایر';
+    if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+    else if (ua.indexOf('Edg') > -1) browser = 'Edge';
+    else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+    else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+    var os = 'سایر';
+    if (/android/i.test(ua)) os = 'Android';
+    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+    else if (/windows/i.test(ua)) os = 'Windows';
+    else if (/mac/i.test(ua)) os = 'Mac';
+    else if (/linux/i.test(ua)) os = 'Linux';
+    var ref = 'مستقیم';
+    if (document.referrer) {
+      if (document.referrer.indexOf('hakimistan.ir') > -1) ref = 'داخلی';
+      else if (document.referrer.indexOf('google') > -1) ref = 'گوگل';
+      else if (document.referrer.indexOf('eitaa') > -1) ref = 'ایتا';
+      else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
+      else ref = 'سایر';
+    }
+    fetch(API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'logVisit',
+        userId: userId,
+        page: (function(){ var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean); if (p.length === 0) return 'index.html'; if (p.length === 1) return p[0]; return p.slice(-2).join('/'); })(),
+        device: device,
+        browser: browser,
+        os: os,
+        lang: navigator.language || 'fa',
+        ref: ref,
+        isNew: isNew
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

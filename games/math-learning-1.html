@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>بازی تقسیم چکشی 🧮</title>
+<meta name="description" content="بازی تقسیم چکشی — تمرین تعاملی و سرگرم‌کننده تقسیم ریاضی پایه پنجم دبستان در مدرسه ریاضی حکیمستان.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{ --cell: clamp(30px, 8.5vw, 54px); }
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -15,7 +17,7 @@ html,body{ margin:0; padding:0; }
 body{
   font-family: Vazirmatn, 'Segoe UI', Tahoma, sans-serif;
   min-height:100vh; color:#0f172a;
-  background: linear-gradient(180deg,#38bdf8 0%, #bae6fd 34%, #e0f2fe 55%, #fefce8 100%) fixed;
+  background: linear-gradient(180deg,#c9c2ff 0%, #e8e4ff 34%, #f4f0ff 55%, #fefce8 100%) fixed;
 }
 body::before{
   content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
@@ -36,19 +38,20 @@ body::before{
 .btn.primary{ background:linear-gradient(180deg,#fbbf24,#f59e0b); color:#451a03; box-shadow:0 5px 0 #b45309; }
 .btn.primary:hover{ box-shadow:0 7px 0 #b45309; }
 .btn.primary:active{ box-shadow:0 1px 0 #b45309; }
-.btn.secondary{ background:linear-gradient(180deg,#60a5fa,#3b82f6); color:#fff; box-shadow:0 5px 0 #1d4ed8; }
-.btn.secondary:active{ box-shadow:0 1px 0 #1d4ed8; }
+.btn.secondary{ background:linear-gradient(180deg,#8b7cf7,#6654e8); color:#fff; box-shadow:0 5px 0 #4c3cc7; }
+.btn.secondary:active{ box-shadow:0 1px 0 #4c3cc7; }
 .btn.ghost{ background:#f1f5f9; color:#334155; box-shadow:0 3px 0 #cbd5e1; }
 .btn.ghost:active{ box-shadow:0 1px 0 #cbd5e1; }
 .btn.icon{ background:#f1f5f9; font-size:1.2rem; padding:7px 11px; box-shadow:0 3px 0 #cbd5e1; }
+a.btn{ display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
 .btn.big{ font-size:1.12rem; padding:14px 26px; width:100%; margin:7px 0; }
 
 /* ---------- menu ---------- */
 .menu-card{ background:#fff; border-radius:28px; padding:26px 22px; text-align:center; box-shadow:0 12px 34px rgba(2,132,199,.18); }
 .mascot-big{ font-size:82px; display:inline-block; animation:bob 2.6s ease-in-out infinite; filter:drop-shadow(0 8px 10px rgba(0,0,0,.15)); }
-.menu-card h1{ font-size:clamp(1.7rem,6vw,2.35rem); margin:6px 0 4px; color:#0c4a6e; font-weight:900; }
+.menu-card h1{ font-size:clamp(1.7rem,6vw,2.35rem); margin:6px 0 4px; color:#4c3cc7; font-weight:900; }
 .menu-card .sub{ color:#475569; margin:0 0 16px; line-height:1.9; }
-.lv-title{ margin-top:14px; font-weight:900; color:#0c4a6e; }
+.lv-title{ margin-top:14px; font-weight:900; color:#4c3cc7; }
 .level-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:10px; margin-top:10px; }
 .lv-card{ background:#f8fafc; border:2px solid #e2e8f0; border-radius:16px; padding:10px 6px; cursor:pointer; text-align:center;
   transition: transform .15s, border-color .2s, background .2s; }
@@ -60,11 +63,11 @@ body::before{
 .menu-foot{ display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
 
 /* ---------- name input ---------- */
-.name-row{ display:flex; align-items:center; gap:10px; background:#f0f9ff; border:2px solid #bae6fd; border-radius:16px;
+.name-row{ display:flex; align-items:center; gap:10px; background:#f5f3ff; border:2px solid #d9d2ff; border-radius:16px;
   padding:8px 14px; margin:0 0 14px; transition:border-color .2s, box-shadow .2s; }
-.name-row:focus-within{ border-color:#38bdf8; box-shadow:0 0 0 4px rgba(56,189,248,.22); }
+.name-row:focus-within{ border-color:#8b7cf7; box-shadow:0 0 0 4px rgba(102,84,232,.22); }
 .name-row .name-ic{ font-size:1.2rem; }
-.name-row input{ flex:1; min-width:0; border:none; outline:none; background:transparent; font:inherit; font-weight:800; font-size:1rem; color:#0c4a6e; }
+.name-row input{ flex:1; min-width:0; border:none; outline:none; background:transparent; font:inherit; font-weight:800; font-size:1rem; color:#4c3cc7; }
 .name-row input::placeholder{ color:#7dd3fc; font-weight:600; }
 .name-row.err{ border-color:#fca5a5; background:#fef2f2; }
 .name-err{ display:none; color:#dc2626; font-size:.85rem; font-weight:800; margin:-6px 0 12px; }
@@ -77,7 +80,7 @@ body::before{
 /* ---------- HUD ---------- */
 .hud{ display:flex; align-items:center; gap:8px; background:#fff; border-radius:18px; padding:8px 10px; margin-bottom:10px;
   box-shadow:0 8px 22px rgba(2,132,199,.14); }
-.hud-title{ flex:1; text-align:center; font-weight:900; font-size:1.02rem; color:#0c4a6e; line-height:1.4; }
+.hud-title{ flex:1; text-align:center; font-weight:900; font-size:1.02rem; color:#4c3cc7; line-height:1.4; }
 .hud-title small{ display:block; font-weight:700; color:#64748b; font-size:.72rem; }
 .hud-stars{ font-weight:900; color:#b45309; background:#fffbeb; border:2px solid #fde68a; padding:4px 10px; border-radius:12px; font-size:.95rem; white-space:nowrap; }
 .dots{ display:flex; gap:8px; justify-content:center; margin:2px 0 0; }
@@ -151,7 +154,7 @@ body::before{
 .ov-card{ background:#fff; border-radius:28px; padding:26px 22px; max-width:450px; width:100%; text-align:center;
   animation:zoomin .4s cubic-bezier(.2,1.4,.4,1); box-shadow:0 20px 60px rgba(0,0,0,.3); max-height:94vh; overflow:auto; }
 .ov-emoji{ font-size:68px; line-height:1.1; }
-.ov-card h2{ color:#0c4a6e; margin:8px 0 4px; font-size:1.5rem; font-weight:900; }
+.ov-card h2{ color:#4c3cc7; margin:8px 0 4px; font-size:1.5rem; font-weight:900; }
 .ov-card p{ color:#475569; margin:6px 0; font-weight:700; line-height:1.9; }
 .ov-stars{ font-size:46px; letter-spacing:8px; margin:6px 0; }
 .ov-credit{ font-size:.82rem; color:#64748b; font-weight:600; margin-top:10px; padding-top:10px; border-top:2px dashed #e2e8f0; line-height:1.8; }
@@ -191,9 +194,19 @@ body::before{
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
   transform:rotate(-8deg); opacity:.96; }
 .cert-seal .seal-ic{ font-size:28px; line-height:1; }
+
+/* ═══ چهرهٔ حکیم (از hakim-core.js) ═══ */
+.mascot{ width:82px; height:82px; }
+.mascot svg, .mascot-big svg{ width:100%; height:100%; display:block; }
+.mascot-big{ width:104px; height:104px; font-size:0; }
+.seal-ic{ display:inline-grid; place-items:center; width:34px; height:34px; }
+.seal-ic svg{ width:100%; height:100%; display:block; }
+.ov-emoji.hakim-ov{ width:110px; height:110px; margin:0 auto; font-size:0; }
+.ov-emoji.hakim-ov svg{ width:100%; height:100%; display:block; }
+
 .cert-seal .seal-tx{ font-size:.6rem; font-weight:900; color:#78350f; line-height:1.3; text-align:center; max-width:72px; }
 .cert-foot{ margin-top:12px; padding-top:10px; border-top:2px solid rgba(212,175,55,.45); color:#64748b; font-size:.8rem; line-height:1.8; font-weight:600; }
-.cert-date{ font-weight:800; color:#0c4a6e; margin-bottom:4px; }
+.cert-date{ font-weight:800; color:#4c3cc7; margin-bottom:4px; }
 
 /* ---------- print certificate ---------- */
 @page{ margin:12mm; }
@@ -227,16 +240,11 @@ body::before{
 @keyframes zoomin{ from{ transform:scale(.6); opacity:0; } to{ transform:scale(1); opacity:1; } }
 @keyframes fall{ to{ transform:translateY(108vh) rotate(720deg); opacity:.75; } }
 </style>
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/main.min.css">
-  <link rel="stylesheet" href="../css/validation.css">
-  <link rel="stylesheet" href="../css/accessibility.css">
-  <link rel="manifest" href="../manifest.json">
+<link rel="manifest" href="../manifest.json">
   <meta name="theme-color" content="#4a5fd0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon" href="../icons/icon-192x192.png">
+  <link rel="apple-touch-icon" href="../icons/icon-192.png">
 </head>
 <body>
 <div class="app" id="app">
@@ -244,7 +252,7 @@ body::before{
   <!-- ============ MENU ============ -->
   <section id="menu" class="screen">
     <div class="menu-card">
-      <div class="mascot-big">👨‍🏫</div>
+      <div class="mascot-big" id="mascotBig"></div>
       <h1>بازی تقسیم چکشی</h1>
       <p class="sub">مرحله به مرحله، قدم‌به‌قدم یاد بگیر<br>و قهرمانِ تقسیم شو! 🏆</p>
       <div class="name-row" id="nameRow">
@@ -261,6 +269,8 @@ body::before{
         <button id="btnHelp" class="btn ghost">❓ راهنما</button>
         <button id="btnSound" class="btn ghost">🔊 صدا</button>
         <button id="btnStepMenu" class="btn ghost">⚡ نمایش خودکار</button>
+        <button id="btnReset" class="btn ghost">↻ شروع مجدد</button>
+        <a href="../math-learning.html" class="btn ghost school-link">🏫 مدرسه ریاضی</a>
       </div>
       <div class="credit">
         <div>طراحی و توسعه‌دهنده: <b>مهدی شریفیان</b></div>
@@ -273,6 +283,7 @@ body::before{
   <section id="game" class="screen hidden">
     <header class="hud">
       <button id="btnHome" class="btn icon" title="منو">🏠</button>
+      <a href="../math-learning.html" class="btn icon school-link" title="بازگشت به مدرسهٔ ریاضی" aria-label="بازگشت به مدرسهٔ ریاضی">🏫</a>
       <div class="hud-title"><span id="lvName"></span><small id="lvSub"></small></div>
       <div class="hud-stars">⭐ <span id="starCount">۰</span>/۱۵</div>
       <button id="btnStep" class="btn icon" title="نحوه‌ی نمایش مراحل">⚡</button>
@@ -325,6 +336,7 @@ body::before{
   </div>
 </div>
 
+<script src="../hakim-core.js"></script>
 <script>
 'use strict';
 /* ================= PURE (testable) ================= */
@@ -544,12 +556,34 @@ function updateDots(){
   const pc = $('#probCount');
   if(pc) pc.textContent = G.pi < 5 ? `مسئله‌ی ${toFa(G.pi + 1)} از ۵` : 'همه‌ی مسائل تمام شد! 🎉';
 }
+/* چهرهٔ حکیم — از hakim-core.js فراخوانی می‌شود؛ اگر نبود، ایموجی */
+const HAKIM_MOOD = { '👨‍🏫':'normal', '🤩':'happy', '🥺':'sad', '🥳':'excited', '🤔':'thinking' };
 function setMascot(e){
   const m = $('#mascot');
-  if(m.textContent === e) return;
-  m.textContent = e;
+  const mood = HAKIM_MOOD[e] || 'normal';
+  if(window.Hakim && typeof Hakim.renderFace === 'function'){
+    if(m.dataset.mood !== mood){ Hakim.renderFace(mood, m); m.dataset.mood = mood; }
+  } else if(m.textContent !== e){
+    m.textContent = e;
+  }
   m.classList.remove('pop'); void m.offsetWidth; m.classList.add('pop');
 }
+
+/* ═══ رندر چهرهٔ حکیم در نقاط مختلف ═══ */
+function hakimPaint(root){
+  if(!window.Hakim || typeof Hakim.renderFace !== 'function') return;
+  root = root || document;
+  const ov = root.querySelector('[data-hakim-ov]');
+  if(ov) Hakim.renderFace('excited', ov);
+  root.querySelectorAll('[data-hakim-seal]').forEach(el => Hakim.renderFace('happy', el));
+}
+(function hakimInit(){
+  if(window.Hakim && typeof Hakim.renderFace === 'function'){
+    const big = document.getElementById('mascotBig');
+    if(big) Hakim.renderFace('happy', big);
+  }
+})();
+
 function popStars(){
   const hs = $('.hud-stars');
   hs.classList.remove('pop'); void hs.offsetWidth; hs.classList.add('pop');
@@ -902,7 +936,7 @@ function startGame(li, mode = 'game'){
   const tok = ++G.token;
   setMascot('👨‍🏫');
   const intro = mode === 'tutorial'
-    ? `سلام! من حکیم هستم 👨‍🏫 امروز با هم تقسیم چکشی یاد می‌گیریم!<br>عدد بزرگ (مقسوم) زیر خط، عدد کوچیک (مقسوم‌علیه) کنارش، و جواب بالای خط می‌نویسیم.<br>حالا مرحله به مرحله <span class="m">${N(204)} ÷ ${N(4)}</span> را انجام می‌دیم. آماده‌ای؟`
+    ? `سلام! من حکیم هستم! امروز با هم تقسیم چکشی یاد می‌گیریم!<br>عدد بزرگ (مقسوم) زیر خط، عدد کوچیک (مقسوم‌علیه) کنارش، و جواب بالای خط می‌نویسیم.<br>حالا مرحله به مرحله <span class="m">${N(204)} ÷ ${N(4)}</span> را انجام می‌دیم. آماده‌ای؟`
     : `سلام <b>${playerName()}</b>! ${LEVELS[li].icon} <b>مرحله‌ی ${toFa(li+1)}: ${LEVELS[li].name}</b><br>${LEVELS[li].desc}<br>۵ مسئله داریم. تو بگو مقسوم‌علیه چند بار جا می‌شود، ما با هم می‌نویسیمش! بزن بریم! 🚀`;
   setBubbleText(intro);
   waitAction(mode === 'tutorial' ? 'بزن بریم! 🚀' : 'شروع! 🚀', () => { if(tok === G.token) playProblem(); });
@@ -937,11 +971,11 @@ function buildCertHTML(){
       <div class="cert-sub">بازیِ تقسیم چکشی • پایه‌ی پنجم</div>
       <p class="cert-to">${champion ? 'تو استادِ تقسیم شدی!' : 'تلاشِ قشنگت را ستایش می‌کنیم!'}<br>این گواهی با افتخار اهدا می‌شود به:</p>
       <span class="cert-name">${playerName()}</span>
-      <p class="cert-note">به پاسِ پشت‌کار و دقتِ او در آموختنِ «تقسیم چکشی»،<br>مرحله به مرحله 👨‍🏫💚</p>
+      <p class="cert-note">به پاسِ پشت‌کار و دقتِ او در آموختنِ «تقسیم چکشی»،<br>مرحله به مرحله 💚</p>
       <ul class="cert-list">${rows}</ul>
       <div class="cert-legend">✅ = بدونِ هیچ اشتباهی • ✏️ = با کمی تلاش و تمرین • 🔒 = هنوز بازی نشده</div>
       <div class="cert-total">مجموع امتیازها: <b>${toFa(total)} از ۷۵</b> ⭐${champion ? '' : ' — ادامه بده تا قهرمان شوی! 🚀'}</div>
-      <div class="cert-seal"><span class="seal-ic">👨‍🏫</span><span class="seal-tx">گواهیِ رسمی<br>تقسیم چکشی</span></div>
+      <div class="cert-seal"><span class="seal-ic" data-hakim-seal></span><span class="seal-tx">گواهیِ رسمی<br>تقسیم چکشی</span></div>
       <div class="cert-foot">
         ${certDate ? `<div class="cert-date">📅 ${certDate}</div>` : ''}
         <div>طراحی و توسعه: <b>مهدی شریفیان</b><br>آموزگار پایه‌ی پنجم • دبستان حکمت</div>
@@ -955,32 +989,40 @@ function showCertificate(){
       <button class="btn primary" id="ovPrint">🖨️ چاپِ گواهی</button>
       <button class="btn ghost" id="ovCloseCert">بستن ✖️</button>
     </div>`;
+  hakimPaint(ov);
   $('#ovPrint').onclick = () => window.print();
   $('#ovCloseCert').onclick = hideOverlay;
   $('#overlay').classList.remove('hidden');
 }
 
-// تابع ارسال نتایج به پنل معلم
+// ارسال نتایج به پنل معلم — همان قالب استاندارد «session» که بقیهٔ بازی‌ها
+// می‌فرستند (action + فیلدهای Sessions) تا بدون تغییر در Apps Script ثبت شود.
 function sendResultsToPanel(gameId, score, stars, level, duration, details = {}) {
-  const studentName = playerName();
-  const data = {
-    student_name: studentName,
-    game_id: gameId,
-    score: score,
-    stars: stars,
-    level: level,
-    duration: duration,
-    device: window.innerWidth <= 768 ? 'mobile' : 'desktop',
-    details: details,
-    timestamp: new Date().toISOString()
-  };
-  
-  fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).catch(() => {});
+  try {
+    const ua = navigator.userAgent;
+    const payload = {
+      action: 'session',
+      student_name: playerName(),
+      student_class: '',
+      student_school: '',
+      game_id: gameId,
+      experiment_id: '',
+      duration: Math.round(duration || 0),
+      device: /mobile|android|iphone/i.test(ua) ? 'موبایل' : (/ipad|tablet/i.test(ua) ? 'تبلت' : 'دسکتاپ'),
+      score: Math.round(score || 0),
+      stars: Math.round(stars || 0),
+      completed: true,
+      attempts: 1,
+      started_at: new Date().toISOString(),
+      finished_at: new Date().toISOString(),
+      details: JSON.stringify(Object.assign({ level: level }, details))
+    };
+    fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).catch(() => {});
+  } catch (e) {}
 }
 
 function levelComplete(){
@@ -1000,7 +1042,7 @@ function levelComplete(){
     G.levelStarsEarned,
     idx + 1,
     Math.round(levelDuration),
-    { mistakes: G.levelMistakes, perfect: G.levelMistakes === 0 }
+    { levelName: LEVELS[idx].name, mistakes: G.levelMistakes, perfect: G.levelMistakes === 0, totalQuestions: 5 }
   );
   
   const total = saved.stars.reduce((a, b) => a + b, 0);
@@ -1014,12 +1056,13 @@ function levelComplete(){
         <button class="btn ghost" id="ovNext">از اول دوباره 🔄</button>
         <button class="btn ghost" id="ovMenu">منو 🏠</button>
       </div>`;
+  hakimPaint(ov);
     $('#ovPrint').onclick = () => window.print();
     $('#ovNext').onclick = () => { hideOverlay(); startGame(0); };
     $('#ovMenu').onclick = () => { hideOverlay(); goMenu(); };
   } else {
     ov.innerHTML = `
-      <div class="ov-emoji">🎊</div>
+      <div class="ov-emoji hakim-ov" data-hakim-ov></div>
       <h2>آفرین! مرحله‌ی ${toFa(idx+1)} تموم شد!</h2>
       <div class="ov-stars">${'⭐'.repeat(k)}${'☆'.repeat(3-k)}</div>
       <p>ستاره‌های این مرحله: ${toFa(G.levelStarsEarned)} از ۱۵</p>
@@ -1030,6 +1073,7 @@ function levelComplete(){
         <button class="btn ghost" id="ovRetry">دوباره 🔄</button>
         <button class="btn ghost" id="ovMenu">منو 🏠</button>
       </div>`;
+    hakimPaint(ov);
     $('#ovNext').onclick = () => { hideOverlay(); startGame(idx + 1); };
     $('#ovRetry').onclick = () => { hideOverlay(); startGame(idx); };
     $('#ovMenu').onclick = () => { hideOverlay(); goMenu(); };
@@ -1116,7 +1160,19 @@ function init(){
   $('#btnLearn').onclick = () => startGame(0, 'tutorial');
   $('#btnCert').onclick = () => { if(!$('#btnCert').disabled) showCertificate(); };
   $('#btnHome').onclick = goMenu;
+  document.querySelectorAll('.school-link').forEach(a => a.addEventListener('click', e => {
+    const game = document.getElementById('game');
+    if(game && !game.classList.contains('hidden') &&
+       !window.confirm('مرحله نیمه‌کاره است؛ به مدرسهٔ ریاضی برگردی؟')) e.preventDefault();
+  }));
   $('#btnHelp').onclick = () => $('#help').classList.remove('hidden');
+  $('#btnReset').onclick = () => {
+    if(!window.confirm('همهٔ ستاره‌ها و پیشرفت این بازی پاک شود و از نو شروع کنی؟')) return;
+    saved = { next: 1, stars: [0,0,0,0,0], sound: saved.sound, name: saved.name,
+              perfect: [false,false,false,false,false], stepMode: saved.stepMode };
+    persist();
+    renderMenu();
+  };
   $('#btnHelpClose').onclick = () => $('#help').classList.add('hidden');
   $('#btnSound').onclick = toggleSound;
   $('#btnSound2').onclick = toggleSound;
@@ -1125,15 +1181,65 @@ function init(){
 }
 init();
 </script>
-  <script src="../js/security.js" defer></script>
-  <script src="../js/main.js" defer></script>
-  <script src="../js/pwa-register.js" defer></script>
-  <script src="../js/lazyload.js" defer></script>
-  <script src="../js/accessibility.js" defer></script>
-  <script src="../js/webp-support.js" defer></script>
-  <script src="../js/analytics.js" defer></script>
-  <script src="../js/themes.js" defer></script>
-  <script src="../js/utils.js" defer></script>
-  <section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a488d2979d36cce4',t:'MTc5MTY2ODgzNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<section id="hakimPanelMount" class="reveal" aria-label="پیام از حکیم"></section>
+<!-- 📊 ردیاب بازدید حکیمستان -->
+<script>
+(function(){
+  try {
+    var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    var userId = localStorage.getItem('hk_uid');
+    var isNew = false;
+    if (!userId) {
+      userId = 'hk_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('hk_uid', userId);
+      isNew = true;
+    }
+    var ua = navigator.userAgent;
+    var device = 'دسکتاپ';
+    if (/mobile|android|iphone|ipod/i.test(ua)) device = 'موبایل';
+    else if (/ipad|tablet/i.test(ua)) device = 'تبلت';
+    var browser = 'سایر';
+    if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+    else if (ua.indexOf('Edg') > -1) browser = 'Edge';
+    else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+    else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+    var os = 'سایر';
+    if (/android/i.test(ua)) os = 'Android';
+    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+    else if (/windows/i.test(ua)) os = 'Windows';
+    else if (/mac/i.test(ua)) os = 'Mac';
+    else if (/linux/i.test(ua)) os = 'Linux';
+    var ref = 'مستقیم';
+    if (document.referrer) {
+      if (document.referrer.indexOf('hakimistan.ir') > -1) ref = 'داخلی';
+      else if (document.referrer.indexOf('google') > -1) ref = 'گوگل';
+      else if (document.referrer.indexOf('eitaa') > -1) ref = 'ایتا';
+      else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
+      else ref = 'سایر';
+    }
+    fetch(API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'logVisit',
+        userId: userId,
+        page: (function(){ var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean); if (p.length === 0) return 'index.html'; if (p.length === 1) return p[0]; return p.slice(-2).join('/'); })(),
+        device: device,
+        browser: browser,
+        os: os,
+        lang: navigator.language || 'fa',
+        ref: ref,
+        isNew: isNew
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
 </html>

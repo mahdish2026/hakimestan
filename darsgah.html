@@ -356,8 +356,8 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
 (() => {
  const $=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
  const fa=n=>Number(n).toLocaleString('fa-IR');
- const PDF_JS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
- const PDF_WORKER='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+ const PDF_JS='assets/vendor/pdf.min.js';
+ const PDF_WORKER='assets/vendor/pdf.worker.min.js';
  const prefsKey='hakimestan.darsgah.canvas.v2';
  const qualityOptions={'360':{bitrate:800000,label:'360p'},'480':{bitrate:1200000,label:'480p'},'540':{bitrate:1600000,label:'540p'},'720':{bitrate:2500000,label:'720p'},'1080':{bitrate:4500000,label:'1080p'}};
  const dimensions={'16:9':{'360':[640,360],'480':[854,480],'540':[960,540],'720':[1280,720],'1080':[1920,1080]},'9:16':{'360':[360,640],'480':[480,854],'540':[540,960],'720':[720,1280],'1080':[1080,1920]},'1:1':{'360':[360,360],'480':[480,480],'540':[540,540],'720':[720,720],'1080':[1080,1080]},'4:3':{'360':[480,360],'480':[640,480],'540':[720,540],'720':[960,720],'1080':[1440,1080]}};
@@ -458,7 +458,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  function pdfError(error){
   if(error.name==='InvalidPDFException')return 'فایل PDF معتبر نیست یا آسیب دیده است. نسخهٔ دیگری از کتاب را امتحان کنید.';
   if(error.name==='PasswordException')return 'رمز فایل PDF وارد نشده یا نادرست است.';
-  if(/worker|fetch|network|dynamically imported/i.test(error.message||''))return 'دریافت Worker یا داده‌های PDF انجام نشد. اتصال اینترنت و دسترسی به cdnjs.cloudflare.com را بررسی کنید.';
+  if(/worker|fetch|network|dynamically imported/i.test(error.message||''))return 'دریافت Viewer یا داده‌های PDF انجام نشد. اتصال اینترنت و به‌روز بودن مرورگر را بررسی کنید.';
   return error.message||'باز کردن کتاب ممکن نشد. یک PDF معتبر انتخاب کنید.';
  }
  async function destroyTask(task){try{await task?.destroy();}catch(_){}}
@@ -1294,7 +1294,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3d95ca4ed16dbc8',t:'MTc4OTgyODk5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>

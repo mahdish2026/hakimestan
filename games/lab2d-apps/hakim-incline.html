@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../../css/a11y.css">
+<!-- hakim-core:end -->
+
 <!-- حلقهٔ تمرکز و ترجیحات دسترس‌پذیری —
      هم در حالت iframe (نسبت به صفحهٔ والد) و هم در بازکردن مستقیم فایل درست کار می‌کند -->
 <link rel="stylesheet" href="../../css/a11y.css">
@@ -10,11 +13,10 @@ window.STUDENT_NAME = "";
 </script>
 
 <meta charset="utf-8">
+<link rel="stylesheet" href="../../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>ماشین‌های ساده | قرقره و سطح شیب‌دار — طراحی مهدی شریفیان</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800;900&display=swap" rel="stylesheet">
+<meta name="description" content="آزمایشگاه تعاملی سطح شیب‌دار — آموزش ماشین‌های ساده و فیزیک به‌صورت بازی برای پایه پنجم دبستان.">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html,body{height:100%}
@@ -293,8 +295,6 @@ table.rt{width:100%;border-collapse:collapse;font-size:.82em;margin-bottom:.6em}
 .rt-note{font-size:.78em;color:#8a97a5;font-weight:700;line-height:1.9}
 
 /* ---------- راهنمای چرخاندن گوشی ---------- */
-
-
 
 /* ---------- انیمیشن‌های SVG ---------- */
 .cloud{animation:sway 9s ease-in-out infinite}
@@ -1761,7 +1761,6 @@ const QUIZZES = {
   ]
 };
 
-
 function runQuiz(lab){
   Game.levelId = lab === 'pulley' ? 'QP' : 'QI';
   Game.attempts = 0;
@@ -1883,8 +1882,6 @@ function runQuiz(lab){
   
   renderQuestion();
 }
-
-
 
 /* ═══════════════════════════════════════════════════════
    نقشه‌ی ماجراها (هاب)
@@ -2039,5 +2036,10 @@ function openReport(){
   }
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3f066534aca5f94',t:'MTc5MDA3MDU2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<!-- hakim-core:start -->
+<script src="../../js/hakim-security.js" defer></script>
+<script src="../../js/hakim-a11y.js" defer></script>
+<script src="../../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
 </html>

@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 
 <html dir="rtl" lang="fa">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
   <link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="utf-8"/>
+<link rel="stylesheet" href="../css/fonts.css">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <meta content="بازی آموزشی فتح کهن دیار ایران — مطالعات اجتماعی پایه پنجم، دروس ۱۸ تا ۲۱. ساخته مهدی شریفیان" name="description"/>
 <meta content="مهدی شریفیان" name="author"/>
@@ -2843,8 +2847,6 @@ body[data-theme="flag"] .hakim-panel { background: linear-gradient(145deg, rgba(
   .commander-card-desc { font-size: 0.6rem; min-height: 3.6em; }
 }
 
-
-
 /* ===== مودال تصمیم اخلاقی ===== */
 .popup-decision {
   position: fixed;
@@ -4356,7 +4358,6 @@ html { scrollbar-gutter: stable; }
       { id: 'final', name: 'نبرد پایانی', icon: '⚔️', qCount: 5, needCorrect: 3 }
     ];
 
-
     // ============================================================
     // 🎖️ سردارها — انتخاب شخصیت با توانایی ویژه
     // ============================================================
@@ -4798,7 +4799,6 @@ html { scrollbar-gutter: stable; }
       }
     }
 
-
     // ============================================================
     // 🧙‍♂️ پل ارتباطی با hakim-core.js
     // ============================================================
@@ -4891,7 +4891,6 @@ html { scrollbar-gutter: stable; }
         tryInit();
       }
     })();
-
 
     function initState() {
       state = {
@@ -5356,7 +5355,6 @@ const PROVINCE_INFO = {
   }
 };
 
-
 // ============================================================
 // 🗺️ تعامل با استان‌ها — کلیک/لمس و نمایش اطلاعات
 // ============================================================
@@ -5624,7 +5622,6 @@ function closeMapAccordion() {
   if (header) header.setAttribute('aria-expanded', 'false');
   content.style.maxHeight = '0px';
 }
-
 
 function buildMap() {
   // فقط نقشه شروع (چون توی صفحه شروع دیده می‌شه)
@@ -6834,7 +6831,6 @@ function animateTravelDot(fromIndex, toIndex) {
 
     function showPopup(msg) { const p = document.getElementById('popup-msg'); p.textContent = msg; p.className = 'popup-msg show'; setTimeout(() => { p.className = 'popup-msg hide'; setTimeout(() => p.className = 'popup-msg', 300); }, 1600); }
 
-
     function toPersianNum(n) { const map = { '0': '۰', '1': '۱', '2': '۲', '3': '۳', '4': '۴', '5': '۵', '6': '۶', '7': '۷', '8': '۸', '9': '۹' }; return String(n).replace(/[0-9]/g, d => map[d]); }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -7099,5 +7095,10 @@ function animateTravelDot(fromIndex, toIndex) {
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

@@ -1212,40 +1212,51 @@ function buildCard(video) {
   body.appendChild(actions);
   card.appendChild(body);
 
-  /* — probe video — */
-  const probe = document.createElement('video');
-  probe.preload = 'metadata';   // metadata (not 'none')
-  probe.src = 'videos/' + video.id + '.mp4';
-  probe.style.display = 'none';
+  /* — probe video —
+     فقط یک درخواست HEAD سبک (بدون دانلود ویدیو) بررسی می‌کند که
+     فایل موجود است یا نه؛ و فقط وقتی کارت در دیدرس کاربر است. */
+  var settled = false;   // نتیجه فقط یک بار اعمال می‌شود
 
   function markReady() {
-    if (videoStatus[video.id]) return;
+    if (settled) return;
+    settled = true;
     videoStatus[video.id] = 'ready';
     clearTimeout(timer);
     soonOverlay.classList.remove('visible');
     playOverlay.classList.add('visible');
     playBtn.disabled = false;
-    probe.remove();
   }
 
   function markSoon() {
-    if (videoStatus[video.id]) return;
+    if (settled) return;
+    settled = true;
     videoStatus[video.id] = 'soon';
     clearTimeout(timer);
     soonOverlay.classList.add('visible');
     playOverlay.classList.remove('visible');
     playBtn.disabled = true;
-    probe.remove();
   }
 
-  probe.addEventListener('loadedmetadata', markReady);
-  probe.addEventListener('canplay',        markReady);
-  probe.addEventListener('error',          markSoon);
+  var timer = null;
 
-  const timer = setTimeout(markSoon, 5000);   // 5-second timeout
+  function startProbe() {
+    if (videoStatus[video.id] || settled) return;
+    timer = setTimeout(markSoon, 6000);   // timeout
+    fetch('videos/' + video.id + '.mp4', { method: 'HEAD' })
+      .then(function (r) { r.ok ? markReady() : markSoon(); })
+      .catch(markSoon);
+  }
 
-  document.body.appendChild(probe);
-  probe.load();
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) { io.disconnect(); startProbe(); }
+      }
+    }, { rootMargin: '150px' });
+    io.observe(card);
+  } else {
+    startProbe();
+  }
 
   /* — click handlers — */
   function tryPlay() {
@@ -1288,6 +1299,60 @@ renderSections();
 
 <!-- دکمهٔ بازگشت به لابی -->
 <script src="back-to-lobby.js"></script>
+<!-- 📊 ردیاب بازدید حکیمستان -->
+<script>
+(function(){
+  try {
+    var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    var userId = localStorage.getItem('hk_uid');
+    var isNew = false;
+    if (!userId) {
+      userId = 'hk_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('hk_uid', userId);
+      isNew = true;
+    }
+    var ua = navigator.userAgent;
+    var device = 'دسکتاپ';
+    if (/mobile|android|iphone|ipod/i.test(ua)) device = 'موبایل';
+    else if (/ipad|tablet/i.test(ua)) device = 'تبلت';
+    var browser = 'سایر';
+    if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+    else if (ua.indexOf('Edg') > -1) browser = 'Edge';
+    else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+    else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+    var os = 'سایر';
+    if (/android/i.test(ua)) os = 'Android';
+    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+    else if (/windows/i.test(ua)) os = 'Windows';
+    else if (/mac/i.test(ua)) os = 'Mac';
+    else if (/linux/i.test(ua)) os = 'Linux';
+    var ref = 'مستقیم';
+    if (document.referrer) {
+      if (document.referrer.indexOf('hakimistan.ir') > -1) ref = 'داخلی';
+      else if (document.referrer.indexOf('google') > -1) ref = 'گوگل';
+      else if (document.referrer.indexOf('eitaa') > -1) ref = 'ایتا';
+      else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
+      else ref = 'سایر';
+    }
+    fetch(API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'logVisit',
+        userId: userId,
+        page: (function(){ var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean); if (p.length === 0) return 'index.html'; if (p.length === 1) return p[0]; return p.slice(-2).join('/'); })(),
+        device: device,
+        browser: browser,
+        os: os,
+        lang: navigator.language || 'fa',
+        ref: ref,
+        isNew: isNew
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>

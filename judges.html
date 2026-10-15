@@ -6,7 +6,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="robots" content="index, follow">
 <meta name="theme-color" content="#ff7d3b">
 <title>معرفی پروژه — حکیمستان</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff7d3b'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Tahoma, sans-serif' fill='white' text-anchor='middle'%3Eح%3C/text%3E%3C/svg%3E">
@@ -401,6 +401,7 @@
   }
   .shot img{
     width:100%;
+    height:auto;
     display:block;
     border-radius:16px;
     border:1px solid var(--border);
@@ -496,7 +497,7 @@
         <source srcset="screenshots/lobby.webp" type="image/webp">
         <img src="screenshots/lobby.jpg" alt="نمای لابی حکیمستان با کارت‌های بازی‌ها و پنج وادی دانش"
              width="1280" height="720" loading="lazy" decoding="async"
-             onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+             onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
       </picture>
       <figcaption>لابی حکیمستان — صفحه‌ی اصلی سامانه</figcaption>
     </figure>
@@ -674,7 +675,7 @@
           <source srcset="screenshots/mancheh.webp" type="image/webp">
           <img src="screenshots/mancheh.jpg" alt="نمای بازی منچِ دانش آنلاین روی صفحهٔ بازی"
                width="1280" height="720" loading="lazy" decoding="async"
-               onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
         </picture>
         <figcaption>منچِ دانش آنلاین</figcaption>
       </figure>
@@ -683,7 +684,7 @@
           <source srcset="screenshots/lab.webp" type="image/webp">
           <img src="screenshots/lab.jpg" alt="نمای آزمایشگاه دو‌بعدی علوم با ابزارهای آزمایش"
                width="1280" height="720" loading="lazy" decoding="async"
-               onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
         </picture>
         <figcaption>آزمایشگاه ۲بعدی</figcaption>
       </figure>
@@ -692,7 +693,7 @@
           <source srcset="screenshots/teacher-panel.webp" type="image/webp">
           <img src="screenshots/teacher-panel.jpg" alt="نمای پنل معلم با آمار کلاس و فهرست دانش‌آموزان"
                width="1280" height="720" loading="lazy" decoding="async"
-               onerror="this.closest('figure').classList.add('shot-empty');this.remove();">
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
         </picture>
         <figcaption>پنل معلم</figcaption>
       </figure>
@@ -851,7 +852,6 @@
   } catch(e){}
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3f3a4fbafc835a6',t:'MTc5MDEwNDU5MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>

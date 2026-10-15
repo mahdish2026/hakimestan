@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="night" data-font-scale="md">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
   <meta charset="UTF-8" />
+<link rel="stylesheet" href="../css/fonts.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="theme-color" content="#140c2c" />
   <meta name="description" content="سامانه هوشمند آموزش، مرور و بازی لغات فارسی پنجم ابتدایی — حکیمستان" />
@@ -12,12 +16,8 @@
   <link rel="manifest" href="../manifest.json" />
 
   <!-- فونت‌های وزیرمتن و لاله‌زار از گوگل فونتز -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <!-- کتابخانه html2canvas برای دانلود تصویر گواهی‌نامه (همراه با جایگزین داخلی Canvas در صورت عدم دسترسی به اینترنت) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<!-- کتابخانه html2canvas برای دانلود تصویر گواهی‌نامه (همراه با جایگزین داخلی Canvas در صورت عدم دسترسی به اینترنت) -->
+  <script src="../assets/vendor/html2canvas.min.js" defer></script>
 
   <style>
     /* ═══════════════════════════════════════════════════════════════════
@@ -1620,7 +1620,6 @@
       @page { size: A4; margin: 10mm; }
     }
 
-
     /* ═════ خروجی PDF / چاپ و تصویر ═════ */
     .print-sheet { background:#fff; color:#1a1a1a; padding:20px; font-family:'Vazirmatn', Tahoma, sans-serif; direction:rtl; }
     .print-header { display:grid; grid-template-columns:auto 1fr auto; gap:15px; align-items:center; border-bottom:3px double #8b5cf6; padding-bottom:14px; margin-bottom:16px; }
@@ -1636,7 +1635,6 @@
     .print-table td strong { color:#5b21b6; font-size:14px; }
     .print-table td.print-lesson-row { background:#ddd6fe !important; color:#4c1d95; font-weight:800; text-align:center; }
     .print-footer { display:flex; justify-content:space-between; margin-top:20px; padding-top:14px; border-top:1px dashed #c4b5fd; font-size:12px; color:#4b5563; }
-
 
     /* ♿ کاهش حرکت — یک بلوک واحد (ترجیح سیستم + تنظیم برنامه) */
     @media (prefers-reduced-motion: reduce) {
@@ -2024,7 +2022,6 @@
 
     /* --- ♿ کاهش حرکت: همهٔ افکت‌های جدید خاموش --- */
 
-
     /* --- 🌱 پانوشت برند: اعتبار طراح + شعار --- */
     .app-footer {
       margin: 26px auto 6px;
@@ -2068,7 +2065,7 @@
   <canvas id="confettiCanvas" aria-hidden="true"></canvas>
 
   <!-- موسیقی بی‌کلام پس‌زمینه؛ پخش فقط پس از انتخاب دانش‌آموز و تعامل او -->
-  <audio id="bgMusic" src="music6.mp3" loop preload="auto"></audio>
+  <audio id="bgMusic" src="music6.mp3" loop preload="none"></audio>
 
   <!-- کانتینر پیام‌های فوری (Toast) -->
   <!-- ⬆️ دکمه بازگشت به بالای صفحه (نمایان‌شونده پس از اسکرول) -->
@@ -2143,7 +2140,7 @@
           </button>
 
           <!-- دکمه بازگشت به لابی حکیمستان -->
-          <button type="button" class="hdr-btn accent" id="btnBackToLobby" aria-label="بازگشت به صفحه اصلی حکیمستان">
+          <button type="button" class="hdr-btn accent" id="btnBackToLobby" data-lobby-link="../index.html" aria-label="بازگشت به صفحه اصلی حکیمستان">
             <span>🏠</span>
             <span>لابی حکیمستان</span>
           </button>
@@ -3133,7 +3130,6 @@
     const WORD_STATS_MIGRATION_KEY = 'hk_farsi5_word_stats_id_migration_v1';
     const MUSIC_SETTING_KEY = 'hk_farsi5_music_setting';
 
-
     // واژگان کامل کتاب فارسی پنجم ابتدایی — چاپ ۱۴۰۴ (نسخهٔ کامل‌تر)
     // هر لغت به‌ازای هر درسی که در آن آمده یک‌بار تکرار شده است؛ lesson عدد است و فیلد خالی = ''
     const FULL_GLOSSARY = [
@@ -3465,8 +3461,6 @@
     // لغات پیش‌فرض اضطراری (۱۰ لغت اول)
     const SEED = FULL_GLOSSARY.slice(0, 10);
 
-
-
     // عناوین فصل‌ها و درس‌های کتاب فارسی پنجم ابتدایی
     const LESSON_TITLES = {
   1:  'درس ۱: تماشاخانه (فصل آفرینش)',
@@ -3692,7 +3686,6 @@
       if (String(lessonNum) === '18') return 'واژه‌های تکمیلی';
       return 'درس ' + toPersianDigits(lessonNum);
     }
-
 
     /* ═══════════════════════════════════════════════════════════════════
        🔊 موتور صوتی Web Audio API (بدون نیاز به فایل صوتی خارجی)
@@ -6180,7 +6173,6 @@
         openModal('certModalBackdrop');
       }
 
-
       async function downloadCertificateImage() {
         const target = document.getElementById('certificateRenderTarget');
         const btn = document.getElementById('btnDownloadCertImg');
@@ -6653,11 +6645,11 @@
           });
         });
 
-        // دکمه بازگشت به لابی (طبق الگوی دقیق بخش ۲)
+        // دکمه بازگشت به لابی — آدرس نسبی تا روی هر میزبانی (دامنهٔ ریشه یا زیرمسیر) درست کار کند
         const backBtn = document.getElementById('btnBackToLobby');
         if (backBtn) {
           backBtn.addEventListener('click', () => {
-            window.location.href = '/index.html';
+            window.location.href = '../index.html';
           });
         }
 
@@ -7265,5 +7257,10 @@
       }
     })();
   </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

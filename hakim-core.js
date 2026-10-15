@@ -710,11 +710,23 @@
 
   function injectFont() {
     if (document.getElementById('hakim-font')) return;
+    // فونت محلی از قبل بارگذاری شده است — نیازی به CDN نیست
+    if (document.querySelector('link[href*="css/fonts.css"]')) return;
     try {
+      // مسیر فونت محلی نسبت به جایگاه هسته یا صفحهٔ جاری
+      let href = '';
+      try {
+        const s = document.currentScript && document.currentScript.src;
+        if (s) href = new URL('css/fonts.css', s).href;
+      } catch (e) {}
+      if (!href) {
+        const dirs = location.pathname.replace(/^\/|\/[^/]*$/g, '').split('/').filter(Boolean);
+        href = '../'.repeat(dirs.length) + 'css/fonts.css';
+      }
       const link = document.createElement('link');
       link.id = 'hakim-font';
       link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap';
+      link.href = href;
       document.head.appendChild(link);
     } catch (e) { /* آفلاین: فونت fallback استفاده می‌شود */ }
   }

@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../../css/a11y.css">
+<!-- hakim-core:end -->
+
 <!-- حلقهٔ تمرکز و ترجیحات دسترس‌پذیری —
      هم در حالت iframe (نسبت به صفحهٔ والد) و هم در بازکردن مستقیم فایل درست کار می‌کند -->
 <link rel="stylesheet" href="../../css/a11y.css">
 <meta charset="utf-8">
+<link rel="stylesheet" href="../../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0a1f">
 <meta name="description" content="گوشِ حکیم — بازی آموزشی درس ۶ علوم پنجم. دو مرحله: آناتومی گوش و مسیر صدا تا مغز. ساختهٔ مهدی شریفیان.">
 <title>گوشِ حکیم 👂 | بازی آموزشی شنوایی — حکیمستان</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0d0a1f;--gold:#f5c76a;--gold-d:#c9913a;--violet:#8b5cf6;
@@ -1158,11 +1159,23 @@ details.about div{font-size:.82rem;color:var(--dim);padding-top:8px;line-height:
 
   function injectFont() {
     if (document.getElementById('hakim-font')) return;
+    // فونت محلی از قبل بارگذاری شده است — نیازی به CDN نیست
+    if (document.querySelector('link[href*="css/fonts.css"]')) return;
     try {
+      // مسیر فونت محلی نسبت به جایگاه هسته یا صفحهٔ جاری
+      let href = '';
+      try {
+        const s = document.currentScript && document.currentScript.src;
+        if (s) href = new URL('css/fonts.css', s).href;
+      } catch (e) {}
+      if (!href) {
+        const dirs = location.pathname.replace(/^\/|\/[^/]*$/g, '').split('/').filter(Boolean);
+        href = '../'.repeat(dirs.length) + 'css/fonts.css';
+      }
       const link = document.createElement('link');
       link.id = 'hakim-font';
       link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap';
+      link.href = href;
       document.head.appendChild(link);
     } catch (e) { /* آفلاین: فونت fallback استفاده می‌شود */ }
   }
@@ -1963,5 +1976,10 @@ try{
 paintScore();
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../../js/hakim-security.js" defer></script>
+<script src="../../js/hakim-a11y.js" defer></script>
+<script src="../../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>
