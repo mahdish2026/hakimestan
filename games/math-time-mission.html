@@ -36,6 +36,7 @@ button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,inpu
 .brand-title{font-size:.96rem;font-weight:900;line-height:1.2}.brand-sub{font-size:.72rem;color:var(--muted);margin-top:3px}
 .global-tools{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
 .player-chip,.score-chip,.streak-chip,.icon-toggle{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--surface-line);border-radius:99px;padding:6px 11px;background:var(--surface);color:var(--ink);font-size:.78rem;font-weight:900;white-space:nowrap}
+a.icon-toggle,a.button{text-decoration:none}
 .player-avatar{font-size:1.2rem;line-height:1}.score-chip{color:#73550b;background:#fff5c9;border-color:#f1df9a}.streak-chip{color:#a13a20;background:#fff0e8;border-color:#ffd1b8}.icon-toggle{width:40px;padding:5px;font-size:1rem;background:var(--surface-soft)}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .streak-chip.pulse{animation:pulse .6s ease-in-out}
@@ -239,6 +240,7 @@ body[data-theme="dark"] .clock-panel{background:radial-gradient(circle at 50% 42
       <span class="player-chip" id="playerChip"><span class="player-avatar" id="topAvatar">🚀</span><span id="topStudent">قهرمان زمان</span></span>
       <span class="score-chip" id="globalScore" aria-label="امتیاز کل">⭐ ۰ / ۴۰</span>
       <span class="streak-chip" id="globalStreak" hidden aria-live="polite">🔥 آتشین · <span id="streakCount">۰</span></span>
+      <a class="icon-toggle" id="schoolLink" href="../math-learning.html" aria-label="بازگشت به مدرسهٔ ریاضی" title="بازگشت به مدرسهٔ ریاضی">🏫</a>
       <button class="icon-toggle" id="soundToggle" type="button" aria-label="قطع صدا" title="قطع یا وصل صدا">🔊</button>
       <button class="icon-toggle" id="themeToggle" type="button" aria-label="فعال کردن حالت شب" title="تغییر تم روشن و تاریک">🌙</button>
     </div>
@@ -266,7 +268,7 @@ body[data-theme="dark"] .clock-panel{background:radial-gradient(circle at 50% 42
   <!-- منوی هشت مرحله و میان‌برهای جانبی -->
   <section class="screen" id="menuView" hidden aria-labelledby="menuTitle">
     <div class="screen-title-row"><div><h1 id="menuTitle">منوی مراحل</h1><p>سلام، <span id="menuNameInline"></span>! یک چالش را انتخاب کن و ستاره بگیر.</p></div><div class="menu-stats"><span class="stat-pill">🏁 مرحله‌های کامل‌شده: <b id="menuCompletedCount">۰ از ۸</b></span></div></div>
-    <div class="menu-hero"><div><p class="menu-hello">آماده‌ای برای ادامه‌ی ماجراجویی؟</p><p class="menu-help">برای هر پاسخ درست یک ستاره بگیر؛ بهترین امتیازت در همین دستگاه ذخیره می‌شود.</p></div><div class="menu-actions"><button class="button button-teal button-small" id="labButton" type="button">🎨 آزمایشگاه ساعت</button><button class="button button-soft button-small" id="achievementsButton" type="button">🏅 کلکسیون نشان‌ها</button><button class="button button-soft button-small" id="certificateButton" type="button">گواهی / پیشرفت</button><button class="button button-primary button-small" id="mixedChallengeButton" type="button">🎯 چالش ترکیبی</button><button class="button button-danger button-small" id="restartButton" type="button">↻ شروع مجدد</button></div></div>
+    <div class="menu-hero"><div><p class="menu-hello">آماده‌ای برای ادامه‌ی ماجراجویی؟</p><p class="menu-help">برای هر پاسخ درست یک ستاره بگیر؛ بهترین امتیازت در همین دستگاه ذخیره می‌شود.</p></div><div class="menu-actions"><button class="button button-teal button-small" id="labButton" type="button">🎨 آزمایشگاه ساعت</button><button class="button button-soft button-small" id="achievementsButton" type="button">🏅 کلکسیون نشان‌ها</button><button class="button button-soft button-small" id="certificateButton" type="button">گواهی / پیشرفت</button><button class="button button-primary button-small" id="mixedChallengeButton" type="button">🎯 چالش ترکیبی</button><button class="button button-danger button-small" id="restartButton" type="button">↻ شروع مجدد</button><a class="button button-soft button-small" id="menuSchoolLink" href="../math-learning.html">🏫 مدرسه ریاضی</a></div></div>
     <div class="learning-path-panel" role="group" aria-label="انتخاب مسیر یادگیری"><strong class="path-lead">مسیر یادگیری:</strong><button class="path-choice" id="pathBeginner" type="button" data-path="beginner" aria-pressed="false">🌱 تازه‌کار</button><button class="path-choice" id="pathIntermediate" type="button" data-path="intermediate" aria-pressed="false">🌿 متوسط</button><button class="path-choice" id="pathAdvanced" type="button" data-path="advanced" aria-pressed="true">🌳 پیشرفته</button></div>
     <p class="challenge-lock-hint" id="challengeLockHint" hidden>اول یک مرحله رو تکمیل کن.</p>
     <div class="levels-grid" id="levelsGrid" aria-label="هشت مرحله‌ی بازی"></div>
@@ -1149,6 +1151,7 @@ body[data-theme="dark"] .clock-panel{background:radial-gradient(circle at 50% 42
   document.querySelectorAll('.path-choice').forEach(button=>button.addEventListener('click',()=>{soundClick();try{localStorage.setItem(PATH_KEY,button.dataset.path);}catch(_){}renderMenu();}));
   byId('mixedChallengeButton').addEventListener('click',()=>{soundClick();startMixedChallenge();});
   byId('restartButton').addEventListener('click',()=>{soundClick();if(!window.confirm('همه‌ی پیشرفت این دانش‌آموز پاک شود و بازی از نو آغاز شود؟'))return;const preferences={soundOn:state.soundOn,darkMode:state.darkMode};removePausedStage();try{localStorage.removeItem(STORAGE_KEY);}catch(_){}state=freshState();state.soundOn=preferences.soundOn;state.darkMode=preferences.darkMode;persist();identityControl.value='';avatarTouched=false;renderAvatarGrid();validateIdentity(false);showScreen('startView');});
+  ['schoolLink','menuSchoolLink'].forEach(id=>{const link=byId(id);if(!link)return;link.addEventListener('click',e=>{const scr=document.querySelector('.screen:not([hidden])');if(scr&&['lessonView','workedExampleView','gameView','practiceView'].indexOf(scr.id)!==-1&&!state.gameDone){if(!window.confirm('مرحله نیمه‌کاره است؛ به مدرسهٔ ریاضی برگردی؟'))e.preventDefault();}});});
   byId('soundToggle').addEventListener('click',()=>{state.soundOn=!state.soundOn;if(!state.soundOn)stopTicking();persist();updateGlobalTopbar();if(state.soundOn)soundClick();});
   byId('themeToggle').addEventListener('click',()=>{state.darkMode=!state.darkMode;persist();updateGlobalTopbar();soundClick();});
   showScreen('startView');

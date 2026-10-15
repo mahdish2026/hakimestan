@@ -2140,7 +2140,7 @@
           </button>
 
           <!-- دکمه بازگشت به لابی حکیمستان -->
-          <button type="button" class="hdr-btn accent" id="btnBackToLobby" aria-label="بازگشت به صفحه اصلی حکیمستان">
+          <button type="button" class="hdr-btn accent" id="btnBackToLobby" data-lobby-link="../index.html" aria-label="بازگشت به صفحه اصلی حکیمستان">
             <span>🏠</span>
             <span>لابی حکیمستان</span>
           </button>
@@ -6645,11 +6645,11 @@
           });
         });
 
-        // دکمه بازگشت به لابی (طبق الگوی دقیق بخش ۲)
+        // دکمه بازگشت به لابی — آدرس نسبی تا روی هر میزبانی (دامنهٔ ریشه یا زیرمسیر) درست کار کند
         const backBtn = document.getElementById('btnBackToLobby');
         if (backBtn) {
           backBtn.addEventListener('click', () => {
-            window.location.href = '/index.html';
+            window.location.href = '../index.html';
           });
         }
 

@@ -43,6 +43,7 @@ body::before{
 .btn.ghost{ background:#f1f5f9; color:#334155; box-shadow:0 3px 0 #cbd5e1; }
 .btn.ghost:active{ box-shadow:0 1px 0 #cbd5e1; }
 .btn.icon{ background:#f1f5f9; font-size:1.2rem; padding:7px 11px; box-shadow:0 3px 0 #cbd5e1; }
+a.btn{ display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
 .btn.big{ font-size:1.12rem; padding:14px 26px; width:100%; margin:7px 0; }
 
 /* ---------- menu ---------- */
@@ -269,6 +270,7 @@ body::before{
         <button id="btnSound" class="btn ghost">🔊 صدا</button>
         <button id="btnStepMenu" class="btn ghost">⚡ نمایش خودکار</button>
         <button id="btnReset" class="btn ghost">↻ شروع مجدد</button>
+        <a href="../math-learning.html" class="btn ghost school-link">🏫 مدرسه ریاضی</a>
       </div>
       <div class="credit">
         <div>طراحی و توسعه‌دهنده: <b>مهدی شریفیان</b></div>
@@ -281,6 +283,7 @@ body::before{
   <section id="game" class="screen hidden">
     <header class="hud">
       <button id="btnHome" class="btn icon" title="منو">🏠</button>
+      <a href="../math-learning.html" class="btn icon school-link" title="بازگشت به مدرسهٔ ریاضی" aria-label="بازگشت به مدرسهٔ ریاضی">🏫</a>
       <div class="hud-title"><span id="lvName"></span><small id="lvSub"></small></div>
       <div class="hud-stars">⭐ <span id="starCount">۰</span>/۱۵</div>
       <button id="btnStep" class="btn icon" title="نحوه‌ی نمایش مراحل">⚡</button>
@@ -1157,6 +1160,11 @@ function init(){
   $('#btnLearn').onclick = () => startGame(0, 'tutorial');
   $('#btnCert').onclick = () => { if(!$('#btnCert').disabled) showCertificate(); };
   $('#btnHome').onclick = goMenu;
+  document.querySelectorAll('.school-link').forEach(a => a.addEventListener('click', e => {
+    const game = document.getElementById('game');
+    if(game && !game.classList.contains('hidden') &&
+       !window.confirm('مرحله نیمه‌کاره است؛ به مدرسهٔ ریاضی برگردی؟')) e.preventDefault();
+  }));
   $('#btnHelp').onclick = () => $('#help').classList.remove('hidden');
   $('#btnReset').onclick = () => {
     if(!window.confirm('همهٔ ستاره‌ها و پیشرفت این بازی پاک شود و از نو شروع کنی؟')) return;
