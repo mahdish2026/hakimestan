@@ -45,6 +45,37 @@ const PREFETCH_PAGES = [
   './install-pwa.html'
 ];
 
+/* ── آزمایشگاه‌های تعاملی بازی lab2d ──────────────────────────
+   این فایل‌ها سنگین‌اند (~۱۲۰ کیلوبایت هر یک) و برای نصب PWA
+   پیش‌بارگذاری نمی‌شوند تا نصب روی اینترنت ضعیف کند نشود.
+   در عوض: وقتی کاربر آنلاین است و مرورگر بی‌کار می‌شود، در
+   پس‌زمینه کش می‌شوند تا آفلاین هم کار کنند. */
+const LAB_APPS = [
+  './games/lab2d-apps/hakim-gosh.html',
+  './games/lab2d-apps/hakim-goosh.html',
+  './games/lab2d-apps/hakim-pulley.html',
+  './games/lab2d-apps/hakim-incline.html'
+];
+
+/** پیش‌بارگذاری آرام در زمان بی‌کاری مرورگر */
+function prefetchLabApps() {
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return;
+  const run = () => {
+    (async () => {
+      const cache = await caches.open(ASSETS_CACHE);
+      for (const url of LAB_APPS) {
+        try {
+          const hit = await caches.match(url);
+          if (hit) continue;
+          await cache.add(new Request(url, { cache: 'reload' }));
+        } catch (err) { /* اختیاری: در فرصت بعدی */ }
+      }
+    })();
+  };
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(run, { timeout: 8000 });
+  else setTimeout(run, 4000);
+}
+
 /* ══════════════════════════════════════════════════════════
    نصب: کش‌کردن پوسته
    ══════════════════════════════════════════════════════════ */
@@ -88,6 +119,9 @@ self.addEventListener('activate', (event) => {
     if (self.registration.navigationPreload) {
       try { await self.registration.navigationPreload.disable(); } catch (e) {}
     }
+
+    // کش‌کردن آرام آزمایشگاه‌های تعاملی در وقت بی‌کاری
+    prefetchLabApps();
     await self.clients.claim();
   })());
 });
