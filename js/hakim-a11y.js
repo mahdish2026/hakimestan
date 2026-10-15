@@ -46,6 +46,34 @@
     } catch (e) {}
   }
 
+  function parseRgb(color) {
+    var m = String(color).match(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s\/]+([\d.]+%?))?\s*\)/i);
+    if (!m) return null;
+    var a = m[4] === undefined ? 1 : (/%$/.test(m[4]) ? parseFloat(m[4]) / 100 : parseFloat(m[4]));
+    return { r: +m[1], g: +m[2], b: +m[3], a: a };
+  }
+
+  function luminanceOf(color) {
+    var c = parseRgb(color);
+    if (!c || c.a < 0.35) return null;
+    return (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / 255;
+  }
+
+  function pageIsLight() {
+    try {
+      var l = luminanceOf(getComputedStyle(document.body).backgroundColor);
+      if (l === null) l = luminanceOf(getComputedStyle(document.documentElement).backgroundColor);
+      if (l === null) return true; // بوم پیش‌فرض مرورگر سفید است
+      return l > 0.5;
+    } catch (e) { return true; }
+  }
+
+  function updateContrastScheme() {
+    var root = document.documentElement;
+    if (!prefs.contrast) { root.classList.remove('hk-hc-light'); return; }
+    root.classList.toggle('hk-hc-light', pageIsLight());
+  }
+
   function applyPrefs() {
     var root = document.documentElement;
     root.classList.toggle('hk-high-contrast', prefs.contrast);
@@ -62,6 +90,7 @@
       var on = p === 'contrast' ? prefs.contrast : prefs.reduceMotion;
       btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
+    updateContrastScheme();
   }
 
   /* ── نام‌های جایگزین برای آیکون‌های رایج ─────────────────── */
@@ -973,6 +1002,11 @@
     buildToolbar();
     keyboardShortcuts();
     watch();
+    try {
+      new MutationObserver(function () { if (prefs.contrast) updateContrastScheme(); })
+        .observe(document.body, { attributes: true, attributeFilter: ['data-theme', 'class', 'style'] });
+    } catch (e) {}
+    global.addEventListener('load', function () { updateContrastScheme(); });
 
     // گزارش را پس از اتمام چیدمان بگیر تا اندازهٔ عناصر واقعی باشد
     var runAudit = function () { try { audit(); } catch (e) {} };
