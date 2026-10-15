@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="manifest" href="manifest.json">
@@ -14,9 +17,7 @@
 <title>حکیمستان — دیار حکیم، سرزمین یادگیری</title>
 
 <!-- فونت فارسی (آفلاین: فونت‌های سیستمی جایگزین می‌شوند) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/fonts.css">
 
 <style>
 /* ============================================================
@@ -110,8 +111,7 @@ a,touch-action{ }
   width:48px;height:48px;border-radius:50%;
   background:linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
   border:1.5px solid rgba(245,199,106,.45);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  color:var(--gold);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--gold);
   font-size:1.25rem;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 6px 18px -6px rgba(0,0,0,.6), 0 0 22px rgba(245,199,106,.22);
@@ -168,8 +168,7 @@ a,touch-action{ }
   position:relative;display:flex;align-items:center;gap:16px;
   background:var(--glass);
   border:1.5px solid var(--glass-brd);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-radius:var(--radius);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:var(--radius);
   padding:18px 18px;margin:16px 0 6px;
   box-shadow:var(--shadow);
   overflow:hidden;
@@ -239,8 +238,7 @@ a,touch-action{ }
   position:relative;display:block;
   background:var(--glass);
   border:1.5px solid var(--glass-brd);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-radius:var(--radius);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:var(--radius);
   padding:20px 18px 18px;margin-bottom:18px;
   box-shadow:var(--shadow);
   transition:transform .3s cubic-bezier(.175,.885,.32,1.275), border-color .3s, box-shadow .3s;
@@ -328,8 +326,7 @@ a,touch-action{ }
 .info-box{
   position:relative;background:var(--glass);
   border:1.5px solid var(--glass-brd);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-radius:var(--radius);padding:20px 20px;margin-bottom:10px;
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:var(--radius);padding:20px 20px;margin-bottom:10px;
   box-shadow:var(--shadow);overflow:hidden;
 }
 .info-box::before{
@@ -539,8 +536,7 @@ a,touch-action{ }
 .section-title{
   position:sticky;top:8px;z-index:60;
   background:rgba(23,16,51,.86);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  padding:10px 14px;border-radius:16px;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding:10px 14px;border-radius:16px;
   border:1px solid var(--glass-brd);
   scroll-margin-top:70px;
 }
@@ -554,8 +550,7 @@ body.light-cards .section-title{background:rgba(255,255,255,.88)}
   font-size:.8rem;font-weight:800;color:var(--ink);
   background:var(--glass);border:1.5px solid var(--glass-brd);
   padding:8px 18px;border-radius:99px;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  transition:transform .2s,border-color .2s;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .2s,border-color .2s;
 }
 .quicknav a:hover{transform:translateY(-2px);border-color:var(--gold)}
 .quicknav a:active{transform:scale(.95)}
@@ -566,8 +561,7 @@ body.light-cards .section-title{background:rgba(255,255,255,.88)}
   width:52px;height:52px;border-radius:50%;
   background:rgba(20,14,40,.88);color:#ffd98a;font-size:1.4rem;font-weight:900;line-height:1;
   border:1.5px solid rgba(245,199,106,.5);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  box-shadow:0 8px 24px rgba(0,0,0,.4);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.4);
   cursor:pointer;
   transform:translateX(50%) translateY(90px);
   transition:transform .35s cubic-bezier(.175,.885,.32,1.275),border-color .2s;
@@ -583,8 +577,7 @@ body.light-cards .section-title{background:rgba(255,255,255,.88)}
   z-index:1000;
   width:48px;height:48px;border-radius:50%;
   background:rgba(20,14,40,.8);border:1.5px solid var(--glass-brd);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  font-size:1.25rem;cursor:pointer;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:1.25rem;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   box-shadow:0 6px 18px -6px rgba(0,0,0,.6);
   transition:transform .25s cubic-bezier(.175,.885,.32,1.275);
@@ -867,7 +860,6 @@ body.light-cards .payam-card .gc-name{color:#0369a1}
 body.light-cards .payam-card .gc-tag{color:#0284c7;background:rgba(2,132,199,.10);border-color:rgba(2,132,199,.35)}
 body.light-cards .payam-card .gc-cta-text{color:#0284c7}
 
-
 /* ============================================================
    تم ۸: مدرن ✨ — پوست‌اندازی کامل به سبک سایت‌های امروزی
    (مینیمال، روشن، گرید سه‌ستونه، کارت‌های سفید)
@@ -988,8 +980,7 @@ body[data-theme="modern"] .header{
   display:flex;align-items:center;gap:10px;
   position:sticky;top:calc(8px + env(safe-area-inset-top,0px));z-index:70;
   background:rgba(255,255,255,.9);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1.5px solid #e6eaf2;border-radius:18px;
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1.5px solid #e6eaf2;border-radius:18px;
   padding:8px 14px;margin:0 0 10px;
   box-shadow:0 10px 28px -14px rgba(15,23,42,.2);
   text-align:right;
@@ -1007,8 +998,7 @@ body[data-theme="modern"] .header .modern-badge{margin:0;margin-inline-start:aut
 body[data-theme="modern"] .quicknav{
   position:static;top:auto;z-index:auto;
   background:rgba(255,255,255,.9);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1.5px solid #e6eaf2;border-radius:99px;
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1.5px solid #e6eaf2;border-radius:99px;
   padding:4px;gap:2px;margin:0 0 4px;
   box-shadow:0 6px 18px -10px rgba(120,70,30,.15);
 }
@@ -1018,8 +1008,7 @@ body[data-theme="modern"] .quicknav a:hover{background:#eef2ff;color:#4f46e5;bor
 /* عنوان بخش ساده (تب‌ها چسبان‌اند، پس عنوان ثابت می‌شود) */
 body[data-theme="modern"] .section-title{
   position:static;background:transparent;border:none;box-shadow:none;
-  backdrop-filter:none;-webkit-backdrop-filter:none;
-  padding:0;border-radius:0;margin:22px 2px 12px;
+  -webkit-backdrop-filter:none;backdrop-filter:none;padding:0;border-radius:0;margin:22px 2px 12px;
   scroll-margin-top:140px;
 }
 
@@ -1056,7 +1045,6 @@ body[data-theme="modern"] .container{padding-top:calc(10px + env(safe-area-inset
 body[data-theme="modern"] .info-box{padding:16px 18px}
 body[data-theme="modern"] .info-text{font-size:.8rem;line-height:1.9}
 body[data-theme="modern"] .footer{padding:18px 16px 4px;margin-top:14px}
-
 
    /* مار و پله آنلاین — فیروزه‌ای */
 .snake-online-card{
@@ -1191,8 +1179,7 @@ body[data-theme="modern"] .farsi5-card .gc-tag{
 #hakimPanelMount .hakim-panel{
   background:var(--glass);
   border:1.5px solid var(--glass-brd);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-radius:var(--radius);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:var(--radius);
   box-shadow:var(--shadow);
   padding:18px;gap:16px;margin:0;max-width:none;
 }
@@ -1230,7 +1217,6 @@ body[data-theme="modern"] .farsi5-card .gc-tag{
   #hakimPanelMount .hakim-panel{padding:15px 14px;gap:12px;}
   #hakimPanelMount .hakim-text{font-size:.82rem;}
 }
-
 
 /* ============================================================
    💬 گفت‌وگو با حکیم — زبانهٔ بازشو (هماهنگ با تمام تم‌ها)
@@ -1287,8 +1273,7 @@ body[data-theme="modern"] .farsi5-card .gc-tag{
   position:relative;display:flex;flex-direction:column;
   background:var(--glass);
   border:1.5px solid var(--glass-brd);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-radius:var(--radius);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:var(--radius);
   box-shadow:var(--shadow);
   overflow:hidden;direction:rtl;text-align:right;
 }
@@ -1473,7 +1458,7 @@ body.light-cards .hkc-input{background:rgba(255,255,255,.7);}
 body.light-cards .hkc-input:focus{background:#fff;}
 body.light-cards .hkc-badge{color:#5b3a9e;background:rgba(139,92,246,.12);}
 body[data-theme="modern"] #hakimChat{--hkc-bot:#f4f6fb;--hkc-bot-brd:#e2e8f0;}
-body[data-theme="modern"] .hkc-card{background:#fff;border-color:#e6eaf2;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:0 10px 28px -14px rgba(15,23,42,.2);}
+body[data-theme="modern"] .hkc-card{background:#fff;border-color:#e6eaf2;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 10px 28px -14px rgba(15,23,42,.2);}
 body[data-theme="modern"] .hkc-face{background:radial-gradient(circle at 42% 30%, #3a2c55 0%, #1a1029 100%);}
 body[data-theme="modern"] .hkc-badge{color:#4f46e5;background:rgba(99,102,241,.10);border-color:rgba(99,102,241,.35);}
 body[data-theme="modern"] .hkc-input{background:#f8fafc;border-color:#e2e8f0;}
@@ -1585,7 +1570,7 @@ body.light-cards .gc-tag.custom{color:#0369a1;background:rgba(59,167,255,.10);bo
 /* ============================================================
    بخش‌های آکاردئونی (درباره حکیمستان + راهنمای استفاده)
    ============================================================ */
-.acc{position:relative;margin:22px 0 4px;border-radius:var(--radius);background:var(--glass);border:1.5px solid var(--glass-brd);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:var(--shadow);overflow:hidden;}
+.acc{position:relative;margin:22px 0 4px;border-radius:var(--radius);background:var(--glass);border:1.5px solid var(--glass-brd);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:var(--shadow);overflow:hidden;}
 .acc-btn{display:flex;align-items:center;gap:10px;width:100%;font:inherit;font-size:.98rem;font-weight:900;color:var(--gold-light);background:none;border:none;cursor:pointer;padding:15px 18px;text-align:right;transition:background .25s;}
 .acc-btn:hover{background:rgba(245,199,106,.07);}
 .acc-btn:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;border-radius:14px;}
@@ -1636,8 +1621,7 @@ body[data-theme="modern"] ::selection{background:#ff7d3b;color:#fff;}
 body[data-theme="modern"] .header{
   position:static;z-index:auto;display:block;text-align:center;
   background:none;border:none;border-radius:0;box-shadow:none;
-  backdrop-filter:none;-webkit-backdrop-filter:none;
-  padding:10px 0 2px;margin:0 0 10px;
+  -webkit-backdrop-filter:none;backdrop-filter:none;padding:10px 0 2px;margin:0 0 10px;
 }
 body[data-theme="modern"] .header .emblem{width:60px;height:60px;margin:0 0 10px;animation:none;filter:none;}
 body[data-theme="modern"] .header .brand{
@@ -2112,6 +2096,23 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
 }
 
 </style>
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta property="og:description" content="حکیمستان — دیار حکیم، سرزمین یادگیری. پلتفرم آموزشی رایگان برای معلمان و دانش‌آموزان.">
+<meta property="og:url" content="https://hakimistan.ir/">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:description" content="حکیمستان — دیار حکیم، سرزمین یادگیری. پلتفرم آموزشی رایگان برای معلمان و دانش‌آموزان.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body data-theme="modern">
 
@@ -2153,7 +2154,6 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
   <div class="theme-group">✨ حالت ویژه</div>
   <button type="button" class="theme-opt" data-theme="modern"><span class="theme-dot" style="--sw:linear-gradient(135deg,#ff7d3b,#3ba7ff)"></span><span class="theme-name">مدرن <small>(پیش‌فرض)</small></span><span class="theme-check">✓</span></button>
 </div>
-
 
 <div class="container">
 
@@ -2870,8 +2870,6 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
     </div>
   </section>
 
-
-
   <!-- ================= فوتر / امضا ================= -->
   <!-- 📝 فرم نظرسنجی -->
   <section class="acc reveal d7" id="sec-survey" aria-label="نظرسنجی">
@@ -3080,7 +3078,6 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
       }
     });
   }
-
 
     /* ============================================================
        ۱) حکیم زنده — hakim-core v3 (چهره‌ی متحرک + پیام‌های تایپ‌شونده)
@@ -3922,5 +3919,19 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+<!-- hakim-contrast:start -->
+<style id="hk-contrast-layer">
+/* اصلاح کنتراست WCAG — تولیدشده توسط tools/gen-contrast-layer.mjs */
+body[data-theme="modern"] .quicknav a:hover, body[data-theme="modern"] .sec-count, .survey-type.active, body[data-theme="modern"] .survey-type.active{color:#ba4c14}
+body[data-theme="modern"] .music-btn, body[data-theme="modern"] .to-top{color:#c55115}
+body[data-theme="modern"] .chat-tab .hint{color:#7b6d63}
+.survey-type, body[data-theme="modern"] .survey-type{color:#7c6e64}
+</style>
+<!-- hakim-contrast:end -->
 </body>
 </html>

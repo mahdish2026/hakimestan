@@ -1,0 +1,195 @@
+# ============================================================
+#  حکیمستان — پیکربندی سرور آپاچی
+#  امنیت + کارایی + دسترس‌پذیری + PWA
+#  نسخه: 1.0.0
+#
+#  این فایل برای میزبانی روی ریشهٔ دامنه (https://hakimistan.ir/)
+#  نوشته شده است. اگر سایت در زیرپوشهٔ /hakimestan/ منتشر می‌شود،
+#  مقادیر ErrorDocument و RedirectMatch را متناسب تغییر دهید.
+# ============================================================
+
+# ---------- ۱) کدگذاری و زبان ----------
+AddDefaultCharset UTF-8
+DefaultLanguage fa-IR
+
+# فایل پیش‌فرض
+DirectoryIndex index.html
+
+# ---------- ۲) هدرهای امنیتی ----------
+<IfModule mod_headers.c>
+  # جلوگیری از اسنیف نوع محتوا
+  Header always set X-Content-Type-Options "nosniff"
+
+  # جلوگیری از قاب‌شدن سایت در iframe دیگران (Clickjacking)
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # سیاست ارجاع‌دهنده
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # محدودکردن دسترسی به سخت‌افزار
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+
+  # جداسازی مبدأها
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+
+  # HSTS — فقط بعد از فعال‌سازی SSL از حالت کامنت خارج کنید
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # سیاست امنیت محتوا (CSP)
+  #
+  # نکته: پروژه از فونت‌های Google و کتابخانه‌های CDN (html2canvas، pdf.js) استفاده می‌کند.
+  # برای کارکرد کامل، دامنهٔ آن‌ها مجاز شده و 'unsafe-inline' لازم است چون
+  # بسیاری از صفحات استایل و اسکریپت درون‌خطی دارند. برای سخت‌گیرانه‌ترکردن:
+  #   ۱) فایل‌های بیرونی را محلی کنید
+  #   ۲) اسکریپت‌های درون‌خطی را به فایل جدا منتقل کنید
+  #   ۳) سپس 'unsafe-inline' و 'unsafe-eval' را حذف کنید
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss:; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests"
+
+  # اطلاعات فنی را پنهان کن
+  Header unset X-Powered-By
+  Header always unset X-Powered-By
+</IfModule>
+
+# ---------- ۳) فشرده‌سازی ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/manifest+json
+  AddOutputFilterByType DEFLATE application/xml application/rss+xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/woff font/woff2 application/font-woff
+
+  SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp|avif|mp3|mp4|webm|ogg|pdf|zip|woff2?)$ no-gzip dont-vary
+  SetEnvIfNoCase Request_URI \.svgz$ no-gzip dont-vary
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json image/svg+xml application/manifest+json
+</IfModule>
+
+# ---------- ۴) کش مرور ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 week"
+
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/avif "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/manifest+json "access plus 1 day"
+  ExpiresByType application/json "access plus 1 day"
+  ExpiresByType audio/mpeg "access plus 1 month"
+  ExpiresByType video/mp4 "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Service Worker هرگز کش نشود (وگرنه به‌روزرسانی گیر می‌کند)
+  <FilesMatch "^sw\.js$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Service-Worker-Allowed "/"
+  </FilesMatch>
+
+  <FilesMatch "\.(css|js|mjs|woff2?|png|jpe?g|webp|avif|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  <FilesMatch "\.(mp4|webm|mp3|pdf)$">
+    Header set Cache-Control "public, max-age=2592000"
+    Header set Accept-Ranges "bytes"
+  </FilesMatch>
+
+  <FilesMatch "\.json$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>
+
+# ---------- ۵) نوع MIME ----------
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType application/javascript .mjs
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType font/woff2 .woff2
+  AddType image/svg+xml .svg
+  AddCharset UTF-8 .html .css .js .mjs .json .svg .webmanifest
+</IfModule>
+
+# ---------- ۶) پشتیبانی از Range (ویدیو/صدا) ----------
+<IfModule mod_headers.c>
+  Header set Accept-Ranges "bytes"
+</IfModule>
+
+# ---------- ۷) صفحه‌های خطا و بازنویسی مسیر ----------
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # اجبار به HTTPS — بعد از فعال‌سازی SSL از حالت کامنت خارج کنید
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # اجبار به دامنهٔ بدون www
+  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # افزودن اسلش پایانی برای پوشه‌ها
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+</IfModule>
+
+# ---------- ۸) محافظت از فایل‌های حساس ----------
+<FilesMatch "(^\.|\.(?:bak|backup|config|env|ini|log|old|orig|save|sql|swp|tmp)$|~$|^package(-lock)?\.json$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# پوشهٔ ابزارهای توسعه‌دهنده و مخزن گیت
+RedirectMatch 404 ^/tools/
+RedirectMatch 404 ^/\.git/
+RedirectMatch 404 ^/node_modules/
+
+# جلوگیری از فهرست‌شدن پوشه‌ها
+Options -Indexes -MultiViews
+
+# ---------- ۹) جلوگیری از هات‌لینک (اختیاری) ----------
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTP_REFERER} !^$
+#   RewriteCond %{HTTP_REFERER} !^https?://(www\.)?hakimistan\.ir [NC]
+#   RewriteRule \.(?:jpe?g|png|gif|webp|svg|mp4|mp3)$ - [F,NC,L]
+# </IfModule>
+
+# ---------- ۱۰) محدودکردن متدهای غیرضروری ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|POST|OPTIONS)$
+  RewriteRule .* - [F,L]
+</IfModule>
+
+# ---------- ۱۱) محدودیت بارگذاری (DoS سبک) ----------
+<IfModule mod_reqtimeout.c>
+  RequestReadTimeout header=20-40,MinRate=500 body=20,MinRate=500
+</IfModule>
+
+# ---------- ۱۲) اطلاعات نسخه پنهان ----------
+ServerSignature Off

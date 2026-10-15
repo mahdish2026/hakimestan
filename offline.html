@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0a1f">
+<meta name="robots" content="noindex">
+<title>آفلاین — حکیمستان</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/a11y.css">
+<style>
+:root{
+  --bg:#0d0a1f; --bg2:#171033; --violet:#8b5cf6; --gold:#f5c76a;
+  --teal:#5eead4; --ink:#f1ecff; --muted:#b6a9db;
+  --font:'Vazirmatn','Vazir',Tahoma,'Segoe UI',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font); color:var(--ink); min-height:100vh;
+  display:grid; place-items:center; padding:28px 18px; line-height:1.9;
+  background:
+    radial-gradient(900px 600px at 80% -10%, rgba(139,92,246,.25), transparent 60%),
+    radial-gradient(700px 500px at 5% 110%, rgba(94,234,212,.12), transparent 55%),
+    linear-gradient(180deg,#0d0a1f,#151033 50%,#0d0a1f);
+}
+.card{
+  max-width:620px; width:100%; text-align:center;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16);
+  border-radius:26px; padding:38px 26px; -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:0 24px 60px -26px rgba(0,0,0,.75);
+}
+.badge{
+  display:inline-flex; align-items:center; gap:8px; font-size:.78rem; font-weight:700;
+  padding:6px 14px; border-radius:999px; margin-bottom:20px;
+  background:rgba(245,199,106,.14); color:var(--gold);
+  border:1px solid rgba(245,199,106,.35);
+}
+h1{font-size:1.9rem; margin:0 0 12px; font-weight:900; letter-spacing:-.4px}
+p{color:var(--muted); margin:0 0 22px; font-size:.98rem}
+.art{width:150px; height:150px; margin:0 auto 18px; display:block}
+ul{text-align:right; color:var(--muted); font-size:.9rem; padding-inline-start:20px; margin:0 0 26px}
+li{margin-bottom:7px}
+.row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+.btn{
+  display:inline-flex; align-items:center; gap:9px; justify-content:center;
+  padding:13px 24px; border-radius:14px; font-weight:800; font-size:.92rem;
+  text-decoration:none; border:2px solid transparent; cursor:pointer;
+  font-family:inherit; transition:transform .2s ease, box-shadow .2s ease;
+}
+.btn-primary{background:linear-gradient(145deg,#f5c76a,#e9a94d); color:#1b1035; border-color:#ffd98a}
+.btn-ghost{background:rgba(255,255,255,.07); color:var(--ink); border-color:rgba(255,255,255,.24)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.status{margin-top:24px; font-size:.8rem; color:var(--muted)}
+.dot{display:inline-block; width:9px; height:9px; border-radius:50%; background:#e74c3c; margin-inline-end:7px}
+.dot.on{background:#2ecc71}
+@media(max-width:520px){h1{font-size:1.5rem}.card{padding:28px 20px}}
+</style>
+<!-- hakim-meta:start -->
+<meta name="description" content="اتصال اینترنت قطع است. بخش زیادی از حکیمستان آفلاین کار می‌کند — می‌توانید به کار خود ادامه دهید.">
+<meta name="robots" content="noindex, follow">
+<!-- hakim-meta:end -->
+</head>
+<body>
+<a class="skip-link" href="#offline-main">پرش به محتوای اصلی</a>
+
+<main id="offline-main" class="card" tabindex="-1">
+  <div class="badge"><span aria-hidden="true">📴</span> حالت آفلاین</div>
+
+  <svg class="art" viewBox="0 0 200 200" role="img" aria-label="تصویر حکیم در حالت آفلاین">
+    <circle cx="100" cy="100" r="82" fill="rgba(139,92,246,.18)" stroke="rgba(245,199,106,.4)" stroke-width="2"/>
+    <path d="M52 96 L100 40 L148 96 Z" fill="#5b4a9e" stroke="#7a68c9" stroke-width="2" stroke-linejoin="round"/>
+    <rect x="44" y="94" width="112" height="12" rx="6" fill="#e9b44c"/>
+    <circle cx="100" cy="30" r="7" fill="#f7d88a"/>
+    <ellipse cx="100" cy="126" rx="46" ry="42" fill="#f3c98b"/>
+    <path d="M70 112 q10 -10 20 0" stroke="#2a1a0a" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M110 112 q10 -10 20 0" stroke="#2a1a0a" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M86 146 q14 12 28 0" stroke="#7a3b2e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M54 152 q46 46 92 0 q-14 34 -46 34 q-32 0 -46 -34 Z" fill="#fff7ef" stroke="#e7dcc6" stroke-width="2"/>
+    <path d="M32 66 l10 -22 10 22 z" fill="rgba(94,234,212,.5)"/>
+    <path d="M148 82 l8 -18 8 18 z" fill="rgba(245,199,106,.5)"/>
+  </svg>
+
+  <h1>اتصال اینترنت قطع است</h1>
+  <p>نگران نباشید — حکیم همراه شماست. بخش‌هایی از حکیمستان که قبلاً باز کرده‌اید، بدون اینترنت هم کار می‌کنند.</p>
+
+  <ul>
+    <li>برای دیدن محتوای ذخیره‌شده، دکمهٔ «تلاش دوباره» را بزنید.</li>
+    <li>بازی‌ها و آزمون‌ساز آفلاین همیشه روی دستگاه شما کار می‌کنند.</li>
+    <li>پس از برقراری اتصال، همه‌چیز خودکار همگام می‌شود.</li>
+  </ul>
+
+  <div class="row">
+    <a class="btn btn-primary" href="./index.html">🏠 بازگشت به لابی</a>
+    <button class="btn btn-ghost" type="button" id="retry">🔄 تلاش دوباره</button>
+  </div>
+
+  <p class="status"><span class="dot" id="dot"></span><span id="statusText">وضعیت اتصال در حال بررسی…</span></p>
+</main>
+
+<script src="js/hakim-security.js"></script>
+<script src="js/hakim-a11y.js"></script>
+<script>
+(function () {
+  'use strict';
+  var dot = document.getElementById('dot');
+  var text = document.getElementById('statusText');
+  var retry = document.getElementById('retry');
+
+  function paint() {
+    var on = navigator.onLine;
+    dot.classList.toggle('on', on);
+    text.textContent = on
+      ? 'اتصال برقرار است — می‌توانید دوباره تلاش کنید.'
+      : 'همچنان آفلاین هستید. محتوای ذخیره‌شده در دسترس است.';
+  }
+
+  retry.addEventListener('click', function () {
+    retry.disabled = true;
+    retry.textContent = '⏳ در حال تلاش…';
+    if (navigator.onLine) {
+      location.href = './index.html';
+    } else {
+      fetch('./manifest.json', { cache: 'no-store' }).then(function () {
+        location.href = './index.html';
+      }).catch(function () {
+        paint();
+        retry.disabled = false;
+        retry.textContent = '🔄 تلاش دوباره';
+        if (window.HakimA11y) window.HakimA11y.announce('اتصال برقرار نشد. لطفاً اتصال اینترنت را بررسی کنید.', true);
+      });
+    }
+  });
+
+  window.addEventListener('online', paint);
+  window.addEventListener('offline', paint);
+  paint();
+})();
+</script>
+</body>
+</html>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
 <link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
@@ -12,9 +15,7 @@
 <meta property="og:description" content="بازی آموزشی آنلاین ۲ تا ۴ نفره: هر جواب درست یک تاس است!">
 <title>🎲 منچِ دانش آنلاین — حکیمستان</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/fonts.css">
 
 <style>
 /* ============================================================
@@ -93,8 +94,7 @@ input,select{font-family:inherit;}
 
 /* ---------- کارت شیشه‌ای با قاب طلایی ---------- */
 .card{
-  position:relative;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1.5px solid var(--line);border-radius:var(--radius);
+  position:relative;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1.5px solid var(--line);border-radius:var(--radius);
   box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.08);
   padding:18px 16px;margin-bottom:16px;
 }
@@ -203,7 +203,7 @@ input,select{font-family:inherit;}
   position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:calc(14px + env(safe-area-inset-left,0px));
   z-index:1000;width:48px;height:48px;border-radius:50%;
   background:rgba(12,40,64,.9);border:1.5px solid rgba(224,172,63,.45);
-  box-shadow:0 8px 20px -8px rgba(0,0,0,.8);backdrop-filter:blur(8px);
+  box-shadow:0 8px 20px -8px rgba(0,0,0,.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   font-size:1.18rem;display:flex;align-items:center;justify-content:center;transition:transform .2s;
 }
 .music-btn:active{transform:scale(.9);}
@@ -214,7 +214,7 @@ input,select{font-family:inherit;}
   position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));right:calc(14px + env(safe-area-inset-right,0px));
   z-index:950;font-size:.72rem;font-weight:900;padding:8px 13px;border-radius:99px;
   background:rgba(12,40,64,.92);border:1.5px solid rgba(30,167,160,.55);color:var(--turq-lite);
-  box-shadow:0 8px 20px -10px rgba(0,0,0,.8);display:none;align-items:center;gap:6px;backdrop-filter:blur(8px);
+  box-shadow:0 8px 20px -10px rgba(0,0,0,.8);display:none;align-items:center;gap:6px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
 }
 .conn.show{display:inline-flex;}
 .conn.bad{border-color:rgba(224,86,63,.6);color:#f0a08f;animation:connBlink 1.2s ease-in-out infinite;}
@@ -340,7 +340,7 @@ input,select{font-family:inherit;}
 /* ---------- مودال ---------- */
 .modal{
   position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;
-  padding:16px;background:rgba(4,14,25,.86);backdrop-filter:blur(8px);
+  padding:16px;background:rgba(4,14,25,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   animation:mIn .3s ease;overflow-y:auto;
 }
 .modal.hidden{display:none;}
@@ -406,7 +406,7 @@ input,select{font-family:inherit;}
   position:fixed;left:50%;bottom:78px;transform:translate(-50%,24px);z-index:1400;
   padding:12px 20px;border-radius:99px;font-weight:900;font-size:.9rem;
   background:rgba(12,40,64,.96);border:1.5px solid rgba(224,172,63,.5);color:var(--cream);
-  box-shadow:0 14px 30px -12px rgba(0,0,0,.9);backdrop-filter:blur(8px);
+  box-shadow:0 14px 30px -12px rgba(0,0,0,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   opacity:0;pointer-events:none;transition:.32s cubic-bezier(.22,1,.36,1);max-width:90vw;text-align:center;
 }
 #toast.show{opacity:1;transform:translate(-50%,0);}
@@ -449,6 +449,23 @@ details.help[open] summary::before{transform:rotate(90deg);}
 }
 *:focus-visible{outline:3px solid var(--turq-lite);outline-offset:2px;border-radius:10px;}
 </style>
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/games/mancheh-online.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="🎲 منچِ دانش آنلاین — حکیمستان">
+<meta property="og:description" content="منچِ دانش آنلاین — بازی آموزشی ۲ تا ۴ نفره از حکیمستان. هر کس با گوشی خودش با کد اتاق وارد می‌شود؛ جواب درست بدهی، تاس می‌اندازی!">
+<meta property="og:url" content="https://hakimistan.ir/games/mancheh-online.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🎲 منچِ دانش آنلاین — حکیمستان">
+<meta name="twitter:description" content="منچِ دانش آنلاین — بازی آموزشی ۲ تا ۴ نفره از حکیمستان. هر کس با گوشی خودش با کد اتاق وارد می‌شود؛ جواب درست بدهی، تاس می‌اندازی!">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body>
 
@@ -2515,6 +2532,16 @@ console.log('سرور:', API_URL);
   } catch(e){}
 })();
 </script>
-
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+<!-- hakim-contrast:start -->
+<style id="hk-contrast-layer">
+/* اصلاح کنتراست WCAG — تولیدشده توسط tools/gen-contrast-layer.mjs */
+.opt.good .k{background-color:#28863a}
+</style>
+<!-- hakim-contrast:end -->
 </body>
 </html>

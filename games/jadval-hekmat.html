@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
-  <link rel="icon" type="image/svg+xml" href="../icon.svg">
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
+<link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#eaf2fb">
 <title>🧩 جدول حکمت — حکیمستان</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/fonts.css">
+
 <style>
   /* ------------------------------------------------------------------ */
   /* ۱) متغیرها و پایه                                                  */
@@ -212,7 +214,7 @@
   /* ۴) مودال‌ها و افکت‌ها                                              */
   /* ------------------------------------------------------------------ */
   .modal-back{
-    position:fixed; inset:0; background:rgba(30,42,82,.45); backdrop-filter:blur(3px);
+    position:fixed; inset:0; background:rgba(30,42,82,.45); -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
     display:flex; align-items:center; justify-content:center; padding:20px; z-index:50;
     animation:fade .2s ease;
   }
@@ -292,6 +294,24 @@
     *{ animation-duration:.001s !important; animation-iteration-count:1 !important; transition-duration:.001s !important; }
   }
 </style>
+<!-- hakim-meta:start -->
+<meta name="description" content="جدول حکمت — جدول کلمات آموزشی حکیمستان برای تقویت واژگان، املای فارسی و دانش عمومی دانش‌آموزان، مستقیم در مرورگر.">
+<link rel="canonical" href="https://hakimistan.ir/games/jadval-hekmat.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="🧩 جدول حکمت — حکیمستان">
+<meta property="og:description" content="جدول حکمت — جدول کلمات آموزشی حکیمستان برای تقویت واژگان، املای فارسی و دانش عمومی دانش‌آموزان، مستقیم در مرورگر.">
+<meta property="og:url" content="https://hakimistan.ir/games/jadval-hekmat.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🧩 جدول حکمت — حکیمستان">
+<meta name="twitter:description" content="جدول حکمت — جدول کلمات آموزشی حکیمستان برای تقویت واژگان، املای فارسی و دانش عمومی دانش‌آموزان، مستقیم در مرورگر.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body>
 <div class="wrap">
@@ -1594,5 +1614,10 @@ loadServerQuestions(function(){
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

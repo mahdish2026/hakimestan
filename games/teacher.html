@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" data-theme="royal">
-<head>
- <link rel="icon" type="image/svg+xml" href="../icon.svg">
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
+<link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>پنل معلم — فتح کهن دیار ایران</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/fonts.css">
 <style>
   /* =========================================================
      THEME SYSTEM — چند تم روشن و تیره (فانتزی)
@@ -156,7 +159,7 @@
     display: flex; gap: 8px; padding: 9px 11px;
     background: var(--panel-2); border: 1px solid var(--brd-hi);
     border-radius: 30px; box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   }
   .theme-dot {
     width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
@@ -197,7 +200,7 @@
       linear-gradient(165deg, var(--panel), var(--panel-2));
     border: 1px solid var(--brd-hi); border-radius: 28px;
     box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 0 60px rgba(var(--accent-rgb), 0.06);
-    overflow: hidden; backdrop-filter: blur(10px);
+    overflow: hidden; -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   }
   .app-header::after {
     content: ""; position: absolute; top: -60%; right: -25%; width: 55%; height: 220%;
@@ -226,7 +229,7 @@
     position: absolute; top: 18px; right: 18px; display: inline-flex; align-items: center; gap: 6px;
     padding: 6px 13px; border-radius: 20px;
     background: rgba(52, 209, 127, 0.16); border: 1px solid rgba(52, 209, 127, 0.4);
-    color: #2ea86a; font-size: 0.66rem; font-weight: 800; backdrop-filter: blur(6px);
+    color: #2ea86a; font-size: 0.66rem; font-weight: 800; -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   }
   [data-theme="royal"] .header-badge, [data-theme="midnight"] .header-badge, [data-theme="emerald"] .header-badge { color: #6fe6a6; }
   .header-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #34d17f; box-shadow: 0 0 10px #34d17f; animation: blink 1.6s infinite; }
@@ -255,7 +258,7 @@
     border: 1px solid var(--brd-hi); border-radius: 30px;
     padding: 46px 34px; text-align: center;
     box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 50px rgba(var(--accent-rgb), 0.1);
-    position: relative; overflow: hidden; backdrop-filter: blur(14px);
+    position: relative; overflow: hidden; -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
     animation: rise3d 0.7s var(--anim) both; transform-style: preserve-3d;
   }
   @keyframes rise3d { from { opacity: 0; transform: translateY(30px) rotateX(12deg) scale(0.96); } to { opacity: 1; transform: none; } }
@@ -304,7 +307,7 @@
     background: linear-gradient(165deg, var(--panel), var(--panel-2));
     border: 1px solid var(--brd); border-radius: var(--radius); padding: 15px;
     margin-bottom: 24px; display: flex; gap: 11px; flex-wrap: wrap; align-items: center;
-    box-shadow: var(--shadow-sm); backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-sm); -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   }
   .toolbar input, .toolbar select {
     padding: 12px 15px; border-radius: 14px; border: 1.5px solid var(--brd);
@@ -325,7 +328,7 @@
     border: 1px solid var(--brd-hi); border-radius: var(--radius);
     padding: 26px 16px 22px; text-align: center;
     box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    overflow: hidden; backdrop-filter: blur(10px);
+    overflow: hidden; -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
     transition: transform 0.3s var(--anim), box-shadow 0.3s; transform-style: preserve-3d;
   }
   .stat-box:hover { transform: translateY(-8px) rotateX(8deg) rotateY(-4deg); box-shadow: 0 26px 46px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--brd-hi), 0 0 30px rgba(var(--accent-rgb), 0.2); }
@@ -352,7 +355,7 @@
     background: linear-gradient(165deg, var(--panel), var(--panel-2));
     border: 1px solid var(--brd); border-radius: var(--radius); padding: 24px 18px 18px;
     display: flex; justify-content: space-around; align-items: flex-end;
-    height: 250px; gap: 14px; box-shadow: var(--shadow-sm); backdrop-filter: blur(10px);
+    height: 250px; gap: 14px; box-shadow: var(--shadow-sm); -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
     position: relative; overflow: hidden;
   }
   .chart-wrap::before { content: ""; position: absolute; inset: 24px 18px 48px; background-image: repeating-linear-gradient(to top, rgba(var(--accent-rgb), 0.08) 0 1px, transparent 1px 25%); pointer-events: none; }
@@ -368,7 +371,7 @@
   .lesson-item {
     background: linear-gradient(165deg, var(--panel), var(--panel-2));
     border: 1px solid var(--brd); border-radius: var(--radius-sm); padding: 17px 19px;
-    margin-bottom: 13px; box-shadow: var(--shadow-sm); backdrop-filter: blur(8px);
+    margin-bottom: 13px; box-shadow: var(--shadow-sm); -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
     transition: transform 0.2s var(--anim), border-color 0.2s, box-shadow 0.2s;
   }
   .lesson-item:hover { transform: translateX(-6px) scale(1.01); border-color: var(--brd-hi); box-shadow: var(--shadow-sm), 0 0 22px rgba(var(--accent-rgb), 0.14); }
@@ -385,7 +388,7 @@
      TABLE
      ========================================================= */
   .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--brd); box-shadow: var(--shadow); }
-  .students-table { width: 100%; border-collapse: collapse; background: linear-gradient(165deg, var(--panel), var(--panel-2)); font-size: 0.83rem; min-width: 740px; backdrop-filter: blur(10px); }
+  .students-table { width: 100%; border-collapse: collapse; background: linear-gradient(165deg, var(--panel), var(--panel-2)); font-size: 0.83rem; min-width: 740px; -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px); }
   .students-table th { background: linear-gradient(135deg, var(--th-bg-a), var(--th-bg-b)); color: var(--accent); padding: 16px 8px; font-weight: 800; text-align: center; border-bottom: 2px solid var(--accent-deep); position: sticky; top: 0; z-index: 2; white-space: nowrap; text-shadow: 0 1px 8px rgba(var(--accent-rgb),0.3); }
   .students-table td { padding: 13px 8px; text-align: center; border-bottom: 1px solid rgba(var(--accent-rgb), 0.1); }
   .students-table tbody tr { transition: background 0.15s, transform 0.15s; }
@@ -427,7 +430,7 @@
   /* =========================================================
      ACTION BAR (3D BUTTONS)
      ========================================================= */
-  .btn-row { display: flex; gap: 13px; flex-wrap: wrap; justify-content: center; margin-top: 28px; padding: 18px; border-radius: var(--radius); background: linear-gradient(165deg, var(--panel), var(--panel-2)); border: 1px solid var(--brd); box-shadow: var(--shadow-sm); backdrop-filter: blur(8px); }
+  .btn-row { display: flex; gap: 13px; flex-wrap: wrap; justify-content: center; margin-top: 28px; padding: 18px; border-radius: var(--radius); background: linear-gradient(165deg, var(--panel), var(--panel-2)); border: 1px solid var(--brd); box-shadow: var(--shadow-sm); -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px); }
   .refresh-btn, .export-btn, .logout-btn, .print-btn, .backup-btn { padding: 13px 27px; border: none; border-radius: 30px; font-family: inherit; font-size: 0.86rem; font-weight: 800; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s, filter 0.2s; display: inline-flex; align-items: center; gap: 6px; justify-content: center; }
   .refresh-btn { background: linear-gradient(135deg, var(--accent-deep), var(--accent) 60%, var(--accent-lt)); color: #150700; box-shadow: 0 10px 22px rgba(var(--accent-rgb), 0.3), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -3px 0 rgba(0,0,0,0.18); }
   [data-theme="daylight"] .refresh-btn, [data-theme="midnight"] .refresh-btn { color: #fff; }
@@ -479,6 +482,25 @@
     .refresh-btn, .export-btn, .print-btn, .backup-btn { width: 100%; }
   }
 </style>
+<!-- hakim-meta:start -->
+<meta name="description" content="پنل معلم بازی فتح کهن دیار ایران — ساخت اتاق، مدیریت کلاس و دیدن پیشرفت دانش‌آموزان به‌صورت زنده.">
+<meta name="theme-color" content="#061c30">
+<link rel="canonical" href="https://hakimistan.ir/games/teacher.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="پنل معلم — فتح کهن دیار ایران">
+<meta property="og:description" content="پنل معلم بازی فتح کهن دیار ایران — ساخت اتاق، مدیریت کلاس و دیدن پیشرفت دانش‌آموزان به‌صورت زنده.">
+<meta property="og:url" content="https://hakimistan.ir/games/teacher.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="پنل معلم — فتح کهن دیار ایران">
+<meta name="twitter:description" content="پنل معلم بازی فتح کهن دیار ایران — ساخت اتاق، مدیریت کلاس و دیدن پیشرفت دانش‌آموزان به‌صورت زنده.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body>
 
@@ -1124,5 +1146,10 @@ window.addEventListener('online',  () => setConnStatus(true));
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

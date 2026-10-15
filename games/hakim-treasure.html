@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
-     <link rel="icon" type="image/svg+xml" href="../icon.svg">
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+
+<link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="UTF-8">
@@ -14,9 +17,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>📖 راز گنج حکیم — حکیمستان</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/fonts.css">
+
 <!-- اختیاری: اگر حکیم‌کور کنار همین فایل باشد استفاده می‌شود، وگرنه آواتار داخلی جایگزین می‌شود -->
 <!-- آواتار و گفتار حکیم کاملاً داخل همین فایل است؛ به هیچ فایل بیرونی نیاز نیست.
      اگر «hakim-core.js» خودت را داری، خط زیر را از حالت توضیح بیرون بیاور تا به آن هم متصل شود:
@@ -125,8 +127,7 @@ h1,h2,h3,p{ margin:0; }
   display:flex; align-items:center; flex-wrap:wrap; gap:7px;
   padding:7px 8px; margin-bottom:10px;
   background:var(--card); border:1px solid var(--card-brd); border-radius:18px;
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-  box-shadow:0 8px 22px rgba(120,60,20,.12);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 22px rgba(120,60,20,.12);
 }
 .tc-brand{
   order:1; display:flex; align-items:center; gap:6px; min-width:0;
@@ -172,8 +173,7 @@ h1,h2,h3,p{ margin:0; }
 /* ================================================================== */
 .start-card{
   text-align:center; margin-top:6px; animation:rise .6s ease both;
-  background:var(--card); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border:1px solid var(--card-brd); border-radius:var(--r-lg);
+  background:var(--card); -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--card-brd); border-radius:var(--r-lg);
   padding:24px 18px 20px; box-shadow:var(--shadow);
 }
 @keyframes rise{ from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none} }
@@ -285,8 +285,7 @@ footer .dev{ color:var(--gold-deep); font-weight:800; }
 /* ================================================================== */
 .topbar{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:10px; }
 .chip{
-  background:var(--card); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-  border:1px solid var(--card-brd); border-radius:999px; padding:7px 12px;
+  background:var(--card); -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--card-brd); border-radius:999px; padding:7px 12px;
   font-size:.82rem; font-weight:800; color:var(--ink); display:inline-flex; align-items:center; gap:5px;
   transition:transform .2s, box-shadow .2s;
 }
@@ -303,8 +302,7 @@ footer .dev{ color:var(--gold-deep); font-weight:800; }
 .progress .dot.cur{ background:#fff; transform:scale(1.55); box-shadow:0 0 9px rgba(255,255,255,.9); }
 
 .stage-card{
-  background:var(--card); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border:1px solid var(--card-brd); border-radius:var(--r-lg);
+  background:var(--card); -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--card-brd); border-radius:var(--r-lg);
   padding:18px 16px 20px; box-shadow:var(--shadow);
   animation:rise .5s ease both;
 }
@@ -346,8 +344,7 @@ body.night .q-tag.math-tag{ background:linear-gradient(90deg,#3a4a8a,#4a5aa8); c
 .options{ display:flex; flex-direction:column; gap:10px; }
 .opt{
   text-align:right; border:1.5px solid var(--card-brd); border-radius:var(--r-md);
-  background:var(--card-2); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-  padding:13px 14px; font-family:inherit; font-size:.92rem; color:var(--ink); cursor:pointer;
+  background:var(--card-2); -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:13px 14px; font-family:inherit; font-size:.92rem; color:var(--ink); cursor:pointer;
   min-height:50px; line-height:1.8; transition:transform .15s, box-shadow .15s, background .15s, opacity .2s;
   animation:optIn .4s ease both; display:flex; align-items:center; gap:9px;
 }
@@ -403,8 +400,7 @@ body.night .math-text-wrap input{ background:rgba(255,255,255,.92); }
 /* ۵) مودال‌ها                                                         */
 /* ================================================================== */
 .modal-back{
-  position:fixed; inset:0; background:rgba(30,15,35,.45); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
-  display:flex; align-items:center; justify-content:center; padding:18px; z-index:60; animation:fade .25s ease;
+  position:fixed; inset:0; background:rgba(30,15,35,.45); -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);display:flex; align-items:center; justify-content:center; padding:18px; z-index:60; animation:fade .25s ease;
 }
 @keyframes fade{ from{opacity:0} to{opacity:1} }
 .modal{
@@ -490,6 +486,23 @@ body.calm *, body.calm *::before, body.calm *::after{
   .no-print{ display:none !important; }
 }
 </style>
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/games/hakim-treasure.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="📖 راز گنج حکیم — حکیمستان">
+<meta property="og:description" content="راز گنج حکیم — بازی آموزشی روایی با انتخاب‌های اخلاقی و معماهای ریاضی برای پایهٔ پنجم دبستان">
+<meta property="og:url" content="https://hakimistan.ir/games/hakim-treasure.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="📖 راز گنج حکیم — حکیمستان">
+<meta name="twitter:description" content="راز گنج حکیم — بازی آموزشی روایی با انتخاب‌های اخلاقی و معماهای ریاضی برای پایهٔ پنجم دبستان">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body>
 <audio id="bgMusic" src="music8.mp3" loop preload="auto"></audio>
@@ -2656,5 +2669,10 @@ window.HakimTreasure = {
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>
