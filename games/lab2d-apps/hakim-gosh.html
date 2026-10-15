@@ -1,0 +1,2386 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<!-- حلقهٔ تمرکز و ترجیحات دسترس‌پذیری —
+     هم در حالت iframe (نسبت به صفحهٔ والد) و هم در بازکردن مستقیم فایل درست کار می‌کند -->
+<link rel="stylesheet" href="../../css/a11y.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0a1f">
+<meta name="description" content="چشمِ حکیم — بازی آموزشی درس ۶ علوم پنجم. چهار مرحله: آناتومی چشم، تنظیم نور، سفر نور، عدسی و شبکیه. ساختهٔ مهدی شریفیان.">
+<title>چشمِ حکیم 🏮 | بازی آموزشی بینایی — حکیمستان</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0a1f;--gold:#f5c76a;--gold-d:#c9913a;--violet:#8b5cf6;
+  --teal:#5eead4;--eye:#38bdf8;--txt:#f1ecff;--dim:#a99bd6;
+  --glass:rgba(255,255,255,.055);--line:rgba(245,199,106,.22);
+  --bad:#fb7185;--ok:#5eead4;--r:22px;--gap:14px;
+  --font:"Vazirmatn",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --pupil:25px;--glow:.45;--dark:.32;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--txt);background:var(--bg);min-height:100vh;line-height:1.85;overflow-x:hidden;font-weight:400}
+
+.bg-wrap{position:fixed;inset:0;z-index:-3;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% -10%,#241a52 0%,#150f33 45%,#0d0a1f 100%),linear-gradient(180deg,#0d0a1f,#070512)}
+.aurora{position:absolute;border-radius:50%;filter:blur(58px);opacity:.42;mix-blend-mode:screen;will-change:transform}
+.a1{width:70vw;height:38vw;left:-12vw;top:4vh;background:linear-gradient(90deg,#8b5cf6,#38bdf8);animation:drift1 26s ease-in-out infinite alternate}
+.a2{width:60vw;height:32vw;right:-10vw;top:-6vh;background:linear-gradient(90deg,#5eead4,#8b5cf6);animation:drift2 33s ease-in-out infinite alternate}
+.a3{width:52vw;height:26vw;left:18vw;bottom:2vh;background:linear-gradient(90deg,#f5c76a33,#8b5cf6);animation:drift1 40s ease-in-out infinite alternate-reverse}
+@keyframes drift1{from{transform:translate3d(0,0,0) scale(1) rotate(0)}to{transform:translate3d(8vw,-5vh,0) scale(1.22) rotate(12deg)}}
+@keyframes drift2{from{transform:translate3d(0,0,0) scale(1.1) rotate(0)}to{transform:translate3d(-7vw,6vh,0) scale(.92) rotate(-14deg)}}
+#stars{position:fixed;inset:0;z-index:-2;pointer-events:none}
+#confetti{position:fixed;inset:0;z-index:60;pointer-events:none}
+
+.wrap{max-width:980px;margin:0 auto;padding:10px 12px 40px}
+.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 2px 12px}
+.brand{display:flex;align-items:center;gap:8px;margin-inline-start:auto;font-weight:900;font-size:1.02rem;color:var(--gold);letter-spacing:.2px}
+.brand small{display:block;font-weight:400;font-size:.66rem;color:var(--dim);line-height:1}
+
+.card{background:var(--glass);border:1px solid rgba(255,255,255,.09);border-radius:var(--r);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 14px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);padding:16px 14px;margin-bottom:var(--gap)}
+
+.hakim{display:flex;align-items:flex-start;gap:11px}
+.hakim .ava{width:56px;height:56px;flex:none;border-radius:50%;background:radial-gradient(circle at 50% 35%,#2b2152,#140e2c);border:1.5px solid var(--line);display:grid;place-items:center;box-shadow:0 0 22px rgba(245,199,106,.22)}
+.hakim .ava svg{width:46px;height:46px;display:block}
+.eye-core-face{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:visible}
+.eye-core-face svg{width:100%;height:100%;display:block;overflow:visible}
+.eye-core-face .hk-body{transform-box:fill-box;transform-origin:50% 100%;animation:eyeHeroBreath 4.2s ease-in-out infinite}
+.eye-core-face .hk-eyes{transform-box:fill-box;transform-origin:center;animation:eyeHeroBlink 4.8s infinite}
+.eye-core-face .hk-hat{transform-box:fill-box;transform-origin:50% 96%;animation:eyeHeroHat 7s ease-in-out infinite}
+.eye-core-face .hk-spark{transform-box:fill-box;transform-origin:center;animation:eyeHeroTwinkle 2.6s ease-in-out infinite}
+@keyframes eyeHeroBreath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.015)}}
+@keyframes eyeHeroBlink{0%,90%,100%{transform:scaleY(1)}93%,96%{transform:scaleY(.08)}}
+@keyframes eyeHeroHat{0%,100%{transform:rotate(0)}45%{transform:rotate(-2deg)}70%{transform:rotate(2deg)}}
+@keyframes eyeHeroTwinkle{0%,100%{transform:scale(.4);opacity:.25}50%{transform:scale(1.15);opacity:1}}
+.bubble{position:relative;flex:1;min-width:0;background:linear-gradient(180deg,rgba(139,92,246,.16),rgba(56,189,248,.07));border:1px solid rgba(139,92,246,.35);border-radius:16px;padding:10px 13px;font-size:.93rem;min-height:56px;display:flex;align-items:center}
+.bubble::before{content:"";position:absolute;top:18px;right:-7px;width:12px;height:12px;background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(56,189,248,.07));border-top:1px solid rgba(139,92,246,.35);border-right:1px solid rgba(139,92,246,.35);transform:rotate(45deg)}
+.bubble.say{animation:sayPop .5s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes sayPop{from{opacity:.2;transform:translateY(6px) scale(.985)}to{opacity:1;transform:none}}
+
+.steps{display:flex;gap:6px;align-items:center;justify-content:center;margin:2px 0 14px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:6px;font-size:.76rem;color:var(--dim);border:1px solid transparent;border-radius:99px;padding:5px 11px;transition:.3s;background:rgba(255,255,255,.03)}
+.step b{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.72rem;background:rgba(255,255,255,.08);color:var(--dim);font-weight:700}
+.step.now{color:var(--txt);border-color:var(--gold);background:rgba(245,199,106,.09)}
+.step.now b{background:linear-gradient(180deg,var(--gold),var(--gold-d));color:#241a05}
+.step.done b{background:var(--teal);color:#04241f}
+.step.done{color:var(--teal)}
+
+h1{font-size:clamp(1.45rem,6.2vw,2.3rem);font-weight:900;margin:.2em 0 .1em;text-align:center;background:linear-gradient(90deg,var(--gold),#fff0cf,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{text-align:center;color:var(--dim);font-size:.87rem;margin:0 0 14px}
+h2.title{font-size:1.06rem;margin:0 0 4px;color:var(--gold);display:flex;align-items:center;gap:8px;font-weight:700}
+p.lead{margin:0 0 12px;color:var(--dim);font-size:.86rem}
+
+.btn{font-family:var(--font);font-weight:700;font-size:.95rem;cursor:pointer;border:0;color:#231803;background:linear-gradient(180deg,#ffe0a2,var(--gold) 55%,var(--gold-d));padding:11px 22px;border-radius:99px;transition:.2s;box-shadow:0 10px 26px rgba(245,199,106,.24),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(245,199,106,.34)}
+.btn:active{transform:translateY(0) scale(.985)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;filter:grayscale(.5)}
+.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+
+.stage{display:none}
+.stage.on{display:block;animation:riseIn .55s cubic-bezier(.2,.8,.25,1)}
+@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* ===== مرحله ۱: چشم تعاملی ===== */
+.eye-box{position:relative;width:100%}
+.eye-box svg{width:100%;height:auto;display:block;overflow:visible}
+.pt{cursor:pointer}
+.pt .hit{fill:transparent}
+.pt .tag{fill:rgba(13,10,31,.85);stroke:var(--line);stroke-width:1.3;transition:.3s}
+.pt .tagtxt{fill:var(--txt);font-size:21px;font-weight:700;text-anchor:middle;font-family:var(--font)}
+.pt .lead{stroke:rgba(245,199,106,.5);stroke-width:1.6;fill:none;stroke-dasharray:3 4}
+.pt .tip{fill:var(--gold);stroke:#0d0a1f;stroke-width:1.6;transition:.3s}
+.pt .halo{fill:none;stroke:var(--gold);stroke-width:2;opacity:.55;transform-origin:center;transform-box:fill-box}
+.pt:hover .tag,.pt:focus-visible .tag{fill:rgba(245,199,106,.2);stroke:var(--gold)}
+.pt:hover .tagtxt,.pt:focus-visible .tagtxt{fill:#fff}
+.pt.found .tag{fill:rgba(94,234,212,.16);stroke:var(--teal)}
+.pt.found .tagtxt{fill:var(--teal)}
+.pt.found .tip{fill:var(--teal)}
+.pt.found .halo{stroke:var(--teal);opacity:.4;animation:none}
+.pt:focus{outline:none}
+.pt:focus-visible .tag{stroke:var(--eye);stroke-width:2.6}
+@media (min-width:721px){.halo{animation:pulseHalo 2.8s ease-out infinite}@keyframes pulseHalo{0%{opacity:.7;transform:scale(1)}70%{opacity:0;transform:scale(1.9)}100%{opacity:0;transform:scale(1.9)}}}
+@media (max-width:720px){.pt .tagtxt{font-size:24px}.pt .tag{stroke-width:1.8}.pt .lead{stroke-width:2}}
+
+.info{margin-top:12px;border-radius:18px;padding:13px 15px;background:linear-gradient(180deg,rgba(94,234,212,.1),rgba(139,92,246,.08));border:1px solid rgba(94,234,212,.28);min-height:96px;transition:.3s}
+.info h3{margin:0 0 4px;font-size:1.06rem;color:var(--teal);display:flex;align-items:center;gap:8px;font-weight:900}
+.info p{margin:0;font-size:.9rem;color:var(--txt)}
+.info .hint{color:var(--dim);font-size:.83rem}
+.info.empty{border-style:dashed;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.03)}
+
+.count{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.count .lbl{font-size:.88rem;color:var(--dim)}
+.count b{color:var(--gold);font-size:1.05rem;font-weight:900}
+.pips{display:flex;gap:6px}
+.pip{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.16);transition:.35s}
+.pip.on{background:linear-gradient(180deg,#ffe6ae,var(--gold));border-color:var(--gold);box-shadow:0 0 12px rgba(245,199,106,.55);transform:scale(1.12)}
+
+/* ===== مرحله ۲: تنظیم نور ===== */
+.locs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.locs::-webkit-scrollbar{height:5px}
+.locs::-webkit-scrollbar-thumb{background:rgba(245,199,106,.35);border-radius:9px}
+.loc{scroll-snap-align:center;flex:none;text-align:center;cursor:pointer;font-family:var(--font);min-width:98px;padding:9px 10px;border-radius:16px;font-size:.76rem;color:var(--dim);background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);transition:.25s}
+.loc .em{display:block;font-size:1.5rem;line-height:1.2}
+.loc:hover{border-color:var(--line);color:var(--txt)}
+.loc.cur{color:var(--txt);border-color:var(--gold);background:rgba(245,199,106,.1);box-shadow:0 0 20px rgba(245,199,106,.14)}
+.loc.done{border-color:rgba(94,234,212,.6);color:var(--teal)}
+.loc.done .em{filter:grayscale(.15)}
+
+.room{position:relative;margin:6px 0 14px;border-radius:20px;padding:22px 12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,#0a0718,#151034)}
+.room::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(72% 62% at 50% 40%,rgba(255,238,196,.9),rgba(255,238,196,.3) 46%,transparent 74%);opacity:var(--glow,.5);transition:opacity .45s ease}
+.room::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 55% at 50% 45%,transparent 0%,#05030f 100%);opacity:var(--dark,.3);transition:opacity .45s ease}
+.room>*{position:relative;z-index:2}
+.room .tagline{position:absolute;top:9px;right:12px;left:12px;display:flex;justify-content:space-between;font-size:.76rem;color:var(--dim);gap:8px}
+.room .tagline b{color:var(--gold);font-weight:700}
+.eye-front{display:block;margin:0 auto;width:min(340px,84vw);height:auto}
+.pupil-live{r:var(--pupil);transition:r .5s cubic-bezier(.25,.9,.3,1)}
+
+.slider-row{display:flex;align-items:center;gap:10px;margin-top:6px}
+.slider-row .emo{font-size:1.15rem;flex:none}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:12px;border-radius:99px;outline:none;background:linear-gradient(90deg,#1b1440 0%,#4b3a86 35%,var(--gold) 70%,#fff3d4 100%);border:1px solid rgba(255,255,255,.14);cursor:pointer;direction:ltr}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;cursor:grab;background:radial-gradient(circle at 35% 30%,#fff,var(--gold) 60%,var(--gold-d));border:2px solid #fff8e6;box-shadow:0 0 18px rgba(245,199,106,.75);margin-top:-10px}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;cursor:grab;border:2px solid #fff8e6;background:radial-gradient(circle at 35% 30%,#fff,var(--gold) 60%,var(--gold-d));box-shadow:0 0 18px rgba(245,199,106,.75)}
+input[type=range]:focus-visible{box-shadow:0 0 0 3px rgba(56,189,248,.5)}
+output{font-variant-numeric:tabular-nums;font-weight:900;color:var(--gold);min-width:52px;text-align:center;font-size:.92rem;flex:none}
+
+.fb{margin-top:12px;border-radius:14px;padding:11px 13px;font-size:.88rem;min-height:46px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:.3s}
+.fb.ok{background:rgba(94,234,212,.13);border-color:var(--teal);color:#d9fff6}
+.fb.no{background:rgba(251,113,133,.12);border-color:rgba(251,113,133,.5);color:#ffe0e5}
+.fb.tip{background:rgba(245,199,106,.12);border-color:var(--line);color:#fff0d2}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;padding:2px 10px;border-radius:99px;background:rgba(94,234,212,.16);color:var(--teal);border:1px solid rgba(94,234,212,.4)}
+
+/* ===== مرحله ۳: سفر نور ===== */
+.slots{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:6px 0 4px}
+.slot{position:relative;flex:1 1 104px;max-width:150px;min-height:70px;border-radius:16px;cursor:pointer;background:rgba(255,255,255,.035);border:1.5px dashed rgba(255,255,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:var(--font);color:var(--dim);font-size:.8rem;padding:7px 6px;transition:.28s;text-align:center}
+.slot .n{position:absolute;top:5px;left:8px;font-size:.68rem;color:rgba(245,199,106,.6);font-weight:700}
+.slot .del{position:absolute;bottom:3px;right:7px;font-size:.62rem;color:var(--bad);opacity:0;transition:.2s}
+.slot.filled{border-style:solid;border-color:var(--teal);background:rgba(94,234,212,.13);color:var(--txt);font-weight:700;font-size:.9rem}
+.slot.filled .del{opacity:.75}
+.slot.filled:hover{transform:translateY(-2px)}
+.slot.err{animation:shake .45s;border-color:var(--bad);background:rgba(251,113,133,.18)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.slot .light{position:absolute;inset:0;border-radius:15px;background:radial-gradient(circle,rgba(255,240,200,.85),transparent 65%);opacity:0;pointer-events:none}
+.slot.flash .light{animation:lightGo .55s ease-out}
+@keyframes lightGo{0%{opacity:0;transform:scale(.4)}45%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}
+
+.tray{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:14px;min-height:52px;padding:11px;border-radius:16px;background:rgba(139,92,246,.09);border:1px dashed rgba(139,92,246,.35)}
+.tray .cap{width:100%;text-align:center;font-size:.74rem;color:var(--dim);margin-bottom:2px}
+.chip{font-family:var(--font);font-weight:700;font-size:.9rem;cursor:pointer;color:var(--txt);padding:9px 16px;border-radius:99px;transition:.2s;background:linear-gradient(180deg,rgba(139,92,246,.4),rgba(56,189,248,.18));border:1px solid rgba(139,92,246,.55)}
+.chip:hover{transform:translateY(-2px) scale(1.03);border-color:var(--teal);color:#fff;box-shadow:0 8px 22px rgba(139,92,246,.3)}
+.chip:focus-visible{outline:2px solid var(--eye);outline-offset:2px}
+.pathline{margin-top:14px;text-align:center;font-size:.86rem;color:var(--teal);min-height:1.8em;font-weight:500}
+
+/* ===== مرحله ۴: عدسی و شبکیه ===== */
+.lens-lab{position:relative;width:100%;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,#0f1a3a 0%,#050210 90%);border:1px solid rgba(255,255,255,.08);padding:8px;margin-bottom:14px}
+.lens-lab svg{width:100%;height:auto;display:block;overflow:visible}
+.lens-label{font-family:var(--font);font-size:14px;font-weight:800;fill:#fff;paint-order:stroke;stroke:rgba(13,10,31,.92);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+@media(max-width:600px){.lens-label{font-size:17px;stroke-width:5px}}
+
+.lever-box{margin-top:14px;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,rgba(245,199,106,.10),rgba(139,92,246,.06));border:1.5px dashed rgba(245,199,106,.35);transition:all .3s}
+.lever-box.near{border-color:rgba(94,234,212,.6);border-style:solid;background:linear-gradient(180deg,rgba(94,234,212,.12),rgba(139,92,246,.05))}
+.lever-title{font-size:.8rem;font-weight:800;color:#ffd98a;text-align:center;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.lever-title .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulseDot 1.6s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.4)}}
+
+.lever-track{position:relative;height:46px;display:flex;align-items:center;gap:10px}
+.lever-side{font-size:.7rem;font-weight:800;color:var(--dim);white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:2px;flex:none;min-width:52px}
+.lever-side .icon{font-size:1.25rem}
+.lever-side.thin{color:#7dd3fc}
+.lever-side.thick{color:#fbbf24}
+
+input[type=range].lever{-webkit-appearance:none;appearance:none;flex:1;height:16px;border-radius:99px;background:linear-gradient(90deg,#0c4a6e,#38bdf8,#a5b4fc,#f5c76a,#b45309);outline:none;cursor:pointer;touch-action:manipulation;box-shadow:inset 0 2px 8px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.1);direction:ltr;border:0}
+input[type=range].lever::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff8e6 0%,#f5c76a 55%,#8a5a1a 100%);border:3px solid #fff;box-shadow:0 4px 18px rgba(245,199,106,.85),inset 0 -3px 8px rgba(0,0,0,.35);cursor:grab;margin-top:-12px}
+input[type=range].lever::-moz-range-thumb{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff8e6 0%,#f5c76a 55%,#8a5a1a 100%);border:3px solid #fff;box-shadow:0 4px 18px rgba(245,199,106,.85),inset 0 -3px 8px rgba(0,0,0,.35);cursor:grab}
+input[type=range].lever:active::-webkit-slider-thumb{cursor:grabbing;transform:scale(1.08)}
+
+.lever-readout{text-align:center;font-size:.82rem;font-weight:800;margin-top:8px;color:var(--dim);transition:color .3s}
+.lever-readout b{color:var(--gold);font-size:.95rem}
+.lever-readout.near b{color:var(--teal)}
+
+/* ===== امتیاز و پایان ===== */
+.scorebar{display:flex;align-items:center;justify-content:center;gap:8px;font-size:.84rem;color:var(--dim)}
+.scorebar b{color:var(--gold);font-size:1.02rem;font-weight:900;font-variant-numeric:tabular-nums}
+.final{text-align:center;padding:8px 4px}
+.ring-wrap{position:relative;width:min(230px,64vw);margin:6px auto 10px}
+.ring-wrap svg{width:100%;height:auto;transform:rotate(-90deg)}
+.ring-wrap .val{position:absolute;inset:0;display:grid;place-items:center;gap:0}
+.ring-wrap .val b{font-size:clamp(2rem,10vw,2.9rem);font-weight:900;color:var(--gold);line-height:1.1}
+.ring-wrap .val span{font-size:.75rem;color:var(--dim)}
+.stars{font-size:1.7rem;letter-spacing:10px;margin:2px 0 8px;color:var(--gold);text-shadow:0 0 18px rgba(245,199,106,.55)}
+.note{font-size:.83rem;color:var(--dim);margin:8px auto 14px;max-width:44ch}
+.best{font-size:.8rem;color:var(--teal);margin-top:10px}
+.final-scores{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:.82rem;color:var(--dim);margin-top:8px}
+.final-scores b{color:var(--gold)}
+
+footer{margin-top:22px;text-align:center;font-size:.78rem;color:var(--dim)}
+footer a{color:var(--gold);text-decoration:none}
+footer a:hover{text-decoration:underline}
+details.about{margin-top:12px;text-align:start;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:10px 14px}
+details.about summary{cursor:pointer;font-weight:700;color:var(--txt);font-size:.86rem;list-style:none}
+details.about summary::-webkit-details-marker{display:none}
+details.about summary::before{content:"▸ ";color:var(--gold)}
+details.about[open] summary::before{content:"▾ "}
+details.about div{font-size:.82rem;color:var(--dim);padding-top:8px;line-height:2}
+
+@media (max-width:720px){
+  .wrap{padding:8px 9px 30px}
+  .card{padding:13px 11px;border-radius:18px}
+  .brand{margin-inline-start:0;width:100%;order:-1;justify-content:center;font-size:.95rem}
+  .bubble{font-size:.86rem;min-height:52px}
+  .hakim .ava{width:48px;height:48px}
+  .hakim .ava svg{width:40px;height:40px}
+  .slot{flex:1 1 84px;min-height:62px;font-size:.74rem}
+  .slot.filled{font-size:.82rem}
+  .chip{font-size:.82rem;padding:8px 13px}
+  .info{min-height:110px}
+  .steps .step span{display:none}
+  .steps .step{padding:5px 9px}
+  .lever-side{min-width:44px;font-size:.66rem}
+}
+@media (max-width:400px){
+  :root{--gap:10px}
+  .top{gap:6px}
+  .loc{min-width:84px;font-size:.7rem}
+  .room{padding:16px 6px}
+  .count{gap:7px}
+  .btn{font-size:.88rem;padding:10px 18px}
+  .info h3{font-size:.98rem}
+  .info p{font-size:.84rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .aurora{opacity:.3}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-wrap" aria-hidden="true">
+  <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div>
+</div>
+<canvas id="stars" aria-hidden="true"></canvas>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">🏮 چشمِ حکیم<small>بازی ۴ مرحله‌ای بینایی — علوم پنجم، درس ۶</small></div>
+  </div>
+
+  <div class="card hakim">
+    <div class="ava" aria-hidden="true">
+      <div id="eye-hakim-face" class="eye-core-face" role="img" aria-label="تصویر حکیم"></div>
+    </div>
+    <div class="bubble" id="bubble" role="status" aria-live="polite">سلام، من <b>حکیم</b> هستم! 👋 امروز در چهار مرحله رازِ «دیدن» را کشف می‌کنیم.</div>
+  </div>
+
+  <div class="steps" id="steps" aria-hidden="true">
+    <div class="step now" data-s="1"><b>۱</b><span>اکتشاف چشم</span></div>
+    <div class="step" data-s="2"><b>۲</b><span>تنظیم نور</span></div>
+    <div class="step" data-s="3"><b>۳</b><span>سفر نور</span></div>
+    <div class="step" data-s="4"><b>۴</b><span>عدسی</span></div>
+  </div>
+
+  <div class="scorebar" aria-hidden="true">امتیاز شما: <b id="liveScore">۰</b> <span>/ ۱۰۰</span></div>
+
+  <h1>چشمِ حکیم</h1>
+  <p class="sub">چهار مرحله، چهار راز — چشم چگونه نور را به تصویر تبدیل می‌کند؟</p>
+
+  <!-- ============ مرحله ۱: اکتشاف چشم ============ -->
+  <section class="stage on" id="st1" aria-labelledby="st1t">
+    <div class="card">
+      <h2 class="title" id="st1t">🔍 مرحلهٔ ۱ — آناتومی چشم را کشف کن</h2>
+      <p class="lead">روی هر برچسب شماره‌دار (یا خودِ همان قسمت در نقّاشی) کلیک کن. <b>شش</b> قسمت را کشف کن!</p>
+      <div class="eye-box">
+        <svg viewBox="0 0 640 480" role="group" aria-label="نمودار برش عرضی چشم">
+          <defs>
+            <radialGradient id="vitreous" cx="42%" cy="40%"><stop offset="0" stop-color="#2a1f5e"/><stop offset="1" stop-color="#130d2e"/></radialGradient>
+            <linearGradient id="sclera" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdfbff"/><stop offset="1" stop-color="#cdc3e4"/></linearGradient>
+            <linearGradient id="irisG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset=".5" stop-color="#38bdf8"/><stop offset="1" stop-color="#6d46c9"/></linearGradient>
+            <linearGradient id="corneaG" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#bfe9ff" stop-opacity=".16"/><stop offset="1" stop-color="#eafaff" stop-opacity=".6"/></linearGradient>
+            <linearGradient id="lensG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7e2" stop-opacity=".95"/><stop offset="1" stop-color="#9fd9f0" stop-opacity=".6"/></linearGradient>
+            <radialGradient id="glow2" cx="50%" cy="50%"><stop offset="0" stop-color="#f5c76a" stop-opacity=".5"/><stop offset="1" stop-color="#f5c76a" stop-opacity="0"/></radialGradient>
+          </defs>
+          <circle cx="272" cy="236" r="184" fill="url(#glow2)" opacity=".45" pointer-events="none"/>
+          <path d="M135 136 A155 155 0 1 1 135 336 A190 190 0 0 0 135 136 Z" fill="url(#sclera)" stroke="#f5c76a" stroke-opacity=".5" stroke-width="2.5"/>
+          <path d="M140 143 A148 148 0 1 1 140 329 A182 182 0 0 0 140 143 Z" fill="url(#vitreous)"/>
+          <path d="M366 123 A147 147 0 0 1 366 349 L355 335 A129 129 0 0 0 355 137 Z" fill="#f5c76a" opacity=".95"/>
+          <path d="M358 140 A132 132 0 0 1 358 332" fill="none" stroke="#5eead4" stroke-width="2.4" opacity=".7"/>
+          <path d="M416 268 C452 280 468 304 496 320" fill="none" stroke="#7c5ce0" stroke-width="18" stroke-linecap="round"/>
+          <path d="M416 268 C452 280 468 304 496 320" fill="none" stroke="#c4b5fd" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+          <path d="M506 280c14-20 46-24 62-8 18-8 38 6 34 24 14 10 10 32-8 36 0 18-24 28-40 18-16 12-44 4-46-16-16-8-16-32-2-42z" fill="#3a2c63" stroke="#c4b5fd" stroke-width="2.2"/>
+          <path d="M528 278c8 12 4 22-2 32M554 270c6 14 2 26-4 36M580 278c6 10 4 22 0 32" fill="none" stroke="#c4b5fd" stroke-width="2" opacity=".55" stroke-linecap="round"/>
+          <text x="548" y="252" fill="#c4b5fd" font-size="19" text-anchor="middle" font-family="Vazirmatn, Tahoma, sans-serif">مغز</text>
+          <ellipse cx="232" cy="236" rx="28" ry="58" fill="url(#lensG2)" stroke="#eafaff" stroke-opacity=".85" stroke-width="2"/>
+          <path d="M212 194 C197 216 197 256 212 278" fill="none" stroke="#ffffff" stroke-opacity=".5" stroke-width="2.4"/>
+          <path d="M176 212 L250 180 L254 208 Z" fill="url(#irisG)"/>
+          <path d="M176 260 L250 292 L254 264 Z" fill="url(#irisG)"/>
+          <ellipse cx="170" cy="236" rx="14" ry="26" fill="#07051a"/>
+          <path d="M135 136 A190 190 0 0 0 135 336" fill="url(#corneaG)" stroke="#bfe9ff" stroke-width="6" stroke-opacity=".9" stroke-linecap="round"/>
+          <g pointer-events="none" opacity=".95">
+            <circle cx="44" cy="242" r="21" fill="none" stroke="#f5c76a" stroke-width="2" stroke-opacity=".45"/>
+            <circle cx="44" cy="242" r="13" fill="#ffe6ae"/>
+            <text x="44" y="284" fill="#f5c76a" font-size="18" text-anchor="middle" font-family="Vazirmatn, Tahoma, sans-serif">نور</text>
+            <path d="M66 226 L132 208 L232 222 L390 238" fill="none" stroke="#f5c76a" stroke-width="2.6" stroke-dasharray="11 9" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dashoffset" values="0;-80" dur="2.2s" repeatCount="indefinite"/></path>
+            <path d="M66 258 L132 268 L238 250 L390 240" fill="none" stroke="#f5c76a" stroke-width="2.6" stroke-dasharray="11 9" stroke-linecap="round" stroke-linejoin="round"><animate attributeName="stroke-dashoffset" values="0;-80" dur="2.2s" repeatCount="indefinite"/></path>
+            <circle cx="390" cy="239" r="5.5" fill="#fff3cf"/>
+          </g>
+          <g class="pt" id="pt-cornea" data-key="cornea" role="button" tabindex="0" aria-pressed="false" aria-label="قرنیه">
+            <path class="hit" d="M135 136 A190 190 0 0 0 135 336" fill="none" stroke="transparent" stroke-width="36"/>
+            <rect class="hit" x="32" y="32" width="132" height="56" rx="18"/>
+            <path class="lead" d="M98 96 C102 132 106 168 110 200"/>
+            <circle class="tip" cx="110" cy="200" r="6"/><circle class="halo" cx="110" cy="200" r="14"/>
+            <rect class="tag" x="40" y="38" width="116" height="44" rx="15"/>
+            <text class="tagtxt" x="98" y="68">۱ قرنیه</text>
+          </g>
+          <g class="pt" id="pt-iris" data-key="iris" role="button" tabindex="0" aria-pressed="false" aria-label="عنبیه">
+            <path class="hit" d="M172 206 L252 176 L256 212 L172 218 Z M172 266 L252 296 L256 260 L172 254 Z"/>
+            <rect class="hit" x="4" y="142" width="132" height="56" rx="18"/>
+            <path class="lead" d="M128 170 L212 192"/>
+            <circle class="tip" cx="212" cy="192" r="6"/><circle class="halo" cx="212" cy="192" r="14"/>
+            <rect class="tag" x="12" y="148" width="116" height="44" rx="15"/>
+            <text class="tagtxt" x="70" y="178">۲ عنبیه</text>
+          </g>
+          <g class="pt" id="pt-pupil" data-key="pupil" role="button" tabindex="0" aria-pressed="false" aria-label="مردمک">
+            <ellipse class="hit" cx="170" cy="236" rx="24" ry="30"/>
+            <rect class="hit" x="4" y="310" width="140" height="56" rx="18"/>
+            <path class="lead" d="M136 334 L166 270"/>
+            <circle class="tip" cx="166" cy="268" r="6"/><circle class="halo" cx="166" cy="268" r="14"/>
+            <rect class="tag" x="12" y="316" width="124" height="44" rx="15"/>
+            <text class="tagtxt" x="74" y="346">۳ مردمک</text>
+          </g>
+          <g class="pt" id="pt-lens" data-key="lens" role="button" tabindex="0" aria-pressed="false" aria-label="عدسی">
+            <ellipse class="hit" cx="232" cy="236" rx="30" ry="62"/>
+            <rect class="hit" x="66" y="392" width="128" height="56" rx="18"/>
+            <path class="lead" d="M138 398 L224 284"/>
+            <circle class="tip" cx="226" cy="280" r="6"/><circle class="halo" cx="226" cy="280" r="14"/>
+            <rect class="tag" x="74" y="398" width="112" height="44" rx="15"/>
+            <text class="tagtxt" x="130" y="428">۴ عدسی</text>
+          </g>
+          <g class="pt" id="pt-retina" data-key="retina" role="button" tabindex="0" aria-pressed="false" aria-label="شبکیه">
+            <path class="hit" d="M366 123 A147 147 0 0 1 366 349 L346 330 A127 127 0 0 0 346 142 Z"/>
+            <rect class="hit" x="406" y="46" width="132" height="56" rx="18"/>
+            <path class="lead" d="M472 98 L382 148"/>
+            <circle class="tip" cx="380" cy="150" r="6"/><circle class="halo" cx="380" cy="150" r="14"/>
+            <rect class="tag" x="414" y="52" width="116" height="44" rx="15"/>
+            <text class="tagtxt" x="472" y="82">۵ شبکیه</text>
+          </g>
+          <g class="pt" id="pt-nerve" data-key="nerve" role="button" tabindex="0" aria-pressed="false" aria-label="عصب بینایی">
+            <path class="hit" d="M416 268 C452 280 468 304 496 320" fill="none" stroke="transparent" stroke-width="30"/>
+            <rect class="hit" x="320" y="378" width="176" height="56" rx="18"/>
+            <path class="lead" d="M408 382 L452 300"/>
+            <circle class="tip" cx="454" cy="296" r="6"/><circle class="halo" cx="454" cy="296" r="14"/>
+            <rect class="tag" x="328" y="384" width="160" height="44" rx="15"/>
+            <text class="tagtxt" x="408" y="414">۶ عصب بینایی</text>
+          </g>
+        </svg>
+      </div>
+      <div class="info empty" id="info1"><p class="hint">هنوز چیزی کشف نکرده‌ای. روی برچسبِ «قرنیه ۱» بزن تا شروع کنیم. ✨</p></div>
+      <div class="count">
+        <span class="lbl">کشف‌شده:</span><b id="cnt1">۰ از ۶</b>
+        <div class="pips" id="pips1" aria-hidden="true"></div>
+      </div>
+      <div class="btn-row" style="margin-top:14px">
+        <button class="btn" id="go2" type="button" disabled>برویم مرحلهٔ ۲ ⟵</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ مرحله ۲: تنظیم نور ============ -->
+  <section class="stage" id="st2" aria-labelledby="st2t">
+    <div class="card">
+      <h2 class="title" id="st2t">💡 مرحلهٔ ۲ — مردمک را تنظیم کن</h2>
+      <p class="lead">یک موقعیت را انتخاب کن، بعد با اسلایدر شدت نور را تنظیم کن تا مردمک درست شود؛ سپس «بررسی» را بزن.</p>
+      <div class="locs" id="locs" role="group" aria-label="موقعیت‌های نوری"></div>
+      <div class="room" id="room">
+        <div class="tagline"><span id="locName">☀️ روز آفتابی</span><span>مردمکِ من: <b id="pupilState">متوسط</b></span></div>
+        <svg class="eye-front" viewBox="0 0 360 210" role="img" aria-label="چشم با مردمک زنده">
+          <defs>
+            <clipPath id="eyeClip"><path d="M20 105 C70 20 290 20 340 105 C290 190 70 190 20 105 Z"/></clipPath>
+            <radialGradient id="irisFront" cx="50%" cy="45%"><stop offset="0" stop-color="#7dd3fc"/><stop offset=".55" stop-color="#3b82c9"/><stop offset="1" stop-color="#1e3a8a"/></radialGradient>
+            <radialGradient id="scleraF" cx="50%" cy="40%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d6cfeb"/></radialGradient>
+          </defs>
+          <g clip-path="url(#eyeClip)">
+            <rect x="0" y="0" width="360" height="210" fill="url(#scleraF)"/>
+            <circle cx="180" cy="105" r="62" fill="url(#irisFront)"/>
+            <g opacity=".55" aria-hidden="true"><circle cx="180" cy="105" r="62" fill="none" stroke="#0ea5e9" stroke-width="16" stroke-dasharray="2 7"/></g>
+            <circle class="pupil-live" cx="180" cy="105" r="26" fill="#08061a"/>
+            <circle cx="158" cy="82" r="9" fill="#fff" opacity=".85"/>
+            <circle cx="200" cy="126" r="4" fill="#fff" opacity=".35"/>
+            <path d="M20 105 C70 20 290 20 340 105" fill="none" stroke="#0d0a1f" stroke-width="9" opacity=".55"/>
+          </g>
+          <path d="M20 105 C70 20 290 20 340 105 C290 190 70 190 20 105 Z" fill="none" stroke="#f5c76a" stroke-width="3.5" stroke-opacity=".8"/>
+        </svg>
+        <div class="slider-row" dir="ltr">
+          <span class="emo">🌙</span>
+          <input type="range" id="lux" min="0" max="100" step="5" value="50" aria-label="شدت نور">
+          <span class="emo">☀️</span>
+          <output id="luxOut" for="lux">۵۰٪</output>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn" id="check2" type="button">بررسی ✓</button>
+        <button class="btn ghost" id="skip2" type="button">موقعیت بعدی ⟵</button>
+      </div>
+      <div class="fb" id="fb2" role="status" aria-live="polite">آماده‌ام! یک موقعیت را انتخاب کن، بعد اسلایدر را حرکت بده.</div>
+      <div class="count">
+        <span class="lbl">پیشرفت:</span><b id="cnt2">۰ از ۵</b>
+        <div class="pips" id="pips2" aria-hidden="true"></div>
+        <span class="badge" id="sc2" style="display:none">۰ امتیاز</span>
+      </div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn" id="go3" type="button" disabled>برویم مرحلهٔ ۳ ⟵</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ مرحله ۳: سفر نور ============ -->
+  <section class="stage" id="st3" aria-labelledby="st3t">
+    <div class="card">
+      <h2 class="title" id="st3t">🛤️ مرحلهٔ ۳ — سفر نور را بچین</h2>
+      <p class="lead">گزینه‌ها را <b>به ترتیبِ درست</b> بچین تا نور به مغز برسد. برای پاک کردن، روی آخرین خانهٔ پُر کلیک کن.</p>
+      <div class="slots" id="slots" aria-label="شش خانهٔ مسیر دیدن"></div>
+      <div class="tray" id="tray"><div class="cap">گزینه‌ها — به‌هم‌ریخته‌اند</div></div>
+      <div class="pathline" id="pathline"></div>
+      <div class="btn-row" style="margin-top:10px">
+        <button class="btn ghost" id="clear3" type="button">🧹 پاک کردن</button>
+        <button class="btn ghost" id="reshuf3" type="button">🔀 درهم</button>
+      </div>
+      <div class="fb" id="fb3" role="status" aria-live="polite">۶ خانه، ۶ گزینه — ترتیب مهم است! 🌟</div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn" id="go4" type="button" disabled>برویم مرحلهٔ ۴ ⟵</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ مرحله ۴: عدسی و شبکیه ============ -->
+  <section class="stage" id="st4" aria-labelledby="st4t">
+    <div class="card">
+      <h2 class="title" id="st4t">🔬 مرحلهٔ ۴ — عدسی و شبکیه</h2>
+      <p class="lead">دو پرتوی نور <b>موازی</b> از شمع وارد عدسی می‌شوند، داخلش می‌شکنند و همگرا می‌شوند. با اهرم پایین، ضخامت عدسی را تنظیم کن تا پرتوها دقیقاً روی شبکیه جمع شوند.</p>
+
+      <div class="lens-lab">
+        <svg viewBox="0 0 800 480" id="lensSvg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="آزمایشگاه بینایی — دو پرتوی موازی از شمع وارد عدسی می‌شوند">
+          <defs>
+            <radialGradient id="flameG" cx=".5" cy=".35" r=".55"><stop offset="0%" stop-color="#fff8e6"/><stop offset="45%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#b45309"/></radialGradient>
+            <radialGradient id="flameGlow" cx=".5" cy=".5" r=".5"><stop offset="0%" stop-color="#fef3c7" stop-opacity=".9"/><stop offset="100%" stop-color="#fef3c7" stop-opacity="0"/></radialGradient>
+            <radialGradient id="lensG3" cx=".35" cy=".35" r=".75"><stop offset="0%" stop-color="#e0f2fe"/><stop offset="55%" stop-color="#7dd3fc"/><stop offset="100%" stop-color="#0369a1"/></radialGradient>
+            <radialGradient id="retinaG" cx=".5" cy=".5" r=".55"><stop offset="0%" stop-color="#fbcfe8"/><stop offset="100%" stop-color="#9d174d"/></radialGradient>
+            <radialGradient id="focusGlow" cx=".5" cy=".5" r=".5"><stop offset="0%" stop-color="#5eead4" stop-opacity=".9"/><stop offset="60%" stop-color="#5eead4" stop-opacity=".4"/><stop offset="100%" stop-color="#5eead4" stop-opacity="0"/></radialGradient>
+            <radialGradient id="focusBlur" cx=".5" cy=".5" r=".5"><stop offset="0%" stop-color="#fb7185" stop-opacity=".7"/><stop offset="100%" stop-color="#fb7185" stop-opacity="0"/></radialGradient>
+          </defs>
+
+          <line x1="60" y1="240" x2="780" y2="240" stroke="rgba(255,255,255,.15)" stroke-width="1.5" stroke-dasharray="6 6"/>
+          <text class="lens-label" x="80" y="230" text-anchor="start" style="font-size:11px;stroke-width:3px;opacity:.7">محور اصلی</text>
+
+          <rect x="100" y="60" width="30" height="360" rx="15" fill="url(#retinaG)" stroke="#f472b6" stroke-width="2"/>
+          <text class="lens-label" x="115" y="42" text-anchor="middle">شبکیه</text>
+
+          <circle id="focusSpot" cx="115" cy="240" r="0" fill="url(#focusGlow)" opacity="0" style="transition:all .35s"/>
+          <circle id="blurSpot" cx="115" cy="240" r="0" fill="url(#focusBlur)" opacity="0" style="transition:all .35s"/>
+
+          <g id="candle4">
+            <circle cx="740" cy="215" r="55" fill="url(#flameGlow)" opacity=".7">
+              <animate attributeName="r" values="52;60;52" dur="2.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values=".6;.85;.6" dur="2.2s" repeatCount="indefinite"/>
+            </circle>
+            <ellipse cx="740" cy="212" rx="10" ry="18" fill="url(#flameG)"/>
+            <ellipse cx="740" cy="216" rx="4" ry="9" fill="#fff8e6" opacity=".9"/>
+            <rect x="738" y="228" width="4" height="6" fill="#3f2a1a"/>
+            <rect x="726" y="234" width="28" height="90" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+            <rect x="726" y="234" width="28" height="10" rx="2" fill="#fbbf24" opacity=".55"/>
+            <ellipse cx="740" cy="324" rx="20" ry="4" fill="#0d0a1f" opacity=".5"/>
+          </g>
+          <text class="lens-label" x="740" y="370" text-anchor="middle">شمع</text>
+
+          <ellipse id="lensShape" cx="440" cy="240" rx="22" ry="115" fill="url(#lensG3)" opacity=".8" stroke="#7dd3fc" stroke-width="2.5" style="transition:rx .15s ease"/>
+          <ellipse id="lensShine" cx="432" cy="200" rx="6" ry="26" fill="#fff" opacity=".55" pointer-events="none"/>
+          <text class="lens-label" x="440" y="400" text-anchor="middle">عدسی</text>
+
+          <polyline id="rayTop" points="740,210 440,210 115,240" fill="none" stroke="#fbbf24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(251,191,36,.9))"/>
+          <polyline id="rayBot" points="740,270 440,270 115,240" fill="none" stroke="#fbbf24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px rgba(251,191,36,.9))"/>
+
+          <circle id="focalPoint" cx="115" cy="240" r="7" fill="#fff8e6" opacity=".95" style="transition:cx .15s ease"/>
+          <circle id="focalHalo" cx="115" cy="240" r="16" fill="none" stroke="#fff8e6" stroke-width="1.5" opacity=".45" style="transition:cx .15s ease">
+            <animate attributeName="r" values="14;22;14" dur="1.8s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values=".5;.15;.5" dur="1.8s" repeatCount="indefinite"/>
+          </circle>
+          <text id="focalLabel" class="lens-label" x="115" y="290" text-anchor="middle" style="font-size:12px;stroke-width:3px;opacity:.85">نقطهٔ همگرایی</text>
+        </svg>
+      </div>
+
+      <div class="lever-box" id="leverBox">
+        <div class="lever-title"><span class="dot"></span> اهرم تنظیم ضخامت عدسی</div>
+        <div class="lever-track">
+          <div class="lever-side thin"><span class="icon">⚪</span><span>نازک</span></div>
+          <input type="range" class="lever" id="leverSlider" min="0" max="100" value="15" step="1" aria-label="تنظیم ضخامت عدسی">
+          <div class="lever-side thick"><span class="icon">🔵</span><span>ضخیم</span></div>
+        </div>
+        <div class="lever-readout" id="leverReadout">وضعیت: <b>خیلی نازک</b></div>
+      </div>
+
+      <div class="fb tip" id="fb4" role="status" aria-live="polite">
+        اهرم را بکش تا پرتوها دقیقاً روی شبکیه جمع شوند 🌟
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" id="goEnd" type="button" disabled>پایان بازی 🎉</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ پایان ============ -->
+  <section class="stage" id="stEnd" aria-labelledby="endt">
+    <div class="card final">
+      <h2 class="title" id="endt" style="justify-content:center">🏁 پایان بازی</h2>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs><linearGradient id="ringG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5c76a"/><stop offset=".5" stop-color="#5eead4"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="10"/>
+          <circle id="ringP" cx="60" cy="60" r="52" fill="none" stroke="url(#ringG)" stroke-width="10" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" style="transition:stroke-dashoffset 1.3s ease"/>
+        </svg>
+        <div class="val"><b id="finalScore">۰</b><span>از ۱۰۰ امتیاز</span></div>
+      </div>
+      <div class="stars" id="starsOut" aria-hidden="true">☆☆☆</div>
+      <p class="note" id="finalMsg"></p>
+      <p class="note" style="color:var(--teal);border:1px dashed rgba(94,234,212,.4);border-radius:14px;padding:9px 12px">
+        💡 نکتهٔ حکیم: تصویر روی شبکیه <b>وارونه</b> تشکیل می‌شود و <b>مغز</b> آن را درست می‌خواند.
+      </p>
+      <div class="final-scores">
+        <span>مرحله ۱: <b id="f1">۰</b>/۲۵</span>
+        <span>مرحله ۲: <b id="f2">۰</b>/۲۵</span>
+        <span>مرحله ۳: <b id="f3">۰</b>/۲۵</span>
+        <span>مرحله ۴: <b id="f4">۰</b>/۲۵</span>
+      </div>
+      <div class="best" id="bestOut"></div>
+      <div class="btn-row" style="margin-top:16px">
+        <button class="btn" id="again" type="button">🔁 بازی دوباره</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>ساختهٔ <b style="color:var(--gold)">مهدی شریفیان</b> — معلم دبستان · پلتفرم آموزشی رایگان <a href="../../index.html">حکیمستان</a></div>
+    <details class="about">
+      <summary>دربارهٔ بازی</summary>
+      <div>
+        «چشمِ حکیم» یک بازی آموزشی چهارمرحله‌ای بر پایهٔ <b>درس ۶ علوم تجربی پایهٔ پنجم</b> («چه خبر؟ ۱» — حس بینایی) است.<br>
+        ساختار امتیاز (سقف ۱۰۰):<br>
+        • مرحلهٔ ۱ — کشف شش قسمت چشم (۲۵)<br>
+        • مرحلهٔ ۲ — تنظیم مردمک در پنج موقعیت نوری (۲۵)<br>
+        • مرحلهٔ ۳ — چیدن مسیر نور تا مغز (۲۵)<br>
+        • مرحلهٔ ۴ — تنظیم عدسی با اهرم (۲۵)<br>
+        بدون کتابخانهٔ خارجی · صداها با Web Audio API · کاملاً سازگار با موبایل · نسخهٔ ۲٫۰
+      </div>
+    </details>
+  </footer>
+</div>
+
+<script>
+/*!
+ * hakim-core.js — هسته‌ی شخصیت «حکیم» برای پروژه‌ی حکیمستان
+ * نسخه: 3.1.0 (Universal)
+ * ساخته مهدی شریفیان
+ *
+ * ─── تغییرات v3 ───────────────────────────────────────────────
+ *  • چهره‌ی SVG کاملاً بازطراحی‌شده: کلاه جادوگر بنفش، ریش سفید،
+ *    عصای چوبی با سر طلایی، گوش، بینی، سایه‌ی زمین و جزئیات بیشتر
+ *  • ۹ حالت چهره: normal, happy, thinking, sad, excited,
+ *    surprised, sleepy, wise, wink
+ *    (اسم‌های قدیمی calm/amazed/concerned/… همچنان به‌عنوان alias کار می‌کنن)
+ *  • انیمیشن‌ها: نفس کشیدن، پلک زدن، تکان کلاه، جرقه دور عصا،
+ *    ورود/خروج نرم، درخشش ستاره و کاغذ رنگی (confetti)
+ *  • افکت‌ها: sparkle در حالت wise، ستاره در excited،
+ *    کاغذ رنگی در Hakim.react('win')
+ *  • حباب دیالوگ مدرن با دم (tail)، موبایل‌اول، فارسی RTL
+ *  • بدون فریم‌ورک / بدون CDN (فونت Google اختیاری و قابل غیرفعال‌کردن)
+ *
+ * ─── سه حالت استفاده (مثل قبل) ────────────────────────────────
+ *  1) پنل در HTML هست → خودش پیدا می‌کنه
+ *     <div class="hakim-panel">...</div>
+ *     Hakim.init();
+ *  2) یه کانتینر می‌دی، پنل رو داخلش می‌سازه
+ *     <div id="hakim-container"></div>
+ *     Hakim.init({ container: '#hakim-container' });
+ *  3) هیچی نمی‌دی → پنل رو به بالای body اضافه می‌کنه
+ *     Hakim.init();
+ *
+ * ─── API (بدون تغییر) ─────────────────────────────────────────
+ *  Hakim.init, say, setMood, react, track, buildReport,
+ *  createProfile, utils, moods, show, hide, reset,
+ *  setName, getName, isReady, renderFace, onCityConquered,
+ *  onLowHearts, sayRandom, celebrate
+ */
+(function (global) {
+  'use strict';
+
+  // ============================================================
+  // 🎨 رنگ‌های ثابت و پالت
+  // ============================================================
+  const C = {
+    skin:      '#f3c98b',   // پوست هلویی (ثابت)
+    skinHi:    '#fadfae',   // هایلایت پوست
+    skinMid:   '#e0a86a',   // سایه‌ی پوست
+    skinLo:    '#c98a4e',   // سایه‌ی عمیق پوست
+    beard:     '#fff7ef',   // ریش سفید (ثابت)
+    beard2:    '#e7dcc6',   // سایه‌ی ریش
+    hat:       '#5b4a9e',   // کلاه بنفش (ثابت)
+    hat2:      '#46377f',   // کلاه بنفش تیره
+    hat3:      '#7a68c9',   // کلاه بنفش روشن
+    gold:      '#e9b44c',   // طلایی عصا (ثابت)
+    gold2:     '#c9922f',   // طلایی تیره
+    goldHi:    '#f7d88a',   // طلایی روشن
+    wood:      '#8a5a2b',   // چوب عصا
+    wood2:     '#6b4219',
+    woodHi:    '#c99a5e',
+    robe:      '#41306e',   // ردا
+    robe2:     '#2a1f52',
+    ink:       '#2a1a0a',   // خطوط صورت
+    lip:       '#7a3b2e',   // دهان
+    blush:     '#f2a68c',   // گونه
+    tongue:    '#e98a8a'
+  };
+
+  // ============================================================
+  // 😀 ۹ حالت چهره (نام جدید + نام‌های قدیمی به‌عنوان alias)
+  // ============================================================
+  const MOODS = ['normal', 'happy', 'thinking', 'sad', 'excited', 'surprised', 'sleepy', 'wise', 'wink'];
+
+  const MOOD_ALIASES = {
+    calm:        'normal',
+    listening:   'normal',
+    amazed:      'surprised',
+    concerned:   'sad',
+    celebrating: 'excited',
+    curious:     'thinking',
+    proud:       'wise'
+  };
+
+  // ============================================================
+  // 🔧 کمکی‌ها
+  // ============================================================
+  let __uid = 0;
+  function uid() { return ++__uid; }
+
+  // ستاره‌ی چهارپر (برای sparkle و ستاره‌ها)
+  function spark(x, y, s, fill, cls) {
+    const r = (v) => Math.round(v * 10) / 10;
+    const d = 'M ' + x + ' ' + r(y - s) +
+      ' Q ' + r(x + s * 0.6) + ' ' + r(y - s * 0.6) + ' ' + r(x + s) + ' ' + y +
+      ' Q ' + r(x + s * 0.6) + ' ' + r(y + s * 0.6) + ' ' + x + ' ' + r(y + s) +
+      ' Q ' + r(x - s * 0.6) + ' ' + r(y + s * 0.6) + ' ' + r(x - s) + ' ' + y +
+      ' Q ' + r(x - s * 0.6) + ' ' + r(y - s * 0.6) + ' ' + x + ' ' + r(y - s) + ' Z';
+    return '<path' + (cls ? ' class="' + cls + '"' : '') + ' d="' + d + '" fill="' + fill + '"/>';
+  }
+
+  function resolveMood(mood) {
+    if (MOODS.indexOf(mood) !== -1) return mood;
+    if (MOOD_ALIASES[mood]) return MOOD_ALIASES[mood];
+    return 'normal';
+  }
+
+  function fillTemplate(str, vars) {
+    return String(str).replace(/\{(\w+)\}/g, (_, k) => (vars && vars[k] != null) ? vars[k] : '');
+  }
+  function pickPhrase(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return '';
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+  function toEnglishNum(s) {
+    const map = {'۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9'};
+    return String(s).replace(/[۰-۹]/g, d => map[d]);
+  }
+  function getLessonFromQ(q) {
+    const m = String((q && q.explanation) || '').match(/درس\s*([۰-۹]+)/);
+    if (!m) return null;
+    return parseInt(toEnglishNum(m[1]), 10) || null;
+  }
+
+  // ============================================================
+  // 🎭 ویژگی‌های هر حالت (ابرو / چشم / دهان / گونه / افکت)
+  // ============================================================
+  const BROW = (d) => '<path d="' + d + '" stroke="' + C.beard + '" stroke-width="6" stroke-linecap="round" fill="none"/>';
+
+  const MOOD_FEATURES = {
+    normal: {
+      blink: true,
+      brows: BROW('M 74 79 Q 87 73 101 78') + BROW('M 99 78 Q 113 73 126 79'),
+      eyes:
+        '<ellipse cx="88" cy="94" rx="8" ry="8.5" fill="#fff"/>' +
+        '<circle cx="89" cy="95" r="3.5" fill="' + C.ink + '"/>' +
+        '<circle cx="86.5" cy="92" r="1.4" fill="#fff"/>' +
+        '<ellipse cx="112" cy="94" rx="8" ry="8.5" fill="#fff"/>' +
+        '<circle cx="113" cy="95" r="3.5" fill="' + C.ink + '"/>' +
+        '<circle cx="110.5" cy="92" r="1.4" fill="#fff"/>',
+      mouth: '<path d="M 94 130 Q 100 136 106 130" stroke="' + C.ink + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+      cheeks: '',
+      extras: ''
+    },
+
+    happy: {
+      blink: false,
+      brows: BROW('M 75 76 Q 87 70 101 75') + BROW('M 99 75 Q 113 70 125 76'),
+      eyes:
+        '<path d="M 81 96 Q 88 88 95 96" stroke="' + C.ink + '" stroke-width="3" stroke-linecap="round" fill="none"/>' +
+        '<path d="M 105 96 Q 112 88 119 96" stroke="' + C.ink + '" stroke-width="3" stroke-linecap="round" fill="none"/>',
+      mouth:
+        '<path d="M 92 127 Q 100 140 108 127 Q 100 133 92 127 Z" fill="' + C.lip + '"/>' +
+        '<ellipse cx="100" cy="134" rx="3.5" ry="2.6" fill="' + C.tongue + '"/>',
+      cheeks:
+        '<circle cx="79" cy="104" r="6.5" fill="' + C.blush + '" opacity=".55"/>' +
+        '<circle cx="121" cy="104" r="6.5" fill="' + C.blush + '" opacity=".55"/>',
+      extras: ''
+    },
+
+    thinking: {
+      blink: true,
+      brows: BROW('M 74 79 Q 87 73 101 78') + BROW('M 99 71 Q 113 62 126 69'),
+      eyes:
+        '<ellipse cx="88" cy="94" rx="8" ry="8.5" fill="#fff"/>' +
+        '<circle cx="91" cy="92" r="3.5" fill="' + C.ink + '"/>' +
+        '<circle cx="89" cy="89.5" r="1.4" fill="#fff"/>' +
+        '<path d="M 105 95 Q 112 90 119 95" stroke="' + C.ink + '" stroke-width="2.6" stroke-linecap="round" fill="none"/>',
+      mouth: '<path d="M 103 132 Q 108 130 113 132" stroke="' + C.ink + '" stroke-width="2.2" stroke-linecap="round" fill="none"/>',
+      cheeks: '',
+      extras:
+        '<circle cx="147" cy="62" r="3" fill="' + C.gold + '" opacity=".8"/>' +
+        '<circle cx="159" cy="55" r="4" fill="' + C.gold + '" opacity=".6"/>' +
+        '<circle cx="173" cy="50" r="5" fill="' + C.gold + '" opacity=".45"/>'
+    },
+
+    sad: {
+      blink: true,
+      brows: BROW('M 76 84 Q 87 77 100 80') + BROW('M 100 80 Q 113 77 124 84'),
+      eyes:
+        '<ellipse cx="88" cy="95" rx="7.5" ry="8" fill="#fff"/>' +
+        '<circle cx="89" cy="97" r="3" fill="' + C.ink + '"/>' +
+        '<circle cx="86" cy="93" r="1.4" fill="#fff"/>' +
+        '<path d="M 81 89 Q 88 93 95 89" stroke="' + C.ink + '" stroke-width="1.5" fill="none" opacity=".55"/>' +
+        '<ellipse cx="112" cy="95" rx="7.5" ry="8" fill="#fff"/>' +
+        '<circle cx="113" cy="97" r="3" fill="' + C.ink + '"/>' +
+        '<circle cx="110" cy="93" r="1.4" fill="#fff"/>' +
+        '<path d="M 105 89 Q 112 93 119 89" stroke="' + C.ink + '" stroke-width="1.5" fill="none" opacity=".55"/>',
+      mouth: '<path d="M 95 135 Q 100 130 105 135" stroke="' + C.ink + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+      cheeks: '',
+      extras: '<path class="hk-tear" d="M 88 105 q 4 9 0 14 q -4 -5 0 -14 Z" fill="#7ec8ff" opacity=".9"/>'
+    },
+
+    excited: {
+      blink: true,
+      brows: BROW('M 75 72 Q 87 66 101 71') + BROW('M 99 71 Q 113 66 125 72'),
+      eyes:
+        '<ellipse cx="88" cy="94" rx="9.5" ry="10.5" fill="#fff"/>' +
+        '<circle cx="88" cy="94" r="4.2" fill="' + C.ink + '"/>' +
+        '<circle cx="86" cy="91" r="1.7" fill="#fff"/>' + spark(92, 90, 3, C.gold) +
+        '<ellipse cx="112" cy="94" rx="9.5" ry="10.5" fill="#fff"/>' +
+        '<circle cx="112" cy="94" r="4.2" fill="' + C.ink + '"/>' +
+        '<circle cx="110" cy="91" r="1.7" fill="#fff"/>' + spark(116, 90, 3, C.gold),
+      mouth:
+        '<path d="M 90 126 Q 100 143 110 126 Q 100 133 90 126 Z" fill="' + C.lip + '"/>' +
+        '<ellipse cx="100" cy="133" rx="4.5" ry="3" fill="' + C.tongue + '"/>',
+      cheeks:
+        '<circle cx="79" cy="105" r="7" fill="' + C.blush + '" opacity=".6"/>' +
+        '<circle cx="121" cy="105" r="7" fill="' + C.blush + '" opacity=".6"/>',
+      extras:
+        spark(58, 62, 6, '#f5c842', 'hk-star') +
+        spark(142, 56, 5, '#f5c842', 'hk-star') +
+        spark(56, 112, 4, '#f5c842', 'hk-star')
+    },
+
+    surprised: {
+      blink: true,
+      brows: BROW('M 75 70 Q 87 64 101 69') + BROW('M 99 69 Q 113 64 125 70'),
+      eyes:
+        '<ellipse cx="88" cy="94" rx="8.5" ry="9.5" fill="#fff"/>' +
+        '<circle cx="88" cy="94" r="2.6" fill="' + C.ink + '"/>' +
+        '<circle cx="86.5" cy="91.5" r="1.4" fill="#fff"/>' +
+        '<ellipse cx="112" cy="94" rx="8.5" ry="9.5" fill="#fff"/>' +
+        '<circle cx="112" cy="94" r="2.6" fill="' + C.ink + '"/>' +
+        '<circle cx="110.5" cy="91.5" r="1.4" fill="#fff"/>',
+      mouth: '<ellipse cx="100" cy="131" rx="5.5" ry="6.5" fill="' + C.lip + '"/>',
+      cheeks: '',
+      extras: spark(100, 22, 5, C.gold, 'hk-spark')
+    },
+
+    sleepy: {
+      blink: false,
+      brows: BROW('M 76 80 Q 87 76 100 80') + BROW('M 100 80 Q 113 76 124 80'),
+      eyes:
+        '<path d="M 81 96 Q 88 101 95 96" stroke="' + C.ink + '" stroke-width="2.6" stroke-linecap="round" fill="none"/>' +
+        '<path d="M 105 96 Q 112 101 119 96" stroke="' + C.ink + '" stroke-width="2.6" stroke-linecap="round" fill="none"/>',
+      mouth: '<ellipse cx="100" cy="131" rx="4" ry="4.5" fill="' + C.lip + '"/>',
+      cheeks: '',
+      extras:
+        '<text class="hk-zzz" x="140" y="48" font-size="12" font-weight="800" fill="' + C.gold + '" font-family="Verdana, sans-serif" opacity=".85">z</text>' +
+        '<text class="hk-zzz" x="152" y="40" font-size="15" font-weight="800" fill="' + C.gold + '" font-family="Verdana, sans-serif" opacity=".7">z</text>' +
+        '<text class="hk-zzz" x="166" y="31" font-size="18" font-weight="800" fill="' + C.gold + '" font-family="Verdana, sans-serif" opacity=".55">z</text>'
+    },
+
+    wise: {
+      blink: false,
+      brows: BROW('M 73 80 Q 86 72 100 77') + BROW('M 100 77 Q 114 72 127 80'),
+      eyes:
+        '<ellipse cx="88" cy="95" rx="8" ry="8" fill="#fff"/>' +
+        '<circle cx="89" cy="96" r="3.2" fill="' + C.ink + '"/>' +
+        '<ellipse cx="88" cy="90" rx="8.5" ry="6" fill="' + C.skin + '"/>' +
+        '<ellipse cx="112" cy="95" rx="8" ry="8" fill="#fff"/>' +
+        '<circle cx="113" cy="96" r="3.2" fill="' + C.ink + '"/>' +
+        '<ellipse cx="112" cy="90" rx="8.5" ry="6" fill="' + C.skin + '"/>',
+      mouth: '<path d="M 94 130 Q 100 135 106 130" stroke="' + C.ink + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+      cheeks: '',
+      extras:
+        spark(58, 58, 6, '#f5c842', 'hk-spark') +
+        spark(142, 52, 5, '#f5c842', 'hk-spark') +
+        spark(148, 92, 4, '#f5c842', 'hk-spark')
+    },
+
+    wink: {
+      blink: false,
+      brows: BROW('M 74 79 Q 87 73 101 78') + BROW('M 99 71 Q 113 63 126 70'),
+      eyes:
+        '<ellipse cx="88" cy="94" rx="8" ry="8.5" fill="#fff"/>' +
+        '<circle cx="89" cy="95" r="3.5" fill="' + C.ink + '"/>' +
+        '<circle cx="86.5" cy="92" r="1.4" fill="#fff"/>' +
+        '<path d="M 105 96 Q 112 100 119 96" stroke="' + C.ink + '" stroke-width="2.8" stroke-linecap="round" fill="none"/>',
+      mouth: '<path d="M 96 130 Q 102 135 110 129" stroke="' + C.ink + '" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+      cheeks: '<circle cx="79" cy="104" r="6" fill="' + C.blush + '" opacity=".5"/>',
+      extras: spark(123, 90, 4, C.gold, 'hk-spark')
+    }
+  };
+
+  // ============================================================
+  // 🧙 ساخت SVG چهره (تولید مشترک + ویژگی‌های هر حالت)
+  // ============================================================
+  function buildFaceSVG(mood) {
+    const f = MOOD_FEATURES[mood] || MOOD_FEATURES.normal;
+    const id = uid();
+    const skinGrad  = 'hkSkin' + id;
+    const beardGrad = 'hkBeard' + id;
+    const hatGrad   = 'hkHat' + id;
+    const robeGrad  = 'hkRobe' + id;
+    const goldGrad  = 'hkGold' + id;
+
+    return [
+      '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">',
+      '<defs>',
+        '<radialGradient id="' + skinGrad + '" cx="40%" cy="35%" r="70%">',
+          '<stop offset="0%" stop-color="' + C.skinHi + '"/>',
+          '<stop offset="65%" stop-color="' + C.skin + '"/>',
+          '<stop offset="100%" stop-color="' + C.skinMid + '"/>',
+        '</radialGradient>',
+        '<linearGradient id="' + beardGrad + '" x1="0" y1="0" x2="0" y2="1">',
+          '<stop offset="0%" stop-color="#ffffff"/>',
+          '<stop offset="100%" stop-color="' + C.beard + '"/>',
+        '</linearGradient>',
+        '<linearGradient id="' + hatGrad + '" x1="0" y1="0" x2="0" y2="1">',
+          '<stop offset="0%" stop-color="' + C.hat3 + '"/>',
+          '<stop offset="100%" stop-color="' + C.hat + '"/>',
+        '</linearGradient>',
+        '<linearGradient id="' + robeGrad + '" x1="0" y1="0" x2="0" y2="1">',
+          '<stop offset="0%" stop-color="' + C.robe + '"/>',
+          '<stop offset="100%" stop-color="' + C.robe2 + '"/>',
+        '</linearGradient>',
+        '<radialGradient id="' + goldGrad + '" cx="35%" cy="30%" r="75%">',
+          '<stop offset="0%" stop-color="#f9e3a4"/>',
+          '<stop offset="55%" stop-color="' + C.gold + '"/>',
+          '<stop offset="100%" stop-color="' + C.gold2 + '"/>',
+        '</radialGradient>',
+      '</defs>',
+
+      '<g class="hk-body">',
+        // سایه‌ی زمین
+        '<ellipse cx="100" cy="193" rx="66" ry="9" fill="rgba(0,0,0,.28)"/>',
+
+        // ردا (شانه‌ها)
+        '<path d="M 32 200 L 36 150 Q 40 138 70 134 L 130 134 Q 160 138 164 150 L 168 200 Z" fill="url(#' + robeGrad + ')"/>',
+        '<path d="M 42 156 Q 100 145 158 156" stroke="' + C.robe2 + '" stroke-width="3" fill="none" opacity=".55"/>',
+
+        // عصای چوبی با سر طلایی
+        '<rect x="159" y="50" width="9" height="122" rx="4.5" fill="' + C.wood + '"/>',
+        '<rect x="160.5" y="50" width="2.5" height="122" rx="1.2" fill="' + C.wood2 + '" opacity=".5"/>',
+        '<rect x="162" y="52" width="1.6" height="118" rx="0.8" fill="' + C.woodHi + '" opacity=".6"/>',
+        '<circle cx="163.5" cy="46" r="9.5" fill="url(#' + goldGrad + ')"/>',
+        '<circle cx="161" cy="43.5" r="3" fill="#fff" opacity=".8"/>',
+        spark(146, 40, 4.5, C.goldHi, 'hk-spark'),
+        spark(180, 50, 3.5, C.goldHi, 'hk-spark'),
+        spark(176, 30, 3, C.goldHi, 'hk-spark'),
+
+        // گوش‌ها
+        '<ellipse cx="66" cy="93" rx="7.5" ry="10.5" fill="' + C.skinMid + '"/>',
+        '<ellipse cx="66" cy="94" rx="3" ry="5" fill="' + C.skinLo + '" opacity=".55"/>',
+        '<ellipse cx="134" cy="93" rx="7.5" ry="10.5" fill="' + C.skinMid + '"/>',
+        '<ellipse cx="134" cy="94" rx="3" ry="5" fill="' + C.skinLo + '" opacity=".55"/>',
+
+        // صورت
+        '<ellipse cx="100" cy="92" rx="35" ry="37" fill="url(#' + skinGrad + ')"/>',
+        '<path d="M 76 120 Q 100 130 124 120" stroke="' + C.skinLo + '" stroke-width="1.5" fill="none" opacity=".3"/>',
+
+        // بینی
+        '<ellipse cx="100" cy="105" rx="7.5" ry="9" fill="' + C.skinMid + '"/>',
+        '<path d="M 96 112 Q 100 115 104 112" stroke="' + C.skinLo + '" stroke-width="1.6" fill="none" opacity=".7"/>',
+        '<ellipse cx="102" cy="101" rx="2.4" ry="2.8" fill="#fff" opacity=".45"/>',
+
+        // ریش سفید
+        '<path d="M 66 108 C 62 138 74 162 100 168 C 126 162 138 138 134 108 C 126 120 114 124 100 124 C 86 124 74 120 66 108 Z" fill="url(#' + beardGrad + ')"/>',
+        '<path d="M 84 138 Q 100 148 116 138" stroke="' + C.beard2 + '" stroke-width="1.6" fill="none"/>',
+        '<path d="M 88 150 Q 100 158 112 150" stroke="' + C.beard2 + '" stroke-width="1.4" fill="none" opacity=".7"/>',
+        '<path d="M 76 124 Q 86 130 94 126" stroke="' + C.beard2 + '" stroke-width="1.4" fill="none" opacity=".6"/>',
+        '<path d="M 106 126 Q 114 130 124 124" stroke="' + C.beard2 + '" stroke-width="1.4" fill="none" opacity=".6"/>',
+
+        // سبیل
+        '<path d="M 74 120 Q 88 110 100 118 Q 112 110 126 120 Q 113 130 100 124 Q 87 130 74 120 Z" fill="' + C.beard + '" stroke="' + C.beard2 + '" stroke-width="1"/>',
+
+        // اجزای وابسته به حالت
+        f.cheeks,
+        f.mouth,
+        '<g' + (f.blink ? ' class="hk-eyes"' : '') + '>' + f.eyes + '</g>',
+        f.brows,
+
+        // کلاه جادوگر بنفش
+        '<g class="hk-hat">',
+          '<ellipse cx="100" cy="57" rx="54" ry="14" fill="' + C.hat2 + '"/>',
+          '<ellipse cx="100" cy="55" rx="50" ry="11" fill="' + C.hat3 + '" opacity=".25"/>',
+          '<path d="M 54 56 C 60 26 92 13 128 12 C 138 11.6 146 18 147 56 C 126 63 74 63 54 56 Z" fill="url(#' + hatGrad + ')"/>',
+          '<path d="M 72 45 C 82 27 96 19 116 16" stroke="' + C.hat3 + '" stroke-width="2.5" fill="none" opacity=".4"/>',
+          '<path d="M 58 58 Q 100 48 146 58" stroke="' + C.gold + '" stroke-width="9" fill="none" stroke-linecap="round"/>',
+          '<path d="M 62 59 Q 100 51 142 59" stroke="' + C.gold2 + '" stroke-width="1.6" fill="none" opacity=".5"/>',
+          '<circle cx="128" cy="12" r="5" fill="url(#' + goldGrad + ')"/>',
+          '<circle cx="126.5" cy="10.5" r="1.6" fill="#fff" opacity=".85"/>',
+          spark(97, 32, 4.5, C.goldHi, 'hk-spark'),
+        '</g>',
+
+        f.extras,
+      '</g>',
+      '</svg>'
+    ].join('');
+  }
+
+  // ساخت همه‌ی چهره‌ها (هم نام جدید، هم alias قدیمی)
+  const HAKIM_FACES = {};
+  MOODS.forEach((m) => { HAKIM_FACES[m] = buildFaceSVG(m); });
+  Object.keys(MOOD_ALIASES).forEach((a) => { HAKIM_FACES[a] = HAKIM_FACES[MOOD_ALIASES[a]]; });
+
+  // ============================================================
+  // 🎭 ایموجی → حالت
+  // ============================================================
+  const EMOJI_TO_MOOD = {
+    '🧙‍♂️':'wise', '🧙':'wise', '👴':'wise', '✨':'wise', '📿':'wise', '👑':'wise',
+    '🤩':'excited', '🎉':'excited', '🥳':'excited', '⭐':'excited', '⚡':'excited', '🔥':'excited', '🏆':'excited',
+    '😎':'wink', '😉':'wink',
+    '😊':'happy', '😄':'happy', '🤗':'happy', '💪':'happy',
+    '🤔':'thinking', '📚':'thinking',
+    '😅':'sad', '😢':'sad', '💔':'sad', '⏳':'sad',
+    '😴':'sleepy', '💤':'sleepy',
+    '❓':'surprised', '😲':'surprised', '👀':'surprised',
+    '👂':'normal', '🙂':'normal', '😐':'normal'
+  };
+
+  // ============================================================
+  // 💬 پیام‌ها
+  // ============================================================
+  const HAKIM_PHRASES = {
+    intro: [
+      'سلام {name} جان! من حکیمم، همراه تو در این سفر. هر وقت لازم باشه، راهنماییت می‌کنم.',
+      '{name} عزیز، خوش آمدی. من حکیمم. با هم تاریخ رو زنده می‌کنیم.'
+    ],
+    correctFast: [
+      'آفرین {name}! در {t} ثانیه جواب دادی. خیلی سریع بودی ⚡',
+      'آفرین! چه سرعتی! انگار این سوال رو از قبل می‌دونستی.',
+      '{t} ثانیه؟! عالیه {name}! داری خوب پیش می‌ری 🔥'
+    ],
+    correctMedium: [
+      'آفرین {name}. درست گفتی.',
+      'کارت درسته. خوب فکر کردی.',
+      'درست بود. حالا مطمئن شدم که یادت مونده.'
+    ],
+    correctSlow: [
+      'آفرین که با دقت فکر کردی {name}. تاریخ جای عجله نداره.',
+      'کمی طول کشید ولی درست بود. عجله نکن، یاد می‌گیری.',
+      'درست گفتی. حالا مطمئن‌ترم که یادت مونده.'
+    ],
+    wrong: [
+      'اشکالی نداره {name}. همه اول اشتباه می‌کنن.',
+      'نگران نباش. این اشتباه خودش یه درس بود.',
+      'پاسخ درست رو که خوندی، یه قدم به جلو رفتی.'
+    ],
+    wrongFast: [
+      'عجله کردی {name}! تاریخ جای شتاب نیست.',
+      'سرعت خوبه ولی نه وقتی اشتباه می‌کنی. یه نفس بکش.'
+    ],
+    timeout: [
+      'زمان تموم شد. تاریخ عجله نداره {name}. یه نفس عمیق بکش.',
+      'اشکالی نداره. دفعه بعد سریع‌تر تصمیم بگیر.'
+    ],
+    recovery: [
+      'آفرین {name}! بعد از اشتباه، محکم برگشتی 💪',
+      'همینه! حالا که جبرانش کردی، قوی‌تر ادامه بده.'
+    ],
+    streak3: [
+      'سه تا پشت سر هم! داری گرم می‌شی {name} 🔥',
+      'سه تا! عالیه! ادامه بده!'
+    ],
+    streak5: [
+      'پنج تا پشت سر هم! {name}، داری پیشرفت می‌کنی! 👑',
+      '👑 بی‌نظیر! پنج پاسخ درست پشت سر هم! عالیه!'
+    ],
+    win: [
+      'آفرین {name} جان! بردی! 🏆',
+      'پیروزی از آنِ تو شد {name}! همیشه همین‌طور بدرخش ✨',
+      'شیرین‌تر از این نمی‌شد {name}! بردی! 🎉'
+    ],
+    weakLesson: {
+      18: 'می‌بینم که درس ۱۸ کمی اذیتت می‌کنه. قیام سیاه‌جامگان و حکومت‌های ایرانی مثل سامانیان.',
+      19: 'درس ۱۹ رو کم‌کم از دست می‌دی {name}. سلجوقیان، وزیران کاردان مثل خواجه نظام‌الملک.',
+      20: 'درس ۲۰ تلخه، می‌دونم. حمله مغول و تیمور. حواست به تفاوت چنگیز و هلاکو باشه.',
+      21: 'درس ۲۱ امیدوارکننده‌ست {name}: بازسازی. خواجه نصیر و رشیدالدین اینجا نقش دارن.'
+    },
+    cityConquered: [
+      '🏆 {city} فتح شد! یه قدم دیگه به وحدت ایران نزدیک شدیم.',
+      '{city} از آنِ ما شد {name}! افتخار کن.'
+    ],
+    perfectCity: [
+      '{city} رو بی‌نقص فتح کردی! حتی بدون یک اشتباه 🤩',
+      '👑 {city} بدون خطا! این یعنی تسلط واقعی.'
+    ],
+    lowHearts: [
+      '{name} جان، فقط {h} قلب داری. محتاط باش.',
+      'مراقب باش! آخرین فرصت‌هاست.'
+    ]
+  };
+
+  // ============================================================
+  // 🧠 پروفایل (بدون تغییر نسبت به v2)
+  // ============================================================
+  function createProfile() {
+    return {
+      lesson: { 18:{c:0,w:0}, 19:{c:0,w:0}, 20:{c:0,w:0}, 21:{c:0,w:0} },
+      consecutiveCorrect: 0, consecutiveWrong: 0,
+      maxConsecutiveCorrect: 0, maxConsecutiveWrong: 0,
+      recovered: 0, lastWasWrong: false,
+      fastWins: 0, slowCorrects: 0,
+      weakLessonWarned: {}, _shownRecovery: false
+    };
+  }
+
+  // ============================================================
+  // 🎨 CSS (تزریق خودکار + fallback)
+  // ============================================================
+  function injectStyles() {
+    if (document.getElementById('hakim-core-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'hakim-core-styles';
+    style.textContent = [
+      // ── پنل ──────────────────────────────────────────────
+      '.hakim-panel,.hakim-panel *{box-sizing:border-box}',
+      '.hakim-panel{',
+        '--hk-gold:#e9b44c;--hk-gold2:#c9922f;--hk-ink:#2a1a0a;',
+        '--hk-font:Vazirmatn,"Segoe UI",Tahoma,sans-serif;',
+        'display:none;position:relative;max-width:760px;margin:0 auto 16px;',
+        'padding:14px 16px;gap:14px;align-items:flex-start;',
+        'border-radius:22px;border:1.5px solid rgba(233,180,76,.30);',
+        'background:linear-gradient(145deg,rgba(48,32,14,.92),rgba(24,16,6,.94));',
+        'box-shadow:0 10px 34px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);',
+        'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);',
+        'overflow:hidden;font-family:var(--hk-font);direction:rtl;text-align:right;',
+        'color:#f6edd8',
+      '}',
+      '.hakim-panel.active{display:flex;animation:hkPanelIn .5s cubic-bezier(.22,1,.36,1)}',
+      '.hakim-panel.active.leaving{animation:hkPanelOut .3s ease forwards}',
+      '.hakim-panel.speaking{box-shadow:0 10px 40px rgba(233,180,76,.28),inset 0 1px 0 rgba(255,255,255,.08)}',
+      '.hakim-panel::before{content:"";position:absolute;top:0;right:-60px;width:260px;height:100%;',
+        'background:radial-gradient(ellipse at right,rgba(233,180,76,.12),transparent 65%);pointer-events:none}',
+
+      // ── آواتار ───────────────────────────────────────────
+      '.hakim-avatar{position:relative;width:96px;height:96px;flex-shrink:0;border-radius:50%;',
+        'background:radial-gradient(circle at 30% 28%,#ffe9b0 0%,var(--hk-gold) 42%,#8a5a1a 100%);',
+        'display:flex;align-items:center;justify-content:center;',
+        'box-shadow:0 0 22px rgba(233,180,76,.45),inset 0 -4px 10px rgba(0,0,0,.35);',
+        'transition:box-shadow .45s,transform .45s}',
+      '.hakim-glow{position:absolute;inset:-7px;border-radius:50%;',
+        'background:radial-gradient(circle,rgba(233,180,76,.55),transparent 70%);',
+        'animation:hkGlow 5s ease-in-out infinite;pointer-events:none;z-index:0}',
+      '.hakim-face{position:absolute;inset:4px;border-radius:50%;overflow:visible;z-index:1;',
+        'display:flex;align-items:center;justify-content:center;',
+        'background:radial-gradient(circle at 42% 30%,#2c2040 0%,#120a1e 100%);',
+        'box-shadow:inset 0 0 12px rgba(0,0,0,.75)}',
+      '.hakim-face svg{width:100%;height:100%;display:block;overflow:visible}',
+      '.hakim-face.face-change{animation:hkFaceChange .55s cubic-bezier(.34,1.56,.64,1)}',
+
+      // هاله‌ی هر حالت
+      '.hakim-panel[data-mood="wise"] .hakim-avatar{box-shadow:0 0 32px rgba(245,200,66,.75),inset 0 -4px 10px rgba(0,0,0,.35)}',
+      '.hakim-panel[data-mood="excited"] .hakim-avatar{box-shadow:0 0 30px rgba(255,150,60,.65),inset 0 -4px 10px rgba(0,0,0,.35)}',
+      '.hakim-panel[data-mood="happy"] .hakim-avatar{box-shadow:0 0 26px rgba(255,200,90,.55),inset 0 -4px 10px rgba(0,0,0,.35)}',
+      '.hakim-panel[data-mood="sad"] .hakim-avatar{box-shadow:0 0 24px rgba(120,160,255,.55),inset 0 -4px 10px rgba(0,0,0,.35)}',
+      '.hakim-panel[data-mood="surprised"] .hakim-avatar{box-shadow:0 0 26px rgba(120,220,255,.6),inset 0 -4px 10px rgba(0,0,0,.35)}',
+      '.hakim-panel[data-mood="sleepy"] .hakim-avatar{box-shadow:0 0 20px rgba(150,150,255,.4),inset 0 -4px 10px rgba(0,0,0,.35)}',
+
+      // ── حباب دیالوگ ─────────────────────────────────────
+      '.hakim-bubble{position:relative;flex:1;min-width:0;',
+        'background:rgba(255,255,255,.055);border:1px solid rgba(233,180,76,.16);',
+        'border-radius:16px 6px 16px 16px;padding:10px 14px 12px;',
+        'box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}',
+      '.hakim-bubble::after{content:"";position:absolute;top:18px;right:-7px;width:12px;height:12px;',
+        'background:#33220e;border:1px solid rgba(233,180,76,.16);border-left:none;border-bottom:none;transform:rotate(45deg)}',
+      '.hakim-name{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:800;',
+        'color:#f5c842;letter-spacing:.4px;margin-bottom:6px;padding:2px 11px;border-radius:99px;',
+        'background:rgba(233,180,76,.10);border:1px solid rgba(233,180,76,.18)}',
+      '.hakim-name .hakim-dot{width:7px;height:7px;border-radius:50%;background:#2ecc71;',
+        'box-shadow:0 0 8px #2ecc71;animation:hkDot 1.8s infinite}',
+      '.hakim-text{font-size:.95rem;color:#f6edd8;line-height:1.9;min-height:1.6em;font-weight:500;white-space:pre-wrap}',
+      '.hakim-text.typing::after{content:"▍";color:#f5c842;animation:hkCursor .7s infinite;margin-right:2px}',
+
+      // ── دسترس‌پذیری ─────────────────────────────────────
+      '.hakim-sr-only,.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;',
+        'overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}',
+
+      // ── تم‌ها ───────────────────────────────────────────
+      'body[data-theme="dark"] .hakim-panel{background:linear-gradient(145deg,rgba(15,28,50,.92),rgba(5,12,24,.94));border-color:rgba(160,200,255,.25)}',
+      'body[data-theme="dawn"] .hakim-panel{background:linear-gradient(145deg,rgba(55,21,61,.92),rgba(28,6,32,.94));border-color:rgba(255,157,108,.28)}',
+      'body[data-theme="flag"] .hakim-panel{background:linear-gradient(145deg,rgba(13,38,24,.92),rgba(5,18,10,.94));border-color:rgba(46,204,113,.3)}',
+
+      // ── کاغذ رنگی (confetti) ────────────────────────────
+      '.hakim-confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:5}',
+      '.hakim-confetti i{position:absolute;top:-16px;display:block;',
+        'animation-name:hkConfetti;animation-timing-function:ease-in;animation-fill-mode:forwards}',
+
+      // ── گزارش ───────────────────────────────────────────
+      '.hakim-report-line{font-size:.85rem;color:#f6edd8;line-height:1.9;padding:12px 14px;',
+        'background:rgba(233,180,76,.07);border-radius:12px;border-right:3px solid #c9922f;',
+        'margin-bottom:12px;text-align:right;font-weight:600}',
+      '.hakim-lesson-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}',
+      '.hakim-lesson-item{padding:10px 12px;background:rgba(0,0,0,.25);',
+        'border:1px solid rgba(233,180,76,.15);border-radius:12px}',
+      '.hl-name{font-size:.75rem;font-weight:800;color:#fff3b0;margin-bottom:6px;text-align:right}',
+      '.hl-bar{height:10px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;margin-bottom:5px}',
+      '.hl-fill{height:100%;border-radius:20px;transition:width .6s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px currentColor}',
+      '.hl-stat{font-size:.68rem;font-weight:700;text-align:right}',
+      '.hakim-report-sign{text-align:center;font-size:.7rem;color:#f5c842;font-weight:700;',
+        'letter-spacing:1px;margin-top:16px;padding-top:12px;border-top:1px dashed rgba(233,180,76,.25)}',
+
+      // ── موبایل ──────────────────────────────────────────
+      '@media (max-width:420px){',
+        '.hakim-avatar{width:80px;height:80px}',
+        '.hakim-text{font-size:.88rem}',
+        '.hakim-panel{padding:12px;gap:11px}',
+      '}',
+
+      // ── keyframes ───────────────────────────────────────
+      '@keyframes hkPanelIn{0%{opacity:0;transform:translateY(16px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}',
+      '@keyframes hkPanelOut{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(12px) scale(.97)}}',
+      '@keyframes hkBreath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2.5px) scale(1.015)}}',
+      '@keyframes hkBlink{0%,90%,100%{transform:scaleY(1)}93%,96%{transform:scaleY(.08)}}',
+      '@keyframes hkHatWiggle{0%,100%{transform:rotate(0)}45%{transform:rotate(-2.6deg)}70%{transform:rotate(2.2deg)}}',
+      '@keyframes hkTwinkle{0%,100%{transform:scale(.4) rotate(0);opacity:.25}50%{transform:scale(1.15) rotate(20deg);opacity:1}}',
+      '@keyframes hkZzz{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}100%{transform:translate(6px,-14px);opacity:0}}',
+      '@keyframes hkTear{0%{transform:translateY(0);opacity:0}30%{opacity:.95}100%{transform:translateY(14px);opacity:0}}',
+      '@keyframes hkSpeak{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.12) rotate(-6deg)}70%{transform:scale(1.06) rotate(5deg)}}',
+      '@keyframes hkGlow{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.85;transform:scale(1.12)}}',
+      '@keyframes hkFaceChange{0%{transform:scale(1) rotate(0)}35%{transform:scale(.82) rotate(-7deg)}70%{transform:scale(1.05) rotate(3deg)}100%{transform:scale(1) rotate(0)}}',
+      '@keyframes hkDot{0%,100%{opacity:1}50%{opacity:.35}}',
+      '@keyframes hkCursor{50%{opacity:0}}',
+      '@keyframes hkConfetti{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(300px) rotate(540deg);opacity:.85}}',
+
+      // انیمیشن‌های داخل SVG
+      '.hk-body{transform-box:fill-box;transform-origin:50% 100%;animation:hkBreath 4.2s ease-in-out infinite}',
+      '.hk-eyes{transform-box:fill-box;transform-origin:center;animation:hkBlink 4.8s infinite}',
+      '.hk-hat{transform-box:fill-box;transform-origin:50% 96%;animation:hkHatWiggle 7s ease-in-out infinite}',
+      '.hk-spark{transform-box:fill-box;transform-origin:center;animation:hkTwinkle 2.6s ease-in-out infinite}',
+      '.hk-star{transform-box:fill-box;transform-origin:center;animation:hkTwinkle 1.9s ease-in-out infinite}',
+      '.hk-zzz{animation:hkZzz 2.8s ease-out infinite}',
+      '.hk-zzz:nth-of-type(2){animation-delay:.35s}',
+      '.hk-zzz:nth-of-type(3){animation-delay:.7s}',
+      '.hk-tear{transform-box:fill-box;animation:hkTear 2.4s ease-in infinite}',
+      '.hakim-panel.speaking .hakim-avatar{animation:hkSpeak .7s cubic-bezier(.175,.885,.32,1.275)}',
+
+      // کاهش حرکت (دسترس‌پذیری)
+      '@media (prefers-reduced-motion:reduce){',
+        '.hakim-panel,.hakim-panel *{animation:none !important;transition:none !important}',
+      '}'
+    ].join('');
+    document.head.appendChild(style);
+  }
+
+  // ============================================================
+  // 🧠 state
+  // ============================================================
+  const state = {
+    panelEl: null, faceEl: null, textEl: null, srEl: null,
+    typeTimer: null, hideTimer: null, hideAnimTimer: null,
+    name: 'دوست من', mood: 'normal',
+    autoHideMs: 4200,
+    initialized: false
+  };
+
+  // ============================================================
+  // 🔍 پیدا کردن یا ساخت پنل
+  // ============================================================
+  function findExistingPanel(containerOption) {
+    if (containerOption) {
+      const container = typeof containerOption === 'string'
+        ? document.querySelector(containerOption)
+        : containerOption;
+      if (container) {
+        if (container.classList && container.classList.contains('hakim-panel')) return container;
+        const inside = container.querySelector && container.querySelector('.hakim-panel');
+        if (inside) return inside;
+      }
+    }
+    return document.querySelector('.hakim-panel') || document.getElementById('hakimPanel');
+  }
+
+  function buildPanelHTML() {
+    return (
+      '<div class="hakim-panel" id="hakimPanel">' +
+        '<div class="hakim-avatar">' +
+          '<div class="hakim-glow" aria-hidden="true"></div>' +
+          '<div class="hakim-face" id="hakimFace" aria-hidden="true"></div>' +
+        '</div>' +
+        '<div class="hakim-bubble">' +
+          '<div class="hakim-name"><span class="hakim-dot" aria-hidden="true"></span> حکیم، همراه تو</div>' +
+          '<div class="hakim-text" id="hakimText" aria-hidden="true"></div>' +
+          '<div class="hakim-sr-only" id="hakimSrText" role="status" aria-live="polite"></div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function bindPanelEls(panelEl) {
+    state.panelEl = panelEl;
+    state.faceEl = panelEl.querySelector('.hakim-face') || panelEl.querySelector('#hakimFace');
+    state.textEl = panelEl.querySelector('.hakim-text') || panelEl.querySelector('#hakimText');
+    state.srEl   = panelEl.querySelector('#hakimSrText') || panelEl.querySelector('.hakim-sr-only');
+  }
+
+  // ============================================================
+  // 🎯 API اصلی
+  // ============================================================
+  function init(options) {
+    options = options || {};
+    injectStyles();
+    if (options.font !== false) injectFont();
+    if (options.name) state.name = String(options.name);
+    if (typeof options.autoHideMs === 'number') state.autoHideMs = options.autoHideMs;
+
+    let panelEl = findExistingPanel(options.container);
+
+    if (!panelEl && options.container) {
+      const container = typeof options.container === 'string'
+        ? document.querySelector(options.container)
+        : options.container;
+      if (container) {
+        container.insertAdjacentHTML('beforeend', buildPanelHTML());
+        panelEl = container.querySelector('.hakim-panel');
+      }
+    }
+
+    if (!panelEl) {
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'max-width:760px;margin:12px auto 0;padding:0 14px;';
+      wrapper.innerHTML = buildPanelHTML();
+      document.body.insertBefore(wrapper, document.body.firstChild);
+      panelEl = wrapper.querySelector('.hakim-panel');
+    }
+
+    bindPanelEls(panelEl);
+    setMood('normal');
+    state.initialized = true;
+    return api;
+  }
+
+  function injectFont() {
+    if (document.getElementById('hakim-font')) return;
+    try {
+      const link = document.createElement('link');
+      link.id = 'hakim-font';
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap';
+      document.head.appendChild(link);
+    } catch (e) { /* آفلاین: فونت fallback استفاده می‌شود */ }
+  }
+
+  function setMood(mood) {
+    if (!state.faceEl) return;
+    const m = resolveMood(mood);
+    if (state.faceEl.dataset.mood === m) return;
+    state.mood = m;
+    state.faceEl.dataset.mood = m;
+    if (state.panelEl) state.panelEl.dataset.mood = m;
+    state.faceEl.innerHTML = HAKIM_FACES[m];
+    state.faceEl.classList.remove('face-change');
+    void state.faceEl.offsetWidth;
+    state.faceEl.classList.add('face-change');
+  }
+
+  function renderFace(mood, element) {
+    if (!element) return;
+    const m = resolveMood(mood);
+    element.innerHTML = HAKIM_FACES[m];
+    element.classList.remove('face-change');
+    void element.offsetWidth;
+    element.classList.add('face-change');
+  }
+
+  function say(text, opts) {
+    opts = opts || {};
+    if (!state.panelEl || !state.textEl) return;
+    const msg = String(text || '');
+    if (!msg) return;
+
+    let mood = opts.mood;
+    if (!mood && opts.emoji) mood = EMOJI_TO_MOOD[opts.emoji];
+    if (mood) setMood(mood);
+
+    if (state.hideAnimTimer) { clearTimeout(state.hideAnimTimer); state.hideAnimTimer = null; }
+    state.panelEl.classList.remove('leaving');
+    state.panelEl.classList.add('active', 'speaking');
+    state.textEl.textContent = '';
+    state.textEl.classList.add('typing');
+    if (state.srEl) state.srEl.textContent = '';
+
+    clearInterval(state.typeTimer);
+    clearTimeout(state.hideTimer);
+
+    const speed = opts.speed || 22;
+    let i = 0;
+    state.typeTimer = setInterval(() => {
+      state.textEl.textContent += msg.charAt(i);
+      i++;
+      if (i >= msg.length) {
+        clearInterval(state.typeTimer);
+        state.typeTimer = null;
+        state.textEl.classList.remove('typing');
+        if (state.srEl) state.srEl.textContent = msg;
+      }
+    }, speed);
+
+    setTimeout(() => { if (state.panelEl) state.panelEl.classList.remove('speaking'); }, 700);
+
+    const autoHide = opts.autoHide !== false && !opts.permanent;
+    if (autoHide) {
+      const total = msg.length * speed + state.autoHideMs;
+      state.hideTimer = setTimeout(() => hide(), total);
+    }
+  }
+
+  function sayRandom(category, vars, opts) {
+    const arr = HAKIM_PHRASES[category];
+    if (!arr) return;
+    const msg = fillTemplate(pickPhrase(arr), vars || { name: state.name });
+    say(msg, opts);
+  }
+
+  function show() {
+    if (!state.panelEl) return;
+    if (state.hideAnimTimer) { clearTimeout(state.hideAnimTimer); state.hideAnimTimer = null; }
+    state.panelEl.classList.remove('leaving');
+    state.panelEl.classList.add('active');
+  }
+
+  function hide() {
+    if (!state.panelEl) return;
+    const el = state.panelEl;
+    if (el.classList.contains('leaving')) return;
+    el.classList.add('leaving');
+    state.hideAnimTimer = setTimeout(() => {
+      el.classList.remove('active', 'leaving');
+      setMood('normal');
+    }, 300);
+  }
+
+  function reset() {
+    clearInterval(state.typeTimer);
+    clearTimeout(state.hideTimer);
+    if (state.hideAnimTimer) { clearTimeout(state.hideAnimTimer); state.hideAnimTimer = null; }
+    if (state.textEl) state.textEl.textContent = '';
+    if (state.srEl) state.srEl.textContent = '';
+    if (state.panelEl) state.panelEl.classList.remove('active', 'speaking', 'leaving');
+    setMood('normal');
+  }
+
+  function setName(name) { state.name = String(name || 'دوست من'); }
+  function getName() { return state.name; }
+  function isReady() { return state.initialized; }
+
+  // ============================================================
+  // 📊 track / react
+  // ============================================================
+  function track(profile, correct, timeUsed, lesson) {
+    if (!profile || !profile.lesson) return;
+    const p = profile;
+    if (lesson && p.lesson[lesson]) {
+      if (correct) p.lesson[lesson].c++; else p.lesson[lesson].w++;
+    }
+    if (correct) {
+      p.consecutiveCorrect++;
+      p.consecutiveWrong = 0;
+      if (p.consecutiveCorrect > p.maxConsecutiveCorrect) p.maxConsecutiveCorrect = p.consecutiveCorrect;
+      if (p.lastWasWrong) { p.recovered++; p.lastWasWrong = false; }
+      if (timeUsed <= 5) p.fastWins++;
+      if (timeUsed >= 10) p.slowCorrects++;
+    } else {
+      p.consecutiveWrong++;
+      p.consecutiveCorrect = 0;
+      if (p.consecutiveWrong > p.maxConsecutiveWrong) p.maxConsecutiveWrong = p.consecutiveWrong;
+      p.lastWasWrong = true;
+    }
+  }
+
+  function react(profile, correct, timeUsed, lesson, wasTimeout) {
+    // 🎉 کاغذ رنگی برای برد: Hakim.react('win')
+    if (profile === 'win') { celebrate('win'); return; }
+    if (!profile) return;
+
+    const p = profile;
+    const name = state.name;
+
+    if (correct) {
+      if (p.consecutiveCorrect === 3) sayRandom('streak3', { name }, { emoji: '🤩' });
+      else if (p.consecutiveCorrect === 5) { sayRandom('streak5', { name }, { emoji: '👑' }); burstConfetti(state.panelEl); }
+      else if (p.recovered > 0 && p.recovered <= 2 && !p._shownRecovery) {
+        sayRandom('recovery', { name }, { emoji: '💪' });
+        p._shownRecovery = true;
+      }
+      else if (timeUsed <= 5) sayRandom('correctFast', { name, t: toEnglishNum(timeUsed) }, { emoji: '😎' });
+      else if (timeUsed >= 10) sayRandom('correctSlow', { name }, { emoji: '🤔' });
+      else sayRandom('correctMedium', { name }, { emoji: '😊' });
+    } else {
+      if (wasTimeout) sayRandom('timeout', { name }, { emoji: '⏳' });
+      else if (timeUsed <= 4) sayRandom('wrongFast', { name }, { emoji: '😅' });
+      else sayRandom('wrong', { name }, { emoji: '🤔' });
+
+      if (lesson && p.lesson[lesson] && p.lesson[lesson].w >= 2 && !p.weakLessonWarned[lesson]) {
+        p.weakLessonWarned[lesson] = true;
+        const hint = HAKIM_PHRASES.weakLesson[lesson];
+        if (hint) setTimeout(() => say(fillTemplate(hint, { name }), { emoji: '📚' }), 3200);
+      }
+    }
+  }
+
+  function onCityConquered(cityName, isPerfect) {
+    const name = state.name;
+    if (isPerfect) {
+      burstConfetti(state.panelEl);
+      sayRandom('perfectCity', { city: cityName, name }, { emoji: '👑' });
+    } else {
+      sayRandom('cityConquered', { city: cityName, name }, { emoji: '🏆' });
+    }
+  }
+
+  function onLowHearts(hearts) {
+    sayRandom('lowHearts', { name: state.name, h: toEnglishNum(hearts) }, { emoji: '💔' });
+  }
+
+  // ============================================================
+  // 🎉 جشن / کاغذ رنگی
+  // ============================================================
+  function burstConfetti(panelEl) {
+    if (!panelEl) return;
+    let layer = panelEl.querySelector('.hakim-confetti');
+    if (!layer) {
+      layer = document.createElement('div');
+      layer.className = 'hakim-confetti';
+      layer.setAttribute('aria-hidden', 'true');
+      panelEl.appendChild(layer);
+    }
+    const colors = ['#f5c842', '#e74c3c', '#2ecc71', '#3498db', '#9b59b6', '#e67e22', '#ff7eb9', '#7ef0ff'];
+    for (let i = 0; i < 26; i++) {
+      const p = document.createElement('i');
+      const c = colors[i % colors.length];
+      p.style.cssText =
+        'left:' + (Math.random() * 100).toFixed(1) + '%;' +
+        'background:' + c + ';' +
+        'width:' + (6 + Math.random() * 5).toFixed(1) + 'px;' +
+        'height:' + (8 + Math.random() * 6).toFixed(1) + 'px;' +
+        'animation-duration:' + (1.6 + Math.random() * 1.4).toFixed(2) + 's;' +
+        'animation-delay:' + (Math.random() * 0.35).toFixed(2) + 's;' +
+        'border-radius:' + (Math.random() > 0.5 ? '2px' : '50%');
+      layer.appendChild(p);
+    }
+    setTimeout(() => { if (layer.parentNode) layer.parentNode.removeChild(layer); }, 3600);
+  }
+
+  function celebrate(type) {
+    burstConfetti(state.panelEl);
+    const name = state.name;
+    const phrase = type === 'city'
+      ? pickPhrase(HAKIM_PHRASES.cityConquered)
+      : pickPhrase(HAKIM_PHRASES.win);
+    say(fillTemplate(phrase, { name }), { emoji: '🎉', permanent: true });
+  }
+
+  // ============================================================
+  // 📜 گزارش (بدون تغییر نسبت به v2)
+  // ============================================================
+  function buildReport(profile, options) {
+    if (!profile || !profile.lesson) return '';
+    options = options || {};
+    const p = profile;
+    const name = state.name;
+    const lessonNames = { 18:'قیام و حکومت‌های ایرانی', 19:'سلجوقیان و وزیران کاردان', 20:'حمله مغول و تیمور', 21:'بازسازی ایران' };
+    let html = '';
+    const totalWrong = [18,19,20,21].reduce((a, l) => a + p.lesson[l].w, 0);
+    let personality;
+    if (p.fastWins >= 4 && totalWrong <= 3) personality = name + ' جان، تو یه تاریخ‌دان سریع و دقیقی.';
+    else if (p.slowCorrects >= 3) personality = name + ' جان، تو با دقت فکر می‌کنی.';
+    else if (p.recovered >= 3) personality = name + ' جان، شکست‌ها تو رو متوقف نمی‌کنن.';
+    else if (p.maxConsecutiveCorrect >= 5) personality = name + ' جان، وقتی شروع می‌کنی، پشت سر هم درست جواب می‌دی.';
+    else personality = name + ' جان، تو یه تاریخ‌آموز کنجکاوی.';
+    html += '<div class="hakim-report-line">' + personality + '</div>';
+
+    if (options.commander) {
+      const cmd = options.commander;
+      html += '<div class="hakim-report-line" style="background:rgba(155,89,182,0.08);border-right-color:#9b59b6;">' +
+        (cmd.icon || '') + ' <strong>سردارت:</strong> ' + cmd.name + ' (' + (cmd.title || '') + ') — ' + (cmd.desc || '') +
+      '</div>';
+    }
+
+    html += '<div class="hakim-lesson-grid">';
+    const lessonStats = [];
+    for (const lesson of [18,19,20,21]) {
+      const l = p.lesson[lesson];
+      const total = l.c + l.w;
+      if (total === 0) continue;
+      const pct = Math.round((l.c / total) * 100);
+      let grade, color;
+      if (pct >= 80) { grade = 'عالی'; color = '#2ecc71'; }
+      else if (pct >= 60) { grade = 'خوب'; color = '#3498db'; }
+      else if (pct >= 40) { grade = 'قابل قبول'; color = '#e67e22'; }
+      else { grade = 'نیاز به مرور'; color = '#e74c3c'; }
+      lessonStats.push({ lesson, pct });
+      html += '<div class="hakim-lesson-item"><div class="hl-name">درس ' + toEnglishNum(lesson) + ': ' + lessonNames[lesson] +
+        '</div><div class="hl-bar"><div class="hl-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
+        '<div class="hl-stat" style="color:' + color + '">' + grade + ' — ' + toEnglishNum(l.c) + ' از ' + toEnglishNum(total) +
+        '</div></div>';
+    }
+    html += '</div>';
+
+    const weakest = lessonStats.slice().sort((a, b) => a.pct - b.pct)[0];
+    if (weakest && weakest.pct < 60) {
+      html += '<div class="hakim-report-line" style="background:rgba(233,180,76,0.10);border-right-color:#f5c842;">📌 پیشنهاد من: یه بار دیگه درس ' +
+        toEnglishNum(weakest.lesson) + ' رو مرور کن.</div>';
+    } else if (lessonStats.length > 0) {
+      html += '<div class="hakim-report-line" style="background:rgba(46,204,113,0.10);border-right-color:#2ecc71;">🌟 همه‌ی درس‌ها رو خوب بلدی ' + name + '.</div>';
+    }
+    html += '<div class="hakim-report-sign">✦ حکیم، همراه تو در این سفر</div>';
+    return html;
+  }
+
+  // ============================================================
+  // 🌟 میان‌بُرها (نام جدید + alias قدیمی) + moods
+  // ============================================================
+  const shortcuts = {};
+  MOODS.forEach((m) => { shortcuts[m] = () => setMood(m); });
+  Object.keys(MOOD_ALIASES).forEach((a) => { shortcuts[a] = () => setMood(a); });
+
+  const moodsObj = {};
+  MOODS.forEach((m) => { moodsObj[m] = shortcuts[m]; });
+  Object.keys(MOOD_ALIASES).forEach((a) => { moodsObj[a] = shortcuts[a]; });
+
+  // ============================================================
+  // 🎁 API نهایی
+  // ============================================================
+  const api = Object.assign({
+    init, setMood, renderFace,
+    say, sayRandom,
+    show, hide, reset,
+    setName, getName, isReady,
+    track, react, onCityConquered, onLowHearts,
+    buildReport, createProfile,
+    celebrate, burstConfetti,
+    saveSession, saveAnswer,
+    FACES: HAKIM_FACES,
+    PHRASES: HAKIM_PHRASES,
+    EMOJI_TO_MOOD,
+    MOODS,
+    MOOD_ALIASES,
+    utils: { fillTemplate, pickPhrase, toEnglishNum, getLessonFromQ },
+    VERSION: '3.1.0'
+  }, shortcuts, { moods: moodsObj });
+
+  global.Hakim = api;
+
+    // ═══════════════════════════════════════════════════════════
+  //  📊 ثبت نتیجه بازی در Google Sheets (پنل معلم)
+  // ═══════════════════════════════════════════════════════════
+  var HAKIM_API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+
+  function detectDevice(){
+    var ua = navigator.userAgent || '';
+    if (/mobile|android|iphone/i.test(ua)) return 'موبایل';
+    if (/ipad|tablet/i.test(ua)) return 'تبلت';
+    return 'دسکتاپ';
+  }
+
+  function saveSession(data){
+    data = data || {};
+    var payload = {
+      action: 'session',
+      student_name: data.student_name || state.name || 'دانش‌آموز',
+      student_class: data.student_class || '',
+      student_school: data.student_school || '',
+      game_id: data.game_id || 'unknown',
+      experiment_id: data.experiment_id || '',
+      duration: Math.round(data.duration || 0),
+      device: detectDevice(),
+      score: Math.round(data.score || 0),
+      stars: Math.round(data.stars || 0),
+      completed: !!data.completed,
+      attempts: data.attempts || 1,
+      details: data.details || '',
+      started_at: data.started_at || new Date().toISOString(),
+      finished_at: new Date().toISOString()
+    };
+    return fetch(HAKIM_API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).then(function(r){ return r.json(); })
+      .catch(function(e){ console.warn('saveSession failed:', e); return { ok:false }; });
+  }
+
+  function saveAnswer(data){
+    data = data || {};
+    var payload = {
+      action: 'answer',
+      student_name: data.student_name || state.name || 'دانش‌آموز',
+      game_id: data.game_id || 'unknown',
+      experiment_id: data.experiment_id || '',
+      question_id: data.question_id || '',
+      question_text: data.question_text || '',
+      student_answer: data.student_answer || '',
+      correct_answer: data.correct_answer || '',
+      is_correct: !!data.is_correct,
+      time_taken: Math.round(data.time_taken || 0)
+    };
+    return fetch(HAKIM_API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).then(function(r){ return r.json(); })
+      .catch(function(e){ console.warn('saveAnswer failed:', e); return { ok:false }; });
+  }
+
+})(typeof window !== 'undefined' ? window : this);
+
+</script>
+<script>
+(function(){
+'use strict';
+  if(window.Hakim && typeof window.Hakim.renderFace === 'function'){
+    window.Hakim.renderFace('normal', document.getElementById('eye-hakim-face'));
+  }
+
+/* ============ ابزارها ============ */
+var FA = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+function fa(n){ return String(n).replace(/[0-9]/g, function(d){ return FA[+d]; }); }
+function $(id){ return document.getElementById(id); }
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+var KEYBOARD = false;
+window.addEventListener('keydown', function(){ KEYBOARD = true; });
+window.addEventListener('pointerdown', function(){ KEYBOARD = false; }, true);
+var REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============ صدا ============ */
+var SND = (function(){
+  var ctx = null, master = null;
+  function ensure(){
+    if(ctx) return ctx;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return null;
+    try{ ctx = new AC(); master = ctx.createGain(); master.gain.value = .28; master.connect(ctx.destination); }
+    catch(e){ ctx = null; }
+    return ctx;
+  }
+  function tone(freq, at, dur, type, vol){
+    if(!ctx) return;
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, at);
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.linearRampToValueAtTime(vol == null ? .6 : vol, at + .012);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    o.connect(g); g.connect(master);
+    o.start(at); o.stop(at + dur + .03);
+  }
+  function seq(notes, type, step){
+    if(!ensure()) return;
+    if(ctx.state === 'suspended'){ ctx.resume(); }
+    var t = ctx.currentTime + .02;
+    for(var i=0;i<notes.length;i++){ tone(notes[i], t + i*(step||.12), (step||.12)*1.9, type); }
+  }
+  return {
+    init: ensure,
+    click:  function(){ seq([660], 'triangle', .085); },
+    pop:    function(){ seq([520], 'sine', .07); },
+    good:   function(){ seq([523,659,784], 'triangle', .125); },
+    bad:    function(){ seq([220,165], 'sawtooth', .17); },
+    win:    function(){ seq([523,659,784,1046], 'triangle', .16); },
+    spark:  function(){ seq([1046,1318], 'sine', .09, .35); }
+  };
+})();
+function firstTouch(){ SND.init(); window.removeEventListener('pointerdown', firstTouch, true); }
+window.addEventListener('pointerdown', firstTouch, true);
+
+/* ============ ستاره‌ها ============ */
+(function starfield(){
+  var c = $('stars'); if(!c) return;
+  var x = c.getContext('2d'), stars = [], W = 0, H = 0, dpr = 1, raf = 0;
+  function build(){
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = c.width  = Math.floor(window.innerWidth * dpr);
+    H = c.height = Math.floor(window.innerHeight * dpr);
+    c.style.width = window.innerWidth + 'px'; c.style.height = window.innerHeight + 'px';
+    var n = Math.round((window.innerWidth * window.innerHeight) / 9000);
+    stars = [];
+    for(var i=0;i<Math.min(190, Math.max(45,n));i++){
+      stars.push({x: Math.random()*W, y: Math.random()*H, r: (Math.random()*1.5 + .35) * dpr, p: Math.random()*Math.PI*2, s: .008 + Math.random()*.028, c: Math.random() < .22 ? '180,235,255' : (Math.random() < .3 ? '245,199,106' : '255,255,255')});
+    }
+  }
+  function draw(shift){
+    x.clearRect(0,0,W,H);
+    for(var i=0;i<stars.length;i++){
+      var st = stars[i];
+      var a = shift ? .75 : (.35 + .65 * Math.abs(Math.sin(st.p)));
+      x.beginPath();
+      x.fillStyle = 'rgba(' + st.c + ',' + a.toFixed(3) + ')';
+      x.arc(st.x, st.y, st.r, 0, 6.2832);
+      x.fill();
+    }
+  }
+  function loop(){ for(var i=0;i<stars.length;i++){ stars[i].p += stars[i].s; } draw(false); raf = requestAnimationFrame(loop); }
+  build();
+  if(REDUCE){ draw(true); } else { loop(); }
+  var rt;
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ cancelAnimationFrame(raf); build(); if(REDUCE) draw(true); else loop(); }, 220); });
+  document.addEventListener('visibilitychange', function(){ cancelAnimationFrame(raf); if(!document.hidden && !REDUCE) loop(); });
+})();
+
+/* ============ کانفتی ============ */
+var confetti = (function(){
+  var c = $('confetti'); if(!c) return function(){};
+  var x = c.getContext('2d'), parts = [], raf = 0;
+  var COL = ['#f5c76a','#8b5cf6','#5eead4','#38bdf8','#ffffff','#fb7185'];
+  function size(){ c.width = innerWidth; c.height = innerHeight; }
+  size(); window.addEventListener('resize', size);
+  function tick(){
+    x.clearRect(0,0,c.width,c.height);
+    var alive = 0;
+    for(var i=0;i<parts.length;i++){
+      var p = parts[i];
+      p.vy += .13; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life--;
+      if(p.y < c.height + 30 && p.life > 0){
+        alive++;
+        x.save(); x.translate(p.x, p.y); x.rotate(p.rot);
+        x.globalAlpha = clamp(p.life/28, 0, 1);
+        x.fillStyle = p.col;
+        if(p.sq) x.fillRect(-p.s/2, -p.s/2, p.s, p.s*1.7);
+        else { x.beginPath(); x.arc(0,0,p.s/1.7,0,6.2832); x.fill(); }
+        x.restore();
+      }
+    }
+    if(alive){ raf = requestAnimationFrame(tick); } else { parts = []; x.clearRect(0,0,c.width,c.height); }
+  }
+  return function(count){
+    if(REDUCE) return;
+    cancelAnimationFrame(raf);
+    parts = [];
+    var n = count || 110;
+    for(var i=0;i<n;i++){
+      parts.push({x: Math.random()*c.width, y: -20 - Math.random()*c.height*.35, vx: (Math.random()-.5)*3.4, vy: 1.6 + Math.random()*3, s: 3 + Math.random()*6, rot: Math.random()*6.28, vr: (Math.random()-.5)*.28, col: COL[(Math.random()*COL.length)|0], sq: Math.random() < .68, life: 90 + Math.random()*70});
+    }
+    tick();
+  };
+})();
+
+/* ============ حکیم ============ */
+var bubble = $('bubble');
+function say(html){
+  if(!bubble) return;
+  bubble.innerHTML = html;
+  bubble.classList.remove('say');
+  void bubble.offsetWidth;
+  bubble.classList.add('say');
+}
+
+/* ============ حالت‌های بازی ============ */
+var S = { s1: 0, s2: 0, s3: 0, s4: 0, found: {}, locIdx: 0, locDone: {}, placed: [] };
+function total(){ return Math.min(100, S.s1 + S.s2 + S.s3 + S.s4); }
+function paintScore(){ $('liveScore').textContent = fa(total()); }
+
+function showStage(n){
+  var ids = ['st1','st2','st3','st4','stEnd'];
+  for(var i=0;i<ids.length;i++){ $(ids[i]).classList.toggle('on', i === n-1); }
+  var steps = document.querySelectorAll('.step');
+  for(var j=0;j<steps.length;j++){
+    var k = +steps[j].getAttribute('data-s');
+    steps[j].classList.toggle('now', k === n);
+    steps[j].classList.toggle('done', k < n);
+  }
+  window.scrollTo({ top: 0, behavior: REDUCE ? 'auto' : 'smooth' });
+}
+
+function pips(el, n, done){
+  if(!el) return;
+  var h = '';
+  for(var i=0;i<n;i++){ h += '<span class="pip' + (i < done ? ' on' : '') + '"></span>'; }
+  el.innerHTML = h;
+}
+
+/* ===================== مرحلهٔ ۱ ===================== */
+var PARTS = {
+  cornea: { n:'قرنیه', e:'🫧', d:'پردهٔ نازک و شفافِ جلوی چشم. مثل شیشهٔ ساعت، نور از آن می‌گذرد و از چشم مراقبت می‌کند.' },
+  iris:   { n:'عنبیه', e:'🎨', d:'بخشِ رنگیِ چشم؛ همان رنگی که در چشمِ تو می‌بینیم. عنبیه مثل یک پرده، اندازهٔ مردمک را کم و زیاد می‌کند.' },
+  pupil:  { n:'مردمک', e:'🕳️', d:'سوراخِ کوچکی در میان عنبیه. نور از همین‌جا وارد چشم می‌شود. خودش نور نیست؛ سیاهیِ وسطِ عنبیه است!' },
+  lens:   { n:'عدسی', e:'🔍', d:'پشتِ مردمک و شبیه ذرّه‌بین است. نور را می‌شکند و تصویر را دقیق و واضح روی شبکیه می‌اندازد.' },
+  retina: { n:'شبکیه', e:'📸', d:'پردهٔ پشتِ چشم؛ مثل فیلمِ دوربین. سلول‌های گیرندهٔ نورِ آن، تصویر را به پیام تبدیل می‌کنند.' },
+  nerve:  { n:'عصب بینایی', e:'🔌', d:'سیمِ نازکِ پشتِ چشم. پیامِ تصویر را با سرعت می‌برد تا مغز آن را بخواند.' }
+};
+var ORDER1 = ['cornea','iris','pupil','lens','retina','nerve'];
+
+function reveal(key){
+  if(S.found[key]){ SND.click(); return; }
+  S.found[key] = true;
+  var g = document.querySelector('.pt[data-key="' + key + '"]');
+  if(g){ g.classList.add('found'); g.setAttribute('aria-pressed','true'); }
+  var info = $('info1');
+  info.classList.remove('empty');
+  info.innerHTML = '<h3>' + PARTS[key].e + ' ' + PARTS[key].n + '</h3><p>' + PARTS[key].d + '</p>';
+  SND.good();
+  say('آفرین! <b>' + PARTS[key].n + '</b> را کشف کردی 🌟');
+
+  var d = 0; for(var k in S.found){ d++; }
+  /* امتیاز: ۴ نمره هر کشف، و اگر همه ۶ کشف شد → ۲۵ (با پاداش ۱ نمره‌ای) */
+  S.s1 = (d >= 6) ? 25 : (d * 4);
+  $('cnt1').textContent = fa(d) + ' از ۶';
+  pips($('pips1'), 6, d);
+  paintScore();
+
+  if(d === 6){
+    var b = $('go2'); b.disabled = false;
+    say('همهٔ شش قسمت را شناختی! حالا نوبتِ تنظیمِ مردمک است ✨');
+    if(!REDUCE) confetti(60);
+  }else{
+    var nxt = null;
+    for(var i=0;i<ORDER1.length;i++){ if(!S.found[ORDER1[i]]){ nxt = ORDER1[i]; break; } }
+    if(nxt && KEYBOARD){
+      var ng = document.querySelector('.pt[data-key="' + nxt + '"]');
+      if(ng) ng.focus();
+    }
+  }
+}
+
+var pts = document.querySelectorAll('.pt');
+for(var i=0;i<pts.length;i++){
+  (function(el){
+    var key = el.getAttribute('data-key');
+    el.addEventListener('click', function(){ reveal(key); });
+    el.addEventListener('keydown', function(ev){
+      if(ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar'){ ev.preventDefault(); reveal(key); }
+    });
+  })(pts[i]);
+}
+pips($('pips1'), 6, 0);
+$('go2').addEventListener('click', function(){ SND.click(); showStage(2); say('نور زیاد → مردمک تنگ. نور کم → مردمک گشاد. حالا خودت امتحان کن!'); });
+
+/* ===================== مرحلهٔ ۲ ===================== */
+var LOCS = [
+  { e:'☀️', n:'روز آفتابی',  band:4, start:40, want:'خیلی تنگ',
+    hint:'در نورِ زیاد مردمک تنگ می‌شود تا نورِ زیادی به شبکیه نرسد و چشم نسوزد.' },
+  { e:'🌙', n:'شب تاریک',    band:0, start:60, want:'خیلی گشاد',
+    hint:'در تاریکی مردمک گشاد می‌شود تا هر ذرّه‌ی نور را جمع کند؛ برای همین کم می‌بینیم.' },
+  { e:'☁️', n:'روز ابری',    band:2, start:100, want:'متوسط',
+    hint:'نورِ روزِ ابری نه زیاد است نه کم؛ مردمک در حدّ وسط باز می‌ماند.' },
+  { e:'🕯️', n:'اتاق با شمع', band:1, start:70, want:'گشاد',
+    hint:'نورِ شمع کم است، پس مردمک گشاد می‌شود تا اتاق را بهتر ببینیم.' },
+  { e:'💡', n:'اتاق با لامپ', band:3, start:20, want:'تنگ',
+    hint:'لامپ پرنور است؛ مردمک از حدّ وسط هم تنگ‌تر می‌شود.' }
+];
+var FULL2 = 5, NEAR2 = 3;
+
+function pupilR(v){ return 40 - (v / 100) * 30; }
+function bandOf(v){ if(v<=10) return 0; if(v<=30) return 1; if(v<=60) return 2; if(v<=80) return 3; return 4; }
+var WORDS = ['خیلی گشاد','گشاد','متوسط','تنگ','خیلی تنگ'];
+function pupilWord(v){ return WORDS[bandOf(v)]; }
+
+function paintLux(){
+  var v = parseInt($('lux').value, 10);
+  var r = pupilR(v);
+  var root = document.documentElement.style;
+  root.setProperty('--pupil', r.toFixed(1) + 'px');
+  root.setProperty('--glow', (0.06 + (v / 100) * 0.78).toFixed(3));
+  root.setProperty('--dark', (0.62 - (v / 100) * 0.58).toFixed(3));
+  var pv = document.querySelector('.pupil-live');
+  if(pv) pv.setAttribute('r', r.toFixed(1));
+  $('luxOut').textContent = fa(v) + '٪';
+  $('pupilState').textContent = pupilWord(v);
+}
+
+(function buildLocs(){
+  var h = '';
+  for(var i=0;i<LOCS.length;i++){
+    h += '<button type="button" class="loc' + (i===0?' cur':'') + '" data-i="' + i + '" ' +
+         (i===0?'aria-current="true" ':'') +
+         'aria-label="موقعیت ' + LOCS[i].n + ' — مردمک باید ' + LOCS[i].want + ' شود">' +
+         '<span class="em" aria-hidden="true">' + LOCS[i].e + '</span>' + LOCS[i].n + '</button>';
+  }
+  $('locs').innerHTML = h;
+  var bs = $('locs').querySelectorAll('.loc');
+  for(var j=0;j<bs.length;j++){
+    (function(b){ b.addEventListener('click', function(){ pickLoc(+b.getAttribute('data-i')); }); })(bs[j]);
+  }
+})();
+
+function pickLoc(i){
+  S.locIdx = i;
+  var bs = $('locs').querySelectorAll('.loc');
+  for(var j=0;j<bs.length;j++){
+    bs[j].classList.toggle('cur', j === i);
+    if(j === i){ bs[j].setAttribute('aria-current','true'); } else { bs[j].removeAttribute('aria-current'); }
+  }
+  $('locName').textContent = LOCS[i].e + ' ' + LOCS[i].n;
+  $('lux').value = LOCS[i].start;
+  paintLux();
+  var note = S.locDone[i] ? ' ✅ این موقعیت را قبلاً درست کرده‌ای؛ باز هم تمرینش کن.' : ' شدت نور را آنقدر تغییر بده تا نوشتهٔ «مردمکِ من» با خواسته یکی شود.';
+  $('fb2').className = 'fb tip';
+  $('fb2').innerHTML = 'مردمک باید <b>' + LOCS[i].want + '</b> شود' + note;
+  SND.click();
+  say('موقعیت: <b>' + LOCS[i].n + '</b> — مردمک باید «' + LOCS[i].want + '» شود.');
+}
+
+$('lux').addEventListener('input', paintLux);
+$('lux').addEventListener('change', function(){ SND.pop(); });
+
+$('check2').addEventListener('click', function(){
+  var i = S.locIdx, L = LOCS[i];
+  var v = parseInt($('lux').value, 10);
+  var band = bandOf(v);
+  var dist = Math.abs(band - L.band);
+  var fb = $('fb2');
+
+  if(dist === 0){
+    if(!S.locDone[i]){
+      S.locDone[i] = FULL2; S.s2 += FULL2;
+      fb.className = 'fb ok';
+      fb.innerHTML = '🎯 آفرین! در «' + L.n + '» مردمک <b>' + L.want + '</b> است. <b>+' + fa(FULL2) + '</b> امتیاز';
+      SND.good(); if(!REDUCE) confetti(45);
+      say(L.hint);
+      markLocs(); paintScore();
+      if(countDone2() < 5){ setTimeout(nextLoc, 1100); }
+      else { $('go3').disabled = false; say('هر پنج موقعیت را درست تنظیم کردی! 🏆'); }
+    }else{
+      fb.className = 'fb tip';
+      fb.innerHTML = '✅ درست است. برو سراغ موقعیت بعدی.';
+      SND.click();
+    }
+    return;
+  }
+
+  if(dist === 1){
+    var nearMsg = '👌 خیلی نزدیک! مردمک «' + pupilWord(v) + '» شده، ولی برای «' + L.n + '» باید <b>' + L.want + '</b> باشد.';
+    if(!S.locDone[i]){
+      S.locDone[i] = NEAR2; S.s2 += NEAR2;
+      fb.className = 'fb tip';
+      fb.innerHTML = nearMsg + ' <b>+' + fa(NEAR2) + '</b> امتیاز';
+      SND.pop();
+      markLocs(); paintScore();
+      say('خوب بود! ' + L.hint);
+      if(countDone2() >= 5){ $('go3').disabled = false; }
+    }else{
+      fb.className = 'fb tip'; fb.innerHTML = nearMsg; SND.click();
+    }
+    return;
+  }
+
+  var dir = band < L.band ? 'بیشتر' : 'کمتر';
+  fb.className = 'fb no';
+  fb.innerHTML = '🤔 مردمک «' + pupilWord(v) + '» است، نه «' + L.want + '». نور را <b>' + dir + '</b> کن.' +
+                 '<br><span style="font-size:.79rem;opacity:.85">💡 ' + L.hint + '</span>';
+  SND.bad();
+  say('نزدیک بود! در «' + L.n + '» مردمک باید «' + L.want + '» شود.');
+});
+
+function countDone2(){ var n=0; for(var k in S.locDone){ n++; } return n; }
+function markLocs(){
+  var bs = $('locs').querySelectorAll('.loc');
+  for(var j=0;j<bs.length;j++){ bs[j].classList.toggle('done', !!S.locDone[j]); }
+  $('cnt2').textContent = fa(countDone2()) + ' از ۵';
+  pips($('pips2'), 5, countDone2());
+  var b = $('sc2');
+  b.style.display = ''; b.textContent = fa(S.s2) + ' امتیاز';
+  if(countDone2() === 5) $('go3').disabled = false;
+}
+
+function nextLoc(){
+  for(var step=1; step<=LOCS.length; step++){
+    var ni = (S.locIdx + step) % LOCS.length;
+    if(!S.locDone[ni]){ pickLoc(ni); return; }
+  }
+  say('همهٔ موقعیت‌ها انجام شد — برویم مرحلهٔ ۳!');
+}
+$('skip2').addEventListener('click', function(){ var ni = (S.locIdx + 1) % LOCS.length; pickLoc(ni); });
+$('go3').addEventListener('click', function(){ SND.click(); showStage(3); });
+
+pips($('pips2'), 5, 0);
+pickLoc(0);
+
+/* ===================== مرحلهٔ ۳ ===================== */
+var PATH = ['قرنیه','مردمک','عدسی','شبکیه','عصب بینایی','مغز'];
+var LOCK = false;
+
+function shuffle(a){
+  var arr = a.slice();
+  for(var i=arr.length-1;i>0;i--){ var j = (Math.random()*(i+1))|0; var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  if(arr.join('|') === a.join('|')){ arr.reverse(); }
+  return arr;
+}
+
+function buildStage3(){
+  LOCK = false; S.placed = [];
+  var h = '';
+  for(var i=0;i<PATH.length;i++){
+    h += '<button type="button" class="slot" data-i="' + i + '" aria-label="خانهٔ شمارهٔ ' + fa(i+1) + ' — خالی">' +
+         '<span class="n">' + fa(i+1) + '</span><span class="lab">خانهٔ ' + fa(i+1) + '</span>' +
+         '<span class="del">برای حذف ⟳</span><span class="light"></span></button>';
+  }
+  $('slots').innerHTML = h;
+  var sl = $('slots').querySelectorAll('.slot');
+  for(var j=0;j<sl.length;j++){
+    (function(el){ el.addEventListener('click', function(){ clickSlot(+el.getAttribute('data-i')); }); })(sl[j]);
+  }
+  fillTray();
+  $('pathline').textContent = '';
+  fb3('fb', '۶ خانه، ۶ گزینه — ترتیب مهم است! 🌟');
+}
+
+function fillTray(){
+  var opts = shuffle(PATH);
+  var t = '<div class="cap">گزینه‌ها — به ترتیب بزن</div>';
+  for(var k=0;k<opts.length;k++){
+    t += '<button type="button" class="chip" data-v="' + opts[k] + '" aria-label="گزینهٔ ' + opts[k] + '">' + opts[k] + '</button>';
+  }
+  $('tray').innerHTML = t;
+  var ch = $('tray').querySelectorAll('.chip');
+  for(var m=0;m<ch.length;m++){
+    (function(el){ el.addEventListener('click', function(){ place(el.getAttribute('data-v')); }); })(ch[m]);
+  }
+}
+
+function fb3(cls, msg){
+  var f = $('fb3');
+  f.className = 'fb' + (cls === 'fb' ? '' : ' ' + cls);
+  f.innerHTML = msg;
+}
+
+function place(v){
+  if(LOCK) return;
+  var i = S.placed.length;
+  if(v !== PATH[i]){
+    LOCK = true;
+    SND.bad();
+    var wrong = $('slots').querySelectorAll('.slot')[i];
+    wrong.classList.add('err');
+    var expect = (i === 0) ? 'قرنیه (پردهٔ شفاف جلوی چشم)' : PATH[i];
+    fb3('no', '❌ «' + v + '» جای خانهٔ ' + fa(i+1) + ' نیست. باید «' + expect + '» باشد. دوباره تلاش کن!');
+    say('اشکالی ندارد! نور اول از <b>قرنیه</b> وارد می‌شود.');
+    setTimeout(function(){
+      wrong.classList.remove('err');
+      clearAll(false);
+      LOCK = false;
+      fb3('fb', '🔁 تلاش دوباره: از خانهٔ ۱ شروع کن.');
+    }, 1250);
+    return;
+  }
+  S.placed.push(v);
+  var slot = $('slots').querySelectorAll('.slot')[i];
+  slot.classList.add('filled');
+  slot.querySelector('.lab').textContent = v;
+  slot.setAttribute('aria-label', 'خانهٔ شمارهٔ ' + fa(i+1) + ' — ' + v);
+  var chip = $('tray').querySelector('.chip[data-v="' + v + '"]');
+  var hadFocus = (document.activeElement === chip);
+  if(chip) chip.remove();
+  if(hadFocus){ var nx = $('tray').querySelector('.chip'); if(nx) nx.focus(); }
+  SND.click();
+  $('pathline').textContent = '☀️ ' + S.placed.join(' ← ');
+  fb3('tip', 'درست است! (' + fa(S.placed.length) + ' از ۶)');
+
+  if(S.placed.length === PATH.length){
+    LOCK = true;
+    S.s3 = 25;   /* امتیاز کامل مرحله ۳ */
+    paintScore();
+    var all = $('slots').querySelectorAll('.slot'), n = 0;
+    (function zap(){
+      if(n >= all.length){
+        SND.win();
+        if(!REDUCE){ confetti(150); }
+        fb3('ok', '🌟 آفرین! مسیر دیدن کامل شد: <b>نور → قرنیه → مردمک → عدسی → شبکیه → عصب بینایی → مغز</b>');
+        say('نکتهٔ جالب: تصویر روی شبکیه <b>وارونه</b> می‌افتد و مغز آن را درست می‌خواند. حالا برویم عدسی! 🏮');
+        $('go4').disabled = false;
+        return;
+      }
+      all[n].classList.add('flash');
+      SND.spark();
+      setTimeout(function(){ all[n].classList.remove('flash'); n++; zap(); }, 180);
+    })();
+  }
+}
+
+function clickSlot(i){
+  if(LOCK) return;
+  if(i >= S.placed.length){ fb3('tip', 'این خانه هنوز خالی است — اول خانه‌های قبلی را پُر کن.'); return; }
+  if(i !== S.placed.length - 1){ SND.bad(); fb3('tip', 'فقط <b>آخرین خانهٔ پُر</b> را می‌شود پاک کرد.'); return; }
+  var v = S.placed.pop();
+  var slot = $('slots').querySelectorAll('.slot')[i];
+  slot.classList.remove('filled');
+  slot.querySelector('.lab').textContent = 'خانهٔ ' + fa(i+1);
+  slot.setAttribute('aria-label', 'خانهٔ شمارهٔ ' + fa(i+1) + ' — خالی');
+  var t = $('tray');
+  var b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.setAttribute('data-v', v);
+  b.setAttribute('aria-label', 'گزینهٔ ' + v);
+  b.textContent = v;
+  b.addEventListener('click', function(){ place(v); });
+  t.appendChild(b);
+  SND.pop();
+  $('pathline').textContent = S.placed.length ? '☀️ ' + S.placed.join(' ← ') : '';
+  fb3('tip', '🧹 «' + v + '» برگشت به گزینه‌ها.');
+}
+
+function clearAll(play){
+  S.placed = [];
+  var all = $('slots').querySelectorAll('.slot');
+  for(var i=0;i<all.length;i++){
+    all[i].classList.remove('filled','err','flash');
+    all[i].querySelector('.lab').textContent = 'خانهٔ ' + fa(i+1);
+    all[i].setAttribute('aria-label', 'خانهٔ شمارهٔ ' + fa(i+1) + ' — خالی');
+  }
+  fillTray();
+  $('pathline').textContent = '';
+  if(play) SND.click();
+}
+$('clear3').addEventListener('click', function(){ if(!LOCK) clearAll(true); });
+$('reshuf3').addEventListener('click', function(){ if(!LOCK){ clearAll(false); SND.pop(); fb3('tip','🔀 گزینه‌ها دوباره به‌هم ریخت.'); } });
+buildStage3();
+$('go4').addEventListener('click', function(){ SND.click(); showStage(4); initStage4(); });
+
+/* ===================== مرحلهٔ ۴: عدسی و شبکیه ===================== */
+var LENS = {
+  objX: 740, objTopY: 210, objBotY: 270,
+  lensX: 440, lensTopY: 210, lensBotY: 270,
+  axisY: 240, retinaX: 115
+};
+
+function focalFromLever(v){ return 30 + (v / 100) * 170; }
+function rxFromLever(v){ return 12 + (v / 100) * 32; }
+
+var leverSlider, lensShape, lensShine, rayTop, rayBot, focalPoint, focalHalo, focalLabel, focusSpot, blurSpot, leverBox, leverReadout, fb4, goEnd;
+var lensAchieved = false;
+
+function initStage4(){
+  leverSlider = $('leverSlider');
+  lensShape = $('lensShape');
+  lensShine = $('lensShine');
+  rayTop = $('rayTop');
+  rayBot = $('rayBot');
+  focalPoint = $('focalPoint');
+  focalHalo = $('focalHalo');
+  focalLabel = $('focalLabel');
+  focusSpot = $('focusSpot');
+  blurSpot = $('blurSpot');
+  leverBox = $('leverBox');
+  leverReadout = $('leverReadout');
+  fb4 = $('fb4');
+  goEnd = $('goEnd');
+
+  if(!leverSlider || leverSlider.dataset.bound === '1'){ updateLens(); return; }
+  leverSlider.dataset.bound = '1';
+
+  var lastSlide = 0;
+  leverSlider.addEventListener('input', function(){
+    var now = Date.now();
+    if (now - lastSlide > 130){ SND.pop(); lastSlide = now; }
+    updateLens();
+  });
+
+  goEnd.addEventListener('click', function(){
+    if(goEnd.disabled) return;
+    SND.win();
+    if(!REDUCE) confetti(200);
+    endGame();
+  });
+
+  updateLens();
+}
+
+function updateLens(){
+  if(!leverSlider) return;
+  var v = parseInt(leverSlider.value, 10);
+  var focalX = focalFromLever(v);
+  var rx = rxFromLever(v);
+
+  lensShape.setAttribute('rx', rx);
+  lensShine.setAttribute('rx', rx * 0.28);
+  lensShine.setAttribute('cx', LENS.lensX - rx * 0.35);
+
+  var fx = clamp(focalX, 40, 760);
+  focalPoint.setAttribute('cx', fx);
+  focalPoint.setAttribute('cy', LENS.axisY);
+  focalHalo.setAttribute('cx', fx);
+  focalHalo.setAttribute('cy', LENS.axisY);
+  focalLabel.setAttribute('x', fx);
+  focalLabel.setAttribute('y', LENS.axisY + 42);
+
+  rayTop.setAttribute('points',
+    LENS.objX + ',' + LENS.objTopY + ' ' +
+    LENS.lensX + ',' + LENS.lensTopY + ' ' +
+    fx.toFixed(1) + ',' + LENS.axisY);
+  rayBot.setAttribute('points',
+    LENS.objX + ',' + LENS.objBotY + ' ' +
+    LENS.lensX + ',' + LENS.lensBotY + ' ' +
+    fx.toFixed(1) + ',' + LENS.axisY);
+
+  var distFromRetina = Math.abs(fx - LENS.retinaX);
+  var clarity = clamp(1 - distFromRetina / 25, 0, 1);
+
+  if (clarity > 0.85){
+    focusSpot.setAttribute('r', 26);
+    focusSpot.setAttribute('opacity', '1');
+    focusSpot.setAttribute('cy', LENS.axisY);
+    blurSpot.setAttribute('r', 0);
+    blurSpot.setAttribute('opacity', '0');
+  } else {
+    var blurR = 12 + distFromRetina * 0.6;
+    blurSpot.setAttribute('r', Math.min(80, blurR));
+    blurSpot.setAttribute('opacity', String(Math.min(0.6, 0.15 + distFromRetina/200)));
+    focusSpot.setAttribute('r', Math.max(0, 26 - distFromRetina * 0.4));
+    focusSpot.setAttribute('opacity', String(clarity * 0.85));
+  }
+
+  var status;
+  if (clarity > 0.85) status = '<b style="color:var(--ok)">دیدِ واضح ✓</b>';
+  else if (v < 40) status = 'خیلی نازک';
+  else if (v > 60) status = 'خیلی ضخیم';
+  else status = 'کمی تار';
+  leverReadout.innerHTML = 'وضعیت: ' + status;
+  leverBox.classList.toggle('near', clarity > 0.85);
+
+  if (clarity > 0.85){
+    fb4.className = 'fb ok';
+    fb4.innerHTML = '🎯 آفرین! پرتوها دقیقاً روی شبکیه جمع شدند — تصویر واضح است!';
+    goEnd.disabled = false;
+    if (!lensAchieved){
+      lensAchieved = true;
+      S.s4 = 25;   /* امتیاز کامل مرحله ۴ */
+      paintScore();
+      SND.good();
+      if(!REDUCE) confetti(80);
+      say('آفرین! حالا دیدی عدسی چطور پرتوها را روی شبکیه جمع می‌کند. 🌟');
+    }
+  } else if (clarity > 0.5){
+    fb4.className = 'fb tip';
+    fb4.innerHTML = '🔍 نزدیک شدی! کمی دیگر تنظیم کن...';
+    goEnd.disabled = true;
+  } else {
+    fb4.className = 'fb tip';
+    var v0 = parseInt(leverSlider.value, 10);
+    var dir;
+    if (v0 < 45) dir = 'اهرم را به سمت <b>راست (ضخیم‌تر)</b> ببر';
+    else if (v0 > 55) dir = 'اهرم را به سمت <b>چپ (نازک‌تر)</b> ببر';
+    else dir = 'اهرم را کمی تنظیم کن';
+    fb4.innerHTML = '🌟 ' + dir + ' تا پرتوها روی شبکیه جمع شوند.';
+    goEnd.disabled = true;
+  }
+}
+
+/* ===================== پایان بازی ===================== */
+function endGame(){
+  showStage(5);
+  var t = total();
+  $('finalScore').textContent = fa(t);
+  $('f1').textContent = fa(S.s1);
+  $('f2').textContent = fa(S.s2);
+  $('f3').textContent = fa(S.s3);
+  $('f4').textContent = fa(S.s4);
+
+  var ring = $('ringP');
+  var C = 2 * Math.PI * 52;
+  ring.setAttribute('stroke-dasharray', C.toFixed(1));
+  ring.style.strokeDashoffset = C;
+  setTimeout(function(){ ring.style.strokeDashoffset = (C * (1 - t/100)).toFixed(1); }, 60);
+
+  var nStar = t >= 85 ? 3 : (t >= 65 ? 2 : (t >= 35 ? 1 : 0));
+  var st = '';
+  for(var q = 0; q < 3; q++){ st += (q < nStar ? '★' : '☆'); }
+  try{ window.parent.postMessage({type:'hakim-gosh-complete', game:'hakim-eye', score:t, stars:nStar}, '*'); }catch(e){}
+  $('starsOut').textContent = st;
+  $('starsOut').setAttribute('aria-label', fa(nStar) + ' ستاره از ۳ ستاره');
+  $('finalMsg').innerHTML =
+    t >= 90 ? 'حکیم از تو تعریف می‌کند: «چشمت خوب می‌بیند و ذهنت روشن‌تر!» 🏮 تو یک کارشناسِ بینایی.'
+    : t >= 70 ? 'عالی بود! تقریباً همهٔ رازهای چشم را یاد گرفتی. یک بار دیگر بازی کن تا کامل شود.'
+    : t >= 40 ? 'خوب شروع کردی. دوباره مرور کن — دفعهٔ بعد امتیازت بالاتر می‌رود.'
+    : 'هر استادی از مبتدی شروع کرده! 😊 بازی را دوباره بازی کن؛ حکیم کمکت می‌کند.';
+
+  say(t >= 70 ? 'آفرین فرزندم! حالا می‌دانی نور چه سفری را تا مغز طی می‌کند. 🌟' : 'دوباره تلاش کن؛ یاد دیدن، تمرین می‌خواهد. 🙂');
+  if(t >= 70 && !REDUCE){ confetti(220); }
+
+  try{
+    var prev = JSON.parse(localStorage.getItem('cheshm_score') || 'null');
+    var best = (!prev || !prev.best) ? 0 : prev.best;
+    var isNew = t > best;
+    var rec = { score: t, s1: S.s1, s2: S.s2, s3: S.s3, s4: S.s4, best: Math.max(best, t), date: new Date().toISOString().slice(0,10) };
+    localStorage.setItem('cheshm_score', JSON.stringify(rec));
+    $('bestOut').textContent = isNew && best > 0
+      ? '🎉 رکورد تازه! بهترین امتیاز قبلی‌ات: ' + fa(best)
+      : 'بهترین امتیاز تو تا امروز: ' + fa(Math.max(best, t)) + (prev && prev.date ? ' (آخرین بازی: ' + fa(prev.date.replace(/-/g,'/')) + ')' : '');
+  }catch(e){ $('bestOut').textContent = ''; }
+}
+
+$('again').addEventListener('click', function(){
+  SND.click();
+  S.s1 = 0; S.s2 = 0; S.s3 = 0; S.s4 = 0;
+  S.found = {}; S.locDone = {}; S.locIdx = 0;
+  lensAchieved = false;
+  if(leverSlider) leverSlider.value = 15;
+
+  var g = document.querySelectorAll('.pt');
+  for(var i=0;i<g.length;i++){ g[i].classList.remove('found'); g[i].setAttribute('aria-pressed','false'); }
+  $('info1').className = 'info empty';
+  $('info1').innerHTML = '<p class="hint">روی برچسب‌های شماره‌دار کلیک کن. ✨</p>';
+  $('cnt1').textContent = '۰ از ۶'; pips($('pips1'), 6, 0);
+  $('go2').disabled = true;
+  $('go3').disabled = true;
+  $('go4').disabled = true;
+  $('goEnd').disabled = true;
+  $('sc2').style.display = 'none';
+  $('cnt2').textContent = '۰ از ۵'; pips($('pips2'), 5, 0);
+  $('fb2').className = 'fb';
+  $('fb2').textContent = 'یک موقعیت را انتخاب کن. 🙂';
+  $('ringP').style.strokeDashoffset = 327;
+  var bs = $('locs').querySelectorAll('.loc');
+  for(var j=0;j<bs.length;j++){ bs[j].classList.remove('done'); }
+  pickLoc(0);
+  buildStage3();
+  paintScore();
+  showStage(1);
+  say('بازی از اول! این بار همهٔ چهار مرحله را با هم پیش ببر. ⚡');
+});
+
+try{
+  var p = JSON.parse(localStorage.getItem('cheshm_score') || 'null');
+  if(p && p.best){
+    var b = document.querySelector('.brand small');
+    if(b) b.textContent = 'بهترین امتیاز شما: ' + fa(p.best) + ' از ۱۰۰';
+  }
+}catch(e){}
+
+paintScore();
+})();
+</script>
+</body>
+</html>

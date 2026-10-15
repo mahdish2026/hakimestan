@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<!-- حلقهٔ تمرکز و ترجیحات دسترس‌پذیری —
+     هم در حالت iframe (نسبت به صفحهٔ والد) و هم در بازکردن مستقیم فایل درست کار می‌کند -->
+<link rel="stylesheet" href="../../css/a11y.css">
+<script>
+window.AUTO_START_LAB = "pulley";
+window.STUDENT_NAME = "";
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ماشین‌های ساده | قرقره و سطح شیب‌دار — طراحی مهدی شریفیان</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;direction:rtl;overflow:hidden;background:#87ceeb;
+  user-select:none;-webkit-user-select:none;color:#12395c;touch-action:manipulation}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input{font-family:inherit}
+.hidden{display:none!important}
+
+/* ---------- دکمه‌ها ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4em;background:#fff;color:#12395c;
+  font-weight:800;border-radius:1.05em;padding:.55em 1.3em;font-size:1.05em;border:.14em solid #d7e3ec;
+  box-shadow:0 .22em 0 #c6d2dd,0 .35em .8em rgba(20,50,80,.18);transition:transform .12s,box-shadow .12s}
+.btn:active{transform:translateY(.15em) scale(.97);box-shadow:0 .08em 0 #c6d2dd}
+.btn-primary{background:linear-gradient(180deg,#37c8f0,#1e9fd6);color:#fff;border-color:#1b8cc4;
+  box-shadow:0 .22em 0 #15749f,0 .35em .8em rgba(20,50,80,.25)}
+.btn-gold{background:linear-gradient(180deg,#ffd76a,#f5b02c);color:#5c3b00;border-color:#d9991f;
+  box-shadow:0 .22em 0 #c07f12,0 .35em .8em rgba(20,50,80,.25)}
+.btn-danger{background:linear-gradient(180deg,#ff8d97,#f45b6b);color:#fff;border-color:#d84a59;
+  box-shadow:0 .22em 0 #b93a48,0 .35em .8em rgba(20,50,80,.25)}
+.btn-big{font-size:1.5em;padding:.7em 1.8em}
+.btn-small{font-size:.85em;padding:.35em .9em}
+
+/* ---------- صفحه‌ها ---------- */
+#app{position:fixed;inset:0;overflow:hidden}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.active{display:flex;animation:screenIn .5s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes screenIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes bounceIn{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+
+/* ---------- صفحه‌ی شروع ---------- */
+#scr-splash{background:linear-gradient(180deg,#6ec6ff 0%,#a8e0ff 55%,#d1f0d9 100%);align-items:center;justify-content:center}
+.floaters{position:absolute;inset:0;pointer-events:none;z-index:1}
+.floater{position:absolute;opacity:.9;animation:floaty 4.2s ease-in-out infinite}
+.splash-center{display:flex;flex-direction:column;align-items:center;gap:.7em;text-align:center;padding:1em;z-index:2}
+.game-title{font-size:clamp(2.1em,7vw,4em);font-weight:900;color:#fff;line-height:1.35;
+  text-shadow:0 .08em 0 #1b7fb8,0 .18em .9em rgba(0,60,110,.35)}
+.game-title .hl{color:#ffd23f;text-shadow:0 .08em 0 #c07f12,0 .18em .9em rgba(90,50,0,.35)}
+.subtitle{font-size:clamp(1.05em,3.4vw,1.5em);font-weight:900;color:#fff;text-shadow:0 .1em 0 #1b7fb8aa}
+.splash-char-row{display:flex;align-items:flex-end;gap:.8em;margin-top:.4em;flex-wrap:wrap;justify-content:center}
+#splash-char svg{height:9.5em;width:auto;overflow:visible}
+.splash-bubble{background:#fff;border:.16em solid #ffd23f;border-radius:1.2em;padding:.7em 1em;font-weight:800;
+  line-height:1.9;max-width:17em;text-align:right;box-shadow:0 .6em 1.4em rgba(20,60,100,.2);position:relative;
+  animation:bounceIn .55s;color:#2a4a63}
+.splash-bubble:after{content:'';position:absolute;bottom:1.2em;right:-1.55em;border:.85em solid transparent;
+  border-right-color:#ffd23f;border-left:0}
+.name-row{display:flex;align-items:center;gap:.6em;background:#ffffffd9;padding:.4em .9em;border-radius:2em;
+  border:.14em solid #ffffff;box-shadow:0 .4em 1em rgba(20,60,100,.15)}
+.name-row label{font-weight:900;color:#2a5a7a;font-size:.95em}
+#inp-name{border:none;background:#eef6fb;border-radius:1.4em;padding:.45em .9em;font-weight:800;font-size:1em;
+  color:#12395c;width:9.5em;outline:none;text-align:center}
+.credit{position:absolute;bottom:.8em;left:0;right:0;text-align:center;font-weight:800;color:#2a5a7acc;font-size:.92em;z-index:2}
+
+/* ---------- نقشه (هاب) ---------- */
+#scr-hub{background:linear-gradient(180deg,#7cc9ff,#e6f6ff 70%,#d8f3dd);align-items:center;overflow:auto}
+.hub-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:.9em 1.2em;flex-wrap:wrap;gap:.5em}
+.hub-head h1{color:#fff;font-size:clamp(1.2em,4.5vw,1.8em);font-weight:900;text-shadow:0 .1em 0 #1b7fb8}
+.hub-tools{display:flex;gap:.5em;flex-wrap:wrap}
+.hub-sub{font-weight:900;color:#2a5a7a;margin:.1em 0 .8em;font-size:1.02em;text-align:center;padding:0 1em}
+.hub-cards{display:flex;gap:1.4em;flex-wrap:wrap;justify-content:center;padding:0 1em}
+.lab-card{background:#fff;border-radius:1.6em;padding:1em 1.2em 1.3em;width:min(88vw,25.5em);text-align:center;
+  box-shadow:0 1.2em 2.4em rgba(20,60,100,.18);border-top:.55em solid #37c8f0;transition:transform .18s;cursor:pointer}
+.lab-card:hover{transform:translateY(-.35em)}
+#card-incline{border-top-color:#7ed957}
+.lab-card h2{font-size:1.12em;color:#12395c;margin:.5em 0 .3em}
+.lab-mini{border-radius:1em;overflow:hidden;border:.14em solid #dcebf5;background:#dff2ff}
+.lab-mini svg{display:block;width:100%;height:auto}
+.stars-row{font-size:1.7em;letter-spacing:.12em;margin:.25em 0;min-height:1.4em}
+.stars-row .st{opacity:.28;filter:grayscale(1);display:inline-block}
+.stars-row .st.earned{opacity:1;filter:none;animation:trayPop .6s}
+@keyframes trayPop{50%{transform:scale(1.45) rotate(14deg)}100%{transform:scale(1)}}
+.lab-progress{font-size:.86em;font-weight:800;color:#41586e;margin-bottom:.6em}
+#go-final{margin:1.3em 0 1em;animation:glowPulse 2s infinite}
+#hub-char{position:absolute;bottom:.7em;inset-inline-start:1em;display:flex;align-items:flex-end;gap:.5em;pointer-events:none}
+#hub-char svg{height:7.5em;width:auto;overflow:visible}
+#hub-tip{background:#fff;border:.15em solid #ffd23f;border-radius:1em;padding:.5em .8em;font-weight:800;font-size:.84em;
+  max-width:13.5em;box-shadow:0 .5em 1.2em rgba(20,60,100,.2);position:relative;color:#2a4a63;line-height:1.8}
+#hub-tip:after{content:'';position:absolute;bottom:1em;inset-inline-start:-1.5em;border:.8em solid transparent;
+  border-inline-end-color:#ffd23f;border-inline-start:0}
+@media (max-width:760px){#hub-char{display:none}}
+
+/* ---------- صفحه‌ی بازی ---------- */
+#topbar{display:flex;align-items:center;gap:.7em;padding:.45em .8em;flex:0 0 auto;
+  background:linear-gradient(180deg,#ffffffee,#ffffffcc);border-bottom:.14em solid #d7e5ef;z-index:50}
+.tb-btn{width:2.5em;height:2.5em;border-radius:.9em;background:#eef4f9;border:.13em solid #cfdde8;font-size:1.15em;
+  display:flex;align-items:center;justify-content:center;transition:transform .12s;flex:0 0 auto}
+.tb-btn:active{transform:scale(.9)}
+#lab-title{font-weight:900;font-size:clamp(.9em,3vw,1.1em);color:#12395c;white-space:nowrap}
+#level-chip{background:#e8f4fd;border:.12em solid #bfdcf0;color:#1b7fb8;font-size:.72em;padding:.25em .8em;
+  border-radius:2em;font-weight:800;white-space:nowrap}
+#star-tray{margin-inline-start:auto;display:flex;gap:.15em;align-items:center;font-size:1.35em}
+.tray-star{opacity:.28;filter:grayscale(1);display:inline-block;line-height:1}
+.tray-star.earned{opacity:1;filter:none;animation:trayPop .6s}
+#stage-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:.5em}
+#stage{position:relative;height:100%;max-width:100%;aspect-ratio:1000/620;margin:auto;border-radius:1.2em;
+  overflow:hidden;background:#bfe6ff;box-shadow:0 .8em 2.4em rgba(15,55,95,.28);font-size:16px;touch-action:none;
+  border:.16em solid #ffffff}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block;font-family:'Vazirmatn',Tahoma,sans-serif}
+#confetti{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:80}
+
+/* حباب صحبت چراغک */
+#bubble{position:absolute;left:2.5%;bottom:41%;max-width:40%;background:#fff;border:.16em solid #ffd23f;
+  border-radius:1.2em;padding:.6em .95em;font-weight:800;font-size:1em;line-height:1.85;box-shadow:0 .5em 1.2em rgba(15,45,80,.22);
+  z-index:22;pointer-events:none;transform-origin:bottom left;animation:bubbleIn .35s;color:#2a4a63}
+#bubble:after{content:'';position:absolute;bottom:-1.15em;left:13%;border:1em solid transparent;border-top-color:#ffd23f;border-bottom:0}
+@keyframes bubbleIn{from{transform:scale(.6);opacity:0}}
+
+/* نوار نیرو */
+#force-panel{position:absolute;top:1.6%;left:50%;transform:translateX(-50%);width:min(47%,24em);
+  background:rgba(255,255,255,.95);border-radius:1.1em;padding:.5em .85em .55em;box-shadow:0 .4em 1.2em rgba(15,45,80,.2);
+  border:.14em solid #d9e6f0;z-index:20;pointer-events:none}
+.fp-head{display:flex;justify-content:space-between;align-items:baseline;font-weight:900}
+.fp-title{font-size:.9em;color:#41586e}
+.fp-val{font-size:1.28em;color:#12395c;white-space:nowrap}
+.fp-val small{font-size:.55em;font-weight:800}
+.fp-bar{height:1.05em;background:#e6edf3;border-radius:1em;overflow:hidden;margin-top:.28em;position:relative;
+  border:.12em solid #fff}
+#fp-fill{height:100%;width:0%;border-radius:1em;transition:width .16s,background .3s;position:relative;overflow:hidden;
+  background:linear-gradient(90deg,#4ade80,#22c55e)}
+#fp-fill.mid{background:linear-gradient(90deg,#ffd23f,#ffb43f)}
+#fp-fill.hard{background:linear-gradient(90deg,#ff7b7b,#ff5252)}
+#fp-fill:after{content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);
+  background-size:220% 100%;animation:sheen 1.7s infinite}
+@keyframes sheen{from{background-position:140% 0}to{background-position:-140% 0}}
+#fp-sub{font-size:.74em;font-weight:800;color:#41586e;margin-top:.28em;min-height:1.3em;line-height:1.6}
+#fp-metric{font-size:.76em;font-weight:900;color:#1b7fb8;margin-top:.15em;min-height:1.2em}
+
+/* جدول مقایسه */
+#data-panel{position:absolute;top:21%;left:1.6%;width:31%;background:rgba(255,255,255,.93);border-radius:1em;
+  padding:.6em .7em;z-index:20;pointer-events:none;border:.13em solid #d9e6f0;box-shadow:0 .4em 1em rgba(15,45,80,.15)}
+#data-panel h4{font-size:.92em;margin-bottom:.3em;color:#12395c}
+table.dp{width:100%;border-collapse:collapse;font-size:.78em}
+.dp th,.dp td{padding:.3em .25em;text-align:center;border-bottom:.1em solid #e4edf4;line-height:1.6}
+.dp th{color:#41586e;font-size:.9em}
+.dp td.val{font-weight:900;color:#12395c}
+#data-panel.pos-right{left:auto;right:1.6%;top:5%;width:25%}
+.dp td.lbl{font-weight:800;color:#41586e;text-align:right;width:58%}
+.dp td.num{font-weight:900;color:#12395c;font-size:1.08em}
+.dp td.pend{color:#9fb2c2}
+.dp td.done{color:#1d9e5a;font-weight:900}
+tr.row-done td{background:#eafaef}
+
+/* کنترل‌های پایین */
+#bottom-controls{position:absolute;bottom:.8%;left:50%;transform:translateX(-50%);display:flex;gap:.7em;
+  align-items:center;z-index:24;background:rgba(255,255,255,.93);padding:.35em .8em;border-radius:1.2em;
+  box-shadow:0 .3em .9em rgba(15,45,80,.22);border:.12em solid #d9e6f0;max-width:96%}
+.mode-btn{font-weight:900;font-size:.92em;padding:.45em 1em;border-radius:1em;background:#eef4f9;
+  border:.14em solid #cfdde8;color:#41586e;transition:.15s;white-space:nowrap}
+.mode-btn.active{background:linear-gradient(180deg,#37c8f0,#1e9fd6);color:#fff;border-color:#1b8cc4;transform:scale(1.05)}
+.slope-ui{display:flex;flex-direction:column;gap:.1em;width:min(46vw,21em)}
+.slope-labels{display:flex;justify-content:space-between;font-size:.7em;font-weight:900;color:#41586e;direction:ltr}
+.slope-labels span:first-child{color:#e0566b}
+.slope-labels span:last-child{color:#1d9e5a}
+#slope-slider{-webkit-appearance:none;appearance:none;width:100%;height:1.9em;background:transparent;direction:ltr;touch-action:pan-y}
+#slope-slider::-webkit-slider-runnable-track{height:.85em;border-radius:1em;
+  background:linear-gradient(90deg,#ff8d97,#ffd76a 55%,#7ed957)}
+#slope-slider::-webkit-slider-thumb{-webkit-appearance:none;width:1.9em;height:1.9em;border-radius:50%;background:#fff;
+  border:.28em solid #1e9fd6;margin-top:-.53em;box-shadow:0 .15em .4em rgba(0,0,0,.3)}
+#slope-slider::-moz-range-track{height:.85em;border-radius:1em;background:linear-gradient(90deg,#ff8d97,#ffd76a 55%,#7ed957)}
+#slope-slider::-moz-range-thumb{width:1.5em;height:1.5em;border-radius:50%;background:#fff;border:.28em solid #1e9fd6;box-shadow:0 .15em .4em rgba(0,0,0,.3)}
+
+/* راهنمای کشیدن */
+#hint{position:absolute;font-size:2.7em;filter:drop-shadow(0 .12em .25em rgba(0,0,0,.35));z-index:25;
+  pointer-events:none;opacity:.95;line-height:1;margin:-.55em 0 0 -.55em}
+#hint.up{animation:hintUp 1.15s ease-in-out infinite}
+#hint.down{animation:hintDown 1.15s ease-in-out infinite}
+#hint.diag{animation:hintDiag 1.3s ease-in-out infinite}
+#hint.right{animation:hintRight 1.15s ease-in-out infinite}
+@keyframes hintUp{0%,100%{transform:translateY(14%)}50%{transform:translateY(-20%)}}
+@keyframes hintDown{0%,100%{transform:translateY(-14%)}50%{transform:translateY(20%)}}
+@keyframes hintDiag{0%,100%{transform:translate(12%,14%)}50%{transform:translate(-14%,-20%)}}
+@keyframes hintRight{0%,100%{transform:translateX(-16%)}50%{transform:translateX(22%)}}
+
+/* اعلان کوچک */
+#toast{position:absolute;bottom:13%;left:50%;transform:translateX(-50%) translateY(1em);background:#12395cee;color:#fff;
+  padding:.55em 1.3em;border-radius:2em;font-weight:800;font-size:.9em;opacity:0;transition:.3s;pointer-events:none;
+  z-index:40;white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis}
+#toast.show{opacity:1;transform:translateX(-50%)}
+
+/* کارت پیام مرحله */
+#msg-backdrop{position:absolute;inset:0;background:rgba(12,34,60,.5);display:flex;align-items:center;justify-content:center;
+  z-index:70;animation:fadeIn .3s}
+#msg-card{width:min(88%,29em);max-height:90%;overflow:auto;background:#fff;border-radius:1.6em;padding:1.2em 1.4em 1.4em;
+  text-align:center;border-top:.55em solid #ffd23f;box-shadow:0 2em 4em rgba(0,0,0,.35);animation:bounceIn .5s}
+.msg-icon{font-size:3em;line-height:1.25;animation:floaty 2.4s ease-in-out infinite}
+#msg-card h2{font-size:1.32em;color:#12395c;margin:.2em 0 .45em;line-height:1.6}
+#msg-card p{font-size:.98em;line-height:2.1;color:#3b4a5a;font-weight:700}
+#msg-card p b{color:#1b7fb8}
+#msg-card .btn{margin-top:1em}
+.msg-stars{display:flex;justify-content:center;gap:.35em;font-size:2.3em;margin:.15em 0}
+.msg-stars .st{opacity:0;transform:scale(0) rotate(-40deg);animation:starPop .55s forwards;display:inline-block}
+@keyframes starPop{60%{transform:scale(1.35) rotate(10deg);opacity:1}100%{opacity:1;transform:scale(1) rotate(0)}}
+
+/* پنل بونوس (کاربردها) */
+#bonus-panel{position:absolute;inset:3.5% 3% 4% 3%;background:rgba(255,255,255,.96);border-radius:1.4em;
+  padding:.9em 1.1em;display:flex;flex-direction:column;gap:.7em;z-index:30;box-shadow:0 1em 2.4em rgba(15,45,80,.3)}
+#bonus-panel h3{font-size:1.25em;color:#12395c;text-align:center}
+#bonus-panel .bp-sub{font-size:.85em;font-weight:800;color:#41586e;text-align:center;margin-top:-.5em}
+.bonus-cards{display:grid;grid-template-columns:1fr 1fr;gap:.9em;flex:1;min-height:0}
+.b-card{background:linear-gradient(180deg,#fff,#eef6fb);border:.16em solid #cfe0ec;border-radius:1.1em;padding:.55em;
+  display:flex;flex-direction:column;align-items:center;gap:.35em;cursor:pointer;transition:transform .15s;position:relative;min-height:0}
+.b-card:active{transform:scale(.95)}
+.b-card.seen{border-color:#7ed957;background:linear-gradient(180deg,#f4fff2,#e4f9e2)}
+.b-card h4{font-size:1em;color:#12395c}
+.b-art{width:100%;flex:1;min-height:0}
+.b-art svg{width:100%;height:100%;display:block;border-radius:.6em}
+.b-check{position:absolute;top:.35em;inset-inline-end:.4em;font-size:1.3em;opacity:0;transform:scale(0);transition:.3s}
+.b-card.seen .b-check{opacity:1;transform:scale(1)}
+@media (max-width:640px){.bonus-cards{grid-template-columns:1fr 1fr}.b-card h4{font-size:.82em}}
+
+/* مودال‌ها */
+#bonus-modal,.modal{position:absolute;inset:0;background:rgba(10,30,55,.55);display:flex;align-items:center;
+  justify-content:center;z-index:60;animation:fadeIn .25s}
+.modal{position:fixed;z-index:200}
+.modal-card{background:#fff;border-radius:1.5em;padding:1.3em 1.4em;width:min(88%,22em);max-width:36em;max-height:88%;
+  overflow:auto;box-shadow:0 2em 4em rgba(0,0,0,.35);animation:bounceIn .45s;text-align:center}
+#bm-art{border-radius:1em;overflow:hidden;margin-bottom:.7em;background:#eaf5ff}
+#bm-art svg{display:block;width:100%;height:auto}
+#bm-title{font-size:1.25em;color:#12395c;margin-bottom:.3em}
+#bm-text{font-size:.98em;line-height:2.1;color:#3b4a5a;font-weight:700;margin-bottom:.9em}
+.modal-btns{display:flex;gap:.7em;justify-content:center;flex-wrap:wrap;margin-top:.9em}
+
+/* ---------- آزمون ---------- */
+.quiz-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:1em;overflow:auto;
+  background:linear-gradient(180deg,#8fd3ff,#e8f7ff)}
+.quiz-card{background:#fff;border-radius:1.6em;padding:1.3em 1.5em 1.5em;width:min(94vw,33em);
+  box-shadow:0 2em 4em rgba(20,50,80,.25);text-align:center;border-top:.55em solid #2ec4b6;animation:bounceIn .5s}
+#quiz-char svg{height:8.5em;width:auto;overflow:visible}
+.quiz-badge-line{font-weight:900;color:#1da398;font-size:.9em;margin-top:-.4em}
+#quiz-q{font-size:clamp(1.05em,4vw,1.3em);margin:.5em 0 .9em;color:#12395c;line-height:1.8}
+#quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:.7em}
+@media (max-width:560px){#quiz-opts{grid-template-columns:1fr}}
+.q-opt{display:flex;align-items:center;gap:.6em;background:#f2f8fc;border:.15em solid #d3e4ef;border-radius:1em;
+  padding:.6em .8em;font-weight:800;font-size:.98em;color:#2a4a63;text-align:right;transition:.15s;line-height:1.7}
+.q-opt:not(:disabled):hover{transform:scale(1.02)}
+.q-letter{flex:0 0 auto;width:2em;height:2em;border-radius:50%;background:#e3f0f9;display:flex;align-items:center;
+  justify-content:center;font-weight:900;color:#1b7fb8;font-size:1.05em}
+.q-opt.ok{background:#e2f8e9;border-color:#56c271}
+.q-opt.ok .q-letter{background:#56c271;color:#fff}
+.q-opt.bad{background:#ffe9eb;border-color:#ff8d97;animation:shakeX .4s}
+.q-opt:disabled{opacity:.8;cursor:default}
+#quiz-fb{margin-top:.9em;font-weight:800;min-height:1.7em;font-size:.98em;line-height:1.9}
+#quiz-fb.ok{color:#1d9e5a}
+#quiz-fb.bad{color:#e0566b}
+#quiz-next{margin-top:.6em}
+@keyframes shakeX{0%,100%{transform:none}25%{transform:translateX(.45em)}75%{transform:translateX(-.45em)}}
+
+/* ---------- گواهی نهایی ---------- */
+.final-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:1em;overflow:auto;
+  background:linear-gradient(180deg,#7cc9ff,#e6f6ff 60%,#d8f3dd)}
+.cert{background:#fffdf4;border:.45em solid #f0c34e;border-radius:1.8em;padding:1.5em 1.4em 1.3em;width:min(94vw,38em);
+  text-align:center;box-shadow:0 2em 4em rgba(20,60,100,.3);position:relative;animation:bounceIn .6s;overflow:visible}
+.cert-ribbon{font-size:clamp(1.1em,4.5vw,1.55em);font-weight:900;color:#a06a00;line-height:1.7}
+#final-name{font-size:clamp(1.5em,6vw,2.1em);font-weight:900;color:#12395c;margin:.25em 0}
+#final-stars{font-size:clamp(1.6em,6vw,2.2em);letter-spacing:.08em;line-height:1.4}
+.cert-sub{font-weight:800;color:#41586e;margin:.5em 0 .8em;line-height:2}
+.laws{display:flex;flex-direction:column;gap:.5em;text-align:right;margin:0 0 .8em}
+.law{background:#f6faff;border:.13em solid #d9e8f3;border-radius:1em;padding:.5em .9em;font-weight:700;font-size:.9em;
+  line-height:2;color:#3b4a5a}
+.law b{color:#1b7fb8}
+.final-stats{font-weight:800;color:#2a5a7a;margin:.4em 0 .9em;font-size:.95em;line-height:2}
+.final-btns{display:flex;gap:.8em;justify-content:center;flex-wrap:wrap}
+.confetti-dom{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.confetti-dom span{position:absolute;top:-3em;font-size:1.4em;animation:confFall linear forwards}
+@keyframes confFall{to{transform:translateY(115vh) rotate(720deg)}}
+
+/* ---------- گزارش ---------- */
+#report-body{max-height:56vh;overflow:auto;text-align:right}
+#report-body h4{color:#12395c;margin:.4em 0 .3em}
+table.rt{width:100%;border-collapse:collapse;font-size:.82em;margin-bottom:.6em}
+.rt th,.rt td{padding:.35em .3em;border-bottom:.1em solid #e4edf4;text-align:center;font-weight:700}
+.rt th{color:#1b7fb8;background:#eef7fd}
+.rt-note{font-size:.78em;color:#8a97a5;font-weight:700;line-height:1.9}
+
+/* ---------- راهنمای چرخاندن گوشی ---------- */
+
+
+
+/* ---------- انیمیشن‌های SVG ---------- */
+.cloud{animation:sway 9s ease-in-out infinite}
+.cloud.c2{animation-duration:12s;animation-delay:-3s}
+.cloud.c3{animation-duration:7.5s;animation-delay:-5s}
+@keyframes sway{0%,100%{transform:translateX(0)}50%{transform:translateX(46px)}}
+.sun-rays{animation:spin 42s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.flag-wave{transform-box:fill-box;transform-origin:left center;animation:flagWave 1.6s ease-in-out infinite}
+@keyframes flagWave{0%,100%{transform:skewY(0) scaleX(1)}50%{transform:skewY(-7deg) scaleX(.96)}}
+.pulse-soft{animation:pulseSoft 1.7s ease-in-out infinite}
+@keyframes pulseSoft{0%,100%{opacity:1}50%{opacity:.45}}
+.handle-glow{animation:glowPulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.22);opacity:.95}}
+.bulb-glow{animation:glowPulse 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.svg-label{font-size:15px;font-weight:900;fill:#8a6a2e}
+.crate-label{font-size:16px;font-weight:900;fill:#5c3a1e}
+.barrel-label{font-size:14px;font-weight:900;fill:#5c3a1e}
+.handle-label{font-size:15px;font-weight:900;fill:#d1444f}
+.rope{stroke:#7a4f2b;stroke-width:5;stroke-linecap:round;fill:none}
+.rope-twist{stroke:#54371b;stroke-width:5;stroke-dasharray:3 9;stroke-linecap:round;fill:none}
+.crate-shake{animation:tremble .14s linear infinite;transform-box:fill-box;transform-origin:center}
+.tremble{animation:tremble .13s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes tremble{0%,100%{transform:translate(0,0)}25%{transform:translate(1.7px,-1.1px)}50%{transform:translate(-1.7px,1.1px)}75%{transform:translate(1.1px,1.5px)}}
+.sparks path{animation:sparkBlink .3s linear infinite}
+.sparks path:nth-child(2){animation-delay:.1s}
+.sparks path:nth-child(3){animation-delay:.2s}
+@keyframes sparkBlink{0%,100%{opacity:0}50%{opacity:1}}
+.dust circle{transform-box:fill-box;transform-origin:center;animation:puff .65s ease-out forwards}
+@keyframes puff{from{transform:scale(.35);opacity:.75}to{transform:scale(2.4);opacity:0}}
+.hop{animation:hop .55s ease}
+@keyframes hop{40%{transform:translateY(-16px)}}
+.cherraghak .face{display:none}
+.cherraghak[data-face="idle"] .face-idle{display:block}
+.cherraghak[data-face="happy"] .face-happy{display:block}
+.cherraghak[data-face="tired"] .face-tired{display:block}
+.cherraghak[data-face="excited"] .face-excited{display:block}
+.cherraghak[data-face="think"] .face-think{display:block}
+.cherraghak .pose{display:none}
+.cherraghak[data-pose="idle"] .pose-idle{display:block}
+.cherraghak[data-pose="up"] .pose-up{display:block}
+.cherraghak[data-pose="pull"] .pose-pull{display:block}
+.cherraghak[data-pose="push"] .pose-push{display:block}
+.cherraghak[data-pose="cheer"] .pose-cheer{display:block}
+.cherraghak .sweat{display:none}
+.cherraghak.sweaty .sweat{display:block;animation:sweatDrop 1.25s ease-in infinite}
+.cherraghak.sweaty .sweat.s2{animation-delay:.6s}
+@keyframes sweatDrop{0%{transform:translateY(0);opacity:0}25%{opacity:1}100%{transform:translateY(30px);opacity:0}}
+
+/* ═══ یکپارچه‌سازی با آزمایشگاه حکیمستان ═══ */
+:root {
+  --font-main: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+  --font-display: 'Lalezar', 'Vazirmatn', system-ui, sans-serif;
+  --bg-sub: #f7fbff;
+  --ink: #132238;
+  --line-sub: rgba(19, 40, 70, 0.12);
+}
+body {
+  font-family: var(--font-main) !important;
+  background: var(--bg-sub) !important;
+  color: var(--ink) !important;
+}
+#topbar {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--line-sub) !important;
+  padding: 0.5rem 1rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+}
+#btn-home {
+  background: linear-gradient(180deg, #ffffff, #f1f7fd) !important;
+  border: 1px solid var(--line-sub) !important;
+  color: #132238 !important;
+  font-weight: 800 !important;
+  font-size: 0.82rem !important;
+  padding: 0.35rem 0.9rem !important;
+  border-radius: 999px !important;
+  box-shadow: 0 2px 6px rgba(19,40,70,0.06) !important;
+  cursor: pointer !important;
+}
+#btn-home:hover {
+  background: #e9f2fb !important;
+  transform: translateY(-1px) !important;
+}
+#lab-title {
+  font-family: var(--font-display) !important;
+  font-size: 1.15rem !important;
+  color: #132238 !important;
+}
+#level-chip {
+  background: rgba(242, 166, 59, 0.16) !important;
+  color: #8a5a12 !important;
+  border: 1px solid rgba(242, 166, 59, 0.36) !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 0.76rem !important;
+  padding: 0.25rem 0.75rem !important;
+}
+#btn-sound {
+  background: linear-gradient(180deg, #ffffff, #f1f7fd) !important;
+  border: 1px solid var(--line-sub) !important;
+  border-radius: 999px !important;
+  font-size: 0.9rem !important;
+  padding: 0.35rem 0.7rem !important;
+}
+#stage-wrap {
+  background: linear-gradient(180deg, #f7fbff, #e9f1fa 50%, #f0f6fc) !important;
+  padding: 0.4rem !important;
+}
+#stage {
+  border-radius: 20px !important;
+  border: 1px solid var(--line-sub) !important;
+  box-shadow: 0 8px 30px rgba(19,40,70,0.12) !important;
+  max-height: calc(100vh - 62px) !important;
+}
+#force-panel, #data-panel {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--line-sub) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 6px 24px rgba(19,40,70,0.10) !important;
+}
+.quiz-wrap {
+  background: linear-gradient(180deg, #e9f4ff, #f7fbff) !important;
+}
+.quiz-card {
+  background: linear-gradient(170deg, #ffffff, #f4f9fe 95%) !important;
+  border-radius: 24px !important;
+  border: 1px solid var(--line-sub) !important;
+  box-shadow: 0 16px 40px rgba(19,40,70,0.16) !important;
+  padding: 1.5rem !important;
+}
+.q-opt {
+  background: #ffffff !important;
+  border: 1.5px solid var(--line-sub) !important;
+  border-radius: 14px !important;
+  padding: 0.85rem 1rem !important;
+  color: #132238 !important;
+  font-weight: 700 !important;
+  transition: all 0.18s ease !important;
+}
+.q-opt:hover {
+  background: #eef6ff !important;
+  border-color: #2f8fd8 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(47,143,216,0.15) !important;
+}
+.q-opt.ok {
+  background: #e8f9f2 !important;
+  border-color: #12b3a0 !important;
+  color: #0f7f6e !important;
+}
+.q-opt.bad {
+  background: #fdf0f2 !important;
+  border-color: #e05a76 !important;
+  color: #b93a58 !important;
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════ صفحه‌ی شروع ═══════ -->
+  <section id="scr-splash" class="screen active">
+    <div class="floaters">
+      <span class="floater" style="top:12%;right:7%;animation-delay:-1s">
+        <svg width="86" height="86" viewBox="0 0 100 100"><circle cx="50" cy="42" r="26" fill="#e8eef2" stroke="#5d7385" stroke-width="6"/><circle cx="50" cy="42" r="8" fill="#5d7385"/><line x1="24" y1="42" x2="76" y2="42" stroke="#5d7385" stroke-width="6"/><line x1="50" y1="16" x2="50" y2="68" stroke="#5d7385" stroke-width="6" transform="rotate(45 50 42)"/><line x1="50" y1="16" x2="50" y2="68" stroke="#5d7385" stroke-width="6" transform="rotate(-45 50 42)"/><path d="M50 68 L50 92" stroke="#7a4f2b" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M14 26 L14 60" stroke="#7a4f2b" stroke-width="5" stroke-linecap="round" fill="none"/></svg>
+      </span>
+      <span class="floater" style="top:16%;left:9%;animation-delay:-2.2s">
+        <svg width="120" height="90" viewBox="0 0 120 90"><path d="M8 78 L104 78 L104 14 Z" fill="#c98d5a" stroke="#8a5a2b" stroke-width="5" stroke-linejoin="round"/><circle cx="60" cy="78" r="9" fill="#a76b35" stroke="#7c4a1e" stroke-width="4"/></svg>
+      </span>
+      <span class="floater" style="bottom:22%;right:11%;animation-delay:-.6s">⭐</span>
+      <span class="floater" style="bottom:30%;left:12%;animation-delay:-3s;font-size:2em">⚙️</span>
+      <span class="floater" style="top:44%;left:3%;animation-delay:-1.6s;font-size:1.6em">🪢</span>
+    </div>
+    <div class="splash-center">
+      <h1 class="game-title">ماشین‌های <span class="hl">ساده</span></h1>
+      <p class="subtitle">قرقره 🛞 و سطح شیب‌دار 📐</p>
+      <div class="splash-char-row">
+        <div id="splash-char"></div>
+        <div class="splash-bubble">سلام! من <b>چراغک</b> هستم ⚡<br>بیا با هم بازی کنیم و رازِ ماشین‌های ساده رو کشف کنیم!</div>
+      </div>
+      <div class="name-row">
+        <label for="inp-name">اسمت چیه؟</label>
+        <input id="inp-name" maxlength="14" placeholder="مهندس کوچولو" autocomplete="off">
+      </div>
+      <button id="btn-start" class="btn btn-primary btn-big">شروع بازی 🚀</button>
+    </div>
+    <div class="credit">طراحی سناریو: مهدی شریفیان</div>
+  </section>
+
+  <!-- ═══════ نقشه‌ی ماجراها ═══════ -->
+  <section id="scr-hub" class="screen">
+    <header class="hub-head">
+      <h1>🗺️ نقشه‌ی ماجراها</h1>
+      <div class="hub-tools">
+        <button id="btn-report" class="btn btn-small">📊 گزارش</button>
+        <button id="btn-sound2" class="btn btn-small">🔊</button>
+        <button id="btn-reset" class="btn btn-small btn-danger">🗑 از اول</button>
+      </div>
+    </header>
+    <div class="hub-sub" id="hub-sub">یه آزمایشگاه رو انتخاب کن! هر آزمایشگاه ۳ ستاره + جایزه داره!</div>
+    <div class="hub-cards">
+      <div class="lab-card" id="card-pulley">
+        <div class="lab-mini">
+          <svg viewBox="0 0 300 150">
+            <rect width="300" height="150" fill="#cdeeff"/>
+            <circle cx="42" cy="34" r="16" fill="#ffd23f"/><ellipse cx="120" cy="26" rx="26" ry="10" fill="#fff"/><ellipse cx="220" cy="36" rx="20" ry="8" fill="#fff"/>
+            <rect x="216" y="40" width="52" height="96" rx="6" fill="#e8b95c" stroke="#c99a3a" stroke-width="3"/>
+            <rect x="210" y="32" width="64" height="10" rx="3" fill="#d9a53f"/>
+            <line x1="242" y1="32" x2="242" y2="8" stroke="#8a5a2b" stroke-width="3"/><path d="M242 9 L268 15 L242 22 Z" fill="#ff5f6d"/>
+            <circle cx="228" cy="52" r="11" fill="#e8eef2" stroke="#5d7385" stroke-width="4"/>
+            <path d="M228 63 L228 100" stroke="#7a4f2b" stroke-width="4" fill="none"/>
+            <rect x="206" y="100" width="44" height="38" rx="4" fill="#c98d5a" stroke="#8a5a2b" stroke-width="3"/>
+            <path d="M217 42 L217 62" stroke="#7a4f2b" stroke-width="4" fill="none"/>
+            <circle cx="217" cy="118" r="7" fill="#e84d4d"/>
+            <rect x="0" y="136" width="300" height="14" fill="#7ed957"/>
+          </svg>
+        </div>
+        <h2>۱. آزمایشگاه قرقره 🛞</h2>
+        <div class="stars-row" id="stars-pulley"></div>
+        <div class="lab-progress" id="prog-pulley"></div>
+        <button class="btn btn-primary" id="go-pulley">شروع</button>
+      </div>
+      <div class="lab-card" id="card-incline">
+        <div class="lab-mini">
+          <svg viewBox="0 0 300 150">
+            <rect width="300" height="150" fill="#cdeeff"/>
+            <circle cx="255" cy="30" r="15" fill="#ffd23f"/><ellipse cx="60" cy="24" rx="24" ry="9" fill="#fff"/>
+            <rect x="196" y="58" width="94" height="52" rx="6" fill="#5b8fd6" stroke="#3d6db3" stroke-width="3"/>
+            <rect x="204" y="38" width="52" height="24" rx="6" fill="#f45b6b" stroke="#c94554" stroke-width="3"/>
+            <rect x="212" y="44" width="24" height="14" rx="4" fill="#d6f0ff"/>
+            <circle cx="222" cy="116" r="11" fill="#3b4a5a"/><circle cx="266" cy="116" r="11" fill="#3b4a5a"/>
+            <path d="M30 130 L204 62" stroke="#c98d5a" stroke-width="10" stroke-linecap="round"/>
+            <ellipse cx="96" cy="96" rx="15" ry="17" fill="#d59a63" stroke="#7c4a1e" stroke-width="3"/>
+            <rect x="0" y="130" width="300" height="20" fill="#7ed957"/>
+          </svg>
+        </div>
+        <h2>۲. آزمایشگاه سطح شیب‌دار 📐</h2>
+        <div class="stars-row" id="stars-incline"></div>
+        <div class="lab-progress" id="prog-incline"></div>
+        <button class="btn btn-primary" id="go-incline">شروع</button>
+      </div>
+    </div>
+    <button id="go-final" class="btn btn-gold btn-big hidden">🎉 جشن بزرگ و گواهی تو!</button>
+    <div id="hub-char"></div>
+  </section>
+
+  <!-- ═══════ صفحه‌ی بازی ═══════ -->
+  <section id="scr-game" class="screen">
+    <header id="topbar">
+      <button class="tb-btn" id="btn-home" title="بازگشت به لابی">⟵ لابی</button>
+      <span id="lab-title">آزمایشگاه</span>
+      <span id="level-chip">مرحله ۱</span>
+      <div id="star-tray"></div>
+      <button class="tb-btn" id="btn-sound" title="صدا">🔊</button>
+    </header>
+    <div id="stage-wrap">
+      <div id="stage">
+        <svg id="scene" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet"></svg>
+        <div id="bubble" class="hidden"><span id="bubble-text"></span></div>
+        <div id="force-panel" class="hidden">
+          <div class="fp-head"><span class="fp-title" id="fp-title">نیرو</span>
+            <span class="fp-val"><b id="fp-num">۰</b> <small>نیوتن</small></span></div>
+          <div class="fp-bar"><div id="fp-fill"></div></div>
+          <div id="fp-sub"></div>
+          <div id="fp-metric" class="hidden"></div>
+        </div>
+        <div id="data-panel" class="hidden"></div>
+        <div id="bottom-controls" class="hidden"></div>
+        <div id="hint" class="hidden">👆</div>
+        <div id="toast"></div>
+        <div id="bonus-panel" class="hidden">
+          <h3>سطح شیب‌دار در زندگی ما 🌍</h3>
+          <div class="bp-sub">روی هر عکس بزن تا رازش رو کشف کنی!</div>
+          <div class="bonus-cards" id="bonus-cards"></div>
+        </div>
+        <div id="bonus-modal" class="hidden">
+          <div class="modal-card">
+            <div id="bm-art"></div>
+            <h3 id="bm-title"></h3>
+            <p id="bm-text"></p>
+            <button id="bm-ok" class="btn btn-primary">فهمیدم! 👍</button>
+          </div>
+        </div>
+        <div id="msg-backdrop" class="hidden"><div id="msg-card"></div></div>
+        <canvas id="confetti" width="1000" height="620"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ آزمون ═══════ -->
+  <section id="scr-quiz" class="screen">
+    <div class="quiz-wrap">
+      <div class="quiz-card">
+        <div id="quiz-char"></div>
+        <div class="quiz-badge-line" id="quiz-line">سؤال پایانی آزمایشگاه</div>
+        <h2 id="quiz-q"></h2>
+        <div id="quiz-opts"></div>
+        <div id="quiz-fb"></div>
+        <button id="quiz-next" class="btn btn-primary hidden">ادامه</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ گواهی پایانی ═══════ -->
+  <section id="scr-final" class="screen">
+    <div class="final-wrap">
+      <div class="cert">
+        <div class="confetti-dom" id="final-confetti"></div>
+        <div class="cert-ribbon">🎓 گواهی مهندسِ ماشین‌های ساده 🎓</div>
+        <div id="final-name"></div>
+        <div id="final-stars"></div>
+        <p class="cert-sub">تو یاد گرفتی که ماشین‌های ساده چطور کارها رو راحت‌تر می‌کنن!</p>
+        <div class="laws" id="final-laws"></div>
+        <div class="final-stats" id="final-stats"></div>
+        <div class="final-btns">
+          <button id="btn-replay" class="btn">🔄 از اول بازی کن</button>
+          <button id="btn-final-hub" class="btn btn-primary">برگرد به نقشه 🗺️</button>
+        </div>
+        <div class="credit" style="position:static;margin-top:1.1em">طراحی سناریو: مهدی شریفیان</div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- ═══════ گزارش ═══════ -->
+  <div id="modal-report" class="modal hidden">
+    <div class="modal-card" style="text-align:right">
+      <h2 style="text-align:center;color:#12395c">📊 گزارش پیشرفت</h2>
+      <div id="report-body"></div>
+      <div class="modal-btns">
+        <button id="btn-copy-report" class="btn btn-small">📋 کپی گزارش</button>
+        <button id="btn-close-report" class="btn btn-small btn-primary">بستن</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+
+'use strict';
+/* ═══════════════ ابزارهای پایه ═══════════════ */
+const $=s=>document.querySelector(s);
+const SVGNS='http://www.w3.org/2000/svg';
+function E(t,a,p){const n=document.createElementNS(SVGNS,t);if(a)for(const k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n;}
+function h(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!==undefined)n.innerHTML=html;return n;}
+const FAD='۰۱۲۳۴۵۶۷۸۹';
+const fa=v=>String(v).replace(/[0-9]/g,d=>FAD[+d]).replace(/\./g,'٫');
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const STAR='M0,-20 L5,-6.9 L19,-6.2 L8.1,2.6 L11.8,16.2 L0,8.5 L-11.8,16.2 L-8.1,2.6 L-19,-6.2 L-5,-6.9 Z';
+function tween(dur,fn,done){const t0=performance.now();function step(t){let k=(t-t0)/dur;if(k>=1){fn(1);if(done)done();return;}fn(1-Math.pow(1-k,3));requestAnimationFrame(step);}requestAnimationFrame(step);}
+const scene=$('#scene');
+
+/* ═══════════════ صدا (وب‌آدیو) ═══════════════ */
+const AudioFX=(()=>{let ctx=null,muted=false;
+  function ensure(){if(!ctx){try{ctx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}}if(ctx&&ctx.state==='suspended')ctx.resume();return ctx;}
+  function tone(f0,f1,dur,type,vol,delay){if(!ensure()||muted)return;type=type||'sine';vol=vol||0.18;delay=delay||0;
+    const t=ctx.currentTime+delay,o=ctx.createOscillator(),g=ctx.createGain();
+    o.type=type;o.frequency.setValueAtTime(f0,t);if(f1!==f0)o.frequency.exponentialRampToValueAtTime(Math.max(f1,1),t+dur);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.015);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g).connect(ctx.destination);o.start(t);o.stop(t+dur+0.05);}
+  function noise(dur,freq,q,vol,delay){if(!ensure()||muted)return;delay=delay||0;
+    const t=ctx.currentTime+delay,len=Math.max(1,Math.floor(ctx.sampleRate*dur)),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
+    const src=ctx.createBufferSource();src.buffer=buf;const bp=ctx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=freq;bp.Q.value=q;
+    const g=ctx.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    src.connect(bp).connect(g).connect(ctx.destination);src.start(t);src.stop(t+dur+0.02);}
+  return {
+    unlock:ensure,
+    setMuted(m){muted=m;},isMuted(){return muted;},
+    click(){tone(950,700,0.06,'sine',0.12);},
+    swish(v){noise(0.14,400+700*(v||0.5),3,0.16);},
+    squeak(){tone(880,480,0.13,'sawtooth',0.045);tone(780,420,0.13,'sawtooth',0.04,0.15);},
+    rise(){tone(170,540,0.3,'triangle',0.1);},
+    ding(){tone(1244,1244,0.9,'sine',0.2);tone(1866,1866,0.7,'sine',0.09);tone(2489,2489,0.5,'sine',0.05);},
+    win(){[523,659,784,1047].forEach((f,i)=>tone(f,f,0.32,'triangle',0.15,i*0.13));tone(1568,1568,0.6,'sine',0.09,0.55);},
+    boop(){tone(240,110,0.3,'square',0.1);},
+    thud(){tone(95,42,0.28,'sine',0.35);noise(0.12,160,1,0.28);},
+    strain(){tone(150,92,0.4,'sawtooth',0.05);tone(160,98,0.35,'sawtooth',0.045,0.45);},
+    star(){[880,1109,1319,1760].forEach((f,i)=>tone(f,f,0.18,'sine',0.13,i*0.08));},
+    pop(){noise(0.05,900,2,0.18);tone(500,900,0.08,'sine',0.09);},
+    clack(){tone(300,180,0.08,'square',0.16);noise(0.06,500,2,0.13);},
+    roll(){noise(0.18,320,2,0.05);}
+  };})();
+
+/* ═══════════════ ذخیره‌سازی (دیتابیس محلی) ═══════════════ */
+const LSKEY='cherraghak-simple-machines-v1';
+const defaultSave=()=>({v:1,sound:true,name:'',finalSeen:false,logs:[],
+  pulley:{s1:false,s2:false,s3:false,badge:false},
+  incline:{s1:false,s2:false,s3:false,gold:false,badge:false}});
+let save=defaultSave();
+try{const raw=localStorage.getItem(LSKEY);if(raw){const o=JSON.parse(raw);
+  save=defaultSave();Object.assign(save,o);
+  save.pulley=Object.assign(defaultSave().pulley,o.pulley||{});
+  save.incline=Object.assign(defaultSave().incline,o.incline||{});
+  if(!Array.isArray(save.logs))save.logs=[];}}catch(e){}
+function persist(){try{localStorage.setItem(LSKEY,JSON.stringify(save));}catch(e){}}
+function log(id,extra){
+  const rec=Object.assign({id:id,secs:Math.round((Date.now()-Game.t0)/1000),attempts:Math.max(1,Game.attempts),ok:true,
+    at:new Date().toLocaleString('fa-IR')},extra||{});
+  save.logs.push(rec);persist();}
+
+/* ═══════════════ وضعیت بازی ═══════════════ */
+const Game={lab:null,step:0,levelId:null,attempts:0,t0:Date.now(),timers:[],raf:null};
+let char=null;
+function after(ms,fn){const id=setTimeout(fn,ms);Game.timers.push(id);return id;}
+function clearTimers(){Game.timers.forEach(clearTimeout);Game.timers=[];}
+function enterLevel(id,chip){
+  Game.levelId=id;Game.attempts=0;Game.t0=Date.now();
+  clearTimers();if(Game.raf)cancelAnimationFrame(Game.raf);Game.raf=null;
+  for(const k in handles)delete handles[k];
+  ['#bubble','#force-panel','#data-panel','#bottom-controls','#hint','#bonus-panel','#bonus-modal','#msg-backdrop']
+    .forEach(s=>$(s).classList.add('hidden'));
+  $('#fp-metric').classList.add('hidden');$('#toast').classList.remove('show');
+  $('#data-panel').classList.remove('pos-right');
+  $('#level-chip').textContent=chip;renderTray();}
+
+/* ═══════════════ نمایش صفحه‌ها ═══════════════ */
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+  if(id==='scr-game')requestAnimationFrame(fitStage);}
+function fitStage(){const st=$('#stage');if(!st)return;const w=st.clientWidth;if(w>0)st.style.fontSize=Math.max(9,w/1000*17)+'px';}
+window.addEventListener('resize',fitStage);
+
+/* ═══════════════ حباب حرف زدن چراغک ═══════════════ */
+let bubT1=null,bubT2=null;
+function say(txt,mood,hold){
+  if(mood===undefined)mood='idle';if(hold===undefined)hold=5200;
+  const b=$('#bubble'),bt=$('#bubble-text');
+  clearTimeout(bubT1);clearInterval(bubT2);
+  b.classList.remove('hidden');
+  if(char)char.setFace(mood);
+  bt.textContent='';let i=0;
+  bubT2=setInterval(()=>{i++;bt.textContent=txt.slice(0,i);if(i>=txt.length)clearInterval(bubT2);},24);
+  bubT1=setTimeout(()=>{b.classList.add('hidden');if(char)char.setFace('idle');},hold);}
+function hideBubble(){clearTimeout(bubT1);clearInterval(bubT2);$('#bubble').classList.add('hidden');}
+
+/* ═══════════════ نوار نیرو ═══════════════ */
+let forceMax=100;
+function showForce(maxN,title,sub){
+  forceMax=maxN;$('#force-panel').classList.remove('hidden');
+  $('#fp-title').textContent=title||'نیرو';
+  $('#fp-sub').textContent=sub||'';}
+function setForce(N,fillPct,feel){
+  const p=clamp((fillPct===undefined?N/forceMax:fillPct/100),0,1);
+  const f=$('#fp-fill');
+  f.style.width=(p*100)+'%';
+  let cls=feel||(p<0.45?'':p<0.78?'mid':'hard');
+  if(p<0.45&&!feel)cls='';
+  f.classList.remove('mid','hard');if(cls)f.classList.add(cls);
+  $('#fp-num').textContent=fa(Math.round(N));}
+function setMetric(txt){const m=$('#fp-metric');if(txt===null||txt===undefined||txt===''){m.classList.add('hidden');return;}
+  m.classList.remove('hidden');m.textContent=txt;}
+
+/* ═══════════════ جدول مقایسه ═══════════════ */
+function showPanel(html,rightPos){
+  const dp=$('#data-panel');
+  dp.classList.remove('hidden');
+  dp.classList.toggle('pos-right',!!rightPos);
+  dp.innerHTML=html;}
+function showData(title,heads,rows){
+  const dp=$('#data-panel');dp.classList.remove('hidden');dp.classList.remove('pos-right');
+  dp.innerHTML='<h4>'+title+'</h4><table class="dp"><thead><tr>'+heads.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+
+    rows.map(r=>'<tr'+(r.done?' class="row-done"':'')+'>'+r.cells.map((c,i)=>'<td class="'+(i===0?'val':(r.done?'done':'pend'))+'">'+c+'</td>').join('')+'</tr>').join('')+
+    '</tbody></table>';}
+
+/* ═══════════════ راهنمای دست ═══════════════ */
+function showHint(x,y,dir){const el=$('#hint');el.textContent=dir==='down'?'👇':dir==='right'?'👉':'👆';
+  el.style.left=(x/10)+'%';el.style.top=(y/10)+'%';
+  el.className='';el.classList.add(dir);el.classList.remove('hidden');}
+function hideHint(){$('#hint').classList.add('hidden');}
+
+/* ═══════════════ اعلان ═══════════════ */
+let toastT=null;
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2800);}
+
+/* ═══════════════ کارت پیام ═══════════════ */
+function showMsg(o){
+  const bd=$('#msg-backdrop'),c=$('#msg-card');
+  let starsHtml='';
+  if(o.stars)starsHtml='<div class="msg-stars">'+'<span class="st">⭐</span>'.repeat(o.stars)+
+    (o.gold?'<span class="st">🌟</span>':'')+'</div>';
+  c.innerHTML='<div class="msg-icon">'+(o.icon||'⭐')+'</div>'+starsHtml+
+    '<h2>'+o.title+'</h2><p>'+o.body+'</p>';
+  const b=h('button','btn btn-primary',o.btn||'ادامه');
+  b.addEventListener('click',()=>{AudioFX.click();bd.classList.add('hidden');if(o.onOk)o.onOk();});
+  c.appendChild(b);
+  bd.classList.remove('hidden');
+  c.querySelectorAll('.msg-stars .st').forEach((s,i)=>{s.style.animationDelay=(0.2+i*0.32)+'s';});
+}
+
+/* ═══════════════ ستاره‌ها ═══════════════ */
+function traySpec(lab){return lab==='pulley'?
+  [['s1','⭐'],['s2','⭐'],['s3','⭐'],['badge','🎖️']]:
+  [['s1','⭐'],['s2','⭐'],['s3','⭐'],['gold','🌟'],['badge','🎖️']];}
+function renderTray(){const t=$('#star-tray');if(!Game.lab){t.innerHTML='';return;}
+  t.innerHTML=traySpec(Game.lab).map(p=>'<span class="tray-star '+(save[Game.lab][p[0]]?'earned':'')+'">'+p[1]+'</span>').join('');}
+function earn(lab,k){if(!save[lab][k]){save[lab][k]=true;persist();renderTray();AudioFX.star();}}
+function setSound(on){
+  save.sound=!!on;persist();
+  AudioFX.setMuted(!on);
+  const b1=$('#btn-sound'),b2=$('#btn-sound2');
+  if(b1)b1.textContent=on?'🔊':'🔇';
+  if(b2)b2.textContent=on?'🔊':'🔇';}
+
+/* ═══════════════ کاغذرنگی ═══════════════ */
+const Confetti=(()=>{const cv=$('#confetti'),cx=cv.getContext('2d');let ps=[],running=false;
+  const COLORS=['#ff5f6d','#ffd23f','#37c8f0','#7ed957','#b07ef0','#ff9f1c'];
+  function go(){if(!running){running=true;requestAnimationFrame(loop);}}
+  function burst(n){n=n||130;for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,sp=2.5+Math.random()*7;
+    ps.push({x:500,y:190,vx:Math.cos(a)*sp*0.7,vy:Math.sin(a)*sp-6,g:0.17,w:6+Math.random()*8,h:4+Math.random()*6,
+      rot:Math.random()*6.28,vr:(Math.random()-0.5)*0.3,c:COLORS[i%6],life:1,decay:0.005+Math.random()*0.004,shape:i%2});}go();}
+  function rain(){for(let i=0;i<110;i++){ps.push({x:Math.random()*1000,y:-20-Math.random()*350,vx:(Math.random()-0.5)*1.5,
+    vy:2+Math.random()*3,g:0.05,w:7+Math.random()*7,h:5+Math.random()*5,rot:Math.random()*6.28,vr:(Math.random()-0.5)*0.25,
+    c:COLORS[i%6],life:1,decay:0.0032,shape:i%2});}go();}
+  function loop(){cx.clearRect(0,0,1000,620);ps=ps.filter(p=>p.life>0&&p.y<680);
+    for(const p of ps){p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.life-=p.decay;p.vx*=0.995;
+      cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.globalAlpha=clamp(p.life*1.7,0,1);cx.fillStyle=p.c;
+      if(p.shape){cx.beginPath();cx.arc(0,0,p.w/2,0,6.283);cx.fill();}else cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      cx.restore();}
+    if(ps.length)requestAnimationFrame(loop);else{running=false;cx.clearRect(0,0,1000,620);}}
+  return{burst,rain};})();
+
+/* ═══════════════ موتور کشیدن (Pointer) ═══════════════ */
+const handles={};let drag=null;
+function reg(id,impl){handles[id]=impl;}
+function disableHandles(){for(const k in handles)handles[k].disabled=true;}
+function svgPoint(e){const r=scene.getBoundingClientRect();
+  return{x:(e.clientX-r.left)/r.width*1000,y:(e.clientY-r.top)/r.height*620};}
+const stage=$('#stage');
+stage.addEventListener('pointerdown',e=>{
+  AudioFX.unlock();
+  if(drag)return;
+  const t=e.target.closest?e.target.closest('[data-handle]'):null;
+  if(!t)return;
+  const impl=handles[t.getAttribute('data-handle')];
+  if(!impl||impl.disabled)return;
+  const p=svgPoint(e);
+  drag={id:t.getAttribute('data-handle'),pid:e.pointerId,sx:p.x,sy:p.y,dx:0,dy:0};
+  try{stage.setPointerCapture(e.pointerId);}catch(err){}
+  if(impl.start)impl.start(p,drag);
+  e.preventDefault();},true);
+stage.addEventListener('pointermove',e=>{
+  if(!drag||e.pointerId!==drag.pid)return;
+  const p=svgPoint(e),impl=handles[drag.id];
+  drag.dx=p.x-drag.sx;drag.dy=p.y-drag.sy;
+  if(impl&&impl.move)impl.move(p,drag);
+  e.preventDefault();},true);
+function endDrag(e){
+  if(!drag||e.pointerId!==drag.pid)return;
+  const impl=handles[drag.id],p=e.type==='pointercancel'?{x:drag.sx+drag.dx,y:drag.sy+drag.dy}:svgPoint(e);
+  if(impl&&impl.end)impl.end(p,drag);
+  drag=null;}
+stage.addEventListener('pointerup',endDrag,true);
+stage.addEventListener('pointercancel',endDrag,true);
+stage.addEventListener('contextmenu',e=>e.preventDefault());
+
+/* ═══════════════ اجزای صحنه (SVG) ═══════════════ */
+function makeDefs(){
+  const defs=E('defs',{},scene);
+  const g1=E('linearGradient',{id:'skyG',x1:0,y1:0,x2:0,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#6ec6ff'},g1);E('stop',{offset:'100%','stop-color':'#d9f2ff'},g1);
+  const g2=E('radialGradient',{id:'sunG'},defs);
+  E('stop',{offset:'0%','stop-color':'#fff7ae'},g2);E('stop',{offset:'100%','stop-color':'#ffd23f'},g2);
+  const g3=E('linearGradient',{id:'grassG',x1:0,y1:0,x2:0,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#7ed957'},g3);E('stop',{offset:'100%','stop-color':'#3f9e4d'},g3);
+  const g4=E('linearGradient',{id:'woodG',x1:0,y1:0,x2:1,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#d69a63'},g4);E('stop',{offset:'100%','stop-color':'#b3763f'},g4);
+  const g5=E('linearGradient',{id:'plankG',x1:0,y1:0,x2:0,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#d69a63'},g5);E('stop',{offset:'100%','stop-color':'#a96f3a'},g5);
+  const g6=E('linearGradient',{id:'metalG',x1:0,y1:0,x2:1,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#f2f6f9'},g6);E('stop',{offset:'55%','stop-color':'#c2d0da'},g6);E('stop',{offset:'100%','stop-color':'#9fb2bf'},g6);
+  const g7=E('linearGradient',{id:'towerG',x1:0,y1:0,x2:1,y2:0},defs);
+  E('stop',{offset:'0%','stop-color':'#f4dc8f'},g7);E('stop',{offset:'100%','stop-color':'#e0b354'},g7);
+  const g8=E('radialGradient',{id:'barrelG',cx:'35%',cy:'35%',r:'80%'},defs);
+  E('stop',{offset:'0%','stop-color':'#e3ab72'},g8);E('stop',{offset:'100%','stop-color':'#a76b35'},g8);
+  const g9=E('radialGradient',{id:'knobG'},defs);
+  E('stop',{offset:'0%','stop-color':'#ff8a8a'},g9);E('stop',{offset:'100%','stop-color':'#e0474f'},g9);
+  const g10=E('radialGradient',{id:'glowG'},defs);
+  E('stop',{offset:'0%','stop-color':'#ffec9e','stop-opacity':'.85'},g10);E('stop',{offset:'100%','stop-color':'#ffec9e','stop-opacity':'0'},g10);
+  const g11=E('linearGradient',{id:'glassG',x1:0,y1:0,x2:1,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#e8fbff'},g11);E('stop',{offset:'100%','stop-color':'#a3dcf5'},g11);
+  const g12=E('linearGradient',{id:'truckBodyG',x1:0,y1:0,x2:0,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#6fa1e0'},g12);E('stop',{offset:'100%','stop-color':'#4b7cc4'},g12);
+  const g13=E('linearGradient',{id:'truckCabG',x1:0,y1:0,x2:0,y2:1},defs);
+  E('stop',{offset:'0%','stop-color':'#ff8a92'},g13);E('stop',{offset:'100%','stop-color':'#ef5a68'},g13);
+}
+function addSky(){
+  E('rect',{x:0,y:0,width:1000,height:620,fill:'url(#skyG)'},scene);
+  const sun=E('g',{transform:'translate(95 95)'},scene);
+  E('circle',{r:72,fill:'#ffd23f',opacity:0.18},sun);
+  const rays=E('g',{class:'sun-rays'},sun);
+  for(let i=0;i<8;i++)E('line',{x1:0,y1:-48,x2:0,y2:-64,transform:'rotate('+(i*45)+')',stroke:'#ffd23f','stroke-width':7,'stroke-linecap':'round'},rays);
+  E('circle',{r:34,fill:'url(#sunG)',stroke:'#f5b02c','stroke-width':3},sun);
+  const c1=E('g',{transform:'translate(240 70)'},scene);const c1i=E('g',{class:'cloud'},c1);
+  E('ellipse',{rx:46,ry:20,fill:'#fff'},c1i);E('ellipse',{cx:-38,cy:8,rx:30,ry:14,fill:'#fff'},c1i);E('ellipse',{cx:40,cy:9,rx:34,ry:15,fill:'#fff'},c1i);
+  const c2=E('g',{transform:'translate(560 55)'},scene);const c2i=E('g',{class:'cloud c2'},c2);
+  E('ellipse',{rx:38,ry:17,fill:'#fff',opacity:.95},c2i);E('ellipse',{cx:34,cy:7,rx:26,ry:12,fill:'#fff',opacity:.95},c2i);
+  const c3=E('g',{transform:'translate(430 130)'},scene);const c3i=E('g',{class:'cloud c3'},c3);
+  E('ellipse',{rx:30,ry:13,fill:'#fff',opacity:.9},c3i);E('ellipse',{cx:-26,cy:6,rx:20,ry:10,fill:'#fff',opacity:.9},c3i);
+  E('path',{d:'M700 150 q7 -9 14 0 q7 -9 14 0',stroke:'#5a7d99','stroke-width':3,fill:'none','stroke-linecap':'round'},scene);
+  E('path',{d:'M760 120 q6 -8 12 0 q6 -8 12 0',stroke:'#5a7d99','stroke-width':2.5,fill:'none','stroke-linecap':'round'},scene);
+}
+function addGround(){
+  E('path',{d:'M0 545 Q 150 498 300 538 T 620 536 T 940 540 L1000 545 L1000 620 L0 620 Z',fill:'#8fd46a'},scene);
+  E('rect',{x:0,y:545,width:1000,height:75,fill:'url(#grassG)'},scene);
+  E('line',{x1:0,y1:545,x2:1000,y2:545,stroke:'#3f9e4d','stroke-width':4},scene);
+  [[70,'#ff8d97'],[330,'#ffd23f'],[520,'#ff8d97'],[940,'#b07ef0'],[820,'#ffd23f']].forEach(f=>{
+    const g=E('g',{transform:'translate('+f[0]+' 566)'},scene);
+    E('line',{x1:0,y1:0,x2:0,y2:-10,stroke:'#2e7d3a','stroke-width':2.5},g);
+    E('circle',{cx:0,cy:-13,r:4.5,fill:f[1]},g);E('circle',{cx:-5,cy:-9,r:3,fill:f[1]},g);E('circle',{cx:5,cy:-9,r:3,fill:f[1]},g);});
+  [[110],[300],[610],[900]].forEach(t=>{const g=E('g',{transform:'translate('+t[0]+' 552)'},scene);
+    E('path',{d:'M0 0 l-3 -9 l3 -8 l3 8 z',fill:'#5fbf6a'},g);});
+}
+function addTower(showGoal){
+  if(showGoal===undefined)showGoal=true;
+  const g=E('g',{},scene);
+  E('rect',{x:720,y:170,width:140,height:375,rx:6,fill:'url(#towerG)',stroke:'#c99a3a','stroke-width':3},g);
+  for(let y=204,row=0;y<545;y+=34,row++){
+    E('line',{x1:722,y1:y,x2:858,y2:y,stroke:'#00000018','stroke-width':2},g);
+    for(let x=720+(row%2?26:60);x<858;x+=62)E('line',{x1:x,y1:y-34,x2:x,y2:y,stroke:'#00000012','stroke-width':2},g);}
+  E('rect',{x:708,y:158,width:164,height:16,rx:4,fill:'#e8b95c',stroke:'#c99a3a','stroke-width':3},g);
+  for(let x=714;x<866;x+=38)E('rect',{x:x,y:138,width:24,height:22,rx:4,fill:'#efc56a',stroke:'#c99a3a','stroke-width':2},g);
+  E('line',{x1:848,y1:138,x2:848,y2:64,stroke:'#8a5a2b','stroke-width':5,'stroke-linecap':'round'},g);
+  E('path',{d:'M848 66 L912 78 L848 96 Z',fill:'#ff5f6d',class:'flag-wave'},g);
+  E('rect',{x:766,y:252,width:48,height:62,rx:22,fill:'#2b5f8f',stroke:'#c99a3a','stroke-width':4},g);
+  E('line',{x1:790,y1:254,x2:790,y2:312,stroke:'#c99a3a','stroke-width':3},g);
+  if(showGoal){
+    const goal=E('g',{},g);
+    E('rect',{x:726,y:86,width:74,height:70,rx:8,fill:'none',stroke:'#f5b02c','stroke-width':4,'stroke-dasharray':'10 8',class:'pulse-soft'},goal);
+    E('path',{d:STAR,transform:'translate(763 118) scale(1.2)',fill:'#ffd23f',stroke:'#c07f12','stroke-width':2},goal);
+    E('text',{x:763,y:80,'text-anchor':'middle',class:'svg-label'},goal).textContent='هدف';
+  }
+}
+function makeCrate(cx,topY){
+  const outer=E('g',{},scene);
+  const g=E('g',{class:'crate-inner'},outer);
+  E('ellipse',{cx:cx,cy:topY+74,rx:46,ry:8,fill:'#00000022'},g);
+  E('rect',{x:cx-35,y:topY,width:70,height:70,rx:8,fill:'url(#woodG)',stroke:'#8a5a2b','stroke-width':4},g);
+  E('rect',{x:cx-26,y:topY+9,width:52,height:52,rx:4,fill:'none',stroke:'#8a5a2b44','stroke-width':3},g);
+  E('line',{x1:cx-26,y1:topY+9,x2:cx+26,y2:topY+61,stroke:'#8a5a2b44','stroke-width':3},g);
+  E('line',{x1:cx+26,y1:topY+9,x2:cx-26,y2:topY+61,stroke:'#8a5a2b44','stroke-width':3},g);
+  E('text',{x:cx,y:topY+44,'text-anchor':'middle',class:'crate-label'},g).textContent='۱۰ کیلو';
+  E('circle',{cx:cx,cy:topY-3,r:6,fill:'#7a4f2b'},g);
+  return{g:g,outer:outer,
+    setLift(rise,dx){outer.setAttribute('transform','translate('+(dx||0)+' '+(-rise)+')');},
+    shake(on){g.classList.toggle('crate-shake',!!on);}};}
+function makeBarrel(){
+  const outer=E('g',{},scene);
+  const mid=E('g',{},outer);
+  const roll=E('g',{},mid);
+  E('ellipse',{cx:0,cy:40,rx:36,ry:7,fill:'#00000022'},roll);
+  E('path',{d:'M-30 -36 Q-41 0 -30 36 L30 36 Q41 0 30 -36 Z',fill:'url(#barrelG)',stroke:'#7c4a1e','stroke-width':4},roll);
+  E('path',{d:'M-14 -37 Q-18 0 -14 37',stroke:'#7c4a1e55','stroke-width':3,fill:'none'},roll);
+  E('path',{d:'M14 -37 Q18 0 14 37',stroke:'#7c4a1e55','stroke-width':3,fill:'none'},roll);
+  E('path',{d:'M-33.5 -16 Q0 -8 33.5 -16',stroke:'#8e97a3','stroke-width':6,fill:'none'},roll);
+  E('path',{d:'M-33.5 16 Q0 24 33.5 16',stroke:'#8e97a3','stroke-width':6,fill:'none'},roll);
+  E('ellipse',{cx:0,cy:-36,rx:30,ry:8,fill:'#d8a06a',stroke:'#7c4a1e','stroke-width':3},roll);
+  E('text',{x:0,y:6,'text-anchor':'middle',class:'barrel-label'},roll).textContent='۲۰ کیلو';
+  return{outer:outer,roll:roll,mid:mid,
+    setPos(x,y,rot){outer.setAttribute('transform','translate('+x+' '+y+')');roll.setAttribute('transform','rotate('+(rot||0)+')');},
+    tremble(on){mid.classList.toggle('tremble',!!on);}};}
+function makeWheel(parent,cx,cy,r){
+  const g=E('g',{transform:'translate('+cx+' '+cy+')'},parent);
+  const rot=E('g',{},g);
+  E('circle',{r:r,fill:'url(#metalG)',stroke:'#5d7385','stroke-width':4},rot);
+  E('circle',{r:r*0.34,fill:'#eef4f9',stroke:'#5d7385','stroke-width':3},rot);
+  for(let i=0;i<4;i++)E('line',{x1:-r*0.82,y1:0,x2:r*0.82,y2:0,transform:'rotate('+(i*45)+')',stroke:'#5d7385','stroke-width':4},rot);
+  E('circle',{r:r*0.15,fill:'#5d7385'},g);
+  return{g:g,setSpin(a){rot.setAttribute('transform','rotate('+a+')');}};}
+function makeHandle(x,y,id,labelDy){
+  const g=E('g',{class:'handle','data-handle':id,transform:'translate('+x+' '+y+')'},scene);
+  E('circle',{r:42,fill:'#ffd23f30',class:'handle-glow'},g);
+  E('circle',{r:46,fill:'transparent'},g);
+  E('circle',{r:17,fill:'url(#knobG)',stroke:'#a8323e','stroke-width':4},g);
+  E('line',{x1:-8,y1:-6,x2:8,y2:-6,stroke:'#ffffff99','stroke-width':3,'stroke-linecap':'round'},g);
+  E('line',{x1:-8,y1:2,x2:8,y2:2,stroke:'#ffffff99','stroke-width':3,'stroke-linecap':'round'},g);
+  E('text',{y:(labelDy===undefined?-32:labelDy),'text-anchor':'middle',class:'handle-label'},g).textContent='بکش!';
+  return{g:g};}
+function puff(x,y,color){
+  const g=E('g',{class:'dust',transform:'translate('+x+' '+y+')'},scene);
+  for(let i=0;i<5;i++)E('circle',{cx:(Math.random()-0.5)*36,cy:Math.random()*8,r:6+Math.random()*7,fill:color||'#d9c9a8'},g);
+  setTimeout(()=>g.remove(),700);}
+function makeRopePair(){
+  const a=E('path',{class:'rope'},scene);
+  const b=E('path',{class:'rope-twist'},scene);
+  return{set(d){a.setAttribute('d',d);b.setAttribute('d',d);},a:a,b:b};}
+
+/* ═══════════════ کاراکتر چراغک ═══════════════ */
+function arm(g,d){E('path',{d:d,stroke:'#1da398','stroke-width':11,'stroke-linecap':'round',fill:'none'},g);}
+function makeCherraghak(parent,x,y,s){
+  if(s===undefined)s=1;
+  const gOuter=E('g',{transform:'translate('+x+' '+y+') scale('+s+')'},parent);
+  const g=E('g',{class:'cherraghak','data-face':'idle','data-pose':'idle'},gOuter);
+  E('ellipse',{cx:0,cy:2,rx:36,ry:8,fill:'#00000022'},g);
+  E('circle',{cx:0,cy:-124,r:48,fill:'url(#glowG)',class:'bulb-glow'},g);
+  E('rect',{x:-21,y:-16,width:15,height:18,rx:5,fill:'#1b7fb8'},g);
+  E('rect',{x:6,y:-16,width:15,height:18,rx:5,fill:'#1b7fb8'},g);
+  const poses={};
+  poses.idle=E('g',{class:'pose pose-idle'},g);
+  arm(poses.idle,'M-30 -78 Q-45 -70 -43 -50');arm(poses.idle,'M30 -78 Q45 -70 43 -50');
+  poses.up=E('g',{class:'pose pose-up'},g);
+  arm(poses.up,'M-27 -82 Q-46 -98 -52 -118');arm(poses.up,'M27 -82 Q46 -98 52 -118');
+  poses.pull=E('g',{class:'pose pose-pull'},g);
+  arm(poses.pull,'M-30 -76 Q-42 -62 -38 -46');arm(poses.pull,'M28 -80 Q50 -70 58 -56');
+  poses.push=E('g',{class:'pose pose-push'},g);
+  arm(poses.push,'M-28 -80 Q-40 -100 -34 -116');arm(poses.push,'M28 -80 Q40 -100 34 -116');
+  poses.cheer=E('g',{class:'pose pose-cheer'},g);
+  arm(poses.cheer,'M-27 -82 Q-50 -104 -60 -124');arm(poses.cheer,'M27 -82 Q50 -104 60 -124');
+  E('rect',{x:-31,y:-94,width:62,height:80,rx:19,fill:'#2ec4b6',stroke:'#1da398','stroke-width':3.5},g);
+  E('circle',{cx:0,cy:-58,r:8,fill:'#ffd23f',stroke:'#e0a92c','stroke-width':2.5},g);
+  E('rect',{x:-16,y:-108,width:32,height:13,rx:6,fill:'#8a97a5',stroke:'#6d7a87','stroke-width':2},g);
+  const head=E('g',{},g);
+  E('circle',{cx:0,cy:-130,r:27,fill:'#fff6cf',stroke:'#e8c85a','stroke-width':3.5,opacity:0.97},head);
+  const fIdle=E('g',{class:'face face-idle'},head);
+  E('circle',{cx:-9,cy:-134,r:3.4,fill:'#4b3b12'},fIdle);E('circle',{cx:9,cy:-134,r:3.4,fill:'#4b3b12'},fIdle);
+  E('path',{d:'M-9 -122 Q0 -115 9 -122',stroke:'#4b3b12','stroke-width':3,fill:'none','stroke-linecap':'round'},fIdle);
+  const fHappy=E('g',{class:'face face-happy'},head);
+  E('path',{d:'M-14 -134 q4 -6 9 0',stroke:'#4b3b12','stroke-width':3,fill:'none','stroke-linecap':'round'},fHappy);
+  E('path',{d:'M5 -134 q4 -6 9 0',stroke:'#4b3b12','stroke-width':3,fill:'none','stroke-linecap':'round'},fHappy);
+  E('path',{d:'M-9 -124 Q0 -112 9 -124 Z',fill:'#b3572b',stroke:'#4b3b12','stroke-width':2},fHappy);
+  const fTired=E('g',{class:'face face-tired'},head);
+  E('path',{d:'M-14 -132 q4 4 9 1',stroke:'#4b3b12','stroke-width':3,fill:'none','stroke-linecap':'round'},fTired);
+  E('path',{d:'M5 -131 q4 4 9 -1',stroke:'#4b3b12','stroke-width':3,fill:'none','stroke-linecap':'round'},fTired);
+  E('path',{d:'M-9 -120 q3 -3 6 0 q3 3 6 0',stroke:'#4b3b12','stroke-width':2.6,fill:'none','stroke-linecap':'round'},fTired);
+  const fExc=E('g',{class:'face face-excited'},head);
+  E('path',{d:STAR,transform:'translate(-9 -133) scale(0.17)',fill:'#4b3b12'},fExc);
+  E('path',{d:STAR,transform:'translate(9 -133) scale(0.17)',fill:'#4b3b12'},fExc);
+  E('path',{d:'M-10 -124 Q0 -111 10 -124 Z',fill:'#b3572b',stroke:'#4b3b12','stroke-width':2},fExc);
+  const fThink=E('g',{class:'face face-think'},head);
+  E('circle',{cx:-9,cy:-137,r:3.2,fill:'#4b3b12'},fThink);E('circle',{cx:9,cy:-137,r:3.2,fill:'#4b3b12'},fThink);
+  E('circle',{cx:0,cy:-121,r:3.6,fill:'none',stroke:'#4b3b12','stroke-width':2.4},fThink);
+  const sweat=E('g',{},g);
+  E('path',{d:'M26 -146 q5 8 0 11 q-5 -3 0 -11',fill:'#7ec8f5',class:'sweat'},sweat);
+  E('path',{d:'M-28 -142 q5 8 0 11 q-5 -3 0 -11',fill:'#7ec8f5',class:'sweat s2'},sweat);
+  return{g:g,
+    setFace(f){g.setAttribute('data-face',f);},
+    setPose(p){g.setAttribute('data-pose',p);},
+    sweat(on){g.classList.toggle('sweaty',!!on);},
+    hop(){g.classList.remove('hop');requestAnimationFrame(()=>{void g.getBoundingClientRect();g.classList.add('hop');});}};}
+function charInto(container,h){
+  container.innerHTML='';
+  const sv=E('svg',{viewBox:'-90 -180 180 200'},null);
+  container.appendChild(sv);
+  return makeCherraghak(sv,0,0,1);}
+
+/* ═══════════════════════════════════════════════════════
+   بخش اول — آزمایشگاه قرقره
+   ═══════════════════════════════════════════════════════ */
+function buildPulleyBase(withGoal){scene.innerHTML='';makeDefs();addSky();addGround();addTower(withGoal);}
+
+/* ---------- مرحله ۱: بدون قرقره (کشیدن از روی برج) ---------- */
+function levelP1(){
+  enterLevel('P1','مرحله ۱ از ۳');
+  buildPulleyBase(false);
+  /* چراغک با سختی خودش رفته بالای برج! */
+  char=makeCherraghak(scene,782,158,0.7);
+  char.setPose('pull');
+  const crate=makeCrate(655,475);
+  const rope=makeRopePair();
+  const ledge=E('g',{},scene);
+  E('path',{d:'M694 140 l7 6 l-5 6 l9 4',stroke:'#7c5a22','stroke-width':4,fill:'none','stroke-linecap':'round'},ledge);
+  E('circle',{cx:712,cy:162,r:6,fill:'#8a5a2b'},ledge);
+  const sparks=E('g',{class:'sparks hidden'},ledge);
+  [[700,146],[716,152],[704,160]].forEach(pt=>{
+    E('path',{d:STAR,transform:'translate('+pt[0]+' '+pt[1]+') scale(0.16)',fill:'#ffb43f'},sparks);});
+  /* طنابِ کشیده‌شده روی برج جمع می‌شه */
+  const pile=E('g',{},scene);
+  const hd=makeHandle(700,151,'pull');
+  const HX=700,NEED=280,MAXS=52;
+  let pulled=0,base=0,stroke=0,strokeVis=0,rise=0,done=false,dragging=false,pileN=-1;
+  let lastSwish=0,lastSqueak=0,lastRise=0,tries=0;
+  showForce(100,'کوشش کشیدن نخ','بدون قرقره — چراغک روی برجه و طناب رو کمی‌کمی به سمت خودش می‌کشه!');
+  setForce(100,0,'hard');
+  const triesMsg=['نگه دار...!','نمی‌تونم! خیلی سنگینه!','اوه اوه... خسته شدم!'];
+  function renderPile(){
+    const n=Math.min(9,Math.floor(pulled/32));
+    if(n===pileN)return;
+    const grew=pileN>=0&&n>pileN;
+    pileN=n;
+    let out='';
+    for(let i=0;i<n;i++){
+      const cx=706+(i%4)*15+((i*7)%7-3);
+      const cy=149-Math.floor(i/4)*8;
+      const rot=((i*53)%30)-15;
+      out+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="15" ry="5.5" transform="rotate('+rot+' '+cx+' '+cy+')" fill="none" stroke="#7a4f2b" stroke-width="5"/>';}
+    pile.innerHTML=out;
+    if(grew)AudioFX.roll();}
+  reg('pull',{
+    start(){if(done)return;dragging=true;Game.attempts++;hideHint();
+      char.setPose('pull');char.setFace('think');AudioFX.click();},
+    move(p,ctx){
+      if(done)return;
+      stroke=clamp(ctx.dx,0,MAXS);
+      const tot=Math.min(NEED,base+stroke);
+      if(tot>pulled){
+        const now=performance.now();
+        if(now-lastSwish>110){AudioFX.swish(0.35);lastSwish=now;}
+        if(now-lastSqueak>420){AudioFX.squeak();lastSqueak=now;}
+        if(now-lastRise>340){AudioFX.rise();lastRise=now;}
+        pulled=tot;}
+    },
+    end(){
+      if(done){dragging=false;return;}
+      dragging=false;base=pulled;
+      char.setPose('idle');
+      if(pulled>25&&pulled<NEED)AudioFX.strain();
+      if(pulled>60)char.sweat(true);
+      if(pulled>50&&pulled<NEED&&tries<3){char.setFace('tired');
+        say(triesMsg[tries],'tired',2200);tries++;}
+      if(pulled>=NEED)complete();
+    }});
+  function draw(){
+    const hx=HX+strokeVis;
+    const boxTop=475-rise;
+    rope.set('M 655 '+boxTop+' L 655 156 Q 655 138 678 138 L 694 142 L '+hx+' 151');
+    hd.g.setAttribute('transform','translate('+hx+' 151)');
+    sparks.classList.toggle('hidden',!(dragging&&stroke>3));
+    const stuck=pulled>62&&pulled<NEED;
+    crate.shake(stuck&&dragging);
+    if(stuck&&dragging){char.setFace('tired');char.sweat(true);}
+    renderPile();
+    setForce(100,Math.min(100,pulled/NEED*100),'hard');
+    setMetric('مسافت کشیدن نخ: '+fa((pulled/100).toFixed(1))+' متر'+(stuck?' — جعبه گیر کرده!':''));}
+  function loop(){
+    const tr=Math.min(pulled,60);
+    rise+=(tr-rise)*0.22;
+    const tS=dragging?stroke:0;
+    strokeVis+=(tS-strokeVis)*0.3;
+    crate.setLift(rise,0);
+    draw();
+    Game.raf=requestAnimationFrame(loop);}
+  Game.raf=requestAnimationFrame(loop);
+  showHint(668,192,'right');
+  say('نوک طناب رو بگیر و به سمت خودم بکش! افقی و محکم! جعبه خیلی سنگینه!','happy');
+  function complete(){
+    done=true;disableHandles();hideHint();
+    char.setFace('tired');char.sweat(true);char.setPose('pull');
+    setForce(100,100,'hard');
+    AudioFX.boop();
+    after(700,()=>{log('P1');
+      showMsg({icon:'😤',title:'اوف! چقدر سنگین بود!',
+        body:'چراغک با سختی رفت بالای برج و تُک‌تُک طناب رو به سمت خودش کشید،<br>ولی جعبه فقط <b>۲۰٪</b> بالا رفت! چراغک خسته شد.<br>بیا یه راه بهتر پیدا کنیم!',
+        btn:'یه راه بهتر پیدا کنیم 🤔',onOk:levelP2});});}
+  if(!save.logs.some(l=>l.id==='P1')){
+    showMsg({icon:'📦',title:'ماموریت: جعبه رو ببر بالای برج!',
+      body:'چراغک یه جعبه‌ی ۱۰ کیلویی داره که باید ببره بالای برج.<br>تنهایی نمی‌تونه! بهش کمک کن!',
+      btn:'بزن بریم 💪'});}}
+
+/* ---------- مرحله ۲: قرقره‌ی ثابت ---------- */
+function levelP2(){
+  enterLevel('P2','مرحله ۲ از ۳');
+  buildPulleyBase();
+  char=makeCherraghak(scene,150,545,1);
+  const crate=makeCrate(662,475);
+  const rig=E('g',{},scene);
+  E('rect',{x:626,y:143,width:100,height:14,rx:4,fill:'#8a97a5',stroke:'#6d7a87','stroke-width':2},rig);
+  const wheel=makeWheel(rig,640,150,22);
+  const rope=makeRopePair();
+  const hd=makeHandle(618,330,'pull',36);
+  const coil=E('g',{},scene);
+  const HY=330,NEED=300,MAXS=190;
+  let pulled=0,base=0,stroke=0,strokeVis=0,rise=0,done=false,dragging=false,wheelA=0;
+  let lastSwish=0,lastRise=0;
+  showForce(100,'کوشش کشیدن نخ','با قرقره: به «پایین» می‌کشی — با وزن بدنت راحت‌تره!');
+  setForce(100,0,'mid');
+  reg('pull',{
+    start(){if(done)return;dragging=true;Game.attempts++;hideHint();
+      char.setPose('pull');AudioFX.click();},
+    move(p,ctx){
+      if(done)return;
+      stroke=clamp(ctx.dy,0,MAXS);
+      const tot=Math.min(NEED,base+stroke);
+      if(tot>pulled){
+        wheelA-=(tot-pulled)/22*57.3;
+        const now=performance.now();
+        if(now-lastSwish>110){AudioFX.swish(Math.min(1,stroke/100));lastSwish=now;}
+        if(now-lastRise>320){AudioFX.rise();lastRise=now;}
+        pulled=tot;}},
+    end(){
+      if(done){dragging=false;return;}
+      dragging=false;base=pulled;char.setPose('idle');
+      if(pulled>=NEED)complete();}});
+  function draw(){
+    const hy=HY+strokeVis;
+    const boxTop=475-rise;
+    rope.set('M 618 '+hy+' L 618 150 A 22 22 0 0 1 662 150 L 662 '+boxTop);
+    hd.g.setAttribute('transform','translate(618 '+hy+')');
+    wheel.setSpin(wheelA);
+    let rings='';
+    const n=Math.min(8,Math.floor(pulled/70));
+    for(let i=0;i<n;i++)rings+='<ellipse cx="618" cy="'+(541-i*2)+'" rx="'+(15+i*2.5)+'" ry="6" fill="none" stroke="#7a4f2b" stroke-width="4"/>';
+    coil.innerHTML=rings;
+    setForce(100,Math.min(100,pulled/NEED*100),'mid');
+    setMetric('مسافت کشیدن نخ: '+fa((pulled/100).toFixed(1))+' متر');}
+  function loop(){
+    rise+=(Math.min(NEED,pulled)-rise)*0.22;
+    const tS=dragging?stroke:0;
+    strokeVis+=(tS-strokeVis)*0.3;
+    crate.setLift(rise,0);
+    draw();
+    Game.raf=requestAnimationFrame(loop);}
+  Game.raf=requestAnimationFrame(loop);
+  showHint(618,420,'down');
+  say('دیگه لازم نیست بالای برج باشیم! قرقره نصب شد — از همین‌جا روی زمین، نخ رو به پایین بکش!','excited');
+  function complete(){
+    done=true;disableHandles();hideHint();
+    char.setPose('pull');
+    const r0=rise;
+    tween(650,e=>{
+      rise=lerp(r0,387,e);crate.setLift(rise,98*e);},
+      ()=>{AudioFX.thud();puff(760,160);
+        after(250,()=>{AudioFX.ding();Confetti.burst(150);AudioFX.win();
+          char.setFace('excited');char.setPose('cheer');char.hop();
+          earn('pulley','s1');log('P2');
+          showMsg({icon:'🎉',stars:1,title:'آفرین! جعبه رفت بالای برج!',
+            body:'قرقره <b>جهت نیرو</b> رو عوض کرد!<br>حالا برای بالا بردن جعبه، نخ رو به <b>پایین</b> می‌کشی، نه بالا!',
+            btn:'مرحله‌ی بعد ◀',onOk:levelP3});});});}}
+
+/* ---------- مرحله ۳: مقایسه‌ی قرقره‌ی ثابت و متحرک ---------- */
+function levelP3(){
+  enterLevel('P3','مرحله ۳ از ۳');
+  buildPulleyBase();
+  char=makeCherraghak(scene,150,545,1);
+  const crate=makeCrate(662,475);
+  /* رگ قرقره ثابت (گوشه‌ی برج) */
+  const rigF=E('g',{},scene);
+  E('rect',{x:626,y:143,width:100,height:14,rx:4,fill:'#8a97a5',stroke:'#6d7a87','stroke-width':2},rigF);
+  const wheelF=makeWheel(rigF,640,150,22);
+  /* رگ قرقره متحرک (بوم بالا) */
+  const rigM=E('g',{class:'hidden'},scene);
+  E('rect',{x:728,y:52,width:18,height:122,rx:4,fill:'#8a5a2b'},rigM);
+  E('path',{d:'M746 170 L746 118 L790 170 Z',fill:'#a06a3c'},rigM);
+  E('rect',{x:556,y:42,width:186,height:16,rx:5,fill:'#c98d5a',stroke:'#8a5a2b','stroke-width':3},rigM);
+  E('circle',{cx:572,cy:50,r:3.5,fill:'#8a5a2b'},rigM);E('circle',{cx:726,cy:50,r:3.5,fill:'#8a5a2b'},rigM);
+  E('rect',{x:596,y:58,width:14,height:18,rx:3,fill:'#8a97a5'},rigM);
+  const wheelM=makeWheel(rigM,603,76,22);
+  E('rect',{x:663,y:60,width:12,height:10,rx:2,fill:'#8a97a5'},rigM);
+  E('path',{d:'M669 70 q7 6 0 11 q-6 -4 0 -11',fill:'none',stroke:'#5d7385','stroke-width':4},rigM);
+  /* قرقره‌ی متحرکِ روی جعبه */
+  const gMob=E('g',{class:'hidden'},scene);
+  const wheelMob=makeWheel(gMob,647,425,22);
+  const mobBar=E('path',{stroke:'#5d7385','stroke-width':6,fill:'none'},gMob);
+  E('rect',{x:637,y:-8,width:20,height:8,rx:2,fill:'#5d7385'},gMob);
+  const gMobPlate=gMob.lastChild;
+  const rope=makeRopePair();
+  const hd=makeHandle(618,330,'pull',36);
+  const coil=E('g',{},scene);
+  const cfg={fixed:{need:300,force:100,cx:662,hx:618,label:'قرقره‌ی ثابت'},
+             movable:{need:600,force:50,cx:647,hx:581,label:'قرقره‌ی متحرک'}};
+  const ms={fixed:{pulled:0,done:false},movable:{pulled:0,done:false}};
+  let mode='fixed',base=0,stroke=0,strokeVis=0,rise=0,dragging=false,wheelA=0,busy=false;
+  let lastSwish=0,lastRise=0;
+  showForce(100,'کوشش کشیدن نخ','قرقره‌ی ثابت: نیرو همون ۱۰۰ نیوتنه — ولی به پایین می‌کشی!');
+  setForce(100,0,'mid');
+  function renderTable(){showData('جدول مقایسه',['نوع قرقره','نیرو','مسافت نخ'],[
+    {cells:['ثابت ⚙️',ms.fixed.done?'۱۰۰ نیوتن ✓':'؟',ms.fixed.done?'۳ متر ✓':'؟'],done:ms.fixed.done},
+    {cells:['متحرک ⚙️⚙️',ms.movable.done?'۵۰ نیوتن ✓':'؟',ms.movable.done?'۶ متر ✓':'؟'],done:ms.movable.done}]);}
+  renderTable();
+  /* دکمه‌های تغییر حالت */
+  const bc=$('#bottom-controls');bc.innerHTML='';bc.classList.remove('hidden');
+  const bF=h('button','mode-btn active','⚙️ قرقره‌ی ثابت');
+  const bM=h('button','mode-btn','⚙️⚙️ قرقره‌ی متحرک');
+  bc.appendChild(bF);bc.appendChild(bM);
+  bF.addEventListener('click',()=>{if(!busy&&mode!=='fixed')setMode('fixed');});
+  bM.addEventListener('click',()=>{if(!busy&&mode!=='movable')setMode('movable');});
+  function setMode(m){
+    mode=m;AudioFX.click();
+    bF.classList.toggle('active',m==='fixed');
+    bM.classList.toggle('active',m==='movable');
+    rigF.classList.toggle('hidden',m!=='fixed');
+    rigM.classList.toggle('hidden',m!=='movable');
+    gMob.classList.toggle('hidden',m!=='movable');
+    base=0;stroke=0;
+    const r0=rise;
+    tween(400,e=>{rise=r0*(1-e);},()=>{});
+    showForce(100,'کوشش کشیدن نخ',m==='fixed'?'قرقره‌ی ثابت: نیرو همون ۱۰۰ نیوتنه — ولی به پایین می‌کشی!':'قرقره‌ی متحرک: نیرو نصف می‌شه... ولی نخ رو دو برابر می‌کشی!');
+    setForce(cfg[m].force,ms[m].pulled/cfg[m].need*100,m==='fixed'?'mid':'');
+    showHint(cfg[m].hx,410,'down');
+    if(m==='fixed')say('اول با «قرقره‌ی ثابت» جعبه رو بالا ببر!','happy');
+    else say('حالا با «قرقره‌ی متحرک»! حس کن چقدر راحت‌تره... ولی چقدر بیشتر باید بکشی!','excited');}
+  reg('pull',{
+    start(){if(busy||ms[mode].done)return;dragging=true;Game.attempts++;hideHint();
+      char.setPose('pull');AudioFX.click();},
+    move(p,ctx){
+      if(busy||ms[mode].done)return;
+      stroke=clamp(ctx.dy,0,190);
+      const st=ms[mode];
+      const cand=Math.min(cfg[mode].need,Math.max(st.pulled,base+stroke));
+      if(cand>st.pulled){
+        wheelA-=(cand-st.pulled)/22*57.3;
+        const now=performance.now();
+        if(now-lastSwish>110){AudioFX.swish(Math.min(1,stroke/100));lastSwish=now;}
+        if(now-lastRise>320){AudioFX.rise();lastRise=now;}
+        st.pulled=cand;}
+      if(st.pulled>=cfg[mode].need)completeMode();},
+    end(){if(busy)return;dragging=false;base=ms[mode].pulled;char.setPose('idle');}});
+  function draw(){
+    const c=cfg[mode],st=ms[mode];
+    const hy=330+strokeVis;
+    const boxTop=475-rise;
+    if(mode==='fixed'){
+      rope.set('M 618 '+hy+' L 618 150 A 22 22 0 0 1 662 150 L 662 '+boxTop);
+      wheelF.setSpin(wheelA);}
+    else{
+      const mpy=boxTop-50;
+      rope.set('M 581 '+hy+' L 581 76 A 22 22 0 0 1 625 76 L 625 '+mpy+' A 22 22 0 0 0 669 '+mpy+' L 669 62');
+      wheelM.setSpin(wheelA);
+      wheelMob.g.setAttribute('transform','translate(647 '+mpy+')');
+      wheelMob.setSpin(-wheelA*2);
+      mobBar.setAttribute('d','M647 '+(mpy+18)+' L647 '+(boxTop-6));
+      gMobPlate.setAttribute('x',647-10);gMobPlate.setAttribute('y',boxTop-8);}
+    hd.g.setAttribute('transform','translate('+c.hx+' '+hy+')');
+    let rings='';
+    const n=Math.min(8,Math.floor(st.pulled/70));
+    for(let i=0;i<n;i++)rings+='<ellipse cx="'+c.hx+'" cy="'+(541-i*2)+'" rx="'+(15+i*2.5)+'" ry="6" fill="none" stroke="#7a4f2b" stroke-width="4"/>';
+    coil.innerHTML=rings;
+    setForce(c.force,Math.min(100,st.pulled/c.need*100),mode==='fixed'?'mid':'');
+    setMetric('نخ کشیده‌شده: '+fa((st.pulled/100).toFixed(1))+' از '+fa(c.need/100)+' متر');}
+  function loop(){
+    const target=Math.min(cfg[mode].need,ms[mode].pulled*(mode==='fixed'?1:0.5));
+    rise+=(target-rise)*0.22;
+    const tS=dragging?stroke:0;
+    strokeVis+=(tS-strokeVis)*0.3;
+    crate.setLift(rise,mode==='movable'?-15:0);
+    draw();
+    Game.raf=requestAnimationFrame(loop);}
+  Game.raf=requestAnimationFrame(loop);
+  showHint(618,410,'down');
+  say('حالا بیا این دو تا قرقره رو با هم مقایسه کنیم!','happy');
+  function completeMode(){
+    if(busy)return;busy=true;dragging=false;disableHandles();hideHint();
+    ms[mode].done=true;
+    const m=mode;
+    char.setPose('pull');
+    const r0=rise;
+    const dx0=(m==='movable'?-15:0);
+    tween(650,function(e){
+      rise=lerp(r0,387,e);
+      crate.setLift(rise,lerp(dx0,98,e));
+    },function(){
+      AudioFX.thud();puff(760,160);renderTable();
+      after(320,function(){
+        AudioFX.ding();Confetti.burst(110);
+        toast(m==='fixed'?'قرقره‌ی ثابت: ۱۰۰ نیوتن و ۳ متر نخ!':'قرقره‌ی متحرک: ۵۰ نیوتن و ۶ متر نخ!');
+        if(ms.fixed.done&&ms.movable.done){
+          finishP3();
+        }else{
+          after(1400,function(){
+            busy=false;
+            const r1=rise;
+            tween(500,function(e){rise=r1*(1-e);},function(){});
+            for(const k in handles)handles[k].disabled=false;
+            setMode(m==='fixed'?'movable':'fixed');
+          });
+        }
+      });
+    });
+  }
+  function finishP3(){
+    earn('pulley','s2');earn('pulley','s3');AudioFX.win();Confetti.rain();
+    char.setFace('excited');char.setPose('cheer');char.hop();
+    log('P3');
+    after(900,function(){
+      showMsg({icon:'🏆',stars:2,title:'مهندس قرقره‌ها!',
+        body:'قرقره‌ی متحرک نیرو رو <b>نصف</b> می‌کنه (۱۰۰ ← ۵۰ نیوتن)،<br>ولی باید نخ رو <b>دو برابر</b> بکشی (۳ متر ← ۶ متر)!<br>قرقره‌ی ثابت فقط جهت نیرو رو عوض می‌کنه.',
+        btn:'سؤال پایانی ◀',onOk:function(){runQuiz('pulley');}});
+    });
+  }}
+
+/* ═══════════════════════════════════════════════════════
+   بخش دوم — آزمایشگاه سطح شیب‌دار
+   ═══════════════════════════════════════════════════════ */
+const BEDX=825,BEDY=278;              /* جای نهایی بشکه روی کامیون */
+function buildInclineBase(){scene.innerHTML='';makeDefs();addSky();addGround();addTruck();}
+function addTruck(){
+  const g=E('g',{},scene);
+  E('rect',{x:740,y:316,width:165,height:16,rx:4,fill:'#5b7a99'},g);
+  E('rect',{x:740,y:330,width:165,height:140,rx:10,fill:'url(#truckBodyG)',stroke:'#3d6db3','stroke-width':3},g);
+  E('rect',{x:742,y:266,width:12,height:52,rx:3,fill:'#4b6a87'},g);
+  E('rect',{x:893,y:272,width:12,height:46,rx:3,fill:'#4b6a87'},g);
+  E('path',{d:'M646 470 L646 300 Q646 256 692 256 L740 256 L740 470 Z',fill:'url(#truckCabG)',stroke:'#c94554','stroke-width':3},g);
+  E('rect',{x:656,y:270,width:44,height:42,rx:8,fill:'url(#glassG)',stroke:'#c94554','stroke-width':3},g);
+  E('line',{x1:678,y1:270,x2:678,y2:312,stroke:'#c94554','stroke-width':2.5},g);
+  E('rect',{x:652,y:342,width:72,height:11,rx:5,fill:'#d94a59'},g);
+  [[700,518],[865,518]].forEach(w=>{E('circle',{cx:w[0],cy:w[1],r:28,fill:'#3b4a5a'},g);
+    E('circle',{cx:w[0],cy:w[1],r:11,fill:'#c2d0da'},g);});
+  E('rect',{x:628,y:452,width:18,height:22,rx:5,fill:'#8a97a5'},g);
+  const goal=E('g',{},g);
+  E('rect',{x:772,y:226,width:106,height:90,rx:10,fill:'none',stroke:'#f5b02c','stroke-width':4,'stroke-dasharray':'10 8',class:'pulse-soft'},goal);
+  E('path',{d:STAR,transform:'translate(825 262) scale(1.5)',fill:'#ffd23f',stroke:'#c07f12','stroke-width':2},goal);
+  E('text',{x:825,y:220,'text-anchor':'middle',class:'svg-label'},goal).textContent='هدف';}
+function posOnPlank(A,B,t,off){
+  const dx=B.x-A.x,dy=B.y-A.y,L=Math.hypot(dx,dy);
+  const ux=dx/L,uy=dy/L,nx=uy,ny=-ux;
+  return{x:A.x+ux*t*L+nx*off,y:A.y+uy*t*L+ny*off,rot:t*L/38*57.3};}
+function projT(p,A,B){
+  const dx=B.x-A.x,dy=B.y-A.y;
+  return clamp(((p.x-A.x)*dx+(p.y-A.y)*dy)/(dx*dx+dy*dy),0,1);}
+
+/* ---------- مرحله ۱: بلند کردن مستقیم ---------- */
+function levelI1(){
+  enterLevel('I1','مرحله ۱ از ۴');
+  buildInclineBase();
+  char=makeCherraghak(scene,120,545,1);
+  const barrel=makeBarrel();
+  let by=507,targetY=507,dragging=false,done=false,sweatStarted=false;
+  barrel.setPos(620,by,0);
+  E('circle',{cx:620,cy:507,r:60,fill:'transparent','data-handle':'barrel'},scene);
+  showForce(200,'نیروی لازم','');
+  setForce(0,0,'hard');
+  reg('barrel',{
+    start(){if(done)return;dragging=true;Game.attempts++;hideHint();
+      char.setPose('push');AudioFX.click();barrel.tremble(true);},
+    move(p){if(!done)targetY=clamp(p.y,280,507);},
+    end(){dragging=false;barrel.tremble(false);char.setPose('idle');}});
+  function loop(){
+    if(!done){
+      if(dragging){
+        by+=(targetY-by)*0.13;
+        const prog=(507-by)/(507-278);
+        setForce(60+140*prog,prog*100,'hard');
+        setMetric('ارتفاعی که بشکه اومده بالا: '+fa(Math.round(prog*100))+'٪');
+        if(!sweatStarted&&prog>0.3){sweatStarted=true;char.sweat(true);char.setFace('tired');
+          say('اوف! این خیلی سخته!','tired',2600);AudioFX.strain();}
+        barrel.setPos(620,by,0);
+        if(by<=282)complete();}}
+    Game.raf=requestAnimationFrame(loop);}
+  Game.raf=requestAnimationFrame(loop);
+  showHint(620,470,'up');
+  say('بشکه‌ی ۲۰ کیلویی رو بگیر و مستقیم بالا بکش تا بره روی کامیون!','happy');
+  function complete(){
+    done=true;dragging=false;disableHandles();hideHint();
+    barrel.tremble(false);
+    char.setPose('push');char.setFace('tired');
+    const y0=by;
+    tween(520,e=>{barrel.setPos(lerp(620,BEDX,e),lerp(y0,BEDY,e),e*90);},
+      ()=>{AudioFX.thud();puff(BEDX,BEDY+34);
+        after(300,()=>{log('I1');
+          showMsg({icon:'😅',title:'اوف! این خیلی سخته!',
+            body:'بشکه رو مستقیم بلند کردیم و تقریباً <b>۲۰۰ نیوتن</b> نیرو لازم بود!<br>بیا با یه فکر هوشمندانه راحت‌ترش کنیم!',
+            btn:'چه فکری بزنیم؟ 🤔',onOk:levelI2});});});}
+  if(!save.logs.some(l=>l.id==='I1')){
+    showMsg({icon:'🛢️',title:'ماموریت: بشکه رو ببر روی کامیون!',
+      body:'چراغک باید بشکه‌ی سنگین ۲۰ کیلویی رو ببره بالای کامیون.<br>اول امتحان کن مستقیم بلندش کنی!',
+      btn:'بزن بریم 💪'});}}
+
+/* ---------- مرحله ۲: اضافه کردن تخته (سطح شیب‌دار) ---------- */
+function levelI2(){
+  enterLevel('I2','مرحله ۲ از ۴');
+  buildInclineBase();
+  char=makeCherraghak(scene,120,545,1);
+  const A={x:213,y:545},B={x:738,y:316};
+  const L=Math.hypot(B.x-A.x,B.y-A.y);
+  const deg=Math.atan2(A.y-B.y,B.x-A.x)*180/Math.PI;
+  /* خط‌چین محل تخته */
+  const ghost=E('g',{class:'pulse-soft'},scene);
+  E('line',{x1:A.x,y1:A.y-8,x2:B.x,y2:B.y-8,stroke:'#f5b02c','stroke-width':16,'stroke-dasharray':'18 14',opacity:.45,'stroke-linecap':'round'},ghost);
+  E('text',{x:(A.x+B.x)/2-60,y:(A.y+B.y)/2-30,class:'svg-label'},ghost).textContent='تخته رو بذار اینجا ⤴';
+  /* تخته */
+  const plank=E('g',{},scene);
+  const hit=E('rect',{x:0,y:-34,width:L,height:66,fill:'transparent','data-handle':'plank'},plank);
+  E('rect',{x:0,y:-14,width:L,height:14,rx:3,fill:'url(#plankG)',stroke:'#8a5a2b','stroke-width':3},plank);
+  for(let i=40;i<L;i+=90)E('line',{x1:i,y1:-13,x2:i+18,y2:-2,stroke:'#8a5a2b33','stroke-width':3},plank);
+  E('rect',{x:-6,y:-18,width:16,height:22,rx:3,fill:'#a06a3c'},plank);
+  let tx=-40,ty=545,trot=0;
+  function setPlank(x,y,r){plank.setAttribute('transform','translate('+x+' '+y+') rotate('+r+')');}
+  setPlank(tx,ty,trot);
+  const barrel=makeBarrel();
+  let t0=0.06,tCur=t0,tTarget=t0,dragging=false,placed=false,done=false,barrelFree=true;
+  const p0=posOnPlank(A,B,t0,52);
+  barrel.setPos(p0.x,p0.y,p0.rot);
+  E('circle',{cx:p0.x,cy:p0.y,r:60,fill:'transparent','data-handle':'barrel',opacity:0},scene);
+  const barrelHit=scene.lastChild;
+  reg('plank',{
+    start(){Game.attempts++;hideHint();AudioFX.click();char.setPose('pull');},
+    move(p,ctx){tx=clamp(-40+ctx.dx,-260,420);ty=clamp(545+ctx.dy,-200,20);setPlank(tx,ty,0);},
+    end(){
+      char.setPose('idle');
+      const moved=Math.hypot(tx+40,ty-545);
+      if(moved>70)snap();
+      else tween(350,e=>{setPlank(lerp(tx,-40,e),lerp(ty,545,e),0);},()=>{tx=-40;ty=545;});}});
+  function snap(){
+    disableHandles();
+    const x0=tx,y0=ty;
+    tween(620,e=>{setPlank(lerp(x0,A.x,e),lerp(y0,A.y,e),lerp(0,-deg,e));},
+      ()=>{tx=A.x;ty=A.y;trot=-deg;
+        AudioFX.clack();AudioFX.thud();puff(A.x,A.y-14);puff(B.x,B.y-10);
+        ghost.classList.add('hidden');
+        placed=true;
+        reg('barrel',{
+          start(){if(done)return;dragging=true;Game.attempts++;hideHint();
+            char.setPose('pull');AudioFX.click();},
+          move(p){if(!done)tTarget=projT(p,A,B);},
+          end(){dragging=false;char.setPose('idle');}});
+        showForce(200,'نیروی لازم','با سطح شیب‌دار — نیروی کمتر، کار راحت‌تر!');
+        setForce(80,40);
+        showPanel('<h4>📏 اندازه‌گیری تخته</h4><table class="dp">'+
+          '<tr><td class="lbl">طول تخته</td><td class="num">'+fa((L/100).toFixed(1))+' متر</td></tr>'+
+          '<tr><td class="lbl">زاویه‌ی شیب</td><td class="num">'+fa(Math.round(deg))+'°</td></tr>'+
+          '<tr><td class="lbl">نیرو</td><td class="num" style="color:#1d9e5a">'+fa(80)+' نیوتن</td></tr>'+
+          '</table>',true);
+        setMetric('مسافت روی تخته: '+fa((tCur*L/100).toFixed(1))+' متر از '+fa((L/100).toFixed(1))+' متر');
+        showHint(p0.x+40,p0.y+40,'diag');
+        say('عالیه! حالا بشکه رو آروم روی تخته بکش بالا!','excited');});}
+  function loop(){
+    if(placed&&!done){
+      tCur+=(tTarget-tCur)*0.2;
+      const pos=posOnPlank(A,B,tCur,52);
+      if(barrelFree){barrel.setPos(pos.x,pos.y,pos.rot);
+        barrelHit.setAttribute('cx',pos.x);barrelHit.setAttribute('cy',pos.y);
+        setMetric('مسافت روی تخته: '+fa((tCur*L/100).toFixed(1))+' متر از '+fa((L/100).toFixed(1))+' متر');
+        if(tCur>=0.985)complete();}}
+    Game.raf=requestAnimationFrame(loop);}
+  Game.raf=requestAnimationFrame(loop);
+  showHint(180,500,'up');
+  say('اول تخته رو بگیر و بذارش از زمین تا کامیون!','happy');
+  function complete(){
+    done=true;dragging=false;disableHandles();hideHint();barrelFree=false;
+    const pos=posOnPlank(A,B,tCur,52);
+    tween(560,e=>{barrel.setPos(lerp(pos.x,BEDX,e),lerp(pos.y,BEDY,e),pos.rot+e*120);},
+      ()=>{AudioFX.thud();puff(BEDX,BEDY+34);
+        after(250,()=>{AudioFX.ding();Confetti.burst(150);AudioFX.win();
+          char.setFace('excited');char.setPose('cheer');char.hop();
+          earn('incline','s1');log('I2');
+          showMsg({icon:'🎉',stars:1,title:'سطح شیب‌دار نیرو رو کم کرد!',
+            body:'با تخته فقط <b>۸۰ نیوتن</b> لازم داشتیم؛ نه ۲۰۰ نیوتن!<br>حالا با نیروی کمتر می‌تونی جسم سنگین رو بالا ببری.',
+            btn:'مرحله‌ی بعد ◀',onOk:levelI3});});});}}
+
+/* ---------- مرحله ۳: تغییر شیب (اسلایدر) ---------- */
+function levelI3(){
+  enterLevel('I3','مرحله ۳ از ۴');
+  buildInclineBase();
+  char=makeCherraghak(scene,120,545,1);
+  const B={x:738,y:316};
+  let L=380,A={x:0,y:545},deg=0,F=100;
+  const plank=E('g',{},scene);
+  const plankRect=E('rect',{x:0,y:-14,width:L,height:14,rx:3,fill:'url(#plankG)',stroke:'#8a5a2b','stroke-width':3},plank);
+  E('rect',{x:-6,y:-18,width:16,height:22,rx:3,fill:'#a06a3c'},plank);
+  const prot=E('g',{},scene);
+  const protArc=E('path',{stroke:'#e0566b','stroke-width':4,fill:'none'},prot);
+  const protTxt=E('text',{class:'svg-label','text-anchor':'middle'},prot);
+  E('line',{x1:0,y1:0,x2:0,y2:0,stroke:'#8a6a2e','stroke-width':2,'stroke-dasharray':'6 6'},prot);
+  const protBase=prot.lastChild;
+  const barrel=makeBarrel();
+  let tCur=0.06,tTarget=0.06,dragging=false,climbState='ready',barrelFree=true;
+  let steep=false,gentle=false;
+  const bc=$('#bottom-controls');
+  bc.innerHTML='<div class="slope-ui"><div class="slope-labels"><span>کوتاه — شیب تند ⛰️</span><span>بلند — شیب ملایم 🌿</span></div>'+
+    '<input type="range" id="slope-slider" min="250" max="580" step="4" value="'+L+'" autocomplete="off"></div>';
+  bc.classList.remove('hidden');
+  const slider=$('#slope-slider');
+  function renderTable(){
+    showPanel('<h4>📏 اندازه‌گیری تخته</h4><table class="dp">'+
+      '<tr><td class="lbl">طول تخته</td><td class="num">'+fa((L/100).toFixed(1))+' متر</td></tr>'+
+      '<tr><td class="lbl">زاویه‌ی شیب</td><td class="num">'+fa(Math.round(deg))+'°</td></tr>'+
+      '<tr><td class="lbl">نیرو</td><td class="num" style="color:'+(F<95?'#1d9e5a':F<150?'#c98a12':'#e0566b')+'">'+fa(F)+' نیوتن</td></tr>'+
+      '</table>'+
+      '<h4>🔑 راز شیب</h4>'+
+      '<table class="dp"><tr><th>شیب</th><th>نیرو</th><th>مسافت</th><th>سرعت</th></tr>'+
+      '<tr'+(steep?' class="row-done"':'')+'><td class="val">تند ⛰️</td><td class="'+(steep?'done':'pend')+'">'+(steep?'زیاد ✓':'؟')+'</td><td class="'+(steep?'done':'pend')+'">'+(steep?'کم ✓':'؟')+'</td><td class="'+(steep?'done':'pend')+'">'+(steep?'سریع ✓':'؟')+'</td></tr>'+
+      '<tr'+(gentle?' class="row-done"':'')+'><td class="val">ملایم 🌿</td><td class="'+(gentle?'done':'pend')+'">'+(gentle?'کم ✓':'؟')+'</td><td class="'+(gentle?'done':'pend')+'">'+(gentle?'زیاد ✓':'؟')+'</td><td class="'+(gentle?'done':'pend')+'">'+(gentle?'کند ✓':'؟')+'</td></tr>'+
+      '</table>',true);}
+  function applySlope(lv,quiet){
+    L=lv;
+    const run=Math.sqrt(L*L-229*229);
+    A={x:738-run,y:545};
+    deg=Math.asin(229/L)*180/Math.PI;
+    F=Math.round(200*229/L);
+    plank.setAttribute('transform','translate('+A.x+' '+A.y+') rotate('+(-deg)+')');
+    plankRect.setAttribute('width',L);
+    const th=deg*Math.PI/180;
+    prot.setAttribute('transform','translate('+A.x+' '+A.y+')');
+    protBase.setAttribute('x1',40);protBase.setAttribute('y1',0);
+    protBase.setAttribute('x2',110);protBase.setAttribute('y2',0);
+    protArc.setAttribute('d','M 70 0 A 70 70 0 '+(deg>0?'0 0':'0 0')+' '+(70*Math.cos(th))+' '+(-70*Math.sin(th)));
+    protTxt.setAttribute('x',95*Math.cos(th/2));protTxt.setAttribute('y',-95*Math.sin(th/2)-6);
+    protTxt.textContent=fa(Math.round(deg))+'°';
+    tCur=0.06;tTarget=0.06;
+    if(climbState==='ready'&&!(steep&&gentle)){
+      const pos=posOnPlank(A,B,tCur,52);
+      barrel.setPos(pos.x,pos.y,0);
+      barrelHit.setAttribute('cx',pos.x);barrelHit.setAttribute('cy',pos.y);}
+    setForce(F,F/200*100,F<95?'':F<150?'mid':'hard');
+    setMetric('عددِ نیرو و طول تخته رو در جدول اندازه‌گیری ببین!');
+    renderTable();
+    if(!quiet)AudioFX.roll();}
+  const barrelHit=E('circle',{cx:0,cy:0,r:60,fill:'transparent','data-handle':'barrel'},scene);
+  reg('barrel',{
+    start(){if(climbState!=='ready')return;dragging=true;Game.attempts++;hideHint();
+      char.setPose('pull');AudioFX.click();},
+    move(p){if(climbState==='ready')tTarget=projT(p,A,B);},
+    end(){dragging=false;char.setPose('idle');}});
+  slider.addEventListener('input',()=>{applySlope(+slider.value);});
+  applySlope(L,true);
+  function loop(){
+    if(climbState==='ready'){
+      tCur+=(tTarget-tCur)*0.2;
+      const pos=posOnPlank(A,B,tCur,52);
+      if(barrelFree){barrel.setPos(pos.x,pos.y,pos.rot);
+        barrelHit.setAttribute('cx',pos.x);barrelHit.setAttribute('cy',pos.y);
+        if(dragging)setMetric('بشکه '+fa(Math.round(tCur*100))+'٪ از مسیر رو اومده بالا');}
+      if(tCur>=0.985)completeClimb();}
+    Game.raf=requestAnimationFrame(loop);}
+  Game.raf=requestAnimationFrame(loop);
+  showHint(430,520,'diag');
+  say('با اسلایدر شیب رو کم و زیاد کن، بعد بشکه رو بکش بالا! هر شیب رو امتحان کن!','excited');
+  function completeClimb(){
+    climbState='land';dragging=false;barrelFree=false;hideHint();
+    const pos=posOnPlank(A,B,tCur,52);
+    tween(500,e=>{barrel.setPos(lerp(pos.x,BEDX,e),lerp(pos.y,BEDY,e),pos.rot+e*100);},
+      ()=>{AudioFX.thud();puff(BEDX,BEDY+34);
+        toast('✅ شیب '+fa(Math.round(deg))+'° • نیرو '+fa(F)+' نیوتن • مسافت '+fa((L/100).toFixed(1))+' متر');
+        let newRow=false;
+        if(deg>=45&&!steep){steep=true;newRow=true;AudioFX.star();}
+        if(deg<=25&&!gentle){gentle=true;newRow=true;AudioFX.star();}
+        renderTable();
+        if(steep&&gentle){completeAll();return;}
+        if(!newRow)toast('این شیب رو قبلاً امتحان کردی! یه شیب دیگه رو با اسلایدر انتخاب کن!');
+        after(1500,()=>{
+          tween(450,e=>{const tt=lerp(0.985,0.06,1-Math.pow(1-e,2));
+            const p2=posOnPlank(A,B,tt,52);
+            barrel.setPos(p2.x,p2.y,p2.rot);},
+            ()=>{tCur=0.06;tTarget=0.06;barrelFree=true;climbState='ready';
+              const p3=posOnPlank(A,B,0.06,52);
+              barrelHit.setAttribute('cx',p3.x);barrelHit.setAttribute('cy',p3.y);
+              AudioFX.pop();});});});}
+  function completeAll(){
+    earn('incline','s2');earn('incline','s3');
+    AudioFX.win();Confetti.rain();Confetti.burst(120);
+    char.setFace('excited');char.setPose('cheer');char.hop();
+    log('I3');
+    after(900,()=>showMsg({icon:'🏆',stars:2,title:'راز شیب کشف شد!',
+      body:'هر چی شیب <b>کمتر</b> باشه، نیروی <b>کمتری</b> لازمه،<br>ولی باید <b>مسافت بیشتری</b> طی کنی!',
+      btn:'یه چیز خیلی جالب ◀',onOk:levelI4}));}}
+
+/* ---------- مرحله ۴: کاربرد در زندگی (بونوس) ---------- */
+const BONUS_ITEMS=[
+ {id:'slide',title:'سرسره 🛝',
+  text:'سطح شیب‌دار برای <b>پایین آمدن</b>! با سرسره راحت و باحال پایین می‌ای. اگه سرسره عمودی بود، مثل سقوط آزاد بود! شیب، پایین اومدن رو نرم و امن می‌کنه.'},
+ {id:'road',title:'جاده‌ی کوهستانی 🏔️',
+  text:'<b>پیچ‌های جاده، شیب رو کم می‌کنن!</b> جاده به‌جای اینکه مستقیم از کوه بالا بره، دورتادور می‌چرخه تا شیب کم بشه و ماشین راحت بالا بره.'},
+ {id:'ladder',title:'نردبان 🪜',
+  text:'نردبان یه <b>سطح شیب‌دار خیلی تند</b> هست! چون شیبش زیاده، مسافتش کمه ولی نیروی بیشتری لازمه. اگه شیب نردبان کمتر بود، راحت‌تر بالا می‌رفتی ولی نردبین بلندتر لازم بود!'},
+ {id:'ramp',title:'رمپ معلولین ♿',
+  text:'رمپ به افرادی که ویلچر دارند کمک می‌کنه <b>راحت بالا و پایین برن</b>. شیب ملایم رمپ باعث می‌شه با نیروی کم بشه بالا رفت. به همین خاطر رمپ‌ها همیشه کج و بلندن!'}];
+const BONUS_ART={
+ slide:`<svg viewBox="0 0 200 130"><rect width="200" height="130" fill="#e8f7ff"/><circle cx="168" cy="24" r="13" fill="#ffd23f"/><ellipse cx="40" cy="22" rx="20" ry="8" fill="#fff"/><rect x="0" y="112" width="200" height="18" fill="#7ed957"/><rect x="30" y="26" width="46" height="86" fill="#c98d5a" stroke="#8a5a2b" stroke-width="3"/><line x1="40" y1="26" x2="40" y2="112" stroke="#8a5a2b" stroke-width="4"/><line x1="66" y1="26" x2="66" y2="112" stroke="#8a5a2b" stroke-width="4"/><line x1="40" y1="42" x2="66" y2="42" stroke="#8a5a2b" stroke-width="4"/><line x1="40" y1="62" x2="66" y2="62" stroke="#8a5a2b" stroke-width="4"/><line x1="40" y1="82" x2="66" y2="82" stroke="#8a5a2b" stroke-width="4"/><rect x="28" y="20" width="52" height="8" rx="4" fill="#a06a3c"/><path d="M80 28 Q148 36 156 108" stroke="#ff5f6d" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="128" cy="60" r="8" fill="#ffd23f" stroke="#c07f12" stroke-width="2"/><rect x="124" y="66" width="9" height="16" rx="4" fill="#37c8f0"/><line x1="126" y1="82" x2="122" y2="92" stroke="#37c8f0" stroke-width="5" stroke-linecap="round"/><line x1="132" y1="82" x2="136" y2="92" stroke="#37c8f0" stroke-width="5" stroke-linecap="round"/></svg>`,
+ road:`<svg viewBox="0 0 200 130"><rect width="200" height="130" fill="#dff3ff"/><circle cx="28" cy="24" r="12" fill="#ffd23f"/><path d="M100 14 L184 112 L16 112 Z" fill="#6abf6e" stroke="#3f9e4d" stroke-width="3"/><path d="M100 40 L152 112 L48 112 Z" fill="#57b05e"/><path d="M14 112 L118 112 L92 86 L146 86 L120 60 L158 60" stroke="#9aa7b0" stroke-width="13" fill="none" stroke-linecap="round"/><path d="M14 112 L118 112 L92 86 L146 86 L120 60 L158 60" stroke="#fff" stroke-width="2.5" fill="none" stroke-dasharray="8 8"/><rect x="150" y="44" width="22" height="12" rx="4" fill="#ff5f6d"/><rect x="154" y="37" width="13" height="9" rx="3" fill="#a3dcf5"/><circle cx="155" cy="58" r="4.5" fill="#3b4a5a"/><circle cx="168" cy="58" r="4.5" fill="#3b4a5a"/><rect x="0" y="112" width="200" height="18" fill="#7ed957"/></svg>`,
+ ladder:`<svg viewBox="0 0 200 130"><rect width="200" height="130" fill="#fdf6e3"/><rect x="118" y="18" width="66" height="94" fill="#f4dc8f" stroke="#c99a3a" stroke-width="3"/><rect x="136" y="52" width="30" height="60" rx="4" fill="#8a5a2b"/><circle cx="30" cy="26" r="12" fill="#ffd23f"/><rect x="0" y="112" width="200" height="18" fill="#b58a54"/><line x1="34" y1="112" x2="120" y2="26" stroke="#8a5a2b" stroke-width="7" stroke-linecap="round"/><line x1="66" y1="112" x2="136" y2="26" stroke="#8a5a2b" stroke-width="7" stroke-linecap="round"/><line x1="48" y1="98" x2="72" y2="98" stroke="#a06a3c" stroke-width="5"/><line x1="62" y1="84" x2="86" y2="84" stroke="#a06a3c" stroke-width="5"/><line x1="76" y1="70" x2="100" y2="70" stroke="#a06a3c" stroke-width="5"/><line x1="90" y1="56" x2="113" y2="56" stroke="#a06a3c" stroke-width="5"/><line x1="104" y1="42" x2="126" y2="42" stroke="#a06a3c" stroke-width="5"/></svg>`,
+ ramp:`<svg viewBox="0 0 200 130"><rect width="200" height="130" fill="#eef7ee"/><rect x="112" y="20" width="72" height="92" fill="#e8b95c" stroke="#c99a3a" stroke-width="3"/><path d="M112 60 h-22 v52 h22 Z" fill="#8a5a2b"/><path d="M112 42 h-10 v18 h10 Z" fill="none" stroke="#8a5a2b" stroke-width="2"/><path d="M112 20 L112 112 L10 112 Z" fill="#c2d0da" stroke="#9fb2bf" stroke-width="3"/><path d="M20 100 L100 52" stroke="#fff" stroke-width="3" stroke-dasharray="7 7"/><circle cx="66" cy="86" r="13" fill="none" stroke="#3b4a5a" stroke-width="4"/><line x1="58" y1="86" x2="74" y2="86" stroke="#3b4a5a" stroke-width="3"/><path d="M72 74 L58 74 L58 62" stroke="#3b4a5a" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="60" cy="56" r="7" fill="#ffd23f" stroke="#c07f12" stroke-width="2"/><rect x="0" y="112" width="200" height="18" fill="#7ed957"/></svg>`};
+function levelI4(){
+  enterLevel('I4','مرحله ۴ از ۴ — بونوس');
+  buildInclineBase();
+  char=makeCherraghak(scene,60,545,0.9);
+  const A={x:330,y:545},B={x:738,y:316};
+  const L=Math.hypot(B.x-A.x,B.y-A.y);
+  const gg=E('g',{transform:'translate('+A.x+' '+A.y+') rotate('+(-Math.asin(229/L)*180/Math.PI)+')'},scene);
+  E('rect',{x:0,y:-14,width:L,height:14,rx:3,fill:'url(#plankG)',stroke:'#8a5a2b','stroke-width':3},gg);
+  const barrel=makeBarrel();
+  const pp=posOnPlank(A,B,0.8,52);
+  barrel.setPos(pp.x,pp.y,pp.rot);
+  $('#bonus-panel').classList.remove('hidden');
+  const wrap=$('#bonus-cards');wrap.innerHTML='';
+  if(!save.incline.cards)save.incline.cards={};
+  BONUS_ITEMS.forEach(item=>{
+    const card=h('div','b-card'+(save.incline.cards[item.id]?' seen':''),
+      '<div class="b-art">'+BONUS_ART[item.id]+'</div><h4>'+item.title+'</h4><span class="b-check">✅</span>');
+    card.addEventListener('click',()=>{
+      AudioFX.pop();
+      $('#bm-art').innerHTML=BONUS_ART[item.id];
+      $('#bm-title').textContent=item.title;
+      $('#bm-text').innerHTML=item.text;
+      $('#bonus-modal').classList.remove('hidden');
+      $('#bonus-modal').dataset.cur=item.id;});
+    wrap.appendChild(card);});
+  hideBubble();
+  function checkAll(){
+    const all=BONUS_ITEMS.every(i=>save.incline.cards[i.id]);
+    if(all){after(400,()=>{
+      earn('incline','gold');
+      Confetti.rain();Confetti.burst(160);AudioFX.win();
+      log('I4',{attempts:4});
+      after(800,()=>showMsg({icon:'🌟',gold:true,title:'ستاره‌ی طلایی گرفتی!',
+        body:'حالا می‌دونی سطح شیب‌دار و قرقره همه‌جا دور و برمون هستن!<br><b>ماشین‌های ساده</b> کار ما رو آسون می‌کنن.',
+        btn:'سؤال پایانی ◀',onOk:()=>runQuiz('incline')}));});}}
+  $('#bm-ok').onclick=()=>{
+    const id=$('#bonus-modal').dataset.cur;
+    $('#bonus-modal').classList.add('hidden');
+    save.incline.cards[id]=true;persist();
+    const cards=wrap.querySelectorAll('.b-card');
+    BONUS_ITEMS.forEach((it,i)=>{if(it.id===id)cards[i].classList.add('seen');});
+    AudioFX.click();checkAll();};
+  say('روی عکس‌ها بزن تا راز هر کدوم رو کشف کنی!','excited',6000);}
+
+/* ═══════════════════════════════════════════════════════
+   آزمون‌های پایانی
+   ═══════════════════════════════════════════════════════ */
+
+const QUIZZES = {
+  pulley: [
+    {
+      q: 'قرقرهٔ ثابت چه کمکی به ما می‌کند؟',
+      opts: [
+        {k:'الف', t:'جهت نیرو را تغییر می‌دهد تا با وزن بدن کشیدن آسان‌تر شود', ok:true, why:'آفرین! قرقرهٔ ثابت مقدار نیرو را تغییر نمی‌دهد، بلکه جهت نیرو را عوض می‌کند؛ برای بالا بردن جعبه، نخ را به پایین می‌کشی و از وزن بدنت کمک می‌گیری.'},
+        {k:'ب', t:'نیروی لازم برای بلند کردن جسم را نصف می‌کند', ok:false, hint:'نه! قرقرهٔ ثابت مقدار نیرو را کم نمی‌کند؛ قرقرهٔ متحرک نیرو را نصف می‌کند!'},
+        {k:'پ', t:'مسافت کشیدن طناب را به نصف کاهش می‌دهد', ok:false, hint:'خیر! در قرقرهٔ ثابت مسافت طناب دقیقاً برابر با مسافت بالا رفتن جسم است.'},
+        {k:'ت', t:'وزن واقعی جسم را سبک‌تر می‌کند', ok:false, hint:'وزن جسم هیچ‌وقت تغییر نمی‌کند؛ ماشین‌های ساده فقط کار را آسان‌تر می‌کنند.'}
+      ]
+    },
+    {
+      q: 'در قرقرهٔ متحرک، مقدار نیروی لازم و مسافت کشیدن طناب چگونه تغییر می‌کند؟',
+      opts: [
+        {k:'الف', t:'نیرو نصف می‌شود، ولی مسافت طناب دو برابر می‌شود', ok:true, why:'درست است! قرقرهٔ متحرک نیرو را نصف می‌کند (۱۰۰ به ۵۰ نیوتن)، ولی باید نخ را دو برابر مسافت بکشیم (۳ متر به ۶ متر).'},
+        {k:'ب', t:'نیرو دو برابر می‌شود و مسافت نصف می‌شود', ok:false, hint:'برعکس! هدف قرقره متحرک این است که نیروی کمتری برای بالا بردن صرف کنیم.'},
+        {k:'پ', t:'نیرو و مسافت هیچ تغییری نمی‌کنند', ok:false, hint:'در قرقره متحرک تغییر بزرگی در نیرو و مسافت رخ می‌دهد!'},
+        {k:'ت', t:'نیرو صفر می‌شود و بدون کشیدن بالا می‌رود', ok:false, hint:'همیشه برای بالا بردن هر جسمی به صرف نیرو نیاز داریم!'}
+      ]
+    },
+    {
+      q: 'اگر یک وزنهٔ ۶۰۰ نیوتنی را با قرقرهٔ متحرک ۳ متر بالا ببریم، به چه نیرو و مسافتی نیاز داریم؟',
+      opts: [
+        {k:'الف', t:'۳۰۰ نیوتن نیرو و ۶ متر کشیدن طناب', ok:true, why:'عالی بود! نیرو نصف می‌شود (۶۰۰ ÷ ۲ = ۳۰۰ نیوتن) و مسافت نخ دو برابر می‌شود (۳ × ۲ = ۶ متر).'},
+        {k:'ب', t:'۶۰۰ نیوتن نیرو و ۳ متر کشیدن طناب', ok:false, hint:'این ویژگی قرقرهٔ ثابت است، نه قرقرهٔ متحرک!'},
+        {k:'پ', t:'۳۰۰ نیوتن نیرو و ۳ متر کشیدن طناب', ok:false, hint:'یادت نرود که کاهش نیرو با افزایش مسافت نخ جبران می‌شود!'},
+        {k:'ت', t:'۱۵۰ نیوتن نیرو و ۱۲ متر طناب', ok:false, hint:'با یک قرقرهٔ متحرک، نیرو نصف (تقسیم بر ۲) می‌شود، نه یک‌چهارم.'}
+      ]
+    }
+  ],
+  incline: [
+    {
+      q: 'چرا برای بالا بردن اجسام سنگین (مثل بار زدن روی کامیون) از سطح شیب‌دار استفاده می‌کنیم؟',
+      opts: [
+        {k:'الف', t:'چون نیروی لازم برای بالا بردن جسم را کمتر می‌کند', ok:true, why:'آفرین! سطح شیب‌دار نیروی لازم برای بالا بردن اجسام را کم می‌کند؛ البته به‌جای آن مسافت بیشتری را طی می‌کنیم!'},
+        {k:'ب', t:'چون مسافت بالا رفتن جسم را کوتاه‌تر می‌کند', ok:false, hint:'نه! روی سطح شیب‌دار مسافت طولانی‌تر از بالا بردن مستقیم است.'},
+        {k:'پ', t:'چون باعث می‌شود وزن جسم کمتر شود', ok:false, hint:'وزن جسم همیشه ثابت می‌ماند؛ فقط نیروی کشیدن/هل دادن کم می‌شود.'},
+        {k:'ت', t:'چون سرعت حرکت خودبه‌خود دو برابر می‌شود', ok:false, hint:'سطح شیب‌دار برای راحتی و کاهش نیرو است، نه لزوماً سرعت.'}
+      ]
+    },
+    {
+      q: 'اگر زاویهٔ سطح شیب‌دار را کمتر کنیم (طول تخته بلندتر و شیب ملایم‌تر شود)، نیروی لازم چه تغییری می‌کند؟',
+      opts: [
+        {k:'الف', t:'نیروی لازم کمتر می‌شود اما مسافت بیشتری باید طی شود', ok:true, why:'دقیقاً! هر چه شیب ملایم‌تر باشد (زاویه کمتر)، نیرو کمتر می‌شود اما مسافت بیشتری طی می‌شود.'},
+        {k:'ب', t:'نیروی لازم بیشتر می‌شود و مسافت کمتر می‌شود', ok:false, hint:'برعکس! شیب ملایم کار را سبک‌تر و نیروی مورد نیاز را کمتر می‌کند.'},
+        {k:'پ', t:'نیرو و مسافت هر دو کمتر می‌شوند', ok:false, hint:'قانون کار می‌گوید اگر نیرو کم شود، مسافت حتماً زیاد می‌شود.'},
+        {k:'ت', t:'نیرو هیچ تغییری نمی‌کند', ok:false, hint:'در آزمایش دیدیم که با تغییر اسلایدر، عدد نیوتن‌سنج تغییر کرد!'}
+      ]
+    },
+    {
+      q: 'کدام گروه از موارد زیر همگی نمونه‌هایی از کاربرد سطح شیب‌دار در زندگی هستند؟',
+      opts: [
+        {k:'الف', t:'پیچ، رمپ معلولین، نردبان و جاده‌های پیچ‌درپیچ کوهستانی', ok:true, why:'بسیار عالی! پیچ (شیب مارپیچ)، رمپ، نردبان، سرسره و جاده‌های کوهستانی همگی از سطح شیب‌دار استفاده می‌کنند.'},
+        {k:'ب', t:'اهرم، ترازو و قیچی', ok:false, hint:'این موارد جزو اهرم‌ها هستند، نه سطح شیب‌دار!'},
+        {k:'پ', t:'چرخ و محور در دوچرخه', ok:false, hint:'چرخ و محور ماشین سادهٔ دیگری است.'},
+        {k:'ت', t:'قرقره پرچم و بادبان کشتی', ok:false, hint:'این‌ها نمونه‌های قرقره هستند.'}
+      ]
+    }
+  ]
+};
+
+
+function runQuiz(lab){
+  Game.levelId = lab === 'pulley' ? 'QP' : 'QI';
+  Game.attempts = 0;
+  Game.t0 = Date.now();
+  Game.lab = lab;
+  clearTimers();
+  if(Game.raf) cancelAnimationFrame(Game.raf);
+  Game.raf = null;
+  renderTray();
+  showScreen('scr-quiz');
+  
+  const qList = QUIZZES[lab];
+  let curQIdx = 0;
+  const collectedAnswers = [];
+  
+  const qc = $('#quiz-char');
+  qc.innerHTML = '';
+  const sv = E('svg', { viewBox: '-90 -180 180 200' });
+  qc.appendChild(sv);
+  const c = makeCherraghak(sv, 0, 0, 1);
+  
+  function renderQuestion(){
+    const q = qList[curQIdx];
+    const totalQ = qList.length;
+    $('#quiz-line').textContent = (lab === 'pulley' ? 'آزمایشگاه قرقره 🛞' : 'آزمایشگاه سطح شیب‌دار 📐') + 
+      ' — پرسش ' + fa(curQIdx + 1) + ' از ' + fa(totalQ);
+    $('#quiz-q').textContent = q.q;
+    c.setFace('think');
+    c.setPose('idle');
+    
+    const opts = $('#quiz-opts');
+    opts.innerHTML = '';
+    const fb = $('#quiz-fb');
+    fb.textContent = '';
+    fb.className = '';
+    const next = $('#quiz-next');
+    next.classList.add('hidden');
+    next.textContent = (curQIdx === totalQ - 1) ? 'پایان آزمون و ثبت در کارنامه 🏆' : 'پرسش بعدی ◀';
+    
+    let solved = false;
+    q.opts.forEach(o => {
+      const b = h('button', 'q-opt', '<span class="q-letter">' + o.k + ')</span><span>' + o.t + '</span>');
+      b.addEventListener('click', () => {
+        if(solved) return;
+        if(o.ok){
+          solved = true;
+          b.classList.add('ok');
+          AudioFX.ding();
+          AudioFX.star();
+          c.setFace('excited');
+          c.setPose('cheer');
+          c.hop();
+          fb.className = 'ok';
+          fb.innerHTML = '✅ ' + o.why;
+          document.querySelectorAll('#quiz-opts .q-opt').forEach(x => x.disabled = true);
+          
+          collectedAnswers.push({
+            expId: lab,
+            q: q.q,
+            chosen: o.t,
+            correct: o.t,
+            isOk: true,
+            t: Math.max(1, Math.round((Date.now() - Game.t0) / 1000))
+          });
+          
+          after(600, () => next.classList.remove('hidden'));
+        } else {
+          Game.attempts++;
+          b.classList.add('bad');
+          AudioFX.boop();
+          c.setFace('tired');
+          fb.className = 'bad';
+          fb.textContent = '❌ ' + o.hint;
+          setTimeout(() => b.classList.remove('bad'), 650);
+        }
+      });
+      opts.appendChild(b);
+    });
+  }
+  
+  $('#quiz-next').onclick = () => {
+    AudioFX.click();
+    if(curQIdx < qList.length - 1){
+      curQIdx++;
+      renderQuestion();
+    } else {
+      earn(lab, 'badge');
+      log(Game.levelId, { attempts: Game.attempts + 1 });
+      try {
+        window.parent.postMessage({
+          type: 'hakim-gosh-complete',
+          game: lab,
+          score: 100,
+          stars: 3,
+          answers: collectedAnswers
+        }, '*');
+      } catch(e) {}
+      
+      AudioFX.win();
+      Confetti.rain();
+      
+      after(600, () => {
+        try {
+          window.parent.postMessage({ type: 'hakim-gosh-back' }, '*');
+        } catch(e) {}
+        if(lab === 'pulley'){
+          renderHub('آفرین! هر ۳ پرسش آزمایشگاه قرقره رو کامل پاسخ دادی! 🛞');
+          showScreen('scr-hub');
+        } else {
+          if(!save.finalSeen) openFinal();
+          else {
+            renderHub('آفرین! هر ۳ پرسش آزمایشگاه سطح شیب‌دار رو کامل پاسخ دادی! 📐');
+            showScreen('scr-hub');
+          }
+        }
+      });
+    }
+  };
+  
+  renderQuestion();
+}
+
+
+
+/* ═══════════════════════════════════════════════════════
+   نقشه‌ی ماجراها (هاب)
+   ═══════════════════════════════════════════════════════ */
+function starsHtml(lab){
+  return traySpec(lab).map(p=>'<span class="st '+(save[lab][p[0]]?'earned':'')+'">'+p[1]+'</span>').join('');}
+function renderHub(msg){
+  $('#stars-pulley').innerHTML=starsHtml('pulley');
+  $('#stars-incline').innerHTML=starsHtml('incline');
+  const pN=(save.pulley.s1?1:0)+(save.pulley.s2?1:0)+(save.pulley.s3?1:0);
+  const iN=(save.incline.s1?1:0)+(save.incline.s2?1:0)+(save.incline.s3?1:0);
+  $('#prog-pulley').textContent=pN===0?'هنوز شروع نکردی — ۳ ستاره منتظرته!':
+    fa(pN)+' ستاره از ۳'+(save.pulley.badge?' + نشان دانش 🎖️':'');
+  $('#prog-incline').textContent=iN===0?'هنوز شروع نکردی — ۳ ستاره + ستاره‌ی طلایی!':
+    fa(iN)+' ستاره از ۳'+(save.incline.gold?' + ستاره‌ی طلایی 🌟':'')+(save.incline.badge?' + نشان دانش 🎖️':'');
+  $('#go-pulley').textContent=pN>0||save.pulley.badge?'دوباره بازی کن 🔁':'شروع';
+  $('#go-incline').textContent=iN>0||save.incline.badge?'دوباره بازی کن 🔁':'شروع';
+  $('#go-final').classList.toggle('hidden',!(save.pulley.badge&&save.incline.badge));
+  if(msg)$('#hub-sub').textContent=msg;}
+function startLab(lab){
+  Game.lab=lab;Game.step=0;
+  $('#lab-title').textContent=lab==='pulley'?'آزمایشگاه قرقره 🛞':'آزمایشگاه سطح شیب‌دار 📐';
+  showScreen('scr-game');
+  AudioFX.click();
+  if(lab==='pulley')levelP1();else levelI1();}
+
+/* ═══════════════════════════════════════════════════════
+   گواهی پایانی
+   ═══════════════════════════════════════════════════════ */
+function openFinal(){
+  save.finalSeen=true;persist();
+  showScreen('scr-final');
+  $('#final-name').textContent=(save.name||'مهندس کوچولو')+' 🎉';
+  let stars='⭐'.repeat((save.pulley.s1?1:0)+(save.pulley.s2?1:0)+(save.pulley.s3?1:0)+
+    (save.incline.s1?1:0)+(save.incline.s2?1:0)+(save.incline.s3?1:0));
+  if(save.incline.gold)stars+='🌟';
+  stars+=' 🎖️'.repeat((save.pulley.badge?1:0)+(save.incline.badge?1:0));
+  $('#final-stars').textContent=stars;
+  $('#final-laws').innerHTML=[
+   '<div class="law">🛞 قرقره <b>جهت نیرو</b> رو عوض می‌کنه — برای بالا بردن، به پایین می‌کشی!</div>',
+   '<div class="law">⚙️ قرقره‌ی ثابت فقط جهت رو عوض می‌کنه؛ قرقره‌ی متحرک نیرو رو <b>نصف</b> می‌کنه (ولی نخ رو دو برابر می‌کشی!)</div>',
+   '<div class="law">📐 سطح شیب‌دار <b>نیروی لازم</b> رو کم می‌کنه — با ۸۰ نیوتن به‌جای ۲۰۰ نیوتن!</div>',
+   '<div class="law">⛰️ هر چی شیب کمتر → نیروی کمتر، ولی مسافت بیشتر!</div>',
+   '<div class="law">🌍 این دو تا <b>ماشین ساده</b> هستن: در جرثقیل، چاه، آسانسور، سرسره، نردبان، رمپ و جاده‌ی کوهستانی!</div>'
+  ].join('');
+  const secs=save.logs.reduce((a,l)=>a+(l.secs||0),0);
+  const atts=save.logs.reduce((a,l)=>a+(l.attempts||0),0);
+  $('#final-stats').innerHTML='⏱ زمان بازی: حدود <b>'+fa(Math.max(1,Math.round(secs/60)))+' دقیقه</b> • 🔁 تعداد تلاش‌ها: <b>'+fa(atts)+'</b> • ⭐ ستاره‌ها: <b>'+fa(6+(save.incline.gold?1:0))+'</b>';
+  const cd=$('#final-confetti');cd.innerHTML='';
+  const ems=['🎉','⭐','🌟','🎊','✨','🎈'];
+  for(let i=0;i<36;i++){
+    const s=h('span','',ems[i%ems.length]);
+    s.style.left=(Math.random()*100)+'%';
+    s.style.animationDuration=(2.6+Math.random()*2.8)+'s';
+    s.style.animationDelay=(Math.random()*2.5)+'s';
+    s.style.fontSize=(0.9+Math.random()*1.2)+'em';
+    cd.appendChild(s);}
+  AudioFX.win();}
+
+/* ═══════════════════════════════════════════════════════
+   گزارش (دیتابیس محلی)
+   ═══════════════════════════════════════════════════════ */
+const LNAME={P1:'قرقره ۱ — بدون قرقره',P2:'قرقره ۲ — قرقره‌ی ثابت',P3:'قرقره ۳ — مقایسه‌ی قرقره‌ها',
+  QP:'آزمون قرقره',I1:'شیب ۱ — بلند کردن مستقیم',I2:'شیب ۲ — با تخته',I3:'شیب ۳ — تغییر شیب',
+  I4:'شیب ۴ — بونوس زندگی واقعی',QI:'آزمون سطح شیب‌دار'};
+function openReport(){
+  const body=$('#report-body');
+  if(!save.logs.length){
+    body.innerHTML='<p style="text-align:center;font-weight:800;padding:1em 0">هنوز بازی نکردی! برو چند تا مرحله بازی کن تا گزارشت ساخته بشه! 🎮</p>';}
+  else{
+    const rows=save.logs.map(l=>'<tr><td>'+(LNAME[l.id]||l.id)+'</td><td>'+fa(l.secs)+' ثانیه</td><td>'+fa(l.attempts)+'</td><td>✓ موفق</td></tr>').join('');
+    const secs=save.logs.reduce((a,l)=>a+(l.secs||0),0);
+    const atts=save.logs.reduce((a,l)=>a+(l.attempts||0),0);
+    const stars=(save.pulley.s1?1:0)+(save.pulley.s2?1:0)+(save.pulley.s3?1:0)+
+      (save.incline.s1?1:0)+(save.incline.s2?1:0)+(save.incline.s3?1:0)+(save.incline.gold?1:0);
+    body.innerHTML='<h4>📋 رکورد مرحله‌ها</h4><table class="rt"><tr><th>مرحله</th><th>زمان</th><th>تلاش</th><th>نتیجه</th></tr>'+rows+'</table>'+
+      '<h4>📌 خلاصه</h4><div style="font-weight:800;line-height:2.2">بازیکن: '+((save.name||'مهندس کوچولو'))+
+      '<br>⏱ کل زمان: '+fa(Math.floor(secs/60))+' دقیقه و '+fa(secs%60)+' ثانیه'+
+      '<br>🔁 کل تلاش‌ها: '+fa(atts)+
+      '<br>⭐ ستاره‌ها: '+fa(stars)+(save.pulley.badge||save.incline.badge?' + نشان دانش 🎖️':'')+'</div>'+
+      '<p class="rt-note">این اطلاعات به‌صورت خودکار روی همین دستگاه ذخیره می‌شه (دیتابیس محلی بازی) و با بستن بازی پاک نمی‌شه.</p>';}
+  $('#modal-report').classList.remove('hidden');}
+
+/* ═══════════════════════════════════════════════════════
+   راه‌اندازی
+   ═══════════════════════════════════════════════════════ */
+(function init(){
+  const sc=charInto($('#splash-char'));
+  sc.setFace('happy');sc.setPose('cheer');
+  const hc=charInto($('#hub-char'));
+  hc.setFace('happy');
+  const tips=['می‌دونستی قرقره توی چاه، پرچم و آسانسور هم استفاده می‌شه؟',
+    'هر چی شیب کمتر باشه، راحت‌تر بالا می‌ری!',
+    'نردبان هم یه سطح شیب‌دار خیلی تنده!',
+    'قرقره‌ی متحرک نیرو رو نصف می‌کنه!',
+    'رمپ ویلچر هم یه سطح شیب‌داره!'];
+  let ti=0;
+  $('#hub-char').insertAdjacentHTML('beforeend','<div id="hub-tip">'+tips[0]+'</div>');
+  setInterval(()=>{ti=(ti+1)%tips.length;const t=$('#hub-tip');if(t)t.textContent=tips[ti];},6000);
+  $('#inp-name').value=save.name||'';
+  setSound(!!save.sound);
+  $('#btn-start').addEventListener('click',()=>{
+    save.name=($('#inp-name').value||'').trim();persist();
+    AudioFX.unlock();AudioFX.click();
+    renderHub('سلام '+(save.name||'مهندس کوچولو')+'! یه آزمایشگاه رو انتخاب کن!');
+    showScreen('scr-hub');});
+  $('#inp-name').addEventListener('keydown',e=>{if(e.key==='Enter')$('#btn-start').click();});
+  $('#card-pulley').addEventListener('click',()=>startLab('pulley'));
+  $('#card-incline').addEventListener('click',()=>startLab('incline'));
+  $('#btn-home').addEventListener('click',()=>{
+    AudioFX.click();
+    clearTimers();
+    if(Game.raf) cancelAnimationFrame(Game.raf);
+    try { window.parent.postMessage({ type: 'hakim-gosh-back' }, '*'); } catch(e){}
+    renderHub();
+    showScreen('scr-hub');
+  });
+  $('#btn-sound').addEventListener('click',()=>setSound(!save.sound));
+  $('#btn-sound2').addEventListener('click',()=>setSound(!save.sound));
+  $('#btn-report').addEventListener('click',()=>{AudioFX.click();openReport();});
+  $('#btn-close-report').addEventListener('click',()=>$('#modal-report').classList.add('hidden'));
+  $('#btn-copy-report').addEventListener('click',()=>{
+    const txt='گزارش بازی ماشین‌های ساده\n'+
+      save.logs.map(l=>(LNAME[l.id]||l.id)+' | زمان: '+l.secs+' ثانیه | تلاش: '+l.attempts).join('\n');
+    try{navigator.clipboard.writeText(txt).then(()=>toast('گزارش کپی شد! 📋'),()=>toast('کپی نشد — دستی یادداشت کن!'));}
+    catch(e){toast('کپی نشد — دستی یادداشت کن!');}});
+  let resetArmed=false,resetTimer=null;
+  $('#btn-reset').addEventListener('click',()=>{
+    if(!resetArmed){resetArmed=true;$('#btn-reset').textContent='مطمئنی؟ دوباره بزن!';
+      resetTimer=setTimeout(()=>{resetArmed=false;$('#btn-reset').textContent='🗑 از اول';},3000);}
+    else{clearTimeout(resetTimer);resetArmed=false;
+      const nm=save.name,snd=save.sound;
+      save=defaultSave();save.name=nm;save.sound=snd;persist();
+      $('#btn-reset').textContent='🗑 از اول';
+      renderHub('همه‌چیز پاک شد! از اول شروع کنیم! 🎮');
+      AudioFX.boop();}});
+  $('#go-final').addEventListener('click',()=>{AudioFX.click();openFinal();});
+  $('#btn-final-hub').addEventListener('click',()=>{AudioFX.click();renderHub();showScreen('scr-hub');});
+  $('#btn-replay').addEventListener('click',()=>{
+    const nm=save.name,snd=save.sound;
+    save=defaultSave();save.name=nm;save.sound=snd;persist();
+    AudioFX.click();renderHub('بازی جدید شروع شد! موفق باشی! 🚀');showScreen('scr-hub');});
+  document.addEventListener('pointerdown',()=>AudioFX.unlock(),{once:true});
+  fitStage();
+  const aLab = window.AUTO_START_LAB || 'pulley';
+  if(window.STUDENT_NAME) save.name = window.STUDENT_NAME;
+  if(aLab === 'pulley' || aLab === 'incline'){
+    setTimeout(()=>{
+      AudioFX.unlock();
+      startLab(aLab);
+    }, 40);
+  }
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3f066534aca5f94',t:'MTc5MDA3MDU2Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
