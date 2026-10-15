@@ -1,0 +1,336 @@
+/*!
+ * a11y.css — لایهٔ دسترس‌پذیری حکیمستان
+ * نسخه: 1.0.0
+ * مطابق WCAG 2.2 سطح AA
+ *
+ * این فایل عمداً «کم‌مداخله» است: هیچ چیدمانی را جابه‌جا نمی‌کند،
+ * فقط فوکوس، لینک پرش، هدف لمس و ترجیحات کاربر را اصلاح می‌کند.
+ */
+
+/* ══════════════════════════════════════════════════════════
+   ۱) لینک پرش به محتوای اصلی (WCAG 2.4.1 — Bypass Blocks)
+   ══════════════════════════════════════════════════════════ */
+.skip-link,
+a.skip-link {
+  position: fixed;
+  top: -100px;
+  inset-inline-start: 16px;
+  z-index: 2147483647;
+  padding: 12px 22px;
+  border-radius: 0 0 14px 14px;
+  background: #12234d;
+  color: #ffe9a8 !important;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-decoration: none;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  border: 2px solid #ffd166;
+  border-top: 0;
+  transition: top 0.18s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible,
+a.skip-link:focus {
+  top: 0;
+  outline: 3px solid #ffd166;
+  outline-offset: 2px;
+}
+
+/* پشتیبانی از نام قدیمی کلاس در صفحات موجود («skip») */
+.skip:focus,
+.skip:focus-visible {
+  outline: 3px solid #ffd166;
+  outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۲) نشانگر فوکوس سراسری (WCAG 2.4.7 / 2.4.11 / 2.4.13)
+   ══════════════════════════════════════════════════════════ */
+:focus {
+  outline: 3px solid #ffb703;
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid #ffb703;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* روی پس‌زمینه‌های روشن رنگ فوکوس تیره‌تر می‌شود */
+@media (prefers-color-scheme: light) {
+  body[data-theme='light'] :focus-visible,
+  body[data-theme='paper'] :focus-visible {
+    outline-color: #7b2ff7;
+  }
+}
+
+/* فوکوس روی عناصر تیره/طلایی (دکمه‌های اصلی لابی) */
+.hk-focus-ring:focus-visible,
+.hk-focus-ring:focus {
+  outline: 3px solid #5eead4 !important;
+  outline-offset: 4px !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۳) کمکی‌های صفحه‌خوان
+   ══════════════════════════════════════════════════════════ */
+.sr-only,
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+  white-space: normal !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۴) هدف لمس ≥ ۴۴×۴۴ پیکسل (WCAG 2.2 — 2.5.8 Target Size)
+   فقط زمانی اعمال می‌شود که ماژول JS کلاس را اضافه کند و
+   عنصر موجود از قبل شبه‌عنصر تزئینی نداشته باشد.
+   هیچ تغییری در چیدمان رخ نمی‌دهد؛ فقط ناحیهٔ کلیک بزرگ‌تر می‌شود.
+   ══════════════════════════════════════════════════════════ */
+.a11y-hit {
+  position: relative;
+}
+
+.a11y-hit::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(44px, 100%);
+  height: max(44px, 100%);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۵) تصاویر و مدیا
+   ══════════════════════════════════════════════════════════ */
+img,
+picture,
+video,
+canvas,
+svg,
+iframe {
+  max-width: 100%;
+}
+
+video:focus-visible,
+audio:focus-visible {
+  outline: 3px solid #ffb703;
+  outline-offset: 3px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۶) کنتراست بالا (WCAG 1.4.6 / 1.4.11)
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-contrast: more) {
+  :root {
+    --muted: #d9d2f5;
+    --glass-brd: rgba(255, 255, 255, 0.45);
+  }
+
+  a:not([class]),
+  .muted,
+  small {
+    color: #ffffff !important;
+  }
+
+  .skip-link {
+    background: #000000;
+    color: #ffee00 !important;
+  }
+
+  * {
+    border-color: currentColor;
+  }
+}
+
+/* حالت دستی کنتراست بالا (دکمهٔ کاربر)
+   هدف: رساندن رنگ‌های کم‌کنتراست به بالای ۴.۵:۱
+   بدون دست‌زدن به چیدمان یا هویت رنگی هر صفحه */
+html.hk-high-contrast {
+  --muted: #f2eeff;
+  --gold-light: #ffe6a8;
+  --glass-brd: rgba(255, 255, 255, 0.5);
+}
+
+/* متن‌های کم‌کنتراست را پررنگ‌تر و خوانا‌تر می‌کند */
+html.hk-high-contrast body,
+html.hk-high-contrast .muted,
+html.hk-high-contrast small,
+html.hk-high-contrast figcaption,
+html.hk-high-contrast .slogan,
+html.hk-high-contrast .panel-group-label {
+  color: #ffffff !important;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* اگر صفحه روشن است، متن تیره می‌شود (به‌جای سفید) */
+html.hk-high-contrast body[data-theme='sunny'] .muted,
+html.hk-high-contrast body[data-theme='sky'] .muted,
+html.hk-high-contrast body[data-theme='candy'] .muted,
+html.hk-high-contrast body[data-theme='shad'] .muted {
+  color: #10131c !important;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+html.hk-high-contrast a:focus-visible,
+html.hk-high-contrast button:focus-visible {
+  outline-width: 4px;
+  outline-color: #ffffff;
+  background-color: #000000;
+  color: #ffee00;
+}
+
+html.hk-high-contrast img {
+  filter: contrast(1.15);
+}
+
+/* خطوط اضافه برای جداسازی بهتر */}
+html.hk-high-contrast button,
+html.hk-high-contrast a.btn,
+html.hk-high-contrast input,
+html.hk-high-contrast select {
+  border-color: currentColor !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۷) کاهش انیمیشن (WCAG 2.3.3)
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* خاموش‌کردن دستی انیمیشن */
+html.hk-reduce-motion *,
+html.hk-reduce-motion *::before,
+html.hk-reduce-motion *::after {
+  animation-play-state: paused !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۸) نوار ابزار دسترس‌پذیری (اختیاری، از طریق JS ساخته می‌شود)
+   ══════════════════════════════════════════════════════════ */
+#a11y-toolbar {
+  position: fixed;
+  inset-block-end: 18px;
+  inset-inline-start: 18px;
+  z-index: 99998;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  /* پس‌زمینهٔ مات پشتیبان تا اگر backdrop-filter پشتیبانی نشد،
+     کنتراست دکمه‌ها حفظ شود */
+  background-color: #0e0a22;
+  background-color: rgba(14, 10, 34, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+}
+
+@supports (backdrop-filter: blur(4px)) {
+  #a11y-toolbar {
+    background-color: rgba(14, 10, 34, 0.88);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  }
+}
+
+#a11y-toolbar button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  /* #ffe9a8 روی #0e0a22 ≈ 13.8:1 — بالاتر از آستانهٔ AA */
+  color: #ffe9a8;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#a11y-toolbar button[aria-pressed='true'] {
+  background: #ffd166;
+  color: #1b1035;
+}
+
+#a11y-toolbar button:focus-visible {
+  outline: 3px solid #5eead4;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  #a11y-toolbar {
+    inset-block-end: 10px;
+    inset-inline-start: 10px;
+  }
+  #a11y-toolbar button {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۹) ناحیهٔ اعلان صفحه‌خوان
+   ══════════════════════════════════════════════════════════ */
+.hk-live {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ۱۰) احترام به اندازهٔ فونت کاربر
+   ══════════════════════════════════════════════════════════ */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media print {
+  .skip-link,
+  #a11y-toolbar,
+  .hk-live {
+    display: none !important;
+  }
+}
