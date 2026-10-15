@@ -19,6 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- CSS -->
+<link rel="stylesheet" href="css/main.min.css">
 <style>
 :root {
   color-scheme: light;
@@ -38,21 +39,6 @@
   --soft-purple: #f1f0ff;
   --soft-green: #edfff4;
   --transition: all .3s cubic-bezier(.4,0,.2,1);
-}
-
-body[data-theme="dark"] {
-  color-scheme: dark;
-  --page: #111426;
-  --surface: #1c2037;
-  --surface-soft: #242942;
-  --surface-line: #373d5c;
-  --ink: #f1f2ff;
-  --muted: #aab1ca;
-  --purple: #a69bff;
-  --purple-dark: #c2baff;
-  --shadow: 0 15px 38px rgba(0,0,0,.28);
-  --soft-purple: #302b54;
-  --soft-green: #173c35;
 }
 
 * { box-sizing: border-box; }
@@ -332,10 +318,26 @@ body {
   <link rel="preload" href="hakim-core.js" as="script">
 
 </head>
-<body>
+<body data-theme="modern">
   <div class="app-shell">
     <!-- Header -->
     <header class="page-header">
+      <button type="button" class="theme-btn" id="themeBtn" aria-label="انتخاب تم صفحه" title="تم صفحه">🎨</button>
+<div class="theme-panel" id="themePanel" role="dialog" aria-label="انتخاب تم صفحه">
+  <div class="theme-title">🎨 تم صفحه رو انتخاب کن</div>
+  <div class="theme-group">تیره</div>
+  <button type="button" class="theme-opt" data-theme="night"><span class="theme-dot" style="--sw:linear-gradient(135deg,#2a1a4a,#f5c76a)"></span><span class="theme-name">شب عرفانی</span><span class="theme-check">✓</span></button>
+  <button type="button" class="theme-opt" data-theme="ocean"><span class="theme-dot" style="--sw:linear-gradient(135deg,#0a2740,#38bdf8)"></span><span class="theme-name">اقیانوس نیمه‌شب</span><span class="theme-check">✓</span></button>
+  <button type="button" class="theme-opt" data-theme="forest"><span class="theme-dot" style="--sw:linear-gradient(135deg,#0a2e1f,#34d399)"></span><span class="theme-name">جنگل اسرارآمیز</span><span class="theme-check">✓</span></button>
+  <div class="theme-group">روشن</div>
+  <button type="button" class="theme-opt" data-theme="sunny"><span class="theme-dot" style="--sw:linear-gradient(135deg,#fff8ec,#f59e0b)"></span><span class="theme-name">صبح روشن</span><span class="theme-check">✓</span></button>
+  <button type="button" class="theme-opt" data-theme="sky"><span class="theme-dot" style="--sw:linear-gradient(135deg,#e0f2fe,#0ea5e9)"></span><span class="theme-name">آسمان آبی</span><span class="theme-check">✓</span></button>
+  <div class="theme-group">کارتونی</div>
+  <button type="button" class="theme-opt" data-theme="candy"><span class="theme-dot" style="--sw:linear-gradient(135deg,#f9a8d4,#a78bfa,#6ee7b7)"></span><span class="theme-name">آب‌نباتی</span><span class="theme-check">✓</span></button>
+  <button type="button" class="theme-opt" data-theme="shad"><span class="theme-dot" style="--sw:linear-gradient(135deg,#ff7d3b,#3d8bff)"></span><span class="theme-name">حکیمستان شاد</span><span class="theme-check">✓</span></button>
+  <div class="theme-group">✨ حالت ویژه</div>
+  <button type="button" class="theme-opt" data-theme="modern"><span class="theme-dot" style="--sw:linear-gradient(135deg,#ff7d3b,#3ba7ff)"></span><span class="theme-name">مدرن <small>(پیش‌فرض)</small></span><span class="theme-check">✓</span></button>
+</div>
       <a href="index.html" class="back-link reveal d1">
         <span>←</span>
         <span>بازگشت به لابی</span>
