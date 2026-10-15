@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مبدل آزمون‌ساز به HQF | حکیمستان</title>
 <!-- فونت وزیرمتن از گوگل فونتس (تنها منبع خارجی؛ در آفلاین با فونت جایگزین کار می‌کند) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/fonts.css">
+
 <style>
   /* ─── متغیرهای تم ─── */
   :root {
@@ -310,9 +311,7 @@
     background: rgba(255,255,255,.055);
     border: 1px solid rgba(255,255,255,.10);
     box-shadow: var(--shadow);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);}
 
   .card h2,
   .settings h3 {
@@ -492,9 +491,7 @@
     border: 1px solid rgba(255,255,255,.10) !important;
     border-radius: 20px !important;
     box-shadow: 0 18px 50px rgba(0,0,0,.28) !important;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);}
 
   @media (max-width: 640px) {
     #hakimMount {
@@ -503,6 +500,25 @@
   }
 
 </style>
+<!-- hakim-meta:start -->
+<meta name="description" content="مبدل آزمون‌ساز به HQF — فایل آزمون خود را به قالب استاندارد حکیمستان تبدیل کنید و در بازی‌ها و آزمون‌ها به کار ببرید.">
+<meta name="theme-color" content="#e7edff">
+<link rel="canonical" href="https://hakimistan.ir/hqf-converter.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="مبدل آزمون‌ساز به HQF | حکیمستان">
+<meta property="og:description" content="مبدل آزمون‌ساز به HQF — فایل آزمون خود را به قالب استاندارد حکیمستان تبدیل کنید و در بازی‌ها و آزمون‌ها به کار ببرید.">
+<meta property="og:url" content="https://hakimistan.ir/hqf-converter.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="مبدل آزمون‌ساز به HQF | حکیمستان">
+<meta name="twitter:description" content="مبدل آزمون‌ساز به HQF — فایل آزمون خود را به قالب استاندارد حکیمستان تبدیل کنید و در بازی‌ها و آزمون‌ها به کار ببرید.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body>
 <div id="hakimMount"></div>
@@ -1900,5 +1916,10 @@
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>

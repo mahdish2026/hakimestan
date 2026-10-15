@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ff7d3b">
@@ -361,7 +364,7 @@ textarea.code{direction:ltr;text-align:left}
 .drawer-item.danger{color:#e0342f}
 
 /* ─── مودال و تست ─── */
-.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:none;align-items:center;justify-content:center;padding:20px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .modal-ov.open{display:flex;animation:fadeUp .25s}
 .modal{background:var(--card);border-radius:26px;padding:24px;width:100%;max-width:400px;box-shadow:var(--shadow);border:2px solid var(--line);animation:popIn .3s}
 .modal h3{font-size:1.1rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
@@ -391,7 +394,6 @@ textarea.code{direction:ltr;text-align:left}
   .theme-grid{grid-template-columns:repeat(4,1fr)}
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
-
 
 /* ═══════════════════════════════════════════════════════════════════
    پیام‌رسان حکیمستان — لایه استایل نسخه ۲ (افزوده‌ها و بهسازی‌ها)
@@ -631,7 +633,7 @@ body[data-mode="dark"] .bubble .quote{background:rgba(255,255,255,.08)}
 .att-state{font-size:.7rem;font-weight:800;color:var(--muted);display:flex;align-items:center;gap:6px}
 
 /* ─── ۵. نمایشگر تصویر (لایت‌باکس) ─── */
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:140;display:none;flex-direction:column;backdrop-filter:blur(6px)}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:140;display:none;flex-direction:column;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .lightbox.open{display:flex;animation:fadeUp .22s}
 .lightbox-top{display:flex;align-items:center;gap:10px;padding:12px 14px;color:#fff}
 .lightbox-top .who{font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -1281,7 +1283,7 @@ body[data-mode="dark"] .live-bg.show{opacity:.55}
   border-radius:99px;border:3px solid transparent;background-clip:content-box
 }
 * {scrollbar-width:thin;scrollbar-color:var(--accent) transparent}
-#btnScrollDown{box-shadow:0 8px 22px -8px rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+#btnScrollDown{box-shadow:0 8px 22px -8px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 
 /* ─── ۴-۵) جزئیات تزئینی ─── */
 .topbar h1{letter-spacing:-.01em}
@@ -1291,7 +1293,7 @@ body[data-mode="dark"] .live-bg.show{opacity:.55}
 .day-sep{
   background:linear-gradient(135deg, var(--card), var(--card2));
   border:1px solid var(--line);box-shadow:0 6px 16px -10px rgba(0,0,0,.3);
-  backdrop-filter:blur(4px)
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)
 }
 /* کارت‌های آماری پنل معلم */
 .stat-card{transition:transform .2s ease, box-shadow .2s ease}
@@ -1335,6 +1337,23 @@ body[data-bgimg="on"] #page-chat .main::before{
 }
 
 </style>
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/payamresan.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="پیامرسان حکیمستان">
+<meta property="og:description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، جستجوی پیشرفته و کار آفلاین">
+<meta property="og:url" content="https://hakimistan.ir/payamresan.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="پیامرسان حکیمستان">
+<meta name="twitter:description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، جستجوی پیشرفته و کار آفلاین">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 <body data-theme="hakimستان" data-mode="light" data-font="medium">
 
@@ -1345,7 +1364,6 @@ body[data-bgimg="on"] #page-chat .main::before{
 
 <!-- ═══ بنر آفلاین ═══ -->
 <div class="offline-banner" id="offlineBanner" role="alert"><span id="offlineTxt">اینترنت قطع است</span></div>
-
 
 <!-- ═══ آیکون‌های SVG (نسخه قبل + آیکون‌های تازه) ═══ -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1838,7 +1856,6 @@ body[data-bgimg="on"] #page-chat .main::before{
     </div>
   </section>
 
-
   <!-- ═════════ ۷. پروفایل کاربری ═════════ -->
   <section id="page-profile" class="page">
     <div class="topbar">
@@ -1942,7 +1959,6 @@ body[data-bgimg="on"] #page-chat .main::before{
   <button id="installBtn" type="button">نصب</button>
   <button id="installX" type="button" aria-label="بستن">✕</button>
 </div>
-
 
 <noscript><div style="padding:40px;text-align:center;font-family:Tahoma">برای استفاده از پیام‌رسان حکیمستان، جاوااسکریپت را فعال کنید.</div></noscript>
 
@@ -7103,5 +7119,18 @@ var V3 = (function(){
   } catch(e){}
 })();
 </script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+<!-- hakim-contrast:start -->
+<style id="hk-contrast-layer">
+/* اصلاح کنتراست WCAG — تولیدشده توسط tools/gen-contrast-layer.mjs */
+.btn-danger, .word-chip button, .msg-actions .mini-btn.danger:hover, .rec-btn.stop{background-color:#ea0000}
+#btnBackToList,
+  #btnBackToList.is-hidden{color:#d04600}
+</style>
+<!-- hakim-contrast:end -->
 </body>
 </html>

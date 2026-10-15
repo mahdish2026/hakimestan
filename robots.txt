@@ -1,0 +1,55 @@
+# ============================================================
+#  حکیمستان — robots.txt
+#  پلتفرم آموزشی رایگان برای دانش‌آموزان و معلمان
+# ============================================================
+
+User-agent: *
+Allow: /
+
+# پوشه‌های داخلی و ابزارهای توسعه‌دهنده نباید ایندکس شوند
+Disallow: /tools/
+Disallow: /node_modules/
+Disallow: /.git/
+
+# صفحه‌هایی که ارزش جست‌وجو ندارند
+Disallow: /offline.html
+Disallow: /404.html
+Disallow: /judges.html
+
+# ---------- خزنده‌های خاص ----------
+
+# گوگل: تصاویر و ویدیوهای آموزشی مجاز به ایندکس هستند
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+# خزنده‌های پرمصرف — محدودکردن پوشهٔ رسانه‌ها برای صرفه‌جویی پهنای باند
+User-agent: AhrefsBot
+Crawl-delay: 10
+Disallow: /videos/
+Disallow: /books/
+
+User-agent: SemrushBot
+Crawl-delay: 10
+Disallow: /videos/
+Disallow: /books/
+
+User-agent: MJ12bot
+Crawl-delay: 15
+Disallow: /videos/
+Disallow: /books/
+
+# ربات‌های هوش مصنوعی که محتوا را بدون اجازه برداشت می‌کنند
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# ---------- نقشهٔ سایت ----------
+Sitemap: https://hakimistan.ir/sitemap.xml

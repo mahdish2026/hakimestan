@@ -1,0 +1,48 @@
+# ============================================================
+#  حکیمستان — فایل‌هایی که نباید در مخزن باشند
+# ============================================================
+
+# وابستگی‌ها
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+npm-debug.log*
+yarn-error.log*
+
+# خروجی ابزارهای ساخت
+dist/
+build/
+out/
+.cache/
+
+# فایل‌های موقت و پشتیبان
+*.tmp
+*.bak
+*.orig
+*.old
+*.log
+*.swp
+*~
+
+# فایل‌های سیستمی
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# فایل‌های شخصی / محلی
+.env
+.env.*
+*.local
+*.private
+
+# ابزارها و ویرایشگرها
+.vscode/
+.idea/
+*.code-workspace
+
+# گزارش‌های تست و کارایی
+lighthouse-report*.html
+lighthouse-report*.json
+reports/
+coverage/

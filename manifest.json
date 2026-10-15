@@ -1,11 +1,35 @@
 {
-  "name": "حکیمستان",
+  "name": "حکیمستان — دیار حکیم، سرزمین یادگیری",
   "short_name": "حکیمستان",
-  "description": "پلتفرم آموزشی حکیمستان",
-  "start_url": "/hakimestan/",
+  "id": "./",
+  "description": "پلتفرم آموزشی رایگان حکیمستان: بازی‌های آموزشی فارسی، آزمون‌ساز آفلاین، دفتر معلم، درسگاه و ماجراجویی‌های دانش برای دانش‌آموزان و معلمان.",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#120a1e",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "orientation": "any",
+  "background_color": "#0d0a1f",
   "theme_color": "#5b4a9e",
+  "categories": [
+    "education",
+    "games",
+    "productivity",
+    "kids"
+  ],
+  "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": [
+      "navigate-existing",
+      "auto"
+    ]
+  },
   "icons": [
     {
       "src": "icon.svg",
@@ -14,10 +38,152 @@
       "purpose": "any"
     },
     {
-      "src": "icon.svg",
+      "src": "icons/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/lobby.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "لابی حکیمستان — پنج وادی دانش"
+    },
+    {
+      "src": "screenshots/mancheh.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "منچِ دانش آنلاین"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "لابی و بازی‌ها",
+      "short_name": "لابی",
+      "description": "ورود به لابی حکیمستان و انتخاب بازی",
+      "url": "./index.html?source=shortcut-lobby",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "آزمون‌ساز",
+      "short_name": "آزمون‌ساز",
+      "description": "ساخت و چاپ آزمون برای معلمان",
+      "url": "./azmoon-saz.html?source=shortcut-exam",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "دفتر معلم",
+      "short_name": "دفتر معلم",
+      "description": "برنامهٔ هفتگی، حضور و غیاب و نمره‌ها",
+      "url": "./daftar.html?source=shortcut-daftar",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "فیلم‌های راهنما",
+      "short_name": "فیلم‌ها",
+      "description": "ویدیوهای آموزشی بخش‌های حکیمستان",
+      "url": "./videos.html?source=shortcut-videos",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }

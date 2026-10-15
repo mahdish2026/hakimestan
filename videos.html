@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>فیلم‌های حکیمستان</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/fonts.css">
+
 <style>
 /* ═══════════════════════════════════════════
    TOKENS — modern (default)
@@ -413,9 +415,7 @@ body[data-theme="shad"] {
   width: fit-content;
   max-width: calc(100vw - 2rem);
   background: var(--nav-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 99px;
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius: 99px;
   box-shadow: 0 6px 18px -10px rgba(120,70,30,.15);
   overflow-x: auto;
   scrollbar-width: none;
@@ -467,9 +467,7 @@ body[data-theme="shad"] {
   margin-bottom: 1.4rem;
   padding: 10px 16px;
   background: var(--sec-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 16px;
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius: 16px;
   border: 1.5px solid var(--glass-brd, #f0e3da);
   font-size: 1.05rem;
   font-weight: 900;
@@ -538,6 +536,11 @@ body[data-theme="shad"] {
   cursor: pointer;
   flex-shrink: 0;
 }
+.card-thumb picture {
+  display: block;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
 .card-thumb img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -572,7 +575,8 @@ body[data-theme="shad"] {
   padding: 0 .8rem;
   line-height: 1.5;
 }
-.card-thumb img.loaded ~ .thumb-ph { display: none; }
+.card-thumb img.loaded ~ .thumb-ph,
+.card-thumb.has-image .thumb-ph { display: none; }
    
 /* play overlay (shown when file exists) */
 .play-overlay {
@@ -805,6 +809,25 @@ body[data-theme="shad"] {
   }
 }
 </style>
+<!-- hakim-meta:start -->
+<meta name="description" content="فیلم‌های آموزشی حکیمستان — مجموعهٔ ویدیوهای درس و کارگاه برای معلمان و دانش‌آموزان، با پخش روان روی موبایل.">
+<meta name="theme-color" content="#faf8f3">
+<link rel="canonical" href="https://hakimistan.ir/videos.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="فیلم‌های حکیمستان">
+<meta property="og:description" content="فیلم‌های آموزشی حکیمستان — مجموعهٔ ویدیوهای درس و کارگاه برای معلمان و دانش‌آموزان، با پخش روان روی موبایل.">
+<meta property="og:url" content="https://hakimistan.ir/videos.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="فیلم‌های حکیمستان">
+<meta name="twitter:description" content="فیلم‌های آموزشی حکیمستان — مجموعهٔ ویدیوهای درس و کارگاه برای معلمان و دانش‌آموزان، با پخش روان روی موبایل.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
 </head>
 
 <body data-theme="modern">
@@ -938,7 +961,7 @@ body[data-theme="shad"] {
     </div>
     <div class="modal-footer">
       <span class="modal-desc" id="modalDescEl"></span>
-      <a class="modal-link" id="modalLinkEl" href="#"></a>
+      <a class="modal-link" id="modalLinkEl" href="#" target="_blank" rel="noopener noreferrer" hidden aria-label="بازکردن صفحهٔ مرتبط در پنجرهٔ جدید"></a>
     </div>
   </div>
 </div>
@@ -1076,9 +1099,14 @@ function openModal(video) {
     modalLink.href        = video.link;
     modalLink.textContent = '← ' + video.linkLabel;
     modalLink.style.display = '';
+    modalLink.hidden = false;
+    modalLink.setAttribute('aria-label', (video.linkLabel || 'پیوند مرتبط') + ' — بازکردن در پنجرهٔ جدید');
   } else {
     modalLink.style.display = 'none';
+    modalLink.hidden = true;
   }
+  modalVideo.poster = 'videos/' + video.id + '.jpg';
+  modalVideo.setAttribute('aria-label', 'پخش ویدیوی ' + video.title);
   modalVideo.src = 'videos/' + video.id + '.mp4';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1108,12 +1136,29 @@ function buildCard(video) {
   thumb.className = 'card-thumb';
   thumb.setAttribute('aria-label', 'پیش‌نمایش: ' + video.title);
 
+  /* تصویر با پشتیبانی WebP و اندازه‌های واکنش‌گرا
+     نسخه‌های WebP از tools/optimize-images.mjs ساخته می‌شوند و
+     اگر موجود نباشند، مرورگر خودکار به JPEG برمی‌گردد. */
+  const base = 'videos/' + video.id;
+  const picture = document.createElement('picture');
+  const source = document.createElement('source');
+  source.type = 'image/webp';
+  source.srcset = `${base}-480.webp 480w, ${base}-960.webp 960w, videos/optimized/${video.id}.webp 1280w`;
+  source.sizes = '(max-width: 560px) 92vw, (max-width: 1000px) 46vw, 380px';
+
   const img = document.createElement('img');
-  img.alt = video.title;
-  img.onload  = () => img.classList.add('loaded');
-  img.onerror = () => img.classList.remove('loaded');
-  img.src = 'videos/' + video.id + '.jpg';
-  thumb.appendChild(img);
+  img.alt = 'پیش‌نمایش ویدیوی ' + video.title;
+  img.width = 1280;
+  img.height = 720;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.onload  = () => { img.classList.add('loaded'); thumb.classList.add('has-image'); };
+  img.onerror = () => { img.classList.remove('loaded'); thumb.classList.remove('has-image'); };
+  img.src = base + '.jpg';
+
+  picture.appendChild(source);
+  picture.appendChild(img);
+  thumb.appendChild(picture);
 
   const ph = document.createElement('div');
   ph.className = 'thumb-ph';
@@ -1243,5 +1288,10 @@ renderSections();
 
 <!-- دکمهٔ بازگشت به لابی -->
 <script src="back-to-lobby.js"></script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
 </body>
 </html>
