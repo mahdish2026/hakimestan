@@ -139,17 +139,24 @@
   </url>
 
   <url>
-    <loc>https://hakimistan.ir/judges.html</loc>
+    <loc>https://hakimistan.ir/panels/teacher.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://hakimistan.ir/panels/teacher.html</loc>
+    <loc>https://hakimistan.ir/games/teacher.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hakimistan.ir/install-pwa.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>

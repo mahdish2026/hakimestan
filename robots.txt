@@ -11,9 +11,10 @@ Disallow: /tools/
 Disallow: /node_modules/
 Disallow: /.git/
 
-# صفحاتی که ارزش جست‌وجو ندارند
-Disallow: /install-pwa.html
+# صفحه‌هایی که ارزش جست‌وجو ندارند
 Disallow: /offline.html
+Disallow: /404.html
+Disallow: /judges.html
 
 # ---------- خزنده‌های خاص ----------
 
@@ -51,5 +52,4 @@ User-agent: anthropic-ai
 Disallow: /
 
 # ---------- نقشهٔ سایت ----------
-Sitemap: https://hakimestan.example/sitemap.xml
-# ⚠ پس از انتشار روی دامنهٔ واقعی، این نشانی را با دامنهٔ خودتان جایگزین کنید.
+Sitemap: https://hakimistan.ir/sitemap.xml
