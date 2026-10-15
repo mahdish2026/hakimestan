@@ -5,7 +5,8 @@
  *
  * کارها:
  *   • ثبت sw.js با مسیر درست (ریشه یا زیرپوشه)
- *   • نمایش دکمهٔ «نصب برنامه» در صورت پشتیبانی مرورگر
+ *   • دکمهٔ «نصب برنامه» فقط در جایگاه صریح [data-pwa-install] صفحه
+ *   • بنر پیشنهاد نصب در پایین صفحه (تأخیر ۴ ثانیه، قابل بستن برای ۷ روز)
  *   • اعلان «نسخهٔ جدید آماده است» + به‌روزرسانی با یک کلیک
  *   • نمایش وضعیت آنلاین/آفلاین به کاربر
  *   • API عمومی HakimPWA
@@ -140,7 +141,45 @@
     if (global.HakimA11y) global.HakimA11y.announce('نسخهٔ جدید حکیمستان آماده است. برای به‌روزرسانی دکمهٔ به‌روزرسانی را بزنید.');
   }
 
-  /* ── دکمهٔ نصب ─────────────────────────────────────────── */
+  /* ── دکمهٔ نصب / پیشنهاد نصب ────────────────────────────── */
+  var INSTALL_DISMISS_KEY = 'hakim.pwa.installDismissedAt';
+  var DAY_MS = 24 * 60 * 60 * 1000;
+  var DISMISS_MS = 7 * DAY_MS;   // «فعلاً نه» → هفت روز سکوت
+  var SUGGEST_DELAY = 4000;      // بنر با ۴ ثانیه تأخیر می‌آید تا مزاحم ورود نشود
+
+  /* مهلتِ «دیگر نشان نده» را می‌خواند/می‌نویسد.
+     ساختار ذخیره‌شده: { t: زمانِ ثبت، ms: مدت مهلت } */
+  function readDismissRecord() {
+    var v = null;
+    if (global.HakimSec && global.HakimSec.store) {
+      v = global.HakimSec.store.get('pwa.installDismissedAt', null);
+    } else {
+      try { v = JSON.parse(localStorage.getItem(INSTALL_DISMISS_KEY)); } catch (e) { v = null; }
+    }
+    return (v && typeof v.t === 'number') ? v : null;
+  }
+
+  function rememberDismiss(ms) {
+    var record = { t: Date.now(), ms: ms };
+    if (global.HakimSec && global.HakimSec.store) {
+      global.HakimSec.store.set('pwa.installDismissedAt', record);
+      return;
+    }
+    try { localStorage.setItem(INSTALL_DISMISS_KEY, JSON.stringify(record)); } catch (e) {}
+  }
+
+  function installDismissed() {
+    var v = readDismissRecord();
+    if (!v) return false;
+    var ms = (typeof v.ms === 'number' && v.ms > 0) ? v.ms : DISMISS_MS;
+    return (Date.now() - v.t) < ms;
+  }
+
+  function removeInstallSuggestion() {
+    var bar = document.getElementById('hk-install-banner');
+    if (bar) bar.remove();
+  }
+
   function makeInstallButton() {
     if (document.getElementById('hk-install-btn')) return null;
     var b = document.createElement('button');
@@ -153,38 +192,88 @@
     return b;
   }
 
+  /* دکمهٔ برچسب‌دار — فقط اگر صفحه جایگاه صریح [data-pwa-install] داشته باشد
+     همان‌جا نشانده می‌شود؛ وگرنه هیچ دکمه‌ای به هدر صفحه‌ها تزریق نمی‌کنیم
+     (دایرهٔ بنفش مبهم گوشهٔ صفحه حذف شد). */
   function showInstallButton() {
     if (isStandalone) return;
     if (document.getElementById('hk-install-btn')) return;
 
+    var host = document.querySelector('[data-pwa-install]');
+    if (!host || host.querySelector('#hk-install-btn')) return;
+
     var b = makeInstallButton();
     if (!b) return;
 
-    // جایگاه‌های ترجیحی برای قرارگیری دکمه
-    var hosts = [
-      '[data-pwa-install]',
-      '.topbar .toptools',
-      'header .nav',
-      'header .actions',
-      '.hero .row',
-      '.hero-actions',
-      'header',
-      '.topbar'
-    ];
-    var host = null;
-    for (var i = 0; i < hosts.length; i++) {
-      var found = document.querySelector(hosts[i]);
-      if (found && !found.querySelector('#hk-install-btn')) { host = found; break; }
-    }
+    injectStyle();
+    host.appendChild(b);
+  }
+
+  /* بنر پیشنهاد نصب — نوار ثابت پایین صفحه، با تأخیر ۴ ثانیه.
+     اگر کاربر «فعلاً نه» بزند تا هفت روز و اگر «نصب» بزند تا یک روز
+     دیگر نشان داده نمی‌شود (کلید hakim.pwa.installDismissedAt). */
+  function showInstallSuggestion() {
+    if (isStandalone) return;
+    if (document.getElementById('hk-install-banner')) return;
+    if (installDismissed()) return;
+    if (!document.body) return;
 
     injectStyle();
 
-    if (host) {
-      host.appendChild(b);
-    } else {
-      b.classList.add('hk-install-floating');
-      document.body.appendChild(b);
+    var bar = document.createElement('div');
+    bar.id = 'hk-install-banner';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'پیشنهاد نصب برنامهٔ حکیمستان');
+
+    var text = document.createElement('div');
+    text.className = 'hk-ib-text';
+    var title = document.createElement('strong');
+    title.textContent = 'نصب حکیمستان روی این دستگاه';
+    var sub = document.createElement('span');
+    sub.textContent = 'مثل یک اپ واقعی — آفلاین، سریع و بدون فروشگاه';
+    text.appendChild(title);
+    text.appendChild(sub);
+
+    var yes = document.createElement('button');
+    yes.type = 'button';
+    yes.id = 'hk-ib-yes';
+    yes.textContent = '⬇️ نصب برنامه';
+
+    var no = document.createElement('button');
+    no.type = 'button';
+    no.id = 'hk-ib-no';
+    no.setAttribute('aria-label', 'فعلاً نه');
+    no.title = 'فعلاً نه';
+    no.textContent = '✕';
+
+    yes.addEventListener('click', function () {
+      // همان مهلت، این بار یک روز (تا مزاحم نشود ولی فرصت نصب بماند)
+      rememberDismiss(DAY_MS);
+      removeInstallSuggestion();
+      doInstall();
+    });
+
+    no.addEventListener('click', function () {
+      rememberDismiss(DISMISS_MS);
+      removeInstallSuggestion();
+      if (global.HakimA11y) global.HakimA11y.announce('پیشنهاد نصب بسته شد. تا هفت روز دیگر نشان داده نمی‌شود.');
+    });
+
+    bar.appendChild(text);
+    bar.appendChild(yes);
+    bar.appendChild(no);
+    document.body.appendChild(bar);
+
+    if (global.HakimA11y) {
+      global.HakimA11y.announce('می‌توانید حکیمستان را مثل یک برنامهٔ واقعی روی این دستگاه نصب کنید.');
     }
+  }
+
+  /* پیشنهاد نصب را با تأخیر نشان می‌دهد (اگر جایگاه صریحی وجود ندارد) */
+  function scheduleInstallSuggestion() {
+    if (isStandalone) return;
+    if (document.querySelector('[data-pwa-install]')) return;
+    global.setTimeout(showInstallSuggestion, SUGGEST_DELAY);
   }
 
   function injectStyle() {
@@ -198,10 +287,25 @@
       'font:800 .85rem Vazirmatn,Tahoma,sans-serif;cursor:pointer;white-space:nowrap}',
       '.hk-install-btn:hover{filter:brightness(1.12)}',
       '.hk-install-btn:focus-visible{outline:3px solid #5eead4;outline-offset:3px}',
-      '.hk-install-floating{position:fixed;inset-block-start:76px;inset-inline-end:16px;z-index:9997}',
-      '@media(max-width:600px){.hk-install-btn .hk-install-text{display:none}',
-      '.hk-install-btn{padding:10px;border-radius:50%;width:44px;height:44px}}',
-      '@media print{.hk-install-btn{display:none!important}}'
+      /* بنر پیشنهاد نصب: نوار تیرهٔ ثابت پایین صفحه */
+      '#hk-install-banner{position:fixed;inset-inline:0;inset-block-end:0;z-index:2147482000;',
+      'display:flex;align-items:center;gap:10px;flex-wrap:wrap;direction:rtl;',
+      'padding:12px 14px;padding-block-end:calc(12px + env(safe-area-inset-bottom,0px));',
+      'background:#141033;color:#f1ecff;border-block-start:1px solid rgba(255,255,255,.22);',
+      'box-shadow:0 -10px 30px rgba(0,0,0,.45);',
+      'font:600 .86rem/1.7 Vazirmatn,Tahoma,sans-serif;',
+      'animation:hk-ib-in .35s ease-out both}',
+      '.hk-ib-text{display:flex;flex-direction:column;gap:2px;flex:1 1 220px;min-width:0}',
+      '.hk-ib-text strong{color:#ffffff;font-size:.95rem}',
+      '.hk-ib-text span{color:#cfc6f2}',
+      '#hk-ib-yes{padding:9px 16px;border:0;border-radius:11px;cursor:pointer;white-space:nowrap;',
+      'background:#f5c76a;color:#1b1035;font:800 .85rem Vazirmatn,Tahoma,sans-serif}',
+      '#hk-ib-yes:hover{filter:brightness(1.08)}',
+      '#hk-ib-no{padding:4px 8px;border:0;border-radius:8px;background:transparent;color:inherit;',
+      'cursor:pointer;font-size:1.05rem;line-height:1}',
+      '#hk-ib-yes:focus-visible,#hk-ib-no:focus-visible{outline:3px solid #5eead4;outline-offset:3px}',
+      '@keyframes hk-ib-in{from{transform:translateY(110%);opacity:0}to{transform:translateY(0);opacity:1}}',
+      '@media print{#hk-install-banner,.hk-install-btn{display:none!important}}'
     ].join('');
     document.head.appendChild(s);
   }
@@ -275,20 +379,26 @@
     global.addEventListener('beforeinstallprompt', function (e) {
       e.preventDefault();
       deferredPrompt = e;
-      showInstallButton();
+      // جایگاه صریح → دکمهٔ برچسب‌دار همان‌جا؛ وگرنه بنر پیشنهاد پایین صفحه
+      if (document.querySelector('[data-pwa-install]')) showInstallButton();
+      else scheduleInstallSuggestion();
     });
 
     global.addEventListener('appinstalled', function () {
       deferredPrompt = null;
       var btn = document.getElementById('hk-install-btn');
       if (btn) btn.remove();
+      removeInstallSuggestion();
       if (global.HakimA11y) global.HakimA11y.announce('برنامهٔ حکیمستان نصب شد.');
     });
 
     // در iOS رویداد beforeinstallprompt وجود ندارد → راهنمای دستی
     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !global.MSStream;
     if (isIOS && !isStandalone) {
-      setTimeout(showInstallButton, 1200);
+      global.setTimeout(function () {
+        if (document.querySelector('[data-pwa-install]')) showInstallButton();
+        else scheduleInstallSuggestion();
+      }, 1200);
     }
   }
 
@@ -306,6 +416,8 @@
     get registration() { return registration; },
     promptInstall: doInstall,
     showInstallButton: showInstallButton,
+    showInstallSuggestion: showInstallSuggestion,
+    hideInstallSuggestion: removeInstallSuggestion,
     clearCaches: function () { return tellSW({ type: 'CLEAR_CACHES' }); },
     getCacheStats: function () { return tellSW({ type: 'CACHE_STATS' }); },
     cachePage: function (u) { return tellSW({ type: 'CACHE_PAGE', url: u }); }
