@@ -131,7 +131,7 @@ a{color:var(--accent)}
 ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px;border:2px solid transparent;background-clip:padding-box}::-webkit-scrollbar-track{background:transparent}
 
 /* ============ هدر ============ */
-.top{position:sticky;top:0;z-index:40;background:var(--top);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--border)}
+.top{position:sticky;top:0;z-index:40;background:var(--top);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--border)}
 .topin{max-width:1320px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.15rem;color:var(--accent);white-space:nowrap}
 .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);display:grid;place-items:center;box-shadow:var(--shadow-sm);flex:none}
@@ -321,7 +321,7 @@ details.acc>.acc-body{padding:4px 16px 16px;border-top:1px dashed var(--border)}
 .hakim .av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);border:2px solid var(--card);box-shadow:var(--shadow-sm);flex:none}
 .hakim{cursor:pointer}.hakim .bub{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:14px 14px 14px 4px;padding:9px 12px;font-size:.8rem;box-shadow:var(--shadow);direction:rtl;line-height:1.6}
 #hakim{max-width:min(380px,88vw)}
-#hakim .hakim-panel{margin:0;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;overflow:visible;gap:8px;align-items:flex-end;direction:ltr}
+#hakim .hakim-panel{margin:0;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;overflow:visible;gap:8px;align-items:flex-end;direction:ltr}
 #hakim .hakim-panel::before{display:none}
 #hakim .hakim-avatar{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 28%,#ffe9b0 0%,#e9b44c 42%,#8a5a1a 100%);box-shadow:0 0 16px rgba(233,180,76,.4),inset 0 -3px 8px rgba(0,0,0,.35);flex:none}
 #hakim .hakim-face{background:radial-gradient(circle at 42% 30%,#2c2040 0%,#120a1e 100%);box-shadow:inset 0 0 8px rgba(0,0,0,.7)}
@@ -332,7 +332,7 @@ details.acc>.acc-body{padding:4px 16px 16px;border-top:1px dashed var(--border)}
 #hakim .hakim-text{font-size:.8rem;color:var(--text);line-height:1.6;font-weight:500}
 @media(max-width:700px){#hakim .hakim-avatar{width:52px;height:52px}#hakim .hakim-text{font-size:.75rem}}
 
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;animation:fade .2s}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;animation:fade .2s}
 .modal{background:var(--card);border:1px solid var(--border-2);border-radius:18px;padding:20px;width:min(640px,100%);max-height:90dvh;overflow:auto;box-shadow:var(--shadow)}
 .modal h3{margin-bottom:10px}
 iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px solid var(--border);border-radius:14px;background:#fff}
@@ -1491,7 +1491,8 @@ function resultDetailModal(r){
   $('#mdCard').onclick=()=>printCards([r]);
   $('#mdClose').onclick=closeModal;
 }
-function reportHTML(list,title){const css=`body{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111;padding:14px}h1{text-align:center;font-size:18px;margin:0 0 4px}h2{font-size:15px;margin:0 0 8px}.m{text-align:center;color:#555;font-size:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #666;padding:5px 7px;text-align:center}th{background:#eee}td.r{text-align:right}.card{border:2px solid #333;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid}.big{font-size:26px;font-weight:900;text-align:center;padding:8px;background:#f3f3f3;border-radius:8px;margin:8px 0}.sig{display:flex;justify-content:space-between;margin-top:14px;font-size:12px}@media print{@page{size:A4;margin:10mm}}`;return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title><link href="${GOOGLE_FONTS_URL}" rel="stylesheet"><style>${css}</style><!-- hakim-core:start -->
+function reportHTML(list,title){const css=`body{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111;padding:14px}h1{text-align:center;font-size:18px;margin:0 0 4px}h2{font-size:15px;margin:0 0 8px}.m{text-align:center;color:#555;font-size:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #666;padding:5px 7px;text-align:center}th{background:#eee}td.r{text-align:right}.card{border:2px solid #333;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid}.big{font-size:26px;font-weight:900;text-align:center;padding:8px;background:#f3f3f3;border-radius:8px;margin:8px 0}.sig{display:flex;justify-content:space-between;margin-top:14px;font-size:12px}@media print{@page{size:A4;margin:10mm}}`;return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title><link href="${GOOGLE_FONTS_URL}" rel="stylesheet"><style>${css}</style>
+<!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
 <!-- hakim-core:end -->
 </head><body>`}

@@ -265,7 +265,7 @@ html.hk-reduce-motion *::after {
 @supports (backdrop-filter: blur(4px)) {
   #a11y-toolbar {
     background-color: rgba(14, 10, 34, 0.88);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   }
 }
 

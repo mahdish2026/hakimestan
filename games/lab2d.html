@@ -82,13 +82,15 @@ img{max-width:100%}
 
 .card{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  padding:clamp(16px,3vw,30px);
+  box-shadow:var(--shadow);-webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);padding:clamp(16px,3vw,30px);
 }
 .pill{
   display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:600;
   padding:.3rem .8rem;border-radius:999px;border:1px solid var(--line);
+  background:rgba(41, 29, 11, 0.16);
   background:color-mix(in oklab, var(--h,#ffb547) 16%, transparent);
+  color:#ffc5.47ae147ae1486f.7ae147ae147c;
   color:color-mix(in oklab, var(--h,#ffb547) 78%, white);
 }
 .muted{color:var(--muted)}
@@ -162,6 +164,7 @@ img{max-width:100%}
 .exp-card .les{font-size:.8rem;color:var(--muted)}
 .exp-stars{margin-top:auto;display:flex;gap:.18rem;font-size:1.05rem;color:#e9a71f;letter-spacing:1px}
 .exp-card .done-badge{position:absolute;top:.9rem;left:.9rem;font-size:.72rem;font-weight:800;
+  background:rgba(4, 43, 38, 0.24);
   background:color-mix(in oklab,var(--teal) 24%,transparent);color:#0f7f6e;border:1px solid rgba(47,214,192,.5);
   padding:.2rem .55rem;border-radius:999px}
 .lobby-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.4rem}
@@ -179,7 +182,7 @@ img{max-width:100%}
   background:linear-gradient(180deg,#ffffff,#f1f7fd);box-shadow:var(--shadow)}
 .stage canvas{display:block;width:100%;height:auto;touch-action:manipulation}
 .taskbar{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1rem;
-  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.8rem;backdrop-filter:blur(10px)}
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.8rem;-webkit-backdrop-filter:blur(10px)}
 .taskbar h3{font-size:1.05rem;font-family:var(--font-display);color:#8a5a12}
 .ctrl{display:flex;flex-direction:column;gap:.35rem}
 .ctrl label{font-size:.85rem;font-weight:600;color:#33445f;display:flex;justify-content:space-between;gap:.5rem}
@@ -233,7 +236,7 @@ input[type=range]{width:100%;accent-color:var(--amber);height:26px}
 
 /* ---------- quiz overlay ---------- */
 .overlay{position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:16px;
-  background:rgba(19,34,56,.42);backdrop-filter:blur(6px);overflow:auto}
+  background:rgba(19,34,56,.42);-webkit-backdrop-filter:blur(6px);overflow:auto}
 .overlay.show{display:grid}
 .quiz-card{width:min(680px,100%);background:linear-gradient(170deg,#ffffff,#f3f8fd 92%);
   border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:clamp(16px,3vw,26px);animation:fadeUp .35s ease both}
@@ -246,8 +249,8 @@ input[type=range]{width:100%;accent-color:var(--amber);height:26px}
 .opt .k{width:26px;height:26px;flex:none;border-radius:9px;display:grid;place-items:center;font-size:.8rem;
   background:rgba(242,166,59,.18);font-weight:800}
 .opt:hover:not(.locked){transform:translateX(-4px);background:rgba(242,166,59,.12);border-color:rgba(242,166,59,.55)}
-.opt.correct{background:color-mix(in oklab,var(--teal) 25%,transparent);border-color:var(--teal)}
-.opt.wrong{background:color-mix(in oklab,var(--rose) 22%,transparent);border-color:var(--rose)}
+.opt.correct{background:rgba(5, 45, 40, 0.25);background:color-mix(in oklab,var(--teal) 25%,transparent);border-color:var(--teal)}
+.opt.wrong{background:rgba(49, 20, 26, 0.22);background:color-mix(in oklab,var(--rose) 22%,transparent);border-color:var(--rose)}
 .opt.locked{cursor:default}
 .qfb{margin-top:.9rem;font-weight:700;font-size:.95rem;min-height:1.4em}
 .qfb.ok{color:#0f7f6e}.qfb.no{color:#b93a58}
@@ -336,8 +339,8 @@ ul.cert-list li .mt{font-size:.74rem;color:#7b8399;font-weight:700;white-space:n
 .steps-mini{display:flex;gap:.28rem;flex-wrap:wrap;margin:.35rem 0 .1rem}
 .dot{width:23px;height:23px;border-radius:8px;display:grid;place-items:center;font-size:.66rem;font-weight:800;
   background:rgba(19,34,56,.05);border:1px solid var(--line);color:var(--muted);transition:.2s}
-.dot.done{background:color-mix(in oklab,var(--teal) 26%,transparent);color:#0f7f6e;border-color:rgba(47,214,192,.5)}
-.dot.cur{background:color-mix(in oklab,var(--amber) 32%,transparent);color:#8a5a12;border-color:rgba(255,181,71,.65);transform:scale(1.12)}
+.dot.done{background:rgba(5, 47, 42, 0.26);background:color-mix(in oklab,var(--teal) 26%,transparent);color:#0f7f6e;border-color:rgba(47,214,192,.5)}
+.dot.cur{background:rgba(77, 53, 19, 0.32);background:color-mix(in oklab,var(--amber) 32%,transparent);color:#8a5a12;border-color:rgba(255,181,71,.65);transform:scale(1.12)}
 .step-btn{width:100%}
 .step-hint{font-size:.78rem;color:#8a5a12;font-weight:600}
 .tools{display:flex;flex-wrap:wrap;gap:.3rem}
@@ -3646,10 +3649,19 @@ renderLobby();
 })();
 </script>
 
+
+
 <!-- hakim-core:start -->
 <script src="../js/hakim-security.js" defer></script>
 <script src="../js/hakim-a11y.js" defer></script>
 <script src="../js/hakim-sw-register.js" defer></script>
 <!-- hakim-core:end -->
+
+<!-- hakim-contrast:start -->
+<style id="hk-contrast-layer">
+/* اصلاح کنتراست WCAG — تولیدشده توسط tools/gen-contrast-layer.mjs */
+ul.cert-list li .tick{color:#6b5f46}
+</style>
+<!-- hakim-contrast:end -->
 </body>
 </html>

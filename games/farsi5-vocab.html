@@ -653,6 +653,7 @@
       border-radius: 20px;
       padding: 18px;
       box-shadow: var(--shadow-main);
+      -webkit-backdrop-filter:blur(12px);
       backdrop-filter: blur(12px);
       margin-bottom: 16px;
     }
@@ -1529,6 +1530,7 @@
       position: fixed;
       inset: 0;
       background: rgba(5, 3, 15, 0.76);
+      -webkit-backdrop-filter:blur(6px);
       backdrop-filter: blur(6px);
       z-index: 1000;
       display: none;
@@ -1610,7 +1612,7 @@
       #certModalBackdrop * { visibility: visible; }
       #certModalBackdrop { position: absolute; inset: 0; background: #fff !important; padding: 0; }
       #printModal, #printModal * { visibility: visible; }
-      #printModal { position: absolute; inset: 0; background: #fff !important; padding: 0; display: block; overflow: visible; height: auto; backdrop-filter: none; }
+      #printModal { position: absolute; inset: 0; background: #fff !important; padding: 0; display: block; overflow: visible; height: auto; -webkit-backdrop-filter:none; backdrop-filter: none; }
       #printModal .modal-box { box-shadow: none; border: none; max-width: 100%; max-height: none; overflow: visible; padding: 0; animation: none; background: #fff; }
       .no-print { display: none !important; }
       .print-sheet { padding: 15mm; page-break-inside: auto; }
@@ -1673,8 +1675,8 @@
       border: 1.5px solid var(--border-color) !important;
       border-radius: 20px !important;
       box-shadow: var(--shadow-main) !important;
+      -webkit-backdrop-filter:blur(12px);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
     }
 
     body[data-app="farsi5-vocab"] #hakimMount .hakim-bubble,
@@ -1709,6 +1711,10 @@
 
     body[data-app="farsi5-vocab"] #hakimMount .hakim-avatar,
     body[data-app="farsi5-vocab"] #hakimPanelMount .hakim-avatar {
+      background:radial-gradient(circle at 30% 28%,
+        #f9b1d7 0%,
+        var(--accent-primary) 45%,
+        #92446d 100%) !important;
       background: radial-gradient(circle at 30% 28%,
         color-mix(in srgb, var(--accent-primary) 55%, white) 0%,
         var(--accent-primary) 45%,
@@ -1719,6 +1725,9 @@
 
     body[data-app="farsi5-vocab"] #hakimMount .hakim-face,
     body[data-app="farsi5-vocab"] #hakimPanelMount .hakim-face {
+      background:radial-gradient(circle at 42% 30%,
+        #04040b 0%,
+        var(--bg-primary) 100%) !important;
       background: radial-gradient(circle at 42% 30%,
         color-mix(in srgb, var(--bg-primary) 60%, black) 0%,
         var(--bg-primary) 100%) !important;
@@ -1735,6 +1744,7 @@
     body[data-app="farsi5-vocab"] #hakimMount .hakim-badge,
     body[data-app="farsi5-vocab"] #hakimPanelMount .hakim-badge {
       color: var(--accent-secondary) !important;
+      background:rgba(129, 140, 248, 0.14) !important;
       background: color-mix(in srgb, var(--accent-secondary) 14%, transparent) !important;
       border-color: var(--border-color) !important;
     }
@@ -1869,7 +1879,7 @@
     body { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
     /* --- اسکرول‌بار برندسازی‌شده (هر تم، رنگ خودش) --- */
-    * { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--accent-primary) 60%, transparent) transparent; }
+    * { scrollbar-width: thin; scrollbar-color:rgba(244, 114, 182, 0.6) transparent; scrollbar-color: color-mix(in srgb, var(--accent-primary) 60%, transparent) transparent; }
     ::-webkit-scrollbar { width: 10px; height: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
@@ -1907,6 +1917,7 @@
     .splash-title {
       font-family: 'Lalezar', 'Vazirmatn', sans-serif;
       font-size: 2.1rem; margin-top: 8px; letter-spacing: 0;
+      background:linear-gradient(90deg, var(--accent-primary), #fac0de, var(--accent-primary));
       background: linear-gradient(90deg, var(--accent-primary), color-mix(in srgb, var(--accent-primary) 45%, white), var(--accent-primary));
       background-size: 200% 100%;
       -webkit-background-clip: text; background-clip: text;
@@ -1930,6 +1941,10 @@
     /* --- درخشش متحرک تیتر برند + شناوری لوگو --- */
     @supports ((-webkit-background-clip: text) or (background-clip: text)) {
       .brand-title > span:first-child {
+        background:linear-gradient(90deg,
+          var(--accent-primary) 0%,
+          #fac0de 50%,
+          var(--accent-primary) 100%);
         background: linear-gradient(90deg,
           var(--accent-primary) 0%,
           color-mix(in srgb, var(--accent-primary) 45%, white) 50%,
@@ -1983,7 +1998,8 @@
       width: 46px; height: 46px; border-radius: 50%;
       border: 1px solid var(--border-color);
       background: var(--bg-glass);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      backdrop-filter: blur(10px);
       color: var(--text-primary); font-size: 1.05rem; cursor: pointer;
       box-shadow: var(--shadow-main);
       opacity: 0; visibility: hidden; transform: translateY(12px);
@@ -1998,8 +2014,10 @@
         position: sticky;
         top: env(safe-area-inset-top, 0px);
         z-index: 50;
+        background:rgba(6, 6, 18, 0.82);
         background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
-        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        -webkit-backdrop-filter:blur(12px);
+        backdrop-filter: blur(12px);
       }
     }
 

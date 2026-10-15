@@ -91,7 +91,10 @@ async function main() {
     }
 
     const withHead = inject(html, block, '</head>');
-    const withBoth = inject(withHead, scripts, '</body>');
+    // اسکریپت‌ها پیش از لایهٔ کنتراست بیایند تا آن لایه همیشه آخرین چیز در سند بماند
+    const contrastMarker = '<!-- hakim-contrast:start -->';
+    const anchor = html.includes(contrastMarker) ? contrastMarker : '</body>';
+    const withBoth = inject(withHead, scripts, anchor);
 
     if (withBoth !== original) {
       changed++;

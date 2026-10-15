@@ -390,8 +390,7 @@ a{text-decoration:none;color:inherit;}
 /* ---------- مودال سؤال ---------- */
 .modal{
   position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;
-  padding:16px;background:rgba(20,40,32,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
-}
+  padding:16px;background:rgba(20,40,32,.55);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);}
 .modal.hidden{display:none;}
 .qcard{
   width:100%;max-width:460px;max-height:92vh;max-height:92dvh;overflow-y:auto;
@@ -2065,7 +2064,7 @@ function applyState(res){
     renderWait();
   }
 }
-function playersSig(){ return room.players.map(p => p.name + '|' + p.color).join(';;'); }
+function playersSig(){ return room.players.map(p => p.name + '|' + p.color).join(';'); }
 function rebuildBoard(){
   room.builtFor = playersSig();
   room.displayed = room.players.map(p => p.pos);
@@ -3227,10 +3226,26 @@ loadServerQuestions(() => renderHome());
   } catch(e){}
 })();
 </script>
+
+
+
+
+
+
+
 <!-- hakim-core:start -->
 <script src="../js/hakim-security.js" defer></script>
 <script src="../js/hakim-a11y.js" defer></script>
 <script src="../js/hakim-sw-register.js" defer></script>
 <!-- hakim-core:end -->
+
+<!-- hakim-contrast:start -->
+<style id="hk-contrast-layer">
+/* اصلاح کنتراست WCAG — تولیدشده توسط tools/gen-contrast-layer.mjs */
+.opt.correct .letter{background-color:#178640}
+.opt.wrong .letter{background-color:#e81414}
+.multi-opt.checked .box{background-color:#23863c}
+</style>
+<!-- hakim-contrast:end -->
 </body>
 </html>

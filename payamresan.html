@@ -361,7 +361,7 @@ textarea.code{direction:ltr;text-align:left}
 .drawer-item.danger{color:#e0342f}
 
 /* ─── مودال و تست ─── */
-.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:none;align-items:center;justify-content:center;padding:20px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .modal-ov.open{display:flex;animation:fadeUp .25s}
 .modal{background:var(--card);border-radius:26px;padding:24px;width:100%;max-width:400px;box-shadow:var(--shadow);border:2px solid var(--line);animation:popIn .3s}
 .modal h3{font-size:1.1rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
@@ -631,7 +631,7 @@ body[data-mode="dark"] .bubble .quote{background:rgba(255,255,255,.08)}
 .att-state{font-size:.7rem;font-weight:800;color:var(--muted);display:flex;align-items:center;gap:6px}
 
 /* ─── ۵. نمایشگر تصویر (لایت‌باکس) ─── */
-.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:140;display:none;flex-direction:column;backdrop-filter:blur(6px)}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:140;display:none;flex-direction:column;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .lightbox.open{display:flex;animation:fadeUp .22s}
 .lightbox-top{display:flex;align-items:center;gap:10px;padding:12px 14px;color:#fff}
 .lightbox-top .who{font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -1281,7 +1281,7 @@ body[data-mode="dark"] .live-bg.show{opacity:.55}
   border-radius:99px;border:3px solid transparent;background-clip:content-box
 }
 * {scrollbar-width:thin;scrollbar-color:var(--accent) transparent}
-#btnScrollDown{box-shadow:0 8px 22px -8px rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+#btnScrollDown{box-shadow:0 8px 22px -8px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 
 /* ─── ۴-۵) جزئیات تزئینی ─── */
 .topbar h1{letter-spacing:-.01em}
@@ -1291,7 +1291,7 @@ body[data-mode="dark"] .live-bg.show{opacity:.55}
 .day-sep{
   background:linear-gradient(135deg, var(--card), var(--card2));
   border:1px solid var(--line);box-shadow:0 6px 16px -10px rgba(0,0,0,.3);
-  backdrop-filter:blur(4px)
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)
 }
 /* کارت‌های آماری پنل معلم */
 .stat-card{transition:transform .2s ease, box-shadow .2s ease}
@@ -7106,10 +7106,26 @@ var V3 = (function(){
   } catch(e){}
 })();
 </script>
+
+
+
+
+
+
+
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>
 <script src="js/hakim-sw-register.js" defer></script>
 <!-- hakim-core:end -->
+
+<!-- hakim-contrast:start -->
+<style id="hk-contrast-layer">
+/* اصلاح کنتراست WCAG — تولیدشده توسط tools/gen-contrast-layer.mjs */
+.btn-danger, .word-chip button, .msg-actions .mini-btn.danger:hover, .rec-btn.stop{background-color:#ea0000}
+#btnBackToList,
+  #btnBackToList.is-hidden{color:#d04600}
+</style>
+<!-- hakim-contrast:end -->
 </body>
 </html>
