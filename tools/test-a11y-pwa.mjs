@@ -126,10 +126,12 @@ async function testContrast() {
     !!star && /border-color:\s*currentColor/.test(star) &&
     /font-weight:\s*bolder/.test(star) && /text-shadow:\s*none/.test(star));
 
-  // بلوک‌های تم روشن (sunny/sky/candy/shad) نباید سایه داشته باشند
-  const light = css.match(/html\.hk-high-contrast body\[data-theme='sunny'\][^{]*\{([^}]*)\}/);
-  ok('بلوک تم روشن بدون سایه', !!light && !/text-shadow/.test(light[1]));
-  ok('بلوک تم روشن متن تیرهٔ #10131c دارد', !!light && /color:\s*#10131c\s*!important/.test(light[1]));
+  // رنگ متن کنتراست: دو قانونِ متقابلاً انحصاری، بدون فهرست ثابت تم‌ها
+  const hcWhite = css.match(/html\.hk-high-contrast:not\(\.hk-hc-light\) body,[^{]*\{([^}]*)\}/);
+  const hcDark = css.match(/html\.hk-high-contrast\.hk-hc-light body,[^{]*\{([^}]*)\}/);
+  ok('متن سفید فقط با html.hk-high-contrast:not(.hk-hc-light)', !!hcWhite && /color:\s*#ffffff\s*!important/.test(hcWhite[1]) && !/text-shadow/.test(hcWhite[1]));
+  ok('متن تیرهٔ #10131c فقط با html.hk-high-contrast.hk-hc-light', !!hcDark && /color:\s*#10131c\s*!important/.test(hcDark[1]) && !/text-shadow/.test(hcDark[1]));
+  ok('هیچ فهرست ثابت body[data-theme=…] برای کنتراست نمانده', !/hk-high-contrast[^{]*body\[data-theme=/.test(css));
 }
 
 /* ══════════════ ۳) دکمهٔ نصب PWA ══════════════ */
@@ -168,7 +170,7 @@ async function testInstallSource() {
 async function testVersion() {
   const sw = await readFile(join(ROOT, 'sw.js'), 'utf8');
   const m = sw.match(/const VERSION = '([^']+)'/);
-  ok(`sw.js → VERSION = 'hakim-v1.3.4'`, !!m && m[1] === 'hakim-v1.3.4', m ? m[1] : 'یافت نشد');
+  ok(`sw.js → VERSION = 'hakim-v1.3.7'`, !!m && m[1] === 'hakim-v1.3.7', m ? m[1] : 'یافت نشد');
   ok('نام کش‌ها از VERSION ساخته می‌شود', /\$\{VERSION\}-shell/.test(sw));
 }
 
