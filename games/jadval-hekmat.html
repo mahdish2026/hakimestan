@@ -477,37 +477,47 @@ const state = {
 /* همراه متنی حکیم؛ بدون خواندن با صدا و بدون SVG محلی */
 /* این بخش فقط نمایش پیام را کنترل می‌کند، نه پاسخ، امتیاز یا جدول. */
 /* ================================================================== */
-let hakimPanel = null, hakimFallback = null;
+let hakimPanel = null, hakimFallback = null, hakimLastMsg = '', hakimLastAt = 0;
+const HAKIM_REPEAT_MS = 4000;
+
+function hakimClearChat(){
+  try{ if(window.Hakim && typeof window.Hakim.reset === 'function') window.Hakim.reset(); }catch(e){}
+  document.querySelectorAll('.hakim-panel, .hakim-fallback').forEach(el => el.remove());
+  hakimPanel = null;
+  hakimFallback = null;
+}
+
 function hakimSay(text, mood){
   const errorOpen = !document.getElementById('modalError').classList.contains('hidden');
   const resultOpen = !document.getElementById('modalResult').classList.contains('hidden');
   const host = document.getElementById(errorOpen ? 'hakimError' : resultOpen ? 'hakimResult' :
     document.getElementById('screenStart').classList.contains('hidden') ? 'hakimGame' : 'hakimStart');
   if(!host) return;
+  const msg = text ? String(text) : '';
+  if(msg && msg === hakimLastMsg && (Date.now() - hakimLastAt) < HAKIM_REPEAT_MS) return;
+  hakimClearChat();
+  hakimLastMsg = msg;
+  hakimLastAt = Date.now();
+  if(!msg) return;
+
   const core = window.Hakim;
   try{
     if(core && typeof core.init === 'function' && typeof core.say === 'function'){
-      if(!hakimPanel){
-        core.init({container:host, font:false});
-        hakimPanel = host.querySelector('.hakim-panel');
-      }
+      core.init({container:host, font:false});
+      hakimPanel = host.querySelector('.hakim-panel');
       if(hakimPanel){
-        if(hakimFallback) hakimFallback.remove();
-        if(hakimPanel.parentNode !== host) host.appendChild(hakimPanel);
-        if(text) core.say(String(text), {mood:mood || 'normal', autoHide:false, speed:reduceMotion ? 1 : 12});
+        core.say(msg, {mood:mood || 'normal', autoHide:false, speed:reduceMotion ? 1 : 12});
         return;
       }
     }
   }catch(e){ /* نبودن یا خطای حکیم‌کور نباید بازی را متوقف کند. */ }
-  if(!hakimFallback){
-    hakimFallback = document.createElement('div');
-    hakimFallback.className = 'hakim-fallback';
-    hakimFallback.setAttribute('role','status');
-    hakimFallback.setAttribute('aria-live','polite');
-  }
-  if(hakimPanel) hakimPanel.remove();
-  if(hakimFallback.parentNode !== host) host.appendChild(hakimFallback);
-  if(text) hakimFallback.textContent = 'حکیم: ' + String(text);
+
+  hakimFallback = document.createElement('div');
+  hakimFallback.className = 'hakim-fallback';
+  hakimFallback.setAttribute('role','status');
+  hakimFallback.setAttribute('aria-live','polite');
+  hakimFallback.textContent = 'حکیم: ' + msg;
+  host.appendChild(hakimFallback);
 }
 function hakimReact(event, data){
   data = data || {};
