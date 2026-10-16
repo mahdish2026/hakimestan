@@ -1764,76 +1764,101 @@ function renderMatch(q){
 }
 
 /* ------------------------------------------------------------------ */
-/* ۱۲-پ) ثبت پاسخ آنلاین: اول سرور، اگر نشد بررسی محلی                   */
+/* ۱۲-پ) ثبت پاسخ آنلاین: داوری همیشه با سرور (sl_answer)                */
 /* ------------------------------------------------------------------ */
 async function submitOnline(choice){
   if(modalLocked) return;
   modalLocked = true;
   const q = currentQ;
   room.myAnswered++;
-  lastAnswer = { qid: (q && q.id != null) ? q.id : '', payload: choice.payload };
+  lastAnswer = { qid: (q && q.id != null) ? q.id : '', payload: choice.payload, sentToServer: false };
   if(choice.lock) choice.lock();
-  qmFeedback.innerHTML =
-    '<div class="fb wait"><div class="fb-title">⏳ در حال بررسیٔ پاسخ…</div>' +
-'<div class="fb-sub">یک لحظه؛ سرور جوابت را چک می‌کند…</div></div>';
 
-  let verdict = null, correctText = '';
-  try{
-    if(room.localQuestion){
-      console.log('📦 سؤال محلی بود؛ سرور صدا زده نمی‌شود');
-      verdict = (choice.localOk === true) ? true : (choice.localOk === false ? false : null);
-    } else {
-      // پاسخ همیشه محلی بررسی میشه (سرور پاسخ رو چک نمیکنه)
-      if(choice.localOk === true || choice.localOk === false){
-        verdict = choice.localOk;
-        console.log('🧠 نتیجهٔ محلی: ' + (verdict ? 'درست ✅' : 'غلط ❌'));
-      }
-    }
-  }catch(e){
-    console.warn('⚠️ sl_answer خطا (بررسی محلی می‌شود):', e && e.message);
-  }
-  if(verdict === null){
-    if(choice.localOk === true || choice.localOk === false){
-      verdict = choice.localOk;
-      toast('🔧 سرور در دسترس نبود؛ پاسخ به‌صورت محلی بررسی شد.');
-      console.log('🧠 نتیجهٔ محلی: ' + (verdict ? 'درست ✅' : 'غلط ❌'));
-    } else {
-      /* نه سرور جواب داد و نه پاسخ درست در سؤال بود؛ برای ادامهٔ بازی درست فرض می‌شود */
-      verdict = true;
-      console.warn('⚠️ تأیید پاسخ ممکن نشد؛ برای ادامهٔ بازی «درست» فرض شد.');
-    }
-  }
-  if(!correctText && q && hasAnswer(q)) correctText = correctAnswerText(q);
-  if(choice.reveal) choice.reveal(verdict, correctText);
+  /* نتیجهٔ داوری را نشان می‌دهد و دکمهٔ ادامه را می‌سازد */
+  function showVerdict(verdict, correctText, explanation){
+    if(!correctText && q && hasAnswer(q)) correctText = correctAnswerText(q);
+    if(choice.reveal) choice.reveal(verdict, correctText);
+    const expl = explanation || (q && q.explanation) || '';
 
-  if(verdict){
-    room.myCorrect++;
-    if(room.players[room.myIndex]) room.players[room.myIndex].correct = room.myCorrect;
-    playCorrect(); vibrate([10, 30, 20]);
-    hakimReact('correct', { name: room.myName });
-    qmFeedback.innerHTML =
-      '<div class="fb good"><div class="fb-title">✅ آفرین ' + esc(room.myName) + '!</div>' +
-      '<div class="fb-sub">حالا تاس بنداز!</div>' +
-      '<button class="btn btn-primary" id="qmContinue">🎲 تاس می‌اندازم!</button></div>';
-  } else {
-    room.myWrong++;
-    if(room.players[room.myIndex]) room.players[room.myIndex].wrong = room.myWrong;
-    playWrong(); vibrate([70]);
-    hakimReact('wrong', { name: room.myName, answer: correctText, explanation: (q && q.explanation) || '' });
-    qmFeedback.innerHTML =
-      '<div class="fb bad"><div class="fb-title">❌ اشکالی نداره، نوبت بعدی</div>' +
-      (correctText ? '<div class="fb-sub">پاسخ درست: <b>' + esc(correctText) + '</b></div>' : '') +
-      ((q && q.explanation) ? '<div class="fb-expl">💡 ' + esc(q.explanation) + '</div>' : '') +
-      '<button class="btn btn-primary" id="qmContinue">ادامه</button></div>';
+    if(verdict){
+      room.myCorrect++;
+      if(room.players[room.myIndex]) room.players[room.myIndex].correct = room.myCorrect;
+      playCorrect(); vibrate([10, 30, 20]);
+      hakimReact('correct', { name: room.myName });
+      qmFeedback.innerHTML =
+        '<div class="fb good"><div class="fb-title">✅ آفرین ' + esc(room.myName) + '!</div>' +
+        '<div class="fb-sub">حالا تاس بنداز!</div>' +
+        '<button class="btn btn-primary" id="qmContinue">🎲 تاس می‌اندازم!</button></div>';
+    } else {
+      room.myWrong++;
+      if(room.players[room.myIndex]) room.players[room.myIndex].wrong = room.myWrong;
+      playWrong(); vibrate([70]);
+      hakimReact('wrong', { name: room.myName, answer: correctText, explanation: expl });
+      qmFeedback.innerHTML =
+        '<div class="fb bad"><div class="fb-title">❌ اشکالی نداره، نوبت بعدی</div>' +
+        (correctText ? '<div class="fb-sub">پاسخ درست: <b>' + esc(correctText) + '</b></div>' : '') +
+        (expl ? '<div class="fb-expl">💡 ' + esc(expl) + '</div>' : '') +
+        '<button class="btn btn-primary" id="qmContinue">ادامه</button></div>';
+    }
+    const cont = document.getElementById('qmContinue');
+    if(cont){
+      cont.onclick = () => {
+        closeModal();
+        if(verdict) doOnlineRoll();
+        else afterWrongAnswer();
+      };
+    }
   }
-  const cont = document.getElementById('qmContinue');
-  if(cont){
-    cont.onclick = () => {
-      closeModal();
-      if(verdict) doOnlineRoll();
-      else afterWrongAnswer();
-    };
+
+  /* خطای سرور → پیام خطا + تلاش دوباره؛ تاس فعال نمی‌شود */
+  function showServerError(msg, retry){
+    console.warn('⚠️ ' + msg + ' — تاس انداخته نمی‌شود.');
+    qmFeedback.innerHTML =
+      '<div class="fb bad"><div class="fb-title">⚠️ بررسیٔ پاسخ ممکن نشد</div>' +
+      '<div class="fb-sub">' + esc(msg) + '</div>' +
+      '<div class="fb-sub">پاسخ تو ثبت نشد، پس تاس هم نمی‌افتد.</div>' +
+      (retry ? '<button class="btn btn-primary" id="qmRetry">🔄 تلاش دوباره</button>' : '') +
+      '</div>';
+    if(retry){
+      const rb = document.getElementById('qmRetry');
+      if(rb) rb.onclick = () => { rb.disabled = true; judgeOnServer(); };
+    }
   }
+
+  /* ۱) پاسخ به سرور فرستاده می‌شود و ۲) منتظر داوری او می‌مانیم */
+  async function judgeOnServer(){
+    qmFeedback.innerHTML =
+      '<div class="fb wait"><div class="fb-title">⏳ در حال بررسیٔ پاسخ…</div>' +
+      '<div class="fb-sub">یک لحظه؛ سرور جوابت را چک می‌کند…</div></div>';
+    let res = null;
+    try{
+      res = await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload, GAME_ID);
+    }catch(e){
+      return showServerError('ارتباط با سرور برقرار نشد.', true);
+    }
+    if(!res || res.ok !== true){
+      return showServerError(String((res && (res.error || res.message)) || 'سرور پاسخ را نپذیرفت.'), true);
+    }
+    /* پاسخ ثبت شد؛ اگر غلط باشد سرور خودش نوبت را می‌چرخاند */
+    lastAnswer.sentToServer = true;
+    if(res.correct !== true && res.correct !== false){
+      return showServerError('سرور نتیجهٔ داوری را برنگرداند.', true);
+    }
+    /* ۳) درست → دکمهٔ تاس    ۴) غلط → بدون تاس */
+    const correctText = (res.correctAnswer != null && res.correctAnswer !== '') ? String(res.correctAnswer)
+                      : ((res.answerText != null) ? String(res.answerText) : '');
+    console.log(res.correct ? '✅ سرور: پاسخ درست بود' : '❌ سرور: پاسخ غلط بود');
+    showVerdict(res.correct === true, correctText, res.explanation ? String(res.explanation) : '');
+  }
+
+  if(room.localQuestion){
+    /* سؤال از مخزن محلی آمده و سرور آن را نمی‌شناسد → داوری محلی */
+    const v = (choice.localOk === false) ? false : true;
+    console.log('📦 سؤال محلی بود؛ داوری محلی: ' + (v ? 'درست ✅' : 'غلط ❌'));
+    showVerdict(v, '');
+    return;
+  }
+  await judgeOnServer();
 }
 
 /* ------------------------------------------------------------------ */
@@ -1866,7 +1891,8 @@ const slJoinRoom    = (roomCode, name, color)   => api('sl_joinRoom', { roomCode
 const slReady       = (roomCode, playerIndex)   => api('sl_ready', { roomCode, playerIndex });
 const slRollDice    = (roomCode, playerIndex)   => api('sl_rollDice', { roomCode, playerIndex });
 const slGetQuestion = (gameId)                  => api('sl_getQuestion', { gameId });
-const slAnswer      = (roomCode, playerIndex, questionId, answer) => api('sl_answer', { roomCode, playerIndex, questionId, answer });
+const slAnswer      = (roomCode, playerIndex, questionId, answer, gameId) =>
+  api('sl_answer', { roomCode, playerIndex, questionId, answer, gameId: gameId || GAME_ID });
 let lastStateRaw = '';
 async function slGetState(roomCode){
   const res = await api('sl_getState', { roomCode }, { quiet: true });
@@ -2405,12 +2431,15 @@ async function doOnlineRoll(){
 /* ------------------------------------------------------------------ */
 async function afterWrongAnswer(){
   room.answeredTurn = true;
-  // جواب غلط → slAnswer نوبت رو میچرخونه (چه سؤال محلی چه سروری)
-  if(lastAnswer){
+  // اگر پاسخ قبلاً با sl_answer فرستاده شده، سرور نوبت را چرخانده → دوباره نفرست
+  if(lastAnswer && !lastAnswer.sentToServer){
     try{
-      await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload);
+      await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload, GAME_ID);
+      lastAnswer.sentToServer = true;
       console.log('✅ sl_answer (جواب غلط) فرستاده شد');
     }catch(e){ console.warn('sl_answer (afterWrong):', e && e.message); }
+  } else {
+    console.log('↪️ sl_answer قبلاً فرستاده شده بود؛ فقط وضعیت تازه می‌شود.');
   }
   pollNow();
 }
