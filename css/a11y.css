@@ -277,8 +277,10 @@ html.hk-reduce-motion *::after {
 }
 
 #a11y-fab {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background-color: #0e0a22;
@@ -339,8 +341,10 @@ html.hk-reduce-motion *::after {
 }
 
 #a11y-tools button {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   border: 0;
   background: transparent;
@@ -365,16 +369,15 @@ html.hk-reduce-motion *::after {
     inset-block-end: 10px;
     inset-inline-end: 10px;
   }
-  #a11y-fab {
-    width: 36px;
-    height: 36px;
-    font-size: 0.95rem;
-  }
+  #a11y-fab,
   #a11y-tools button {
-    width: 34px;
-    height: 34px;
-    font-size: 0.9rem;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
   }
+  #a11y-fab { font-size: 0.95rem; }
+  #a11y-tools button { font-size: 0.9rem; }
 }
 
 /* ══════════════════════════════════════════════════════════

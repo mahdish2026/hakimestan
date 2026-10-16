@@ -17,7 +17,7 @@
 <meta name="author" content="مهدی شریفیان">
 <meta name="referrer" content="no-referrer">
 <!-- سیاست امنیتی محتوا (جلوگیری از XSS و اسکریپت بیرونی ناشناس) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https: data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src *; font-src 'self' data: https:; manifest-src 'self' data: blob:; worker-src 'self' blob:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data:; manifest-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'">
 <title>پیامرسان حکیمستان</title>
 <!-- مانیفست PWA (در زمان اجرا با مانیفست ساخته‌شده جایگزین می‌شود) -->
 <link rel="manifest" href="manifest.json">
@@ -1508,14 +1508,8 @@ body[data-bgimg="on"] #page-chat .main::before{
           <input class="input" id="regPass2" type="password" placeholder="••••" maxlength="64" autocomplete="new-password">
         </div>
         <div style="height:12px"></div>
-        <label class="check-line"><input type="checkbox" id="regIsTeacher"> من معلم هستم (گزینه پیشرفته)</label>
-        <div id="teacherCodeBox" style="display:none;margin-top:12px">
-          <div class="field">
-            <label><svg class="ic-sm"><use href="#i-shield"/></svg> رمز معلم</label>
-            <input class="input" id="regTeacherCode" type="password" placeholder="رمز مخصوص معلم" maxlength="64">
-          </div>
-        </div>
-        <div class="err" id="regErr"></div>
+        <p class="hint" role="note">ساخت حساب معلم فقط از سوی مدیر سامانه انجام می‌شود؛ این فرم برای حساب دانش‌آموز است.</p>
+        <div class="err" id="regErr" role="alert" aria-live="polite"></div>
         <button class="btn btn-accent" id="btnRegister"><svg class="ic"><use href="#i-check"/></svg> ثبت‌نام</button>
       </div>
       <button class="btn btn-ghost" id="btnRegToLogin">قبلاً ثبت‌نام کردی؟ ورود</button>
@@ -1568,7 +1562,7 @@ body[data-bgimg="on"] #page-chat .main::before{
       <button class="icon-btn" id="btnNotifQuick" title="اعلان"><svg class="ic"><use href="#i-bell"/></svg><span class="dot-alert"></span></button>
       <button class="icon-btn is-hidden" id="btnToggleBan" title="بن کردن" aria-label="بن کردن کاربر"><svg class="ic"><use href="#i-ban"/></svg></button>
       <button class="icon-btn" id="btnChatMenu" title="گزینه‌های گفتگو" aria-label="گزینه‌های گفتگو"><svg class="ic"><use href="#i-more"/></svg></button>
-      <button class="icon-btn" id="btnMenu1" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <button class="icon-btn" id="btnMenu1" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="chat-shell" id="chatShell">
       <div class="inchat-search" id="inchatSearchBox">
@@ -1661,7 +1655,7 @@ body[data-bgimg="on"] #page-chat .main::before{
       <div class="avatar sm">👩‍🏫</div>
       <div class="grow"><h1>پنل معلم</h1><div class="sub">مدیریت کامل کلاس</div></div>
       <button class="icon-btn" id="btnTeacherHome" title="چت"><svg class="ic"><use href="#i-chat"/></svg></button>
-      <button class="icon-btn" id="btnMenu2" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <button class="icon-btn" id="btnMenu2" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="tabs" id="teacherTabs">
       <button class="tab active" data-tab="users"><svg class="ic-sm"><use href="#i-users"/></svg> کاربران</button>
@@ -1686,7 +1680,7 @@ body[data-bgimg="on"] #page-chat .main::before{
     <div class="topbar">
       <button class="icon-btn" id="btnSettingsBack" title="برگشت"><svg class="ic"><use href="#i-back"/></svg></button>
       <div class="grow"><h1>تنظیمات</h1><div class="sub" id="settingsUser">کاربر</div></div>
-      <button class="icon-btn" id="btnMenu3" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <button class="icon-btn" id="btnMenu3" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="set-list" style="flex:1">
       <div class="card">
@@ -1862,7 +1856,7 @@ body[data-bgimg="on"] #page-chat .main::before{
       <button class="icon-btn" id="btnProfileBack" title="برگشت"><svg class="ic"><use href="#i-back"/></svg></button>
       <div class="avatar sm" id="profileTopAvatar">؟</div>
       <div class="grow"><h1>پروفایل من</h1><div class="sub">عکس، نام نمایشی و بیوگرافی</div></div>
-      <button class="icon-btn" id="btnMenu5" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <button class="icon-btn" id="btnMenu5" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="set-list" style="flex:1" id="profileBody"></div>
     <div class="footer">© مهدی شریفیان — حکیمستان</div>
@@ -1874,7 +1868,7 @@ body[data-bgimg="on"] #page-chat .main::before{
       <button class="icon-btn" id="btnSearchBack" title="برگشت"><svg class="ic"><use href="#i-back"/></svg></button>
       <div class="avatar sm" style="background:linear-gradient(135deg,#3d8bff,#8e54ff)"><svg class="ic"><use href="#i-search"/></svg></div>
       <div class="grow"><h1>جستجوی پیشرفته</h1><div class="sub">در همه چت‌ها با فیلتر</div></div>
-      <button class="icon-btn" id="btnMenu6" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <button class="icon-btn" id="btnMenu6" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="set-list" style="flex:1" id="searchBody"></div>
     <div class="footer">© مهدی شریفیان — حکیمستان</div>
@@ -1883,7 +1877,7 @@ body[data-bgimg="on"] #page-chat .main::before{
 </div><!-- /app -->
 
 <div class="drawer-ov" id="drawerOv"></div>
-<aside class="drawer" id="drawer">
+<aside class="drawer" id="drawer" aria-hidden="true" inert>
   <div class="drawer-head">
     <div class="row" style="align-items:center">
       <div class="avatar" id="drawerAvatar">؟</div>
@@ -1914,13 +1908,13 @@ body[data-bgimg="on"] #page-chat .main::before{
 <div id="toasts" role="log" aria-live="polite" aria-atomic="false"></div>
 <!-- ═══ شیت پایین صفحه (اکشن‌شیت موبایل) ═══ -->
 <div class="sheet-ov" id="sheetOv"></div>
-<aside class="drawer" id="sheet" role="dialog" aria-modal="true" aria-label="گزینه‌ها">
+<aside class="drawer" id="sheet" role="dialog" aria-modal="true" aria-label="گزینه‌ها" aria-hidden="true" inert>
   <div class="drawer-head" style="border-radius:22px 0 0 0"><div class="row" style="align-items:center;gap:10px"><svg class="ic"><use href="#i-more"/></svg><b>گزینه‌ها</b></div></div>
   <div class="drawer-body" id="sheetBody"></div>
 </aside>
 
 <!-- ═══ نمایشگر عکس (لایت‌باکس) ═══ -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="نمایش عکس">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" inert aria-label="نمایش عکس">
   <div class="lightbox-top">
     <span class="who" id="lbWho">عکس</span>
     <button class="lb-btn" id="lbZoomOut" title="کوچک‌تر" aria-label="کوچک‌تر">−</button>
@@ -1999,9 +1993,9 @@ body[data-bgimg="on"] #page-chat .main::before{
 /* ═════════════ ۱. پیکربندی ═════════════ */
 var CFG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec',
-  TEACHER_CODE: 'hakim-teacher-1404',   // رمز ثبت‌نام معلم
-  POLL_ACTIVE_MS: 2000,                 // فاصله دریافت وقتی تب فعال است (بهبود سرعت)
-  POLL_HIDDEN_MS: 15000,                // فاصله دریافت وقتی تب مخفی است
+  POLL_ACTIVE_MS: 5000,                 // ۱۲ پیام‌خوانی در دقیقه؛ کاهش بار سرور
+  POLL_HIDDEN_MS: 20000,                // دریافت کم‌تواتر در تب مخفی
+  POST_TIMEOUT_MS: 10000,               // هیچ POSTای نباید صف را نامحدود قفل کند
   POLL_OFFLINE_MS: 30000,               // تلاش کند وقتی آفلاین هستیم
   POLL_BACKOFF_MAX: 30000,              // سقف عقب‌نشینی در خطای شبکه
   MAX_LEN: 500,                         // سقف طول پیام متنی
@@ -2042,6 +2036,16 @@ var U = (function(){
   }
   // مقایسه اسم‌ها با نادیده گرفتن تفاوت‌های نوشتاری
   function same(a,b){ return normName(a).toLowerCase()===normName(b).toLowerCase(); }
+  // تبدیل امن بولین‌های JSON/Sheets؛ رشتهٔ «false» یا «0» نباید true شود.
+  function bool(v, fallback){
+    if(v===true || v===false) return v;
+    if(typeof v==='number') return v!==0;
+    if(v==null) return !!fallback;
+    var t=String(v).trim().toLowerCase();
+    if(['false','0','no','n','off','null','undefined','نه','خیر','غیرفعال'].indexOf(t)>=0) return false;
+    if(['true','1','yes','y','on','بله','آری','فعال'].indexOf(t)>=0) return true;
+    return t!=='';
+  }
   function uid(p){ return (p||'x')+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
   function hashStr(s){ var h=5381; s=String(s||''); for(var i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))|0; return h; }
   function hue(name){ var h=0; name=String(name||'?'); for(var i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))%360; return Math.abs(h); }
@@ -2307,7 +2311,7 @@ var U = (function(){
 
   return {
     $:$, $all:$all, fa:fa, toEn:toEn, esc:esc, normName:normName, same:same, uid:uid, hashStr:hashStr,
-    hue:hue, clamp:clamp, bytes:bytes, debounce:debounce, throttle:throttle, on:on, isOnline:isOnline,
+    hue:hue, clamp:clamp, bool:bool, bytes:bytes, debounce:debounce, throttle:throttle, on:on, isOnline:isOnline,
     isVisible:isVisible, sleep:sleep, safeUrl:safeUrl, copyText:copyText, blobToDataURL:blobToDataURL,
     dataURLtoBlob:dataURLtoBlob, b64enc:b64enc, b64dec:b64dec, el:el, parseDate:parseDate, faTime:faTime,
     faDate:faDate, faDateShort:faDateShort, faWeekday:faWeekday, dayKey:dayKey, dayDiff:dayDiff,
@@ -2363,7 +2367,7 @@ S.initialsDone = false;
 
 /* ═════════════ ۵. رابط‌های پایه (Ui) ═════════════ */
 var Ui = (function(){
-  var modalResolve=null, modalOpen=false, lastFocus=null;
+  var modalResolve=null, modalOpen=false, lastFocus=null, lightboxFocus=null;
 
   function toast(txt, type, ms){
     var box=$('#toasts'); if(!box) return;
@@ -2430,17 +2434,22 @@ var Ui = (function(){
   var lbScale=1;
   function lightbox(src, who, caption){
     var img=$('#lbImg'); if(!img) return;
+    lightboxFocus=document.activeElement;
+    var layer=$('#lightbox'); layer.removeAttribute('inert');
     img.src=src; img.style.transform='scale(1)'; lbScale=1;
     $('#lbWho').textContent = who||'';
     $('#lbCap').textContent = caption||'';
-    $('#lightbox').classList.add('open');
-    $('#lightbox').setAttribute('aria-hidden','false');
+    layer.classList.add('open');
+    layer.setAttribute('aria-hidden','false');
     setTimeout(function(){ $('#lbClose').focus(); }, 60);
   }
   function closeLightbox(){
-    $('#lightbox').classList.remove('open');
-    $('#lightbox').setAttribute('aria-hidden','true');
+    var layer=$('#lightbox');
+    layer.classList.remove('open');
+    layer.setAttribute('aria-hidden','true'); layer.setAttribute('inert','');
     var img=$('#lbImg'); if(img) img.src='';
+    if(lightboxFocus && lightboxFocus.isConnected && lightboxFocus.focus) try{ lightboxFocus.focus(); }catch(e){}
+    lightboxFocus=null;
   }
   function initLightbox(){
     var img=$('#lbImg');
@@ -2463,7 +2472,9 @@ var Ui = (function(){
               .filter(function(x){ return x.offsetParent!==null || x===document.activeElement; });
     if(!f.length) return;
     var first=f[0], last=f[f.length-1];
-    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    if(!container.contains(document.activeElement)){
+      e.preventDefault(); (e.shiftKey?last:first).focus();
+    } else if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
     else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
   }
 
@@ -2478,6 +2489,8 @@ var Ui = (function(){
     }
     if($('#modalOv').classList.contains('open')) trapFocus($('#modalOv'), e);
     else if($('#drawer').classList.contains('open')) trapFocus($('#drawer'), e);
+    else if($('#sheet').classList.contains('open')) trapFocus($('#sheet'), e);
+    else if($('#lightbox').classList.contains('open')) trapFocus($('#lightbox'), e);
   });
 
   return {
@@ -2490,7 +2503,9 @@ var toast = Ui.toast;
 
 /* شیت پایین صفحه (اکشن‌شیت موبایل) */
 var Sheets = (function(){
+  var lastFocus=null;
   function open(title, items){
+    lastFocus=document.activeElement;
     var box=$('#sheetBody'); box.innerHTML='';
     if(title) box.appendChild(el('div',{class:'side-sec', text:title}));
     (items||[]).forEach(function(it){
@@ -2502,17 +2517,37 @@ var Sheets = (function(){
       b.addEventListener('click', function(){ close(); setTimeout(function(){ it.fn&&it.fn(); }, 40); });
       box.appendChild(b);
     });
-    $('#sheetOv').classList.add('open'); $('#sheet').classList.add('open');
+    var sheet=$('#sheet'); sheet.removeAttribute('inert'); sheet.setAttribute('aria-hidden','false');
+    $('#sheetOv').classList.add('open'); sheet.classList.add('open');
+    setTimeout(function(){ var first=$('#sheetBody button'); if(first) first.focus(); },60);
   }
-  function close(){ $('#sheetOv').classList.remove('open'); $('#sheet').classList.remove('open'); }
+  function close(){
+    var sheet=$('#sheet'); $('#sheetOv').classList.remove('open'); sheet.classList.remove('open');
+    sheet.setAttribute('aria-hidden','true'); sheet.setAttribute('inert','');
+    if(lastFocus && lastFocus.isConnected && lastFocus.focus) try{ lastFocus.focus(); }catch(e){}
+    lastFocus=null;
+  }
   U.on($('#sheetOv'),'click',close);
   return { open:open, close:close };
 })();
 
 /* کشو (منو) */
 var Drawerx = (function(){
-  function open(){ $('#drawerOv').classList.add('open'); $('#drawer').classList.add('open'); $('#btnMenu1').setAttribute('aria-expanded','true'); setTimeout(function(){ var f=$('#drawer .drawer-item'); if(f) f.focus(); },80); }
-  function close(){ $('#drawerOv').classList.remove('open'); $('#drawer').classList.remove('open'); $all('[id^=btnMenu]').forEach(function(b){ b.setAttribute('aria-expanded','false'); }); }
+  var lastFocus=null;
+  function open(){
+    lastFocus=document.activeElement;
+    var drawer=$('#drawer'); drawer.removeAttribute('inert'); drawer.setAttribute('aria-hidden','false');
+    $('#drawerOv').classList.add('open'); drawer.classList.add('open');
+    $all('[id^=btnMenu]').forEach(function(b){ b.setAttribute('aria-expanded','true'); });
+    setTimeout(function(){ var f=$('#drawer .drawer-item:not([disabled])'); if(f) f.focus(); },80);
+  }
+  function close(){
+    var drawer=$('#drawer'); $('#drawerOv').classList.remove('open'); drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden','true'); drawer.setAttribute('inert','');
+    $all('[id^=btnMenu]').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+    if(lastFocus && lastFocus.isConnected && lastFocus.focus) try{ lastFocus.focus(); }catch(e){}
+    lastFocus=null;
+  }
   U.on($('#drawerOv'),'click',close);
   return { open:open, close:close };
 })();
@@ -2525,22 +2560,104 @@ var Net = (function(){
   var lastErr='';
   var stats={ ok:0, fail:0, lastOk:0 };
 
-  function postDB(payload){
-    if(!U.isOnline()){ S.failCount++; setConn(false); return Promise.resolve(false); }
-    return fetch(CFG.API_URL, {
-      method:'POST', mode:'no-cors', cache:'no-store',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify(payload)
-    }).then(function(){ stats.ok++; stats.lastOk=Date.now(); S.failCount=0; return true; })
-      .catch(function(e){ lastErr=String(e&&e.message||e); stats.fail++; S.failCount++; return false; });
+  function apiFailure(body, text){
+    if(body && typeof body==='object' && !Array.isArray(body)){
+      if(body.ok===false || body.success===false || body.result===false) return true;
+      if(body.ok!=null && !U.bool(body.ok)) return true;
+      if(body.success!=null && !U.bool(body.success)) return true;
+      if(body.error!=null && body.error!==false && body.error!=='' && body.error!==0) return true;
+      var status=String(body.status||'').trim().toLowerCase();
+      if(/^(error|failed|failure|rejected)$/.test(status)) return true;
+      var result=String(body.result||'').trim().toLowerCase();
+      if(/^(error|failed|failure|rejected)(?:\b|:)/.test(result)) return true;
+    }
+    return /^(?:error|failed|failure|rejected)(?:\b|:|\s)/i.test(String(text||'').trim());
   }
-  // POST با خواندن پاسخ (اگر بک‌اند v2 فعال باشد و CORS بدهد)
-  function postJSON(payload){
-    return fetch(CFG.API_URL, {
-      method:'POST', cache:'no-store',
+  function timedFetch(url, init, timeout, externalSignal){
+    timeout = Math.max(1, Number(timeout)||CFG.POST_TIMEOUT_MS||10000);
+    var Controller = window.AbortController || (typeof AbortController!=='undefined'?AbortController:null);
+    var controller = Controller? new Controller():null;
+    var timer=null, settled=false, onAbort=null;
+    var config=Object.assign({},init||{});
+    if(controller) config.signal=controller.signal;
+    else if(externalSignal) config.signal=externalSignal;
+    return new Promise(function(resolve,reject){
+      function cleanup(){
+        if(timer) clearTimeout(timer);
+        if(externalSignal && onAbort) externalSignal.removeEventListener('abort',onAbort);
+      }
+      function finish(err,value){
+        if(settled) return;
+        settled=true; cleanup();
+        if(err) reject(err); else resolve(value);
+      }
+      onAbort=function(){
+        var e=new Error('Request aborted'); e.name='AbortError';
+        if(controller) controller.abort();
+        finish(e);
+      };
+      if(externalSignal){
+        if(externalSignal.aborted){ onAbort(); return; }
+        externalSignal.addEventListener('abort',onAbort,{once:true});
+      }
+      timer=setTimeout(function(){
+        if(settled) return;
+        settled=true; cleanup();
+        if(controller) controller.abort();
+        var e=new Error('Request timed out after '+timeout+'ms'); e.name='TimeoutError'; reject(e);
+      },timeout);
+      try{
+        fetch(url,config).then(function(response){ finish(null,response); },function(error){ finish(error); });
+      }catch(error){ finish(error); }
+    });
+  }
+  function postDB(payload, opt){
+    opt=opt||{};
+    if(!U.isOnline()){ S.failCount++; setConn(false); return Promise.resolve(false); }
+    return timedFetch(CFG.API_URL,{
+      method:'POST', mode:'cors', cache:'no-store',
       headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify(payload)
-    }).then(function(r){ return r.json(); });
+      body:JSON.stringify(payload)
+    },opt.timeout||CFG.POST_TIMEOUT_MS,opt.signal).then(function(r){
+      if(!r || r.type==='opaque' || r.status===0) return null; // پاسخ مبهم را تأییدشده حساب نکن
+      if(!r.ok){
+        lastErr='HTTP '+r.status; stats.fail++; S.failCount++;
+        // پاسخ 5xx می‌تواند پس از commit رخ دهد؛ وضعیت را مبهم می‌دانیم و بعداً با GET می‌سنجیم.
+        return r.status>=500? null : false;
+      }
+      return r.text().then(function(text){
+        var body=null;
+        try{ body=text?JSON.parse(text):null; }catch(e){}
+        if(apiFailure(body,text)){
+          lastErr=String((body&&(body.error||body.message||body.result))||text||'API rejected request').slice(0,240);
+          stats.fail++; S.failCount++; return false;
+        }
+        stats.ok++; stats.lastOk=Date.now(); S.failCount=0; return true;
+      });
+    }).catch(function(e){
+      lastErr=String(e&&e.message||e); stats.fail++;
+      if(e && e.name==='TimeoutError'){ S.failCount++; return null; }
+      if(e && e.name==='AbortError' && opt.signal && opt.signal.aborted) return false;
+      // خطای CORS/شبکه لزوماً ثابت نمی‌کند POST به سرور نرسیده است؛ فراخواننده باید تأیید GET انجام دهد.
+      if(U.isOnline() && (e && (e.name==='TypeError' || /fetch|network|cors/i.test(String(e.message||e))))) return null;
+      S.failCount++; return false;
+    });
+  }
+  // POST قابل‌خواندن؛ پاسخ HTTP و بدنهٔ خطا هر دو اعتبارسنجی می‌شوند.
+  function postJSON(payload, opt){
+    opt=opt||{};
+    return timedFetch(CFG.API_URL,{
+      method:'POST', mode:'cors', cache:'no-store',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)
+    },opt.timeout||CFG.POST_TIMEOUT_MS,opt.signal).then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.text().then(function(text){
+        var body=null;
+        try{ body=text?JSON.parse(text):null; }catch(e){ body=text; }
+        if(apiFailure(body,text)) throw new Error(String((body&&(body.error||body.message||body.result))||text||'API rejected request'));
+        return body;
+      });
+    });
   }
   function getDB(params, opt){
     opt = opt||{};
@@ -2549,20 +2666,20 @@ var Net = (function(){
     var timeout = opt.timeout==null? 12000 : opt.timeout;
     return attempt(tries);
     function attempt(n){
-      var ctrl = ('AbortController' in window)? new AbortController() : null;
-      var tm = ctrl? setTimeout(function(){ ctrl.abort(); }, timeout) : null;
-      return fetch(url, {cache:'no-store', signal: ctrl?ctrl.signal:undefined})
-        .then(function(r){ if(tm) clearTimeout(tm); if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-        .then(function(j){ stats.ok++; stats.lastOk=Date.now(); S.failCount=0; return j; })
-        .catch(function(e){
-          if(tm) clearTimeout(tm);
-          lastErr=String(e&&e.message||e); stats.fail++;
-          if(n>1){ return U.sleep(400+Math.random()*400).then(function(){ return attempt(n-1); }); }
-          throw e;
-        });
+      return timedFetch(url,{cache:'no-store'},timeout).then(function(r){
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        return r.json();
+      }).then(function(j){
+        if(apiFailure(j)) throw new Error(String(j.error||j.message||j.result||'API error'));
+        stats.ok++; stats.lastOk=Date.now(); S.failCount=0; return j;
+      }).catch(function(e){
+        lastErr=String(e&&e.message||e); stats.fail++;
+        if(n>1){ return U.sleep(400+Math.random()*400).then(function(){ return attempt(n-1); }); }
+        throw e;
+      });
     }
   }
-  // ارسال و سپس تأیید با GET (برگشت به عقب: چند بار با فاصله فزاینده)
+  // ارسال و سپس تأیید با GET؛ ارسال مبهم یا خطای POST به‌تنهایی موفقیت نیست.
   function postAndVerify(payload, checkFn, tries){
     tries = tries||3;
     return postDB(payload).then(function(postOk){
@@ -2570,14 +2687,14 @@ var Net = (function(){
       function attempt(i){
         return checkFn().catch(function(){ return null; }).then(function(res){
           if(res) return res;
-          if(i>=tries) return postOk? {ok:true, unverified:true} : null;
+          if(i>=tries) return postOk===true? {ok:true, unverified:true} : null;
           return U.sleep(1200 + i*1200).then(function(){ return attempt(i+1); });
         });
       }
     });
   }
   return { postDB:postDB, getDB:getDB, postJSON:postJSON, postAndVerify:postAndVerify, stats:stats,
-           lastError:function(){ return lastErr; } };
+           isApiFailure:apiFailure, lastError:function(){ return lastErr; } };
 })();
 var postDB = Net.postDB, getDB = Net.getDB;
 
@@ -2619,14 +2736,25 @@ var Wire = (function(){
 /* ═════════════ ۸. نرمال‌سازی داده (Norm) ═════════════ */
 var Norm = (function(){
 
-  // ساخت شناسه پایدار پیام: اگر سرور id بدهد همان، وگرنه هش ترکیبی
-  function msgId(m){
+  // شناسهٔ کلاینت/متادیتا اولویت دارد تا پیام محلی با نسخهٔ سرور یکی شود.
+  function msgId(m, wireMeta){
+    if(m.clientId!=null && String(m.clientId).trim()!=='') return String(m.clientId);
+    if(m.client_id!=null && String(m.client_id).trim()!=='') return String(m.client_id);
+    if(wireMeta && wireMeta.cid!=null && String(wireMeta.cid).trim()!=='') return String(wireMeta.cid);
+    if(m.meta && m.meta.cid!=null && String(m.meta.cid).trim()!=='') return String(m.meta.cid);
     if(m.id!=null && String(m.id).trim()!=='') return String(m.id);
-    if(m._id!=null) return String(m._id);
-    return 'm'+Math.abs(U.hashStr([m.from,m.to_group,m.to_user,m.text,m.date].join('|')));
+    if(m._id!=null && String(m._id).trim()!=='') return String(m._id);
+    return 'm'+Math.abs(U.hashStr([m.from_user||m.from,m.to_group,m.to_user,m.text,m.date].join('|')));
   }
-  // امضای پیام برای تشخیص تکراری‌ها (بدون متادیتا)
-  function sig(m){ return [U.normName(m.from), U.normName(m.to_group||''), U.normName(m.to_user||''), Wire.strip(m.text).slice(0,300), Math.round((U.parseDate(m.date)?U.parseDate(m.date).getTime():0)/60000)].join('§'); }
+  // امضای قدیمی فقط برای مهاجرت کنترل‌های قبلی نگه داشته می‌شود؛ هویت جدید IDمحور است.
+  function legacySig(m){ return [U.normName(m.from), U.normName(m.to_group||''), U.normName(m.to_user||''), Wire.strip(m.text).slice(0,300), Math.round((U.parseDate(m.date)?U.parseDate(m.date).getTime():0)/60000)].join('§'); }
+  function sig(m){ return 'id:'+String(m && m.id!=null ? m.id : msgId(m)); }
+  // برای تأیید echo قدیمیِ بک‌اند: دقت میلی‌ثانیه حفظ شود تا دو پیام مشابه یکی نشوند.
+  function contentSig(m){
+    m=m||{};
+    var d=U.parseDate(m.date||m.time||m.timestamp);
+    return [U.normName(m.from_user||m.from||m.user||''), U.normName(m.to_group||m.group||''), U.normName(m.to_user||m.receiver||''), Wire.strip(m.text||m.message||''), d?d.getTime():0].join('§');
+  }
 
   // یکدست‌سازی پیام + جداکردن متادیتا از متن
   function msg(m){
@@ -2642,13 +2770,15 @@ var Norm = (function(){
       if(S.groups.some(function(g){ return U.same(g, alt); }) || U.same(alt, DEFAULT_GROUP)) toGroup = alt;
       else toUser = alt;
     }
+    var meta = m.meta && typeof m.meta==='object' && !Array.isArray(m.meta) ? Object.assign({},m.meta) : {};
+    if(sp.meta && typeof sp.meta==='object') Object.keys(sp.meta).forEach(function(k){ meta[k]=sp.meta[k]; });
     var o = {
       id: null, from: String(from), to_group: String(toGroup||''), to_user: String(toUser||''),
-      text: sp.text, meta: sp.meta || {}, date: m.date||m.time||m.timestamp||m.createdAt||m.created_at||m.datetime||m.Date||new Date().toISOString(),
-      filtered: !!(m.filtered||m.isFiltered),
+      text: sp.text, meta: meta, date: m.date||m.time||m.timestamp||m.createdAt||m.created_at||m.datetime||m.Date||new Date().toISOString(),
+      filtered: U.bool(m.filtered, false) || U.bool(m.isFiltered, false),
       status: 'sent', mine: false
     };
-    o.id = msgId(m);
+    o.id = msgId(m, meta);
     o.__raw = m;
     return o;
   }
@@ -2659,12 +2789,12 @@ var Norm = (function(){
     return {
       username: String(name),
       role: (u.role||u.type||'student')==='teacher'?'teacher':'student',
-      banned: !!(u.banned||u.ban||u.isBanned||u.blocked),
+      banned: U.bool(u.banned, false) || U.bool(u.ban, false) || U.bool(u.isBanned, false) || U.bool(u.blocked, false),
       display: u.displayName||u.display||u.fullName||'',
       bio: u.bio||u.about||'',
       avatar: u.avatar||u.avatarUrl||u.pic||'',
       lastSeen: u.lastSeen||u.last_seen||null,
-      online: !!u.online
+      online: U.bool(u.online, false)
     };
   }
   function group(g){
@@ -2687,7 +2817,7 @@ var Norm = (function(){
     if(j.rows && Array.isArray(j.rows)) return j.rows;
     return [];
   }
-  return { msg:msg, user:user, group:group, word:word, asArray:asArray, msgId:msgId, sig:sig };
+  return { msg:msg, user:user, group:group, word:word, asArray:asArray, msgId:msgId, sig:sig, legacySig:legacySig, contentSig:contentSig };
 })();
 
 /* ═════════════ ۹. مارک‌داون ایمن (Markdown) ═════════════
@@ -2846,7 +2976,7 @@ var Guard = (function(){
 var Data = (function(){
 
   // آخرین زمانی که پیام گرفتیم (برای دریافت افزایشی)
-  var lastFetchAt = 0, lastMsgTime = 0, fullSyncAt = 0;
+  var lastFetchAt = 0, lastMsgTime = 0, fullSyncAt = 0, lastServerSnapshot={messages:[],complete:false};
 
   /* ── تشخیص توانایی‌های بک‌اند (نسخه ۲ اختیاری) ── */
   function detectCaps(){
@@ -2873,11 +3003,16 @@ var Data = (function(){
     if(!S.me) return Promise.resolve(false);
     // ✅ همیشه ۷ روز آخر رو می‌گیریم تا پیام‌های قدیمی از دست نرن
     var sinceIso = new Date(Date.now() - 7*CFG.DAY_MS).toISOString();    
-    return getDB({action:'messages', user:S.me, since:sinceIso, limit:300}).then(function(j){
+    return getDB({action:'messages', user:S.me, since:sinceIso, limit:300}, {tries:opt.tries, timeout:opt.timeout}).then(function(j){
             if(j.serverTime){
         S.serverOffset = new Date(j.serverTime).getTime() - Date.now();
       }
        var arr = Norm.asArray(j,'messages').map(Norm.msg);
+      // وضعیت خامِ پاسخ برای تأیید صف؛ merge ممکن است پیام‌های محلیِ خوش‌بینانه را بازسازی کند.
+      lastServerSnapshot={
+        messages:arr.map(function(m){ return {id:String(m.id),from:m.from,to_group:m.to_group,to_user:m.to_user,text:Wire.strip(m.text),date:m.date,meta:m.meta||{}}; }),
+        complete:arr.length<300
+      };
       // حذف پیام‌های قدیمی‌تر از ۷ روز، مگر روزهای ذخیره‌شده معلم
       var weekAgo = Date.now() - 7*CFG.DAY_MS;
       arr = arr.filter(function(m){
@@ -2904,10 +3039,17 @@ var Data = (function(){
      بک‌اند فعلی فقط «افزودن پیام» را می‌شناسد؛ پس حذف/ویرایش به شکل یک پیام
      کنترلی با متادیتای مخصوص ذخیره می‌شود. همه کلاینت‌ها آن را می‌خوانند،
      روی پیام هدف اعمال می‌کنند و خودِ ردیف کنترلی را نمایش نمی‌دهند. */
-  function ctrlLoad(){ if(!S.controls || !Object.keys(S.controls).length) S.controls = DB.get('controls', {})||{}; }
+  function ctrlLoad(){
+    if(!S.controls || !Object.keys(S.controls).length) S.controls = DB.get('controls', {})||{};
+    // مهاجرت کنترل‌های قدیمی به کلید ID، نه امضای متنِ قابل‌تصادم.
+    Object.keys(S.controls).forEach(function(k){
+      var c=S.controls[k];
+      if(c && c.id!=null && !S.controls['id:'+c.id]) S.controls['id:'+c.id]=c;
+    });
+  }
   function ctrlAdd(entry){
     ctrlLoad();
-    var k = entry.of || entry.id;
+    var k = entry.id!=null? 'id:'+String(entry.id) : (entry.of? 'legacy:'+String(entry.of):'');
     if(!k) return;
     var prev = S.controls[k];
     if(prev && prev.at > entry.at) return;
@@ -2920,9 +3062,34 @@ var Data = (function(){
     }
     DB.set('controls', S.controls);
   }
-  function ctrlFind(m){
+  function ctrlFind(m, legacyCounts){
     if(!m) return null;
-    return S.controls[m.id] || S.controls[Norm.sig(m)] || null;
+    var idKey='id:'+String(m.id);
+    if(S.controls[idKey]) return S.controls[idKey];
+    if(S.controls[m.id]) return S.controls[m.id];
+    var legacyKey=Norm.legacySig(m);
+    var old=S.controls[legacyKey]||S.controls['legacy:'+legacyKey];
+    if(old && old.id!=null && String(old.id)===String(m.id)) return old;
+    if(old && old.id==null && legacyCounts && legacyCounts[legacyKey]===1) return old;
+    return null;
+  }
+  function actorIsTeacher(name){
+    if(U.same(name,S.me) && S.role==='teacher') return true;
+    var rec=(S.users||[]).filter(function(u){ return U.same(u.username,name); })[0];
+    return !!(rec && rec.role==='teacher');
+  }
+  function controlAllowed(marker, control, candidates){
+    var actor=marker && marker.from;
+    if(!actor || (control.by && !U.same(control.by,actor))) return false;
+    var targetId=control.id||control.targetId||'';
+    if(!targetId && /^id:/.test(String(control.of||''))) targetId=String(control.of).slice(3);
+    var target=targetId && (candidates||[]).filter(function(x){ return String(x.id)===String(targetId); })[0];
+    if(!target && control.of && !/^id:/.test(String(control.of))){
+      var matches=(candidates||[]).filter(function(x){ return !x.meta || (!x.meta.x && !x.meta.e); }).filter(function(x){ return Norm.legacySig(x)===String(control.of); });
+      if(matches.length===1) target=matches[0];
+    }
+    if(target && U.same(actor,target.from)) return true;
+    return actorIsTeacher(actor);
   }
 
   /* ── ادغام پیام‌های سرور با پیام‌های محلی ──
@@ -2931,27 +3098,31 @@ var Data = (function(){
      • حفظ متادیتای محلی (ریپلای/پیوست) اگر سرور آن را نداد
      • حذف‌شده‌ها هرگز برنمی‌گردند (سنگ‌قبر) */
   function merge(serverMsgs){
-    var before = S.messages.length, out = [], seen = {}, seenSig = {};
-    var changed = false;
+    var before = S.messages.length, out = [], seen = Object.create(null);
+    var changed = false, incoming=serverMsgs||[], legacyCounts=Object.create(null);
     ctrlLoad();
+    incoming.forEach(function(m){ var k=Norm.legacySig(m); legacyCounts[k]=(legacyCounts[k]||0)+1; });
 
-    // ۱) ردیف‌های کنترلی: ثبت و حذف از فهرست نمایش
+    // ۱) ردیف‌های کنترلی: فقط نویسندهٔ پیام هدف یا معلمِ شناخته‌شده حق اعمال دارد.
     var rows = [];
-    (serverMsgs||[]).forEach(function(m){
+    incoming.forEach(function(m){
       var meta = m.meta||{};
-      if(meta.x){                                   // حذف برای همه
-        ctrlAdd({ kind:'x', of:meta.x.of, id:meta.x.id, by:meta.x.by, at:meta.x.at||0 });
+      if(meta.x){
+        if(controlAllowed(m,meta.x,incoming)) ctrlAdd({ kind:'x', of:meta.x.of, id:meta.x.id, by:m.from, at:meta.x.at||0 });
+        if(typeof Outbox!=='undefined' && Outbox.find(m.id)) Outbox.done(m.id);
         changed = true; return;
       }
-      if(meta.e && !meta.a && !meta.r){             // ویرایش برای همه
-        ctrlAdd({ kind:'e', of:meta.e.of, at:meta.e.at||0, text:m.text, by:m.from });
+      if(meta.e && !meta.a && !meta.r){
+        if(controlAllowed(m,meta.e,incoming)) ctrlAdd({ kind:'e', of:meta.e.of, id:meta.e.id, at:meta.e.at||0, text:m.text, by:m.from });
+        // نشانگر کنترل در بک‌اند قدیمی، تأیید نهاییِ آیتم صف ویرایش است.
+        if(typeof Outbox!=='undefined' && Outbox.find(m.id)) Outbox.done(m.id);
         changed = true; return;
       }
       rows.push(m);
     });
 
     // ۲) بازسازی پیوست‌های تکه‌تکه‌شده
-    var chunks = {}, normal = [];
+    var chunks = Object.create(null), normal = [];
     rows.forEach(function(m){
       var c = m.meta && m.meta.c;
       if(c && c.cid){ (chunks[c.cid] = chunks[c.cid] || []).push(m); }
@@ -2959,7 +3130,7 @@ var Data = (function(){
     });
     Object.keys(chunks).forEach(function(cid){
       var list = chunks[cid].slice().sort(function(a,b){ return (a.meta.c.i||0)-(b.meta.c.i||0); });
-      var first = list[0], have = {}, data = '';
+      var first = list[0], have = Object.create(null), data = '';
       list.forEach(function(m){ if(have[m.meta.c.i]==null){ have[m.meta.c.i]=1; data += (m.meta.c.d||''); } });
       normal.push({
         id:'ck:'+cid, from:first.from, to_group:first.to_group, to_user:first.to_user,
@@ -2978,7 +3149,7 @@ var Data = (function(){
     });
     normal.forEach(function(m){
       if(Tomb.has(m)){ return; }                          // قبلاً حذف شده
-      var ctl = ctrlFind(m);
+      var ctl = ctrlFind(m,legacyCounts);
       if(ctl && ctl.kind==='x'){ Tomb.add(m.id, Norm.sig(m)); changed = true; return; }
       if(ctl && ctl.kind==='e' && ctl.text!=null){
         if(m.text !== ctl.text){
@@ -2989,24 +3160,39 @@ var Data = (function(){
         }
       }
       if(seen[m.id]) return;
-      var sg = Norm.sig(m);
-      if(seenSig[sg] && !(m.meta&&m.meta.a)) return;
-      seen[m.id]=1; seenSig[sg]=1;
+      seen[m.id]=1;
       m.mine = U.same(m.from, S.me);
       if(m.mine) m.status = 'delivered';                  // پیام در سرور ثبت شده
       if(m.meta && m.meta.e) m.edited = true;
       out.push(m);
     });
 
-    // ۴) پیام‌های در صف (ارسال‌نشده) حفظ شوند و با بازگشت سرور یکی شوند
-    var sigMap = {};
-    out.forEach(function(m){ sigMap[Norm.sig(m)] = m; });
+    // ۴) ویرایش‌های در صف را پس از بارگذاری کش/سرور دوباره روی پیام محلی اعمال کن.
+    //    به این ترتیب، رفرش صفحه در حالت آفلاین متن ویرایش‌شده را از دست نمی‌دهد.
+    Outbox.all().forEach(function(item){
+      var p=item.payload||{}, targetId='', editedText=null, editMeta=null;
+      if(p.action==='editMsg'){
+        targetId=p.id; editedText=p.text; editMeta={at:p.editedAt||item.at, old:String(p.oldText||'').slice(0,200)};
+      } else if(p.action==='message' && p.controlEdit){
+        var controlMsg=Norm.msg(p); editMeta=controlMsg.meta&&controlMsg.meta.e;
+        if(editMeta){ targetId=editMeta.id||''; editedText=Wire.strip(p.text||''); }
+      }
+      if(!targetId || editedText==null) return;
+      var target=out.filter(function(m){ return String(m.id)===String(targetId); })[0];
+      if(!target) return;
+      target.text=String(editedText); target.meta=target.meta||{};
+      target.meta.e=target.meta.e||editMeta; target.editOutboxId=item.id;
+    });
+
+    // ۵) پیام‌های در صف (ارسال‌نشده) حفظ شوند و با بازگشت سرور یکی شوند
+    var idMap = Object.create(null), contentMap = Object.create(null);
+    out.forEach(function(m){ idMap[String(m.id)] = m; contentMap[Norm.contentSig(m)] = m; });
     var stillPending = [];
     (S.messages||[]).forEach(function(m){
       if(!m.pending) return;
       var item = Outbox.find(m.id);
       if(!item) return;                                   // صف تمام شده
-      var twin = sigMap[Norm.sig(m)];
+      var twin = idMap[String(m.id)] || contentMap[Norm.contentSig(m)];
       if(twin){                                           // سرور پیام را گرفت
         twin.meta = twin.meta||{};
         if(m.meta&&m.meta.a && !twin.meta.a) twin.meta.a = m.meta.a;
@@ -3037,7 +3223,8 @@ var Data = (function(){
       var ld = U.parseDate(out[out.length-1].date);
       if(ld) lastMsgTime = Math.max(lastMsgTime, ld.getTime());
     }
-    return changed || out.length !== before;
+    var structureChanged = out.length!==before || S.messages.some(function(m,i){ return !out[i] || out[i].id!==m.id; });
+    return changed || structureChanged;
   }
 
   /* ── کاربران ── */
@@ -3166,6 +3353,7 @@ var Data = (function(){
     fetchGroups:fetchGroups, createGroup:createGroup, fetchWords:fetchWords, fetchReads:fetchReads,
     sendRead:sendRead, exportJSON:exportJSON, exportCSV:exportCSV, download:download,
     lastMsgTime:function(){ return lastMsgTime; },
+    serverSnapshot:function(){ return lastServerSnapshot; },
     resetSince:function(){ lastMsgTime=0; }
   };
 })();
@@ -3189,6 +3377,32 @@ var Outbox = (function(){
     S.outbox.push(item); save();
     return item;
   }
+  function update(id, payload, preview){
+    var item=find(id);
+    if(!item || item.status==='sending') return false;
+    item.payload=payload; item.preview=preview||''; item.status='queued'; item.tries=0; item.nextAt=0;
+    save(); return item;
+  }
+  function cancel(id){
+    var item=find(id); if(!item) return null;
+    item.cancelled=true;
+    var i=S.outbox.indexOf(item); if(i>=0) S.outbox.splice(i,1);
+    save();
+    return item;
+  }
+  function cancelEdits(targetId){
+    var edits=S.outbox.filter(function(item){
+      var p=item.payload||{};
+      if(p.action==='editMsg') return String(p.id)===String(targetId);
+      if(p.action==='message' && p.controlEdit){
+        var meta=Norm.msg(p).meta||{};
+        return !!(meta.e && String(meta.e.id)===String(targetId));
+      }
+      return false;
+    });
+    edits.forEach(function(item){ cancel(item.id); });
+    return edits.length;
+  }
   function done(id){
     var i = S.outbox.findIndex(function(x){ return x.id===id; });
     if(i>=0){ S.outbox.splice(i,1); save(); }
@@ -3203,7 +3417,35 @@ var Outbox = (function(){
   function pendingCount(){ return S.outbox.filter(function(i){ return i.status!=='failed'; }).length; }
   function failedItems(){ return S.outbox.filter(function(i){ return i.status==='failed'; }); }
 
-  // فرستادن همه صف به ترتیب
+  function existsOnServer(item){
+    var p=item.payload||{}, snapshot=Data.serverSnapshot(), rows=snapshot.messages||[];
+    if(p.action==='editMsg'){
+      var target=rows.filter(function(m){ return String(m.id)===String(p.id); })[0];
+      return !!(target && Wire.strip(target.text)===Wire.strip(p.text||''));
+    }
+    if(p.action==='deleteMsg'){
+      var targetDate=U.parseDate(p.date), targetId=String(p.targetId||p.id||'');
+      if(!snapshot.complete || !targetDate || targetDate.getTime()<Date.now()-7*CFG.DAY_MS) return false;
+      return !rows.some(function(m){ return String(m.id)===targetId && !(m.meta&&m.meta.x); });
+    }
+    return rows.some(function(m){ return String(m.id)===String(item.id) || Norm.contentSig(m)===Norm.contentSig(p); });
+  }
+  function verify(item){
+    return Data.fetchMessages({tries:1,timeout:7000}).then(function(){ return existsOnServer(item); }).catch(function(){ return false; });
+  }
+  function deleteCancelled(item){
+    var p=item.payload||{}, targetId=item.id;
+    if(p.action==='editMsg') targetId=p.id||targetId;
+    else if(p.controlEdit){ var meta=Norm.msg(p).meta||{}; if(meta.e&&meta.e.id) targetId=meta.e.id; }
+    var actor=p.from_user||p.from||S.me;
+    return Net.postDB({
+      action:'deleteMsg', id:targetId, targetId:targetId,
+      from:actor, to_group:p.to_group||'', to_user:p.to_user||'',
+      text:Wire.strip(p.text||''), date:p.date||new Date().toISOString(),
+      role:p.role||S.role, by:actor
+    },{timeout:CFG.POST_TIMEOUT_MS}).catch(function(){ return false; });
+  }
+  // فرستادن همه صف به ترتیب؛ هر درخواست timeout دارد و echo سرور تأیید می‌شود.
   function flush(){
     if(S.queueRunning) return Promise.resolve();
     if(!U.isOnline()) return Promise.resolve();
@@ -3212,18 +3454,30 @@ var Outbox = (function(){
     S.queueRunning = true;
     return ready.reduce(function(p, item){
       return p.then(function(){
+        if(item.cancelled || !find(item.id)) return;
         item.status='sending'; save();
-        return Net.postDB(item.payload).then(function(ok){
-          if(ok){
-            item.status='sent'; item.sentAt=Date.now();
-            done(item.id);
-            App.markStatus(item.id, 'sent');
+        return Net.postDB(item.payload,{timeout:CFG.POST_TIMEOUT_MS}).then(function(result){
+          if(item.cancelled){
+            // فقط لغو صریح کاربر باید POST درحال‌اجرا را جبران کند؛ echo ممکن است
+            // پیش از پاسخ برسد و Outbox.done را اجرا کند، که به معنی حذف پیام نیست.
+            if(result!==false) return deleteCancelled(item);
+            return;
+          }
+          if(!find(item.id)) return; // echo معتبر قبلاً آیتم را تأیید و حذف کرده است.
+          if(result===true){
+            done(item.id); App.markStatus(item.id, 'sent');
+          } else if(result===null){
+            return verify(item).then(function(found){
+              if(item.cancelled){ if(result!==false) return deleteCancelled(item); return; }
+              if(!find(item.id)) return; // Data.merge ممکن است قبلاً echo را تأیید کرده باشد.
+              if(found){ done(item.id); App.markStatus(item.id,'sent'); }
+              else bump(item.id);
+            });
           } else { bump(item.id); }
         });
       });
     }, Promise.resolve()).then(function(){
       S.queueRunning=false; save();
-      // بعد از ارسال موفق، یک دریافت سریع برای گرفتن تأیید سرور
       if(!pendingCount()) setTimeout(function(){ Data.fetchMessages().catch(function(){}); }, 900);
     }).catch(function(){ S.queueRunning=false; save(); });
   }
@@ -3240,7 +3494,7 @@ var Outbox = (function(){
   }
   U.on(window,'online', function(){ onConnectivityChange(); kickAll(); setTimeout(flush, 400); });
   U.on(window,'offline', function(){ onConnectivityChange(); });
-  return { add:add, done:done, markSending:markSending, bump:bump, flush:flush, kickAll:kickAll, find:find, all:all,
+  return { add:add, update:update, cancel:cancel, cancelEdits:cancelEdits, done:done, markSending:markSending, bump:bump, flush:flush, kickAll:kickAll, find:find, all:all,
            restore:restore, pendingCount:pendingCount, failedItems:failedItems, retryFailed:retryFailed, clear:clear, save:save };
 })();
 
@@ -3292,17 +3546,13 @@ var Auth = (function(){
 
   async function doRegister(){
     var u=$('#regUser').value.trim(), p=$('#regPass').value, p2=$('#regPass2').value;
-    var isT=$('#regIsTeacher').checked, code=$('#regTeacherCode').value.trim();
     var err=$('#regErr'); err.textContent='';
     if(u.length<2||u.length>24){ err.textContent='اسم کاربری باید بین ۲ تا ۲۴ حرف باشد.'; return; }
     if(!/^[\w\u0600-\u06FF\u200C.]+$/.test(u)){ err.textContent='فقط حرف، عدد، نقطه و زیرخط مجاز است.'; return; }
     if(p.length<4){ err.textContent='رمز باید حداقل ۴ حرف باشد.'; return; }
     if(p!==p2){ err.textContent='رمز و تکرارش یکی نیست!'; return; }
+    // نقش معلم هرگز از فرم عمومی یا دادهٔ قابل‌تغییرِ مرورگر پذیرفته نمی‌شود.
     var role='student';
-    if(isT){
-      if(code!==CFG.TEACHER_CODE){ err.textContent='رمز معلم اشتباه است.'; return; }
-      role='teacher';
-    }
     var btn=$('#btnRegister'); btn.disabled=true;
     toast('در حال بررسی نام کاربری…');
     try{
@@ -3312,8 +3562,7 @@ var Auth = (function(){
       if(findUser(u)){ err.textContent='این نام کاربری قبلاً گرفته شده!'; btn.disabled=false; return; }
 
       toast('در حال ساخت حساب…');
-      var payload = {action:'register', username:u, password:p, display:u, role:role, date:new Date().toISOString()};
-      if(role==='teacher') payload.teacherPassword = CFG.TEACHER_CODE;
+      var payload = {action:'register', username:u, password:p, display:u, role:'student', date:new Date().toISOString()};
       // اگر بک‌اند هش را پشتیبانی کند، رمز خام فرستاده نمی‌شود
       if(S.caps.hash){
         payload.passwordHash = await Guard.hashPassword(u, p);
@@ -3324,7 +3573,7 @@ var Auth = (function(){
       var found = await verifyUser(u, 4);
       btn.disabled=false;
       if(found){
-        loginSuccess(u, found.role==='teacher'?'teacher':role);
+        loginSuccess(u, role);
         toast('خوش اومدی '+u+'!','ok');
         welcomeFx();
       } else {
@@ -3366,7 +3615,8 @@ var Auth = (function(){
     var btn=$('#btnLogin'); btn.disabled=true;
     toast('در حال ورود…');
     try{
-      var res = await getDB({action:'checkPass', username:u, password:p}, {tries:1});
+      // رمز عبور در query string قرار نمی‌گیرد؛ فقط در بدنهٔ POST روی HTTPS ارسال می‌شود.
+      var res = await Net.postJSON({action:'checkPass', username:u, password:p},{timeout:CFG.POST_TIMEOUT_MS});
       btn.disabled=false;
       var ok = res && (res.ok || res.success===true || res.result==='ok');
       if(!ok){ err.textContent=(res && (res.error||res.message)) || 'نام کاربری یا رمز اشتباه است!'; toast('رمز اشتباه!','err'); return; }
@@ -3376,21 +3626,15 @@ var Auth = (function(){
       toast('خوش برگشتی '+name+'!','ok');
     }catch(e){
       btn.disabled=false;
-      // اگر سرور در دسترس نبود، تلاش محلی با آخرین اطلاعات ذخیره‌شده
-      var cached = (DB.get('users', [])||[]).filter(function(x){ return U.same(x.username, u); })[0];
-      if(cached){
-        err.textContent='سرور در دسترس نیست؛ ورود با اطلاعات ذخیره‌شده.';
-        loginSuccess(u, cached.role||'student');
-      } else {
-        err.textContent='اتصال به سرور برقرار نشد.';
-        toast('خطای اتصال','err');
-      }
+      // فهرست کاربران محلی شامل هش/راستی‌آزمایی رمز نیست؛ پس هرگز جای احراز هویت سرور استفاده نمی‌شود.
+      err.textContent='ورود امن در دسترس نیست؛ اتصال سرور را بررسی و دوباره تلاش کن.';
+      toast('خطای اتصال','err');
     }
   }
 
   function loginSuccess(u, role){
     S.me=u; S.role=role==='teacher'?'teacher':'student';
-    DB.set('session',{username:u, role:S.role, at:Date.now()});
+    DB.set('session',{username:u, at:Date.now()});
     S.profile = Profile.load(u);
     if(!S.groups.length) S.groups=[DEFAULT_GROUP];
     if(S.groups.indexOf(DEFAULT_GROUP)<0) S.groups.unshift(DEFAULT_GROUP);
@@ -4103,6 +4347,10 @@ var App = (function(){
     var ok = await Ui.confirmDlg('حذف پیام', label, 'حذف', true);
     if(!ok) return;
     var tgtSig = Norm.sig(m);
+    // پیام هنوز در صف است؟ آن را هم‌زمان لغو کن تا بعد از حذف دوباره ارسال نشود.
+    Outbox.cancelEdits(m.id);
+    var pendingItem=Outbox.find(m.id);
+    if(pendingItem) Outbox.cancel(m.id);
     // ۱) حذف محلی + سنگ‌قبر (تا در دریافت بعدی برنگردد)
     Tomb.add(m.id, tgtSig);
     S.messages = S.messages.filter(function(x){ return x.id!==m.id; });
@@ -4117,21 +4365,25 @@ var App = (function(){
       // فیلدهای نسخه ۲
       targetId:m.id, targetSig:tgtSig
     };
-    if(teacher){
-      await Net.postDB(payload);
-      // ۳) نشانه حذف برای بقیه کاربران (بدون تغییر بک‌اند):
-      //    متن پیام، خودِ نشانه را در قالب سیم حمل می‌کند؛ هر کلاینتی آن را
-      //    می‌خواند، پیام هدف را پنهان می‌کند و این ردیف کنترلی را نشان نمی‌دهد.
-      var marker = Wire.encode({x:{of:tgtSig, id:m.id, by:S.me, at:Date.now()}});
-      await Net.postDB({
+    if(S.caps.v2){
+      // حذف نسخهٔ ۲ هم مثل پیام‌ها با شناسهٔ پایدار در صف آفلاین می‌ماند.
+      payload.clientId=U.uid('d');
+      Outbox.add(payload,'حذف پیام');
+      Outbox.flush();
+    } else if(teacher){
+      // اکشن مستقیم را هم امتحان کن؛ نشانگر صف‌شده سازگاری بک‌اند قدیمی را پوشش می‌دهد.
+      Net.postDB(payload).catch(function(){});
+      var deleteId=U.uid('d'), deleteAt=Date.now();
+      // نشانگر حذف برای همهٔ کلاینت‌های بک‌اند قدیمی؛ cid پاسخ تکراری را حذف می‌کند.
+      var marker=Wire.encode({x:{of:tgtSig, id:m.id, by:S.me, at:deleteAt},cid:deleteId});
+      Outbox.add({
         action:'message', from_user:S.me, to_group:m.to_group, to_user:m.to_user,
-        text: '\u200B' + marker,
-        date: new Date().toISOString(),
-        meta_kind:'delete',
-        control: marker          // برای بک‌اند نسخه ۲ (فیلد اختصاصی)
-      });
+        text:'\u200B'+marker, date:new Date(deleteAt+(S.serverOffset||0)).toISOString(),
+        meta_kind:'delete', control:marker, clientId:deleteId
+      },'حذف پیام');
+      Outbox.flush();
     } else {
-      await Net.postDB(payload);
+      Net.postDB(payload).catch(function(){});
     }
     setTimeout(function(){ Data.fetchMessages().catch(function(){}); }, 800);
   }
@@ -4297,7 +4549,7 @@ var Tomb = (function(){
       keys.slice(0, keys.length-1000).forEach(function(k){ delete S.tomb[k]; }); }
     DB.set('tomb', S.tomb);
   }
-  function has(m){ return !!(S.tomb[m.id] || S.tomb[Norm.sig(m)]); }
+  function has(m){ return !!(S.tomb[m.id] || S.tomb[Norm.sig(m)] || S.tomb[Norm.legacySig(m)]); }
   return { add:add, has:has };
 })();
 
@@ -4447,6 +4699,7 @@ var Compose = (function(){
   function edit(id){
     var m = App.byId(id); if(!m) return;
     if(!U.same(m.from, S.me)){ toast('فقط پیام خودت رو می‌تونی ویرایش کنی','err'); return; }
+    if(m.pending){ toast('این پیام هنوز ارسال نشده؛ بعد از تأیید سرور ویرایشش کن.','err'); return; }
     S.replyTo = null; $('#replyBar').classList.add('is-hidden');
     S.editing = {id:m.id, old: Wire.strip(m.text)};
     $('#editSnip').textContent = (Wire.strip(m.text)||'پیوست').slice(0,140);
@@ -4503,7 +4756,8 @@ var Compose = (function(){
     var date = new Date(Date.now() + (S.serverOffset||0)).toISOString();
 
     // اگر بک‌اند فیلدهای اضافه را پشتیبانی نکند، متادیتا به انتهای متن می‌چسبد
-    var wireSuffix = (S.wire.metaOk===true)? '' : Wire.encode(meta);
+    var wireMeta = Object.assign({},meta,{cid:clientId});
+    var wireSuffix = (S.wire.metaOk===true)? '' : Wire.encode(wireMeta);
     var payload = {
       action:'message', from_user:S.me, to_group:to_group, to_user:to_user,
       text: t + (wireSuffix? (t? ' ':'')+wireSuffix : ''),
@@ -4512,6 +4766,7 @@ var Compose = (function(){
     // فیلدهای نسخه ۲ (اگر بک‌اند پشتیبانی کند، همانجا ذخیره می‌شود)
     if(meta.r) payload.reply_to = meta.r.id;
     if(meta.a) payload.attachment = meta.a;
+    if(S.wire.metaOk===true) payload.meta = wireMeta;
 
     var local = {
       id: clientId, from: S.me, to_group:to_group, to_user:to_user,
@@ -4543,23 +4798,25 @@ var Compose = (function(){
     if(!text){ toast('متن پیام خالی است','err'); return; }
     var old = Wire.strip(m.text);
     if(old === text){ clear(); var inp=$('#msgInput'); inp.value=''; autoGrow(); return; }
-    var editMeta = {e:{at:Date.now(), of:Norm.sig(m), old:old.slice(0,200)}};
-    // ۱) تغییر محلی
-    m.text = text; m.meta = m.meta||{}; m.meta.e = editMeta.e;
+    var editId=U.uid('e'), editAt=Date.now();
+    var editMeta = {e:{id:m.id, at:editAt, of:Norm.sig(m), old:old.slice(0,200)}};
+    // ۱) تغییر محلی؛ درخواست ویرایش هم مثل پیام، در صف پایدار می‌ماند.
+    m.text = text; m.meta = m.meta||{}; m.meta.e = editMeta.e; m.editOutboxId=editId;
     var inp=$('#msgInput'); inp.value=''; autoGrow(); clear();
     App.render('messages');
-    // ۲) تلاش سرور: اکشن ویرایش (نسخه ۲)
-    Net.postDB({action:'editMsg', id:m.id, from:m.from, to_group:m.to_group, to_user:m.to_user,
-                oldText:old, text:text, role:S.role, by:S.me, editedAt:editMeta.e.at});
-    // ۳) نشانه ویرایش برای بقیه کاربران (بک‌اند فعلی): یک پیام کنترلی با متن جدید
-    if(!S.caps.v2){
-      var wire = Wire.encode(editMeta);
-      Net.postDB({
-        action:'message', from_user:S.me, to_group:m.to_group, to_user:m.to_user,
-        text: text + (wire? ' '+wire : ''), date:new Date().toISOString(), role:S.role, controlEdit:true
-      });
+    var payload;
+    if(S.caps.v2){
+      payload={action:'editMsg', id:m.id, from:m.from, to_group:m.to_group, to_user:m.to_user,
+               oldText:old, text:text, role:S.role, by:S.me, editedAt:editAt, clientId:editId};
+    } else {
+      var wire=Wire.encode(Object.assign({},editMeta,{cid:editId}));
+      payload={action:'message', from_user:S.me, to_group:m.to_group, to_user:m.to_user,
+               text:text+(wire?' '+wire:''), date:new Date(Date.now()+(S.serverOffset||0)).toISOString(),
+               role:S.role, clientId:editId, controlEdit:true};
     }
-    toast('پیام ویرایش شد ✏️','ok');
+    Outbox.add(payload,'ویرایش پیام');
+    Outbox.flush();
+    toast('ویرایش ذخیره شد؛ در صورت قطعی شبکه در صف می‌ماند ✏️','ok');
     Guard.markSent(text);
   }
 
@@ -5450,14 +5707,38 @@ var InChatSearch = (function(){
     var b=$('#inchatSearchBox');
     b.classList.toggle('show');
     if(b.classList.contains('show')) $('#inchatSearch').focus();
-    else { S.chatQ=''; $('#inchatSearch').value=''; App.renderMsgs(true); $('#inchatSearchCount').textContent=''; }
+    else { S.chatQ=''; hits=[]; idx=0; $('#inchatSearch').value=''; App.renderMsgs(true); $('#inchatSearchCount').textContent=''; }
+  }
+  function markText(root,q){
+    if(!root || !q) return;
+    var walker=document.createTreeWalker(root,window.NodeFilter.SHOW_TEXT), nodes=[], n;
+    while((n=walker.nextNode())) if(n.nodeValue.toLowerCase().indexOf(q)>=0) nodes.push(n);
+    nodes.forEach(function(textNode){
+      var text=textNode.nodeValue, lower=text.toLowerCase(), at=0, found, frag=document.createDocumentFragment();
+      while((found=lower.indexOf(q,at))>=0){
+        if(found>at) frag.appendChild(document.createTextNode(text.slice(at,found)));
+        var mark=document.createElement('mark'); mark.textContent=text.slice(found,found+q.length); frag.appendChild(mark);
+        at=found+q.length;
+      }
+      if(at<text.length) frag.appendChild(document.createTextNode(text.slice(at)));
+      if(textNode.parentNode) textNode.parentNode.replaceChild(frag,textNode);
+    });
   }
   function apply(q){
-    S.chatQ = q;
+    q=String(q||'').trim(); S.chatQ=q;
     App.renderMsgs(true);
-    hits = $all('.bubble').filter(function(b){ return b.querySelector('mark'); });
-    idx = 0;
-    $('#inchatSearchCount').textContent = hits.length? fa(hits.length)+' نتیجه' : (q? 'نتیجه‌ای نیست':'');
+    var qn=q.toLowerCase();
+    if(qn){
+      hits=$all('.bubble').filter(function(b){
+        var m=App.byId(b.getAttribute('data-id')); if(!m) return false;
+        var text=Wire.strip(m.text).toLowerCase();
+        var matched=text.indexOf(qn)>=0 || String(m.from).toLowerCase().indexOf(qn)>=0;
+        if(matched) markText(b.querySelector('.txt'),qn);
+        return matched;
+      });
+    } else hits=[];
+    idx=0;
+    $('#inchatSearchCount').textContent=hits.length? fa(hits.length)+' نتیجه' : (qn? 'نتیجه‌ای نیست':'');
     if(hits.length) focusHit(0);
   }
   function focusHit(i){
@@ -6333,7 +6614,6 @@ var Sync = (function(){
   U.on($('#regUser'),'keydown', function(e){ if(e.key==='Enter') Auth.doRegister(); });
   U.on($('#regPass2'),'keydown', function(e){ if(e.key==='Enter') Auth.doRegister(); });
   U.on($('#loginPass'),'keydown', function(e){ if(e.key==='Enter') Auth.doLogin(); });
-  U.on($('#regIsTeacher'),'change', function(){ $('#teacherCodeBox').style.display = this.checked? 'block':'none'; });
   U.on($('#btnTeacherBack'),'click', function(){ App.showPage('chat'); });
   U.on($('#btnTeacherHome'),'click', function(){ App.showPage('chat'); });
   U.on($('#btnSettingsBack'),'click', function(){ App.showPage('chat'); });
@@ -6345,14 +6625,23 @@ var Sync = (function(){
   onConnectivityChange();
   var sess = DB.get('session', null);
   if(sess && sess.username){
-    S.me = sess.username; S.role = sess.role||'student';
+    // نقش ذخیره‌شده در localStorage قابل‌دستکاری است؛ نشست آفلاین فقط دانش‌آموز است.
+    // ارتقای نقش معلم تنها پس از دریافت رکورد مرجع از سرور انجام می‌شود.
+    S.me = sess.username; S.role = 'student';
     S.profile = Profile.load(S.me);
     Sync.drawer(); Sync.theme();
     App.showPage('chat');
     Poll.boot(true);
     Data.detectCaps().then(function(){ Profile.syncToServer(); });
-    // بررسی بن در ورود خودکار
-    Data.fetchUsers().then(function(){ Auth.checkMyBan(); });
+    // بررسی بن و همگام‌سازی نقش از فهرست سرور، نه از مقدار محلیِ نشست.
+    Data.fetchUsers().then(function(){
+      var account=Auth.findUser(S.me);
+      if(account){
+        S.role=account.role==='teacher'?'teacher':'student';
+        Sync.drawer(); App.render('all');
+      }
+      Auth.checkMyBan();
+    });
   } else {
     App.showPage('welcome');
   }
@@ -7053,72 +7342,7 @@ var V3 = (function(){
   } catch(e){}
 })();
 </script>
-<!-- 📊 ردیاب بازدید حکیمستان -->
-<script>
-(function(){
-  try {
-    var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
-    var userId = localStorage.getItem('hk_uid');
-    var isNew = false;
-    if (!userId) {
-      userId = 'hk_' + Math.random().toString(36).substr(2, 9);
-      localStorage.setItem('hk_uid', userId);
-      isNew = true;
-    }
-
-    var ua = navigator.userAgent;
-    var device = 'دسکتاپ';
-    if (/mobile|android|iphone|ipod/i.test(ua)) device = 'موبایل';
-    else if (/ipad|tablet/i.test(ua)) device = 'تبلت';
-
-    var browser = 'سایر';
-    if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
-    else if (ua.indexOf('Edg') > -1) browser = 'Edge';
-    else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
-    else if (ua.indexOf('Safari') > -1) browser = 'Safari';
-
-    var os = 'سایر';
-    if (/android/i.test(ua)) os = 'Android';
-    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
-    else if (/windows/i.test(ua)) os = 'Windows';
-    else if (/mac/i.test(ua)) os = 'Mac';
-    else if (/linux/i.test(ua)) os = 'Linux';
-
-    var ref = 'مستقیم';
-    if (document.referrer) {
-      if (document.referrer.indexOf('hakimistan.ir') > -1) ref = 'داخلی';
-      else if (document.referrer.indexOf('google') > -1) ref = 'گوگل';
-      else if (document.referrer.indexOf('eitaa') > -1) ref = 'ایتا';
-      else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
-      else ref = 'سایر';
-    }
-
-    fetch(API, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'logVisit',
-        userId: userId,
-        page: (function(){
-          var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean);
-          if (p.length === 0) return 'index.html';
-          if (p.length === 1) return p[0];
-          return p.slice(-2).join('/');
-        })(),
-        device: device,
-        browser: browser,
-        os: os,
-        lang: navigator.language || 'fa',
-        ref: ref,
-        isNew: isNew
-      })
-    }).catch(function(){});
-
-  } catch(e){}
-})();
-</script>
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>
