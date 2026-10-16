@@ -281,14 +281,18 @@ body[data-mode="dark"]{
 .typing .dots i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:tp 1s infinite}
 .typing .dots i:nth-child(2){animation-delay:.15s}.typing .dots i:nth-child(3){animation-delay:.3s}
 @keyframes tp{0%,100%{transform:none;opacity:.5}50%{transform:translateY(-5px);opacity:1}}
-/* کادر ارسال */
-.composer{padding:10px 12px 4px;display:flex;gap:8px;align-items:flex-end;background:linear-gradient(transparent,var(--bg) 30%)}
-.composer .box{flex:1;background:var(--card);border:2.5px solid var(--line);border-radius:22px;padding:4px 6px 4px 16px;display:flex;align-items:flex-end;gap:6px;transition:border-color .2s,box-shadow .2s}
+/* کادر ارسال — چیدمان flex
+   • فیلد متن: flex:1 + min-width:0 → همیشه تمام فضای باقی‌مانده را می‌گیرد،
+     زیر فشارِ عرض صفحه کوچک می‌شود (نه سرریز، نه «فضای خالی وسط»)
+   • دکمه‌ها: flex:none → هرگز فشرده یا از جای خود جابه‌جا نمی‌شوند */
+.composer{padding:10px 12px 4px;display:flex;gap:8px;align-items:flex-end;min-width:0;background:linear-gradient(transparent,var(--bg) 30%)}
+.composer .box{flex:1 1 0%;min-width:0;background:var(--card);border:2.5px solid var(--line);border-radius:22px;padding:4px 6px 4px 16px;display:flex;align-items:flex-end;gap:6px;transition:border-color .2s,box-shadow .2s}
 .composer .box:focus-within{border-color:var(--accent);box-shadow:var(--glow)}
-.composer textarea{flex:1;border:none;background:none;resize:none;max-height:120px;min-height:48px;padding:12px 6px;line-height:1.8}
+.composer textarea{flex:1 1 0%;min-width:0;border:none;background:none;resize:none;max-height:120px;min-height:48px;padding:12px 6px;line-height:1.8}
 .composer textarea:focus{outline:none}
-.char-count{font-size:.68rem;color:var(--muted);padding-bottom:12px;white-space:nowrap}
-.send-btn{width:60px;height:60px;min-width:60px;border-radius:20px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 rgba(0,0,0,.15);transition:transform .12s}
+.char-count{flex:none;font-size:.68rem;color:var(--muted);padding-bottom:12px;white-space:nowrap}
+.composer>.icon-btn,.composer>.send-btn{flex:0 0 auto}
+.send-btn{width:60px;height:60px;min-width:60px;min-height:60px;border-radius:20px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 rgba(0,0,0,.15);transition:transform .12s}
 .send-btn:active{transform:scale(.9) rotate(-8deg)}
 .send-btn:disabled{opacity:.5}
 .scroll-down{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);background:var(--card);border:2px solid var(--accent);color:var(--ink);border-radius:99px;padding:8px 18px;font-size:.8rem;font-weight:800;display:none;box-shadow:var(--shadow);z-index:6;animation:popIn .2s}
@@ -498,22 +502,27 @@ textarea.code{direction:ltr;text-align:left}
   .composer{
     padding:6px 6px 4px!important;gap:4px!important;
     align-items:flex-end!important;
+    min-width:0!important;
   }
   .composer .box{
     border-radius:16px!important;
     padding:2px 4px 2px 10px!important;
     min-height:0!important;
+    flex:1 1 0%!important;
+    min-width:0!important;   /* اجازهٔ کوچک‌شدن فیلد متن روی گوشی‌های باریک */
   }
   .composer textarea{
     min-height:34px!important;max-height:80px!important;
     padding:7px 4px!important;font-size:.88rem!important;line-height:1.5!important;
+    flex:1 1 0%!important;
+    min-width:0!important;   /* بدون این، textarea زیر min-width:auto سرریز می‌کرد */
   }
-  .char-count{font-size:.58rem!important;padding-bottom:6px!important}
+  .char-count{font-size:.58rem!important;padding-bottom:6px!important;flex:none!important}
 
-  /* دکمه ارسال */
+  /* دکمه ارسال — حداقل ۴۴×۴۴ (هدف لمس راحت روی گوشی) */
   .send-btn{
-    width:42px!important;height:42px!important;min-width:42px!important;
-    border-radius:13px!important;
+    width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
+    border-radius:14px!important;
   }
   .send-btn svg{width:18px!important;height:18px!important}
 
@@ -792,7 +801,7 @@ body[data-mode="dark"] .bubble .quote{background:rgba(255,255,255,.08)}
 /* ارتفاع کم‌تر روی موبایل‌های کوچک */
 @media(max-width:400px){
   .composer{padding:8px 8px 2px;gap:6px}
-  .send-btn{width:54px;height:54px;min-width:54px}
+  .send-btn{width:44px;height:44px;min-width:44px;min-height:44px}
   .chat-notices{padding:0 8px}
 }
 @media(max-height:560px){
@@ -4479,6 +4488,9 @@ var App = (function(){
   /* ── صفحه‌ها ── */
   function showPage(name){
     PAGES.forEach(function(p){ var pе=$('#page-'+p); if(pе) pе.classList.toggle('active', p===name); });
+    /* نام صفحهٔ فعال روی <body> — لایهٔ دسترس‌پذیری از آن استفاده می‌کند
+       تا دکمهٔ ♿ در صفحهٔ چت، بالای کادر ارسال بنشیند (روی دکمهٔ ارسال نیفتد) */
+    try{ document.body.setAttribute('data-page', name); }catch(e){}
     window.scrollTo(0,0);
     closeDrawer();
     if(name==='chat') renderAll('all');
