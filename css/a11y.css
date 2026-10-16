@@ -182,17 +182,17 @@ html.hk-high-contrast {
   --glass-brd: rgba(255, 255, 255, 0.5);
 }
 
-/* متن‌های کم‌کنتراست را پررنگ‌تر و خوانا‌تر می‌کند */
-html.hk-high-contrast body,
-html.hk-high-contrast .muted,
-html.hk-high-contrast small,
-html.hk-high-contrast figcaption,
-html.hk-high-contrast .slogan,
-html.hk-high-contrast .panel-group-label {
+/* صفحهٔ تیره: متن کنتراست سفید */
+html.hk-high-contrast:not(.hk-hc-light) body,
+html.hk-high-contrast:not(.hk-hc-light) .muted,
+html.hk-high-contrast:not(.hk-hc-light) small,
+html.hk-high-contrast:not(.hk-hc-light) figcaption,
+html.hk-high-contrast:not(.hk-hc-light) .slogan,
+html.hk-high-contrast:not(.hk-hc-light) .panel-group-label {
   color: #ffffff !important;
 }
 
-/* اگر صفحه روشن است، متن تیره می‌شود (به‌جای سفید) */
+/* صفحهٔ روشن: متن کنتراست تیره (کلاس را JS می‌گذارد) */
 html.hk-high-contrast.hk-hc-light body,
 html.hk-high-contrast.hk-hc-light .muted,
 html.hk-high-contrast.hk-hc-light small,

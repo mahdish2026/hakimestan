@@ -1,6 +1,6 @@
 /*!
  * hakim-a11y.js — ماژول دسترس‌پذیری حکیمستان
- * نسخه: 1.0.1
+ * نسخه: 1.0.2
  * ساخته مهدی شریفیان
  *
  * کارها:
@@ -52,36 +52,108 @@
     var a = m[4] === undefined ? 1 : (/%$/.test(m[4]) ? parseFloat(m[4]) / 100 : parseFloat(m[4]));
     return { r: +m[1], g: +m[2], b: +m[3], a: a };
   }
-
   function luminanceOf(color) {
     var c = parseRgb(color);
     if (!c || c.a < 0.35) return null;
     return (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) / 255;
   }
-
   function pageIsLight() {
     try {
       var cs = getComputedStyle(document.body);
       var l = luminanceOf(cs.backgroundColor);
       if (l === null) l = luminanceOf(getComputedStyle(document.documentElement).backgroundColor);
       if (l !== null) return l > 0.5;
-      /* پس‌زمینهٔ شفاف (مثل لابی که پس‌زمینه‌اش فقط گرادیان است):
-         از رنگ متن خودِ صفحه حدس بزن — تم‌ها رنگ متن را هماهنگ با
-         پس‌زمینه ست می‌کنند: متن روشن ⇒ پس‌زمینه تیره ⇒ صفحه تیره */
+      /* پس‌زمینهٔ شفاف (مثل لابی که فقط گرادیان دارد): رنگ متن تم ملاک است؛
+         متن روشن یعنی پس‌زمینه تیره */
       var t = luminanceOf(cs.color);
       if (t !== null) return t < 0.5;
-      return true; /* بوم پیش‌فرض مرورگر سفید است */
+      return true;
     } catch (e) { return true; }
   }
-
   function updateContrastScheme() {
     var root = document.documentElement;
     if (!prefs.contrast) { root.classList.remove('hk-hc-light'); return; }
     root.classList.toggle('hk-hc-light', pageIsLight());
   }
 
+  /* ── سنجش «تمیز» پیش از updateContrastScheme() ──────────────
+     در حالت کنتراست دو چیز سنجش pageIsLight() را خراب می‌کند:
+       ۱) رنگ متن body را خودِ دو قانون کنتراست (a11y.css بخش ۶) با
+          !important عوض کرده‌اند؛ روی پس‌زمینهٔ شفاف (لابی، جدول حکمت،
+          مار و پله…) pageIsLight() همان رنگ کنتراست را می‌خواند و حالت
+          قبلی را تأیید می‌کند → روی تم روشن متن سفید و نامرئی می‌ماند.
+       ۲) ترنزیشن رنگ/پس‌زمینهٔ body هنگام تعویض تم (مثل مدرسهٔ ریاضی)
+          هنوز رنگ «تم قبلی» را برمی‌گرداند → کلاس یک قدم عقب می‌ماند.
+     settleContrastScheme() پیش از هر updateContrastScheme() حالت درست را
+     می‌نشاند و updateContrastScheme() پس از آن همیشه به همان نتیجه می‌رسد
+     (پس‌زمینهٔ مات همان است؛ رنگ متنِ کنتراستِ انتخاب‌شده هم به همان حالت
+     برمی‌گردد). ترنزیشن html/body در لحظهٔ سنجش خاموش است و حالت نهایی
+     پیش از رسم بعدی اعمال می‌شود — بدون چشمک.
+     هزینه: پس‌زمینهٔ مات → ارزان. پس‌زمینهٔ شفاف → رنگ متن خودِ تم لازم است:
+     هنگام روشن‌کردن کنتراست پیش از افزودن کلاس خوانده می‌شود؛ برای تمِ تازه
+     یک بار با برداشتن موقت hk-high-contrast (گران: کل صفحه دوباره استایل
+     می‌شود) و از آن پس از حافظهٔ همان «وضعیت تم». */
+  var schemeMemo = Object.create(null), schemeMemoSize = 0;
+
+  function themeStateKey() {
+    var b = document.body, r = document.documentElement;
+    return [r.getAttribute('data-theme'), b.getAttribute('data-theme'), b.className, b.getAttribute('style')].join('\n');
+  }
+
+  function rememberScheme(key, light) {
+    if (!(key in schemeMemo) && ++schemeMemoSize > 64) { schemeMemo = Object.create(null); schemeMemoSize = 1; }
+    schemeMemo[key] = light;
+  }
+
+  function freezeRootTransitions() {
+    var s = document.createElement('style');
+    s.setAttribute('data-hk-contrast-probe', '');
+    s.textContent = ':root,:root body{transition:none!important}';
+    (document.head || document.documentElement).appendChild(s);
+    return function () { if (s.parentNode) s.parentNode.removeChild(s); };
+  }
+
+  function hasOpaqueBackground() {
+    return luminanceOf(getComputedStyle(document.body).backgroundColor) !== null ||
+      luminanceOf(getComputedStyle(document.documentElement).backgroundColor) !== null;
+  }
+
+  /* پیش از افزودن hk-high-contrast: رنگ‌های خودِ صفحه هنوز دست‌نخورده‌اند */
+  function notePageScheme() {
+    schemeMemo = Object.create(null); schemeMemoSize = 0;
+    if (!document.body) return;
+    var thaw = freezeRootTransitions();
+    try {
+      if (!hasOpaqueBackground()) rememberScheme(themeStateKey(), pageIsLight());
+    } catch (e) {} finally { thaw(); }
+  }
+
+  function settleContrastScheme() {
+    if (!prefs.contrast || !document.body) return;
+    var root = document.documentElement;
+    var thaw = freezeRootTransitions();
+    try {
+      var light;
+      if (hasOpaqueBackground()) {
+        light = pageIsLight();
+      } else {
+        var key = themeStateKey();
+        if (key in schemeMemo) {
+          light = schemeMemo[key];
+        } else {
+          root.classList.remove('hk-high-contrast');
+          try { light = pageIsLight(); } finally { root.classList.add('hk-high-contrast'); }
+          rememberScheme(key, light);
+        }
+      }
+      root.classList.toggle('hk-hc-light', light);
+      void getComputedStyle(document.body).color;   // حالت نهایی با ترنزیشنِ خاموش
+    } catch (e) {} finally { thaw(); }
+  }
+
   function applyPrefs() {
     var root = document.documentElement;
+    if (prefs.contrast && !root.classList.contains('hk-high-contrast')) notePageScheme();
     root.classList.toggle('hk-high-contrast', prefs.contrast);
     root.classList.toggle('hk-reduce-motion', prefs.reduceMotion);
     root.style.setProperty('--hk-text-scale', String(prefs.textScale));
@@ -96,6 +168,7 @@
       var on = p === 'contrast' ? prefs.contrast : prefs.reduceMotion;
       btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
+    settleContrastScheme();
     updateContrastScheme();
   }
 
@@ -1009,10 +1082,15 @@
     keyboardShortcuts();
     watch();
     try {
-      new MutationObserver(function () { if (prefs.contrast) updateContrastScheme(); })
+      new MutationObserver(function () { if (prefs.contrast) { settleContrastScheme(); updateContrastScheme(); } })
         .observe(document.body, { attributes: true, attributeFilter: ['data-theme', 'class', 'style'] });
+      /* برخی صفحه‌ها (واژه‌ستان، طرح درس، درسگاه، پنل معلمِ بازی‌ها) تم را روی
+         <html data-theme> می‌گذارند. فقط data-theme پایش می‌شود: class و style
+         ریشه را خودِ همین ماژول عوض می‌کند و پایش آن‌ها حلقه می‌سازد. */
+      new MutationObserver(function () { if (prefs.contrast) { settleContrastScheme(); updateContrastScheme(); } })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     } catch (e) {}
-    global.addEventListener('load', function () { updateContrastScheme(); });
+    global.addEventListener('load', function () { settleContrastScheme(); updateContrastScheme(); });
 
     // گزارش را پس از اتمام چیدمان بگیر تا اندازهٔ عناصر واقعی باشد
     var runAudit = function () { try { audit(); } catch (e) {} };
@@ -1034,7 +1112,7 @@
   }
 
   global.HakimA11y = {
-    version: '1.0.1',
+    version: '1.0.2',
     announce: announce,
     audit: audit,
     nameIcons: nameIcons,

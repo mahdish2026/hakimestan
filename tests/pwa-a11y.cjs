@@ -27,6 +27,7 @@ function page(html = '') {
   assert(css.includes('font-weight: bolder !important'));
   assert(css.includes('text-decoration: underline !important'));
   assert(css.includes('html.hk-high-contrast.hk-hc-light body'));
+  assert(css.includes('html.hk-high-contrast:not(.hk-hc-light) body'));
   assert(!/hk-high-contrast body\[data-theme=/.test(css));
   let dom = page('<header></header>'); let w = dom.window;
   w.eval(pwa); w.HakimPWA.showInstallButton();
