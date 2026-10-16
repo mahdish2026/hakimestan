@@ -976,34 +976,52 @@ document.addEventListener('visibilitychange', () => {
 /* ------------------------------------------------------------------ */
 /* ۷) همراه متنی حکیم — فقط از ../hakim-core.js                        */
 /* ------------------------------------------------------------------ */
-let hakimPanel = null, hakimFallback = null;
+let hakimPanel = null, hakimFallback = null, hakimLastMsg = '', hakimLastAt = 0;
+const HAKIM_REPEAT_MS = 4000;   // یک پیام یکسان در این بازه دوباره پخش نمی‌شود
+
+/* چت هرگز «فهرست» نمی‌شود: پیش از هر پیام تازه، همهٔ حباب‌های حکیم در
+   همهٔ جایگاه‌ها پاک می‌شوند تا پیام قبلی باقی نماند یا دوباره ظاهر نشود. */
+function hakimClearChat(){
+  try{ if(window.Hakim && typeof window.Hakim.reset === 'function') window.Hakim.reset(); }catch(e){}
+  document.querySelectorAll('.hakim-panel, .hakim-fallback').forEach(el => {
+    if(el.parentNode) el.parentNode.removeChild(el);
+  });
+  hakimPanel = null;
+  hakimFallback = null;
+}
+
 function hakimSay(text, mood){
   const host = modalOpen ? $('hakimQuestion') : document.querySelector('.screen.active .hakim-slot');
   if(!host) return;
+
+  const msg = text ? String(text) : '';
+
+  /* پیام تکراری را دوباره پخش نکن (مثلاً وقتی پولینگ همان رویداد را
+     دوباره می‌فرستد) — حکیم هر پیام را فقط یک بار و زنده می‌گوید. */
+  if(msg && msg === hakimLastMsg && (Date.now() - hakimLastAt) < HAKIM_REPEAT_MS) return;
+
+  /* کل محتوای چت با پیام تازه جایگزین می‌شود (نه اضافه شدن به آن). */
+  hakimClearChat();
+  hakimLastMsg = msg; hakimLastAt = Date.now();
+  if(!msg) return;                    // hakimSay() بدون متن = خالی کردن چت
+
   const core = window.Hakim;
   try{
     if(core && typeof core.init === 'function' && typeof core.say === 'function'){
-      if(!hakimPanel){
-        core.init({ container: host, font: false });
-        hakimPanel = host.querySelector('.hakim-panel');
-      }
+      core.init({ container: host, font: false });
+      hakimPanel = host.querySelector('.hakim-panel');
       if(hakimPanel){
-        if(hakimFallback) hakimFallback.remove();
-        if(hakimPanel.parentNode !== host) host.appendChild(hakimPanel);
-        if(text) core.say(String(text), { mood: mood || 'normal', autoHide:false, speed: REDUCED ? 1 : 12 });
+        core.say(msg, { mood: mood || 'normal', autoHide:false, speed: REDUCED ? 1 : 12 });
         return;
       }
     }
   }catch(e){ /* نبودن فایل حکیم نباید بازی را متوقف کند */ }
-  if(!hakimFallback){
-    hakimFallback = document.createElement('div');
-    hakimFallback.className = 'hakim-fallback';
-    hakimFallback.setAttribute('role','status');
-    hakimFallback.setAttribute('aria-live','polite');
-  }
-  if(hakimPanel) hakimPanel.remove();
-  if(hakimFallback.parentNode !== host) host.appendChild(hakimFallback);
-  if(text) hakimFallback.textContent = 'حکیم: ' + String(text);
+  hakimFallback = document.createElement('div');
+  hakimFallback.className = 'hakim-fallback';
+  hakimFallback.setAttribute('role','status');
+  hakimFallback.setAttribute('aria-live','polite');
+  hakimFallback.textContent = 'حکیم: ' + msg;
+  host.appendChild(hakimFallback);
 }
 function hakimReact(ev, d){
   d = d || {};

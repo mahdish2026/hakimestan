@@ -362,8 +362,8 @@ $$('.tab').forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));function switchTab
 async function loadQuestions(){if(!currentGame)return;loading($('qList'));try{const res=await api('tpGetQuestions',{gameId:currentGame});if(!res.ok){$('qList').innerHTML='<div class="empty">خطا در دریافت سؤال‌ها</div>';return}renderQuestions(res.questions||[])}catch(e){$('qList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
 function typeLabel(t){return({mcq:'چندگزینه‌ای',tf:'صحیح/غلط',short:'پاسخ کوتاه',blank:'جای خالی',multi:'چندپاسخی',match:'تطبیقی'})[t]||t||'نامشخص'}
 function answerSummary(q){if(q.type==='tf')return q.answer===true||String(q.answer)==='true'?'درست':'نادرست';if(q.type==='multi')return (Array.isArray(q.answer)?q.answer:[]).map(i=>q.options?.[i]||i).join('، ')||'—';if(q.type==='match')return (q.pairs||[]).map(p=>`${p.a} ↔ ${p.b}`).join('، ')||'—';if(q.type==='short'||q.type==='blank')return (q.answers||q.answer||[]).toString().replaceAll(',', '، ')||'—';const i=Number(q.answer);return q.options?.[i]??String(q.answer??'—')}
-function renderQuestions(list){if(!list.length){$('qList').innerHTML='<div class="empty">هنوز سؤالی نیست. از افزودن دستی یا آپلود HQF استفاده کنید.</div>';return}$('qList').innerHTML=list.map((q,i)=>`<div class="q-item"><div class="q-number">${fa(i+1)}</div><div class="q-content"><b>${esc(q.text||'بدون متن')}</b><small><span class="badge ok">${esc(typeLabel(q.type))}</span> پاسخ: ${esc(answerSummary(q))}</small></div><div class="q-actions"><button class="circle-btn edit" data-qid="${attr(q.id)}" title="ویرایش">${icon('edit')}</button><button class="circle-btn delete" data-qid="${attr(q.id)}" title="حذف">${icon('trash')}</button></div></div>`).join('');$$('.q-actions .edit').forEach(b=>b.onclick=()=>openEdit(b.dataset.qid));$$('.q-actions .delete').forEach(b=>b.onclick=()=>deleteQuestion(b.dataset.qid))}
-async function deleteQuestion(id){if(!confirm('این سؤال حذف شود؟'))return;try{const res=await api('tpDeleteQuestion',{token,gameId:currentGame,qId:id});if(res.ok){showAlert($('qAlert'),'ok','سؤال حذف شد.');loadQuestions()}else showAlert($('qAlert'),'err',res.error||'خطا')}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}}
+function renderQuestions(list){if(!list.length){$('qList').innerHTML='<div class="empty">هنوز سؤالی نیست. از افزودن دستی یا آپلود HQF استفاده کنید.</div>';return}$('qList').innerHTML=list.map((q,i)=>`<div class="q-item"><div class="q-number">${fa(i+1)}</div><div class="q-content"><b>${esc(q.text||'بدون متن')}</b><small><span class="badge ok">${esc(typeLabel(q.type))}</span> پاسخ: ${esc(answerSummary(q))}</small></div><div class="q-actions"><button class="circle-btn edit" data-qid="${attr(q.id)}" title="ویرایش">${icon('edit')}</button><button class="circle-btn delete" data-qid="${attr(q.id)}" title="حذف">${icon('trash')}</button></div></div>`).join('');$$('.q-actions .edit').forEach(b=>b.onclick=()=>openEdit(b.dataset.qid));$$('.q-actions .delete').forEach(b=>b.onclick=()=>deleteQuestion(b.dataset.qid,b))}
+async function deleteQuestion(id,btn){if(!confirm('این سؤال حذف شود؟'))return;setButtonBusy(btn,true);try{const res=await api('tpDeleteQuestion',{token,gameId:currentGame,qId:id});if(res.ok){showAlert($('qAlert'),'ok','سؤال حذف شد.');loadQuestions()}else showAlert($('qAlert'),'err',res.error||'خطا')}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false)}}
 async function openEdit(id){try{const res=await api('tpGetQuestions',{gameId:currentGame});const q=(res.questions||[]).find(x=>String(x.id)===String(id));if(!q)return;editingQ=q;fillQuestion('e',q);hideAlert($('editAlert'));$('editModal').classList.remove('hidden')}catch(e){showAlert($('qAlert'),'err','خطا در باز کردن سؤال')}}
 async function saveEdit(){if(!editingQ)return;const q=collectQuestion('e'),err=validQuestion(q);if(err){showAlert($('editAlert'),'err',err);return}const btn=$('btnSaveEdit');setButtonBusy(btn,true);try{const res=await api('tpUpdateQuestion',{token,gameId:currentGame,qId:editingQ.id,question:q});if(!res.ok){showAlert($('editAlert'),'err',res.error||'خطا');return}$('editModal').classList.add('hidden');showAlert($('qAlert'),'ok','تغییرات سؤال ذخیره شد.');loadQuestions()}catch(e){showAlert($('editAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-check"></use></svg> ذخیره تغییرات')}}
 $('btnSaveEdit').onclick=saveEdit;$('btnCancelEdit').onclick=closeEdit;$('btnCancelEdit2').onclick=closeEdit;function closeEdit(){$('editModal').classList.add('hidden');editingQ=null}
@@ -374,7 +374,7 @@ function extractQuestions(data){if(Array.isArray(data))return data;if(Array.isAr
 function normalizeQuestion(q){const n={...q};n.text=n.text||q.question||'';n.options=n.options||q.choices;n.answer=n.answer??q.correct;if(!n.type){n.type=Array.isArray(n.options)&&n.options.length>=2?'mcq':'short'}if(n.type==='mcq'&&typeof n.answer==='string'&&Array.isArray(n.options)){const i=n.options.findIndex(o=>String(o)===String(n.answer));if(i>=0)n.answer=i}if((n.type==='short'||n.type==='blank')&&!n.answers)n.answers=Array.isArray(n.answer)?n.answer:splitAnswers(n.answer);if(n.type==='match'){const rawPairs=Array.isArray(n.pairs)?n.pairs:(Array.isArray(n.answer)?n.answer:[]);n.pairs=rawPairs.map(p=>({a:String(p.a??'').trim(),b:String(p.b??'').trim()}));n.answer=n.pairs}return n}
 function readHQF(file){const reader=new FileReader();reader.onload=e=>{try{const data=JSON.parse(e.target.result),items=extractQuestions(data).map(normalizeQuestion).filter(q=>q.text),valid=items.filter(q=>!validQuestion(q));showHQFPreview(valid,file.name,items.length)}catch(err){showAlert($('qAlert'),'err','فایل JSON معتبر نیست.')}};reader.readAsText(file)}
 function showHQFPreview(valid,filename,total){$('hqfPreview').innerHTML=`<div class="alert on info">${icon('file')}<span>فایل <b>${esc(filename)}</b> · ${fa(valid.length)} سؤال معتبر از ${fa(total)} سؤال</span></div><div class="q-list" style="max-height:250px;margin-top:10px">${valid.slice(0,15).map((q,i)=>`<div class="q-item"><div class="q-number">${fa(i+1)}</div><div class="q-content"><b>${esc(q.text)}</b><small>${esc(typeLabel(q.type))} · ${esc(answerSummary(q))}</small></div></div>`).join('')}</div><button id="btnConfirmReplace" class="btn danger" style="margin-top:13px;width:100%">${icon('upload')} جایگزینی ${fa(valid.length)} سؤال</button>`;$('btnConfirmReplace').onclick=async()=>{if(!confirm('همه سؤال‌های فعلی این بازی جایگزین شوند؟'))return;const btn=$('btnConfirmReplace');setButtonBusy(btn,true);try{const res=await api('tpReplaceQuestions',{token,gameId:currentGame,questions:valid});if(!res.ok){showAlert($('qAlert'),'err',res.error||'خطا');return}showAlert($('qAlert'),'ok',`${fa(res.added??valid.length)} سؤال جایگزین شد.`);$('hqfPreview').innerHTML='';loadQuestions()}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'جایگزینی سؤال‌ها')}}}
-$('btnRestore').onclick=async()=>{if(!confirm('سؤال‌های پیش‌فرض جایگزین سؤال‌های فعلی شوند؟'))return;try{const res=await api('tpRestoreDefaults',{token,gameId:currentGame});if(res.ok){showAlert($('qAlert'),'ok',`${fa(res.restored||0)} سؤال بازیابی شد.`);loadQuestions()}else showAlert($('qAlert'),'err',res.error||'خطا')}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}};
+$('btnRestore').onclick=async function(){if(!confirm('هشدار: همهٔ سؤال‌های فعلی این بازی حذف می‌شوند و با سؤال‌های پیش‌فرض جایگزین خواهند شد. ادامه می‌دهید؟'))return;const btn=this;setButtonBusy(btn,true);try{const res=await api('tpRestoreDefaults',{token,gameId:currentGame});if(res.ok){showAlert($('qAlert'),'ok',`${fa(res.restored||0)} سؤال بازیابی شد.`);loadQuestions()}else showAlert($('qAlert'),'err',res.error||'خطا')}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false)}};
 
 /* نتایج */
 function filterPayload(){return{gameId:$('fGame').value,student:$('fStudent').value.trim(),days:$('fDays').value}}
@@ -385,8 +385,8 @@ function resultDate(r){const d=new Date(r.date||r.createdAt||'');return isNaN(d)
 function resultRowHtml(r,idx){const id=resultId(r),canDelete=Boolean(id||r.date||r.createdAt||r.student||r.game||r.score!==undefined),detail=r.details&&String(r.details).length>2;return `<tr><td>${resultDate(r)}</td><td>${esc(r.student||'—')}</td><td>${esc(GAME_NAMES[r.game]||r.game||'—')}</td><td>${esc(r.experiment||'—')}</td><td><b>${fa(r.score??0)}</b></td><td>${r.completed?'<span class="badge ok">'+icon('check')+' کامل</span>':'<span class="badge bad">ناقص</span>'}</td><td><button class="btn ghost small detail-result" data-idx="${idx}" ${detail?'':'disabled'}>${icon('eye')}</button> <button class="btn danger small delete-result" data-id="${attr(id)}" data-idx="${idx}" ${canDelete?'':'disabled'}>${icon('trash')}</button></td></tr>`}
 function resultCardHtml(r,idx){const id=resultId(r),canDelete=Boolean(id||r.date||r.createdAt||r.student||r.game||r.score!==undefined),detail=r.details&&String(r.details).length>2;return `<div class="result-card"><div class="result-card-head"><b>${esc(r.student||'—')}</b><span>${r.completed?'<span class="badge ok">کامل</span>':'<span class="badge bad">ناقص</span>'}</span></div><div class="result-card-meta"><span>تاریخ<strong>${resultDate(r)}</strong></span><span>بازی<strong>${esc(GAME_NAMES[r.game]||r.game||'—')}</strong></span><span>امتیاز<strong>${fa(r.score??0)}</strong></span><span>عملیات<strong>${detail?`<button class="btn ghost small detail-result" data-idx="${idx}">${icon('eye')} جزئیات</button>`:''} ${canDelete?`<button class="btn danger small delete-result" data-id="${attr(id)}" data-idx="${idx}">${icon('trash')}</button>`:''}</strong></span></div></div>`}
 function renderResults(list){window.__resultsData=list;$('resultsInfo').textContent=list.length?`${fa(list.length)} نتیجه پیدا شد`:'نتیجه‌ای پیدا نشد';if(!list.length){$('resultsTable').innerHTML='<div class="empty">نتیجه‌ای با این فیلتر پیدا نشد.</div>';return}const shown=list.slice(0,200);$('resultsTable').innerHTML='<div class="table-wrap"><table class="results-table"><thead><tr><th>تاریخ</th><th>دانش‌آموز</th><th>بازی</th><th>آزمایش</th><th>امتیاز</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>'+shown.map(resultRowHtml).join('')+'</tbody></table></div>'+(list.length>200?'<p class="muted" style="font-size:.68rem;margin:8px 0">فقط ۲۰۰ نتیجه اول نمایش داده شد.</p>':'');$('resultCards').innerHTML=shown.map(resultCardHtml).join('');bindResultActions()}
-function bindResultActions(){$$('.detail-result').forEach(b=>b.onclick=()=>showDetails(Number(b.dataset.idx)));$$('.delete-result').forEach(b=>b.onclick=()=>deleteResult(b.dataset.id,Number(b.dataset.idx)))}
-async function deleteResult(id,idx){const r=window.__resultsData?.[idx]||{};if(!id&&!((r.date||r.createdAt||r.student||r.game)||r.score!==undefined))return;if(!confirm('این رکورد حذف شود؟'))return;try{const res=await api('tpDeleteResult',{token,id,date:r.date||r.createdAt||'',student:r.student||'',game:r.game||'',score:r.score??'',experiment:r.experiment||''});if(res.ok){showAlert($('resultsAlert'),'ok','رکورد حذف شد.');loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}}
+function bindResultActions(){$$('.detail-result').forEach(b=>b.onclick=()=>showDetails(Number(b.dataset.idx)));$$('.delete-result').forEach(b=>b.onclick=()=>deleteResult(b.dataset.id,Number(b.dataset.idx),b))}
+async function deleteResult(id,idx,btn){const r=window.__resultsData?.[idx]||{};if(!id&&!((r.date||r.createdAt||r.student||r.game)||r.score!==undefined))return;if(!confirm('این رکورد حذف شود؟'))return;setButtonBusy(btn,true);try{const res=await api('tpDeleteResult',{token,id,date:r.date||r.createdAt||'',student:r.student||'',game:r.game||'',score:r.score??'',experiment:r.experiment||''});if(res.ok){showAlert($('resultsAlert'),'ok','رکورد حذف شد.');loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false)}}
 $('btnDeleteAll').onclick=async()=>{const promptValue=prompt('برای حذف نتایج مطابق فیلتر فعلی، عبارت «پاک کن» را دقیق وارد کنید:');if(promptValue!=='پاک کن')return;const btn=$('btnDeleteAll');setButtonBusy(btn,true);try{const filters=filterPayload(),res=await api('tpDeleteAllResults',{token,...filters,filters});if(res.ok){showAlert($('resultsAlert'),'ok',`${fa(res.deleted||0)} رکورد حذف شد.`);loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-trash"></use></svg> پاک کردن همه')}};
 $('btnExport').onclick=()=>{try{const data={version:'1.0',exported_at:new Date().toISOString(),count:(window.__resultsData||[]).length,results:window.__resultsData||[]};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),pad=n=>String(n).padStart(2,'0');a.href=url;a.download=`hakimestan-results-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showAlert($('resultsAlert'),'ok','پشتیبان نتایج دانلود شد.')}catch(e){showAlert($('resultsAlert'),'err','دانلود پشتیبان انجام نشد.')}};
 $('btnImport').onclick=()=>$('importFile').click();$('importFile').onchange=e=>{if(e.target.files[0])readImport(e.target.files[0]);e.target.value=''};
@@ -524,19 +524,29 @@ async function loadUsers(){loading($('usersList'));try{const res=await api('tpGe
 /* ═══ آمار بازدید ═══ */
 async function loadStats(){
   loading($('statsPages'));loading($('statsDevices'));loading($('statsBrowsers'));loading($('statsRefs'));loading($('surveysList'));
-  try{
-    const [analyticsRes,surveysRes]=await Promise.all([api('tpGetAnalytics',{token}),api('tpGetSurveys',{token})]);
-    if(!analyticsRes||!analyticsRes.ok){
-      showAlert($('statsAlert'),'err',(analyticsRes&&analyticsRes.error)||'خطا در دریافت آمار');
-      ['statsPages','statsDevices','statsBrowsers','statsRefs'].forEach(id=>$(id).innerHTML='<div class="empty">داده‌ای نیست</div>');
-      $('surveysList').innerHTML='<div class="empty">داده‌ای نیست</div>';
-      return;
-    }
-    renderStats(analyticsRes.visits||[],(surveysRes&&surveysRes.surveys)||[]);
-  }catch(e){
-    showAlert($('statsAlert'),'err','خطای شبکه: '+e.message);
-    ['statsPages','statsDevices','statsBrowsers','statsRefs','surveysList'].forEach(id=>$(id).innerHTML='<div class="empty">خطای شبکه</div>');
-    console.error(e);
+  const [analyticsResult,surveysResult]=await Promise.allSettled([
+    api('tpGetAnalytics',{token}),
+    api('tpGetSurveys',{token})
+  ]);
+  const analyticsRes=analyticsResult.status==='fulfilled'?analyticsResult.value:null;
+  const surveysRes=surveysResult.status==='fulfilled'?surveysResult.value:null;
+  if(analyticsResult.status!=='fulfilled'||!analyticsRes||!analyticsRes.ok){
+    const err=analyticsResult.status==='rejected'?analyticsResult.reason:null;
+    showAlert($('statsAlert'),'err',(analyticsRes&&analyticsRes.error)||(err&&err.message)||'خطا در دریافت آمار');
+    ['statsPages','statsDevices','statsBrowsers','statsRefs'].forEach(id=>$(id).innerHTML='<div class="empty">داده‌ای نیست</div>');
+    $('surveysList').innerHTML=(surveysResult.status==='fulfilled'&&surveysRes&&surveysRes.ok)
+      ?'<div class="empty">داده‌ای نیست</div>'
+      :'<div class="empty">خطا در دریافت نظرات کاربران</div>';
+    if(err)console.error(err);
+    if(surveysResult.status==='rejected')console.error(surveysResult.reason);
+    return;
+  }
+  const surveysOk=surveysResult.status==='fulfilled'&&surveysRes&&surveysRes.ok;
+  renderStats(analyticsRes.visits||[],surveysOk?(surveysRes.surveys||[]):[]);
+  if(!surveysOk){
+    $('surveysList').innerHTML='<div class="empty">خطا در دریافت نظرات کاربران</div>';
+    if(surveysResult.status==='rejected')console.error(surveysResult.reason);
+    else console.error('tpGetSurveys:',surveysRes&&surveysRes.error||'پاسخ ناموفق');
   }
 }
 function renderStats(visits,surveys){
@@ -1068,10 +1078,10 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
       html += `
         <h3 class="dk-form-title">${ui.editingClass === '__new__' ? '➕ کلاس جدید' : '✏️ ویرایش کلاس'}</h3>
         <div class="dk-grid">
-          <div class="dk-field"><label class="dk-label">نام کلاس *</label><input class="dk-input" id="dkCName" value="${esc(c.name)}" placeholder="مثلاً پنجم الف"></div>
-          <div class="dk-field"><label class="dk-label">پایه</label><input class="dk-input" id="dkCGrade" value="${esc(c.grade||'')}" placeholder="مثلاً پنجم"></div>
-          <div class="dk-field"><label class="dk-label">درس اصلی</label><input class="dk-input" id="dkCSubject" value="${esc(c.subject||'')}" placeholder="مثلاً ریاضی"></div>
-          <div class="dk-field"><label class="dk-label">رنگ کلاس</label><input class="dk-input" type="color" id="dkCColor" value="${esc(c.color||'#3b82f6')}" style="height:42px;padding:4px"></div>
+          <div class="dk-field"><label class="dk-label">نام کلاس *</label><input class="dk-input" id="dkCName" value="${attr(c.name)}" placeholder="مثلاً پنجم الف"></div>
+          <div class="dk-field"><label class="dk-label">پایه</label><input class="dk-input" id="dkCGrade" value="${attr(c.grade||'')}" placeholder="مثلاً پنجم"></div>
+          <div class="dk-field"><label class="dk-label">درس اصلی</label><input class="dk-input" id="dkCSubject" value="${attr(c.subject||'')}" placeholder="مثلاً ریاضی"></div>
+          <div class="dk-field"><label class="dk-label">رنگ کلاس</label><input class="dk-input" type="color" id="dkCColor" value="${attr(c.color||'#3b82f6')}" style="height:42px;padding:4px"></div>
         </div>
         <div id="dkCErr"></div>
         <div class="dk-form-actions">
@@ -1130,8 +1140,8 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
                 </div>
               </div>
               <div style="display:flex;gap:6px;flex-shrink:0">
-                <button class="dk-btn dk-btn-icon" data-act="edit" data-id="${c.id}" title="ویرایش">✏️</button>
-                <button class="dk-btn dk-btn-icon dk-btn-danger" data-act="del" data-id="${c.id}" title="حذف">🗑️</button>
+                <button class="dk-btn dk-btn-icon" data-act="edit" data-id="${attr(c.id)}" title="ویرایش">✏️</button>
+                <button class="dk-btn dk-btn-icon dk-btn-danger" data-act="del" data-id="${attr(c.id)}" title="حذف">🗑️</button>
               </div>
             </div>
           </div>
@@ -1176,14 +1186,14 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
         <div class="dk-grid">
           <div class="dk-field"><label class="dk-label">کلاس *</label>
             <select class="dk-input" id="dkSClass">
-              ${classes.map(c => `<option value="${c.id}" ${c.id===s.classId?'selected':''}>${esc(c.name)}</option>`).join('')}
+              ${classes.map(c => `<option value="${attr(c.id)}" ${c.id===s.classId?'selected':''}>${esc(c.name)}</option>`).join('')}
             </select>
           </div>
-          <div class="dk-field"><label class="dk-label">نام *</label><input class="dk-input" id="dkSFirst" value="${esc(s.first)}"></div>
-          <div class="dk-field"><label class="dk-label">نام خانوادگی</label><input class="dk-input" id="dkSLast" value="${esc(s.last||'')}"></div>
-          <div class="dk-field"><label class="dk-label">کد دانش‌آموز</label><input class="dk-input" id="dkSCode" value="${esc(s.code||'')}" style="direction:ltr"></div>
-          <div class="dk-field"><label class="dk-label">تلفن والدین</label><input class="dk-input" id="dkSPhone" value="${esc(s.phone||'')}" style="direction:ltr"></div>
-          <div class="dk-field"><label class="dk-label">یادداشت</label><input class="dk-input" id="dkSNote" value="${esc(s.note||'')}"></div>
+          <div class="dk-field"><label class="dk-label">نام *</label><input class="dk-input" id="dkSFirst" value="${attr(s.first)}"></div>
+          <div class="dk-field"><label class="dk-label">نام خانوادگی</label><input class="dk-input" id="dkSLast" value="${attr(s.last||'')}"></div>
+          <div class="dk-field"><label class="dk-label">کد دانش‌آموز</label><input class="dk-input" id="dkSCode" value="${attr(s.code||'')}" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">تلفن والدین</label><input class="dk-input" id="dkSPhone" value="${attr(s.phone||'')}" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">یادداشت</label><input class="dk-input" id="dkSNote" value="${attr(s.note||'')}"></div>
         </div>
         <div id="dkSErr"></div>
         <div class="dk-form-actions">
@@ -1227,7 +1237,7 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
           <option value="">همهٔ کلاس‌ها (${fa(allStudents.length)} نفر)</option>
           ${classes.map(c => {
             const n = allStudents.filter(s => s.classId === c.id).length;
-            return `<option value="${c.id}" ${c.id===ui.filterClass?'selected':''}>${esc(c.name)} (${fa(n)} نفر)</option>`;
+            return `<option value="${attr(c.id)}" ${c.id===ui.filterClass?'selected':''}>${esc(c.name)} (${fa(n)} نفر)</option>`;
           }).join('')}
         </select>
         <button class="dk-btn dk-btn-primary" id="dkSNew" ${!classes.length?'disabled':''}>➕ افزودن</button>
@@ -1253,8 +1263,8 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
                   <td style="direction:ltr;text-align:right;color:var(--muted);font-size:11px">${esc(s.phone||'—')}</td>
                   <td>
                     <div style="display:flex;gap:4px">
-                      <button class="dk-btn dk-btn-icon dk-btn-sm" data-act="edit" data-id="${s.id}" title="ویرایش">✏️</button>
-                      <button class="dk-btn dk-btn-icon dk-btn-sm dk-btn-danger" data-act="del" data-id="${s.id}" title="حذف">🗑️</button>
+                      <button class="dk-btn dk-btn-icon dk-btn-sm" data-act="edit" data-id="${attr(s.id)}" title="ویرایش">✏️</button>
+                      <button class="dk-btn dk-btn-icon dk-btn-sm dk-btn-danger" data-act="del" data-id="${attr(s.id)}" title="حذف">🗑️</button>
                     </div>
                   </td>
                 </tr>`;
@@ -1305,25 +1315,25 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
         <div class="dk-grid">
           <div class="dk-field"><label class="dk-label">کلاس *</label>
             <select class="dk-input" id="dkGClass">
-              ${classes.map(c => `<option value="${c.id}" ${c.id===g.classId?'selected':''}>${esc(c.name)}</option>`).join('')}
+              ${classes.map(c => `<option value="${attr(c.id)}" ${c.id===g.classId?'selected':''}>${esc(c.name)}</option>`).join('')}
             </select>
           </div>
           <div class="dk-field"><label class="dk-label">دانش‌آموز *</label>
             <select class="dk-input" id="dkGStudent">
-              ${classStudents.map(s => `<option value="${s.id}" ${s.id===g.studentId?'selected':''}>${esc(fullName(s))}</option>`).join('')}
+              ${classStudents.map(s => `<option value="${attr(s.id)}" ${s.id===g.studentId?'selected':''}>${esc(fullName(s))}</option>`).join('')}
             </select>
           </div>
-          <div class="dk-field"><label class="dk-label">عنوان *</label><input class="dk-input" id="dkGTitle" value="${esc(g.title)}" placeholder="مثلاً فصل ۲"></div>
-          <div class="dk-field"><label class="dk-label">درس *</label><input class="dk-input" id="dkGSubject" value="${esc(g.subject)}" placeholder="مثلاً ریاضی"></div>
+          <div class="dk-field"><label class="dk-label">عنوان *</label><input class="dk-input" id="dkGTitle" value="${attr(g.title)}" placeholder="مثلاً فصل ۲"></div>
+          <div class="dk-field"><label class="dk-label">درس *</label><input class="dk-input" id="dkGSubject" value="${attr(g.subject)}" placeholder="مثلاً ریاضی"></div>
           <div class="dk-field"><label class="dk-label">نوع</label>
             <select class="dk-input" id="dkGType">
               ${['امتحان','پرسش','تکلیف','فعالیت','انضباط'].map(t => `<option ${t===g.type?'selected':''}>${t}</option>`).join('')}
             </select>
           </div>
-          <div class="dk-field"><label class="dk-label">تاریخ (شمسی یا میلادی)</label><input class="dk-input" id="dkGDate" value="${esc(g.date)}" placeholder="۱۴۰۵/۰۶/۲۵" style="direction:ltr"></div>
-          <div class="dk-field"><label class="dk-label">نمره (۰ تا ۲۰) *</label><input class="dk-input" id="dkGScore" value="${esc(g.score)}" inputmode="decimal" style="direction:ltr"></div>
-          <div class="dk-field"><label class="dk-label">وزن</label><input class="dk-input" id="dkGWeight" value="${esc(g.weight||1)}" inputmode="decimal" style="direction:ltr"></div>
-          <div class="dk-field" style="grid-column:1/-1"><label class="dk-label">توضیح</label><input class="dk-input" id="dkGNote" value="${esc(g.note||'')}"></div>
+          <div class="dk-field"><label class="dk-label">تاریخ (شمسی یا میلادی)</label><input class="dk-input" id="dkGDate" value="${attr(g.date)}" placeholder="۱۴۰۵/۰۶/۲۵" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">نمره (۰ تا ۲۰) *</label><input class="dk-input" id="dkGScore" value="${attr(g.score)}" inputmode="decimal" style="direction:ltr"></div>
+          <div class="dk-field"><label class="dk-label">وزن</label><input class="dk-input" id="dkGWeight" value="${attr(g.weight||1)}" inputmode="decimal" style="direction:ltr"></div>
+          <div class="dk-field" style="grid-column:1/-1"><label class="dk-label">توضیح</label><input class="dk-input" id="dkGNote" value="${attr(g.note||'')}"></div>
         </div>
         <div id="dkGErr"></div>
         <div class="dk-form-actions">
@@ -1336,7 +1346,7 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
       classSel.onchange = () => {
         const cid = classSel.value;
         const list = students.filter(s => s.classId === cid);
-        document.getElementById('dkGStudent').innerHTML = list.map(s => `<option value="${s.id}">${esc(fullName(s))}</option>`).join('');
+        document.getElementById('dkGStudent').innerHTML = list.map(s => `<option value="${attr(s.id)}">${esc(fullName(s))}</option>`).join('');
       };
       document.getElementById('dkGCancel').onclick = () => { ui.editingGrade = null; renderBody(); };
       document.getElementById('dkGSave').onclick = async () => {
@@ -1380,7 +1390,7 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
           <option value="">همهٔ کلاس‌ها (${fa(allGrades.length)} نمره)</option>
           ${classes.map(c => {
             const n = allGrades.filter(g => g.classId === c.id).length;
-            return `<option value="${c.id}" ${c.id===ui.filterClass?'selected':''}>${esc(c.name)} (${fa(n)})</option>`;
+            return `<option value="${attr(c.id)}" ${c.id===ui.filterClass?'selected':''}>${esc(c.name)} (${fa(n)})</option>`;
           }).join('')}
         </select>
         <button class="dk-btn dk-btn-primary" id="dkGNew" ${(!classes.length||!students.length)?'disabled':''}>➕ نمره</button>
@@ -1405,8 +1415,8 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
                   <td style="font-weight:700;color:var(--gold)">${fa(g.score)}</td>
                   <td>
                     <div style="display:flex;gap:4px">
-                      <button class="dk-btn dk-btn-icon dk-btn-sm" data-act="edit" data-id="${g.id}">✏️</button>
-                      <button class="dk-btn dk-btn-icon dk-btn-sm dk-btn-danger" data-act="del" data-id="${g.id}">🗑️</button>
+                      <button class="dk-btn dk-btn-icon dk-btn-sm" data-act="edit" data-id="${attr(g.id)}">✏️</button>
+                      <button class="dk-btn dk-btn-icon dk-btn-sm dk-btn-danger" data-act="del" data-id="${attr(g.id)}">🗑️</button>
                     </div>
                   </td>
                 </tr>`;
@@ -1446,7 +1456,7 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     html += `
       <div class="dk-toolbar">
         <select class="dk-input dk-grow" id="dkAFilter">
-          ${classes.map(c => `<option value="${c.id}" ${c.id===filter?'selected':''}>${esc(c.name)}</option>`).join('')}
+          ${classes.map(c => `<option value="${attr(c.id)}" ${c.id===filter?'selected':''}>${esc(c.name)}</option>`).join('')}
         </select>
         <button class="dk-btn dk-btn-soft" id="dkARefresh">🔄</button>
       </div>

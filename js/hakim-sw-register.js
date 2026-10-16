@@ -41,6 +41,22 @@
 
   var BASE = basePath();
 
+  /* ── دسترسی ایمن به ذخیره‌سازی ──────────────────────────────
+     توجه: HakimSec.store یک «سازنده» است (safeStore(prefix)) و نه یک
+     آبجکت آماده؛ باید اول صدا زده شود تا {get,set,remove,keys,prune}
+     بدهد. پیشوند 'hakim.' همان کلیدِ مسیر جایگزین پایین است، پس هر دو
+     مسیر روی یک کلید می‌نویسند. */
+  function secStore() {
+    var S = global.HakimSec;
+    if (S && typeof S.store === 'function') {
+      try {
+        var st = S.store('hakim.');
+        if (st && typeof st.get === 'function' && typeof st.set === 'function') return st;
+      } catch (e) { /* حافظهٔ ایمن در دسترس نیست */ }
+    }
+    return null;
+  }
+
   function url(rel) {
     return (BASE || '') + rel;
   }
@@ -52,7 +68,8 @@
       updateViaCache: 'none'
     }).then(function (reg) {
       registration = reg;
-      if (global.HakimSec) global.HakimSec.store.set('pwa.registered', true);
+      var st0 = secStore();
+      if (st0) st0.set('pwa.registered', true);
 
       // اگر از قبل نسخهٔ جدید آماده بود
       if (reg.waiting) offerUpdate(reg);
@@ -151,8 +168,9 @@
      ساختار ذخیره‌شده: { t: زمانِ ثبت، ms: مدت مهلت } */
   function readDismissRecord() {
     var v = null;
-    if (global.HakimSec && global.HakimSec.store) {
-      v = global.HakimSec.store.get('pwa.installDismissedAt', null);
+    var st = secStore();
+    if (st) {
+      v = st.get('pwa.installDismissedAt', null);
     } else {
       try { v = JSON.parse(localStorage.getItem(INSTALL_DISMISS_KEY)); } catch (e) { v = null; }
     }
@@ -161,8 +179,9 @@
 
   function rememberDismiss(ms) {
     var record = { t: Date.now(), ms: ms };
-    if (global.HakimSec && global.HakimSec.store) {
-      global.HakimSec.store.set('pwa.installDismissedAt', record);
+    var st = secStore();
+    if (st) {
+      st.set('pwa.installDismissedAt', record);
       return;
     }
     try { localStorage.setItem(INSTALL_DISMISS_KEY, JSON.stringify(record)); } catch (e) {}
