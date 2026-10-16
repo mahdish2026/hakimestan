@@ -76,6 +76,16 @@
     root.classList.toggle('hk-hc-light', pageIsLight());
   }
 
+  // این برنامه برای اندازهٔ پایهٔ body از px استفاده می‌کند؛ بزرگ‌کردن rem
+  // به‌تنهایی متن‌های ۱۴/۱۵٫۵/۱۷٫۵px را تغییر نمی‌دهد.
+  function applyBodyTextScale() {
+    if (!document.body) return;
+    var base = { small: 14, medium: 15.5, large: 17.5 }[document.body.getAttribute('data-font') || ''];
+    if (!base) return;
+    if (prefs.textScale === 1) document.body.style.removeProperty('font-size');
+    else document.body.style.fontSize = (base * prefs.textScale) + 'px';
+  }
+
   /* ── سنجش «تمیز» پیش از updateContrastScheme() ──────────────
      در حالت کنتراست دو چیز سنجش pageIsLight() را خراب می‌کند:
        ۱) رنگ متن body را خودِ دو قانون کنتراست (a11y.css بخش ۶) با
@@ -162,6 +172,7 @@
     } else {
       root.style.removeProperty('font-size');
     }
+    applyBodyTextScale();
     var btns = document.querySelectorAll('#a11y-toolbar button[data-pref]');
     for (var i = 0; i < btns.length; i++) {
       var p = btns[i].getAttribute('data-pref');
@@ -170,6 +181,14 @@
     }
     settleContrastScheme();
     updateContrastScheme();
+  }
+
+  /* جست‌وجوی دامنه‌ای: تغییرهای پویا را فقط در زیر‌درخت تازه پردازش کن. */
+  function queryAll(root, selector) {
+    root = root || document;
+    var found = root.querySelectorAll ? Array.prototype.slice.call(root.querySelectorAll(selector)) : [];
+    if (root.nodeType === 1 && root.matches && root.matches(selector)) found.unshift(root);
+    return found;
   }
 
   /* ── نام‌های جایگزین برای آیکون‌های رایج ─────────────────── */
@@ -397,8 +416,8 @@
 
   var ICON_SELECTOR = 'button, a, [role="button"], summary, [data-act], input[type="button"], input[type="submit"], input[type="reset"]';
 
-  function nameIcons() {
-    var els = document.querySelectorAll(ICON_SELECTOR);
+  function nameIcons(root) {
+    var els = queryAll(root, ICON_SELECTOR);
     var count = 0;
     for (var i = 0; i < els.length; i++) {
       var el = els[i];
@@ -474,8 +493,8 @@
     fStudent: 'جست‌وجوی دانش‌آموز'
   };
 
-  function labelFormFields() {
-    var els = document.querySelectorAll('input:not([type="hidden"]), select, textarea');
+  function labelFormFields(root) {
+    var els = queryAll(root, 'input:not([type="hidden"]), select, textarea');
     var fixed = 0, missing = 0;
     for (var i = 0; i < els.length; i++) {
       var el = els[i];
@@ -554,7 +573,8 @@
   }
 
   function watchHeading() {
-    if (headingObserver || typeof MutationObserver === 'undefined' || !document.body) return;
+    // صفحه‌ای که از ابتدا h1 واقعی دارد، برایش placeholder/observer لازم نیست.
+    if (headingObserver || !document.getElementById(HEADING_ID) || typeof MutationObserver === 'undefined' || !document.body) return;
     headingObserver = new MutationObserver(function () {
       if (!document.getElementById(HEADING_ID)) return;
       var real = Array.prototype.slice.call(document.querySelectorAll('h1'))
@@ -570,8 +590,8 @@
   }
 
   /* ── مخفی‌کردن آیکون‌های تزئینی ─────────────────────────── */
-  function hideDecorativeIcons() {
-    var svgs = document.querySelectorAll('svg:not([role]):not([aria-label])');
+  function hideDecorativeIcons(root) {
+    var svgs = queryAll(root, 'svg:not([role]):not([aria-label])');
     for (var i = 0; i < svgs.length; i++) {
       var s = svgs[i];
       if (s.hasAttribute('aria-hidden')) continue;
@@ -584,15 +604,15 @@
   }
 
   /* ── ARIA برای مدیا، کانواس و تصاویر ────────────────────── */
-  function mediaAria() {
-    var imgs = document.querySelectorAll('img:not([alt])');
+  function mediaAria(root) {
+    var imgs = queryAll(root, 'img:not([alt])');
     for (var i = 0; i < imgs.length; i++) {
       // تصویری که alt ندارد یا تزئینی است یا فراموش شده — هر دو با alt="" امن‌ترند
       imgs[i].setAttribute('alt', '');
       if (DEBUG) console.warn('[a11y] تصویر بدون alt:', imgs[i].src);
     }
 
-    var canvases = document.querySelectorAll('canvas:not([role])');
+    var canvases = queryAll(root, 'canvas:not([role])');
     for (var c = 0; c < canvases.length; c++) {
       canvases[c].setAttribute('role', 'img');
       if (!canvases[c].getAttribute('aria-label')) {
@@ -601,7 +621,7 @@
       }
     }
 
-    var vids = document.querySelectorAll('video:not([aria-label])');
+    var vids = queryAll(root, 'video:not([aria-label])');
     for (var v = 0; v < vids.length; v++) {
       var src = vids[v].getAttribute('src') || '';
       var name = src.split('/').pop().replace(/\.[a-z0-9]+$/i, '') || 'ویدیو';
@@ -609,20 +629,20 @@
       if (!vids[v].hasAttribute('controls')) vids[v].setAttribute('controls', '');
     }
 
-    var auds = document.querySelectorAll('audio:not([aria-label])');
+    var auds = queryAll(root, 'audio:not([aria-label])');
     for (var a = 0; a < auds.length; a++) {
       auds[a].setAttribute('aria-label', 'پخش‌کنندهٔ صوتی حکیمستان');
     }
 
-    var iframes = document.querySelectorAll('iframe:not([title])');
+    var iframes = queryAll(root, 'iframe:not([title])');
     for (var f = 0; f < iframes.length; f++) {
       iframes[f].setAttribute('title', 'قاب محتوای حکیمستان');
     }
   }
 
   /* ── ناحیهٔ لمس بزرگ‌تر برای عناصر کوچک ─────────────────── */
-  function enlargeHitTargets() {
-    var els = document.querySelectorAll('button, a[href], [role="button"], summary');
+  function enlargeHitTargets(root) {
+    var els = queryAll(root, 'button, a[href], [role="button"], summary');
     var changed = 0;
     for (var i = 0; i < els.length; i++) {
       var el = els[i];
@@ -1045,20 +1065,21 @@
   /* ── راه‌اندازی ────────────────────────────────────────── */
   var observerStarted = false;
 
-  function run(light) {
+  function run(light, root) {
     try {
-      if (!light) {
+      var initial = !light && !root;
+      if (initial) {
         ensureLandmarks();
-        mediaAria();
         escapeCloses();
+        ensureSkipLink();
+        ensureHeading();
+        watchHeading();
       }
-      ensureSkipLink();
-      nameIcons();
-      labelFormFields();
-      hideDecorativeIcons();
-      ensureHeading();
-      if (!light) watchHeading();
-      enlargeHitTargets();
+      mediaAria(root);
+      nameIcons(root);
+      labelFormFields(root);
+      hideDecorativeIcons(root);
+      enlargeHitTargets(root);
     } catch (e) {
       if (DEBUG) console.error('[a11y] خطا در اجرا:', e);
     }
@@ -1067,11 +1088,35 @@
   function watch() {
     if (observerStarted || typeof MutationObserver === 'undefined' || !document.body) return;
     observerStarted = true;
-    var timer = null;
-    new MutationObserver(function () {
+    var timer = null, pending = [];
+    function addRoot(node) {
+      if (!node || node.nodeType !== 1 || !document.body.contains(node)) return;
+      if (node.closest && node.closest('#a11y-toolbar')) return;
+      for (var i = 0; i < pending.length; i++) {
+        if (pending[i] === node || (pending[i].contains && pending[i].contains(node))) return;
+      }
+      pending = pending.filter(function (old) { return !(node.contains && node.contains(old)); });
+      pending.push(node);
+    }
+    function processPending() {
+      timer = null;
+      var roots = pending; pending = [];
+      roots.forEach(function (root) {
+        if (document.body.contains(root)) run(true, root);
+      });
+    }
+    new MutationObserver(function (records) {
+      records.forEach(function (record) {
+        if (record.type === 'attributes') {
+          if (record.target !== document.body && record.target !== document.documentElement) addRoot(record.target);
+          return;
+        }
+        for (var i = 0; i < record.addedNodes.length; i++) addRoot(record.addedNodes[i]);
+      });
+      if (!pending.length) return;
       clearTimeout(timer);
-      timer = setTimeout(function () { run(true); }, 300);
-    }).observe(document.body, { childList: true, subtree: true });
+      timer = setTimeout(processPending, 150);
+    }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden'] });
   }
 
   function init() {
@@ -1089,6 +1134,11 @@
          ریشه را خودِ همین ماژول عوض می‌کند و پایش آن‌ها حلقه می‌سازد. */
       new MutationObserver(function () { if (prefs.contrast) { settleContrastScheme(); updateContrastScheme(); } })
         .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      new MutationObserver(function (records) {
+        for (var i = 0; i < records.length; i++) {
+          if (records[i].attributeName === 'data-font') { applyBodyTextScale(); break; }
+        }
+      }).observe(document.body, { attributes: true, attributeFilter: ['data-font'] });
     } catch (e) {}
     global.addEventListener('load', function () { settleContrastScheme(); updateContrastScheme(); });
 
