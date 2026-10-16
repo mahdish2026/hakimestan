@@ -274,6 +274,44 @@ html.hk-reduce-motion *::after {
   inset-block-end: 14px;
   inset-inline-end: 14px;
   z-index: 99998;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+/* کنار رفتن موقت: وقتی پنل شناوری (استیکر/پیوست/ری‌اکشن) زیر دکمه باز
+   می‌شود، دکمه محو می‌شود تا جلوی لمس محتوای پنل را نگیرد و خودش هم
+   بی‌دلیل دیده نشود. visibility:hidden آن را از مسیر صفحه‌خوان و تب هم
+   بیرون می‌برد (برخلاف opacity تنها). */
+#a11y-toolbar.is-avoiding {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #a11y-toolbar {
+    transition-duration: 0.01ms;
+  }
+}
+
+html.hk-reduce-motion #a11y-toolbar {
+  transition-duration: 0.01ms;
+}
+
+/* پیام‌رسان (payamresan.html): در چیدمان موبایل، کادر ارسال به پایین صفحه
+   چسبیده است و دکمهٔ ارسال دقیقاً در گوشهٔ پایین-چپ قرار می‌گیرد. اگر دکمهٔ ♿
+   همان‌جا بماند، روی دکمهٔ ارسال می‌افتد و لمسِ ارسال کار نمی‌کند.
+   پس در صفحهٔ چت، نوار دسترس‌پذیری بالای کادر ارسال می‌نشیند.
+   (js/hakim-a11y.js هم ارتفاع واقعی کادر را می‌سنجد و اگر لازم بود بیشتر
+    بالا می‌برد؛ روی دسکتاپ که کادر ارسال پایینِ صفحه نیست، جابه‌جایی لازم نیست.) */
+@media (max-width: 919px) {
+  body[data-page='chat'] #a11y-toolbar {
+    inset-block-end: 90px;
+  }
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    body[data-page='chat'] #a11y-toolbar {
+      inset-block-end: calc(90px + env(safe-area-inset-bottom));
+    }
+  }
 }
 
 #a11y-fab {

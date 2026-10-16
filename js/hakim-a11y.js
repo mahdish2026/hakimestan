@@ -928,10 +928,32 @@
     document.body.appendChild(bar);
     applyPrefs();
 
-    /* ── جابه‌جایی هوشمند: اگر دکمهٔ ثابت دیگری (مثل دکمهٔ موسیقی
-       بازی‌ها) همین گوشه را گرفته باشد، نوار کمی بالاتر می‌نشیند. ── */
+    /* ── جابه‌جایی هوشمند ────────────────────────────────────────
+       ۱) اگر نوار، کادر ارسال پیام‌رسان (payamresan: .composer-wrap) را
+          می‌پوشاند، دقیقاً بالای آن می‌نشیند. این کادر sticky/fixed است و
+          دکمهٔ ارسالش در گوشهٔ پایین-چپ (سمت پایان در RTL) قرار دارد؛
+          بدون این کار، دکمهٔ ♿ روی دکمهٔ ارسال می‌افتاد و لمس ارسال
+          کار نمی‌کرد.
+       ۲) اگر دکمهٔ ثابت دیگری (مثل دکمهٔ موسیقی بازی‌ها) همین گوشه را
+          گرفته باشد، نوار کمی بالاتر می‌نشیند.
+
+       نکتهٔ مهم: محاسبهٔ بالا آمدن *باید* از مقدار پایه انجام شود، نه از
+       موقعیت فعلی دکمه؛ وگرنه در فراخوانی‌های پشت‌سرهم، مقدار قبلی روی
+       خودش جمع می‌شود و نوار بی‌دلیل به بالا می‌پرد. ── */
     var BASE_OFFSET = 14;
     var liftRaf = 0;
+
+    /* کادر ارسال پیام‌رسان — اگر قابل مشاهده باشد، رکتش برمی‌گردد */
+    function composerRect() {
+      var c = document.querySelector('.composer-wrap');
+      if (!c) return null;
+      var cs = getComputedStyle(c);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return null;
+      var r = c.getBoundingClientRect();
+      if (r.height < 20 || r.width < 40) return null;
+      if (r.bottom <= 0 || r.top >= window.innerHeight) return null;   // بیرون از دید
+      return r;
+    }
 
     function collidingTops() {
       var fr = fab.getBoundingClientRect();
@@ -953,18 +975,75 @@
       return tops;
     }
 
+    /* پنل‌های شناورِ کادر ارسال پیام‌رسان (استیکر، پیوست، ری‌اکشن).
+       اگر یکی از این‌ها باز شود و زیر دکمهٔ ♿ بیفتد، دکمه موقتاً کنار
+       می‌رود تا جلوی محتوای پنل و لمس آن را نگیرد. */
+    var OVERLAY_SELECTORS = ['.sticker-panel', '.attach-menu', '.mention-box', '.react-bar'];
+
+    function visibleOverlayOverFab() {
+      var fr = fab.getBoundingClientRect();
+      if (!fr.width || !fr.height) return false;
+      for (var i = 0; i < OVERLAY_SELECTORS.length; i++) {
+        var els = document.querySelectorAll(OVERLAY_SELECTORS[i]);
+        for (var j = 0; j < els.length; j++) {
+          var el = els[j];
+          var cs = getComputedStyle(el);
+          if (cs.display === 'none' || cs.visibility === 'hidden' || cs.opacity === '0' || cs.pointerEvents === 'none') continue;
+          var r = el.getBoundingClientRect();
+          if (r.width < 10 || r.height < 10) continue;
+          if (!(r.right < fr.left || r.left > fr.right || r.bottom < fr.top || r.top > fr.bottom)) return true;
+        }
+      }
+      return false;
+    }
+
     function positionToolbar() {
       if (liftRaf) cancelAnimationFrame(liftRaf);
       liftRaf = requestAnimationFrame(function () {
         liftRaf = 0;
+
+        /* ۱) فاصلهٔ پایه را از CSS بگیر (در پیام‌رسان: ۹۰px).
+           اگر خالی بود، به همان ۱۴px پیش‌فرض برگرد. */
         bar.style.removeProperty('inset-block-end');
-        var tops = collidingTops();
-        if (!tops.length) return;
-        var fr = fab.getBoundingClientRect();
-        var lift = fr.bottom - (Math.min.apply(null, tops) - 10);
-        if (lift > 0) {
-          bar.style.setProperty('inset-block-end', (BASE_OFFSET + lift) + 'px');
+        var base = parseFloat(getComputedStyle(bar).insetBlockEnd) || BASE_OFFSET;
+        /* ۲) هم‌پوشانی با کادر ارسال پیام‌رسان — فقط اگر دکمه واقعاً روی
+           کادر (یا دکمهٔ ارسالِ داخل آن) بیفتد، تا بالای آن بالا می‌رود.
+           روی دسکتاپ که کادر ارسال پایینِ صفحه نیست، دکمه سر جایش می‌ماند. */
+        var comp = composerRect();
+        var frBase = fab.getBoundingClientRect();
+        if (comp) {
+          var fabTop = window.innerHeight - base - frBase.height;
+          var fabBottom = window.innerHeight - base;
+          var overlaps = !(comp.right < frBase.left || comp.left > frBase.right ||
+                           comp.bottom < fabTop || comp.top > fabBottom);
+          if (overlaps) {
+            var need = fabBottom - (comp.top - 10);          // چقدر باید بالا برود
+            if (need > 0) base += need;
+          }
         }
+
+        /* ۳) هم‌پوشانی با دکمه‌های ثابت دیگر (مثل دکمهٔ موسیقی بازی‌ها)
+           مقدار «lift» همان فاصله‌ای است که پایینِ دکمه باید بالاتر بیاید */
+        var tops = collidingTops();
+        if (tops.length) {
+          var fr = fab.getBoundingClientRect();
+          var want = fr.bottom - (Math.min.apply(null, tops) - 10);
+          if (want > 0) base += want;
+        }
+
+        /* ۴) دکمه نباید از بالای صفحه بیرون بزند */
+        var maxBase = window.innerHeight - frBase.height - 8;
+        if (base > maxBase) base = maxBase;
+
+        if (base > BASE_OFFSET) {
+          var val = Math.round(base) + 'px';
+          /* فقط وقتی مقدار عوض شده بنویس — جلوگیری از حلقهٔ MutationObserver */
+          if (bar.style.insetBlockEnd !== val) bar.style.setProperty('inset-block-end', val);
+        }
+
+        /* ۵) کنار رفتن از سر راه پنل‌های باز کادر ارسال */
+        var avoid = visibleOverlayOverFab();
+        if (bar.classList.contains('is-avoiding') !== avoid) bar.classList.toggle('is-avoiding', avoid);
       });
     }
 
@@ -976,6 +1055,48 @@
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(positionToolbar, 200);
     });
+    window.addEventListener('orientationchange', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(positionToolbar, 200);
+    });
+
+    /* پیام‌رسان: با ورود به صفحهٔ چت، انتخاب گفتگو، باز/بسته شدن نوارهای
+       ریپلای و ویرایش یا پنل‌ها، ارتفاع کادر ارسال عوض می‌شود؛
+       در آن لحظه‌ها هم دکمه باید دوباره جای‌گذاری شود.
+
+       ⚠ این ناظر فقط در صفحه‌ای فعال می‌شود که کادر ارسال (‎.composer-wrap‎)
+       دارد؛ در بازی‌ها و صفحه‌های پر‌تغییر، اجرای مکرر جای‌گذاری هم بی‌فایده
+       است و هم هزینهٔ محاسباتی دارد. علاوه بر آن، هر بار «امضای» وضعیت
+       (اندازهٔ پنجره، ارتفاع کادر ارسال، باز بودن پنل‌ها) مقایسه می‌شود و
+       تا وقتی چیزی عوض نشده، محاسبهٔ سنگین انجام نمی‌شود. */
+    if (typeof MutationObserver !== 'undefined' && document.body && document.querySelector('.composer-wrap')) {
+      var lastSig = '';
+      function composerSignature() {
+        var c = document.querySelector('.composer-wrap');
+        var r = c ? c.getBoundingClientRect() : null;
+        var overlays = document.querySelectorAll('.sticker-panel:not(.is-hidden), .attach-menu.open, .mention-box.open, .react-bar.show').length;
+        return window.innerWidth + 'x' + window.innerHeight + '|' +
+               (r ? Math.round(r.top) + ',' + Math.round(r.height) : 'none') + '|' +
+               (c ? c.className : 'none') + '|' + overlays;
+      }
+      function relayout() {
+        var sig = composerSignature();
+        if (sig === lastSig) return;
+        lastSig = sig;
+        positionToolbar();
+      }
+      var posObserver = new MutationObserver(function () {
+        if (posObserver._t) clearTimeout(posObserver._t);
+        posObserver._t = setTimeout(relayout, 80);
+      });
+      try {
+        posObserver.observe(document.body, {
+          attributes: true,
+          attributeFilter: ['data-page', 'class', 'style'],
+          subtree: true
+        });
+      } catch (e) { /* مرورگرهای قدیمی — بی‌اهمیت */ }
+    }
   }
 
   /* ── بررسی خودکار ──────────────────────────────────────── */
