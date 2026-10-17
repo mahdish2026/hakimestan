@@ -305,12 +305,10 @@ html.hk-reduce-motion #a11y-toolbar {
     بالا می‌برد؛ روی دسکتاپ که کادر ارسال پایینِ صفحه نیست، جابه‌جایی لازم نیست.) */
 @media (max-width: 919px) {
   body[data-page='chat'] #a11y-toolbar {
-    inset-block-end: 90px;
-  }
-  @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    body[data-page='chat'] #a11y-toolbar {
-      inset-block-end: calc(90px + env(safe-area-inset-bottom));
-    }
+    /* ارتفاع واقعی کادر ارسال را خودِ پیام‌رسان در --hk-composer-h می‌گذارد
+       (ResizeObserver)؛ اگر نبود، ۱۰۸px تخمین امن است. env() داخل calc با
+       var() در همهٔ مرورگرهای امروزی کار می‌کند. */
+    inset-block-end: calc(var(--hk-composer-h, 108px) + env(safe-area-inset-bottom, 0px) + 10px);
   }
 }
 
