@@ -936,7 +936,7 @@ let pool = [];
 let currentQ = null;      // سؤال باز در مودال
 let modalLocked = false;
 let modalOpen = false;
-let lastAnswer = null;    // آخرین پاسخ من (برای ارسال دوباره در واچ‌داگ)
+let lastAnswer = null;    // آخرین پاسخ من و تأیید سرور
 
 /* ------------------------------------------------------------------ */
 /* ۴) وضعیت اتاق و بازی (سمت کلاینت)                                    */
@@ -1138,37 +1138,54 @@ document.addEventListener('visibilitychange', () => {
 /* ------------------------------------------------------------------ */
 let hakimPanel = null;
 let hakimFallback = null;
+let hakimLastMsg = '', hakimLastAt = 0;
+const HAKIM_REPEAT_MS = 4000;   // یک پیام یکسان در این بازه دوباره پخش نمی‌شود
+
+/* چت هرگز «فهرست» نمی‌شود: پیش از هر پیام تازه، همهٔ حباب‌های حکیم در
+   همهٔ جایگاه‌ها پاک می‌شود تا پیام قبلی باقی نماند یا دوباره ظاهر نشود
+   (همان الگوی mancheh-online.html و snake-ladder.html). */
+function hakimClearChat(){
+  try{ if(window.Hakim && typeof window.Hakim.reset === 'function') window.Hakim.reset(); }catch(e){}
+  document.querySelectorAll('.hakim-panel, .hakim-fallback').forEach(el => {
+    if(el.parentNode) el.parentNode.removeChild(el);
+  });
+  hakimPanel = null;
+  hakimFallback = null;
+}
+
 function hakimSay(text, mood){
   const host = modalOpen
     ? document.getElementById('hakimQuestion')
     : document.querySelector('.screen.active .snake-hakim-slot');
   if(!host) return;
+
+  const msg = text ? String(text) : '';
+
+  /* پیام تکراری دوباره پخش نشود (پولینگ همان رویداد را دوباره می‌فرستد). */
+  if(msg && msg === hakimLastMsg && (Date.now() - hakimLastAt) < HAKIM_REPEAT_MS) return;
+
+  /* محتوای چت با پیام تازه جایگزین می‌شود، نه اینکه به آن اضافه شود. */
+  hakimClearChat();
+  hakimLastMsg = msg; hakimLastAt = Date.now();
+  if(!msg) return;            // hakimSay() بدون متن = خالی کردن چت
+
   const core = window.Hakim;
   try{
     if(core && typeof core.init === 'function' && typeof core.say === 'function'){
-      if(!hakimPanel){
-        core.init({ container:host, font:false });
-        hakimPanel = host.querySelector('.hakim-panel');
-      }
+      core.init({ container:host, font:false });
+      hakimPanel = host.querySelector('.hakim-panel');
       if(hakimPanel){
-        if(hakimFallback) hakimFallback.remove();
-        if(hakimPanel.parentNode !== host) host.appendChild(hakimPanel);
-        if(text){
-          core.say(String(text), { mood:mood || 'normal', autoHide:false, speed:REDUCED ? 1 : 12 });
-        }
+        core.say(msg, { mood:mood || 'normal', autoHide:false, speed:REDUCED ? 1 : 12 });
         return;
       }
     }
   }catch(e){ /* نبودن یا خطای فایل حکیم نباید جریان بازی را متوقف کند. */ }
-  if(!hakimFallback){
-    hakimFallback = document.createElement('div');
-    hakimFallback.className = 'hakim-fallback';
-    hakimFallback.setAttribute('role', 'status');
-    hakimFallback.setAttribute('aria-live', 'polite');
-  }
-  if(hakimPanel) hakimPanel.remove();
-  if(hakimFallback.parentNode !== host) host.appendChild(hakimFallback);
-  if(text) hakimFallback.textContent = 'حکیم: ' + String(text);
+  hakimFallback = document.createElement('div');
+  hakimFallback.className = 'hakim-fallback';
+  hakimFallback.setAttribute('role', 'status');
+  hakimFallback.setAttribute('aria-live', 'polite');
+  host.appendChild(hakimFallback);
+  hakimFallback.textContent = 'حکیم: ' + msg;
 }
 function hakimReact(event, data){
   data = data || {};
@@ -1450,7 +1467,7 @@ function nextQuestion(){
 /* ------------------------------------------------------------------ */
 /* ۱۲-ب) رندر ۷ نوع سؤال — پاسخ از طریق sl_answer بررسی می‌شود           */
 /* هر رندرکننده: payload (چیزی که به سرور می‌رود) + localOk (بررسی      */
-/* محلی برای وقتی سرور در دسترس نیست) + lock + reveal می‌سازد.           */
+/* محلی فقط برای نمایش گزینهٔ درست) + lock + reveal می‌سازد.             */
 /* ------------------------------------------------------------------ */
 function renderModalQuestion(q){
   switch(q.type){
@@ -1767,11 +1784,14 @@ function renderMatch(q){
 /* ۱۲-پ) ثبت پاسخ آنلاین: داوری همیشه با سرور (sl_answer)                */
 /* ------------------------------------------------------------------ */
 async function submitOnline(choice){
-  if(modalLocked) return;
+  if(modalLocked || room.phase !== 'playing' || room.turn !== room.myIndex) return;
   modalLocked = true;
   const q = currentQ;
   room.myAnswered++;
   lastAnswer = { qid: (q && q.id != null) ? q.id : '', payload: choice.payload, sentToServer: false };
+  const submittedAnswer = lastAnswer;
+  const submittedRoom = room.code;
+  const submittedPlayer = room.myIndex;
   if(choice.lock) choice.lock();
 
   /* نتیجهٔ داوری را نشان می‌دهد و دکمهٔ ادامه را می‌سازد */
@@ -1832,18 +1852,20 @@ async function submitOnline(choice){
       '<div class="fb-sub">یک لحظه؛ سرور جوابت را چک می‌کند…</div></div>';
     let res = null;
     try{
-      res = await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload, GAME_ID);
+      res = await slAnswer(submittedRoom, submittedPlayer, submittedAnswer.qid, submittedAnswer.payload, GAME_ID);
     }catch(e){
       return showServerError('ارتباط با سرور برقرار نشد.', true);
     }
+    if(room.code !== submittedRoom || currentQ !== q || room.phase !== 'playing') return;
     if(!res || res.ok !== true){
       return showServerError(String((res && (res.error || res.message)) || 'سرور پاسخ را نپذیرفت.'), true);
     }
     /* پاسخ ثبت شد؛ اگر غلط باشد سرور خودش نوبت را می‌چرخاند */
-    lastAnswer.sentToServer = true;
+    submittedAnswer.sentToServer = true;
     if(res.correct !== true && res.correct !== false){
       return showServerError('سرور نتیجهٔ داوری را برنگرداند.', true);
     }
+    submittedAnswer.approved = res.correct === true;
     /* ۳) درست → دکمهٔ تاس    ۴) غلط → بدون تاس */
     const correctText = (res.correctAnswer != null && res.correctAnswer !== '') ? String(res.correctAnswer)
                       : ((res.answerText != null) ? String(res.answerText) : '');
@@ -1851,13 +1873,6 @@ async function submitOnline(choice){
     showVerdict(res.correct === true, correctText, res.explanation ? String(res.explanation) : '');
   }
 
-  if(room.localQuestion){
-    /* سؤال از مخزن محلی آمده و سرور آن را نمی‌شناسد → داوری محلی */
-    const v = (choice.localOk === false) ? false : true;
-    console.log('📦 سؤال محلی بود؛ داوری محلی: ' + (v ? 'درست ✅' : 'غلط ❌'));
-    showVerdict(v, '');
-    return;
-  }
   await judgeOnServer();
 }
 
@@ -2196,7 +2211,8 @@ async function processMoveQueue(){
       while(q.length){ const j = q.shift(); setPiecePos(j.i, j.to); room.displayed[j.i] = j.to; j.resolve(); }
       syncPieceOffsets(); updateHUD();
     } else {
-      const mv = job.mv || inferMove(job.from, job.to);
+      const inferred = job.mv || inferMove(job.from, job.to);
+      const mv = inferred ? Object.assign({ from: job.from }, inferred) : null;
       if(mv && mv.dice) room.rolls++;
       if(mv && mv.to !== mv.from) await animateMoveCore(job.i, mv);
       room.displayed[job.i] = job.to;
@@ -2311,14 +2327,15 @@ async function askTurnQuestionAsync(){
         room.localQuestion = false;
       }
     }catch(e){
-      console.warn('⚠️ sl_getQuestion ناموفق؛ از مخزن محلی استفاده می‌شود:', e && e.message);
+      console.warn('⚠️ sl_getQuestion ناموفق:', e && e.message);
     }
-    if(!q || !q.text || !q.type){
-      q = nextQuestion();
-      console.log('📦 سؤال از مخزن محلی: ' + (q.id || 'بدون شناسه'));
-      room.localQuestion = true;
+    if(!q || !q.id || !q.text || !q.type){
+      room.questionOpen = false;
+      toast('⚠️ سؤال معتبر از سرور دریافت نشد؛ دوباره تلاش کن.');
+      return;
     }
     if(room.phase !== 'playing' || room.turn !== room.myIndex) return;
+    lastAnswer = null;
     currentQ = q;
     modalLocked = false;
     qmFeedback.innerHTML = '';
@@ -2340,7 +2357,7 @@ async function askTurnQuestionAsync(){
 /* ------------------------------------------------------------------ */
 function parseRoll(res, fromPos){
   let dice = parseInt(res.dice, 10);
-  if(isNaN(dice) || dice < 1 || dice > 6) dice = 1 + Math.floor(Math.random() * 6);
+  if(isNaN(dice) || dice < 1 || dice > 6) return null;
   const rawTo = parseInt(res.newPosition != null ? res.newPosition : ((res.newPos != null) ? res.newPos : res.position), 10);
   let mid = fromPos + dice;
   let to = NaN;
@@ -2373,8 +2390,9 @@ function parseRoll(res, fromPos){
 async function doOnlineRoll(){
   if(room.phase !== 'playing' || room.turn !== room.myIndex) return;
   if(room.busy || room.myMoveBusy) return;
+  if(!lastAnswer || !lastAnswer.sentToServer || lastAnswer.approved !== true) return;
   room.busy = true;
-  room.answeredTurn = false;
+  room.answeredTurn = true;
   room.questionOpen = false;
   room.rollRetry = false;
   updateActionBtn();
@@ -2384,9 +2402,8 @@ async function doOnlineRoll(){
     res = await slRollDice(room.code, room.myIndex);
   }catch(e){
     console.warn('⚠️ sl_rollDice خطا:', e && e.message);
-    toast('⚠️ خطا در پرتاب تاس؛ دوباره تلاش می‌شود…');
-    await sleep(1500);
-    try{ res = await slRollDice(room.code, room.myIndex); }catch(e2){ res = null; }
+    // ممکن است درخواست ثبت شده باشد؛ بدون ارسال خودکار مجدد، وضعیت را بگیر.
+    toast('⚠️ پاسخ تاس دریافت نشد؛ وضعیت سرور بررسی می‌شود.');
   }
   if(!res || res.ok === false){
     room.busy = false;
@@ -2402,11 +2419,22 @@ async function doOnlineRoll(){
     room.rollRetry = true;
     updateActionBtn();
     toast('⚠️ تاس روی سرور ثبت نشد؛ دکمهٔ نارنجی را دوباره بزن.');
+    /* نوبت/تاس با سرور همگام شود؛ اگر نوبت رفته باشد، دکمه خودش درست می‌شود */
+    pollNow();
     return;
   }
   const from = (room.displayed[room.myIndex] != null) ? room.displayed[room.myIndex] : 1;
   const mv = parseRoll(res, from);
+  if(!mv){
+    room.busy = false;
+    room.rollRetry = true;
+    updateActionBtn();
+    pollNow();
+    toast('⚠️ مقدار تاس سرور معتبر نبود؛ حرکت محلی انجام نشد.');
+    return;
+  }
   console.log('🎲 تاس ' + mv.dice + ' — از ' + from + ' به ' + mv.to + (mv.kind !== 'plain' ? ' (' + mv.kind + ')' : ''));
+  lastAnswer.approved = false; // همین تأیید فقط برای یک پرتاب مصرف می‌شود
   room.dice = mv.dice;          /* پولینگ دوباره انیمیشن ندهد */
   room.myMoveBusy = true;
   room.busy = false;
@@ -2431,16 +2459,7 @@ async function doOnlineRoll(){
 /* ------------------------------------------------------------------ */
 async function afterWrongAnswer(){
   room.answeredTurn = true;
-  // اگر پاسخ قبلاً با sl_answer فرستاده شده، سرور نوبت را چرخانده → دوباره نفرست
-  if(lastAnswer && !lastAnswer.sentToServer){
-    try{
-      await slAnswer(room.code, room.myIndex, lastAnswer.qid, lastAnswer.payload, GAME_ID);
-      lastAnswer.sentToServer = true;
-      console.log('✅ sl_answer (جواب غلط) فرستاده شد');
-    }catch(e){ console.warn('sl_answer (afterWrong):', e && e.message); }
-  } else {
-    console.log('↪️ sl_answer قبلاً فرستاده شده بود؛ فقط وضعیت تازه می‌شود.');
-  }
+  // داوری قبلاً در sl_answer ثبت شده؛ دوباره پاسخ ارسال نمی‌کنیم.
   pollNow();
 }
 
@@ -2795,10 +2814,41 @@ async function onJoinClick(){
 /* ------------------------------------------------------------------ */
 /* ۲۶) لود سؤال‌ها از پنل معلم (tpGetQuestions)                          */
 /* ------------------------------------------------------------------ */
+/* ──────────────────────────────────────────────────────────────
+   پارس گزینه‌هایی که سرور به‌صورت «متن JSON» می‌فرستد
+   ──────────────────────────────────────────────────────────────
+   شیتِ سؤالها هر فیلد را در یک سلول نگه می‌دارد؛ بنابراین گزینه‌ها
+   می‌توانند به‌صورت رشتهٔ JSON بیایند:  ["الف","ب","ج"]
+   اگر مستقیم استفاده شوند، به‌جای سه گزینه یک متن بلند نمایش داده
+   می‌شود (همان باگ منچ). این تابع رشته را به آرایه/شیء تبدیل می‌کند
+   و اگر JSON نبود، مقدار اصلی را دست‌نخورده برمی‌گرداند.        */
+function parseMaybeJson(v){
+  if(typeof v !== 'string') return v;
+  const s = v.trim();
+  if(s.length < 2) return v;
+  const c = s.charAt(0);
+  if(c !== '[' && c !== '{') return v;
+  try{
+    const out = JSON.parse(s);
+    return (out && typeof out === 'object') ? out : v;
+  }catch(e){ return v; }
+}
+/* گزینه‌ها همیشه باید آرایه باشند؛ رشتهٔ تبدیل‌نشده دور ریخته می‌شود. */
+function optionsArray(v){
+  const o = parseMaybeJson(v);
+  return Array.isArray(o) ? o : [];
+}
 function normalizeQuestion(q){
   const n = Object.assign({}, q);
   if(!n.text && (n.question || n.body || n.prompt)) n.text = n.question || n.body || n.prompt;
-  if(!n.options && Array.isArray(n.choices)) n.options = n.choices;
+  n.options  = optionsArray(n.options);
+  n.choices  = parseMaybeJson(n.choices);
+  if(!n.options.length && Array.isArray(n.choices)) n.options = n.choices;
+  n.answer   = parseMaybeJson(n.answer);
+  n.answers  = parseMaybeJson(n.answers);
+  n.pairs    = parseMaybeJson(n.pairs);
+  n.left     = parseMaybeJson(n.left);
+  n.right    = parseMaybeJson(n.right);
   if(n.answer === undefined && n.correct !== undefined) n.answer = n.correct;
   if(n.answer === undefined && n.correctIndex !== undefined) n.answer = n.correctIndex;
   if(n.answer === undefined && Array.isArray(n.answers)) n.answer = n.answers;
@@ -2817,24 +2867,25 @@ function convertServerQuestion(q){
   switch(q.type){
     case 'mcq':
     case 'dropdown':
-      out.options = q.options || [];
-      out.answer = q.answer;
+      out.options = optionsArray(q.options);
+      out.answer = parseMaybeJson(q.answer);
       break;
     case 'tf':
       out.answer = (q.answer === true || q.answer === 'true' || q.answer === 'درست');
       break;
     case 'multi':
-      out.options = q.options || [];
-      out.answer = Array.isArray(q.answer) ? q.answer : [q.answer];
+      out.options = optionsArray(q.options);
+      out.answer = Array.isArray(parseMaybeJson(q.answer)) ? parseMaybeJson(q.answer) : [q.answer];
       break;
     case 'short':
     case 'blank':
-      out.answer = q.answer;
+      out.answer = parseMaybeJson(q.answer);
       break;
     case 'match':
-      if(Array.isArray(q.pairs)) out.pairs = q.pairs;
-      else if(Array.isArray(q.left) && Array.isArray(q.right)){
-        out.pairs = q.left.map((l, i) => [l, q.right[i]]);
+      if(Array.isArray(parseMaybeJson(q.pairs))) out.pairs = parseMaybeJson(q.pairs);
+      else if(Array.isArray(parseMaybeJson(q.left)) && Array.isArray(parseMaybeJson(q.right))){
+        const L = parseMaybeJson(q.left), R = parseMaybeJson(q.right);
+        out.pairs = L.map((l, i) => [l, R[i]]);
       } else {
         return null;
       }

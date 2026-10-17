@@ -3204,7 +3204,7 @@ function logSession(experimentId, opts){
   const duration = Math.round((Date.now() - started)/1000);
   const done = !!PROGRESS.done[experimentId];
   sendToDB({
-    type:'session', student_name:STUDENT.name, student_class:STUDENT.cls, student_school:STUDENT.school,
+    action:'session', type:'session', student_name:STUDENT.name, student_class:STUDENT.cls, student_school:STUDENT.school,
     game_id:GAME_ID, experiment_id:experimentId, duration:duration, device:deviceType(),
     score:PROGRESS.score[experimentId]||0, stars:PROGRESS.stars[experimentId]||0,
     completed:done, attempts:PROGRESS.attempts[experimentId]||0,
@@ -3530,7 +3530,7 @@ window.addEventListener('message', (event)=>{
   updateHUD();
   renderLobby();
   sendToDB({
-    type:'session', student_name:STUDENT.name, student_class:STUDENT.cls, student_school:STUDENT.school,
+    action:'session', type:'session', student_name:STUDENT.name, student_class:STUDENT.cls, student_school:STUDENT.school,
     game_id:GAME_ID, experiment_id:expId, duration:Math.round((Date.now()-(PROGRESS.started[expId]||Date.now()))/1000),
     device:deviceType(), score:score, stars:stars, completed:true, attempts:PROGRESS.attempts[expId],
     started_at:new Date(PROGRESS.started[expId]||Date.now()).toISOString(), finished_at:new Date().toISOString()
@@ -3573,7 +3573,7 @@ $('btn-logout').onclick = ()=>{
    ============================================================ */
 window.addEventListener('beforeunload', ()=>{
   try{ navigator.sendBeacon && navigator.sendBeacon(DB_URL, JSON.stringify({
-    type:'session', student_name:STUDENT.name, student_class:STUDENT.cls, student_school:STUDENT.school,
+    action:'session', type:'session', student_name:STUDENT.name, student_class:STUDENT.cls, student_school:STUDENT.school,
     game_id:GAME_ID, experiment_id:'exit', duration:Math.round((Date.now()-GAME_START)/1000),
     device:deviceType(), completed:doneCount()>=EXPS.length, score:totalScore(), stars:totalStars(),
     started_at:new Date(GAME_START).toISOString(), finished_at:new Date().toISOString()

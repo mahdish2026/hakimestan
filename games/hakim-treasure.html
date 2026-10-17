@@ -2129,31 +2129,48 @@ function normalizeStage(s, idx){
     maths: maths.length ? maths : base.maths
   };
 }
+/* پارس گزینه‌ها/پاسخ‌هایی که سرور به‌صورت «متن JSON» می‌فرستد.
+   شیتِ سؤالها هر فیلد را در یک سلول نگه می‌دارد، پس گزینه‌ها ممکن است
+   رشتهٔ JSON باشند:  ["الف","ب","ج"]  — اگر مستقیم استفاده شوند، به‌جای
+   چند گزینه یک متن بلند نمایش داده می‌شود (همان باگ منچ). */
+function parseMaybeJson(v){
+  if(typeof v !== 'string') return v;
+  var s = v.trim();
+  if(s.length < 2) return v;
+  var c = s.charAt(0);
+  if(c !== '[' && c !== '{') return v;
+  try{
+    var out = JSON.parse(s);
+    return (out && typeof out === 'object') ? out : v;
+  }catch(e){ return v; }
+}
 function convertQ(q){
   if(!q) return null;
   var t = String(q.type || 'mcq').toLowerCase();
   var text = q.text || q.question || '';
   if(!text) return null;
   var ex = String(q.explanation || '');
+  var rawAns = parseMaybeJson(q.answer);
   if(t === 'tf' || t === 'truefalse' || t === 'boolean'){
     var yes = (q.answer === true) || ['درست','صحیح','true','1','بله'].indexOf(String(q.answer).trim().toLowerCase()) >= 0;
     return { type:'mcq', text:String(text), options:['درست','نادرست'], answer: yes ? 0 : 1, explanation:ex };
   }
   if(t === 'short' || t === 'blank' || t === 'number' || t === 'text' || t === 'fill'){
-    var a = Array.isArray(q.answer) ? q.answer[0] : q.answer;
+    var a = Array.isArray(rawAns) ? rawAns[0] : rawAns;
     if(a == null || String(a).trim() === '') return null;
     return { type:'text', text:String(text).replace(/[_.…]{2,}/g, '……'), answer:String(a), explanation:ex };
   }
-  var o = q.options || q.choices || [];
+  var o = parseMaybeJson(q.options);
+  if(!Array.isArray(o)) o = parseMaybeJson(q.choices);
   if(!Array.isArray(o) || o.length < 2) return null;
   o = o.map(function(x){ return (x && typeof x === 'object') ? String(x.text || x.label || '') : String(x); });
-  var ans = Array.isArray(q.answer) ? q.answer[0] : q.answer;
+  var ans = Array.isArray(rawAns) ? rawAns[0] : rawAns;
   var idx = Number(ans);
   if(!isFinite(idx) || !o[idx]) idx = o.map(normAns).indexOf(normAns(ans));
   if(!isFinite(idx) || idx < 0 || !o[idx]) return null;
-  if(t === 'multi' && Array.isArray(q.answer) && q.answer.length > 1){
+  if(t === 'multi' && Array.isArray(rawAns) && rawAns.length > 1){
     ex = (ex ? ex + ' — ' : '') + 'همهٔ گزینه‌های درست: ' +
-         q.answer.map(function(i){ return o[Number(i)]; }).filter(Boolean).join('، ');
+         rawAns.map(function(i){ return o[Number(i)]; }).filter(Boolean).join('، ');
   }
   return { type:'mcq', text:String(text), options:o, answer:idx, explanation:ex };
 }

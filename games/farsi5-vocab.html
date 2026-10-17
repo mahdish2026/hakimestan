@@ -3609,6 +3609,25 @@
       };
     }
 
+    // پارس فیلدهایی که سرور به‌صورت «متن JSON» می‌فرستد.
+    // شیتِ سؤالها هر فیلد را در یک سلول نگه می‌دارد، پس گزینه‌ها/پاسخ‌ها
+    // ممکن است رشتهٔ JSON باشند: ["الف","ب","ج"] — اگر مستقیم استفاده شوند،
+    // به‌جای چند گزینه یک متن بلند نمایش داده می‌شود (همان باگ منچ).
+    // اگر JSON نبود، مقدار اصلی دست‌نخورده برمی‌گردد.
+    function parseMaybeJson(v) {
+      if (typeof v !== 'string') return v;
+      const s = v.trim();
+      if (s.length < 2) return v;
+      const c = s.charAt(0);
+      if (c !== '[' && c !== '{') return v;
+      try {
+        const out = JSON.parse(s);
+        return (out && typeof out === 'object') ? out : v;
+      } catch (e) {
+        return v;
+      }
+    }
+
     // تبدیل رکورد شیت questions به ساختار لغت برنامه (بخش ۳)
     function questionToWord(q) {
       if (!q) return null;
@@ -3617,7 +3636,10 @@
       const rawSec = String(q.section || '').replace(/^درس\s*/, '').trim();
       const parsedLesson = parseInt(rawSec, 10);
       const lesson = !isNaN(parsedLesson) ? parsedLesson : (rawSec || '?');
-      const meaning = (Array.isArray(q.answers) && q.answers[0]) ? q.answers[0] : (q.answer || '');
+      const rawAnswers = parseMaybeJson(q.answers);
+      const rawAnswer = parseMaybeJson(q.answer);
+      const meaning = (Array.isArray(rawAnswers) && rawAnswers[0]) ? rawAnswers[0]
+                     : (Array.isArray(rawAnswer) && rawAnswer[0] ? rawAnswer[0] : (rawAnswer || ''));
       let extra = {};
       if (q.explanation) {
         try {
@@ -3627,11 +3649,12 @@
           extra.example = String(q.explanation);
         }
       }
-      if (Array.isArray(q.options) && q.options.length > 0) {
-        if (!extra.synonym && q.options[0]) extra.synonym = q.options[0];
-        if (!extra.antonym && q.options[1]) extra.antonym = q.options[1];
-        if (!extra.family && q.options[2]) extra.family = q.options[2];
-        if (!extra.example && q.options[3]) extra.example = q.options[3];
+      const opts = parseMaybeJson(q.options);
+      if (Array.isArray(opts) && opts.length > 0) {
+        if (!extra.synonym && opts[0]) extra.synonym = opts[0];
+        if (!extra.antonym && opts[1]) extra.antonym = opts[1];
+        if (!extra.family && opts[2]) extra.family = opts[2];
+        if (!extra.example && opts[3]) extra.example = opts[3];
       }
       return enrichWord({
         id: q.id || uid(),
