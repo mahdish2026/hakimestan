@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head><!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../css/fonts.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الگوستان | بازی الگوهای ریاضی پنجم</title>
+<meta name="description" content="الگوستان — بازی تعاملی آموزش الگوهای هندسی و عددی ریاضی پایه پنجم؛ جدول، شکل بعدی، قانون الگو و گواهی پایان.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔷</text></svg>">
+<style>
+:root{
+  --ink:#1e1b4b; --muted:#5b5678; --paper:#fffdf8; --line:#e8e0ff;
+  --purple:#6654e8; --purple-d:#4c3cc7; --gold:#f5c542; --gold-d:#d4a017;
+  --teal:#14b8a6; --coral:#fb7185; --green:#22c55e; --sky:#38bdf8;
+  --shadow:0 18px 40px rgba(76,60,199,.16);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;min-height:100%}
+body{
+  font-family:Vazirmatn,'Segoe UI',Tahoma,sans-serif;
+  color:var(--ink); background:#0b0830;
+  min-height:100vh; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(1000px 560px at 92% -8%, rgba(139,92,246,.7), transparent 58%),
+    radial-gradient(800px 480px at -8% 108%, rgba(20,184,166,.42), transparent 58%),
+    radial-gradient(520px 360px at 50% 38%, rgba(245,197,66,.18), transparent 70%),
+    radial-gradient(280px 220px at 20% 20%, rgba(251,113,133,.22), transparent 70%),
+    repeating-linear-gradient(58deg, rgba(255,255,255,.04) 0 10px, transparent 10px 26px);
+}
+.hidden{display:none !important}
+.app{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:16px 14px 56px}
+.btn{
+  cursor:pointer;border:none;font-family:inherit;font-weight:800;
+  border-radius:16px;padding:12px 20px;font-size:1rem;
+  transition:transform .12s, box-shadow .12s; color:#fff;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(2px)!important}
+.btn.primary{background:linear-gradient(180deg,#fbbf24,#f59e0b);color:#451a03;box-shadow:0 5px 0 #b45309}
+.btn.primary:active{box-shadow:0 1px 0 #b45309}
+.btn.purple{background:linear-gradient(180deg,#8b7cf7,#6654e8);box-shadow:0 5px 0 #4c3cc7}
+.btn.purple:active{box-shadow:0 1px 0 #4c3cc7}
+.btn.teal{background:linear-gradient(180deg,#2dd4bf,#0d9488);box-shadow:0 5px 0 #0f766e}
+.btn.ghost{background:#f4f0ff;color:#3b3472;box-shadow:0 3px 0 #d4c9ff}
+.btn.icon{padding:8px 11px;font-size:1.15rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:none}
+.btn.big{width:100%;padding:14px 22px;font-size:1.08rem;margin-top:8px}
+.card{
+  background:var(--paper); border-radius:28px; padding:24px 20px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.card h1,.card h2{font-family:Lalezar,Vazirmatn,sans-serif;margin:0 0 8px}
+.hero-shapes{height:120px;position:relative;margin:0 auto 8px}
+.float{position:absolute;animation:bob 3.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.pop{animation:pop .35s ease}
+.mascot{width:92px;height:92px;margin:0 auto 8px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));font-size:0}
+.mascot.big{width:118px;height:118px}
+.mascot svg,.face svg,#certFace svg{width:100%;height:100%;display:block}
+.bubble .face{width:64px;height:64px;font-size:0}
+#hakimPanelMount{margin:14px 0 0;position:relative;z-index:2}
+#hakimPanelMount .hakim-panel{
+  background:#fffdf8 !important;border:2px solid #c4b5fd !important;border-radius:22px;
+  box-shadow:0 12px 28px rgba(76,60,199,.16); color:#1e1b4b !important;
+}
+#hakimPanelMount .hakim-panel::before{background:radial-gradient(ellipse at right,rgba(102,84,232,.12),transparent 65%) !important}
+#hakimPanelMount .hakim-bubble{
+  background:#f5f3ff !important;border:1.5px solid #c4b5fd !important;
+}
+#hakimPanelMount .hakim-bubble::after{
+  background:#f5f3ff !important;border-color:#c4b5fd !important;
+}
+#hakimPanelMount .hakim-text{
+  color:#1e1b4b !important;font-weight:800 !important;
+}
+#hakimPanelMount .hakim-name{
+  color:#4c3cc7 !important;background:#ede9fe !important;border-color:#c4b5fd !important;
+}
+#hakimPanelMount .hakim-report-line{color:#1e1b4b !important}
+.bubble p{color:#1e1b4b;font-weight:800}
+.title{
+  font-size:clamp(1.8rem,6vw,2.6rem); color:#4c3cc7; text-align:center; font-weight:900;
+}
+.sub{text-align:center;color:var(--muted);line-height:1.9;margin:0 0 14px}
+.name-row{
+  display:flex;align-items:center;gap:10px;background:#f5f3ff;
+  border:2px solid #d9d2ff;border-radius:16px;padding:10px 14px;margin:12px 0;
+}
+.name-row:focus-within{border-color:#8b7cf7;box-shadow:0 0 0 4px rgba(102,84,232,.2)}
+.name-row.err{border-color:#fca5a5;background:#fef2f2}
+.name-row input{
+  flex:1;min-width:0;border:none;outline:none;background:transparent;
+  font:inherit;font-weight:800;font-size:1.05rem;color:#4c3cc7;
+}
+.name-err{display:none;color:#dc2626;font-weight:800;font-size:.86rem;margin:-4px 0 8px}
+.name-err.show{display:block}
+.credit{margin-top:18px;padding-top:12px;border-top:2px dashed #e8e0ff;text-align:center;color:#6b6588;font-size:.82rem;line-height:1.9}
+.credit b{color:#4c3cc7}
+.howto-grid{display:grid;gap:10px;margin:14px 0}
+.howto-item{
+  display:flex;gap:12px;align-items:flex-start;background:#f7f4ff;
+  border:1px solid #e8e0ff;border-radius:16px;padding:12px;
+}
+.howto-item .n{
+  flex:0 0 38px;height:38px;border-radius:12px;background:linear-gradient(180deg,#8b7cf7,#6654e8);
+  color:#fff;display:grid;place-items:center;font-weight:900;
+}
+.howto-item b{display:block;color:#3b3472}
+.howto-item span{color:#5b5678;font-size:.9rem;line-height:1.7}
+
+/* map */
+.map-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.stat-pill{
+  background:#fff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:.86rem;
+  box-shadow:0 6px 16px rgba(76,60,199,.12); color:#4c3cc7;
+}
+.lands{display:grid;gap:12px}
+.land{
+  display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;
+  background:#fff;border-radius:20px;padding:14px;border:2px solid #efeaff;
+  cursor:pointer;transition:transform .15s, border-color .2s, box-shadow .2s;
+  text-align:right;
+}
+.land:hover{transform:translateY(-3px);border-color:#c4b5fd;box-shadow:var(--shadow)}
+.land.locked{opacity:.55;cursor:not-allowed;transform:none}
+.land.done{border-color:#86efac;background:#f0fdf4}
+.land .ic{font-size:2rem;text-align:center}
+.land h3{margin:0;font-size:1.05rem;color:#3b3472}
+.land p{margin:2px 0 0;font-size:.82rem;color:#6b6588}
+.land .stars{font-weight:900;color:#d97706}
+
+/* HUD */
+.hud{
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;
+}
+.hud .grow{flex:1;min-width:140px}
+.hud-title{font-weight:900;color:#fff}
+.hud-sub{color:#ddd6fe;font-size:.8rem}
+.progress{height:10px;background:rgba(255,255,255,.18);border-radius:99px;overflow:hidden;margin-top:6px}
+.progress > i{display:block;height:100%;width:0;background:linear-gradient(90deg,#fbbf24,#fb7185);border-radius:99px;transition:width .35s}
+.play-card{padding:18px 16px 22px}
+.page-badge{
+  display:inline-flex;gap:6px;align-items:center;background:#efeaff;color:#4c3cc7;
+  border-radius:999px;padding:4px 10px;font-weight:800;font-size:.78rem;margin-bottom:8px;
+}
+.q-title{font-size:1.12rem;font-weight:900;color:#3b3472;margin:0 0 8px;line-height:1.8}
+.q-body{color:#4b456c;line-height:1.9;margin:0 0 12px}
+.visual{
+  background:linear-gradient(180deg,#fbf8ff,#f3f0ff);
+  border:2px dashed #ddd6fe;border-radius:20px;padding:12px;margin:10px 0 14px;
+  overflow-x:auto; text-align:center;
+}
+.fig-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:flex-end}
+.fig{display:flex;flex-direction:column;align-items:center;gap:6px}
+.fig small{color:#6b6588;font-weight:800}
+.fig svg{display:block;max-width:100%;height:auto}
+.bubble{
+  display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;
+  background:#eef2ff;border-radius:18px;padding:10px;margin:8px 0 14px;
+}
+.bubble .face{width:64px;height:64px}
+.bubble p{margin:0;line-height:1.8;font-weight:700;color:#3730a3}
+.answer-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.num-in{
+  width:110px;border:2px solid #ddd6fe;border-radius:14px;padding:10px 12px;
+  font:inherit;font-weight:900;font-size:1.15rem;text-align:center;color:#4c3cc7;background:#fff;
+}
+.num-in:focus{outline:none;border-color:#8b7cf7;box-shadow:0 0 0 4px rgba(102,84,232,.18)}
+.num-in.err, .tbl input.err{border-color:#fb7185;background:#fff1f2}
+#answerBox.err{box-shadow:0 0 0 3px rgba(251,113,133,.45);border-radius:16px}
+.unit{font-weight:800;color:#6b6588}
+.choices{display:grid;gap:8px}
+.choice{
+  background:#fff;border:2px solid #e8e0ff;border-radius:16px;padding:12px 14px;
+  font:inherit;font-weight:800;color:#3b3472;text-align:right;cursor:pointer;
+}
+.choice:hover{border-color:#a78bfa;background:#f8f5ff}
+.choice.ok{border-color:#22c55e;background:#f0fdf4;color:#166534}
+.choice.bad{border-color:#fb7185;background:#fff1f2;color:#9f1239}
+.pick-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pick{
+  background:#fff;border:3px solid #e8e0ff;border-radius:18px;padding:10px 8px;
+  cursor:pointer;font:inherit;min-width:110px;color:#3b3472;font-weight:800;
+}
+.pick:hover{border-color:#a78bfa;background:#f8f5ff}
+.pick.ok{border-color:#22c55e;background:#f0fdf4}
+.pick.bad{border-color:#fb7185;background:#fff1f2}
+.pick small{display:block;margin-top:6px}
+.pick svg{width:108px!important;max-width:100%;height:auto;max-height:92px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl input{width:72px;min-height:44px;font-size:1.05rem}
+.feedback{
+  border-radius:16px;padding:12px 14px;margin:10px 0;font-weight:700;line-height:1.85;
+}
+.feedback.ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+.feedback.bad{background:#fff1f2;color:#9f1239;border:1px solid #fecdd3}
+.steps-mini{background:#fffbeb;border:1px solid #fde68a;border-radius:16px;padding:12px;margin-top:8px}
+.steps-mini ol{margin:6px 0 0;padding-right:20px;line-height:1.9;color:#78350f}
+.tbl{width:100%;border-collapse:separate;border-spacing:6px;margin:8px 0}
+.tbl th,.tbl td{background:#fef9c3;border-radius:10px;padding:8px 4px;text-align:center;font-weight:800}
+.tbl th{background:#ddd6fe;color:#4c3cc7}
+.tbl .lab{background:#c4f0e8;color:#115e59}
+.tbl input{
+  width:64px;max-width:100%;border:2px solid #fde68a;border-radius:10px;
+  padding:6px 4px;font:inherit;font-weight:900;text-align:center;color:#4c3cc7;
+}
+.grid-build{
+  display:inline-grid;gap:3px;background:#c4b5fd;padding:6px;border-radius:12px;direction:ltr;
+}
+.gcell{
+  width:28px;height:28px;background:#fff;border-radius:6px;cursor:pointer;border:1px solid #ddd6fe;
+}
+.gcell.on{background:linear-gradient(180deg,#fbcfe8,#fb7185);border-color:#e11d48}
+.gcell.on.blue{background:linear-gradient(180deg,#bae6fd,#38bdf8);border-color:#0284c7}
+.gcell.on.gold{background:linear-gradient(180deg,#fde68a,#f59e0b);border-color:#d97706}
+.gcell.on.green{background:linear-gradient(180deg,#bbf7d0,#22c55e);border-color:#15803d}
+.hex-board{display:flex;flex-direction:column;align-items:center;gap:2px;direction:ltr}
+.hex-row{display:flex;gap:2px}
+.hex{
+  width:34px;height:38px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  background:#e5e7eb;cursor:pointer;
+}
+.hex.on{background:linear-gradient(180deg,#f9a8d4,#ec4899)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.toast{
+  position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+  background:#1e1b4b;color:#fff;padding:10px 16px;border-radius:999px;
+  font-weight:800;z-index:20;box-shadow:var(--shadow);
+}
+
+/* certificate */
+.cert{
+  background:#fffdf6;border:10px solid #f5c542;border-radius:18px;padding:22px 18px;
+  position:relative; overflow:hidden; text-align:center;
+}
+.cert::before{
+  content:"";position:absolute;inset:8px;border:2px dashed #c4b5fd;border-radius:10px;pointer-events:none;
+}
+.cert h1{font-family:Lalezar,sans-serif;font-size:clamp(1.6rem,5vw,2.3rem);color:#4c3cc7;margin:8px 0}
+.cert-name{font-size:clamp(1.4rem,4vw,2rem);color:#b45309;display:block;margin:8px 0 12px}
+.seal{
+  width:90px;height:90px;margin:8px auto;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fde68a,#f59e0b);
+  display:grid;place-items:center;font-weight:900;color:#78350f;box-shadow:0 8px 0 #b45309;
+  transform:rotate(-8deg);
+}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:12px 0}
+.cert-stat{background:#f5f3ff;border-radius:14px;padding:10px}
+.cert-stat b{display:block;font-size:1.2rem;color:#4c3cc7}
+.orn{color:#c4b5fd;letter-spacing:6px;margin:6px 0}
+.cert-list{
+  list-style:none;margin:14px 0 4px;padding:0;text-align:right;
+}
+.cert-list li{
+  display:flex;align-items:center;gap:10px;background:#f8f5ff;
+  border:1.5px solid #e8e0ff;border-radius:14px;padding:10px 12px;margin:8px 0;
+  font-weight:800;color:#3b3472;
+}
+.cert-list li.ok{background:#ecfdf5;border-color:#86efac;color:#166534}
+.cert-list li.wait{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.cert-list .tick{
+  flex:0 0 32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:#e5e7eb;color:#6b7280;font-size:1.1rem;
+}
+.cert-list li.ok .tick{background:#22c55e;color:#fff}
+.cert-list li.wait .tick{background:#fbbf24;color:#78350f}
+.cert-list .meta{flex:1;min-width:0}
+.cert-list small{display:block;font-size:.78rem;font-weight:700;opacity:.8;margin-top:2px}
+.cert-list .st{white-space:nowrap;font-weight:900;color:#d97706}
+@media print{
+  body::before,.hud,.actions,.no-print,#hakimPanelMount{display:none!important}
+  body{background:#fff}
+  .app{max-width:none}
+  .cert{box-shadow:none}
+}
+
+/* ===== juice ===== */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{
+  position:absolute;font-size:22px;opacity:.22;filter:drop-shadow(0 0 8px rgba(255,255,255,.4));
+  animation:drift 16s linear infinite;
+}
+.sky .o1{top:8%;right:8%;animation-duration:18s}
+.sky .o2{top:22%;left:6%;animation-duration:22s;animation-delay:-4s;font-size:28px}
+.sky .o3{bottom:18%;right:12%;animation-duration:20s;animation-delay:-8s}
+.sky .o4{bottom:8%;left:16%;animation-duration:24s;animation-delay:-2s}
+.sky .o5{top:46%;right:28%;animation-duration:14s;font-size:16px}
+.sky .o6{top:62%;left:8%;animation-duration:19s;animation-delay:-6s}
+.sky .o7{top:12%;left:40%;animation-duration:26s}
+.sky .o8{bottom:28%;left:42%;animation-duration:17s;animation-delay:-9s}
+@keyframes drift{
+  0%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-28px) rotate(18deg)}
+  100%{transform:translateY(0) rotate(0)}
+}
+@keyframes shine{
+  0%{background-position:120% 0}
+  100%{background-position:-20% 0}
+}
+@keyframes wiggle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes bounceIn{0%{transform:scale(.4) translateY(18px);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes starfly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(245,197,66,.45)}50%{box-shadow:0 0 0 10px rgba(245,197,66,0)}}
+@keyframes pathPulse{50%{opacity:.35}}
+.title{
+  background:linear-gradient(90deg,#fde68a,#fff,#c4b5fd,#f9a8d4,#fde68a);
+  background-size:220% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 6s linear infinite;
+  filter:drop-shadow(0 3px 0 rgba(76,60,199,.25));
+}
+.gate-badge{
+  display:inline-flex;align-items:center;gap:6px;margin:0 auto 10px;
+  background:linear-gradient(180deg,#fff7d6,#fde68a);color:#78350f;
+  border-radius:999px;padding:6px 14px;font-weight:900;font-size:.82rem;
+  box-shadow:0 6px 0 #d97706; transform:rotate(-2deg);
+}
+.mission-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 4px}
+.mission-row span{
+  background:#efeaff;color:#4c3cc7;border-radius:999px;padding:6px 12px;
+  font-weight:800;font-size:.8rem;border:1.5px solid #ddd6fe;
+}
+.card{
+  background:linear-gradient(180deg,#fffefb 0%,#fff 55%,#f6f3ff 100%);
+  border:2px solid rgba(255,255,255,.7);
+}
+.card::after{
+  content:"";position:absolute;inset:-40% auto auto -20%;width:160px;height:160px;
+  background:radial-gradient(circle,rgba(253,224,71,.35),transparent 70%);
+  pointer-events:none;
+}
+.land{
+  position:relative;overflow:hidden;
+  grid-template-columns:72px 1fr auto;
+  border-width:3px;
+  background:linear-gradient(135deg,#fff,#f8f5ff);
+}
+.land .ic{
+  width:64px;height:64px;border-radius:20px;display:grid;place-items:center;
+  font-size:2rem;background:linear-gradient(180deg,#fff,#efeaff);
+  box-shadow:0 6px 0 #ddd6fe; animation:bob 3s ease-in-out infinite;
+}
+.land.current{border-color:#f5c542;box-shadow:0 0 0 4px rgba(245,197,66,.35),var(--shadow);animation:pulseGlow 1.8s ease-in-out infinite}
+.land.done .ic{background:linear-gradient(180deg,#dcfce7,#86efac);box-shadow:0 6px 0 #22c55e}
+.land[data-i="0"] .ic{background:linear-gradient(180deg,#ddd6fe,#a78bfa)}
+.land[data-i="1"] .ic{background:linear-gradient(180deg,#fde68a,#fbbf24)}
+.land[data-i="2"] .ic{background:linear-gradient(180deg,#99f6e4,#2dd4bf)}
+.land[data-i="3"] .ic{background:linear-gradient(180deg,#bae6fd,#38bdf8)}
+.land[data-i="4"] .ic{background:linear-gradient(180deg,#fde68a,#fb7185)}
+.land .bar{height:6px;background:#ede9fe;border-radius:99px;margin-top:8px;overflow:hidden}
+.land .bar>i{display:block;height:100%;background:linear-gradient(90deg,#fbbf24,#fb7185);border-radius:99px}
+.land .go{
+  background:linear-gradient(180deg,#fde68a,#f59e0b);color:#78350f;border-radius:12px;
+  padding:6px 10px;font-weight:900;font-size:.78rem;box-shadow:0 3px 0 #b45309;
+}
+.land.locked .go{background:#e5e7eb;color:#6b7280;box-shadow:none}
+.land.done .go{background:#dcfce7;color:#166534;box-shadow:0 3px 0 #22c55e}
+.path-dot{height:18px;display:flex;justify-content:center;color:#c4b5fd;font-size:12px;opacity:.7;animation:pathPulse 1.6s ease-in-out infinite}
+.map-hero{
+  background:linear-gradient(135deg,#6654e8,#8b5cf6 50%,#14b8a6);
+  border-radius:24px;padding:16px 18px;margin-bottom:14px;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  box-shadow:0 16px 32px rgba(76,60,199,.28); position:relative; overflow:hidden;
+}
+.map-hero::before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.12);left:-40px;top:-50px}
+.map-hero h2{margin:0;font-family:Lalezar,Vazirmatn,sans-serif;font-size:1.5rem;font-weight:400}
+.map-hero p{margin:4px 0 0;opacity:.92;font-size:.88rem}
+.xp{
+  background:rgba(255,255,255,.18);border-radius:16px;padding:8px 12px;text-align:center;min-width:88px
+}
+.xp b{display:block;font-size:1.3rem}
+.play-card{border:3px solid #ede9fe}
+body[data-land="0"] .play-card{border-color:#c4b5fd;background:linear-gradient(180deg,#fff,#f5f3ff)}
+body[data-land="1"] .play-card{border-color:#fde68a;background:linear-gradient(180deg,#fff,#fffbeb)}
+body[data-land="2"] .play-card{border-color:#99f6e4;background:linear-gradient(180deg,#fff,#f0fdfa)}
+body[data-land="3"] .play-card{border-color:#bae6fd;background:linear-gradient(180deg,#fff,#f0f9ff)}
+body[data-land="4"] .play-card{border-color:#fbcfe8;background:linear-gradient(180deg,#fff,#fff1f2)}
+.visual{
+  background:
+    radial-gradient(circle at 12% 20%, rgba(253,224,71,.25), transparent 40%),
+    radial-gradient(circle at 88% 80%, rgba(167,139,250,.22), transparent 42%),
+    linear-gradient(180deg,#fff,#f6f3ff);
+  border:3px solid #e9e4ff; box-shadow:inset 0 0 0 6px #fff;
+}
+.fig{animation:bounceIn .45s cubic-bezier(.34,1.56,.64,1) both}
+.fig:nth-child(2){animation-delay:.06s}
+.fig:nth-child(3){animation-delay:.12s}
+.fig:nth-child(4){animation-delay:.18s}
+.fig svg{filter:drop-shadow(0 8px 8px rgba(76,60,199,.22))}
+.fig small{
+  background:#4c3cc7;color:#fff;border-radius:999px;padding:2px 10px;font-size:.75rem
+}
+.choice,.pick{
+  transition:transform .12s, box-shadow .12s, border-color .15s, background .15s;
+  box-shadow:0 4px 0 #e8e0ff;
+}
+.choice:hover,.pick:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 0 #ddd6fe}
+.choice:active,.pick:active{transform:translateY(2px);box-shadow:0 1px 0 #e8e0ff}
+.hud-dots{display:flex;gap:5px;flex-wrap:wrap;margin:2px 4px 10px;justify-content:flex-start}
+.hud-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.28)}
+.hud-dots i.on{background:#fbbf24;box-shadow:0 0 8px #fbbf24}
+.hud-dots i.done{background:#4ade80}
+.combo{
+  display:none;background:linear-gradient(180deg,#fb7185,#e11d48);color:#fff;
+  border-radius:999px;padding:6px 12px;font-weight:900;font-size:.8rem;
+  animation:pulse 1s ease-in-out infinite;
+}
+.combo.show{display:inline-flex}
+.star-pop{
+  position:fixed;z-index:40;pointer-events:none;font-size:22px;
+  animation:starfly .8s ease-out forwards;
+}
+.celeb{
+  position:fixed;inset:0;z-index:30;background:rgba(18,12,58,.55);
+  display:grid;place-items:center;padding:18px;
+  backdrop-filter:blur(6px);
+}
+.celeb.hidden{display:none !important}
+.celeb-card{
+  background:linear-gradient(180deg,#fffdf8,#fff7d6);border-radius:28px;padding:26px 20px;
+  text-align:center;max-width:420px;width:100%;
+  box-shadow:0 24px 50px rgba(0,0,0,.28);border:4px solid #f5c542;
+  animation:bounceIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+.celeb-card h2{font-family:Lalezar,sans-serif;font-size:1.8rem;color:#4c3cc7;margin:8px 0}
+.celeb-ico{font-size:3.2rem;animation:wiggle 1.2s ease-in-out infinite}
+.num-in{font-size:1.35rem;min-height:52px;box-shadow:0 4px 0 #ddd6fe}
+.btn.primary,.btn.purple,.btn.teal{position:relative;overflow:hidden}
+.btn.primary::after,.btn.purple::after{
+  content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:translateX(120%); animation:shineBtn 2.8s ease-in-out infinite;
+}
+@keyframes shineBtn{0%,60%{transform:translateX(120%)}100%{transform:translateX(-120%)}}
+.howto-item{border:2px solid #e8e0ff;background:linear-gradient(90deg,#fff,#f7f4ff)}
+.howto-item:nth-child(2n){background:linear-gradient(90deg,#fffbeb,#fff)}
+.seal{animation:wiggle 2.4s ease-in-out infinite}
+#gate .mascot.big{animation:bob 2.8s ease-in-out infinite}
+.sub b{color:#4c3cc7}
+.toast{background:linear-gradient(90deg,#4c3cc7,#7c3aed);border:2px solid #fde68a}
+@media (prefers-reduced-motion:reduce){
+  .sky span,.title,.float,.land .ic,.seal,.combo,.btn.primary::after{animation:none!important}
+}
+
+@media (max-width:520px){
+  .gcell{width:24px;height:24px}
+  .land{grid-template-columns:48px 1fr auto}
+  .bubble{grid-template-columns:52px 1fr}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true">
+  <span class="o1">◆</span><span class="o2">▲</span><span class="o3">●</span><span class="o4">■</span>
+  <span class="o5">✦</span><span class="o6">⬡</span><span class="o7">★</span><span class="o8">◇</span>
+</div>
+<div class="app">
+
+  <!-- GATE -->
+  <section id="gate" class="card">
+    <div class="hero-shapes" aria-hidden="true">
+      <svg class="float" style="left:8%;top:10px" width="54" height="54" viewBox="0 0 54 54"><rect x="4" y="4" width="46" height="46" rx="10" fill="#8b7cf7"/></svg>
+      <svg class="float" style="left:38%;top:28px;animation-delay:.4s" width="50" height="50" viewBox="0 0 50 50"><polygon points="25,3 47,44 3,44" fill="#f5c542"/></svg>
+      <svg class="float" style="left:62%;top:6px;animation-delay:.8s" width="56" height="50" viewBox="0 0 56 50"><polygon points="28,2 54,14 54,36 28,48 2,36 2,14" fill="#14b8a6"/></svg>
+      <svg class="float" style="left:82%;top:30px;animation-delay:.2s" width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="#fb7185"/></svg>
+    </div>
+    <div style="text-align:center"><span class="gate-badge">✨ سفر جادویی الگوها</span></div>
+    <div class="mascot big" id="gateFace" data-hakim-face="excited"></div>
+    <h1 class="title">الگوستان</h1>
+    <p class="sub">۵ سرزمین رنگی، شکل‌هایی که حرف می‌زنند، و حکیم کنار توست!<br><b>ببین، بشمار، قانون را شکار کن، ستاره جمع کن.</b></p>
+    <div class="mission-row"><span>🗺️ ۵ سرزمین</span><span>⭐ ستاره بگیر</span><span>🧙 با حکیم</span><span>📜 گواهی قهرمانی</span></div>
+    <div class="name-row" id="nameRow">
+      <span aria-hidden="true">✏️</span>
+      <input id="nameIn" maxlength="32" autocomplete="name" placeholder="نام و نام خانوادگی‌ات را بنویس…">
+    </div>
+    <div class="name-err" id="nameErr">برای ورود و گرفتن گواهی، نوشتن نام اجباری است.</div>
+    <button class="btn primary big" id="btnEnter">🚀 بزن بریم الگوستان!</button>
+    <button class="btn purple big" id="btnHow">🎮 چطور بازی کنیم؟</button>
+    <p class="credit">طراحی و توسعه دهنده : <b>مهدی شریفیان</b><br>حکیمستان — دیار حکیم، سرزمین یادگیری</p>
+  </section>
+
+  <!-- HOWTO -->
+  <section id="howto" class="card hidden">
+    <div class="mascot" id="howFace"></div>
+    <h2 class="title" style="font-size:1.8rem">ماجراجویی چطوره؟</h2>
+    <p class="sub">تو کاشف الگوهایی! در هر سرزمین شکل‌ها بزرگ می‌شوند. راز را پیدا کن، جدول را پر کن و قفل سرزمین بعدی را باز کن.</p>
+    <div class="howto-grid">
+      <div class="howto-item"><div class="n">۱</div><div><b>اسم قهرمان را بنویس</b><span>گواهی فقط به نام خودت صادر می‌شود — مثل کارت قهرمانی!</span></div></div>
+      <div class="howto-item"><div class="n">۲</div><div><b>با حکیم راز را پیدا کن</b><span>اول شکل‌ها را نگاه کن، بشمار، بعد بگو هر بار چقدر زیاد شد. همان راز الگوست.</span></div></div>
+      <div class="howto-item"><div class="n">۳</div><div><b>جدول، گزینه یا شکل بعدی</b><span>گاهی عدد می‌نویسی، گاهی انتخاب می‌کنی، گاهی شکل درست را لمس می‌کنی.</span></div></div>
+      <div class="howto-item"><div class="n">۴</div><div><b>ستاره و کمبو بگیر</b><span>اولین تلاش درست ۳ ستاره دارد. چند تا پشت‌سرهم درست بگی، کمبو روشن می‌شود!</span></div></div>
+      <div class="howto-item"><div class="n">۵</div><div><b>۵ سرزمین را فتح کن</b><span>هر سرزمین که تمام شود، قفل بعدی باز می‌شود. آخر کار، گواهی قهرمانی مال توست.</span></div></div>
+    </div>
+    <button class="btn primary big" id="btnHowGo">فهمیدم، بریم!</button>
+    <button class="btn ghost big" id="btnHowBack">بازگشت</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="map" class="hidden">
+    <div class="map-hero">
+      <div>
+        <h2 id="hello"></h2>
+        <p>نقشهٔ الگوستان — یک سرزمین را لمس کن و سفر را شروع کن</p>
+      </div>
+      <div class="xp">⭐<b id="mapStars">۰</b>ستاره</div>
+    </div>
+    <div class="lands" id="lands"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+      <button class="btn ghost" id="btnCertMap">📜 گواهی</button>
+      <button class="btn ghost" id="btnReset">↻ شروع مجدد</button>
+      <a class="btn ghost" href="../math-learning.html">🏫 مدرسهٔ ریاضی</a>
+    </div>
+    <p class="credit" style="color:#ddd6fe">طراحی و توسعه دهنده : <b style="color:#fde68a">مهدی شریفیان</b></p>
+  </section>
+
+  <!-- PLAY -->
+  <section id="play" class="hidden">
+    <div class="hud">
+      <button class="btn icon ghost" id="btnBackMap" title="نقشه">🗺️</button>
+      <div class="grow">
+        <div class="hud-title" id="hudTitle"></div>
+        <div class="progress"><i id="hudBar"></i></div>
+      </div>
+      <div class="combo" id="comboPill">🔥 ×۲</div>
+      <div class="stat-pill">⭐ <span id="hudStars">۰</span></div>
+      <button class="btn icon ghost" id="btnSound" title="صدا">🔊</button>
+    </div>
+    <div class="hud-dots" id="hudDots"></div>
+    <div class="card play-card">
+      <div class="page-badge" id="pageBadge"></div>
+      <h2 class="q-title" id="qTitle"></h2>
+      <p class="q-body" id="qBody"></p>
+      <div class="visual" id="visual"></div>
+      <div class="bubble">
+        <div class="face" id="playFace"></div>
+        <p id="hakimText"></p>
+      </div>
+      <div id="answerBox"></div>
+      <div id="feed"></div>
+      <div class="actions" id="acts"></div>
+    </div>
+  </section>
+
+  <!-- CERT -->
+  <section id="cert" class="hidden">
+    <article class="cert" id="certPage">
+      <div class="orn">✦　✧　✦　✧　✦</div>
+      <div class="mascot" id="certFace"></div>
+      <h1>گواهی‌نامهٔ قهرمانی الگوستان</h1>
+      <p>این گواهی با افتخار تقدیم می‌شود به</p>
+      <strong class="cert-name" id="certName"></strong>
+      <div class="seal">قهرمان<br>الگوها</div>
+      <p>دانش‌آموز پایهٔ پنجم که درس <b>الگوها</b> را با موفقیت به پایان رساند.</p>
+      <div class="cert-grid">
+        <div class="cert-stat">ستاره<br><b id="certStars"></b></div>
+        <div class="cert-stat">درستی<br><b id="certPct"></b></div>
+        <div class="cert-stat">سرزمین‌ها<br><b id="certPages"></b></div>
+      </div>
+      <ul class="cert-list" id="certList"></ul>
+      <p id="certDate"></p>
+      <p class="credit">طراحی و توسعه دهنده : <b>مهدی شریفیان</b><br>حکیمستان — مدرسهٔ ریاضی</p>
+    </article>
+    <div class="actions no-print" style="margin-top:14px">
+      <button class="btn primary" id="btnPrint">🖨️ چاپ گواهی</button>
+      <button class="btn purple" id="btnCertMap2">🗺️ نقشه</button>
+    </div>
+  </section>
+  <section id="hakimPanelMount" aria-label="پیام از حکیم"></section>
+</div>
+<div id="celeb" class="celeb hidden" role="dialog" aria-modal="true">
+  <div class="celeb-card">
+    <div class="celeb-ico" id="celebIco">🎉</div>
+    <h2 id="celebTitle">سرزمین فتح شد!</h2>
+    <p id="celebText"></p>
+    <button class="btn primary big" id="celebGo">ادامهٔ سفر</button>
+  </div>
+</div>
+
+<script src="../hakim-core.js"></script>
+<script>
+(function(){
+'use strict';
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const fa = '۰۱۲۳۴۵۶۷۸۹';
+const toFa = n => String(n).replace(/\d/g, d => fa[d]);
+const fromFa = s => String(s||'').trim()
+  .replace(/[۰-۹]/g, d => fa.indexOf(d))
+  .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+  .replace(/[٬,]/g,'');
+const KEY = 'hakimestan_olgo_v1';
+const LANDS = [
+  {id:'p30', icon:'🏰', name:'قلعهٔ پله‌های بنفش', desc:'پله، مربع و هرم — محیط را شکار کن'},
+  {id:'p31', icon:'🔥', name:'جنگل چوب‌کبریت', desc:'مثلث‌ها و خانه‌های چوبی'},
+  {id:'p32', icon:'🏡', name:'دهکدهٔ خانه‌های چسبیده', desc:'دیوار مشترک و دایره‌های سه‌گوش'},
+  {id:'p33', icon:'💎', name:'شهر مربع‌های درخشان', desc:'دایره‌های مربعی و مثلث‌های کوچک'},
+  {id:'p34', icon:'🏆', name:'قلهٔ قهرمانان', desc:'شکل ال، سبز، آبی و شش‌ضلعی'}
+];
+
+function jalali(date){
+  const g = [date.getFullYear(), date.getMonth()+1, date.getDate()];
+  const gy=g[0]-1600, gm=g[1]-1, gd=g[2]-1;
+  let g_day = 365*gy + Math.floor((gy+3)/4) - Math.floor((gy+99)/100) + Math.floor((gy+399)/400);
+  const v=[0,31,59,90,120,151,181,212,243,273,304,334];
+  g_day += v[gm] + gd;
+  if(gm>1 && ((g[0]%4===0 && g[0]%100!==0) || g[0]%400===0)) g_day++;
+  let j_day = g_day - 79;
+  const j_np = Math.floor(j_day/12053); j_day %= 12053;
+  let jy = 979 + 33*j_np + 4*Math.floor(j_day/1461); j_day %= 1461;
+  if(j_day >= 366){ jy += Math.floor((j_day-1)/365); j_day = (j_day-1)%365; }
+  const jm = j_day<186 ? 1+Math.floor(j_day/31) : 7+Math.floor((j_day-186)/30);
+  const jd = 1 + (j_day<186 ? j_day%31 : (j_day-186)%30);
+  const months=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+  return toFa(jd)+' '+months[jm-1]+' '+toFa(jy);
+}
+
+/* ===== SFX ===== */
+let actx, soundOn=true;
+function ctx(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+function beep(f, t, type='sine', g=.08){
+  if(!soundOn) return;
+  try{
+    const c=ctx(), o=c.createOscillator(), a=c.createGain();
+    o.type=type; o.frequency.value=f; a.gain.value=g;
+    o.connect(a); a.connect(c.destination);
+    o.start(); a.gain.exponentialRampToValueAtTime(.0001, c.currentTime+t);
+    o.stop(c.currentTime+t);
+  }catch(e){}
+}
+const SFX = {
+  click(){ beep(640,.08,'triangle',.05); },
+  ok(){ beep(523,.1,'triangle',.07); setTimeout(()=>beep(659,.1),80); setTimeout(()=>beep(784,.12),160); setTimeout(()=>beep(1046,.2,'sine',.06),260); },
+  bad(){ beep(220,.2,'sawtooth',.05); },
+  star(){ beep(880,.1); setTimeout(()=>beep(1174,.16),80); },
+  fanfare(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,'triangle',.08), i*90)); }
+};
+let combo = 0;
+
+/* ===== SVG FIGURES ===== */
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${Math.min(w,320)}" style="max-width:100%" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`; }
+function sq(x,y,s,fill,stroke,sw=2.2){
+  const r=Math.min(7,s/5);
+  return `<g>
+    <rect x="${x}" y="${y+2}" width="${s}" height="${s}" rx="${r}" fill="${stroke}" opacity=".22"/>
+    <rect x="${x}" y="${y}" width="${s}" height="${s}" rx="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>
+    <rect x="${x+3}" y="${y+3}" width="${Math.max(4,s*0.42)}" height="${Math.max(3,s*0.22)}" rx="2" fill="#fff" opacity=".38"/>
+  </g>`;
+}
+function polyomino(cells, opt={}){
+  const s=opt.s||26, fill=opt.fill||'#c4b5fd', stroke=opt.stroke||'#5b21b6';
+  let maxx=0,maxy=0;
+  cells.forEach(([x,y])=>{ maxx=Math.max(maxx,x); maxy=Math.max(maxy,y); });
+  const inner = cells.map(([x,y])=>sq(x*s+3,y*s+3,s-4,fill,stroke)).join('');
+  return svg((maxx+1)*s+6,(maxy+1)*s+6, inner);
+}
+function stair(n, fill='#a78bfa', stroke='#5b21b6'){
+  const cells=[];
+  for(let c=0;c<n;c++) for(let r=0;r<c+1;r++) cells.push([c, n-1-r]);
+  return polyomino(cells,{fill,stroke});
+}
+function rectGrid(w,h, fill='#93c5fd', stroke='#1d4ed8'){
+  const cells=[]; for(let y=0;y<h;y++) for(let x=0;x<w;x++) cells.push([x,y]);
+  return polyomino(cells,{fill,stroke});
+}
+function pyramid(n, fill='#fda4af', stroke='#be123c'){
+  const cells=[];
+  for(let r=0;r<n;r++){
+    const count=r+1, x0=n-1-r;
+    for(let i=0;i<count;i++) cells.push([x0+i, r]);
+  }
+  return polyomino(cells,{fill,stroke});
+}
+function Lshape(n, fill='#fb7185', stroke='#be123c'){
+  // 2 rows, n+1 cols, missing bottom-left
+  const cells=[]; const w=n+1;
+  for(let x=0;x<w;x++) cells.push([x,0]);
+  for(let x=1;x<w;x++) cells.push([x,1]);
+  return polyomino(cells,{fill,stroke});
+}
+function greenZ(n, fill='#4ade80', stroke='#15803d'){
+  const top=2*n+1, bot=2*n, off=n;
+  const cells=[];
+  for(let x=0;x<top;x++) cells.push([x,0]);
+  for(let x=0;x<bot;x++) cells.push([off+x,1]);
+  return polyomino(cells,{fill,stroke,s:18});
+}
+function bluePlus(n, fill='#38bdf8', stroke='#0369a1'){
+  const cells=[];
+  for(let y=0;y<n;y++) for(let x=1;x<=n;x++) cells.push([x,y]);
+  cells.push([0,n-1]); // extra bottom-left
+  if(n===1){ /* 1x1 + extra left of it already */ }
+  return polyomino(cells,{fill,stroke});
+}
+function wood(x1,y1,x2,y2){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#b45309" stroke-width="5" stroke-linecap="round"/>
+          <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>`;
+}
+function matchTris(n){
+  const s=34, h=s*Math.sqrt(3)/2, pad=12;
+  let d='';
+  for(let i=0;i<n;i++){
+    const x=pad+i*s, y=pad+h;
+    d += wood(x,y,x+s/2,pad)+wood(x+s/2,pad,x+s,y)+wood(x,y,x+s,y);
+  }
+  return svg(pad*2+n*s, pad*2+h, d);
+}
+function matchHouses(n, share){
+  const W=36, gap = share?0:14, pad=10, roof=22;
+  let d='', x=pad;
+  for(let i=0;i<n;i++){
+    const y=pad+roof;
+    d += wood(x,y,x+W,y)+wood(x+W,y,x+W,y+W)+wood(x+W,y+W,x,y+W);
+    if(!share || i===0) d += wood(x,y+W,x,y);
+    d += wood(x,y,x+W/2,y-roof)+wood(x+W/2,y-roof,x+W,y);
+    x += W + gap;
+  }
+  return svg(x+pad-(share?0:gap), pad+roof+W+10, d);
+}
+function circlesTri(n, r=9){
+  const gap=r*2+4, pad=12;
+  let d='';
+  for(let row=0; row<n; row++){
+    const count=row+1;
+    const y=pad+row*gap+r;
+    const x0=pad + (n-count)*gap/2 + r;
+    for(let i=0;i<count;i++){
+      d += `<circle cx="${x0+i*gap}" cy="${y+1.5}" r="${r}" fill="#1d4ed8" opacity=".18"/><circle cx="${x0+i*gap}" cy="${y}" r="${r}" fill="#dbeafe" stroke="#2563eb" stroke-width="2.4"/><circle cx="${x0+i*gap-2}" cy="${y-2}" r="${r*0.28}" fill="#fff" opacity=".7"/>`;
+    }
+  }
+  return svg(pad*2+n*gap, pad*2+n*gap, d);
+}
+function circlesSq(n, r=8){
+  const gap=r*2+4, pad=10;
+  let d='';
+  for(let y=0;y<n;y++) for(let x=0;x<n;x++){
+    d += `<circle cx="${pad+r+x*gap}" cy="${pad+r+y*gap+1.5}" r="${r}" fill="#1d4ed8" opacity=".18"/><circle cx="${pad+r+x*gap}" cy="${pad+r+y*gap}" r="${r}" fill="#dbeafe" stroke="#2563eb" stroke-width="2.4"/><circle cx="${pad+r+x*gap-2}" cy="${pad+r+y*gap-2}" r="${r*0.28}" fill="#fff" opacity=".7"/>`;
+  }
+  return svg(pad*2+n*gap, pad*2+n*gap, d);
+}
+function triTiles(n){
+  const s=22, h=s*Math.sqrt(3)/2, pad=8;
+  let d='';
+  for(let row=0; row<n; row++){
+    const y=pad+row*h;
+    const x0=pad+(n-1-row)*s/2;
+    for(let i=0;i<row+1;i++){
+      const x=x0+i*s;
+      d += `<polygon points="${x+s/2},${y} ${x+s},${y+h} ${x},${y+h}" fill="#fde68a" stroke="#b45309" stroke-width="1.4"/>`;
+      if(i<row){
+        d += `<polygon points="${x+s},${y+h} ${x+s/2},${y} ${x+s+s/2},${y}" fill="#fef3c7" stroke="#b45309" stroke-width="1.4"/>`;
+      }
+    }
+  }
+  return svg(pad*2+n*s, pad*2+n*h, d);
+}
+function hexesTri(n){
+  const size=14, w=Math.sqrt(3)*size, h=2*size, pad=16;
+  let d='';
+  function hex(cx,cy,on){
+    const pts=[];
+    for(let i=0;i<6;i++){
+      const a=Math.PI/180*(60*i-30);
+      pts.push((cx+size*Math.cos(a)).toFixed(1)+','+(cy+size*Math.sin(a)).toFixed(1));
+    }
+    return `<polygon points="${pts.join(' ')}" fill="${on?'#ec4899':'#f3f4f6'}" stroke="${on?'#9d174d':'#d1d5db'}" stroke-width="1.4"/>`;
+  }
+  for(let row=0; row<n; row++){
+    const count=row+1;
+    const cy=pad+size+row*(h*0.75);
+    const cx0=pad + (n-count)*w/2 + w/2;
+    for(let i=0;i<count;i++) d += hex(cx0+i*w, cy, true);
+  }
+  return svg(pad*2+n*w, pad*2+n*(h*0.75)+size, d);
+}
+function figCap(html, cap){
+  return `<div class="fig">${html}<small>${cap}</small></div>`;
+}
+function figs(arr){ return `<div class="fig-row">${arr.join('')}</div>`; }
+
+/* ===== STATE ===== */
+function fresh(){
+  return {name:'', stars:0, sound:true, land:0, step:0, tries:{}, done:{}, started:Date.now(), maxByQ:{}, sentLands:[]};
+}
+let S = fresh();
+try{ const raw=localStorage.getItem(KEY); if(raw) S = Object.assign(fresh(), JSON.parse(raw)); }catch(e){}
+soundOn = S.sound !== false;
+function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+function paintFace(el, mood){
+  if(!el) return;
+  const m = mood||'happy';
+  if(window.Hakim && typeof Hakim.renderFace==='function'){
+    Hakim.renderFace(m, el);
+  } else {
+    el.textContent = {happy:'😊',excited:'🤩',thinking:'🤔',sad:'🥺',normal:'🧙',wise:'🧙',wink:'😉',surprised:'😮',sleepy:'😴'}[m]||'🧙';
+    el.style.fontSize='42px'; el.style.display='grid'; el.style.placeItems='center';
+  }
+}
+function bootHakim(){
+  if(!window.Hakim || typeof Hakim.init!=='function') return;
+  try{
+    Hakim.init({ container:'#hakimPanelMount', name: S.name||'دوست من', font:false, autoHideMs:8000 });
+    if(S.name && Hakim.setName) Hakim.setName(S.name);
+  }catch(e){}
+}
+function hkSay(text, mood){
+  const m = mood || 'happy';
+  faceMood(m);
+  if(window.Hakim && typeof Hakim.say==='function'){
+    try{ Hakim.say(String(text||'').replace(/<[^>]+>/g,' '), {mood:m}); }catch(e){}
+  }
+}
+
+/* ===== STEPS ===== */
+const STEPS = [
+  /* ===== PAGE 30 ===== */
+  {
+    land:0, teach:true, title:'الگو یعنی چه؟',
+    body:'وقتی شکل‌ها یا عددها با یک <b>نظم مشخص</b> جلو می‌روند، به آن <b>الگو</b> می‌گوییم. کار ما این است: نگاه کنیم، بشماریم، <b>گام</b> را پیدا کنیم و با همان گام ادامه بدهیم.',
+    visual:()=>figs([
+      figCap(polyomino([[0,1],[1,1],[1,0]],{fill:'#c4b5fd',stroke:'#5b21b6'}),'شکل ۱'),
+      figCap(stair(2),'شکل ۲'),
+      figCap(stair(3),'شکل ۳'),
+      figCap(`<div style="font-size:2rem;font-weight:900;color:#4c3cc7">؟</div>`,'شکل ۴')
+    ]),
+    hakim:'از شکل ۱ تا ۳ چه چیزی منظم بزرگ می‌شود؟ بعداً خودت شکل بعدی را می‌سازی.'
+  },
+  {
+    land:0, title:'فعالیت ۱: محیط شکل‌ها',
+    body:'طول هر ضلع مربع کوچک <b>۱ سانتی‌متر</b> است. محیط یعنی دور تا دور شکل را بشماری. ضلع‌های داخلی را نشمار!',
+    visual:()=>figs([
+      figCap(stair(2,'#e9d5ff','#6d28d9'),'پله'),
+      figCap(rectGrid(2,2,'#bfdbfe','#1d4ed8'),'مربع ۲×۲')
+    ]),
+    hakim:'با انگشتت روی خط دور شکل حرکت کن و ضلع‌ها را بشمار. هر ضلع ۱ سانتی‌متر است.'
+  },
+  {
+    land:0, title:'محیط شکل پله‌ای سمت چپ',
+    body:'این شکل از ۳ مربع ساخته شده (پلهٔ ۲ تایی). محیط آن چند سانتی‌متر است؟',
+    visual:()=>figs([figCap(stair(2,'#e9d5ff','#6d28d9'),'۳ مربع — ضلع‌ها ۱ سانتی‌متر')]),
+    hakim:'۳ مربع اگر جدا بودند محیط‌شان ۱۲ می‌شد؛ اما ۲ ضلع مشترک دارند. هر ضلع مشترک ۲ واحد از محیط کم می‌کند.',
+    type:'input', answer:8, unit:'سانتی‌متر',
+    hint:'۱۲ − ۲×۲ = ۸. یا دور شکل را بشمار: پایین ۲، راست ۲، بالا ۲، چپ ۲.',
+    why:['۳ مربع × ۴ = ۱۲ واحد ضلع.','۲ ضلع مشترک وجود دارد، پس ۲×۲=۴ تا کم می‌شود.','۱۲ − ۴ = ۸ سانتی‌متر.']
+  },
+  {
+    land:0, title:'محیط مربع ۲×۲',
+    body:'مربع سمت راست از ۴ مربع کوچک ساخته شده. محیط آن چند سانتی‌متر است؟',
+    visual:()=>figs([figCap(rectGrid(2,2),'مربع ۲×۲')]),
+    hakim:'برای مربع بزرگ، کافی است ۴ ضلعِ بیرونی را بشمار. هر ضلع ۲ سانتی‌متر است.',
+    type:'input', answer:8, unit:'سانتی‌متر',
+    hint:'۴ × ۲ = ۸',
+    why:['ضلع مربع بزرگ ۲ سانتی‌متر است.','محیط مربع = ۴ × ضلع = ۸ سانتی‌متر.']
+  },
+  {
+    land:0, title:'مقایسهٔ دو شکل صورتی',
+    body:'محیط شکل پله‌ای و مربع ۲×۲ را با هم مقایسه کن.',
+    visual:()=>figs([figCap(stair(2,'#e9d5ff','#6d28d9'),'محیط ۸'), figCap(rectGrid(2,2),'محیط ۸')]),
+    hakim:'مساحت این دو شکل فرق دارد (۳ مربع در برابر ۴ مربع) ولی محیط‌شان…',
+    type:'choice',
+    options:['محیط پله بیشتر است','محیط مربع بیشتر است','محیط هر دو برابر است'],
+    answer:2,
+    why:['هر دو محیط ۸ سانتی‌متر دارند.','پس می‌توان شکل را جور دیگر چید و محیط عوض نشود — یا حتی شکل با مربع کمتر، همان محیط را داشته باشد.']
+  },
+  {
+    land:0, title:'محیط پلهٔ سه‌تایی',
+    body:'حالا شکل آبی سمت چپ: پله با ارتفاع‌های ۱، ۲ و ۳. محیط چند سانتی‌متر است؟',
+    visual:()=>figs([figCap(stair(3,'#93c5fd','#1d4ed8'),'۶ مربع کوچک')]),
+    hakim:'می‌توانی دور شکل را با انگشت بشماری. یک راه تند هم هست: شمارهٔ پله را در ۴ ضرب کن. اینجا پله ۳ تایی است، پس ۴×۳=۱۲.',
+    type:'input', answer:12, unit:'سانتی‌متر',
+    hint:'شمارهٔ پله ۳ است. ۳ را در ۴ ضرب کن.',
+    why:['این پله ۳ پله دارد.','در این الگو محیط همیشه ۴ برابر شمارهٔ پله است.','۴×۳=۱۲ سانتی‌متر']
+  },
+  {
+    land:0, title:'محیط مربع ۳×۳',
+    body:'مربع سمت راست از ۹ مربع کوچک ساخته شده. محیط آن؟',
+    visual:()=>figs([figCap(rectGrid(3,3),'مربع ۳×۳')]),
+    hakim:'ضلع بزرگ ۳ سانتی‌متر است.',
+    type:'input', answer:12, unit:'سانتی‌متر',
+    hint:'۴ × ۳ = ۱۲',
+    why:['محیط مربع = ۴ × ۳ = ۱۲ سانتی‌متر.','باز هم با پلهٔ کناری برابر شد!']
+  },
+  {
+    land:0, title:'مقایسهٔ دو شکل آبی',
+    body:'محیط پلهٔ سه‌تایی و مربع ۳×۳ را مقایسه کن.',
+    type:'choice',
+    options:['پله محیط بیشتری دارد','مربع محیط بیشتری دارد','محیط هر دو برابر ۱۲ سانتی‌متر است'],
+    answer:2,
+    visual:()=>figs([figCap(stair(3,'#93c5fd','#1d4ed8'),'۶ مربع'), figCap(rectGrid(3,3),'۹ مربع')]),
+    hakim:'دیدی؟ تعداد مربع‌ها فرق دارد ولی محیط یکی است.',
+    why:['هر دو ۱۲ سانتی‌متر محیط دارند.','مساحت‌ها متفاوت‌اند (۶ در برابر ۹) ولی محیط برابر است.']
+  },
+  {
+    land:0, title:'فعالیت ۲ — الگوی هندسی پله‌ای',
+    body:'با مربع‌هایی به ضلع ۱ سانتی‌متر این الگو ساخته شده. شکل‌ها را نگاه کن و ببین هر بار چه چیزی اضافه می‌شود.',
+    visual:()=>figs([
+      figCap(stair(1),'شکل (۱)'), figCap(stair(2),'شکل (۲)'),
+      figCap(stair(3),'شکل (۳)'), figCap(stair(4),'شکل (۴)')
+    ]),
+    hakim:'هر شکل، یک ستون جدید با یک مربع بیشتر از ستون قبلی اضافه می‌کند. حالا جدول محیط را کامل می‌کنیم.'
+  },
+  {
+    land:0, title:'الف) جدول محیط را کامل کن',
+    body:'محیط شکل ۱ داده شده: ۴ سانتی‌متر. بقیه را با شمردن یا با قانون پر کن. ستون آخر برای شکل ۵ است.',
+    visual:()=>figs([figCap(stair(1),'۴'), figCap(stair(2),'؟'), figCap(stair(3),'؟'), figCap(stair(4),'؟')]),
+    hakim:'از یکی به بعدی، محیط ۴ سانتی‌متر زیاد می‌شود. گام الگو +۴ است.',
+    type:'table',
+    table:{
+      head:['شمارهٔ شکل','۱','۲','۳','۴','۵'],
+      lab:'محیط شکل',
+      given:{0:4},
+      answers:{1:8,2:12,3:16,4:20}
+    },
+    why:['شکل ۱: ۴','هر بار یک پله اضافه می‌شود و محیط ۴ تا زیاد می‌شود.','۴، ۸، ۱۲، ۱۶، ۲۰']
+  },
+  {
+    land:0, title:'گام الگو چیست؟',
+    body:'در جدول قبلی، از هر شکل به شکل بعد، محیط چقدر زیاد شد؟',
+    type:'choice',
+    options:['۲ سانتی‌متر','۴ سانتی‌متر','۶ سانتی‌متر','۸ سانتی‌متر'],
+    answer:1,
+    hakim:'اگر گام را پیدا کنی، شکل دهم را بدون کشیدن به‌دست می‌آوری.',
+    why:['۸−۴=۴، ۱۲−۸=۴، ۱۶−۱۲=۴. گام الگو +۴ است.']
+  },
+  {
+    land:0, title:'ب) محیط شکل دهم',
+    body:'با توجّه به رابطه‌ای که در الگو دیدی، محیط شکل دهم چند سانتی‌متر است؟',
+    type:'input', answer:40, unit:'سانتی‌متر',
+    hakim:'شمارهٔ شکل را در ۴ ضرب کن. شکل دهم یعنی ۴×۱۰.',
+    hint:'۴ × ۱۰ = ۴۰',
+    why:['قانون بچه مدرسه‌ای: محیط هر شکل = ۴ × شمارهٔ همان شکل.','شکل دهم: ۴×۱۰=۴۰ سانتی‌متر. لازم نیست شکل را بکشی!']
+  },
+  {
+    land:0, title:'پ) محیطی برابر ۳۶ سانتی‌متر',
+    body:'محیط یکی از شکل‌ها ۳۶ سانتی‌متر است. این شکل چندمین شکل است؟',
+    type:'input', answer:9, unit:'',
+    hakim:'۴ ضربدر چه عددی می‌شود ۳۶؟ همان عدد، شمارهٔ شکل است.',
+    hint:'۳۶ را بر ۴ تقسیم کن.',
+    why:['۳۶ ÷ ۴ = ۹. پس این شکل نهم است.']
+  },
+  {
+    land:0, title:'ت) رابطهٔ محیط و شمارهٔ شکل',
+    body:'در این الگو بین محیط و شمارهٔ شکل چه رابطه‌ای وجود دارد؟',
+    type:'choice',
+    options:[
+      'محیط = شمارهٔ شکل + ۴',
+      'محیط = ۴ × شمارهٔ شکل',
+      'محیط = ۲ × شمارهٔ شکل',
+      'محیط همیشه ۱۶ است'
+    ],
+    answer:1,
+    hakim:'قانون را با یک جملهٔ ساده بگو تا برای شکل صدم هم کار کند؛ لازم نیست صد تا پله بکشی!',
+    why:['محیط هر شکل، ۴ برابر شمارهٔ آن شکل است.','چون دور این پله همیشه ۴ تا ضلعِ شمارهٔ شکل دارد.']
+  },
+  {
+    land:0, title:'هرم مربع‌ها — کشف الگو',
+    body:'تعداد مربع‌های این هرم‌ها را بشمار: ۱ ، ۳ ، ۶ ، … به این‌ها عددهای سه‌گوش می‌گوییم.',
+    visual:()=>figs([
+      figCap(pyramid(1),'شکل (۱) — ۱'), figCap(pyramid(2),'شکل (۲) — ۳'), figCap(pyramid(3),'شکل (۳) — ۶')
+    ]),
+    hakim:'شکل ۲ نسبت به شکل ۱ دو مربع اضافه دارد. شکل ۳ نسبت به شکل ۲ سه مربع. حدس بزن شکل ۴ چند تا دارد؟'
+  },
+  {
+    land:0, title:'شکل چهارم هرم چند مربع دارد؟',
+    body:'اگر هر بار به اندازهٔ شمارهٔ شکل جدید مربع اضافه شود، شکل ۴ با چند مربع ساخته می‌شود؟',
+    type:'input', answer:10,
+    visual:()=>figs([figCap(pyramid(3),'۶ مربع'), figCap(`<div style="font-size:2.4rem">+۴</div>`,'گام بعدی')]),
+    hakim:'۶ + ۴ = ؟  و شکل پنجم می‌شود آن به‌علاوهٔ ۵.',
+    hint:'۱+۲+۳+۴ = ۱۰',
+    why:['۱ ، بعد +۲ می‌شود ۳ ، بعد +۳ می‌شود ۶ ، بعد +۴ می‌شود ۱۰.','هر شکل، عددهای ۱ تا شمارهٔ خودش را با هم جمع می‌کند. شکل ۴: ۱+۲+۳+۴=۱۰']
+  },
+
+  /* ===== PAGE 31 ===== */
+  {
+    land:1, teach:true, title:'الگو با چوب‌کبریت',
+    body:'حالا الگو از <b>چوب‌کبریت</b> ساخته می‌شود. مهم: اگر دو مثلث یک ضلع مشترک داشته باشند، آن ضلع را فقط <b>یک‌بار</b> می‌شماریم.',
+    visual:()=>figs([
+      figCap(matchTris(1),'شکل (۱)'), figCap(matchTris(2),'شکل (۲)'),
+      figCap(matchTris(3),'شکل (۳)'), figCap(matchTris(4),'شکل (۴)')
+    ]),
+    hakim:'شکل ۱ سه چوب دارد. هر مثلث جدید فقط ۲ چوب اضافه می‌کند، چون یک ضلع را از قبلی قرض می‌گیرد.'
+  },
+  {
+    land:1, title:'الف) جدول مثلث‌های چوب‌کبریتی',
+    body:'جدول را کامل کن. زیر جدول، گام با +۳ شروع شده؛ ببین آیا همیشه +۳ است؟',
+    visual:()=>figs([figCap(matchTris(1),'۳'), figCap(matchTris(2),'۵'), figCap(matchTris(3),'۷'), figCap(matchTris(4),'۹')]),
+    hakim:'شکل‌ها را بشمار، به جدول نگاه نکن اول. مثلث‌ها ضلع مشترک دارند؛ از شکل ۱ به ۲ فقط ۲ چوب اضافه می‌شود: ۳، ۵، ۷، ۹، ۱۱.',
+    type:'table',
+    table:{
+      head:['شمارهٔ شکل','۱','۲','۳','۴','۵'],
+      lab:'تعداد چوب‌کبریت',
+      given:{},
+      answers:{0:3,1:5,2:7,3:9,4:11}
+    },
+    why:['۳، ۵، ۷، ۹، ۱۱','هر شکل ۲ چوب اضافه می‌کند.','راه تند: شمارهٔ شکل را دو برابر کن، بعد یکی اضافه کن. شکل ۵: ۱۰+۱=۱۱']
+  },
+  {
+    land:1, title:'شکل دهم چند چوب‌کبریت دارد؟',
+    body:'شکل دهم از چند چوب‌کبریت تشکیل شده است؟',
+    type:'input', answer:21,
+    hakim:'شمارهٔ شکل را دو برابر کن، بعد یکی اضافه کن. شکل دهم: ۲×۱۰=۲۰، به‌علاوهٔ ۱ می‌شود ۲۱.',
+    hint:'۲×۱۰ ، بعد یکی اضافه کن.',
+    why:['هر مثلث جدید فقط ۲ چوب می‌آورد، چون یک ضلع را از قبلی قرض می‌گیرد.','شکل دهم: دو برابر ۱۰، به‌علاوهٔ ۱ = ۲۱']
+  },
+  {
+    land:1, title:'آیا شکلی با ۱۶ چوب‌کبریت هست؟',
+    body:'آیا شکلی وجود دارد که از ۱۶ چوب‌کبریت تشکیل شده باشد؟',
+    type:'choice',
+    options:['بله، شکل ۸','بله، شکل ۷','خیر، چون تعداد چوب‌ها همیشه فرد است','بله، شکل ۱۶'],
+    answer:2,
+    hakim:'این الگو همیشه عدد فرد می‌سازد: ۳، ۵، ۷، ۹، … عدد ۱۶ زوج است، پس در این الگو نمی‌آید.',
+    why:['تعداد چوب‌ها: ۳،۵،۷،۹،۱۱،۱۳،۱۵،۱۷،… همه فردند.','۱۶ زوج است، پس چنین شکلی وجود ندارد.']
+  },
+  {
+    land:1, title:'ب) خانه‌های جدا از هم',
+    body:'هر خانه از یک مربع و یک سقف ساخته شده و <b>۶ چوب‌کبریت</b> دارد. خانه‌ها به هم نچسبیده‌اند، پس چوب مشترک ندارند.',
+    visual:()=>figs([
+      figCap(matchHouses(1,false),'شکل (۱)'), figCap(matchHouses(2,false),'شکل (۲)'),
+      figCap(matchHouses(3,false),'شکل (۳)'), figCap(matchHouses(4,false),'شکل (۴)')
+    ]),
+    hakim:'اگر خانه‌ها جدا باشند، تعداد چوب = ۶ × شمارهٔ شکل. گام الگو +۶ است.'
+  },
+  {
+    land:1, title:'جدول خانه‌های جدا',
+    body:'جدول را تا شکل ۷ کامل کن.',
+    type:'table',
+    table:{
+      head:['شمارهٔ شکل','۱','۲','۳','۴','۵','۶','۷'],
+      lab:'چوب‌کبریت',
+      given:{},
+      answers:{0:6,1:12,2:18,3:24,4:30,5:36,6:42}
+    },
+    hakim:'۶، ۱۲، ۱۸، ۲۴، ۳۰، ۳۶، ۴۲',
+    why:['هر خانه ۶ چوب جدا دارد.','۶×۱ تا ۶×۷']
+  },
+  {
+    land:1, title:'راه حل سعیده — شکل هفتم',
+    body:'سعیده نوشته: ۷ × ۶ =  ؟  پاسخ را کامل کن.',
+    type:'input', answer:42,
+    hakim:'سعیده قانون را یک‌جا استفاده کرده: تعداد خانه × ۶',
+    hint:'۷×۶=۴۲',
+    why:['۷ خانهٔ جدا × ۶ چوب = ۴۲']
+  },
+  {
+    land:1, title:'راه حل فاطمه',
+    body:'فاطمه یکی‌یکی ۶ تا ۶ تا جمع کرده: ۶ و ۱۲ و … تا شکل هفتم. عدد آخر چیست؟',
+    type:'input', answer:42,
+    hakim:'هر دو راه به یک جواب می‌رسند. ضرب سعیده سریع‌تر است، جمع فاطمه قدم‌به‌قدم است.',
+    hint:'۶+۶+۶+۶+۶+۶+۶=۴۲',
+    why:['فاطمه همان الگوی +۶ را ۷ بار جلو برده و به ۴۲ رسیده.']
+  },
+
+  /* ===== PAGE 32 ===== */
+  {
+    land:2, teach:true, title:'کار در کلاس — خانه‌های چسبیده',
+    body:'این الگو با الگوی قبلی یک فرق مهم دارد: خانه‌ها <b>یک دیوار مشترک</b> دارند. دیوار مشترک را دو بار نمی‌شماریم.',
+    visual:()=>figs([
+      figCap(matchHouses(1,true),'شکل (۱)'), figCap(matchHouses(2,true),'شکل (۲)'),
+      figCap(matchHouses(3,true),'شکل (۳)'), figCap(matchHouses(4,true),'شکل (۴)')
+    ]),
+    hakim:'خانهٔ اول ۶ چوب. هر خانهٔ جدید فقط ۵ چوب اضافه می‌کند، چون یک دیوار را از قبلی می‌گیرد.'
+  },
+  {
+    land:2, title:'جدول خانه‌های چسبیده',
+    body:'جدول را کامل کن و گام را ببین.',
+    type:'table',
+    table:{
+      head:['شمارهٔ شکل','۱','۲','۳','۴'],
+      lab:'چوب‌کبریت',
+      given:{},
+      answers:{0:6,1:11,2:16,3:21}
+    },
+    hakim:'گام +۵ است: ۶ ، ۱۱ ، ۱۶ ، ۲۱',
+    why:['۶ ، ۱۱=۶+۵ ، ۱۶=۱۱+۵ ، ۲۱=۱۶+۵']
+  },
+  {
+    land:2, title:'چوب‌کبریت‌های شکل ششم',
+    body:'روش خودت را برای شکل ششم به کار ببر. چند چوب‌کبریت؟',
+    type:'input', answer:31,
+    hakim:'خانهٔ اول ۶ چوب دارد. هر خانهٔ بعدی فقط ۵ چوب اضافه می‌کند. شکل ششم یعنی یک خانهٔ اول و پنج خانهٔ بعد.',
+    hint:'۶ + ۵+۵+۵+۵+۵',
+    why:['خانهٔ اول ۶ چوب.','پنج خانهٔ بعدی هر کدام ۵ چوب.','۶+۲۵=۳۱']
+  },
+  {
+    land:2, title:'آیا روش سعیده (ضرب در ۶) اینجا کار می‌کند؟',
+    body:'سعیده برای خانه‌های جدا می‌گفت شمارهٔ شکل را در ۶ ضرب کن. آیا برای خانه‌های چسبیده هم همان کار درست است؟',
+    type:'choice',
+    options:[
+      'بله، باز هم ۶×۶=۳۶ درست است',
+      'خیر، چون دیوار مشترک را نباید دو بار شمرد؛ ۶×۶ زیاد می‌شمارد',
+      'بله، فقط باید به‌علاوهٔ ۱ کنیم'
+    ],
+    answer:1,
+    hakim:'اگر ۶×۶ کنی، دیوارهای مشترک دو بار شمرده می‌شوند و جواب زیادی درمی‌آید.',
+    why:['۶×۶=۳۶ دیوارهای مشترک را دوباره می‌شمارد.','جواب درست ۳۱ است. پس روش سعیده مخصوص خانه‌های جدا بود.']
+  },
+  {
+    land:2, title:'فعالیت — الگوی عددی دایره‌های سه‌گوش',
+    body:'شکل‌ها به همین ترتیب ادامه پیدا می‌کنند. دایره‌ها را بشمار: ۱ ، ۳ ، ۶ ، … این همان عددهای سه‌گوش است.',
+    visual:()=>figs([
+      figCap(circlesTri(1),'شکل (۱)'), figCap(circlesTri(2),'شکل (۲)'),
+      figCap(circlesTri(3),'شکل (۳)'), figCap(circlesTri(4),'شکل (۴)')
+    ]),
+    hakim:'از ۱ به ۳ می‌شود +۲، از ۳ به ۶ می‌شود +۳، از ۶ به ۱۰ می‌شود +۴. گام هر بار یکی زیاد می‌شود!'
+  },
+  {
+    land:2, title:'الگوی عددی را ادامه بده',
+    body:'جاهای خالی: ۱ ، ۳ ، ۶ ، ■ ، ■ ، ■',
+    type:'table',
+    table:{
+      head:['جمله','۱','۲','۳','۴','۵','۶'],
+      lab:'تعداد دایره',
+      given:{0:1,1:3,2:6},
+      answers:{3:10,4:15,5:21}
+    },
+    hakim:'هر بار شمارهٔ شکل را اضافه کن: +۲، +۳، +۴، +۵، +۶',
+    why:['۱، ۳، ۶، ۱۰، ۱۵، ۲۱']
+  },
+  {
+    land:2, title:'شکل پنجم را بساز',
+    body:'شکل چهارم ۱۰ دایره دارد. برای شکل پنجم یک ردیف ۵ تایی زیر آن اضافه می‌شود. شکل ۵ چند دایره دارد؟',
+    type:'input', answer:15,
+    visual:()=>figs([figCap(circlesTri(4),'شکل ۴ = ۱۰'), figCap(circlesTri(5),'شکل ۵')]),
+    hakim:'گام بعدی برابر شمارهٔ شکل جدید است: ۱۰ + ۵ = ۱۵.',
+    why:['گام بعدی +۵ است. ۱۰+۵=۱۵']
+  },
+  {
+    land:2, title:'شکل بیست‌ویکم با چند دایره؟',
+    body:'اگر شکل‌ها ادامه پیدا کنند، شکل بیستم با ۲۱۰ دایره درست می‌شود. شکل بیست‌ویکم با چند دایره درست می‌شود؟',
+    type:'input', answer:231,
+    hakim:'برای رفتن از شکل ۲۰ به ۲۱، باید ۲۱ دایره اضافه کنی.',
+    hint:'۲۱۰ + ۲۱ = ۲۳۱',
+    why:['از شکل بیستم به بیست‌ویکم، یک ردیف تازه با ۲۱ دایره اضافه می‌شود.','۲۱۰ + ۲۱ = ۲۳۱']
+  },
+  {
+    land:2, title:'چرا ۲۳۱؟',
+    body:'کدام توضیح درست است؟',
+    type:'choice',
+    options:[
+      'چون هر شکل ۲۰ دایره اضافه می‌کند',
+      'چون از شکل بیستم به بیست‌ویکم، ۲۱ دایره جدید در ردیف پایین اضافه می‌شود',
+      'چون باید ۲۱۰ را در ۲ ضرب کنیم'
+    ],
+    answer:1,
+    hakim:'ردیف جدید همیشه به تعداد شمارهٔ شکل دایره دارد.',
+    why:['هر شکل یک ردیف تازه زیر قبلی می‌گذارد که تعداد دایره‌هایش برابر شمارهٔ همان شکل است.']
+  },
+
+  /* ===== PAGE 33 ===== */
+  {
+    land:3, teach:true, title:'مربع‌های عددی',
+    body:'این بار دایره‌ها مربع می‌سازند: ۱ ، ۴ ، ۹ ، … یعنی ۱×۱ ، ۲×۲ ، ۳×۳.',
+    visual:()=>figs([
+      figCap(circlesSq(1),'شکل (۱) — ۱'), figCap(circlesSq(2),'شکل (۲) — ۴'),
+      figCap(circlesSq(3),'شکل (۳) — ۹'), figCap(`<div style="font-size:2rem;font-weight:900;color:#4c3cc7">۴×۴</div>`,'شکل (۴)')
+    ]),
+    hakim:'گام‌ها: +۳ ، +۵ ، +۷ ، +۹ ، … عددهای فرد. این‌ها مربع کامل‌اند.'
+  },
+  {
+    land:3, title:'الگوی عددی مربع را ادامه بده',
+    body:'۱ ، ۴ ، ۹ ، ■ ، ■ ، ■ ، ■',
+    type:'table',
+    table:{
+      head:['جمله','۱','۲','۳','۴','۵','۶','۷'],
+      lab:'تعداد دایره',
+      given:{0:1,1:4,2:9},
+      answers:{3:16,4:25,5:36,6:49}
+    },
+    hakim:'۴ یعنی ۲×۲، ۹ یعنی ۳×۳، بعد ۱۶ یعنی ۴×۴. شمارهٔ شکل را در خودش ضرب کن!',
+    why:['شمارهٔ شکل را در خودش ضرب کن: ۱×۱، ۲×۲، ۳×۳، ۴×۴، ۵×۵، ۶×۶، ۷×۷']
+  },
+  {
+    land:3, title:'شکل چهارم کدام است؟',
+    body:'دایره‌ها مربع می‌سازند. شکل چهارم باید ۴ ردیف و ۴ ستون داشته باشد. کدام شکل درست است؟',
+    type:'pick', answer:1,
+    options:[
+      {svg:()=>circlesSq(3), label:'۳×۳'},
+      {svg:()=>circlesSq(4), label:'۴×۴'},
+      {svg:()=>circlesTri(4), label:'سه‌گوش'},
+      {svg:()=>circlesSq(2), label:'۲×۲'}
+    ],
+    hakim:'شکل چهارم یعنی ۴ ردیف و ۴ ستون.',
+    why:['۴×۴=۱۶ دایره. همان مربع ۴ در ۴.']
+  },
+  {
+    land:3, title:'شکل دهم با چند دایره؟',
+    body:'اگر شکل‌ها ادامه پیدا کنند، شکل دهم با چند دایره ساخته می‌شود؟',
+    type:'input', answer:100,
+    hakim:'شکل دهم یعنی ۱۰ ردیف و ۱۰ ستون. کافی است ۱۰ را در ۱۰ ضرب کنی.',
+    hint:'۱۰ × ۱۰ = ۱۰۰',
+    why:['هر شکل یک مربع است: شمارهٔ شکل ردیف، و همان‌قدر ستون.','شکل دهم: ۱۰×۱۰=۱۰۰']
+  },
+  {
+    land:3, title:'چرا ۱۰۰؟',
+    body:'دلیل درست را انتخاب کن.',
+    type:'choice',
+    options:[
+      'چون از ۹ تا ۱۰ باید ۱۰ تا اضافه کنیم و ۹+۱۰=۱۹',
+      'چون شکل دهم یک مربع ۱۰ در ۱۰ است، پس ۱۰۰ دایره دارد',
+      'چون ۲۰×۵=۱۰۰ و ربطی به مربع ندارد'
+    ],
+    answer:1,
+    hakim:'سریع‌ترین راه: شمارهٔ شکل را در خودش ضرب کن.',
+    why:['تعداد دایره‌ها همیشه برابر است با شمارهٔ شکل × خودش.']
+  },
+  {
+    land:3, title:'کار در کلاس — مثلث‌های کوچک هم‌اندازه',
+    body:'مثلث‌های کوچک و هم‌اندازه را بشمار (هم آن‌هایی که نوک‌بالا هستند هم نوک‌پایین).',
+    visual:()=>figs([
+      figCap(triTiles(1),'شکل (۱)'), figCap(triTiles(2),'شکل (۲)'),
+      figCap(triTiles(3),'شکل (۳)'), figCap(triTiles(4),'شکل (۴)')
+    ]),
+    hakim:'شکل ۱: ۱ مثلث. شکل ۲: ۴ مثلث کوچک. شکل ۳: ۹. باز هم مربع کامل!'
+  },
+  {
+    land:3, title:'جدول تعداد مثلث‌ها',
+    body:'جدول را کامل کن.',
+    type:'table',
+    table:{
+      head:['شکل','۱','۲','۳','۴'],
+      lab:'تعداد مثلث‌ها',
+      given:{},
+      answers:{0:1,1:4,2:9,3:16}
+    },
+    hakim:'۱، ۴، ۹، ۱۶ — درست مثل دایره‌های مربعی!',
+    why:['باز هم شمارهٔ شکل را در خودش ضرب کن: ۱، ۴، ۹، ۱۶']
+  },
+
+  /* ===== PAGE 34 ===== */
+  {
+    land:4, teach:true, title:'تمرین ۱: الگوی ال',
+    body:'شکل مثل حرف L است: دو ردیف، هر بار یک ستون به سمت راست اضافه می‌شود و گوشهٔ پایین چپ خالی می‌ماند.',
+    visual:()=>figs([
+      figCap(Lshape(1),'شکل (۱) — ۳'), figCap(Lshape(2),'شکل (۲) — ۵'),
+      figCap(Lshape(3),'شکل (۳) — ۷'), figCap(`<div style="font-size:2rem">؟</div>`,'شکل (۴)')
+    ]),
+    hakim:'۳، ۵، ۷، … هر بار ۲ تا زیاد می‌شود. راه تند: شمارهٔ شکل را دو برابر کن، بعد یکی اضافه کن.'
+  },
+  {
+    land:4, title:'شکل چهارم الگوی ال کدام است؟',
+    body:'هر بار یک ستون به راست اضافه می‌شود و گوشهٔ پایینِ چپ خالی می‌ماند. شکل چهارم را انتخاب کن.',
+    type:'pick', answer:1,
+    options:[
+      {svg:()=>Lshape(3), label:'شکل ۳'},
+      {svg:()=>Lshape(4), label:'شکل ۴'},
+      {svg:()=>rectGrid(5,2,'#fb7185','#be123c'), label:'مستطیل'},
+      {svg:()=>Lshape(2), label:'شکل ۲'}
+    ],
+    hakim:'شکل ۴ دو ردیف دارد؛ ردیف بالا ۵ مربع و ردیف پایین ۴ مربع.',
+    why:['شمارهٔ شکل ۴ را دو برابر کن می‌شود ۸، یکی اضافه کن می‌شود ۹.']
+  },
+  {
+    land:4, title:'شکل دهم چند مربع کوچک دارد؟',
+    body:'در این الگو، شکل دهم با چند مربع کوچک هم‌اندازه ساخته می‌شود؟',
+    type:'input', answer:21,
+    hakim:'شمارهٔ شکل را دو برابر کن، بعد یکی اضافه کن. شکل دهم: ۲۰+۱=۲۱',
+    hint:'هر شکل ۲ مربع بیشتر از قبلی دارد. شکل ۱ سه تا دارد.',
+    why:['۳، ۵، ۷، ۹، … هر بار +۲.','شکل دهم: دو برابر ۱۰، به‌علاوهٔ ۱ = ۲۱']
+  },
+  {
+    land:4, title:'کدام شکل از ۳۱ مربع ساخته می‌شود؟',
+    body:'کدام شکل از ۳۱ مربع کوچک هم‌اندازه تشکیل می‌شود؟',
+    type:'input', answer:15,
+    hakim:'۳۱ را یکی کم کن می‌شود ۳۰. ۳۰ را نصف کن می‌شود ۱۵. پس شکل پانزدهم است.',
+    hint:'اول یکی از ۳۱ کم کن، بعد نصفش کن.',
+    why:['۳۱ − ۱ = ۳۰','۳۰ ÷ ۲ = ۱۵','پس شکل پانزدهم']
+  },
+  {
+    land:4, title:'تمرین ۲ — الگوی شکل‌های سبز',
+    body:'دو ردیف پله‌دار. هر بار ۴ مربع اضافه می‌شود: ۵ ، ۹ ، ۱۳ ، …',
+    visual:()=>figs([
+      figCap(greenZ(1),'شکل (۱) — ۵'), figCap(greenZ(2),'شکل (۲) — ۹'), figCap(greenZ(3),'شکل (۳) — ۱۳')
+    ]),
+    hakim:'گام +۴ است. شکل چهارم چند مربع دارد؟'
+  },
+  {
+    land:4, title:'شکل چهارم سبز چند مربع دارد؟',
+    body:'شکل چهارم با چند مربع ساخته می‌شود؟ چرا؟',
+    type:'input', answer:17,
+    hakim:'۱۳ + ۴ = ۱۷. شمارهٔ شکل را در ۴ ضرب کن، بعد یکی اضافه کن. شکل ۴: ۱۶+۱=۱۷',
+    hint:'۵، ۹، ۱۳، ۱۷',
+    why:['هر بار ۴ مربع اضافه می‌شود.','شکل ۴: ۴×۴=۱۶، به‌علاوهٔ ۱ می‌شود ۱۷']
+  },
+  {
+    land:4, title:'تمرین ۳ الف — الگوی عددی',
+    body:'عددهای بعدی را پیدا کن: ۲ ، ۵ ، ۱۰ ، ۱۷ ، ■ ، ■',
+    type:'table',
+    table:{
+      head:['جمله','۱','۲','۳','۴','۵','۶'],
+      lab:'عدد',
+      given:{0:2,1:5,2:10,3:17},
+      answers:{4:26,5:37}
+    },
+    hakim:'گام‌ها: +۳، +۵، +۷، +۹، +۱۱ — عددهای فرد پشت سر هم. یک راه قشنگ: شمارهٔ شکل را در خودش ضرب کن، بعد یکی اضافه کن.',
+    why:['۱۷+۹=۲۶ و ۲۶+۱۱=۳۷.','۱+۱=۲، ۴+۱=۵، ۹+۱=۱۰، ۱۶+۱=۱۷، ۲۵+۱=۲۶، ۳۶+۱=۳۷']
+  },
+  {
+    land:4, title:'تمرین ۳ ب — شکل چهارم آبی کدام است؟',
+    body:'هر شکل یک مربع است به‌اضافهٔ یک مربع چسبیده به پایینِ چپ. شکل چهارم را انتخاب کن.',
+    visual:()=>figs([
+      figCap(bluePlus(1),'شکل (۱) — ۲'), figCap(bluePlus(2),'شکل (۲) — ۵'), figCap(bluePlus(3),'شکل (۳) — ۱۰')
+    ]),
+    type:'pick', answer:2,
+    options:[
+      {svg:()=>bluePlus(3), label:'شکل ۳'},
+      {svg:()=>rectGrid(4,4,'#38bdf8','#0369a1'), label:'فقط مربع'},
+      {svg:()=>bluePlus(4), label:'شکل ۴'},
+      {svg:()=>Lshape(4,'#38bdf8','#0369a1'), label:'ال'}
+    ],
+    hakim:'۱۶ + ۱ = ۱۷. همان الگوی عددی قسمت الف!',
+    why:['شکل ۴ یعنی ۴×۴ به‌علاوهٔ ۱ = ۱۷']
+  },
+  {
+    land:4, title:'پ) مقایسهٔ الگوی عددی و شکلی',
+    body:'الگوی عددی قسمت (الف) را با تعداد مربع‌های کوچک در الگوی شکلی (ب) مقایسه کن.',
+    type:'choice',
+    options:[
+      'عددها با تعداد مربع‌ها فرق دارند',
+      'هر دو یکی هستند: ۲، ۵، ۱۰، ۱۷، ۲۶. یعنی شمارهٔ شکل × خودش، بعد به‌علاوهٔ ۱',
+      'الگوی شکلی همیشه دو برابر الگوی عددی است'
+    ],
+    answer:1,
+    hakim:'می‌بینی؟ عدد و شکل دو زبان برای یک الگو هستند.',
+    why:['۱×۱ به‌علاوهٔ ۱ = ۲','۲×۲ به‌علاوهٔ ۱ = ۵','۳×۳ به‌علاوهٔ ۱ = ۱۰','۴×۴ به‌علاوهٔ ۱ = ۱۷']
+  },
+  {
+    land:4, title:'تمرین ۴ — الگوی شش‌ضلعی',
+    body:'شش‌ضلعی‌ها سه‌گوش چیده شده‌اند: ۱ ، ۳ ، ۶ ، … دوباره عددهای سه‌گوش!',
+    visual:()=>figs([
+      figCap(hexesTri(1),'شکل (۱) — ۱'), figCap(hexesTri(2),'شکل (۲) — ۳'),
+      figCap(hexesTri(3),'شکل (۳) — ۶'), figCap(hexesTri(4),'شکل (۴) — ۱۰')
+    ]),
+    hakim:'شکل چهارم ۱۰ شش‌ضلعی دارد. این همان الگوی سه‌گوش است که با دایره‌ها هم دیده بودی: ۱، ۳، ۶، ۱۰.'
+  },
+  {
+    land:4, title:'شکل چهارم چند شش‌ضلعی دارد؟',
+    body:'تعداد شش‌ضلعی‌های شکل ۴ را بنویس.',
+    type:'input', answer:10,
+    hakim:'۶ + ۴ = ۱۰. هر بار به اندازهٔ شمارهٔ شکل جدید اضافه می‌شود.',
+    why:['۱، ۳، ۶، ۱۰']
+  },
+  {
+    land:4, title:'چالش پایانی — قانون را انتخاب کن',
+    body:'کدام جمله برای همهٔ الگوهای این فصل درست است؟',
+    type:'choice',
+    options:[
+      'باید حتماً شکل صدم را بکشیم تا تعداد را بفهمیم',
+      'اول گام یا قانون را پیدا می‌کنیم، بعد برای هر شماره‌ای حساب می‌کنیم',
+      'الگو یعنی عددها تصادفی زیاد شوند'
+    ],
+    answer:1,
+    hakim:'آفرین! تو حالا یک کاشف الگویی. گواهی‌ات آماده است.',
+    why:['راز الگوستان: ببین، بشمار، قانون بساز، بعد برای شکل‌های دور هم حساب کن.']
+  }
+];
+
+const QSTEPS = STEPS.filter(s => s.type);
+function maxStars(){ return QSTEPS.length * 3; }
+
+/* ===== UI ===== */
+function show(id){
+  ['gate','howto','map','play','cert'].forEach(s => $('#'+s).classList.toggle('hidden', s!==id));
+  const c=$('#celeb'); if(c && id!=='play') c.classList.add('hidden');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function landSteps(i){ return STEPS.map((s,idx)=>({s,idx})).filter(x=>x.s.land===i); }
+function landDone(i){
+  return landSteps(i).every(({idx}) => !STEPS[idx].type || S.done[idx]);
+}
+function unlocked(i){
+  if(i===0) return true;
+  return landDone(i-1);
+}
+
+function renderMap(){
+  const nDone = LANDS.filter((_,i)=>landDone(i)).length;
+  $('#hello').textContent = 'سلام '+S.name+'، کاشف الگوها!';
+  $('#mapStars').textContent = toFa(S.stars);
+  const box = $('#lands'); box.innerHTML='';
+  LANDS.forEach((L,i)=>{
+    const done = landDone(i), lock=!unlocked(i);
+    const qs = landSteps(i).filter(x=>x.s.type);
+    const got = qs.reduce((a,x)=>a+(S.maxByQ[x.idx]||0),0);
+    const fin = qs.filter(x=>S.done[x.idx]).length;
+    const pct = qs.length ? Math.round(fin/qs.length*100) : 0;
+    const current = !lock && !done && (i===0 || landDone(i-1));
+    if(i){
+      const d=document.createElement('div'); d.className='path-dot'; d.textContent='✦  ·  ·  ·  ✦'; box.appendChild(d);
+    }
+    const el = document.createElement('button');
+    el.className = 'land'+(done?' done':'')+(lock?' locked':'')+(current?' current':'');
+    el.type='button';
+    el.dataset.i = String(i);
+    const go = lock ? 'قفل' : (done ? 'دوباره' : (fin?'ادامه':'بزن بریم'));
+    el.innerHTML = `<div class="ic">${lock?'🔒':L.icon}</div>
+      <div><h3>${L.name}</h3><p>${L.desc}</p><div class="bar"><i style="width:${pct}%"></i></div></div>
+      <div class="go">${go}<div class="stars">${done?'✅':'⭐ '+toFa(got)}</div></div>`;
+    el.onclick = ()=>{
+      if(lock){ toast('اول سرزمین قبلی را فتح کن 🗺️'); return; }
+      SFX.click(); startLand(i);
+    };
+    box.appendChild(el);
+  });
+  paintFace($('#gateFace'),'excited');
+  document.body.removeAttribute('data-land');
+}
+
+function startLand(i){
+  S.land=i;
+  const list = landSteps(i);
+  const next = list.find(x => !S.done[x.idx]);
+  S.step = next ? next.idx : list[0].idx;
+  persist(); renderPlay(); show('play');
+}
+
+function faceMood(m){ paintFace($('#playFace'), m); }
+
+function renderPlay(){
+  const i=S.step, st=STEPS[i];
+  if(!st){ renderMap(); show('map'); return; }
+  const L=LANDS[st.land];
+  const list=landSteps(st.land);
+  const pos=list.findIndex(x=>x.idx===i);
+  document.body.setAttribute('data-land', String(st.land));
+  $('#hudTitle').textContent = L.icon+' '+L.name;
+  $('#hudStars').textContent = toFa(S.stars);
+  $('#hudBar').style.width = ((pos)/Math.max(1,list.length-1)*100)+'%';
+  const dots = $('#hudDots');
+  if(dots){
+    dots.innerHTML = list.map((x,k)=>`<i class="${k<pos?'done':(k===pos?'on':'')}"></i>`).join('');
+  }
+  $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length);
+  $('#qTitle').textContent = st.title;
+  $('#qBody').innerHTML = st.body||'';
+  const vis = st.visual ? st.visual() : '';
+  $('#visual').innerHTML = vis;
+  $('#visual').style.display = vis ? '' : 'none';
+  $('#hakimText').innerHTML = st.hakim||'با دقت نگاه کن، بعد جواب بده.';
+  $('#feed').innerHTML='';
+  hkSay(st.hakim||'با دقت نگاه کن، بعد جواب بده.', st.teach?'wise':'thinking');
+  const box=$('#answerBox'); box.innerHTML='';
+  const acts=$('#acts'); acts.innerHTML='';
+
+  if(!st.type){
+    const b=document.createElement('button'); b.className='btn primary big'; b.textContent='فهمیدم، بریم بعدی ✨';
+    b.onclick=()=>{ SFX.click(); S.done[i]=true; persist(); nextStep(true); };
+    acts.appendChild(b);
+    addNav(acts,i,list);
+    return;
+  }
+
+  if(S.done[i]){
+    showWhy(st, true);
+    const b=document.createElement('button'); b.className='btn primary'; b.textContent='بریم بعدی';
+    b.onclick=()=>{ SFX.click(); nextStep(true); };
+    acts.appendChild(b);
+    addNav(acts,i,list);
+    return;
+  }
+
+  S.tries[i]=S.tries[i]||0;
+
+  if(st.type==='input'){
+    box.innerHTML = `<div class="answer-row">
+      <input class="num-in" id="ans" inputmode="numeric" autocomplete="off" placeholder="؟">
+      <span class="unit">${st.unit||''}</span>
+    </div>`;
+    setTimeout(()=>{ const el=$('#ans'); if(el){ el.focus(); el.addEventListener('keydown', e=>{ if(e.key==='Enter') checkCurrent(st); }); } }, 200);
+  }
+  if(st.type==='choice'){
+    const wrap=document.createElement('div'); wrap.className='choices';
+    st.options.forEach((op,k)=>{
+      const b=document.createElement('button'); b.className='choice'; b.type='button';
+      b.textContent = op;
+      b.onclick=()=> grade(k===st.answer, st, b, wrap);
+      wrap.appendChild(b);
+    });
+    box.appendChild(wrap);
+  }
+  if(st.type==='table'){
+    const t=st.table;
+    let h='<div class="tbl-wrap"><table class="tbl"><tr>';
+    t.head.forEach((c,ci)=> h += `<th>${ci===0?c:toFa(c)}</th>`);
+    h += `</tr><tr><td class="lab">${t.lab}</td>`;
+    const n=t.head.length-1;
+    for(let k=0;k<n;k++){
+      if(t.given[k]!=null) h += `<td>${toFa(t.given[k])}</td>`;
+      else h += `<td><input data-k="${k}" inputmode="numeric" dir="ltr" autocomplete="off"></td>`;
+    }
+    h += '</tr></table></div>';
+    box.innerHTML=h;
+  }
+  if(st.type==='pick'){
+    const wrap=document.createElement('div'); wrap.className='pick-row';
+    st.options.forEach((op,k)=>{
+      const b=document.createElement('button'); b.type='button'; b.className='pick';
+      const svg = typeof op.svg==='function' ? op.svg() : (op.svg||'');
+      b.innerHTML = `${svg}<small>${op.label||''}</small>`;
+      b.onclick=()=> grade(k===st.answer, st, b, wrap);
+      wrap.appendChild(b);
+    });
+    box.appendChild(wrap);
+  }
+
+  if(st.type!=='choice' && st.type!=='pick'){
+    const chk=document.createElement('button'); chk.className='btn primary'; chk.textContent='بررسی پاسخ';
+    chk.onclick=()=> checkCurrent(st);
+    acts.appendChild(chk);
+  }
+    const hint=document.createElement('button'); hint.className='btn ghost'; hint.textContent='💡 راهنمایی حکیم';
+  hint.onclick=()=>{ SFX.click(); const t=st.hint || st.hakim || 'اول دو شکل پشت سر هم را نگاه کن و ببین چقدر زیاد شده.'; $('#hakimText').innerHTML = t; hkSay(t, 'wink'); };
+  acts.appendChild(hint);
+  addNav(acts,i,list);
+}
+
+function addNav(acts,i,list){
+  const back=document.createElement('button'); back.className='btn ghost'; back.textContent='قبلی';
+  const pos=list.findIndex(x=>x.idx===i);
+  back.disabled = pos<=0;
+  back.onclick=()=>{ SFX.click(); S.step=list[pos-1].idx; persist(); renderPlay(); };
+  acts.appendChild(back);
+}
+
+function checkCurrent(st){
+  if(st.type==='input'){
+    const el=$('#ans');
+    if(!el || !el.value.trim()){ shake(); return; }
+    const v = Number(fromFa(el.value));
+    if(!isFinite(v)){ shake(); return; }
+    grade(v===Number(st.answer), st);
+  } else if(st.type==='table'){
+    const t=st.table; const inps=$$('#answerBox input');
+    if(!inps.length || inps.some(inp=>!String(inp.value).trim())){ shake(); return; }
+    let ok=true;
+    inps.forEach(inp=>{
+      const k=+inp.dataset.k; const v=Number(fromFa(inp.value));
+      if(!isFinite(v) || v!==Number(t.answers[k])) ok=false;
+    });
+    grade(ok, st);
+  }
+}
+function grade(ok, st, btn, wrap){
+  const i=S.step;
+  S.tries[i]=(S.tries[i]||0)+1;
+  if(ok){
+    SFX.ok(); SFX.star();
+    combo++;
+    updateCombo();
+    const gain = Math.max(1, 4-S.tries[i]); // 3,2,1
+    if(!S.done[i]){
+      S.stars += gain;
+      S.maxByQ[i] = gain;
+      S.done[i]=true;
+    }
+    persist();
+    $('#hudStars').textContent=toFa(S.stars);
+    burstStars(gain);
+    if(gain>=2) confetti();
+    if(btn){ btn.classList.add('ok'); }
+    if(wrap) $$('.choice, .pick',wrap).forEach(c=>c.disabled=true);
+    const praise = ['آفرین شکارچی الگو!','وااای چه قانونی پیدا کردی!','ستاره مال توست ⭐','دمت گرم، جادو کردی!','حکیم کیف کرد!'][Math.floor(Math.random()*5)];
+    $('#hakimText').textContent = praise;
+    hkSay(praise, 'excited');
+    showWhy(st, true, gain);
+    const b=document.createElement('button'); b.className='btn primary big'; b.textContent='بزن بعدی ✨';
+    b.onclick=()=>{ SFX.click(); nextStep(true); };
+    $('#acts').innerHTML=''; $('#acts').appendChild(b);
+  } else {
+    combo=0; updateCombo();
+    SFX.bad();
+    if(btn) btn.classList.add('bad');
+    const miss = S.tries[i]>=3 ? 'اشکال ندارد؛ راه حل را با هم می‌بینیم و بعد دوباره می‌روی جلو.' : 'هنوز نه. دوباره نگاه کن یا از من راهنمایی بگیر.';
+    $('#hakimText').textContent = miss;
+    hkSay(miss, 'sad');
+    const fb=$('#feed');
+    fb.innerHTML = `<div class="feedback bad">این بار درست نبود. ${st.hint? 'راهنمایی: '+st.hint : 'گام بین دو شکل را یک‌بار دیگر حساب کن.'}</div>`;
+    if(S.tries[i]>=3){
+      showWhy(st, false);
+      S.done[i]=true; S.maxByQ[i]=S.maxByQ[i]||0; persist();
+      if(wrap) $$('.choice, .pick',wrap).forEach(c=>c.disabled=true);
+      const b=document.createElement('button'); b.className='btn purple big'; b.textContent='متوجه شدم، بعدی';
+      b.onclick=()=>{ SFX.click(); nextStep(true); };
+      $('#acts').appendChild(b);
+    }
+  }
+}
+
+function showWhy(st, ok, gain){
+  const fb=$('#feed');
+  const star = ok && gain ? `<div class="feedback ok">درست گفتی! ${'⭐'.repeat(gain)} (${toFa(gain)} ستاره)</div>` : '';
+  const steps = (st.why||[]).map(x=>`<li>${x}</li>`).join('');
+  fb.innerHTML = star + (steps? `<div class="steps-mini"><b>راه حل گام‌به‌گام</b><ol>${steps}</ol></div>`:'');
+}
+
+function nextStep(fromPlay){
+  const i=S.step, st=STEPS[i];
+  const list=landSteps(st.land);
+  const pos=list.findIndex(x=>x.idx===i);
+  if(pos<list.length-1){
+    S.step=list[pos+1].idx; persist(); renderPlay(); return;
+  }
+  persist();
+  sendLand(st.land, true);
+  const L = LANDS[st.land];
+  const full = LANDS.every((_,k)=>landDone(k));
+  SFX.fanfare(); confetti();
+  if(window.Hakim && typeof Hakim.react==='function') try{ Hakim.react('win'); }catch(e){}
+  if(full){
+    hkSay('آفرین قهرمان! همهٔ سرزمین‌ها را فتح کردی. گواهی‌ات آماده است.', 'excited');
+    openCeleb(L.icon+' قله فتح شد!', 'همهٔ ۵ سرزمین الگوستان مال توست. گواهی قهرمانی آماده‌ست!', ()=>{ showCert(); });
+    return;
+  }
+  hkSay('آفرین! این سرزمین تمام شد. قفل بعدی باز شد.', 'happy');
+  openCeleb(L.icon+' '+L.name+' فتح شد!', 'قفل سرزمین بعدی باز شد. آماده‌ای ادامه بدهی؟', ()=>{
+    renderMap(); show('map');
+  });
+}
+
+function updateCombo(){
+  const el=$('#comboPill'); if(!el) return;
+  if(combo>=2){ el.textContent = '🔥 کمبو ×'+toFa(combo); el.classList.add('show'); }
+  else el.classList.remove('show');
+}
+function burstStars(n){
+  const hud = $('#hudStars') || document.body;
+  const r = hud.getBoundingClientRect();
+  for(let k=0;k<Math.min(6, 2+n);k++){
+    const s=document.createElement('div'); s.className='star-pop'; s.textContent='⭐';
+    s.style.left = (innerWidth/2 - 20 + (Math.random()*80-40))+'px';
+    s.style.top = (innerHeight*0.45)+'px';
+    s.style.setProperty('--dx', (r.left - innerWidth/2 + Math.random()*30)+'px');
+    s.style.setProperty('--dy', (r.top - innerHeight*0.45)+'px');
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(), 850);
+  }
+}
+function openCeleb(title, text, go){
+  $('#celebTitle').textContent = title;
+  $('#celebText').textContent = text;
+  $('#celebIco').textContent = '🎉';
+  $('#celeb').classList.remove('hidden');
+  $('#celebGo').onclick = ()=>{
+    SFX.click(); $('#celeb').classList.add('hidden'); go();
+  };
+}
+
+function shake(){
+  const box=$('#answerBox') || $('.name-row');
+  if(!box) return;
+  box.classList.add('err');
+  const inp=box.querySelector('input');
+  if(inp){ inp.classList.add('err'); setTimeout(()=>inp.classList.remove('err'), 500); }
+  setTimeout(()=>box.classList.remove('err'), 500);
+}
+
+function toast(t){
+  const el=document.createElement('div'); el.className='toast'; el.textContent=t;
+  document.body.appendChild(el); setTimeout(()=>el.remove(), 2400);
+}
+
+function confetti(){
+  const c=document.createElement('canvas');
+  c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:50';
+  c.width=innerWidth; c.height=innerHeight; document.body.appendChild(c);
+  const g=c.getContext('2d');
+  const ps=Array.from({length:90},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height,v:2+Math.random()*4,s:4+Math.random()*6,c:['#f5c542','#6654e8','#14b8a6','#fb7185','#38bdf8'][Math.floor(Math.random()*5)],r:Math.random()*6}));
+  let n=0;
+  (function tick(){
+    g.clearRect(0,0,c.width,c.height);
+    ps.forEach(p=>{ p.y+=p.v; p.x+=Math.sin(p.y/20); g.fillStyle=p.c; g.fillRect(p.x,p.y,p.s,p.s*.6); });
+    if(++n<180) requestAnimationFrame(tick); else c.remove();
+  })();
+}
+function showCert(){
+  const q = QSTEPS.length;
+  const answered = QSTEPS.filter(s => S.done[STEPS.indexOf(s)]).length;
+  const pct = Math.round((S.stars / maxStars())*100);
+  const full = LANDS.every((_,i)=>landDone(i));
+  $('#certPage').querySelector('h1').textContent = full ? 'گواهی‌نامهٔ قهرمانی الگوستان' : 'گواهی‌نامهٔ پیشرفت الگوستان';
+  $('#certName').textContent = S.name;
+  $('#certStars').textContent = toFa(S.stars)+' از '+toFa(maxStars());
+  $('#certPct').textContent = toFa(pct)+'٪';
+  $('#certPages').textContent = toFa(LANDS.filter((_,i)=>landDone(i)).length)+' از ۵';
+  const list = $('#certList'); list.innerHTML = '';
+  LANDS.forEach((L,i)=>{
+    const done = landDone(i);
+    const st = landStats(i);
+    const li = document.createElement('li');
+    li.className = done ? 'ok' : 'wait';
+    li.innerHTML = `<span class="tick">${done?'✓':'○'}</span>
+      <span class="meta">${L.icon} ${L.name}<small>${done ? 'کامل شد' : 'هنوز تمام نشده'}</small></span>
+      <span class="st">${done ? '⭐ '+toFa(st.stars) : '—'}</span>`;
+    list.appendChild(li);
+  });
+  $('#certDate').textContent = 'تاریخ: '+jalali(new Date());
+  paintFace($('#certFace'),'excited');
+  show('cert');
+  if(full){ SFX.star(); confetti(); if(window.Hakim && Hakim.celebrate) try{ Hakim.celebrate(); }catch(e){} }
+}
+
+function sendResultsToPanel(score, stars, level, duration, details, completed){
+  try{
+    const payload = {
+      student_name: S.name || 'دانش‌آموز',
+      student_class: '',
+      student_school: '',
+      game_id: 'math-olgoha',
+      experiment_id: '',
+      duration: Math.round(duration || 0),
+      score: Math.round(score || 0),
+      stars: Math.round(stars || 0),
+      completed: !!completed,
+      attempts: 1,
+      started_at: new Date(S.started || Date.now()).toISOString(),
+      finished_at: new Date().toISOString(),
+      details: JSON.stringify(Object.assign({ level: level }, details || {}))
+    };
+    if(window.Hakim && typeof Hakim.saveSession === 'function'){
+      Hakim.saveSession(payload);
+      return;
+    }
+    payload.action = 'session';
+    payload.device = /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : (/ipad|tablet/i.test(navigator.userAgent) ? 'تبلت' : 'دسکتاپ');
+    fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).catch(function(){});
+  }catch(e){}
+}
+function landStats(i){
+  const qs = landSteps(i).filter(x => x.s.type);
+  const stars = qs.reduce((a,x)=>a+(S.maxByQ[x.idx]||0),0);
+  return { totalQuestions: qs.length, stars };
+}
+function sendLand(i, completedLand){
+  S.sentLands = S.sentLands || [];
+  if(completedLand && S.sentLands.indexOf(i) !== -1) return;
+  if(completedLand) S.sentLands.push(i);
+  persist();
+  const st = landStats(i), L = LANDS[i];
+  const full = LANDS.every((_,k)=>landDone(k));
+  sendResultsToPanel(st.stars, st.stars, L.name, Math.round((Date.now()-(S.started||Date.now()))/1000), {
+    landName: L.name,
+    totalQuestions: st.totalQuestions,
+    stars: st.stars,
+    landsDone: LANDS.filter((_,k)=>landDone(k)).length,
+    accuracy: st.totalQuestions ? Math.round(100 * st.stars / (st.totalQuestions * 3)) : 0
+  }, full);
+}
+
+function enter(){
+  const n=$('#nameIn').value.trim();
+  if(n.length<2){
+    $('#nameRow').classList.add('err'); $('#nameErr').classList.add('show'); SFX.bad(); return;
+  }
+  $('#nameRow').classList.remove('err'); $('#nameErr').classList.remove('show');
+  S.name=n; persist(); SFX.ok();
+  if(window.Hakim && Hakim.setName) try{ Hakim.setName(n); }catch(e){}
+  hkSay('سلام '+n+'! من حکیم‌ام. نقشهٔ الگوستان باز شد — یک سرزمین را لمس کن تا سفر شروع شود!', 'excited');
+  renderMap(); show('map');
+}
+
+$('#btnEnter').onclick=enter;
+$('#nameIn').addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
+$('#btnHow').onclick=()=>{ SFX.click(); paintFace($('#howFace'),'happy'); show('howto'); };
+$('#btnHowBack').onclick=()=>{ SFX.click(); show('gate'); };
+$('#btnHowGo').onclick=()=>{
+  SFX.click();
+  if(S.name && S.name.length>=2){ renderMap(); show('map'); }
+  else show('gate');
+};
+$('#btnBackMap').onclick=()=>{ SFX.click(); renderMap(); show('map'); };
+$('#btnSound').onclick=()=>{
+  soundOn=!soundOn; S.sound=soundOn; persist();
+  $('#btnSound').textContent = soundOn?'🔊':'🔇';
+  SFX.click();
+};
+$('#btnCertMap').onclick=()=>{ SFX.click(); if(!S.name){ show('gate'); return;} showCert(); };
+$('#btnCertMap2').onclick=()=>{ SFX.click(); renderMap(); show('map'); };
+$('#btnPrint').onclick=()=>window.print();
+$('#btnReset').onclick=()=>{
+  if(!confirm('همهٔ پیشرفت پاک شود؟')) return;
+  const name=S.name; S=fresh(); S.name=name; persist(); renderMap(); toast('از نو شروع شد');
+};
+
+if(S.name){ $('#nameIn').value=S.name; }
+bootHakim();
+paintFace($('#gateFace'),'excited');
+paintFace($('#howFace'),'happy');
+$('#btnSound').textContent = soundOn?'🔊':'🔇';
+hkSay('سلام! من حکیم‌ام. اسمت را بنویس تا با هم وارد الگوستان شویم.', 'happy');
+})();
+</script>
+<!-- 📊 ردیاب بازدید حکیمستان -->
+<script>
+(function(){
+  try {
+    var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    var userId = localStorage.getItem('hk_uid');
+    var isNew = false;
+    if (!userId) {
+      userId = 'hk_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('hk_uid', userId);
+      isNew = true;
+    }
+    var ua = navigator.userAgent;
+    var device = 'دسکتاپ';
+    if (/mobile|android|iphone|ipod/i.test(ua)) device = 'موبایل';
+    else if (/ipad|tablet/i.test(ua)) device = 'تبلت';
+    var browser = 'سایر';
+    if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+    else if (ua.indexOf('Edg') > -1) browser = 'Edge';
+    else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+    else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+    var os = 'سایر';
+    if (/android/i.test(ua)) os = 'Android';
+    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+    else if (/windows/i.test(ua)) os = 'Windows';
+    else if (/mac/i.test(ua)) os = 'Mac';
+    else if (/linux/i.test(ua)) os = 'Linux';
+    var ref = 'مستقیم';
+    if (document.referrer) {
+      if (document.referrer.indexOf('hakimistan.ir') > -1) ref = 'داخلی';
+      else if (document.referrer.indexOf('google') > -1) ref = 'گوگل';
+      else if (document.referrer.indexOf('eitaa') > -1) ref = 'ایتا';
+      else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
+      else ref = 'سایر';
+    }
+    fetch(API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'logVisit',
+        userId: userId,
+        page: (function(){ var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean); if (p.length === 0) return 'index.html'; if (p.length === 1) return p[0]; return p.slice(-2).join('/'); })(),
+        device: device,
+        browser: browser,
+        os: os,
+        lang: navigator.language || 'fa',
+        ref: ref,
+        isNew: isNew
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
+</html>
