@@ -170,7 +170,7 @@ async function testInstallSource() {
 async function testVersion() {
   const sw = await readFile(join(ROOT, 'sw.js'), 'utf8');
   const m = sw.match(/const VERSION = '([^']+)'/);
-  ok(`sw.js → VERSION = 'hakim-v1.3.7'`, !!m && m[1] === 'hakim-v1.3.7', m ? m[1] : 'یافت نشد');
+  ok(`sw.js → VERSION = 'hakim-v1.3.8'`, !!m && m[1] === 'hakim-v1.3.8', m ? m[1] : 'یافت نشد');
   ok('نام کش‌ها از VERSION ساخته می‌شود', /\$\{VERSION\}-shell/.test(sw));
 }
 

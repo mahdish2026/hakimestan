@@ -1363,6 +1363,55 @@ body[data-bgimg="on"] #page-chat .main::before{
 <meta name="twitter:description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، جستجوی پیشرفته و کار آفلاین">
 <meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
 <!-- hakim-meta:end -->
+
+<!-- pr-fix:start — لایهٔ اصلاح پیام‌رسان: سربرگ موبایل، کادر ارسال، دکمهٔ دسترس‌پذیری -->
+<style id="pr-fix-layer">
+/* ── سربرگ چت: متن وضعیت دیگر روی دکمه‌ها نمی‌افتد و سه‌خطی نمی‌شود ──
+   علت اصلی: قانون عمومی ‎.row>*{flex:1}‎ به متن وضعیت و نشان اتصال هم
+   می‌رسید و هر دو را نصف‌عرض می‌کرد؛ متن می‌پیچید و روی آیکن‌ها می‌افتاد. */
+#page-chat .topbar .grow{min-width:0}
+#page-chat .topbar h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#page-chat .topbar .sub.row{flex-wrap:nowrap;min-width:0;align-items:center}
+#page-chat .topbar .sub.row>*{flex:none}
+#chatStatus{flex:1 1 auto!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#page-chat .conn{flex:none;white-space:nowrap}
+/* پیام‌ها زیر ناحیهٔ امن و اسکرول نرم‌تر */
+.msgs{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.main{padding-bottom:env(safe-area-inset-bottom)}
+
+@media (max-width:919px){
+  /* سربرگ: یک ردیف تمیز؛ دکمه‌ها حداقل ۴۴px و هیچ دکمه‌ای از لبه بیرون نمی‌زند.
+     زنگولهٔ اعلان در موبایل حذف شد (همان کار در «تنظیمات ← اعلان‌ها» هست)
+     تا جا برای عنوان و وضعیت باز شود. */
+  #page-chat .topbar{
+    flex-wrap:nowrap;gap:6px;
+    padding:calc(6px + env(safe-area-inset-top)) 8px 10px;
+  }
+  #page-chat .topbar .icon-btn{
+    min-width:44px!important;min-height:44px!important;width:44px!important;height:44px!important;
+    border-radius:13px!important;
+  }
+  #page-chat .topbar .avatar.sm{width:38px!important;height:38px!important;border-radius:12px!important}
+  #btnNotifQuick{display:none!important}
+  /* کادر نوشتن: فونت ۱۶px (جلوگیری از زوم خودکار iOS)، دکمهٔ ارسال ۴۸px */
+  .composer textarea{font-size:16px!important}
+  .composer-wrap{padding-bottom:env(safe-area-inset-bottom)}
+  .send-btn{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;border-radius:15px!important}
+  #btnAttach,#btnSticker{min-width:44px!important;min-height:44px!important;width:44px!important;height:44px!important}
+  .char-count{font-size:.62rem!important}
+  /* پس‌زمینهٔ زنده روی موبایل لکهٔ بزرگ و تیره نسازد */
+  .live-bg{opacity:.45!important}
+  /* دکمهٔ دسترس‌پذیری دقیقاً بالای کادر ارسال (ارتفاع واقعی با JS سنجیده می‌شود) */
+  body[data-page="chat"] #a11y-toolbar{
+    inset-block-end:calc(var(--hk-composer-h,108px) + env(safe-area-inset-bottom) + 10px)!important;
+  }
+}
+@media (max-width:374px){
+  /* گوشی‌های خیلی باریک: آواتار سربرگ حذف می‌شود تا عنوان جا داشته باشد */
+  #page-chat .topbar .avatar.sm{display:none!important}
+}
+</style>
+<!-- pr-fix:end -->
 </head>
 <body data-theme="hakimستان" data-mode="light" data-font="medium">
 
@@ -1642,7 +1691,7 @@ body[data-bgimg="on"] #page-chat .main::before{
               <button class="icon-btn" id="btnSticker" type="button" title="استیکر و شکلک" aria-label="استیکر و شکلک" aria-expanded="false"><svg class="ic"><use href="#i-sticker"/></svg></button>
               <button class="icon-btn" id="btnAttach" type="button" title="افزودن پیوست" aria-label="افزودن پیوست" aria-expanded="false" aria-haspopup="menu" style="align-self:flex-end"><svg class="ic"><use href="#i-clip"/></svg></button>
               <div class="box">
-                <textarea id="msgInput" rows="1" maxlength="500" placeholder="پیامت رو بنویس… (حداکثر ۵۰۰ حرف)" aria-label="متن پیام"></textarea>
+                <textarea id="msgInput" rows="1" maxlength="500" placeholder="پیامت رو بنویس…" aria-label="متن پیام (حداکثر ۵۰۰ حرف)" enterkeyhint="send"></textarea>
                 <span class="char-count" id="charCount">۰/۵۰۰</span>
               </div>
               <button class="send-btn" id="btnSend" title="ارسال" aria-label="ارسال پیام"><svg class="ic"><use href="#i-send"/></svg></button>
@@ -3200,8 +3249,15 @@ var Data = (function(){
     (S.messages||[]).forEach(function(m){
       if(!m.pending) return;
       var item = Outbox.find(m.id);
-      if(!item) return;                                   // صف تمام شده
       var twin = idMap[String(m.id)] || contentMap[Norm.contentSig(m)];
+      if(!item){
+        if(twin){ changed = true; return; }   // نسخهٔ سرور رسید: حباب باید تیک بخورد
+        // صف تمام شده؛ اگر سرور همین حالا تأییدش کرده ولی نسخه‌اش هنوز در این
+        // دریافت نیست، حباب را با تیک «ارسال شد» نگه دار (حداکثر ۵ دقیقه) تا
+        // پیام جلوی چشم کاربر ناپدید و دوباره ظاهر نشود.
+        if(m.ackedAt && Date.now()-m.ackedAt < 5*60*1000){ m.status='sent'; stillPending.push(m); }
+        return;
+      }
       if(twin){                                           // سرور پیام را گرفت
         twin.meta = twin.meta||{};
         if(m.meta&&m.meta.a && !twin.meta.a) twin.meta.a = m.meta.a;
@@ -3227,12 +3283,20 @@ var Data = (function(){
     // پیام‌های تازه برای اعلان (فقط ردیف‌های واقعی)
     App.handleNewMessages(out);
 
+    // ⚠️ مقایسهٔ ساختار باید با فهرستِ قبلی انجام شود، نه بعد از جایگزینی!
+    // نسخهٔ قبلی اول S.messages=out می‌کرد و بعد out را با خودش مقایسه می‌کرد؛
+    // نتیجه همیشه «بدون تغییر» بود و وقتی پیامِ در صف با نسخهٔ سرور یکی می‌شد،
+    // رندر صدا زده نمی‌شد و حباب تا ابد روی ساعتِ «در حال ارسال» می‌ماند.
+    var prevMsgs = S.messages||[];
+    var structureChanged = out.length!==prevMsgs.length || prevMsgs.some(function(m,i){
+      return !out[i] || String(out[i].id)!==String(m.id) ||
+             (out[i].status||'')!==(m.status||'') || !!out[i].pending!==!!m.pending;
+    });
     S.messages = out;
     if(out.length){
       var ld = U.parseDate(out[out.length-1].date);
       if(ld) lastMsgTime = Math.max(lastMsgTime, ld.getTime());
     }
-    var structureChanged = out.length!==before || S.messages.some(function(m,i){ return !out[i] || out[i].id!==m.id; });
     return changed || structureChanged;
   }
 
@@ -3419,8 +3483,13 @@ var Outbox = (function(){
   function markSending(id){ var it=find(id); if(it){ it.status='sending'; } }
   function bump(id){
     var it=find(id); if(!it) return;
-    it.tries++; it.nextAt = Date.now() + Math.min(30000, Math.pow(2, it.tries)*800);
-    if(it.tries>10){ it.status='failed'; }
+    it.tries++; it.nextAt = Date.now() + Math.min(12000, Math.pow(2, it.tries)*800);
+    // ساعتِ بی‌نهایت بدترین تجربه است: بعد از چند تلاش ناموفق (یا ۹۰ ثانیه)
+    // پیام «ناموفق» می‌شود تا کاربر دکمهٔ تلاش دوباره را ببیند و تکلیفش روشن باشد.
+    if(it.tries>4 || Date.now()-(it.at||Date.now())>90000){
+      it.status='failed';
+      try{ if(typeof App!=='undefined' && App.markStatus) App.markStatus(it.id,'failed'); }catch(e){}
+    }
     save();
   }
   function pendingCount(){ return S.outbox.filter(function(i){ return i.status!=='failed'; }).length; }
@@ -3464,7 +3533,7 @@ var Outbox = (function(){
     return ready.reduce(function(p, item){
       return p.then(function(){
         if(item.cancelled || !find(item.id)) return;
-        item.status='sending'; save();
+        item.status='sending'; item.sentAt=Date.now(); save();
         return Net.postDB(item.payload,{timeout:CFG.POST_TIMEOUT_MS}).then(function(result){
           if(item.cancelled){
             // فقط لغو صریح کاربر باید POST درحال‌اجرا را جبران کند؛ echo ممکن است
@@ -3474,12 +3543,12 @@ var Outbox = (function(){
           }
           if(!find(item.id)) return; // echo معتبر قبلاً آیتم را تأیید و حذف کرده است.
           if(result===true){
-            done(item.id); App.markStatus(item.id, 'sent');
+            done(item.id); App.markAcked(item.id);
           } else if(result===null){
             return verify(item).then(function(found){
               if(item.cancelled){ if(result!==false) return deleteCancelled(item); return; }
               if(!find(item.id)) return; // Data.merge ممکن است قبلاً echo را تأیید کرده باشد.
-              if(found){ done(item.id); App.markStatus(item.id,'sent'); }
+              if(found){ done(item.id); App.markAcked(item.id); }
               else bump(item.id);
             });
           } else { bump(item.id); }
@@ -3488,6 +3557,8 @@ var Outbox = (function(){
     }, Promise.resolve()).then(function(){
       S.queueRunning=false; save();
       if(!pendingCount()) setTimeout(function(){ Data.fetchMessages().catch(function(){}); }, 900);
+      // پیامی که حین همین ارسال به صف اضافه شده، منتظر چرخهٔ بعدی نماند:
+      else if(S.outbox.some(function(i){ return i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()); })) return flush();
     }).catch(function(){ S.queueRunning=false; save(); });
   }
   // تلاش دوباره برای پیام‌های ناموفق
@@ -3501,6 +3572,16 @@ var Outbox = (function(){
     S.outbox.forEach(function(i){ if(i.status!=='failed'){ i.nextAt=0; i.tries=0; } });
     save();
   }
+  // نگهبان صف: اگر ارسالی نیمه‌کاره رها شد (قفل صفحه، پس‌زمینه رفتن مرورگر،
+  // خطای پیش‌بینی‌نشده) پیام تا ابد روی ساعت نماند؛ دوباره در صف می‌رود.
+  setInterval(function(){
+    if(S.queueRunning || !U.isOnline() || !S.outbox.length) return;
+    var now=Date.now(), dirty=false;
+    S.outbox.forEach(function(i){
+      if(i.status==='sending' && now-(i.sentAt||i.at||now)>30000){ i.status='queued'; i.nextAt=0; dirty=true; }
+    });
+    if(dirty){ save(); flush(); }
+  }, 8000);
   U.on(window,'online', function(){ onConnectivityChange(); kickAll(); setTimeout(flush, 400); });
   U.on(window,'offline', function(){ onConnectivityChange(); });
   return { add:add, update:update, cancel:cancel, cancelEdits:cancelEdits, done:done, markSending:markSending, bump:bump, flush:flush, kickAll:kickAll, find:find, all:all,
@@ -4066,7 +4147,7 @@ var App = (function(){
     return arr;
   }
   function sigOf(m){
-    return [m.id, (m.meta&&m.meta.e)?1:0, m.status||'', m.text.length, (m.meta&&m.meta.a)?(m.meta.a.u?m.meta.a.u.length:0):0, reactCount(m)].join('|');
+    return [m.id, (m.meta&&m.meta.e)?1:0, m.pending?1:0, m.ackedAt?1:0, m.status||'', m.text.length, (m.meta&&m.meta.a)?(m.meta.a.u?m.meta.a.u.length:0):0, reactCount(m)].join('|');
   }
   function reactCount(m){
     var rc=S.reactions[m.id]||{}, n=0;
@@ -4538,6 +4619,12 @@ var App = (function(){
     var m = byId(id);
     if(m){ m.status = status; renderMsgs(true); }
   }
+  // سرور ارسال را تأیید کرده ولی نسخهٔ سرور هنوز در فهرست برنگشته است:
+  // حباب با تیک «ارسال شد» می‌ماند تا در ادغام بعدی با نسخهٔ سرور یکی شود.
+  function markAcked(id){
+    var m = byId(id);
+    if(m){ m.ackedAt = Date.now(); m.status = 'sent'; renderMsgs(true); }
+  }
 
   return {
     chatKey:chatKey, isInChat:isInChat, messagesOf:messagesOf, unreadCount:unreadCount, unreadTotal:unreadTotal,
@@ -4546,7 +4633,7 @@ var App = (function(){
     openChat:openChat, markSeen:markSeen, showPage:showPage, showWelcomeBanner:showWelcomeBanner,
     msgAction:msgAction, toggleReact:toggleReact, jumpTo:jumpTo, byId:byId, doDelete:doDelete,
     statusHTML:statusHTML, bubbleHTML:bubbleHTML, scrollBottom:scrollBottom, updateScrollBtn:updateScrollBtn,
-    handleNewMessages:handleNewMessages, markStatus:markStatus, updateChatView:updateChatView,
+    handleNewMessages:handleNewMessages, markStatus:markStatus, markAcked:markAcked, updateChatView:updateChatView,
     previewOf:previewOf, sideItemHTML:sideItemHTML, countOnlineGroup:countOnlineGroup
   };
 })();
@@ -4590,6 +4677,7 @@ var Status = (function(){
       var item = Outbox.find(m.id);
       if(item && item.status==='failed') return 'failed';
       if(item && item.status==='sending') return 'sending';
+      if(!item && m.ackedAt) return 'sent';   // سرور تأیید کرده؛ ساعت نشان نده
       return U.isOnline()? 'sending':'queued';
     }
     if(m.status==='failed') return 'failed';
@@ -4795,8 +4883,8 @@ var Compose = (function(){
     Outbox.flush().then(function(){
       // وضعیت را از روی صف تعیین کن، نه خوش‌بینی: اگر هنوز در صف است یعنی ارسال نشده
       var item = Outbox.find(clientId);
-      var st = !item? 'sent' : (item.status==='failed'? 'failed' : (U.isOnline()? 'sending':'queued'));
-      App.markStatus(clientId, st);
+      if(!item) App.markAcked(clientId);
+      else App.markStatus(clientId, item.status==='failed'? 'failed' : (U.isOnline()? 'sending':'queued'));
       if(!item) setTimeout(function(){ Data.fetchMessages().catch(function(){}); }, 1400);
       Upd.badge();
     });
@@ -6331,12 +6419,14 @@ var Poll = (function(){
     inflight = true;
     tickCount++;
     var jobs = [];
-    jobs.push(Data.fetchMessages().catch(function(){}));
+    // اول صف ارسال تخلیه شود، بعد پیام‌ها گرفته شوند؛ اجرای هم‌زمانِ این دو
+    // هم تأیید echo را خراب می‌کرد و هم یک دریافت اضافه روی سرور می‌ساخت.
+    jobs.push((S.outbox.length? Outbox.flush().catch(function(){}) : Promise.resolve())
+      .then(function(){ return Data.fetchMessages().catch(function(){}); }));
     if(tickCount % 3 === 0) jobs.push(Data.fetchGroups().catch(function(){}));
     if(tickCount % 4 === 0) jobs.push(Data.fetchUsers().catch(function(){}));
     if(tickCount % 6 === 0) jobs.push(Data.fetchReads().catch(function(){}));
     if(tickCount % 30 === 1) jobs.push(Data.fetchWords().catch(function(){}));
-    if(S.outbox.length) jobs.push(Outbox.flush());
     Promise.all(jobs).then(function(){ inflight=false; schedule(); }, function(){ inflight=false; schedule(); });
     // پاک‌سازی نشانگر تایپِ قدیمی
     if(tickCount % 5 === 0) Typing.hide();
@@ -6554,6 +6644,20 @@ var Sync = (function(){
   Typing.init();
   PWA.init();
   Notify.initTitle();
+
+  // ارتفاع واقعی نوار پایین چت (کادر ارسال + پانوشت) را در یک متغیر CSS نگه دار
+  // تا دکمهٔ شناور دسترس‌پذیری دقیقاً بالای آن بنشیند — نه روی دکمهٔ ارسال.
+  (function(){
+    var wrap=$('.composer-wrap'), foot=$('.chat-foot');
+    if(!wrap || !('ResizeObserver' in window)) return;
+    var set=function(){
+      var h=(wrap.getBoundingClientRect().height||0)+(foot? foot.getBoundingClientRect().height:0);
+      if(h>20) document.documentElement.style.setProperty('--hk-composer-h', Math.round(h)+'px');
+    };
+    var ro=new ResizeObserver(function(){ set(); });
+    ro.observe(wrap); if(foot) ro.observe(foot);
+    set(); setTimeout(set, 600);
+  })();
 
   // ۴) ناوبری پایه
   U.on($('#btnBackToList'),'click', function(){ $('#chatShell').classList.remove('in-chat'); App.updateChatView(); });
@@ -6868,7 +6972,7 @@ var V3 = (function(){
         var cyp = (b.y + Math.cos(ph*1.3)*0.06)*h;
         var rad = b.r*Math.min(w,h)*(1 + Math.sin(ph*0.9)*0.14);
         var g = cx.createRadialGradient(cxp,cyp,0,cxp,cyp,Math.max(1,rad));
-        g.addColorStop(0, hexA(b.c, 0.20));
+        g.addColorStop(0, hexA(b.c, 0.11));
         g.addColorStop(1, hexA(b.c, 0));
         cx.fillStyle = g;
         cx.beginPath(); cx.arc(cxp,cyp,Math.max(1,rad),0,Math.PI*2); cx.fill();
@@ -6895,7 +6999,7 @@ var V3 = (function(){
     function start(){
       if(!ensure()) return;
       readColors(); size(); on = true; last = 0;
-      if(Fx.reduced()){ draw(0); return; }           // برای کاربران حساس به حرکت: یک تصویر ثابت
+      if(Fx.reduced() || window.innerWidth<920){ draw(0); cv.classList.add('show'); return; }  // موبایل و حساس به حرکت: تصویر ثابت، بدون انیمیشنِ باتری‌خور
       if(!raf) raf = requestAnimationFrame(loop);
       cv.classList.add('show');
     }
