@@ -44,6 +44,7 @@ node tools/extract-inline-assets.mjs [--dry]
 | `kohan-diyar.html` | فتح کهن‌دیار ایران (مطالعات اجتماعی) |
 | `lab2d.html` | آزمایشگاه دوبعدی علوم |
 | `farsi5-vocab.html` | واژه‌ستان فارسی پنجم |
+| `math-olgoha.html` | الگوستان — الگوهای ریاضی پنجم |
 | `hakim-cards.html` | کارت‌های حکیم |
 | `hakim-treasure.html` | راز گنج حکیم |
 | `jadval-hekmat.html` | جدول حکمت |
