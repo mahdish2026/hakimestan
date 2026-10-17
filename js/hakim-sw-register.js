@@ -45,15 +45,19 @@
      توجه: HakimSec.store یک «سازنده» است (safeStore(prefix)) و نه یک
      آبجکت آماده؛ باید اول صدا زده شود تا {get,set,remove,keys,prune}
      بدهد. پیشوند 'hakim.' همان کلیدِ مسیر جایگزین پایین است، پس هر دو
-     مسیر روی یک کلید می‌نویسند. */
+     مسیر روی یک کلید می‌نویسند. برای نسخه‌های آبجکتی نیز نوع متدها
+     پیش از استفاده بررسی می‌شود. */
   function secStore() {
     var S = global.HakimSec;
-    if (S && typeof S.store === 'function') {
-      try {
+    if (!S || !S.store) return null;
+    try {
+      if (typeof S.store === 'function') {
         var st = S.store('hakim.');
         if (st && typeof st.get === 'function' && typeof st.set === 'function') return st;
-      } catch (e) { /* حافظهٔ ایمن در دسترس نیست */ }
-    }
+      } else if (typeof S.store.get === 'function' && typeof S.store.set === 'function') {
+        return S.store;   /* حالت آبجکتی (نسخه‌های قدیمی) */
+      }
+    } catch (e) { /* حافظهٔ ایمن در دسترس نیست */ }
     return null;
   }
 

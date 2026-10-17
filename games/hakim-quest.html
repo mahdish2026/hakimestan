@@ -2993,6 +2993,28 @@ function loadServerQuestions(callback){
     });
 }
 
+/* پارس گزینه‌هایی که سرور به‌صورت «متن JSON» می‌فرستد.
+   شیتِ سؤالها هر فیلد را در یک سلول نگه می‌دارد، پس گزینه‌ها ممکن است
+   رشتهٔ JSON باشند:  ["الف","ب","ج"]  — اگر مستقیم استفاده شوند، به‌جای
+   چند گزینه یک متن بلند نمایش داده می‌شود (همان باگ منچ).
+   اگر JSON نبود، مقدار اصلی دست‌نخورده برمی‌گردد. */
+function parseMaybeJson(v){
+  if(typeof v !== 'string') return v;
+  const s = v.trim();
+  if(s.length < 2) return v;
+  const c = s.charAt(0);
+  if(c !== '[' && c !== '{') return v;
+  try{
+    const out = JSON.parse(s);
+    return (out && typeof out === 'object') ? out : v;
+  }catch(e){ return v; }
+}
+/* گزینه‌ها همیشه باید آرایه باشند. */
+function optionsArray(v){
+  const o = parseMaybeJson(v);
+  return Array.isArray(o) ? o : [];
+}
+
 /* تبدیل سؤال سرور به فرمت بازی */
 function convertServerQuestion(q){
   if(!q || !q.text || !q.type) return null;
@@ -3007,26 +3029,30 @@ function convertServerQuestion(q){
   switch(q.type){
     case 'mcq':
     case 'dropdown':
-      out.options = q.options || [];
-      out.answer = q.answer;
+      out.options = optionsArray(q.options);
+      out.answer = parseMaybeJson(q.answer);
       break;
     case 'tf':
       out.answer = (q.answer === true || q.answer === 'true' || q.answer === 'درست');
       break;
     case 'multi':
-      out.options = q.options || [];
-      out.answer = Array.isArray(q.answer) ? q.answer : [q.answer];
+      out.options = optionsArray(q.options);
+      {
+        const a = parseMaybeJson(q.answer);
+        out.answer = Array.isArray(a) ? a : [q.answer];
+      }
       break;
     case 'short':
-      out.answer = q.answer;
+      out.answer = parseMaybeJson(q.answer);
       break;
     case 'blank':
-      out.answer = q.answer;
+      out.answer = parseMaybeJson(q.answer);
       break;
     case 'match':
-      if(Array.isArray(q.pairs)) out.pairs = q.pairs;
-      else if(Array.isArray(q.left) && Array.isArray(q.right)){
-        out.pairs = q.left.map((l, i) => [l, q.right[i]]);
+      if(Array.isArray(parseMaybeJson(q.pairs))) out.pairs = parseMaybeJson(q.pairs);
+      else if(Array.isArray(parseMaybeJson(q.left)) && Array.isArray(parseMaybeJson(q.right))){
+        const L = parseMaybeJson(q.left), R = parseMaybeJson(q.right);
+        out.pairs = L.map((l, i) => [l, R[i]]);
       } else {
         return null;
       }
