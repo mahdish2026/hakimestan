@@ -6,101 +6,793 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d0a1f">
-<meta name="robots" content="noindex, follow">
-<title>صفحه پیدا نشد (۴۰۴) — حکیمستان</title>
+<meta name="theme-color" content="#071a2c">
+<meta name="description" content="این نشانی در حکیمستان وجود ندارد. نگران نباشید — از لابی اصلی ادامه دهید: بازی، آزمون‌ساز، دفتر معلم و فیلم‌های آموزشی.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' https: wss:; manifest-src 'self'; worker-src 'self' blob:">
+<title>اینجا هیچ خبری نیست — خطای ۴۰۴ | حکیمستان</title>
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="css/a11y.css">
+<link rel="stylesheet" href="css/fonts.css">
 <style>
+/* ============================================================
+   حکیمستان — صفحهٔ ۴۰۴
+   تم: شبِ لاجوردی + کاشی‌کاری ایرانی + ستاره‌های طلایی
+   هم‌خانواده با لابی (شب عرفانی) و منچِ دانش (فیروزه‌ای/لاجوردی)
+   ============================================================ */
 :root{
-  --ink:#f1ecff; --muted:#b6a9db; --gold:#f5c76a; --teal:#5eead4;
+  --bg:#071a2c;
+  --night:#071a2c;
+  --night-2:#0b2540;
+  --lapis:#12385f;
+  --turq:#1ea7a0;
+  --turq-lite:#5eead4;
+  --turq-deep:#0d6f70;
+  --gold:#f5c76a;
+  --gold-light:#ffd98a;
+  --gold-deep:#e9a94d;
+  --ink:#f5f0e4;
+  --muted:#b9cfdd;
+  --soft:#8fb0c4;
+  --line:rgba(245,199,106,.22);
+  --glass:rgba(255,255,255,.045);
   --font:'Vazirmatn','Vazir',Tahoma,'Segoe UI',Arial,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  scroll-behavior:smooth;
+}
 body{
-  margin:0; font-family:var(--font); color:var(--ink); line-height:1.9;
-  min-height:100vh; display:grid; place-items:center; padding:30px 18px; text-align:center;
-  background:
-    radial-gradient(1000px 620px at 80% -10%, rgba(139,92,246,.24), transparent 60%),
-    radial-gradient(760px 520px at 6% 108%, rgba(94,234,212,.11), transparent 55%),
-    linear-gradient(180deg,#0d0a1f,#151033 50%,#0d0a1f);
+  margin:0;
+  -webkit-tap-highlight-color:transparent;
+  min-height:100vh;
+  min-height:100dvh;
+  overflow-x:hidden;
+  font-family:var(--font);
+  color:var(--ink);
+  line-height:1.8;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background-color:var(--night);
+  background-image:
+    radial-gradient(1100px 700px at 84% -16%, rgba(30,167,160,.24), transparent 62%),
+    radial-gradient(900px 620px at 3% 112%, rgba(224,172,63,.16), transparent 58%),
+    linear-gradient(168deg,#0a2036 0%,var(--night-2) 42%,var(--night) 100%);
 }
-.card{max-width:660px; width:100%}
+a{text-decoration:none;color:inherit}
+a,button{touch-action:manipulation}
+::selection{background:rgba(245,199,106,.32);color:#fff}
+
+/* ---------- لایه‌های پس‌زمینه ---------- */
+.bg-layer{
+  position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+/* کاشی‌کاری ایرانی: ستاره‌های هشت‌پر با خطوط طلایی */
+.tile{
+  position:absolute;inset:-18%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23f5c76a' stroke-width='1.1'%3E%3Cpath d='M60 2 74 30 106 34 83 57 89 90 60 74 31 90 37 57 14 34 46 30Z'/%3E%3Ccircle cx='60' cy='60' r='30'/%3E%3Cpath d='M60 18 102 60 60 102 18 60Z' stroke='%235eead4' stroke-opacity='.65'/%3E%3Cpath d='M0 0h120v120H0z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:150px 150px;
+  opacity:.3;
+  -webkit-mask-image:radial-gradient(ellipse 74% 64% at 50% 42%, rgba(0,0,0,.10) 0%, rgba(0,0,0,.42) 52%, #000 100%);
+  mask-image:radial-gradient(ellipse 74% 64% at 50% 42%, rgba(0,0,0,.10) 0%, rgba(0,0,0,.42) 52%, #000 100%);
+  animation:tileDrift 170s linear infinite;
+}
+@keyframes tileDrift{to{background-position:150px 150px}}
+
+/* شفق‌های نرم فیروزه‌ای و طلایی */
+.aurora{
+  position:absolute;border-radius:50%;pointer-events:none;will-change:transform;
+  filter:blur(62px);opacity:.55;
+}
+.aurora.a1{
+  width:42vmax;height:42vmax;top:-16vmax;right:-10vmax;
+  background:radial-gradient(circle,rgba(30,167,160,.36),transparent 66%);
+  animation:auroraDrift 27s ease-in-out infinite alternate;
+}
+.aurora.a2{
+  width:38vmax;height:38vmax;bottom:-18vmax;left:-10vmax;
+  background:radial-gradient(circle,rgba(224,172,63,.24),transparent 68%);
+  animation:auroraDrift 34s ease-in-out infinite alternate-reverse;
+}
+.aurora.a3{
+  width:30vmax;height:30vmax;top:36%;left:-16vmax;
+  background:radial-gradient(circle,rgba(18,56,95,.75),transparent 70%);
+  animation:auroraDrift 40s ease-in-out infinite alternate;
+}
+@keyframes auroraDrift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  100%{transform:translate3d(5vmax,3vmax,0) scale(1.12)}
+}
+
+/* ستاره‌های چشمک‌زن (بوم) */
+#starsCanvas{
+  position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block;
+}
+.vignette{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(120% 92% at 50% 42%, transparent 48%, rgba(3,10,18,.58) 100%);
+}
+
+/* ---------- ظرف صفحه ---------- */
+.page{
+  position:relative;z-index:5;
+  display:flex;flex-direction:column;
+  width:100%;max-width:1080px;min-height:100vh;min-height:100dvh;
+  margin:0 auto;
+  padding-top:calc(8px + env(safe-area-inset-top,0px));
+  padding-left:calc(16px + env(safe-area-inset-left,0px));
+  padding-right:calc(16px + env(safe-area-inset-right,0px));
+  padding-bottom:0;
+}
+
+/* ---------- سرصفحهٔ برند ---------- */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:6px 2px 15px;
+  border-bottom:1px solid rgba(245,199,106,.14);
+}
+.brand-link{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:2px 4px;border-radius:14px;
+  transition:transform .22s ease;
+}
+.brand-link:hover{transform:translateY(-1px)}
+.emblem{
+  display:block;width:52px;height:52px;flex:0 0 auto;
+  filter:drop-shadow(0 0 18px rgba(255,217,138,.38));
+  animation:floatEmblem 4.4s ease-in-out infinite;
+}
+.emblem svg{width:100%;height:100%;display:block}
+@keyframes floatEmblem{
+  0%,100%{transform:translateY(0) rotate(-2.5deg)}
+  50%{transform:translateY(-5px) rotate(2.5deg)}
+}
+.brand-text{display:flex;flex-direction:column;line-height:1.38;text-align:right}
+.brand-name{
+  font-size:1.18rem;font-weight:900;letter-spacing:-.2px;
+  background:linear-gradient(180deg,#fff8e7 0%,var(--gold-light) 42%,var(--gold) 70%,#c98a2e 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 10px rgba(245,199,106,.2));
+  animation:brandGlow 5.5s ease-in-out infinite;
+}
+@keyframes brandGlow{
+  0%,100%{filter:drop-shadow(0 2px 8px rgba(245,199,106,.14))}
+  50%{filter:drop-shadow(0 2px 16px rgba(245,199,106,.38))}
+}
+.brand-sub{font-size:.68rem;font-weight:600;color:#9fbdce;letter-spacing:.2px}
+.brand-sub .sep{color:var(--gold);opacity:.8;margin:0 5px;display:inline-block;animation:sepPulse 2.4s ease-in-out infinite}
+@keyframes sepPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;
+  padding:6px 13px;border-radius:999px;
+  background:rgba(7,26,44,.52);
+  border:1px solid rgba(245,199,106,.28);
+  color:var(--gold-light);font-size:.72rem;font-weight:800;letter-spacing:.1px;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+.chip .chip-star{color:var(--gold);font-size:.82rem;line-height:1}
+
+/* دکمهٔ نصب PWA در صفحهٔ خطا مزاحم بازگشت به لابی است؛ در لابی می‌ماند */
+.topbar .hk-install-btn{display:none !important}
+
+/* ---------- قهرمان صفحه ---------- */
+.hero{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;max-width:780px;margin:0 auto;
+  padding:clamp(18px,3.6vh,42px) 0 clamp(24px,4vh,46px);
+  text-align:center;
+}
+.hero:focus{outline:none}
+.hero:focus-visible{outline:3px solid var(--turq-lite);outline-offset:10px;border-radius:14px}
+
+/* آواتار حکیم — دقیقاً همان آواتار hakim-core */
+.avatar-stage{
+  position:relative;
+  width:clamp(154px,26vw,190px);
+  height:clamp(154px,26vw,190px);
+  display:grid;place-items:center;
+  margin:0 auto;
+}
+.shamse{
+  position:absolute;inset:0;width:100%;height:100%;
+  animation:slowSpin 90s linear infinite;
+}
+@keyframes slowSpin{to{transform:rotate(360deg)}}
+.halo{
+  position:absolute;inset:14%;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,199,106,.3),rgba(30,167,160,.12) 52%,transparent 72%);
+  filter:blur(10px);
+  animation:haloPulse 5.4s ease-in-out infinite;
+}
+@keyframes haloPulse{
+  0%,100%{opacity:.68;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.09)}
+}
+.avatar-mount{
+  position:relative;z-index:2;
+  width:96px;height:96px;
+  display:flex;align-items:center;justify-content:center;
+  filter:drop-shadow(0 14px 30px rgba(0,0,0,.55));
+}
+.hakim-fallback{
+  position:absolute;inset:0;width:100%;height:100%;
+  border-radius:50%;object-fit:cover;
+  border:2px solid rgba(245,199,106,.55);
+  background:#120a1e;
+  box-shadow:0 0 28px rgba(245,199,106,.4),inset 0 0 0 4px rgba(7,26,44,.55);
+}
+
+/* پنل hakim-core فقط به‌عنوان قاب آواتار — بدون حباب و بدون کارت */
+#hakimAvatarMount .hakim-panel{
+  display:flex;align-items:center;justify-content:center;
+  width:auto;max-width:none;margin:0;padding:0;gap:0;
+  background:none;border:0;border-radius:0;box-shadow:none;
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+  overflow:visible;
+  animation:none;
+}
+#hakimAvatarMount .hakim-panel::before{display:none}
+#hakimAvatarMount .hakim-panel.active{
+  display:flex;
+  animation:hkPanelIn .55s cubic-bezier(.22,1,.36,1);
+}
+#hakimAvatarMount .hakim-avatar{
+  width:96px;height:96px;
+  box-shadow:
+    0 0 0 4px rgba(7,26,44,.62),
+    0 0 34px rgba(245,199,106,.6),
+    inset 0 -4px 10px rgba(0,0,0,.35);
+}
+#hakimAvatarMount .hakim-glow{inset:-11px;opacity:.85}
+#hakimAvatarMount .hakim-face{inset:4px}
+.spark{position:absolute;border-radius:50%;pointer-events:none;animation:twinkle 2.9s ease-in-out infinite}
+.spark.s1{top:16%;right:10%;width:7px;height:7px;background:var(--gold-light);box-shadow:0 0 12px var(--gold)}
+.spark.s2{bottom:15%;left:9%;width:5px;height:5px;background:var(--turq-lite);box-shadow:0 0 12px var(--turq);animation-delay:-1.1s}
+.spark.s3{top:52%;left:-2%;width:4px;height:4px;background:var(--gold-light);box-shadow:0 0 10px var(--gold);animation-delay:-1.9s}
+@keyframes twinkle{0%,100%{opacity:.22;transform:scale(.65)}50%{opacity:1;transform:scale(1.2)}}
+
+.avatar-caption{
+  display:inline-flex;align-items:center;gap:7px;
+  margin:2px 0 0;
+  font-size:.74rem;font-weight:800;letter-spacing:.3px;color:var(--gold-light);
+}
+.live-dot{position:relative;width:7px;height:7px;border-radius:50%;background:#4ade80;flex:0 0 auto}
+.live-dot::after{
+  content:'';position:absolute;inset:0;border-radius:50%;background:#4ade80;
+  animation:dotPulse 2s ease-out infinite;
+}
+@keyframes dotPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.6);opacity:0}}
+
+/* کد ۴۰۴ */
 .code{
-  font-size:clamp(4.5rem,18vw,8rem); font-weight:900; line-height:1; letter-spacing:-4px;
-  background:linear-gradient(160deg,#f5c76a,#8b5cf6 70%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  margin-bottom:6px;
+  position:relative;
+  margin:2px 0 0;
+  font-size:clamp(4.9rem,17vw,8.1rem);
+  font-weight:900;
+  line-height:.95;
+  letter-spacing:-.02em;
+  background:linear-gradient(180deg,#fff8e7 0%,var(--gold-light) 30%,var(--gold) 62%,#b0741c 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 12px 34px rgba(224,172,63,.3));
+  animation:codeGlow 6s ease-in-out infinite;
 }
-h1{font-size:1.7rem; margin:0 0 12px; font-weight:900}
-p{color:var(--muted); margin:0 0 26px}
-.art{width:132px; height:132px; margin:0 auto 4px; display:block; opacity:.95}
-.links{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:11px; margin-top:8px;
+@keyframes codeGlow{
+  0%,100%{filter:drop-shadow(0 10px 26px rgba(224,172,63,.22))}
+  50%{filter:drop-shadow(0 12px 42px rgba(224,172,63,.44))}
 }
-.links a{
-  display:flex; align-items:center; justify-content:center; gap:9px;
-  padding:14px 12px; border-radius:16px; text-decoration:none; font-weight:700; font-size:.9rem;
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16); color:var(--ink);
-  transition:transform .2s ease, border-color .2s ease;
+h1{
+  margin:0 0 8px;
+  font-size:clamp(1.48rem,4.4vw,2.12rem);
+  font-weight:900;
+  line-height:1.6;
+  letter-spacing:-.2px;
+  color:#fff8e9;
+  text-wrap:balance;
 }
-.links a:hover{transform:translateY(-2px); border-color:var(--gold)}
-.links a:focus-visible{outline:3px solid var(--teal); outline-offset:3px}
-.home{
-  display:inline-flex; align-items:center; gap:10px; margin-top:26px;
-  padding:14px 30px; border-radius:15px; font-weight:800; text-decoration:none;
-  background:linear-gradient(145deg,#f5c76a,#e9a94d); color:#1b1035; border:2px solid #ffd98a;
+h1 .accent{color:var(--gold-light)}
+.lead{
+  max-width:52ch;
+  margin:0 auto;
+  color:var(--muted);
+  font-size:clamp(.92rem,2.5vw,1.02rem);
+  line-height:2.05;
+  text-wrap:pretty;
 }
-.home:hover{transform:translateY(-2px)}
-@media(max-width:560px){h1{font-size:1.35rem}}
+
+/* دکمهٔ اصلی — همان زبان بصری دکمه‌های لابی */
+.actions{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  width:100%;margin:clamp(18px,3vh,28px) 0 0;
+}
+.btn-home{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:inline-flex;align-items:center;justify-content:center;gap:11px;
+  width:clamp(270px,72vw,370px);max-width:100%;
+  padding:16px 26px;border-radius:18px;
+  font-size:clamp(.96rem,2.5vw,1.06rem);font-weight:900;line-height:1.5;
+  color:#241505;
+  background:linear-gradient(160deg,#ffe9b0 0%,#f5c76a 42%,#e0ac3f 72%,#c8912a 100%);
+  border:1.5px solid rgba(255,231,166,.9);
+  box-shadow:
+    0 18px 42px -18px rgba(224,172,63,.85),
+    0 0 0 6px rgba(224,172,63,.06),
+    inset 0 1px 0 rgba(255,255,255,.68),
+    inset 0 -3px 0 rgba(120,78,8,.2);
+  transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .25s ease, filter .2s ease;
+}
+.btn-home::before{
+  content:'';position:absolute;top:-45%;bottom:-45%;left:-70%;width:34%;
+  transform:skewX(-18deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  animation:sweep 4.4s ease-in-out infinite;
+  pointer-events:none;z-index:0;
+}
+.btn-home > *{position:relative;z-index:1}
+.btn-home .ic{width:22px;height:22px;flex:0 0 auto}
+.btn-home .arrow{width:19px;height:19px;flex:0 0 auto;transition:transform .22s ease;opacity:.75}
+.btn-home:hover{
+  transform:translateY(-3px);
+  filter:brightness(1.035);
+  box-shadow:
+    0 24px 50px -18px rgba(224,172,63,.95),
+    0 0 0 7px rgba(224,172,63,.09),
+    inset 0 1px 0 rgba(255,255,255,.72),
+    inset 0 -3px 0 rgba(120,78,8,.2);
+}
+.btn-home:hover .arrow{transform:translateX(-4px)}
+.btn-home:active{transform:translateY(0) scale(.987)}
+.btn-home:focus-visible{outline:3px solid var(--turq-lite);outline-offset:5px}
+@keyframes sweep{0%{left:-70%}55%,100%{left:135%}}
+
+/* پیوندهای پیشنهادی */
+.quick-block{width:100%;margin-top:clamp(20px,3.2vh,30px)}
+.quick-label{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:min(100%,430px);margin:0 auto 12px;
+  color:var(--soft);font-size:.73rem;font-weight:700;letter-spacing:.2px;
+}
+.quick-label::before,.quick-label::after{
+  content:'';height:1px;flex:1;
+  background:linear-gradient(90deg,transparent,rgba(245,199,106,.38));
+}
+.quick-label::after{background:linear-gradient(90deg,rgba(245,199,106,.38),transparent)}
+.quick-links{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.quick-links a{
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:44px;padding:9px 15px;border-radius:13px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.12);
+  color:#c9dcea;font-size:.81rem;font-weight:700;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  transition:transform .2s ease,border-color .2s ease,color .2s ease,background .2s ease;
+}
+.quick-links a:hover{
+  transform:translateY(-2px);
+  color:var(--turq-lite);
+  border-color:rgba(94,234,212,.5);
+  background:rgba(94,234,212,.08);
+}
+.quick-links a:focus-visible{outline:3px solid var(--turq-lite);outline-offset:3px}
+.quick-links .q-ic{display:grid;place-items:center;width:18px;height:18px;flex:0 0 auto;color:var(--turq-lite)}
+.quick-links .q-ic svg{width:18px;height:18px;display:block}
+
+.hint{
+  max-width:50ch;margin:clamp(16px,2.6vh,24px) auto 0;
+  color:#8fb0c4;font-size:.75rem;line-height:1.95;
+}
+.hint a{color:var(--gold-light);font-weight:700;border-bottom:1px dotted rgba(245,199,106,.45)}
+.hint a:hover{color:var(--gold)}
+
+/* ---------- پابرگ ---------- */
+.site-footer{
+  position:relative;z-index:5;
+  width:100%;max-width:780px;margin:0 auto;text-align:center;
+  padding:10px 0 calc(20px + env(safe-area-inset-bottom,0px));
+}
+.f-line{
+  height:1px;max-width:340px;margin:6px auto 13px;
+  background:linear-gradient(90deg,transparent,rgba(245,199,106,.38),transparent);
+}
+.f-brand{margin:0;font-size:.72rem;font-weight:800;color:#a9c2d4;line-height:1.9}
+.f-brand .gold{color:var(--gold)}
+.f-dev{margin:1px 0 0;font-size:.69rem;color:#7f9cb0;line-height:1.9}
+.f-dev b{color:var(--gold);font-weight:800}
+.f-note{margin:4px 0 0;font-size:.68rem}
+.f-note a{color:#8fb0c4;border-bottom:1px dotted rgba(143,176,196,.4);transition:color .2s}
+.f-note a:hover{color:var(--gold-light)}
+
+/* ---------- واکنش‌گرا ---------- */
+@media (max-width:620px){
+  .aurora{filter:blur(44px);opacity:.45}
+  .tile{animation:none}
+  .topbar{gap:10px;padding-bottom:12px}
+  .emblem{width:44px;height:44px}
+  .brand-name{font-size:1.04rem}
+  .brand-sub{font-size:.61rem}
+  .chip{display:none}
+  .avatar-stage{width:clamp(148px,42vw,176px);height:clamp(148px,42vw,176px)}
+  .code{letter-spacing:-.04em}
+  .quick-links a{font-size:.77rem;padding:8px 13px}
+}
+@media (max-width:400px){
+  .brand-sub{display:none}
+  .avatar-caption{font-size:.7rem}
+  .lead{font-size:.9rem;line-height:2}
+  .hint{font-size:.72rem}
+}
+@media (max-height:620px) and (min-width:700px){
+  .avatar-stage{width:150px;height:150px}
+  .code{font-size:4.6rem}
+  .hero{padding-top:14px;padding-bottom:18px}
+  .quick-block{margin-top:16px}
+}
+
+/* ---------- کاهش حرکت ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  .tile{animation:none}
+  .btn-home::before{display:none}
+}
 </style>
 <!-- hakim-meta:start -->
-<meta name="description" content="این نشانی در حکیمستان وجود ندارد. از صفحهٔ اصلی ادامه دهید — دیار حکیم، سرزمین یادگیری: بازی، آزمون‌ساز، دفتر معلم و درسگاه.">
 <meta name="robots" content="noindex, follow">
 <!-- hakim-meta:end -->
 </head>
 <body>
-<a class="skip-link" href="#notfound">پرش به محتوای اصلی</a>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
-<main class="card" id="notfound" tabindex="-1">
-  <svg class="art" viewBox="0 0 200 200" role="img" aria-label="حکیم در حال جست‌وجوی صفحهٔ گم‌شده">
-    <circle cx="100" cy="100" r="80" fill="rgba(139,92,246,.16)" stroke="rgba(245,199,106,.35)" stroke-width="2" stroke-dasharray="7 7"/>
-    <path d="M56 92 L100 40 L144 92 Z" fill="#5b4a9e" stroke="#7a68c9" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="48" y="90" width="104" height="12" rx="6" fill="#e9b44c"/>
-    <circle cx="100" cy="30" r="6.5" fill="#f7d88a"/>
-    <ellipse cx="100" cy="124" rx="42" ry="38" fill="#f3c98b"/>
-    <circle cx="85" cy="118" r="4.4" fill="#2a1a0a"/>
-    <circle cx="115" cy="118" r="4.4" fill="#2a1a0a"/>
-    <path d="M88 142 q12 -7 24 0" stroke="#7a3b2e" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M60 148 q40 40 80 0 q-12 30 -40 30 q-28 0 -40 -30 Z" fill="#fff7ef" stroke="#e7dcc6" stroke-width="2"/>
-    <g stroke="#5eead4" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85">
-      <circle cx="150" cy="146" r="20"/>
-      <path d="M165 161 l20 20"/>
-    </g>
-  </svg>
+<!-- ================= پس‌زمینه ================= -->
+<div class="bg-layer" aria-hidden="true">
+  <div class="tile"></div>
+  <div class="aurora a1"></div>
+  <div class="aurora a2"></div>
+  <div class="aurora a3"></div>
+  <canvas id="starsCanvas"></canvas>
+  <div class="vignette"></div>
+</div>
 
-  <p class="code">۴۰۴</p>
-  <h1>این صفحه در حکیمستان پیدا نشد</h1>
-  <p>شاید نشانی را اشتباه نوشته‌اید یا این بخش جابه‌جا شده است. اصلاً نگران نباشید — از راه‌های زیر ادامه دهید.</p>
+<div class="page">
 
-  <nav class="links" aria-label="صفحه‌های پیشنهادی">
-    <a href="./index.html"><span aria-hidden="true">🏠</span> لابی حکیمستان</a>
-    <a href="./games/hakim-quest.html"><span aria-hidden="true">🗺️</span> ماجرای حکیم</a>
-    <a href="./azmoon-saz.html"><span aria-hidden="true">📝</span> آزمون‌ساز</a>
-    <a href="./daftar.html"><span aria-hidden="true">📚</span> دفتر معلم</a>
-    <a href="./videos.html"><span aria-hidden="true">🎬</span> فیلم‌ها</a>
-    <a href="./judges.html"><span aria-hidden="true">ℹ️</span> معرفی پروژه</a>
-  </nav>
+  <!-- ================= سرصفحه ================= -->
+  <header class="topbar">
+    <a class="brand-link" href="./index.html" aria-label="حکیمستان — دیار حکیم، سرزمین یادگیری">
+      <span class="emblem" aria-hidden="true">
+        <!-- چراغ دانایی — همان نشان لابی -->
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="34" fill="#ffd98a" opacity=".16"/>
+          <circle cx="40" cy="10" r="3" fill="#f5c76a"/>
+          <line x1="40" y1="13" x2="40" y2="17" stroke="#f5c76a" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M28 17 h24 l-3 8 h-18 z" fill="#8a5a2b"/>
+          <path d="M25 25 h30 l4.5 30 a4.5 4.5 0 0 1 -4.5 4.5 h-30 a4.5 4.5 0 0 1 -4.5 -4.5 z" fill="#8b5cf6" opacity=".28" stroke="#a78bfa" stroke-width="2.2"/>
+          <circle cx="40" cy="45" r="8" fill="#ffd98a"/>
+          <path d="M40 53 c -3 -5 -1.8 -9.5 0 -11.5 c 1.8 2 3 6.5 0 11.5 z" fill="#fff7e6"/>
+          <line x1="24" y1="59.5" x2="56" y2="59.5" stroke="#8a5a2b" stroke-width="4" stroke-linecap="round"/>
+          <g stroke="#ffd98a" stroke-width="2" stroke-linecap="round" opacity=".8">
+            <path d="M40 20 v-6"/><path d="M28 26 l-5 -4"/><path d="M52 26 l5 -4"/>
+          </g>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">حکیمستان</span>
+        <span class="brand-sub">دیار حکیم <span class="sep" aria-hidden="true">✦</span> سرزمین یادگیری</span>
+      </span>
+    </a>
+    <span class="chip"><span class="chip-star" aria-hidden="true">✦</span> صفحه پیدا نشد</span>
+  </header>
 
-  <a class="home" href="./index.html">🏠 بازگشت به لابی</a>
-</main>
+  <!-- ================= محتوای ۴۰۴ ================= -->
+  <main class="hero" id="main" tabindex="-1">
 
-<script src="js/hakim-security.js" defer></script>
-<script src="js/hakim-a11y.js" defer></script>
-<script src="js/hakim-sw-register.js" defer></script>
+    <div class="avatar-stage">
+      <div class="halo" aria-hidden="true"></div>
+      <svg class="shamse" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="#f5c76a" stroke-opacity=".42" stroke-width="1.2" stroke-linejoin="round">
+          <path d="M100 4 118 38 154 22 148 62 188 68 160 100 188 132 148 138 154 178 118 162 100 196 82 162 46 178 52 138 12 132 40 100 12 68 52 62 46 22 82 38Z"/>
+          <circle cx="100" cy="100" r="62" opacity=".7"/>
+          <circle cx="100" cy="100" r="40" stroke-dasharray="3 7" opacity=".8"/>
+          <path d="M100 60 110 90 140 100 110 110 100 140 90 110 60 100 90 90Z" opacity=".55"/>
+        </g>
+      </svg>
+      <span class="spark s1" aria-hidden="true"></span>
+      <span class="spark s2" aria-hidden="true"></span>
+      <span class="spark s3" aria-hidden="true"></span>
+
+      <!-- آواتار حکیم از hakim-core داخل این کانتینر ساخته می‌شود -->
+      <div class="avatar-mount" id="hakimAvatarMount" role="img" aria-label="حکیم، راهنمای دانا">
+        <img class="hakim-fallback" src="icon.svg" width="96" height="96" alt="" aria-hidden="true" decoding="async">
+      </div>
+    </div>
+
+    <p class="avatar-caption"><span class="live-dot" aria-hidden="true"></span> حکیم، همراه تو</p>
+
+    <p class="code">
+      <span aria-hidden="true">۴۰۴</span>
+      <span class="sr-only">خطای ۴۰۴</span>
+    </p>
+
+    <h1>اینجا <span class="accent">هیچ خبری</span> نیست!</h1>
+    <p class="lead">به نظر می‌رسد گم شده‌اید؛ نشانی‌ای که دنبالش بودید وجود ندارد یا جابه‌جا شده است. نگران نباشید، حکیم راه بازگشت را نشانتان می‌دهد.</p>
+
+    <div class="actions">
+      <a class="btn-home" href="./index.html">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <path d="M3 10.6 12 3l9 7.6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5.6 9.4V19a1.5 1.5 0 0 0 1.5 1.5H10V15h4v5.5h2.9a1.5 1.5 0 0 0 1.5-1.5V9.4" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>بازگشت به لابی اصلی</span>
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <path d="M19 12H5m6-6-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="quick-block">
+      <p class="quick-label" id="quickLabel"><span>یا از این بخش‌ها ادامه بده</span></p>
+      <nav class="quick-links" aria-labelledby="quickLabel">
+        <a href="./index.html#sec-games">
+          <span class="q-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7.6 8h8.8a5 5 0 0 1 4.4 7.4l-.8 1.5a2.6 2.6 0 0 1-4.4.4L14.4 16H9.6l-1.2 1.3a2.6 2.6 0 0 1-4.4-.4l-.8-1.5A5 5 0 0 1 7.6 8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M8.1 11v3M6.6 12.5h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <circle cx="15.4" cy="11.9" r=".95" fill="currentColor"/>
+              <circle cx="17.4" cy="13.9" r=".95" fill="currentColor"/>
+            </svg>
+          </span>
+          بازی‌ها
+        </a>
+        <a href="./azmoon-saz.html">
+          <span class="q-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 20h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M6.2 16.4 16 6.6a2 2 0 0 1 2.8 2.8L8.9 19.2 4.5 20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="m14.8 7.8 2.8 2.8" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+          </span>
+          آزمون‌ساز
+        </a>
+        <a href="./daftar.html">
+          <span class="q-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v20H7.5A2.5 2.5 0 0 1 5 19.5v-15Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M8.4 2v20M11.5 7h4M11.5 11h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </span>
+          دفتر معلم
+        </a>
+        <a href="./videos.html">
+          <span class="q-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="6" width="13" height="12" rx="2.6" stroke="currentColor" stroke-width="1.7"/>
+              <path d="m16 10 5-3v10l-5-3" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          فیلم‌ها
+        </a>
+      </nav>
+    </div>
+
+    <p class="hint">اگر از یک پیوند قدیمی به این صفحه رسیده‌اید، از <a href="./index.html">لابی اصلی</a> می‌توانید همهٔ بازی‌ها و ابزارها را پیدا کنید.</p>
+  </main>
+
+  <!-- ================= پابرگ ================= -->
+  <footer class="site-footer">
+    <div class="f-line" aria-hidden="true"></div>
+    <p class="f-brand"><span aria-hidden="true">🧙</span> حکیمستان <span class="gold">—</span> دیار حکیم، سرزمین یادگیری</p>
+    <p class="f-dev">طراح و توسعه‌دهنده: <b>مهدی شریفیان</b></p>
+    <p class="f-note"><a href="./judges.html">اطلاعات تکمیلی پروژه</a></p>
+  </footer>
+
+</div>
+
+<script src="hakim-core.js" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  function mountHakim() {
+    var mount = document.getElementById('hakimAvatarMount');
+    if (!mount || !window.Hakim || typeof window.Hakim.init !== 'function') return;
+    try {
+      /* ۱) همان هستهٔ شخصیت سایت، بدون فونت و بدون حباب گفت‌وگو */
+      window.Hakim.init({ container: mount, font: false });
+
+      var panel = mount.querySelector('.hakim-panel');
+      if (!panel) return;
+      var bubble = panel.querySelector('.hakim-bubble');
+      if (bubble && bubble.parentNode) bubble.parentNode.removeChild(bubble);
+
+      /* ۲) نمایش پنل تنها برای آواتار (CSS صفحه بقیهٔ پنل را حذف می‌کند) */
+      panel.classList.add('active');
+
+      /* ۳) تصویر جایگزین فقط تا وقتی جاوااسکریپت در دسترس نیست لازم است */
+      var fallback = mount.querySelector('.hakim-fallback');
+      if (fallback && fallback.parentNode) fallback.parentNode.removeChild(fallback);
+
+      /* ۴) حالت «دانا» برای چهرهٔ حکیم */
+      if (typeof window.Hakim.setMood === 'function') window.Hakim.setMood('wise');
+    } catch (err) {
+      /* اگر هسته بارگذاری نشد، تصویر جایگزین (icon.svg) می‌ماند */
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountHakim, { once: true });
+  } else {
+    mountHakim();
+  }
+})();
+</script>
+
+<script>
+/* ============================================================
+   ستاره‌های پس‌زمینه — همان زبان بصری لابی
+   ============================================================ */
+(function () {
+  'use strict';
+  var canvas = document.getElementById('starsCanvas');
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var reduce = !!mq.matches;
+  var W = 0, H = 0, dpr = 1;
+  var stars = [], dust = [], shoot = null, raf = 0;
+
+  function seed() {
+    stars = [];
+    dust = [];
+    var n = Math.min(160, Math.round(W * H / 15000));
+    for (var i = 0; i < n; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.4 + 0.35,
+        p: Math.random() * 6.2832,
+        s: Math.random() * 1.4 + 0.35,
+        gold: Math.random() > 0.7
+      });
+    }
+    var nd = reduce ? 0 : Math.min(34, Math.round(W * H / 46000));
+    for (var j = 0; j < nd; j++) {
+      dust.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 2 + 1,
+        v: Math.random() * 0.2 + 0.06,
+        a: Math.random() * 6.2832,
+        o: Math.random() * 0.42 + 0.12
+      });
+    }
+  }
+
+  function resize() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+    if (reduce) drawStatic();
+  }
+
+  function paintBase() {
+    ctx.clearRect(0, 0, W, H);
+  }
+
+  function drawStatic() {
+    paintBase();
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      ctx.globalAlpha = 0.62;
+      ctx.fillStyle = s.gold ? 'rgba(246,212,136,.85)' : 'rgba(158,235,226,.7)';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, 6.2832);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function frame(t) {
+    if (reduce || document.hidden) return;
+    paintBase();
+    var i, s, d;
+
+    for (i = 0; i < stars.length; i++) {
+      s = stars[i];
+      var tw = 0.42 + 0.58 * Math.sin(t * 0.001 * s.s + s.p);
+      ctx.globalAlpha = tw;
+      ctx.fillStyle = s.gold ? 'rgba(246,212,136,.9)' : 'rgba(158,235,226,.78)';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, 6.2832);
+      ctx.fill();
+    }
+
+    for (i = 0; i < dust.length; i++) {
+      d = dust[i];
+      d.y -= d.v;
+      d.x += Math.sin(t * 0.0008 + d.a) * 0.18;
+      if (d.y < -14) { d.y = H + 14; d.x = Math.random() * W; }
+
+      var g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r * 3);
+      g.addColorStop(0, 'rgba(255,217,138,' + d.o + ')');
+      g.addColorStop(1, 'rgba(255,217,138,0)');
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r * 3, 0, 6.2832);
+      ctx.fill();
+    }
+
+    if (!shoot && Math.random() < 0.004) {
+      shoot = {
+        x: W * (0.25 + Math.random() * 0.65),
+        y: H * Math.random() * 0.3,
+        vx: -(3.5 + Math.random() * 3.5),
+        vy: 2 + Math.random() * 1.6,
+        life: 1
+      };
+    }
+    if (shoot) {
+      shoot.x += shoot.vx;
+      shoot.y += shoot.vy;
+      shoot.life -= 0.018;
+      var tail = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x - shoot.vx * 8, shoot.y - shoot.vy * 8);
+      tail.addColorStop(0, 'rgba(255,240,196,' + Math.max(0, shoot.life) + ')');
+      tail.addColorStop(1, 'rgba(255,240,196,0)');
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = tail;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(shoot.x, shoot.y);
+      ctx.lineTo(shoot.x - shoot.vx * 8, shoot.y - shoot.vy * 8);
+      ctx.stroke();
+      if (shoot.life <= 0 || shoot.x < -40 || shoot.y > H + 40) shoot = null;
+    }
+
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(frame);
+  }
+
+  resize();
+  if (!reduce) raf = requestAnimationFrame(frame);
+
+  var resizeTimer = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      resize();
+      if (reduce) { cancelAnimationFrame(raf); drawStatic(); }
+    }, 160);
+  }, { passive: true });
+
+  if (mq.addEventListener) {
+    mq.addEventListener('change', function (e) {
+      reduce = e.matches;
+      cancelAnimationFrame(raf);
+      if (reduce) drawStatic(); else raf = requestAnimationFrame(frame);
+    });
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    cancelAnimationFrame(raf);
+    if (!document.hidden && !reduce) raf = requestAnimationFrame(frame);
+  });
+})();
+</script>
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>
