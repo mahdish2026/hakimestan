@@ -2096,6 +2096,183 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
   box-shadow:0 18px 42px -14px rgba(232,179,95,.6), 0 0 28px rgba(245,199,106,.32);
 }
 
+/* ============================================================
+   Bento lobby refresh — چیدمان و تعامل، بدون تغییر پالت رنگ
+   ============================================================ */
+.container{max-width:1180px}
+#grid-games,#grid-tools{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  align-items:stretch;
+  gap:clamp(16px,2vw,22px);
+  margin-bottom:clamp(20px,3vw,30px);
+}
+#grid-games .game-card,#grid-tools .game-card{
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  height:100%;
+  margin:0;
+  padding:clamp(18px,2vw,24px);
+  border-radius:clamp(20px,2vw,26px);
+  -webkit-backdrop-filter:blur(18px) saturate(135%);
+  backdrop-filter:blur(18px) saturate(135%);
+  transform-style:preserve-3d;
+  transition:transform .24s cubic-bezier(.2,.8,.2,1),opacity .22s ease;
+}
+#grid-games .card-spotlight,#grid-tools .card-spotlight{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  border-radius:inherit;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .22s ease;
+}
+#grid-games .card-spotlight::before,#grid-tools .card-spotlight::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:360px;
+  height:360px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(245,199,106,.18) 0%,rgba(94,234,212,.12) 34%,transparent 72%);
+  transform:translate3d(var(--spot-x,-180px),var(--spot-y,-180px),0) scale(.78);
+  transition:transform .14s ease-out;
+}
+#grid-games .game-card.is-spotlit .card-spotlight,
+#grid-tools .game-card.is-spotlit .card-spotlight{opacity:1}
+#grid-games .game-card.is-spotlit .card-spotlight::before,
+#grid-tools .game-card.is-spotlit .card-spotlight::before{
+  transform:translate3d(var(--spot-x,-180px),var(--spot-y,-180px),0) scale(1);
+  will-change:transform;
+}
+#grid-games .game-card > .gc-top,#grid-tools .game-card > .gc-top,
+#grid-games .game-card > .gc-tags,#grid-tools .game-card > .gc-tags,
+#grid-games .game-card > .gc-steps,#grid-tools .game-card > .gc-steps,
+#grid-games .game-card > .gc-cta,#grid-tools .game-card > .gc-cta{
+  position:relative;
+  z-index:1;
+}
+#grid-games .gc-top,#grid-tools .gc-top{gap:16px;margin-bottom:16px}
+#grid-games .gc-icon,#grid-tools .gc-icon{
+  width:66px;height:66px;border-radius:19px;
+}
+#grid-games .gc-icon svg,#grid-tools .gc-icon svg{width:42px;height:42px}
+#grid-games .gc-emoji,#grid-tools .gc-emoji{font-size:2rem}
+#grid-games .gc-name,#grid-tools .gc-name{
+  font-size:clamp(1.08rem,1.45vw,1.32rem);
+  font-weight:900;
+  line-height:1.45;
+}
+#grid-games .gc-desc,#grid-tools .gc-desc{
+  font-size:clamp(.8rem,1vw,.9rem);
+  font-weight:500;
+  line-height:1.85;
+}
+#grid-games .gc-tags,#grid-tools .gc-tags{gap:8px;margin-bottom:16px}
+#grid-games .gc-tag,#grid-tools .gc-tag{font-size:.72rem;padding:4px 11px}
+#grid-games .gc-steps,#grid-tools .gc-steps{gap:8px;padding:12px 14px;margin-bottom:16px}
+#grid-games .gc-cta,#grid-tools .gc-cta{
+  gap:14px;
+  min-height:60px;
+  margin-top:auto;
+  padding-top:14px;
+}
+#grid-games .gc-cta-text,#grid-tools .gc-cta-text{font-size:.94rem;font-weight:900}
+#grid-games .gc-arrow,#grid-tools .gc-arrow{
+  position:relative;
+  width:44px;height:44px;min-height:44px;
+  font-size:0;
+}
+#grid-games .gc-arrow::before,#grid-tools .gc-arrow::before{
+  content:'';
+  position:absolute;
+  left:50%;top:50%;
+  width:14px;height:2.5px;
+  border-radius:2px;
+  background:currentColor;
+  transform:translate(-4px,-50%);
+}
+#grid-games .gc-arrow::after,#grid-tools .gc-arrow::after{
+  content:'';
+  position:absolute;
+  left:50%;top:50%;
+  width:9px;height:9px;
+  border-top:2.5px solid currentColor;
+  border-left:2.5px solid currentColor;
+  transform:translate(-50%,-50%) rotate(-45deg);
+}
+#grid-games .bento-feature,#grid-tools .bento-feature{
+  min-height:100%;
+  padding:clamp(22px,2.5vw,32px);
+}
+#grid-games .bento-feature .gc-top,#grid-tools .bento-feature .gc-top{
+  gap:20px;margin-bottom:20px;
+}
+#grid-games .bento-feature .gc-icon,#grid-tools .bento-feature .gc-icon{
+  width:80px;height:80px;border-radius:23px;
+}
+#grid-games .bento-feature .gc-icon svg,#grid-tools .bento-feature .gc-icon svg{width:48px;height:48px}
+#grid-games .bento-feature .gc-emoji,#grid-tools .bento-feature .gc-emoji{font-size:2.35rem}
+#grid-games .bento-feature .gc-name,#grid-tools .bento-feature .gc-name{
+  font-size:clamp(1.35rem,2vw,1.65rem);
+}
+#grid-games .bento-feature .gc-desc,#grid-tools .bento-feature .gc-desc{font-size:.95rem}
+#grid-games .bento-feature .gc-cta,#grid-tools .bento-feature .gc-cta{
+  padding:12px 15px;
+  border:1px solid var(--acc-brd);
+  border-radius:16px;
+  background:var(--acc-soft);
+}
+#grid-games .bento-feature .gc-cta-text,#grid-tools .bento-feature .gc-cta-text{font-size:1rem}
+#grid-games .bento-feature .gc-arrow,#grid-tools .bento-feature .gc-arrow{
+  width:48px;height:48px;min-height:48px;font-size:0;
+}
+#hakimPanelMount .hakim-avatar .hk-body{
+  animation-duration:5s;
+  will-change:transform;
+}
+#grid-games .game-card.reveal,#grid-tools .game-card.reveal{animation-duration:.62s}
+
+@media(min-width:700px){
+  .container{max-width:1060px}
+  body[data-theme="modern"] .container{max-width:1080px}
+  #grid-games,#grid-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #grid-games .bento-feature,#grid-tools .bento-feature{grid-column:span 2}
+}
+@media(min-width:1024px){
+  .container,body[data-theme="modern"] .container{max-width:1180px}
+  #grid-games,#grid-tools{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+}
+#grid-games .game-card.is-tilting,#grid-tools .game-card.is-tilting{
+  will-change:transform;
+  transition:transform .08s linear,opacity .22s ease;
+}
+@media(max-width:699px){
+  .container{max-width:100%}
+  #grid-games,#grid-tools{grid-template-columns:minmax(0,1fr);gap:16px}
+  #grid-games .game-card,#grid-tools .game-card{padding:18px 16px 17px}
+  #grid-games .gc-icon,#grid-tools .gc-icon{width:58px;height:58px}
+  #grid-games .gc-icon svg,#grid-tools .gc-icon svg{width:38px;height:38px}
+  #grid-games .bento-feature,#grid-tools .bento-feature{padding:20px 17px}
+  #grid-games .bento-feature .gc-icon,#grid-tools .bento-feature .gc-icon{width:68px;height:68px}
+  #grid-games .bento-feature .gc-icon svg,#grid-tools .bento-feature .gc-icon svg{width:42px;height:42px}
+  #grid-games .bento-feature .gc-name,#grid-tools .bento-feature .gc-name{font-size:1.28rem}
+  #grid-games .bento-feature .gc-desc,#grid-tools .bento-feature .gc-desc{font-size:.86rem}
+}
+@media(hover:none),(pointer:coarse){
+  #grid-games .card-spotlight,#grid-tools .card-spotlight{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  #grid-games .card-spotlight,#grid-tools .card-spotlight{display:none}
+  #grid-games .game-card.is-tilting,#grid-tools .game-card.is-tilting{transform:none!important}
+}
+
 </style>
 <!-- hakim-meta:start -->
 <link rel="canonical" href="https://hakimistan.ir/">
@@ -2236,7 +2413,7 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
   <div class="cards-grid" id="grid-games">
 
   <!-- کارت ۱: فتح کهن دیار ایران -->
-  <a href="games/kohan-diyar.html" class="game-card theme-kohan gold-border reveal d4" aria-label="شروع بازی فتح کهن دیار ایران">
+  <a href="games/kohan-diyar.html" class="game-card bento-feature theme-kohan gold-border reveal d4" aria-label="شروع بازی فتح کهن دیار ایران">
     <span class="hakim-pick">پیشنهاد حکیم</span>
     <div class="gc-top">
       <div class="gc-icon" aria-hidden="true">
@@ -2560,7 +2737,7 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
   <div class="cards-grid" id="grid-tools">
 
   <!-- کارت ۷: آزمون‌ساز حکیمستان -->
-  <a href="azmoon-saz.html" class="game-card theme-tool reveal d7" aria-label="ورود به آزمون‌ساز حکیمستان">
+  <a href="azmoon-saz.html" class="game-card bento-feature theme-tool reveal d7" aria-label="ورود به آزمون‌ساز حکیمستان">
     <div class="gc-top">
       <div class="gc-icon" aria-hidden="true">
         <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -3153,8 +3330,8 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
     var stars = [], dust = [], shoot = null;
 
     function resize(){
-      dpr = Math.min(2, window.devicePixelRatio || 1);
       W = window.innerWidth; H = window.innerHeight;
+      dpr = Math.min(W < 700 ? 1.25 : 2, window.devicePixelRatio || 1);
       canvas.width = W * dpr; canvas.height = H * dpr;
       canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -3162,11 +3339,12 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
     }
     function seed(){
       stars = []; dust = [];
-      var n = Math.min(170, Math.round(W * H / 14000));
+      var compactViewport = W < 700;
+      var n = Math.min(compactViewport ? 90 : 170, Math.round(W * H / (compactViewport ? 18000 : 14000)));
       for (var i = 0; i < n; i++){
         stars.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.5 + 0.4, p: Math.random()*6.28, s: Math.random()*1.5 + 0.4, gold: Math.random() > 0.72 });
       }
-      var nd = reduceMotion ? 8 : Math.min(40, Math.round(W * H / 42000));
+      var nd = reduceMotion ? 8 : Math.min(compactViewport ? 16 : 40, Math.round(W * H / (compactViewport ? 70000 : 42000)));
       for (var j = 0; j < nd; j++){
         dust.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*2.2 + 1, v: Math.random()*0.22 + 0.07, a: Math.random()*6.28, o: Math.random()*0.5 + 0.14 });
       }
@@ -3234,14 +3412,59 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
     var auroras = document.querySelectorAll('.aurora');
     var glow = document.getElementById('cursorGlow');
     var fx = document.getElementById('fx');
-    var mx = 0, my = 0, tx = 0, ty = 0, lastSpark = 0;
+    var mx = 0, my = 0, tx = 0, ty = 0, lastSpark = 0, followFrame = 0;
+
+    // Bento card spotlight + tilt: one rAF update per frame, desktop pointer only.
+    var bentoCards = document.querySelectorAll('#grid-games .game-card, #grid-tools .game-card');
+    for (var bci = 0; bci < bentoCards.length; bci++){
+      (function(card){
+        var effectFrame = 0, pointerX = 0, pointerY = 0, cardRect = null;
+        var spotlight = document.createElement('span');
+        spotlight.className = 'card-spotlight';
+        spotlight.setAttribute('aria-hidden', 'true');
+        card.insertBefore(spotlight, card.firstChild);
+
+        function updateCardEffects(){
+          effectFrame = 0;
+          if (!cardRect) return;
+          var width = Math.max(cardRect.width, 1), height = Math.max(cardRect.height, 1);
+          var localX = Math.max(0, Math.min(width, pointerX - cardRect.left));
+          var localY = Math.max(0, Math.min(height, pointerY - cardRect.top));
+          var tiltX = (0.5 - localY / height) * 6;
+          var tiltY = (localX / width - 0.5) * 7;
+          spotlight.style.setProperty('--spot-x', (localX - 180).toFixed(1) + 'px');
+          spotlight.style.setProperty('--spot-y', (localY - 180).toFixed(1) + 'px');
+          card.style.transform = 'perspective(1100px) rotateX(' + tiltX.toFixed(2) + 'deg) rotateY(' + tiltY.toFixed(2) + 'deg) translateY(-4px)';
+          card.classList.add('is-spotlit', 'is-tilting');
+        }
+        function onCardMove(e){
+          if (!cardRect) cardRect = card.getBoundingClientRect();
+          pointerX = e.clientX;
+          pointerY = e.clientY;
+          if (!effectFrame) effectFrame = requestAnimationFrame(updateCardEffects);
+        }
+        function resetCardEffects(){
+          if (effectFrame){ cancelAnimationFrame(effectFrame); effectFrame = 0; }
+          cardRect = null;
+          card.classList.remove('is-spotlit', 'is-tilting');
+          card.style.removeProperty('transform');
+          spotlight.style.removeProperty('--spot-x');
+          spotlight.style.removeProperty('--spot-y');
+        }
+        card.addEventListener('mousemove', onCardMove, { passive: true });
+        card.addEventListener('mouseleave', resetCardEffects);
+        window.addEventListener('scroll', resetCardEffects, { passive: true });
+        window.addEventListener('resize', resetCardEffects, { passive: true });
+      })(bentoCards[bci]);
+    }
 
     document.addEventListener('mousemove', function(e){
       if (document.body.getAttribute('data-theme') === 'modern') return;
       mx = e.clientX; my = e.clientY;
-      // جرقه‌ی کوچک دنبال موس (با فاصله‌ی زمانی برای سبکی)
+      var overBentoCard = !!(e.target && e.target.closest && e.target.closest('.cards-grid .game-card'));
+      // روی کارت‌ها Spotlight جای جرقه را می‌گیرد؛ ذرات اضافی نمی‌سازیم.
       var now = Date.now();
-      if (now - lastSpark > 70){
+      if (!overBentoCard && now - lastSpark > 70){
         lastSpark = now;
         if (fx){
           var sp = document.createElement('span');
@@ -3255,27 +3478,33 @@ body[data-theme="modern"] .theme-kohan.gold-border:hover{
           setTimeout(function(){ if (sp.parentNode) sp.parentNode.removeChild(sp); }, 950);
         }
       }
-      if (glow) glow.style.opacity = '1';
+      if (glow) glow.style.opacity = overBentoCard ? '0' : '1';
+      if (!followFrame) followFrame = requestAnimationFrame(follow);
     });
     document.addEventListener('mouseleave', function(){ if (glow) glow.style.opacity = '0'; });
 
-    // حلقه‌ی نرم‌سازی حرکت
+    // نرم‌سازی رویدادمحور: فقط هنگام حرکت موس فریم می‌گیرد، نه در حالت بیکار.
     function follow(){
-      if (document.body.getAttribute('data-theme') === 'modern'){ requestAnimationFrame(follow); return; }
-      tx += (mx - tx) * 0.09;
-      ty += (my - ty) * 0.09;
+      followFrame = 0;
+      if (document.body.getAttribute('data-theme') === 'modern') return;
+      tx += (mx - tx) * 0.18;
+      ty += (my - ty) * 0.18;
       var nx = (tx / window.innerWidth) - 0.5;   // -0.5..0.5
       var ny = (ty / window.innerHeight) - 0.5;
-      if (glow){ glow.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)'; }
-      // پارالاکس ظریف روی شفق
+      if (glow) glow.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+      // translate به‌جای margin: پارالاکس روی لایه‌ی ترکیب‌شده، بدون layout.
       for (var i = 0; i < auroras.length; i++){
         var f = (i + 1) * 7;
-        auroras[i].style.marginLeft = (-nx * f) + 'px';
-        auroras[i].style.marginTop = (-ny * f) + 'px';
+        if ('translate' in auroras[i].style){
+          auroras[i].style.translate = (-nx * f) + 'px ' + (-ny * f) + 'px';
+        }
       }
-      requestAnimationFrame(follow);
+      if (Math.abs(mx - tx) + Math.abs(my - ty) > 0.6){
+        followFrame = requestAnimationFrame(follow);
+      } else {
+        tx = mx; ty = my;
+      }
     }
-    requestAnimationFrame(follow);
   }
 
   /* ============================================================
