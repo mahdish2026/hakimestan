@@ -1,0 +1,955 @@
+/* ============================================================================
+   حکیمستان — لابی (بازطراحی ۱۴۰۴)
+   هویت: شبِ کاشی — لاجورد، فیروزه، طلا
+   قاعده‌ها: تمام انیمیشن‌ها فقط transform / opacity
+             شیشه‌ی مات با backdrop-filter، حاشیه‌ی نوری نازک
+   ========================================================================== */
+
+/* ── ۰. توکن‌ها و تم‌ها ─────────────────────────────────────────────────── */
+:root{
+  --font:'Vazirmatn','Vazir',Tahoma,'Segoe UI',Arial,sans-serif;
+  --ink:#eef4ff;
+  --muted:#a9bad8;
+  --muted-2:#8195b8;
+  --gold:#f4cd84;
+  --gold-2:#e0aa58;
+  --teal:#5eead4;
+  --cyan:#67e8f9;
+  --violet:#b49cff;
+
+  --bg:#050c1c;
+  --bg-2:#081328;
+  --card:rgba(16,32,60,.58);
+  --card-2:rgba(9,20,40,.58);
+  --brd:rgba(255,255,255,.10);
+  --brd-strong:rgba(255,255,255,.18);
+  --field:rgba(255,255,255,.045);
+  --hairline:rgba(255,255,255,.08);
+  --header-bg:rgba(7,17,35,.62);
+  --shadow:0 30px 80px -40px rgba(0,0,0,.95);
+  --radius:22px;
+  --radius-lg:28px;
+  --max:1200px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --spring:cubic-bezier(.34,1.45,.64,1);
+}
+body[data-theme="ocean"]{
+  --bg:#030a18;
+  --bg-2:#061228;
+  --gold:#f2c979;
+  --teal:#67e8f9;
+  --muted:#a2b6d6;
+  --card:rgba(10,29,60,.62);
+  --card-2:rgba(6,18,40,.6);
+  --header-bg:rgba(4,12,28,.64);
+}
+body[data-theme="sunny"]{
+  --ink:#0f2038;
+  --muted:#4a5f7d;
+  --muted-2:#5c7292;
+  --gold:#a9701c;
+  --gold-2:#8c5c14;
+  --teal:#0d9488;
+  --cyan:#0891b2;
+  --bg:#eef3fa;
+  --bg-2:#e1eaf6;
+  --card:rgba(255,255,255,.72);
+  --card-2:rgba(255,255,255,.64);
+  --brd:rgba(15,40,80,.10);
+  --brd-strong:rgba(15,40,80,.18);
+  --field:rgba(15,40,80,.045);
+  --hairline:rgba(15,40,80,.08);
+  --header-bg:rgba(255,255,255,.72);
+  --shadow:0 30px 70px -40px rgba(16,42,80,.35);
+}
+
+/* ── ۱. ریست ────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{
+  font-family:var(--font);
+  font-weight:400;
+  color:var(--ink);
+  background:var(--bg);
+  min-height:100vh;
+  overflow-x:clip;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  transition:background-color .4s ease,color .4s ease;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img,svg{display:block;max-width:100%}
+::selection{background:rgba(94,234,212,.28);color:#fff}
+:target{scroll-margin-top:104px}
+h1,h2,h3{line-height:1.4;font-weight:800;letter-spacing:-.2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ── ۲. لایه‌های پس‌زمینه ──────────────────────────────────────────────── */
+/* همه‌ی هاله‌ها در یک لایه‌ی ثابت و بدون فیلتر/ماسک رندر می‌شوند تا
+   پردازش هر فریم فقط به بوم ستاره‌ها محدود بماند (۶۰fps روی موبایل). */
+.bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(58% 42% at 82% -6%,rgba(37,99,235,.30),rgba(37,99,235,0) 64%),
+    radial-gradient(52% 40% at 4% -10%,rgba(45,212,191,.20),rgba(45,212,191,0) 62%),
+    radial-gradient(46% 38% at 88% 104%,rgba(244,205,132,.12),rgba(244,205,132,0) 66%);
+}
+body[data-theme="ocean"] .bg{
+  background:
+    radial-gradient(58% 42% at 82% -6%,rgba(37,99,235,.34),rgba(37,99,235,0) 64%),
+    radial-gradient(52% 40% at 4% -10%,rgba(14,165,233,.18),rgba(14,165,233,0) 62%),
+    radial-gradient(46% 38% at 88% 104%,rgba(103,232,249,.10),rgba(103,232,249,0) 66%);
+}
+body[data-theme="sunny"] .bg{
+  background:
+    radial-gradient(58% 42% at 82% -6%,rgba(186,230,253,.85),rgba(186,230,253,0) 64%),
+    radial-gradient(52% 40% at 4% -10%,rgba(204,251,241,.85),rgba(204,251,241,0) 62%),
+    radial-gradient(46% 38% at 88% 104%,rgba(253,230,138,.55),rgba(253,230,138,0) 66%);
+}
+#starsCanvas{position:absolute;inset:0;width:100%;height:100%}
+/* نقش کاشی — الگوی SVG سبک، بدون ماسک؛ محو‌شدن با گرادیان هم‌رنگ زمینه */
+.tile-veil{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%235eead4' stroke-width='.7'%3E%3Cpath d='M36 2 70 36 36 70 2 36Z'/%3E%3Crect x='12' y='12' width='48' height='48' transform='rotate(45 36 36)'/%3E%3Ccircle cx='36' cy='36' r='10'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:78px 78px;
+  opacity:.075;
+  height:58vh;
+}
+.tile-veil::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(5,12,28,0),rgba(5,12,28,.55) 55%,var(--bg) 100%);
+}
+body[data-theme="ocean"] .tile-veil::after{
+  background:linear-gradient(to bottom,rgba(3,10,24,0),rgba(3,10,24,.55) 55%,var(--bg) 100%);
+}
+body[data-theme="sunny"] .tile-veil{opacity:.14}
+body[data-theme="sunny"] .tile-veil::after{
+  background:linear-gradient(to bottom,rgba(238,243,250,0),rgba(238,243,250,.6) 55%,var(--bg) 100%);
+}
+/* سایه‌ی پایین صفحه برای عمق — یک گرادیان ثابت */
+.fade-bottom{
+  position:absolute;left:0;right:0;bottom:0;height:42vh;
+  background:linear-gradient(to top,var(--bg),rgba(5,12,28,0));
+}
+body[data-theme="sunny"] .fade-bottom{background:linear-gradient(to top,var(--bg),rgba(238,243,250,0))}
+.cursor-glow{
+  position:fixed;top:0;left:0;width:560px;height:560px;margin:-280px 0 0 -280px;
+  z-index:1;pointer-events:none;opacity:0;
+  background:radial-gradient(circle,rgba(244,205,132,.16),rgba(94,234,212,.08) 40%,rgba(94,234,212,0) 66%);
+  will-change:transform;
+  transition:opacity .45s ease;
+}
+body.has-pointer .cursor-glow{opacity:1}
+
+/* ── ۳. هدر شناور شیشه‌ای ─────────────────────────────────────────────── */
+.site-header{
+  position:fixed;inset-inline:0;top:0;z-index:100;
+  padding:14px 20px 0;
+  transition:transform .4s var(--ease);
+}
+.header-inner{
+  max-width:var(--max);margin:0 auto;min-width:0;
+  display:flex;align-items:center;gap:18px;
+  height:64px;padding:0 14px 0 18px;
+  border-radius:999px;
+  background:var(--header-bg);
+  border:1px solid var(--brd);
+  box-shadow:0 18px 50px -30px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.08);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  backdrop-filter:blur(22px) saturate(150%);
+  transition:background .35s ease,box-shadow .35s ease,border-color .35s ease;
+}
+body.is-scrolled .header-inner{
+  background:var(--header-bg);
+  border-color:var(--brd-strong);
+  box-shadow:0 24px 60px -30px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.brand-mark{
+  width:40px;height:40px;border-radius:13px;flex:0 0 auto;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 25%,rgba(244,205,132,.28),rgba(94,234,212,.12));
+  border:1px solid rgba(244,205,132,.38);
+  box-shadow:0 0 22px rgba(244,205,132,.16),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.brand-mark svg{width:24px;height:24px}
+.brand-text{display:flex;flex-direction:column;line-height:1.15}
+.brand-text b{font-size:1.02rem;font-weight:800;letter-spacing:-.2px}
+.brand-text small{font-size:.62rem;color:var(--muted);font-weight:500;letter-spacing:.2px}
+.nav{display:flex;align-items:center;gap:2px;margin-inline:auto}
+.nav a{
+  position:relative;padding:9px 13px;border-radius:999px;
+  font-size:.86rem;font-weight:600;color:var(--muted);
+  transition:color .25s ease,background .25s ease,transform .25s var(--ease);
+  white-space:nowrap;
+}
+.nav a:hover,.nav a:focus-visible{color:var(--ink);background:rgba(255,255,255,.06)}
+.nav a:hover{transform:translateY(-1px)}
+.header-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.icon-btn{
+  width:42px;height:42px;border-radius:50%;
+  display:grid;place-items:center;
+  color:var(--ink);
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--brd);
+  transition:transform .25s var(--spring),background .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+.icon-btn svg{width:19px;height:19px}
+.icon-btn:hover{transform:translateY(-2px) scale(1.04);background:rgba(255,255,255,.09);border-color:rgba(244,205,132,.45);box-shadow:0 0 22px rgba(244,205,132,.18)}
+.icon-btn:active{transform:scale(.94)}
+.icon-btn.playing{border-color:rgba(94,234,212,.55);box-shadow:0 0 22px rgba(94,234,212,.25)}
+.icon-btn.playing #musicIcon{animation:noteSpin 3.6s linear infinite}
+#musicIcon{width:19px;height:19px}
+#musicIcon .mute-slash{transition:opacity .2s ease}
+.icon-btn.playing #musicIcon .mute-slash{opacity:0}
+@keyframes noteSpin{to{transform:rotate(360deg)}}
+
+/* دکمه‌ها */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  height:50px;padding:0 22px;border-radius:14px;
+  font-size:.94rem;font-weight:700;white-space:nowrap;
+  border:1px solid transparent;
+  transition:transform .3s var(--ease),box-shadow .3s ease,background .3s ease,border-color .3s ease;
+}
+.btn svg{width:17px;height:17px;transition:transform .3s var(--ease)}
+.btn-primary{
+  background:linear-gradient(135deg,#ffe4a8 0%,#f4cd84 45%,#dfa753 100%);
+  color:#241603;
+  box-shadow:0 14px 34px -14px rgba(244,205,132,.8),inset 0 1px 0 rgba(255,255,255,.65);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 22px 44px -16px rgba(244,205,132,.9),inset 0 1px 0 rgba(255,255,255,.7)}
+.btn-primary:hover svg{transform:translateX(-4px)}
+.btn-ghost{
+  background:rgba(255,255,255,.045);
+  border-color:var(--brd);
+  color:var(--ink);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+.btn-ghost:hover{transform:translateY(-2px);background:rgba(255,255,255,.08);border-color:rgba(94,234,212,.4)}
+.btn-ghost:hover svg{transform:translateX(-4px)}
+.btn:active{transform:scale(.97)}
+.header-cta{height:42px;padding:0 18px;border-radius:999px;font-size:.86rem}
+
+/* ── ۴. قهرمان (Hero) ──────────────────────────────────────────────────── */
+main{position:relative;z-index:2}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.hero{padding:118px 0 40px;position:relative}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);
+  grid-template-areas:"lead stage" "rest stage";
+  grid-template-rows:auto auto;
+  column-gap:48px;row-gap:0;
+  align-items:center;
+  min-height:min(76vh,660px);
+}
+.hero-lead{grid-area:lead;align-self:end;min-width:0}
+.hero-rest{grid-area:rest;align-self:start;min-width:0;padding-bottom:6px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:7px 14px 7px 12px;border-radius:999px;
+  font-size:.76rem;font-weight:600;color:var(--muted);
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--brd);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+.pulse{position:relative;width:7px;height:7px;border-radius:50%;background:var(--teal);flex:0 0 auto}
+.pulse::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--teal);animation:ping 2.4s ease-out infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}75%,100%{transform:scale(3);opacity:0}}
+.hero h1{
+  margin:18px 0 0;
+  font-size:clamp(3rem,6vw,4.7rem);
+  font-weight:800;line-height:1.12;letter-spacing:-1.5px;
+  background:linear-gradient(180deg,#ffffff 8%,#e8f1ff 52%,#a9c6ef 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 10px 34px rgba(120,180,255,.18));
+}
+body[data-theme="sunny"] .hero h1{background:linear-gradient(180deg,#10233f 10%,#24456f 90%);-webkit-background-clip:text;background-clip:text}
+.hero-tagline{
+  margin-top:14px;font-size:clamp(1.1rem,2.3vw,1.42rem);
+  font-weight:700;color:var(--ink);letter-spacing:-.3px;
+}
+.hero-tagline em{
+  font-style:normal;
+  background:linear-gradient(100deg,var(--gold) 10%,var(--teal) 90%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{margin-top:14px;max-width:46ch;font-size:.98rem;color:var(--muted);line-height:2}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-actions .btn-primary{height:58px;padding:0 26px;border-radius:16px;font-size:1rem}
+.hero-actions .btn-ghost{height:58px;padding:0 22px;border-radius:16px}
+.hero-stats{display:flex;gap:30px;margin-top:30px;padding-top:24px;border-top:1px solid var(--hairline)}
+.hero-stats li{list-style:none;display:flex;flex-direction:column;gap:2px}
+.hero-stats b{font-size:1.62rem;font-weight:800;color:var(--gold);letter-spacing:-.5px;line-height:1.2}
+.hero-stats span{font-size:.76rem;color:var(--muted);font-weight:500}
+
+/* صحنه‌ی حکیم */
+.hero-stage{grid-area:stage;position:relative;display:grid;place-items:center;min-height:540px;isolation:isolate;min-width:0}
+.stage-rings{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:0}
+.stage-rings i{
+  grid-area:1/1;position:relative;border-radius:50%;display:block;aspect-ratio:1;
+  width:100%;max-width:100%;
+  border:1px solid rgba(94,234,212,.18);
+}
+.stage-rings i:nth-child(1){width:64%;border-color:rgba(244,205,132,.22);animation:spin 46s linear infinite}
+.stage-rings i:nth-child(2){width:82%;border-style:dashed;border-color:rgba(94,234,212,.16);animation:spin 64s linear infinite reverse}
+.stage-rings i:nth-child(3){width:100%;border-color:rgba(255,255,255,.07);animation:spin 90s linear infinite}
+.stage-rings i::before{
+  content:"";position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 14px rgba(244,205,132,.9);
+}
+.stage-rings i:nth-child(2)::before{background:var(--teal);box-shadow:0 0 14px rgba(94,234,212,.9)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.stage-glow{
+  position:absolute;width:70%;max-width:360px;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,rgba(244,205,132,.20),rgba(94,234,212,.09) 46%,transparent 72%);
+  z-index:0;transform:translateZ(0);
+  animation:breatheGlow 6s ease-in-out infinite;
+}
+@keyframes breatheGlow{0%,100%{transform:scale(.94);opacity:.8}50%{transform:scale(1.06);opacity:1}}
+
+.hakim-mount{position:relative;z-index:2;width:min(430px,100%)}
+/* بازنویسی پنل hakim-core برای صحنه‌ی قهرمان */
+#hakimPanelMount .hakim-panel{
+  display:none;max-width:430px;margin:0 auto;
+  flex-direction:column;align-items:center;text-align:center;gap:16px;
+  padding:26px 22px 24px;
+  border-radius:26px;
+  border:1px solid rgba(244,205,132,.24);
+  background:linear-gradient(165deg,rgba(14,30,56,.78),rgba(5,13,28,.72));
+  box-shadow:0 40px 90px -40px rgba(0,0,0,1),inset 0 1px 0 rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(22px) saturate(140%);
+  backdrop-filter:blur(22px) saturate(140%);
+  overflow:visible;
+}
+#hakimPanelMount .hakim-panel.active{display:flex}
+#hakimPanelMount .hakim-panel::before{
+  display:block;top:-40px;right:50%;width:280px;height:140%;
+  transform:translateX(50%);
+  background:radial-gradient(ellipse at center,rgba(244,205,132,.12),transparent 65%);
+}
+#hakimPanelMount .hakim-avatar{
+  width:126px;height:126px;
+  box-shadow:0 0 46px rgba(244,205,132,.42),inset 0 -6px 16px rgba(0,0,0,.35);
+  animation:hakimBreathe 5.6s ease-in-out infinite;
+  transform-origin:50% 60%;
+}
+@keyframes hakimBreathe{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-3px) scale(1.045)}
+}
+#hakimPanelMount .hakim-glow{
+  inset:-12px;
+  background:radial-gradient(circle,rgba(244,205,132,.42),transparent 68%);
+  animation:hakimGlow 5.6s ease-in-out infinite;
+}
+@keyframes hakimGlow{0%,100%{transform:scale(.96);opacity:.65}50%{transform:scale(1.08);opacity:1}}
+#hakimPanelMount .hakim-face{inset:5px}
+#hakimPanelMount .hakim-bubble{
+  width:100%;background:transparent;border:0;box-shadow:none;padding:0;
+  border-radius:0;
+}
+#hakimPanelMount .hakim-bubble::after{display:none}
+#hakimPanelMount .hakim-name{
+  margin:0 auto 8px;font-size:.72rem;padding:4px 12px;
+  background:rgba(244,205,132,.10);border-color:rgba(244,205,132,.22);
+}
+#hakimPanelMount .hakim-text{
+  font-size:1rem;line-height:1.95;color:#f2f7ff;font-weight:500;
+  min-height:3.6em;text-wrap:balance;
+}
+.stage-chip{
+  position:absolute;z-index:3;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 13px;border-radius:999px;
+  font-size:.74rem;font-weight:600;color:var(--ink);
+  background:var(--card);
+  border:1px solid var(--brd);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  box-shadow:0 16px 40px -24px rgba(0,0,0,.9);
+  animation:floaty 7s ease-in-out infinite;
+}
+.stage-chip.a{top:8%;inset-inline-start:0}
+.stage-chip.b{bottom:10%;inset-inline-end:0;animation-delay:-2.4s}
+.stage-chip svg{width:15px;height:15px;color:var(--gold);flex:0 0 auto}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.stage-star{position:absolute;width:20px;height:20px;color:var(--gold);opacity:.75;animation:twinkle 4.4s ease-in-out infinite}
+.stage-star.s1{top:20%;right:6%}
+.stage-star.s2{bottom:24%;left:8%;width:13px;height:13px;animation-delay:-1.6s;color:var(--teal)}
+@keyframes twinkle{0%,100%{transform:scale(.75) rotate(0);opacity:.4}50%{transform:scale(1.2) rotate(22deg);opacity:1}}
+
+/* ── ۵. بخش‌ها ─────────────────────────────────────────────────────────── */
+.section{padding:64px 0 12px}
+.section-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;margin-bottom:26px;
+}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.74rem;font-weight:700;letter-spacing:.3px;
+  color:var(--gold);margin-bottom:10px;
+}
+.kicker::before{content:"";width:18px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.section-head h2{font-size:clamp(1.55rem,3.2vw,2.25rem);letter-spacing:-.6px}
+.section-note{max-width:44ch;font-size:.86rem;color:var(--muted);line-height:1.9;padding-bottom:4px}
+.count-num{font-variant-numeric:tabular-nums}
+
+/* ── ۶. شبکه‌ی بنتو ───────────────────────────────────────────────────── */
+.bento{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-auto-rows:214px;grid-auto-flow:dense;gap:16px;
+}
+.bento-card{
+  position:relative;display:flex;flex-direction:column;
+  padding:18px;border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(160deg,var(--card),var(--card-2));
+  border:1px solid var(--brd);
+  box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.06);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  backdrop-filter:blur(18px) saturate(140%);
+  transform-style:preserve-3d;
+  transition:border-color .35s ease,box-shadow .35s ease,background .35s ease;
+  isolation:isolate;
+}
+body[data-theme="sunny"] .bento-card{box-shadow:0 20px 50px -34px rgba(16,42,80,.35),inset 0 1px 0 rgba(255,255,255,.8)}
+/* نور موضعی کارت */
+.bento-card::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;z-index:0;pointer-events:none;
+  background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(244,205,132,.18),transparent 62%);
+  opacity:0;transition:opacity .35s ease;
+}
+.bento-card:hover::before,.bento-card:focus-visible::before{opacity:1}
+/* موی‌خط نوری بالای کارت */
+.bento-card::after{
+  content:"";position:absolute;top:0;inset-inline:18%;height:1px;z-index:1;
+  background:linear-gradient(90deg,transparent,var(--a,#5eead4),var(--gold),transparent);
+  opacity:0;transition:opacity .35s ease;
+}
+.bento-card:hover::after,.bento-card:focus-visible::after{opacity:.9}
+.bento-card:hover,.bento-card:focus-visible{
+  border-color:rgba(255,255,255,.2);
+  box-shadow:0 36px 80px -40px rgba(0,0,0,1),0 0 0 1px rgba(94,234,212,.10),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.bento-card.is-tilting{will-change:transform;z-index:5}
+.bento-card > *{position:relative;z-index:2}
+.bento-card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:auto}
+.card-icon{
+  width:46px;height:46px;border-radius:14px;flex:0 0 auto;
+  display:grid;place-items:center;font-size:1.4rem;line-height:1;color:var(--a,var(--teal));
+  background:linear-gradient(150deg,var(--a-soft,rgba(94,234,212,.16)),rgba(255,255,255,.03));
+  border:1px solid var(--a-brd,rgba(94,234,212,.36));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 18px -12px var(--a,#5eead4);
+  transition:transform .4s var(--spring);
+}
+.bento-card:hover .card-icon{transform:translateY(-2px) scale(1.06) rotate(-3deg)}
+.card-icon svg{width:23px;height:23px}
+.card-cta{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.7rem;font-weight:700;color:var(--muted);
+  transition:color .3s ease,transform .3s var(--ease);
+}
+.card-cta svg{width:14px;height:14px;transition:transform .3s var(--ease)}
+.bento-card:hover .card-cta{color:var(--a,var(--gold))}
+.bento-card:hover .card-cta svg{transform:translateX(-4px)}
+.card-title{margin-top:13px;font-size:1.03rem;font-weight:700;color:var(--ink);letter-spacing:-.2px;line-height:1.45}
+.card-desc{margin-top:5px;font-size:.79rem;line-height:1.75;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.card-tags span{
+  font-size:.65rem;font-weight:600;color:var(--muted);
+  padding:3px 8px;border-radius:999px;
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--hairline);
+  white-space:nowrap;
+}
+body[data-theme="sunny"] .card-tags span{background:rgba(15,40,80,.04)}
+.card-tags span:first-child{color:var(--a,var(--teal));border-color:var(--a-brd,rgba(94,234,212,.3));background:var(--a-soft,rgba(94,234,212,.1))}
+
+/* کارت بزرگ (Feature) */
+.b-feature{grid-column:span 2;grid-row:span 2;padding:0;justify-content:flex-end}
+.b-feature .feature-visual{
+  position:relative;flex:1;min-height:170px;display:grid;place-items:center;overflow:hidden;
+  background:
+    radial-gradient(70% 90% at 50% 100%,rgba(244,205,132,.16),transparent 70%),
+    radial-gradient(60% 80% at 80% 10%,rgba(94,234,212,.12),transparent 72%);
+}
+.b-feature .feature-visual::before{
+  content:"";position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23f4cd84' stroke-width='.6' opacity='.5'%3E%3Cpath d='M28 2 54 28 28 54 2 28Z'/%3E%3Ccircle cx='28' cy='28' r='9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:56px 56px;opacity:.18;
+  -webkit-mask-image:radial-gradient(70% 70% at 50% 60%,#000,transparent 78%);
+  mask-image:radial-gradient(70% 70% at 50% 60%,#000,transparent 78%);
+}
+.feature-icon{
+  position:relative;z-index:1;font-size:0;
+  width:120px;height:120px;border-radius:32px;display:grid;place-items:center;
+  background:linear-gradient(160deg,rgba(244,205,132,.24),rgba(94,234,212,.08));
+  border:1px solid rgba(244,205,132,.4);
+  box-shadow:0 30px 60px -30px rgba(244,205,132,.65),inset 0 1px 0 rgba(255,255,255,.25);
+  transform:translateZ(30px);
+  transition:transform .5s var(--spring);
+}
+.feature-icon svg{width:64px;height:64px}
+.b-feature:hover .feature-icon{transform:translateZ(30px) translateY(-5px) rotate(-2deg) scale(1.03)}
+.feature-orb{position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none}
+.feature-orb.o1{width:10px;height:10px;background:var(--gold);top:24%;left:18%;box-shadow:0 0 20px var(--gold);animation:floaty 6s ease-in-out infinite}
+.feature-orb.o2{width:7px;height:7px;background:var(--teal);bottom:22%;right:16%;box-shadow:0 0 18px var(--teal);animation:floaty 8s ease-in-out infinite reverse}
+.feature-orb.o3{width:5px;height:5px;background:#fff;top:16%;right:26%;box-shadow:0 0 14px #fff;animation:twinkle 5s ease-in-out infinite}
+.feature-badge{
+  position:absolute;top:16px;inset-inline-start:16px;z-index:3;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 11px;border-radius:999px;
+  font-size:.68rem;font-weight:700;color:#2a1a04;
+  background:linear-gradient(135deg,#ffe6b3,#f4cd84);
+  box-shadow:0 10px 24px -12px rgba(244,205,132,.9);
+}
+.feature-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;position:relative;z-index:2}
+.feature-body .card-title{font-size:1.3rem;margin-top:0}
+.feature-body .card-desc{font-size:.84rem;-webkit-line-clamp:2;color:var(--muted)}
+.feature-body .card-tags{margin-top:6px}
+.feature-body .btn{margin-top:12px;height:44px;align-self:flex-start;border-radius:12px;font-size:.85rem}
+
+/* تراکم برچسب‌ها در کارت‌های کوچک */
+.bento-card:not(.b-feature) .card-tags span:nth-child(n+3){display:none}
+.b-wide{grid-column:span 2}
+.b-wide .card-desc{-webkit-line-clamp:2}
+
+/* رنگ‌های لهجه */
+.a-gold{--a:#f4cd84;--a-soft:rgba(244,205,132,.14);--a-brd:rgba(244,205,132,.35)}
+.a-teal{--a:#5eead4;--a-soft:rgba(94,234,212,.13);--a-brd:rgba(94,234,212,.32)}
+.a-violet{--a:#b49cff;--a-soft:rgba(180,156,255,.14);--a-brd:rgba(180,156,255,.34)}
+.a-emerald{--a:#6ee7b7;--a-soft:rgba(110,231,183,.13);--a-brd:rgba(110,231,183,.32)}
+.a-blue{--a:#7dd3fc;--a-soft:rgba(125,211,252,.13);--a-brd:rgba(125,211,252,.32)}
+.a-rose{--a:#fda4af;--a-soft:rgba(253,164,175,.13);--a-brd:rgba(253,164,175,.32)}
+.a-orange{--a:#fdba74;--a-soft:rgba(253,186,116,.14);--a-brd:rgba(253,186,116,.34)}
+.a-cyan{--a:#67e8f9;--a-soft:rgba(103,232,249,.13);--a-brd:rgba(103,232,249,.32)}
+
+/* ── ۷. آکاردئون‌ها ───────────────────────────────────────────────────── */
+.info-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}
+.acc{
+  border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(160deg,var(--card),var(--card-2));
+  border:1px solid var(--brd);
+  box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.06);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  backdrop-filter:blur(18px) saturate(140%);
+}
+.acc-btn{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:17px 20px;text-align:start;
+  font-size:.98rem;font-weight:700;color:var(--ink);
+  transition:background .25s ease;
+}
+.acc-btn:hover{background:rgba(255,255,255,.035)}
+.acc-btn .acc-emoji{display:grid;place-items:center;width:20px;height:20px;color:var(--gold)}
+.acc-btn .acc-emoji svg{width:19px;height:19px}
+.acc-btn .line{flex:1;height:1px;background:linear-gradient(90deg,var(--hairline),transparent)}
+.acc-btn .chev{width:18px;height:18px;color:var(--muted);transition:transform .35s var(--ease),color .25s ease}
+.acc.open .acc-btn .chev{transform:rotate(180deg);color:var(--gold)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .55s var(--ease)}
+.acc.open .acc-body{max-height:2400px}
+.acc-inner{padding:0 20px 20px;color:var(--muted);font-size:.87rem;line-height:2}
+.acc-inner p{margin-bottom:8px}
+.acc-inner .acc-lead{color:var(--ink);font-weight:600;margin-bottom:12px;line-height:1.95}
+.acc-h{color:var(--gold);font-weight:700;margin-top:12px}
+.acc-inner b,.acc-inner strong{color:var(--ink);font-weight:700}
+.acc-inner a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+
+/* نظرسنجی */
+.survey-section{padding-top:16px}
+.survey-types{display:flex;gap:8px;padding:4px;border-radius:999px;background:var(--field);border:1px solid var(--hairline);align-self:flex-start;margin-bottom:16px;width:fit-content}
+.survey-type{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 16px;border-radius:999px;font-size:.8rem;font-weight:700;color:var(--muted);
+  transition:background .25s ease,color .25s ease,box-shadow .25s ease;
+}
+.survey-type svg{width:15px;height:15px}
+.survey-type.active{background:linear-gradient(135deg,#ffe4a8,#f4cd84);color:#241603;box-shadow:0 8px 20px -12px rgba(244,205,132,.9)}
+.survey-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sf-field{display:flex;flex-direction:column;gap:6px}
+.sf-field:nth-of-type(4),.sf-submit,.sf-msg{grid-column:1/-1}
+.sf-field label{font-size:.78rem;font-weight:600;color:var(--ink)}
+.sf-field small{color:var(--muted-2);font-weight:400}
+.sf-field input,.sf-field select,.sf-field textarea{
+  width:100%;padding:11px 14px;border-radius:12px;
+  background:var(--field);border:1px solid var(--brd);
+  color:var(--ink);font:inherit;font-size:.85rem;
+  transition:border-color .25s ease,box-shadow .25s ease,background .25s ease;
+}
+.sf-field textarea{resize:vertical;min-height:84px}
+.sf-field input::placeholder,.sf-field textarea::placeholder{color:var(--muted-2)}
+.sf-field input:focus,.sf-field select:focus,.sf-field textarea:focus{
+  outline:none;border-color:rgba(94,234,212,.55);
+  box-shadow:0 0 0 3px rgba(94,234,212,.14);
+}
+.sf-field select option{background:#0b1830;color:#eef4ff}
+.sf-stars{display:flex;gap:5px;line-height:1;direction:ltr;justify-content:flex-end}
+.sf-stars span{
+  display:grid;place-items:center;width:30px;height:30px;border-radius:9px;
+  color:var(--muted-2);cursor:pointer;
+  transition:transform .22s var(--spring),color .2s ease,background .2s ease;
+}
+.sf-stars span svg{width:21px;height:21px}
+.sf-stars span.on{color:var(--gold);transform:scale(1.06)}
+.sf-stars span:hover{transform:scale(1.16);color:var(--gold)}
+.sf-stars span:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.sf-submit{
+  justify-self:start;display:inline-flex;align-items:center;gap:8px;
+  height:46px;padding:0 20px;border-radius:12px;
+  font-size:.88rem;font-weight:700;color:#231604;
+  background:linear-gradient(135deg,#ffe4a8,#f4cd84);
+  box-shadow:0 12px 28px -14px rgba(244,205,132,.85);
+  transition:transform .25s var(--ease),box-shadow .25s ease;
+}
+.sf-submit svg{width:16px;height:16px}
+.sf-submit:hover{transform:translateY(-2px)}
+.sf-submit:disabled{opacity:.6;cursor:progress}
+.sf-msg{font-size:.8rem;color:var(--teal);min-height:1.2em}
+.sf-msg.err{color:#fda4af}
+
+/* ── ۸. گفت‌وگو با حکیم ──────────────────────────────────────────────── */
+.chat-section{padding:64px 0 12px}
+.chat-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.chat-head h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.5px}
+.chat-head p{color:var(--muted);font-size:.86rem;margin-top:6px;max-width:52ch}
+.chat-head .btn{height:44px;font-size:.82rem;border-radius:999px}
+.chat-head .chev{transition:transform .35s var(--ease)}
+#hakimChat.open .chat-head .chev{transform:rotate(180deg)}
+.chat-wrap{
+  max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .65s var(--ease),opacity .4s ease;
+}
+#hakimChat.open .chat-wrap{max-height:900px;opacity:1}
+.hkc-card{
+  border-radius:var(--radius-lg);overflow:hidden;
+  background:linear-gradient(165deg,var(--card),var(--card-2));
+  border:1px solid var(--brd);
+  box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.07);
+  -webkit-backdrop-filter:blur(22px) saturate(140%);
+  backdrop-filter:blur(22px) saturate(140%);
+  display:flex;flex-direction:column;
+  max-width:840px;margin:0 auto;
+}
+.hkc-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--hairline)}
+.hkc-ava{position:relative;width:48px;height:48px;flex:0 0 auto}
+.hkc-halo{position:absolute;inset:-5px;border-radius:50%;background:radial-gradient(circle,rgba(244,205,132,.45),transparent 68%);animation:hakimGlow 5.6s ease-in-out infinite}
+.hkc-face{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 42% 30%,#2c2040,#120a1e);box-shadow:inset 0 0 10px rgba(0,0,0,.7)}
+.hkc-face svg{width:100%;height:100%}
+.hkc-face.hkc-pop{animation:facePop .5s var(--spring)}
+@keyframes facePop{0%{transform:scale(.86)}100%{transform:scale(1)}}
+.hkc-id{flex:1;min-width:0}
+.hkc-title{font-size:.88rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hkc-badge{font-size:.6rem;padding:2px 8px;border-radius:999px;background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.3);color:var(--teal);font-weight:600}
+.hkc-status{display:flex;align-items:center;gap:6px;font-size:.68rem;color:var(--muted);margin-top:2px}
+.hkc-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80}
+.hkc-clear{
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  border:1px solid var(--hairline);background:var(--field);font-size:.9rem;
+  transition:background .2s ease,transform .2s ease;
+}
+.hkc-clear svg{width:16px;height:16px}
+.hkc-clear:hover{background:rgba(255,255,255,.09);transform:rotate(-8deg)}
+.hkc-log{
+  padding:16px 18px;display:flex;flex-direction:column;gap:10px;
+  max-height:340px;min-height:180px;overflow-y:auto;scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.15) transparent;
+}
+.hkc-row{display:flex;align-items:flex-start;gap:8px;animation:msgIn .35s var(--ease)}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hkc-row.me{flex-direction:row-reverse}
+.hkc-mini{width:26px;height:26px;flex:0 0 auto;display:grid;place-items:center;font-size:.8rem;border-radius:50%;background:var(--field);border:1px solid var(--hairline)}
+.hkc-bubble{
+  position:relative;max-width:76%;
+  padding:10px 14px 8px;border-radius:16px 16px 16px 4px;
+  background:rgba(255,255,255,.055);border:1px solid var(--hairline);
+  font-size:.86rem;line-height:1.85;color:var(--ink);
+}
+body[data-theme="sunny"] .hkc-bubble{background:rgba(15,40,80,.045)}
+.hkc-row.me .hkc-bubble{background:linear-gradient(135deg,rgba(94,234,212,.18),rgba(56,189,248,.12));border-color:rgba(94,234,212,.3);border-radius:16px 16px 4px 16px}
+.hkc-row.err .hkc-bubble{border-color:rgba(253,164,175,.4);background:rgba(253,164,175,.08)}
+.hkc-time{display:flex;align-items:center;gap:5px;font-size:.6rem;color:var(--muted-2);margin-top:4px}
+.hkc-src-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);opacity:.7}
+.hkc-typing{display:inline-flex;gap:4px;padding:4px 2px}
+.hkc-typing i{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:typing 1.2s ease-in-out infinite}
+.hkc-typing i:nth-child(2){animation-delay:.15s}
+.hkc-typing i:nth-child(3){animation-delay:.3s}
+@keyframes typing{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-4px);opacity:1}}
+.hkc-chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 18px 10px}
+.hkc-chip{
+  padding:6px 12px;border-radius:999px;font-size:.73rem;font-weight:600;
+  color:var(--muted);background:var(--field);border:1px solid var(--hairline);
+  transition:background .25s ease,color .25s ease,transform .25s ease,border-color .25s ease;
+}
+.hkc-chip:hover{color:var(--ink);border-color:rgba(244,205,132,.4);transform:translateY(-1px)}
+.hkc-hint{padding:0 18px 10px;font-size:.65rem;color:var(--muted-2)}
+.hkc-hint b{color:var(--muted)}
+.hkc-bar{display:flex;align-items:flex-end;gap:8px;padding:12px 18px 16px;border-top:1px solid var(--hairline);background:rgba(0,0,0,.10)}
+.hkc-input{
+  flex:1;min-height:46px;max-height:120px;padding:12px 14px;border-radius:14px;
+  background:var(--field);border:1px solid var(--brd);color:var(--ink);
+  font:inherit;font-size:.86rem;resize:none;line-height:1.6;
+}
+.hkc-input:focus{outline:none;border-color:rgba(94,234,212,.5);box-shadow:0 0 0 3px rgba(94,234,212,.12)}
+.hkc-input::placeholder{color:var(--muted-2)}
+.hkc-send{
+  position:relative;width:46px;height:46px;flex:0 0 auto;border-radius:14px;
+  display:grid;place-items:center;color:#241603;
+  background:linear-gradient(135deg,#ffe4a8,#f4cd84);
+  box-shadow:0 10px 24px -12px rgba(244,205,132,.9);
+  transition:transform .25s var(--spring),box-shadow .25s ease;
+}
+.hkc-send svg{width:19px;height:19px}
+.hkc-send:hover{transform:translateY(-2px) scale(1.03)}
+.hkc-send:disabled{opacity:.55;cursor:progress}
+.hkc-spin{display:none;position:absolute;inset:0;margin:auto;width:18px;height:18px;border:2px solid rgba(36,22,3,.35);border-top-color:#241603;border-radius:50%;animation:spin .8s linear infinite}
+.hkc-busy .hkc-send svg{opacity:0}
+.hkc-busy .hkc-spin{display:block}
+
+/* ── ۹. فوتر ───────────────────────────────────────────────────────────── */
+.site-footer{padding:60px 0 34px;margin-top:36px;border-top:1px solid var(--hairline)}
+.footer-top{display:flex;align-items:flex-start;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.footer-brand{display:flex;align-items:center;gap:11px}
+.footer-brand .brand-text b{font-size:1rem}
+.footer-brand .brand-text small{font-size:.7rem}
+.footer-note{max-width:34ch;font-size:.78rem;color:var(--muted);line-height:1.9;margin-top:12px}
+.footer-links{display:flex;gap:22px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.footer-links a{transition:color .2s ease}
+.footer-links a:hover{color:var(--gold)}
+.footer-dev{font-size:.78rem;color:var(--muted);line-height:2}
+.footer-dev b{color:var(--gold);font-weight:700}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:34px;padding-top:18px;border-top:1px solid var(--hairline);font-size:.7rem;color:var(--muted-2)}
+
+/* ── ۱۰. پنل تم، بازگشت به بالا ──────────────────────────────────────── */
+.theme-panel{
+  position:fixed;top:86px;inset-inline-end:20px;z-index:120;width:258px;
+  padding:14px;border-radius:18px;
+  background:linear-gradient(165deg,rgba(14,30,56,.94),rgba(5,13,28,.94));
+  border:1px solid var(--brd-strong);
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.9);
+  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter:blur(24px);
+  opacity:0;transform:translateY(-8px) scale(.97);pointer-events:none;
+  visibility:hidden;
+  transition:opacity .25s ease,transform .25s var(--ease),visibility .25s;
+}
+.theme-panel.open{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.tp-title{font-size:.72rem;font-weight:700;color:var(--muted);margin:0 6px 8px}
+.theme-opt{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:8px;border-radius:12px;text-align:start;
+  transition:background .2s ease;
+}
+.theme-opt:hover{background:rgba(255,255,255,.06)}
+.theme-opt.active{background:rgba(244,205,132,.1);box-shadow:inset 0 0 0 1px rgba(244,205,132,.35)}
+.theme-dot{width:30px;height:30px;border-radius:9px;flex:0 0 auto;background:var(--sw);border:1px solid rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.theme-name{flex:1;font-size:.8rem;font-weight:600;color:#eef4ff}
+.theme-name small{display:block;font-size:.62rem;color:#a9bad8;font-weight:400}
+.theme-check{color:#f4cd84;font-weight:800;opacity:0;transition:opacity .2s ease}
+.theme-opt.active .theme-check{opacity:1}
+.to-top{
+  position:fixed;bottom:22px;inset-inline-start:22px;z-index:90;
+  width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;font-size:1rem;
+  background:var(--card);border:1px solid var(--brd);color:var(--ink);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .3s ease,transform .3s var(--ease),border-color .25s ease;
+}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top svg{width:18px;height:18px}
+.to-top:hover{border-color:var(--gold)}
+
+/* ── ۱۱. ورود پلکانی ──────────────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(26px) scale(.985)}
+.reveal.in{
+  opacity:1;transform:none;
+  transition:opacity .7s var(--ease),transform .8s var(--spring);
+  transition-delay:calc(var(--i,0) * 55ms);
+}
+.hero [data-anim]{opacity:0;transform:translateY(22px)}
+body.ready .hero [data-anim]{
+  opacity:1;transform:none;
+  animation:riseIn .85s var(--spring) both;
+  animation-delay:calc(var(--i,0) * 90ms + 80ms);
+}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px) scale(.98)}to{opacity:1;transform:none}}
+
+/* ── ۱۲. ریسپانسیو ────────────────────────────────────────────────────── */
+@media (max-width:1080px){
+  .hero-grid{column-gap:26px}
+  .hero h1{font-size:clamp(2.5rem,5.4vw,3.6rem)}
+  .hero-stage{min-height:470px}
+  .nav a{padding:9px 8px;font-size:.78rem}
+  .brand-text small{display:none}
+}
+@media (max-width:860px){
+  .hero-grid{
+    grid-template-columns:1fr;
+    grid-template-areas:"lead" "stage" "rest";
+    grid-template-rows:auto auto auto;
+    row-gap:4px;min-height:0;
+  }
+  .hero-lead,.hero-rest{align-self:auto}
+  .hero h1{font-size:clamp(2.8rem,7.6vw,4rem)}
+  .hero-stage{min-height:440px;width:100%;margin:4px 0 8px}
+}
+@media (max-width:900px){
+  .site-header{padding:8px 10px 0}
+  .header-inner{height:auto;flex-wrap:wrap;padding:8px 10px;gap:6px;border-radius:18px}
+  .brand-mark{width:34px;height:34px;border-radius:11px}
+  .brand-mark svg{width:20px;height:20px}
+  .brand-text b{font-size:.96rem}
+  .icon-btn{width:38px;height:38px}
+  .brand{order:1}
+  .header-actions{order:2;margin-inline-start:auto}
+  .header-cta{display:none}
+  .nav{
+    order:3;width:100%;margin:0;gap:2px;
+    overflow-x:auto;overflow-y:hidden;
+    padding:2px 0 4px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(to left,transparent 0,#000 18px,#000 calc(100% - 4px));
+    mask-image:linear-gradient(to left,transparent 0,#000 18px,#000 calc(100% - 4px));
+  }
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{flex:0 0 auto;background:rgba(255,255,255,.045);font-size:.76rem;padding:7px 11px;border-radius:10px}
+  .hero{padding-top:112px}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .b-feature{grid-column:span 2;grid-row:span 2}
+  .b-wide{grid-column:span 2}
+  .info-grid{grid-template-columns:1fr}
+  .stage-chip.a{inset-inline-start:0;top:1%}
+  .stage-chip.b{inset-inline-end:0;bottom:1%}
+}
+@media (max-width:700px){
+  .wrap{padding:0 16px}
+  .hero{padding:106px 0 22px}
+  .eyebrow{font-size:.7rem;padding:6px 12px 6px 10px}
+  .hero h1{margin-top:14px}
+  .hero-stage{min-height:390px;margin:2px 0 4px}
+  .stage-rings i:nth-child(1){width:58%}
+  .stage-rings i:nth-child(2){width:78%}
+  #hakimPanelMount{width:min(360px,100%)}
+  #hakimPanelMount .hakim-panel{padding:18px 14px 16px;border-radius:22px;gap:12px}
+  #hakimPanelMount .hakim-avatar{width:92px;height:92px}
+  #hakimPanelMount .hakim-glow{inset:-9px}
+  #hakimPanelMount .hakim-text{font-size:.9rem;min-height:3.2em;line-height:1.85}
+  #hakimPanelMount .hakim-name{font-size:.66rem;padding:3px 10px;margin-bottom:6px}
+  .stage-chip{font-size:.64rem;padding:5px 9px;gap:5px}
+  .stage-chip svg{width:13px;height:13px}
+  .stage-chip.a{top:2%}
+  .stage-chip.b{bottom:2%}
+  .hero h1{letter-spacing:-1.2px}
+  .hero-tagline{font-size:1.15rem}
+  .hero-sub{font-size:.9rem}
+  .hero-actions{display:grid;grid-template-columns:1fr;gap:10px}
+  .hero-actions .btn{width:100%}
+  .hero-stats{gap:0;justify-content:space-between;margin-top:22px;padding-top:18px}
+  .hero-stats b{font-size:1.35rem}
+  .hero-stats span{font-size:.7rem}
+  .hero-stage{min-height:430px}
+  .stage-glow{width:72%}
+  #hakimPanelMount .hakim-panel{padding:20px 16px}
+  #hakimPanelMount .hakim-avatar{width:104px;height:104px}
+  #hakimPanelMount .hakim-text{font-size:.92rem;min-height:4.4em}
+  .stage-chip{font-size:.66rem;padding:6px 10px}
+  .stage-chip.a{top:0}
+  .stage-chip.b{bottom:0}
+  .hero-stage{min-height:400px}
+  .stage-star{display:none}
+  .section{padding:46px 0 8px}
+  .section-head{margin-bottom:18px;gap:8px}
+  .section-note{font-size:.8rem}
+  .bento{grid-template-columns:1fr;grid-auto-rows:auto;gap:12px}
+  .b-feature,.b-wide{grid-column:auto;grid-row:auto}
+  .b-feature{min-height:0}
+  .b-feature .feature-visual{min-height:186px}
+  .bento-card{padding:16px;-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(13,28,52,.86)}
+  body[data-theme="sunny"] .bento-card{background:rgba(255,255,255,.88)}
+  .bento-card:not(.b-feature){min-height:172px}
+  .card-desc{-webkit-line-clamp:3}
+  .bento-card:not(.b-feature) .card-tags span:nth-child(n+3){display:inline-block}
+  .card-title{font-size:1.02rem}
+  .survey-form{grid-template-columns:1fr}
+  .sf-field:nth-of-type(4),.sf-submit,.sf-msg{grid-column:auto}
+  .hkc-chips{padding-bottom:6px}
+  .hkc-log{max-height:300px;min-height:150px}
+  .hkc-bubble{max-width:84%;font-size:.82rem}
+  .chat-wrap{transition:max-height .55s var(--ease),opacity .3s ease}
+  #hakimChat.open .chat-wrap{max-height:900px}
+  .footer-top{gap:20px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:6px}
+  .theme-panel{top:auto;bottom:76px;inset-inline:16px auto;width:min(300px,calc(100vw - 32px))}
+  .to-top{inset-inline-end:16px;inset-inline-start:auto;bottom:16px;width:40px;height:40px}
+}
+
+/* ── ۱۳. احترام به کاهش حرکت ─────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .reveal,.hero [data-anim]{opacity:1 !important;transform:none !important}
+}
+
+/* ── ۱۴. تم روشن: پنل حکیم و حلقه‌ها ─────────────────────────────────── */
+body[data-theme="sunny"] #hakimPanelMount .hakim-panel{
+  background:linear-gradient(165deg,rgba(255,255,255,.86),rgba(232,241,252,.74));
+  border-color:rgba(15,40,80,.14);
+  box-shadow:0 30px 70px -40px rgba(16,42,80,.45),inset 0 1px 0 rgba(255,255,255,.9);
+}
+body[data-theme="sunny"] #hakimPanelMount .hakim-panel::before{
+  background:radial-gradient(ellipse at center,rgba(169,112,28,.10),transparent 65%);
+}
+body[data-theme="sunny"] #hakimPanelMount .hakim-text{color:#122440}
+body[data-theme="sunny"] #hakimPanelMount .hakim-name{
+  color:#8a5c14;background:rgba(169,112,28,.10);border-color:rgba(169,112,28,.26);
+}
+body[data-theme="sunny"] .stage-rings i{border-color:rgba(13,148,136,.22)}
+body[data-theme="sunny"] .stage-rings i:nth-child(1){border-color:rgba(169,112,28,.28)}
+body[data-theme="sunny"] .stage-rings i:nth-child(3){border-color:rgba(15,40,80,.08)}
+body[data-theme="sunny"] .theme-panel{
+  background:linear-gradient(165deg,rgba(255,255,255,.96),rgba(238,244,252,.96));
+  border-color:rgba(15,40,80,.14);
+}
+body[data-theme="sunny"] .theme-name{color:#0f2038}
+body[data-theme="sunny"] .theme-name small{color:#5c7292}
+body[data-theme="sunny"] .theme-opt:hover{background:rgba(15,40,80,.05)}
+body[data-theme="sunny"] .btn-ghost{background:rgba(255,255,255,.6)}
+body[data-theme="sunny"] .btn-ghost:hover{background:#fff;border-color:rgba(13,148,136,.45)}
+body[data-theme="sunny"] .icon-btn{background:rgba(255,255,255,.55)}
+body[data-theme="sunny"] .to-top{background:rgba(255,255,255,.8)}
+body[data-theme="sunny"] .hkc-bubble{background:rgba(15,40,80,.05)}
+body[data-theme="sunny"] .hkc-card{background:linear-gradient(165deg,rgba(255,255,255,.86),rgba(238,244,252,.8))}
+body[data-theme="sunny"] .acc{background:linear-gradient(160deg,rgba(255,255,255,.82),rgba(238,244,252,.76))}
+body[data-theme="sunny"] .hkc-bar{background:rgba(15,40,80,.03)}
+body[data-theme="sunny"] .sf-field select option{background:#fff;color:#0f2038}
+body[data-theme="sunny"] .hkc-row.me .hkc-bubble{background:linear-gradient(135deg,rgba(13,148,136,.16),rgba(56,189,248,.12))}
+
+/* ── ۱۵. تم روشن: لهجه‌های تیره‌تر برای کنتراست AA ────────────────────── */
+body[data-theme="sunny"] .a-gold{--a:#8a5c14;--a-soft:rgba(169,112,28,.10);--a-brd:rgba(169,112,28,.30)}
+body[data-theme="sunny"] .a-teal{--a:#0f766e;--a-soft:rgba(13,148,136,.10);--a-brd:rgba(13,148,136,.28)}
+body[data-theme="sunny"] .a-violet{--a:#6d28d9;--a-soft:rgba(109,40,217,.09);--a-brd:rgba(109,40,217,.28)}
+body[data-theme="sunny"] .a-emerald{--a:#047857;--a-soft:rgba(4,120,87,.09);--a-brd:rgba(4,120,87,.28)}
+body[data-theme="sunny"] .a-blue{--a:#1d4ed8;--a-soft:rgba(29,78,216,.09);--a-brd:rgba(29,78,216,.28)}
+body[data-theme="sunny"] .a-rose{--a:#be123c;--a-soft:rgba(190,18,60,.08);--a-brd:rgba(190,18,60,.26)}
+body[data-theme="sunny"] .a-orange{--a:#b45309;--a-soft:rgba(180,83,9,.09);--a-brd:rgba(180,83,9,.28)}
+body[data-theme="sunny"] .a-cyan{--a:#0e7490;--a-soft:rgba(14,116,144,.09);--a-brd:rgba(14,116,144,.28)}
+body[data-theme="sunny"] .bento-card::before{
+  background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(169,112,28,.12),transparent 62%);
+}
+body[data-theme="sunny"] .feature-badge{color:#3b2405}
+body[data-theme="sunny"] .kicker{color:#8a5c14}
+body[data-theme="sunny"] .hero-stats b{color:#8a5c14}
+body[data-theme="sunny"] .brand-text small{color:#4a5f7d}
