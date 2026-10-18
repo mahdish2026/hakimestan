@@ -574,12 +574,70 @@ function countBy(arr,key){
   arr.forEach(item=>{const k=item[key]||'-';out[k]=(out[k]||0)+1});
   return Object.keys(out).map(k=>({key:k,val:out[k]})).sort((a,b)=>b.val-a.val);
 }
+/* نگاشت کامل مسیر صفحات به اسم فارسی زیبا (اسکن کل مخزن) */
+const PAGE_NAMES={
+  'index.html':'لابی اصلی',
+  '404.html':'صفحه ۴۰۴',
+  'offline.html':'صفحه آفلاین',
+  'azmoon-saz.html':'آزمون‌ساز',
+  'daftar.html':'دفتر معلم',
+  'darsgah.html':'درسگاه',
+  'hqf-converter.html':'مبدل HQF',
+  'install-pwa.html':'نصب اپلیکیشن',
+  'judges.html':'معرفی پروژه',
+  'math-learning.html':'مدرسه ریاضی',
+  'payamresan.html':'پیام‌رسان',
+  'tarh-dars.html':'کارگاه طرح درس',
+  'videos.html':'فیلم‌های آموزشی',
+  'panels/teacher.html':'پنل معلم',
+  'games/snake-ladder.html':'مار و پله دانش',
+  'games/snake-ladder-online.html':'مار و پله آنلاین',
+  'games/mancheh-online.html':'منچ دانش آنلاین',
+  'games/kohan-diyar.html':'فتح کهن دیار ایران',
+  'games/hakim-quest.html':'ماجرای حکیم',
+  'games/hakim-cards.html':'کارت‌های حکیم',
+  'games/hakim-treasure.html':'گنج حکیم',
+  'games/jadval-hekmat.html':'جدول حکمت',
+  'games/farsi5-vocab.html':'واژه‌ستان فارسی پنجم',
+  'games/math-learning-1.html':'تقسیم چکشی',
+  'games/math-olgoha.html':'الگوستان',
+  'games/math-time-mission.html':'ماموریت زمان',
+  'games/lab2d.html':'آزمایشگاه دوبعدی',
+  'games/teacher.html':'پنل معلم کهن‌دیار',
+  'games/lab2d-apps/hakim-goosh.html':'گوش حکیم',
+  'games/lab2d-apps/hakim-gosh.html':'چشم حکیم',
+  'games/lab2d-apps/hakim-incline.html':'سطح شیب‌دار',
+  'games/lab2d-apps/hakim-pulley.html':'قرقره'
+};
+/* تابع هوشمند: مسیر خام لاگ → {اسم فارسی، لینک صحیح، مسیر تمیز}
+   - پیشوند hakimestan/ ابتدای مسیرها را حذف می‌کند
+   - نام تکی فایل (مثل hakim-goosh.html) را به مسیر کامل برمی‌گرداند
+   - لینک را با ../ می‌سازد چون پنل داخل پوشه panels/ است */
+function getCleanPageInfo(path){
+  var raw=String(path==null?'':path).trim();
+  if(!raw||raw==='-')raw='index.html';
+  if(/^https?:\/\//i.test(raw)){try{raw=new URL(raw).pathname;}catch(e){}}
+  raw=String(raw).split(/[?#]/)[0].trim().replace(/^\/+/,'');
+  raw=raw.replace(/^(hakimestan|hakimistan)\//i,'').replace(/^\/+/,'');
+  if(!raw||raw==='/')raw='index.html';
+  if(raw==='/'||raw==='.')raw='index.html';
+  var cleanPath=raw,name=PAGE_NAMES[raw];
+  if(!name){
+    var base=raw.split('/').pop();
+    var found=Object.keys(PAGE_NAMES).find(function(k){return k===base||k.slice(-base.length-1)==='/'+base;});
+    if(found){name=PAGE_NAMES[found];cleanPath=found;}
+  }
+  if(!name){
+    var file=raw.split('/').pop().replace(/\.html?$/i,'');
+    try{file=decodeURIComponent(file);}catch(e){}
+    file=String(file||raw).replace(/[-_]+/g,' ').trim();
+    name=file||raw;
+  }
+  var href=('../'+cleanPath).replace(/^(\.\.\/)+/,'../');
+  return {name:name,href:href,path:cleanPath,raw:String(path==null?'':path)};
+}
 function pageToPath(page){
-  var p=String(page||'').trim();
-  if(!p||p==='-')return 'index.html';
-  if(p.indexOf('/')!==-1)return p;
-  if(/^(snake-ladder|hakim-cards|kohan-diyar|hakim-quest|jadval-hekmat|hakim-treasure|snake-ladder-online|farsi5-vocab)/.test(p))return 'games/'+p;
-  return p;
+  return getCleanPageInfo(page).path;
 }
 function renderBars(containerId,list,max){
   const el=$(containerId);
@@ -590,7 +648,7 @@ function renderBars(containerId,list,max){
   el.innerHTML='<div class="stat-bars">'+list.map(item=>{
     const pct=Math.round((item.val/total)*100);
     const labelHtml=isPages
-      ?'<a href="../'+esc(pageToPath(item.key))+'" target="_blank" rel="noopener" class="lbl lbl-link" title="باز کردن '+esc(item.key)+'">'+esc(item.key)+' ↗</a>'
+      ?(function(){var info=getCleanPageInfo(item.key);return '<a href="'+esc(info.href)+'" target="_blank" rel="noopener" class="lbl lbl-link" title="باز کردن '+esc(info.name)+' ('+esc(info.path)+')">'+esc(info.name)+' ↗</a>';})()
       :'<span class="lbl">'+esc(item.key)+'</span>';
     return '<div class="stat-bar"><div class="stat-bar-top">'+labelHtml+'<span class="val">'+fa(item.val)+' ('+fa(pct)+'٪)</span></div><div class="stat-bar-track"><div class="stat-bar-fill" style="width:'+pct+'%"></div></div></div>';
   }).join('')+'</div>';
@@ -620,7 +678,7 @@ function applyVisitFilters(){
     if(dev&&v.device!==dev)return false;
     if(st&&v.status!==st)return false;
     if(q){
-      const hay=[v.page,v.user,v.ref,v.browser,v.os,v.lang,v.device,v.status,v.time].map(x=>x==null?'':x).join(' ').toLowerCase();
+      const hay=[v.page,getCleanPageInfo(v.page).name,v.user,v.ref,v.browser,v.os,v.lang,v.device,v.status,v.time].map(x=>x==null?'':x).join(' ').toLowerCase();
       if(hay.indexOf(q)===-1)return false;
     }
     return true;
@@ -652,7 +710,8 @@ function renderVisitsTable(){
     const isNew=v.status==='جدید';
     const userFull=v.user||'—';
     const userShort=userFull.length>18?userFull.substring(0,18)+'…':userFull;
-    const pageLink='<a href="../'+esc(pageToPath(v.page))+'" target="_blank" rel="noopener" class="lbl-link" style="max-width:none">'+esc(v.page||'—')+' ↗</a>';
+    const _info=getCleanPageInfo(v.page);
+    const pageLink='<a href="'+esc(_info.href)+'" target="_blank" rel="noopener" class="lbl-link" style="max-width:none" title="'+esc(_info.path)+'">'+esc(_info.name||'—')+' ↗</a>';
     html+='<tr>'+
       '<td style="font-size:11px;color:var(--muted)">'+fa(idx)+'</td>'+
       '<td style="font-size:11px;color:var(--muted);white-space:nowrap">'+esc(v.time||'—')+'</td>'+
