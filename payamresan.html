@@ -388,14 +388,23 @@ textarea.code{direction:ltr;text-align:left}
 /* ─── دسکتاپ ─── */
 @media(min-width:920px){
   .wrap{max-width:560px}
+  /* دسکتاپ: پنل چت به ارتفاع دید محدود است؛ فقط پیام‌ها اسکرول می‌شوند. */
+  #page-chat{height:100dvh;min-height:0;overflow:hidden}
+  #page-chat .chat-shell,#page-chat .chat-body{min-height:0}
   .chat-body{max-width:1100px;margin:0 auto;width:100%;gap:12px;padding:12px;align-items:stretch}
-  .side{max-width:340px;max-height:calc(100dvh - 220px);background:var(--card);border:2px solid var(--line);border-radius:26px;display:flex!important;box-shadow:var(--shadow)}
+  .side{max-width:340px;min-height:0;max-height:none;background:var(--card);border:2px solid var(--line);border-radius:26px;display:flex!important;box-shadow:var(--shadow)}
   .chat-shell.in-chat .side{display:flex!important}
   .main{display:flex!important;background:var(--card);border:2px solid var(--line);border-radius:26px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+  #page-chat .msgs{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto}
+  #page-chat .composer-wrap{flex:0 0 auto;width:100%;margin-top:auto}
+  #page-chat .chat-foot{display:none} /* فضای زیر کادر ارسال در پنل دسکتاپ حذف شود */
   .back-fab{display:none!important}
-  .msgs{max-height:calc(100dvh - 360px)}
   .stat-grid{grid-template-columns:repeat(4,1fr)}
   .theme-grid{grid-template-columns:repeat(4,1fr)}
+  /* دکمهٔ دسترس‌پذیری از دکمهٔ ارسال فاصله بگیرد، حتی با بزرگ‌شدن کادر نوشتن. */
+  body[data-page="chat"] #a11y-toolbar{
+    inset-block-end:max(90px,calc(var(--hk-composer-h,74px) + 28px));
+  }
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
 
