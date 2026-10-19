@@ -11,8 +11,8 @@
 <title>معرفی پروژه — حکیمستان</title>
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="stylesheet" href="css/fonts.css">
-<!-- پوستهٔ مشترک — همان هویت و تم‌های لابی (شبِ کاشی) -->
-<link rel="stylesheet" href="css/hakim-ui.css?v=1405-07-kashi">
+<!-- پوستهٔ مشترک — همان هویت و تم‌های لابی (کاشی روشن) -->
+<link rel="stylesheet" href="css/hakim-ui.css?v=1405-08-kashi-light">
 
 <style>
 /* ═══════════════════════════════════════════
@@ -326,6 +326,45 @@ body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
   .designer-card{ flex-direction:column; text-align:center; }
   .gallery{ grid-template-columns:1fr; }
 }
+
+/* ═══════════════════════════════════════════
+   تم کاشی (روشن) — همگام با لابی
+═══════════════════════════════════════════ */
+body[data-theme="kashi"] .hero-logo{
+  background:linear-gradient(145deg,rgba(0,128,128,.14),rgba(212,175,55,.12));
+  border-color:rgba(212,175,55,.52);
+  box-shadow:0 5px 18px rgba(0,128,128,.10),inset 0 1px 0 rgba(255,255,255,.6);
+}
+body[data-theme="kashi"] .section-title{ color:#8f6510; }
+body[data-theme="kashi"] th{ background:rgba(0,128,128,.07); color:#006f6e; }
+body[data-theme="kashi"] .tag-fixed{ color:#4f6274; background:rgba(0,128,128,.06); border-color:rgba(0,128,128,.18); }
+body[data-theme="kashi"] .tag-custom{ color:#8f6510; background:rgba(212,175,55,.14); border-color:rgba(169,112,28,.32); }
+body[data-theme="kashi"] .checklist .tick{ color:#00706f; }
+body[data-theme="kashi"] .timeline{ border-right-color:rgba(0,128,128,.30); }
+body[data-theme="kashi"] .tl-item::before{ box-shadow:0 0 0 3px rgba(169,112,28,.24); }
+body[data-theme="kashi"] .tl-phase{ color:#8f6510; background:rgba(212,175,55,.14); border-color:rgba(169,112,28,.32); }
+body[data-theme="kashi"] .tech-item:hover{ border-color:rgba(169,112,28,.35); background:rgba(212,175,55,.06); }
+body[data-theme="kashi"] .designer-card{
+  border-color:rgba(169,112,28,.40);
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(0,128,128,.08), transparent 70%),
+    linear-gradient(160deg,#ffffff,#fffdf7);
+}
+body[data-theme="kashi"] .highlight-card{
+  border-color:rgba(169,112,28,.42);
+  background:
+    radial-gradient(70% 90% at 85% 0%, rgba(212,175,55,.12), transparent 70%),
+    linear-gradient(160deg,#ffffff,#fffdf7);
+}
+body[data-theme="kashi"] .ready-card{
+  border-color:rgba(0,128,128,.38);
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(0,128,128,.08), transparent 70%),
+    linear-gradient(160deg,#ffffff,#fffdf7);
+}
+body[data-theme="kashi"] .ready-card .section-title{ color:#00706f; }
+body[data-theme="kashi"] .shot img{ border-color:rgba(0,128,128,.20); }
+body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
 </style>
 <!-- hakim-meta:start -->
 <meta name="description" content="معرفی پروژهٔ حکیمستان برای داوران جشنواره — معماری، فناوری‌های به‌کاررفته، دسترس‌پذیری، امنیت و امکانات آفلاین.">
@@ -442,15 +481,16 @@ body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
   <!-- ۲. این پروژه چیه؟ -->
   <section class="hk-card reveal">
     <h2 class="section-title">📖 این پروژه چیه؟</h2>
-    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل <strong>۱۲ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و گفت‌وگو با «حکیم») و بیش از <strong>۸۰ سؤال آماده</strong> با <strong>۸ تم رنگی</strong> می‌باشد.</p>
+    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل <strong>۱۳ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و درسگاه) و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۸۰ سؤال آماده</strong> و <strong>۲۷ فیلم معرفی</strong>.</p>
     <p>این سامانه برای پایه پنجم ابتدایی طراحی شده و هدفش این است که مفاهیم درسی از طریق بازی، یادگیری فعال و بازخورد فوری به دانش‌آموز منتقل شود.</p>
     <p>تمام محتوا با HTML، CSS و JavaScript خالص ساخته شده و به‌صورت PWA روی هر مرورگر و هر دستگاهی (موبایل، تبلت، رایانه) بدون نیاز به نصب اجرا می‌شود.</p>
+    <p>همهٔ صفحه‌های اصلی — لابی، فیلم‌ها و همین صفحهٔ معرفی — روی یک <strong>هویت بصری واحد</strong> به نام «کاشی» (کرم روشن، فیروزه و طلا، با نقش اسلیمی) ساخته شده‌اند و تم انتخابی کاربر (<strong>کاشی، اقیانوس یا صبح فیروزه</strong>) به‌صورت مشترک در همهٔ صفحه‌ها باقی می‌ماند.</p>
 
     <!-- اسکرین‌شات لابی -->
     <figure class="shot">
       <picture>
         <source srcset="screenshots/lobby.webp" type="image/webp">
-        <img src="screenshots/lobby.jpg" alt="نمای لابی حکیمستان با کارت‌های بازی‌ها و پنج وادی دانش"
+        <img src="screenshots/lobby.jpg" alt="نمای لابی حکیمستان در تم کاشی — حکیم در قهرمان صفحه و کارت‌های بازی‌ها"
              width="1280" height="720" loading="lazy" decoding="async"
              onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
       </picture>
@@ -558,6 +598,12 @@ body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
             <td><span class="tag tag-fixed">محتوای ثابت</span></td>
           </tr>
           <tr>
+            <td>الگوستان (مدرسه ریاضی)</td>
+            <td>ریاضی (الگوهای هندسی و عددی)</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-fixed">محتوای ثابت</span></td>
+          </tr>
+          <tr>
             <td>واژه‌ستان فارسی پنجم</td>
             <td>فارسی (واژگان هر ۱۷ درس)</td>
             <td>پنجم</td>
@@ -621,11 +667,12 @@ body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
   <!-- ۴ب. مدرسه ریاضی -->
   <section class="hk-card reveal">
     <h2 class="section-title">🧮 مدرسه ریاضی</h2>
-    <p>«مدرسه ریاضی» بخش ویژه‌ی ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم که با هر به‌روزرسانی، بازی‌های تازه‌ای (از تقسیم و ساعت تا کسر، هندسه و مسائل کتاب درسی) به آن اضافه می‌شود.</p>
+    <p>«مدرسه ریاضی» بخش ویژه‌ی ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم که با هر به‌روزرسانی، بازی‌های تازه‌ای (از تقسیم و ساعت تا الگو، کسر، هندسه و مسائل کتاب درسی) به آن اضافه می‌شود.</p>
     <p><strong>بازی‌های فعلی:</strong></p>
     <ul class="feature-list">
       <li>🔨 <strong>تقسیم چکشی</strong> — یادگیری تقسیم، قدم‌به‌قدم و مرحله‌به‌مرحله با راهنمایی حکیم؛ ۵ مرحله، ۱۵ ستاره و گواهی‌نامه در پایان</li>
       <li>⏰ <strong>ماموریت زمان</strong> — خواندن ساعت، جمع و تفریق زمان و تبدیل واحدها در ۸ مرحله‌ی ماجراجویی، به‌همراه چالش ترکیبی، نشان‌ها و گواهی‌نامه</li>
+      <li>🧩 <strong>الگوستان</strong> — کشف الگوهای هندسی و عددی؛ جدول الگو، شکل بعدی، قانون الگو و گواهی پایان</li>
     </ul>
     <p>بازی‌های این بخش کاملاً آفلاین و واکنش‌گرا هستند، بازخورد فوری و راهنمایی گام‌به‌گام دارند و پیشرفت دانش‌آموز (ستاره‌ها و گواهی‌نامه) روی همان دستگاه ذخیره می‌شود.</p>
   </section>
@@ -655,6 +702,15 @@ body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
     <h2 class="section-title">🖼️ نماها</h2>
     <p>نمایی از محیط حکیمستان:</p>
     <div class="gallery">
+      <figure class="shot">
+        <picture>
+          <source srcset="screenshots/videos-page.webp" type="image/webp">
+          <img src="screenshots/videos-page.jpg" alt="نمای صفحهٔ فیلم‌های حکیمستان با کارت‌های ویدیویی شیشه‌ای در تم کاشی"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+        </picture>
+        <figcaption>صفحهٔ فیلم‌ها — ۲۷ ویدیوی معرفی بازی‌ها و ابزارها</figcaption>
+      </figure>
       <figure class="shot">
         <picture>
           <source srcset="screenshots/mancheh.webp" type="image/webp">
@@ -700,7 +756,7 @@ body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
       <li>✏️ ویرایش پیام</li>
       <li>⭐ ستاره‌دار کردن پیام‌های مهم</li>
       <li>🛡️ پنل مدیریت برای معلم</li>
-      <li>🎨 ۴ تم رنگی قابل انتخاب</li>
+      <li>🎨 تم‌های رنگی متنوع قابل انتخاب</li>
       <li>🔐 فیلتر کلمات نامناسب</li>
     </ul>
   </section>
@@ -729,14 +785,17 @@ body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
   <section class="hk-card reveal">
     <h2 class="section-title">🛠️ ویژگی‌های فنی</h2>
     <div class="tech-grid">
-      <div class="tech-item"><span class="num">۱۲</span><span class="label">بازی تعاملی</span></div>
+      <div class="tech-item"><span class="num">۱۳</span><span class="label">بازی تعاملی</span></div>
       <div class="tech-item"><span class="num">۷</span><span class="label">ابزار معلم و دانش‌آموز</span></div>
-      <div class="tech-item"><span class="num">۸</span><span class="label">تم رنگی</span></div>
+      <div class="tech-item"><span class="num">۳</span><span class="label">تم رنگی هماهنگ در همهٔ صفحه‌ها</span></div>
       <div class="tech-item"><span class="num">۸۰+</span><span class="label">سؤال آماده</span></div>
+      <div class="tech-item"><span class="num">۲۷</span><span class="label">فیلم معرفی بازی‌ها و ابزارها</span></div>
       <div class="tech-item"><span class="num">PWA</span><span class="label">قابل نصب بدون فروشگاه</span></div>
       <div class="tech-item"><span class="num">AI</span><span class="label">گفت‌وگو با حکیم</span></div>
+      <div class="tech-item"><span class="num">🎨</span><span class="label">هویت بصری یکپارچه — کاشی</span></div>
       <div class="tech-item"><span class="num">HTML</span><span class="label">پایه‌ی فنی — بدون فریم‌ورک</span></div>
-      <div class="tech-item"><span class="num">📱</span><span class="label">موبایل‌پسند</span></div>
+      <div class="tech-item"><span class="num">a11y</span><span class="label">دسترس‌پذیری WCAG 2.2 AA</span></div>
+      <div class="tech-item"><span class="num">📱</span><span class="label">موبایل‌پسند و واکنش‌گرا</span></div>
       <div class="tech-item"><span class="num">👨‍🏫</span><span class="label">طراحی‌شده توسط معلم پایه پنجم</span></div>
     </div>
   </section>

@@ -9,8 +9,8 @@
 <title>فیلم‌های حکیمستان</title>
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="stylesheet" href="css/fonts.css">
-<!-- پوستهٔ مشترک — همان هویت و تم‌های لابی (شبِ کاشی) -->
-<link rel="stylesheet" href="css/hakim-ui.css?v=1405-07-kashi">
+<!-- پوستهٔ مشترک — همان هویت و تم‌های لابی (کاشی روشن) -->
+<link rel="stylesheet" href="css/hakim-ui.css?v=1405-08-kashi-light">
 
 <style>
 /* ═══════════════════════════════════════════
@@ -411,6 +411,47 @@ body[data-theme="sunny"] .modal-box {
 .modal-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ═══════════════════════════════════════════
+   تم کاشی (روشن) — همگام با لابی
+═══════════════════════════════════════════ */
+body[data-theme="kashi"] .btn-play {
+  background: linear-gradient(135deg,#00a896,#007f7b);
+  color: #fff;
+  border-color: rgba(255,255,255,.5);
+  box-shadow: 0 12px 28px -14px rgba(0,128,128,.55), inset 0 1px 0 rgba(255,255,255,.3);
+}
+body[data-theme="kashi"] .btn-play:hover:not(:disabled) {
+  box-shadow: 0 18px 34px -14px rgba(0,128,128,.58), inset 0 1px 0 rgba(255,255,255,.35);
+}
+body[data-theme="kashi"] .play-circle {
+  background: linear-gradient(135deg,#00a896,#007f7b);
+  color: #fff;
+  box-shadow: 0 12px 28px -14px rgba(0,128,128,.6), inset 0 1px 0 rgba(255,255,255,.35);
+}
+body[data-theme="kashi"] .soon-overlay { background: rgba(251,248,241,.78); }
+body[data-theme="kashi"] .soon-pill {
+  background: rgba(255,255,255,.85);
+  border-color: rgba(0,128,128,.22);
+  color: #4f6274;
+}
+body[data-theme="kashi"] .modal-box {
+  background: linear-gradient(165deg,#ffffff,#fffdf7);
+  border-color: rgba(0,128,128,.24);
+  box-shadow: 0 40px 90px -30px rgba(26,42,58,.4), inset 0 1px 0 rgba(255,255,255,.95);
+}
+body[data-theme="kashi"] .modal-close { background: rgba(0,128,128,.06); border-color: rgba(0,128,128,.22); }
+body[data-theme="kashi"] .section-title .sec-count {
+  color: #8f6510;
+  background: rgba(212,175,55,.14);
+  border-color: rgba(169,112,28,.32);
+}
+body[data-theme="kashi"] .thumb-ph {
+  background:
+    radial-gradient(70% 90% at 50% 100%, rgba(212,175,55,.14), transparent 70%),
+    radial-gradient(60% 80% at 80% 10%, rgba(0,128,128,.10), transparent 72%),
+    var(--bg-2);
+}
+
+/* ═══════════════════════════════════════════
    حرکت کمتر
 ═══════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
@@ -518,7 +559,7 @@ body[data-theme="sunny"] .modal-box {
     <div class="wrap">
       <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> دیار حکیم · سرزمین یادگیری</p>
       <div class="hero-emblem" aria-hidden="true">
-        <!-- چراغ دانایی — هم‌رنگ شبِ کاشی -->
+        <!-- چراغ دانایی — هم‌رنگ تم کاشی -->
         <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" fill="none">
           <defs>
             <radialGradient id="gldFlame" cx="50%" cy="30%" r="55%">
