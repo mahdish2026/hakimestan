@@ -34,33 +34,44 @@
   --spring:cubic-bezier(.34,1.45,.64,1);
 }
 body[data-theme="ocean"]{
-  --bg:#030a18;
-  --bg-2:#061228;
-  --gold:#f2c979;
-  --teal:#67e8f9;
-  --muted:#a2b6d6;
-  --card:rgba(10,29,60,.62);
-  --card-2:rgba(6,18,40,.6);
-  --header-bg:rgba(4,12,28,.64);
+  --ink:#e8f4ff;
+  --muted:#8ab4e0;
+  --muted-2:#6a98c8;
+  --gold:#38bdf8;
+  --gold-2:#0ea5e9;
+  --teal:#22d3ee;
+  --cyan:#67e8f9;
+  --violet:#818cf8;
+  --bg:#020b1a;
+  --bg-2:#041530;
+  --card:rgba(8,24,55,.70);
+  --card-2:rgba(4,14,35,.68);
+  --brd:rgba(56,189,248,.14);
+  --brd-strong:rgba(56,189,248,.28);
+  --field:rgba(56,189,248,.06);
+  --hairline:rgba(56,189,248,.12);
+  --header-bg:rgba(4,16,38,.70);
+  --shadow:0 30px 80px -40px rgba(2,11,26,.98);
 }
 body[data-theme="sunny"]{
-  --ink:#0f2038;
-  --muted:#4a5f7d;
-  --muted-2:#5c7292;
+  --ink:#0c1e38;
+  --muted:#3d5a80;
+  --muted-2:#4f6f95;
   --gold:#a9701c;
   --gold-2:#8c5c14;
   --teal:#0d9488;
   --cyan:#0891b2;
-  --bg:#eef3fa;
-  --bg-2:#e1eaf6;
-  --card:rgba(255,255,255,.72);
-  --card-2:rgba(255,255,255,.64);
-  --brd:rgba(15,40,80,.10);
-  --brd-strong:rgba(15,40,80,.18);
-  --field:rgba(15,40,80,.045);
-  --hairline:rgba(15,40,80,.08);
-  --header-bg:rgba(255,255,255,.72);
-  --shadow:0 30px 70px -40px rgba(16,42,80,.35);
+  --violet:#7c3aed;
+  --bg:#f4f8fc;
+  --bg-2:#e8f0f8;
+  --card:rgba(255,255,255,.88);
+  --card-2:rgba(240,248,255,.82);
+  --brd:rgba(13,148,136,.14);
+  --brd-strong:rgba(13,148,136,.26);
+  --field:rgba(13,148,136,.04);
+  --hairline:rgba(13,148,136,.10);
+  --header-bg:rgba(255,255,255,.82);
+  --shadow:0 30px 70px -40px rgba(13,30,60,.18);
 }
 
 /* ── ۱. ریست ────────────────────────────────────────────────────────────── */
@@ -99,9 +110,9 @@ h1,h2,h3{line-height:1.4;font-weight:800;letter-spacing:-.2px}
 }
 body[data-theme="ocean"] .bg{
   background:
-    radial-gradient(58% 42% at 82% -6%,rgba(37,99,235,.34),rgba(37,99,235,0) 64%),
-    radial-gradient(52% 40% at 4% -10%,rgba(14,165,233,.18),rgba(14,165,233,0) 62%),
-    radial-gradient(46% 38% at 88% 104%,rgba(103,232,249,.10),rgba(103,232,249,0) 66%);
+    radial-gradient(58% 42% at 82% -6%,rgba(56,189,248,.34),rgba(56,189,248,0) 64%),
+    radial-gradient(52% 40% at 4% -10%,rgba(34,211,238,.22),rgba(34,211,238,0) 62%),
+    radial-gradient(46% 38% at 88% 104%,rgba(129,140,248,.14),rgba(129,140,248,0) 66%);
 }
 body[data-theme="sunny"] .bg{
   background:
@@ -903,6 +914,117 @@ body.ready .hero [data-anim]{
   .reveal,.hero [data-anim]{opacity:1 !important;transform:none !important}
 }
 
+/* ── ۱۳بیس. تم اقیانوس: لهجه‌های نئونی آبی و فیروزه ──────────────────── */
+body[data-theme="ocean"] .hero h1{
+  background:linear-gradient(180deg,#e0f2ff 8%,#7dd3fc 52%,#38bdf8 100%);
+  -webkit-background-clip:text;background-clip:text;
+}
+body[data-theme="ocean"] .a-gold{--a:#38bdf8;--a-soft:rgba(56,189,248,.12);--a-brd:rgba(56,189,248,.32)}
+body[data-theme="ocean"] .a-teal{--a:#22d3ee;--a-soft:rgba(34,211,238,.12);--a-brd:rgba(34,211,238,.30)}
+body[data-theme="ocean"] .a-violet{--a:#818cf8;--a-soft:rgba(129,140,248,.12);--a-brd:rgba(129,140,248,.30)}
+body[data-theme="ocean"] .a-emerald{--a:#34d399;--a-soft:rgba(52,211,153,.10);--a-brd:rgba(52,211,153,.28)}
+body[data-theme="ocean"] .a-blue{--a:#60a5fa;--a-soft:rgba(96,165,250,.12);--a-brd:rgba(96,165,250,.30)}
+body[data-theme="ocean"] .a-rose{--a:#fb7185;--a-soft:rgba(251,113,133,.10);--a-brd:rgba(251,113,133,.28)}
+body[data-theme="ocean"] .a-orange{--a:#fdba74;--a-soft:rgba(253,186,116,.10);--a-brd:rgba(253,186,116,.28)}
+body[data-theme="ocean"] .a-cyan{--a:#67e8f9;--a-soft:rgba(103,232,249,.12);--a-brd:rgba(103,232,249,.30)}
+body[data-theme="ocean"] .bento-card:hover,.body[data-theme="ocean"] .bento-card:focus-visible{
+  border-color:rgba(56,189,248,.30);
+  box-shadow:0 36px 80px -40px rgba(2,11,26,1),0 0 0 1px rgba(34,211,238,.12),inset 0 1px 0 rgba(255,255,255,.08);
+}
+body[data-theme="ocean"] .bento-card::after{
+  background:linear-gradient(90deg,transparent,var(--a,#22d3ee),var(--gold,#38bdf8),transparent);
+}
+body[data-theme="ocean"] .nav a:hover,body[data-theme="ocean"] .nav a:focus-visible{
+  color:var(--ink);background:rgba(56,189,248,.08);
+}
+body[data-theme="ocean"] .icon-btn:hover{
+  background:rgba(56,189,248,.10);border-color:rgba(56,189,248,.45);box-shadow:0 0 22px rgba(56,189,248,.18);
+}
+body[data-theme="ocean"] .theme-panel{
+  background:linear-gradient(165deg,rgba(8,24,55,.96),rgba(4,14,35,.96));
+  border-color:rgba(56,189,248,.20);
+}
+body[data-theme="ocean"] .theme-opt.active{
+  background:rgba(56,189,248,.10);box-shadow:inset 0 0 0 1px rgba(56,189,248,.30);
+}
+body[data-theme="ocean"] .theme-check{color:#38bdf8}
+body[data-theme="ocean"] ::selection{background:rgba(34,211,238,.30);color:#fff}
+body[data-theme="ocean"] .kicker{color:#38bdf8}
+body[data-theme="ocean"] .kicker::before{background:linear-gradient(90deg,#38bdf8,transparent)}
+body[data-theme="ocean"] .hero-stats b{color:#38bdf8}
+body[data-theme="ocean"] .acc-inner a{color:#22d3ee}
+body[data-theme="ocean"] #hakimPanelMount .hakim-panel{
+  border-color:rgba(56,189,248,.22);
+  background:linear-gradient(165deg,rgba(8,24,55,.82),rgba(2,11,26,.78));
+  box-shadow:0 40px 90px -40px rgba(2,11,26,1),inset 0 1px 0 rgba(255,255,255,.10);
+}
+body[data-theme="ocean"] #hakimPanelMount .hakim-panel::before{
+  background:radial-gradient(ellipse at center,rgba(56,189,248,.10),transparent 65%);
+}
+body[data-theme="ocean"] #hakimPanelMount .hakim-name{
+  background:rgba(56,189,248,.10);border-color:rgba(56,189,248,.24);color:#7dd3fc;
+}
+body[data-theme="ocean"] .stage-rings i{border-color:rgba(34,211,238,.18)}
+body[data-theme="ocean"] .stage-rings i:nth-child(1){border-color:rgba(56,189,248,.24)}
+body[data-theme="ocean"] .stage-rings i:nth-child(3){border-color:rgba(129,140,248,.12)}
+body[data-theme="ocean"] .hkc-card{
+  background:linear-gradient(165deg,rgba(8,24,55,.82),rgba(4,14,35,.78));
+}
+body[data-theme="ocean"] .acc{
+  background:linear-gradient(160deg,rgba(8,24,55,.78),rgba(4,14,35,.72));
+}
+body[data-theme="ocean"] .hkc-send{
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#002a42;
+  box-shadow:0 10px 24px -12px rgba(56,189,248,.9);
+}
+body[data-theme="ocean"] .sf-submit{
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#002a42;
+  box-shadow:0 12px 28px -14px rgba(56,189,248,.85);
+}
+body[data-theme="ocean"] .survey-type.active{
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#002a42;
+  box-shadow:0 8px 20px -12px rgba(56,189,248,.9);
+}
+body[data-theme="ocean"] .btn-primary{
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  color:#002a42;
+  box-shadow:0 14px 34px -14px rgba(56,189,248,.8),inset 0 1px 0 rgba(255,255,255,.5);
+}
+body[data-theme="ocean"] .btn-primary:hover{
+  box-shadow:0 22px 44px -16px rgba(56,189,248,.9),inset 0 1px 0 rgba(255,255,255,.55);
+}
+body[data-theme="ocean"] .feature-badge{
+  background:linear-gradient(135deg,#7dd3fc,#38bdf8);color:#002a42;
+  box-shadow:0 10px 24px -12px rgba(56,189,248,.9);
+}
+body[data-theme="ocean"] .feature-icon{
+  background:linear-gradient(160deg,rgba(56,189,248,.24),rgba(34,211,238,.10));
+  border-color:rgba(56,189,248,.40);
+  box-shadow:0 30px 60px -30px rgba(56,189,248,.55),inset 0 1px 0 rgba(255,255,255,.20);
+}
+body[data-theme="ocean"] .hkc-row.me .hkc-bubble{
+  background:linear-gradient(135deg,rgba(34,211,238,.20),rgba(56,189,248,.14));
+  border-color:rgba(34,211,238,.32);
+}
+body[data-theme="ocean"] .hkc-badge{
+  background:rgba(34,211,238,.14);border-color:rgba(34,211,238,.30);color:#22d3ee;
+}
+body[data-theme="ocean"] .hkc-chip:hover{
+  border-color:rgba(56,189,248,.45);
+}
+body[data-theme="ocean"] .hkc-input:focus{
+  border-color:rgba(34,211,238,.55);box-shadow:0 0 0 3px rgba(34,211,238,.14);
+}
+body[data-theme="ocean"] .sf-field input:focus,body[data-theme="ocean"] .sf-field select:focus,body[data-theme="ocean"] .sf-field textarea:focus{
+  border-color:rgba(34,211,238,.55);box-shadow:0 0 0 3px rgba(34,211,238,.14);
+}
+body[data-theme="ocean"] .to-top{border-color:rgba(56,189,248,.20)}
+body[data-theme="ocean"] .to-top:hover{border-color:var(--gold)}
+body[data-theme="ocean"] .footer-links a:hover{color:var(--gold)}
+body[data-theme="ocean"] .footer-dev b{color:var(--gold)}
+
 /* ── ۱۴. تم روشن: پنل حکیم و حلقه‌ها ─────────────────────────────────── */
 body[data-theme="sunny"] #hakimPanelMount .hakim-panel{
   background:linear-gradient(165deg,rgba(255,255,255,.86),rgba(232,241,252,.74));
@@ -953,3 +1075,14 @@ body[data-theme="sunny"] .feature-badge{color:#3b2405}
 body[data-theme="sunny"] .kicker{color:#8a5c14}
 body[data-theme="sunny"] .hero-stats b{color:#8a5c14}
 body[data-theme="sunny"] .brand-text small{color:#4a5f7d}
+body[data-theme="sunny"] ::selection{background:rgba(13,148,136,.22);color:#0c1e38}
+body[data-theme="sunny"] .nav a:hover,body[data-theme="sunny"] .nav a:focus-visible{
+  color:var(--ink);background:rgba(13,148,136,.08);
+}
+body[data-theme="sunny"] .bento-card:hover,body[data-theme="sunny"] .bento-card:focus-visible{
+  border-color:rgba(13,148,136,.30);
+  box-shadow:0 36px 80px -40px rgba(13,30,60,.30),0 0 0 1px rgba(13,148,136,.12),inset 0 1px 0 rgba(255,255,255,.85);
+}
+body[data-theme="sunny"] .bento-card::after{
+  background:linear-gradient(90deg,transparent,var(--a,#0d9488),var(--gold,#a9701c),transparent);
+}
