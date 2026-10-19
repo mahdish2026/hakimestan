@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.4.1';
+const VERSION = 'hakim-v1.4.2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
