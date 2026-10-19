@@ -5,446 +5,366 @@
 <!-- hakim-core:end -->
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#ff7d3b">
+<meta name="theme-color" content="#fbf8f1">
 <title>معرفی پروژه — حکیمستان</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ff7d3b'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Tahoma, sans-serif' fill='white' text-anchor='middle'%3Eح%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="stylesheet" href="css/fonts.css">
+<!-- پوستهٔ مشترک — همان هویت و تم‌های لابی (کاشی روشن) -->
+<link rel="stylesheet" href="css/hakim-ui.css?v=1405-08-kashi-light">
 
 <style>
-  :root{
-    --primary:#ff7d3b;
-    --primary-dark:#e35d18;
-    --secondary:#3ba7ff;
-    --bg:#faf8f5;
-    --text:#2b2320;
-    --card:#ffffff;
-    --border:#f0e3da;
-    --shadow: 0 10px 30px -14px rgba(120,70,30,.16);
-    --radius:20px;
-  }
+/* ═══════════════════════════════════════════
+   معرفی پروژه — استایل‌های اختصاصی صفحه
+   (بر پایهٔ توکن‌ها و تم‌های hakim-ui.css)
+═══════════════════════════════════════════ */
+.page-hero .hero-logo{
+  width:84px;height:84px;border-radius:26px;
+  margin:0 auto 14px;
+  display:grid;place-items:center;
+  font-size:2.6rem;font-weight:800;color:var(--gold);
+  background:radial-gradient(circle at 30% 25%,rgba(244,205,132,.28),rgba(94,234,212,.12));
+  border:1px solid rgba(244,205,132,.4);
+  box-shadow:0 0 34px rgba(244,205,132,.2),inset 0 1px 0 rgba(255,255,255,.22);
+}
 
-  *{box-sizing:border-box;}
+/* فاصلهٔ بخش‌ها */
+.wrap-sections{
+  max-width:900px;
+  margin:0 auto;
+  padding:0 20px 40px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
 
-  ::selection{
-    background: rgba(255,125,59,.28);
-    color:var(--text);
-  }
+/* عنوان بخش داخل کارت */
+.section-title{
+  font-size:1.15rem;
+  font-weight:800;
+  color:var(--gold);
+  margin:0 0 14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-  html,body{
-    margin:0;
-    padding:0;
-  }
+.sub-heading{
+  font-size:1rem;
+  font-weight:700;
+  color:var(--ink);
+  margin:20px 0 10px;
+}
+.sub-heading:first-of-type{ margin-top:6px; }
 
-  body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:"Vazirmatn", Tahoma, sans-serif;
-    line-height:1.9;
-    -webkit-font-smoothing:antialiased;
-    padding:24px 16px 60px;
-  }
+p{ margin:0 0 12px; }
+p:last-child{ margin-bottom:0; }
 
-  .wrap{
-    max-width:900px;
-    margin:0 auto;
-  }
+/* جدول‌ها */
+.table-wrap{
+  overflow-x:auto;
+  margin-bottom:8px;
+}
+.table-wrap:last-child{ margin-bottom:0; }
 
-  .card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    padding:24px;
-    margin-bottom:18px;
-  }
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:560px;
+  font-size:.92rem;
+}
 
-  .card h2, .card h3, .card h4{
-    margin-top:0;
-    color:var(--primary-dark);
-  }
+th, td{
+  padding:11px 14px;
+  text-align:right;
+  border-bottom:1px solid var(--hairline);
+}
 
-  /* Header */
-  header.card{
-    text-align:center;
-    padding:36px 24px;
-  }
+th{
+  background:rgba(94,234,212,.07);
+  color:var(--teal);
+  font-weight:700;
+  white-space:nowrap;
+}
+body[data-theme="sunny"] th{ background:rgba(13,148,136,.08); }
 
-  .logo{
-    width:72px;
-    height:72px;
-    border-radius:18px;
-    background:linear-gradient(145deg, var(--primary), #ff9a63);
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:38px;
-    font-weight:800;
-    margin:0 auto 16px;
-    box-shadow:var(--shadow);
-  }
+tr:last-child td{ border-bottom:none; }
+td{ color:var(--muted); }
+td:first-child{ color:var(--ink); font-weight:600; }
 
-  header h1{
-    margin:8px 0 6px;
-    font-size:1.7rem;
-    font-weight:800;
-    color:var(--text);
-  }
+/* برچسب‌ها */
+.tag{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:.74rem;
+  font-weight:600;
+  white-space:nowrap;
+}
 
-  header .subtitle{
-    color:var(--primary-dark);
-    font-weight:600;
-    font-size:1.05rem;
-    margin:0;
-  }
+.tag-fixed{
+  color:var(--muted);
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--hairline);
+}
+body[data-theme="sunny"] .tag-fixed{ background:rgba(15,40,80,.05); }
 
-  .badge{
-    display:inline-block;
-    background:rgba(59,167,255,.12);
-    color:#1f6fb8;
-    border:1px solid rgba(59,167,255,.35);
-    border-radius:999px;
-    padding:6px 16px;
-    font-size:.9rem;
-    font-weight:600;
-  }
+.tag-custom{
+  color:var(--gold);
+  background:rgba(244,205,132,.10);
+  border:1px solid rgba(244,205,132,.32);
+}
 
-  /* Designer card */
-  .designer-card{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    border:1.5px solid var(--primary);
-    background:linear-gradient(135deg, #fff6ef, #ffffff);
-  }
+/* فهرست تیک‌دار */
+.checklist{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.checklist li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:8px 0;
+  border-bottom:1px dashed var(--hairline);
+  color:var(--muted);
+}
+.checklist li:last-child{ border-bottom:none; }
+.checklist .tick{
+  color:var(--teal);
+  font-weight:900;
+  flex:0 0 auto;
+  margin-top:2px;
+}
 
-  .designer-card .icon{
-    font-size:2.6rem;
-    flex:0 0 auto;
-  }
+/* فهرست ویژگی‌ها */
+.feature-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:2px;
+}
+.feature-list li{
+  padding:8px 0;
+  border-bottom:1px dashed var(--hairline);
+  color:var(--muted);
+}
+.feature-list li:last-child{ border-bottom:none; }
 
-  .designer-card h3{
-    margin:0 0 4px;
-    color:var(--text);
-    font-size:1.15rem;
-  }
+/* شبکهٔ آمار فنی */
+.tech-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+}
+.tech-item{
+  background:var(--field);
+  border:1px solid var(--hairline);
+  border-radius:14px;
+  padding:18px 10px;
+  text-align:center;
+  transition:border-color .3s ease,background .3s ease;
+}
+.tech-item:hover{ border-color:rgba(244,205,132,.35); background:rgba(244,205,132,.05); }
+.tech-item .num{
+  font-size:1.5rem;
+  font-weight:800;
+  color:var(--gold);
+  display:block;
+  margin-bottom:4px;
+}
+.tech-item .label{
+  font-size:.85rem;
+  color:var(--muted);
+}
 
-  .designer-card p{
-    margin:0;
-    color:#6b5b4d;
-  }
+/* کارت‌های لینک/تماس */
+.highlight-card{
+  border-color:rgba(244,205,132,.42);
+  background:
+    radial-gradient(70% 90% at 85% 0%, rgba(244,205,132,.09), transparent 70%),
+    linear-gradient(160deg,var(--card),var(--card-2));
+}
+.highlight-card .line{
+  padding:6px 0;
+  font-size:1rem;
+  color:var(--muted);
+}
+.highlight-card a{
+  color:var(--teal);
+  text-decoration:none;
+  font-weight:600;
+  word-break:break-all;
+}
+.highlight-card a:hover{
+  text-decoration:underline;
+  text-underline-offset:3px;
+  color:var(--gold);
+}
+.contact-star{
+  color:var(--gold);
+  font-weight:700;
+}
 
-  /* Section title */
-  .section-title{
-    font-size:1.15rem;
-    font-weight:800;
-    color:var(--primary-dark);
-    margin:0 0 14px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
+/* کارت طراح */
+.designer-card{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  border:1px solid rgba(244,205,132,.38);
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(244,205,132,.10), transparent 70%),
+    linear-gradient(160deg,var(--card),var(--card-2));
+}
+.designer-card .icon{ font-size:2.6rem; flex:0 0 auto; }
+.designer-card h3{ margin:0 0 4px; color:var(--ink); font-size:1.15rem; }
+.designer-card p{ margin:0; color:var(--muted); }
 
-  .sub-heading{
-    font-size:1rem;
-    font-weight:700;
-    color:var(--text);
-    margin:20px 0 10px;
-  }
+/* خط زمان */
+.timeline{
+  position:relative;
+  margin:8px 0 4px;
+  border-right:2px solid rgba(94,234,212,.28);
+}
+.tl-item{
+  position:relative;
+  padding:0 26px 20px 0;
+}
+.tl-item:last-child{ padding-bottom:4px; }
+.tl-item::before{
+  content:"";
+  position:absolute;
+  right:-9px;
+  top:5px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:var(--gold);
+  border:3px solid var(--bg);
+  box-shadow:0 0 0 3px rgba(244,205,132,.25);
+}
+.tl-phase{
+  display:inline-block;
+  font-size:.76rem;
+  font-weight:800;
+  background:rgba(244,205,132,.10);
+  color:var(--gold);
+  border:1px solid rgba(244,205,132,.32);
+  border-radius:999px;
+  padding:3px 12px;
+  margin-bottom:6px;
+}
+.tl-item h4{
+  margin:0 0 4px;
+  font-size:1.02rem;
+  color:var(--ink);
+}
+.tl-item p{
+  margin:0;
+  color:var(--muted);
+  font-size:.95rem;
+}
 
-  .sub-heading:first-of-type{
-    margin-top:6px;
-  }
+/* کارت وضعیت */
+.ready-card{
+  border-color:rgba(94,234,212,.38);
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(94,234,212,.10), transparent 70%),
+    linear-gradient(160deg,var(--card),var(--card-2));
+}
+.ready-card .section-title{ color:var(--teal); }
 
-  p{
-    margin:0 0 12px;
-  }
-  p:last-child{margin-bottom:0;}
+/* اسکرین‌شات‌ها */
+.shot{
+  margin:14px 0 4px;
+  text-align:center;
+}
+.shot img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:16px;
+  border:1px solid var(--brd);
+  box-shadow:var(--shadow);
+}
+.shot figcaption{
+  font-size:.85rem;
+  color:var(--muted);
+  margin-top:8px;
+}
+.shot-empty{
+  min-height:170px;
+  border:2px dashed rgba(94,234,212,.35);
+  border-radius:16px;
+  background:repeating-linear-gradient(45deg,transparent,transparent 14px,rgba(94,234,212,.05) 14px,rgba(94,234,212,.05) 28px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+}
+.shot-empty::before{
+  content:"\1F4F7 \062F\0631 \0627\0646\062A\0638\0627\0631 \0627\0633\06A9\0631\06CC\0646\200C\0634\0627\062A";
+  color:var(--muted);
+  font-weight:700;
+  font-size:.9rem;
+}
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:14px;
+}
+.gallery .shot{ margin:0; }
+.gallery .shot figcaption{ font-size:.8rem; }
+.gallery .shot-empty{ min-height:150px; }
 
-  /* Table */
-  .table-wrap{
-    overflow-x:auto;
-    margin-bottom:8px;
-  }
+@media (max-width:600px){
+  .tech-grid{ grid-template-columns:repeat(2, 1fr); }
+  .designer-card{ flex-direction:column; text-align:center; }
+  .gallery{ grid-template-columns:1fr; }
+}
 
-  .table-wrap:last-child{margin-bottom:0;}
-
-  table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:560px;
-    font-size:.95rem;
-  }
-
-  th, td{
-    padding:12px 14px;
-    text-align:right;
-    border-bottom:1px solid var(--border);
-  }
-
-  th{
-    background:#fff3ea;
-    color:var(--primary-dark);
-    font-weight:700;
-    white-space:nowrap;
-  }
-
-  tr:last-child td{
-    border-bottom:none;
-  }
-
-  .tag{
-    display:inline-block;
-    padding:3px 10px;
-    border-radius:999px;
-    font-size:.8rem;
-    font-weight:600;
-    white-space:nowrap;
-  }
-
-  .tag-fixed{
-    background:#eef1f4;
-    color:#5a6472;
-  }
-
-  .tag-custom{
-    background:rgba(255,125,59,.12);
-    color:var(--primary-dark);
-  }
-
-  /* Bullet list (checklist with ticks) */
-  .checklist{
-    list-style:none;
-    margin:0;
-    padding:0;
-  }
-
-  .checklist li{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    padding:8px 0;
-    border-bottom:1px dashed var(--border);
-  }
-
-  .checklist li:last-child{
-    border-bottom:none;
-  }
-
-  .checklist .tick{
-    color:var(--primary);
-    font-weight:900;
-    flex:0 0 auto;
-    margin-top:2px;
-  }
-
-  /* Plain feature list (with leading emoji already in text) */
-  .feature-list{
-    list-style:none;
-    margin:0;
-    padding:0;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:2px;
-  }
-
-  .feature-list li{
-    padding:8px 0;
-    border-bottom:1px dashed var(--border);
-  }
-
-  .feature-list li:last-child{
-    border-bottom:none;
-  }
-
-  /* Tech grid */
-  .tech-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:14px;
-  }
-
-  .tech-item{
-    background:#fff8f3;
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:18px 10px;
-    text-align:center;
-  }
-
-  .tech-item .num{
-    font-size:1.5rem;
-    font-weight:800;
-    color:var(--primary);
-    display:block;
-    margin-bottom:4px;
-  }
-
-  .tech-item .label{
-    font-size:.85rem;
-    color:#6b5b4d;
-  }
-
-  /* Links / Contact cards */
-  .highlight-card{
-    border:1.5px solid var(--primary);
-    background:#fffaf6;
-  }
-
-  .highlight-card .line{
-    padding:6px 0;
-    font-size:1rem;
-  }
-
-  .highlight-card a{
-    color:var(--secondary);
-    text-decoration:none;
-    font-weight:600;
-    word-break:break-all;
-  }
-
-  .highlight-card a:hover{
-    text-decoration:underline;
-  }
-
-  .contact-star{
-    color:var(--primary-dark);
-    font-weight:700;
-  }
-
-  /* Footer */
-  footer{
-    text-align:center;
-    padding:30px 20px 10px;
-    color:#8a7a6c;
-  }
-
-  footer .icon{
-    font-size:2.4rem;
-    margin-bottom:8px;
-  }
-
-  footer .brand{
-    font-weight:800;
-    color:var(--text);
-    font-size:1.1rem;
-    margin-bottom:6px;
-  }
-
-  footer .dev{
-    font-size:.9rem;
-    margin-bottom:10px;
-  }
-
-  footer .note{
-    font-size:.8rem;
-    color:#a99a8c;
-  }
-
-  /* Timeline — مسیر شکل‌گیری */
-  .timeline{
-    position:relative;
-    margin:8px 0 4px;
-    border-right:3px solid #ffe3d1;
-  }
-  .tl-item{
-    position:relative;
-    padding:0 26px 20px 0;
-  }
-  .tl-item:last-child{padding-bottom:4px;}
-  .tl-item::before{
-    content:"";
-    position:absolute;
-    right:-8px;
-    top:5px;
-    width:14px;
-    height:14px;
-    border-radius:50%;
-    background:var(--primary);
-    border:3px solid #fff;
-    box-shadow:0 0 0 3px rgba(255,125,59,.22);
-  }
-  .tl-phase{
-    display:inline-block;
-    font-size:.78rem;
-    font-weight:800;
-    background:rgba(255,125,59,.12);
-    color:var(--primary-dark);
-    border-radius:999px;
-    padding:3px 12px;
-    margin-bottom:6px;
-  }
-  .tl-item h4{
-    margin:0 0 4px;
-    font-size:1.02rem;
-    color:var(--text);
-  }
-  .tl-item p{
-    margin:0;
-    color:#6b5b4d;
-    font-size:.95rem;
-  }
-
-  /* کارت وضعیت — آمادهٔ تست میدانی */
-  .ready-card{
-    border-color:#cfe3f8;
-    background:#f2f8ff;
-  }
-  .ready-card .section-title{color:#1f6fb8;}
-
-  /* اسکرین‌شات‌ها */
-  .shot{
-    margin:14px 0 4px;
-    text-align:center;
-  }
-  .shot img{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:16px;
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-  }
-  .shot figcaption{
-    font-size:.85rem;
-    color:#8a7a6c;
-    margin-top:8px;
-  }
-  .shot-empty{
-    min-height:170px;
-    border:2px dashed #d9c8b8;
-    border-radius:16px;
-    background:repeating-linear-gradient(45deg,#fffaf6,#fffaf6 14px,#fff3ea 14px,#fff3ea 28px);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-  }
-  .shot-empty::before{
-    content:"\1F4F7 \062F\0631 \0627\0646\062A\0638\0627\0631 \0627\0633\06A9\0631\06CC\0646\200C\0634\0627\062A";
-    color:#a99a8c;
-    font-weight:700;
-    font-size:.9rem;
-  }
-  .gallery{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:14px;
-  }
-  .gallery .shot{margin:0;}
-  .gallery .shot figcaption{font-size:.8rem;}
-  .gallery .shot-empty{min-height:150px;}
-
-  @media (max-width:600px){
-    header.card{padding:28px 16px;}
-    header h1{font-size:1.35rem;}
-    .tech-grid{grid-template-columns:repeat(2, 1fr);}
-    .designer-card{flex-direction:column;text-align:center;}
-    .gallery{grid-template-columns:1fr;}
-  }
+/* ═══════════════════════════════════════════
+   تم کاشی (روشن) — همگام با لابی
+═══════════════════════════════════════════ */
+body[data-theme="kashi"] .hero-logo{
+  background:linear-gradient(145deg,rgba(0,128,128,.14),rgba(212,175,55,.12));
+  border-color:rgba(212,175,55,.52);
+  box-shadow:0 5px 18px rgba(0,128,128,.10),inset 0 1px 0 rgba(255,255,255,.6);
+}
+body[data-theme="kashi"] .section-title{ color:#8f6510; }
+body[data-theme="kashi"] th{ background:rgba(0,128,128,.07); color:#006f6e; }
+body[data-theme="kashi"] .tag-fixed{ color:#4f6274; background:rgba(0,128,128,.06); border-color:rgba(0,128,128,.18); }
+body[data-theme="kashi"] .tag-custom{ color:#8f6510; background:rgba(212,175,55,.14); border-color:rgba(169,112,28,.32); }
+body[data-theme="kashi"] .checklist .tick{ color:#00706f; }
+body[data-theme="kashi"] .timeline{ border-right-color:rgba(0,128,128,.30); }
+body[data-theme="kashi"] .tl-item::before{ box-shadow:0 0 0 3px rgba(169,112,28,.24); }
+body[data-theme="kashi"] .tl-phase{ color:#8f6510; background:rgba(212,175,55,.14); border-color:rgba(169,112,28,.32); }
+body[data-theme="kashi"] .tech-item:hover{ border-color:rgba(169,112,28,.35); background:rgba(212,175,55,.06); }
+body[data-theme="kashi"] .designer-card{
+  border-color:rgba(169,112,28,.40);
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(0,128,128,.08), transparent 70%),
+    linear-gradient(160deg,#ffffff,#fffdf7);
+}
+body[data-theme="kashi"] .highlight-card{
+  border-color:rgba(169,112,28,.42);
+  background:
+    radial-gradient(70% 90% at 85% 0%, rgba(212,175,55,.12), transparent 70%),
+    linear-gradient(160deg,#ffffff,#fffdf7);
+}
+body[data-theme="kashi"] .ready-card{
+  border-color:rgba(0,128,128,.38);
+  background:
+    radial-gradient(60% 100% at 0% 0%, rgba(0,128,128,.08), transparent 70%),
+    linear-gradient(160deg,#ffffff,#fffdf7);
+}
+body[data-theme="kashi"] .ready-card .section-title{ color:#00706f; }
+body[data-theme="kashi"] .shot img{ border-color:rgba(0,128,128,.20); }
+body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
 </style>
 <!-- hakim-meta:start -->
 <meta name="description" content="معرفی پروژهٔ حکیمستان برای داوران جشنواره — معماری، فناوری‌های به‌کاررفته، دسترس‌پذیری، امنیت و امکانات آفلاین.">
@@ -465,37 +385,112 @@
 <meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
 <!-- hakim-meta:end -->
 </head>
-<body>
-<div class="wrap">
+<body data-theme="kashi">
 
-  <!-- ۱. هدر -->
-  <header class="card">
-    <div class="logo">ح</div>
-    <h1>معرفی پروژه حکیمستان</h1>
-    <p class="subtitle">حکیمستان — دیار حکیم، سرزمین یادگیری</p>
-  </header>
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
-  <!-- ۲. کارت طراح -->
-  <section class="card designer-card">
-    <div class="icon">👨‍🏫</div>
+<!-- ================= لایه‌های پس‌زمینه (همان لابی) ================= -->
+<div class="bg" aria-hidden="true">
+  <canvas id="starsCanvas"></canvas>
+  <span class="tile-veil"></span>
+  <span class="fade-bottom"></span>
+</div>
+
+<!-- موج نوری طلایی که پشت موس حرکت می‌کند -->
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- ================= هدر شیشه‌ای شناور (همان لابی) ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a class="brand" href="index.html" aria-label="حکیمستان — صفحه اصلی">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 3l2.6 7.1L26 13l-7.4 2.9L16 23l-2.6-7.1L6 13l7.4-2.9L16 3z" fill="#f4cd84"/>
+          <path d="M16 9.5l1.4 3.8 3.8 1.4-3.8 1.4L16 19.9l-1.4-3.8-3.8-1.4 3.8-1.4L16 9.5z" fill="#0b1830"/>
+          <circle cx="16" cy="13" r="2" fill="#5eead4"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <b>حکیمستان</b>
+        <small>دیار حکیم · سرزمین یادگیری</small>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="ناوبری اصلی">
+      <a href="index.html">لابی</a>
+      <a href="videos.html">فیلم‌ها</a>
+      <a href="judges.html" aria-current="page">معرفی</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="icon-btn" id="themeBtn" aria-label="انتخاب تم صفحه" aria-expanded="false" aria-controls="themePanel" title="تم صفحه">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3a9 9 0 100 18c1.2 0 2-.8 2-1.8 0-.5-.2-.9-.6-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 004-4c0-4.4-4-8-9-8z" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="7.8" cy="11" r="1.2" fill="currentColor"/>
+          <circle cx="11.5" cy="7.2" r="1.2" fill="currentColor"/>
+          <circle cx="16" cy="8.5" r="1.2" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- پنل انتخاب تم — همان گزینه‌های لابی، با کلید مشترک -->
+<div class="theme-panel" id="themePanel" role="dialog" aria-label="انتخاب تم صفحه">
+  <p class="tp-title">تم صفحه</p>
+  <button type="button" class="theme-opt" data-theme="kashi">
+    <span class="theme-dot" style="--sw:linear-gradient(135deg,#fbf8f1,#008080 55%,#d4af37)"></span>
+    <span class="theme-name">کاشی<small>گنبد فیروزه‌ای — روشن</small></span>
+    <span class="theme-check" aria-hidden="true">✓</span>
+  </button>
+  <button type="button" class="theme-opt" data-theme="ocean">
+    <span class="theme-dot" style="--sw:linear-gradient(135deg,#030a18,#2563eb 60%,#67e8f9)"></span>
+    <span class="theme-name">لاجورد نیمه‌شب<small>آبی عمیق و فیروزه</small></span>
+    <span class="theme-check" aria-hidden="true">✓</span>
+  </button>
+  <button type="button" class="theme-opt" data-theme="sunny">
+    <span class="theme-dot" style="--sw:linear-gradient(135deg,#ffffff,#bae6fd 55%,#f4cd84)"></span>
+    <span class="theme-name">صبح فیروزه<small>روشن و آرام</small></span>
+    <span class="theme-check" aria-hidden="true">✓</span>
+  </button>
+</div>
+
+<main id="main">
+
+  <!-- ================= قهرمان فشرده ================= -->
+  <section class="page-hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> برای داوران جشنواره</p>
+      <div class="hero-logo" aria-hidden="true">ح</div>
+      <h1 id="hero-title">معرفی پروژه حکیمستان</h1>
+      <p class="hero-tagline">حکیمستان — <em>دیار حکیم</em>، سرزمین یادگیری</p>
+    </div>
+  </section>
+
+  <div class="wrap-sections">
+
+  <!-- ۱. کارت طراح -->
+  <section class="hk-card designer-card reveal">
+    <div class="icon" aria-hidden="true">👨‍🏫</div>
     <div>
       <h3>مهدی شریفیان</h3>
       <p>معلم پایه پنجم ابتدایی — استان گلستان، گنبدکاووس</p>
     </div>
   </section>
 
-  <!-- ۳. این پروژه چیه؟ -->
-  <section class="card">
+  <!-- ۲. این پروژه چیه؟ -->
+  <section class="hk-card reveal">
     <h2 class="section-title">📖 این پروژه چیه؟</h2>
-    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل <strong>۱۲ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و گفت‌وگو با «حکیم») و بیش از <strong>۸۰ سؤال آماده</strong> با <strong>۸ تم رنگی</strong> می‌باشد.</p>
+    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل <strong>۱۳ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و درسگاه) و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۸۰ سؤال آماده</strong> و <strong>۲۷ فیلم معرفی</strong>.</p>
     <p>این سامانه برای پایه پنجم ابتدایی طراحی شده و هدفش این است که مفاهیم درسی از طریق بازی، یادگیری فعال و بازخورد فوری به دانش‌آموز منتقل شود.</p>
     <p>تمام محتوا با HTML، CSS و JavaScript خالص ساخته شده و به‌صورت PWA روی هر مرورگر و هر دستگاهی (موبایل، تبلت، رایانه) بدون نیاز به نصب اجرا می‌شود.</p>
+    <p>همهٔ صفحه‌های اصلی — لابی، فیلم‌ها و همین صفحهٔ معرفی — روی یک <strong>هویت بصری واحد</strong> به نام «کاشی» (کرم روشن، فیروزه و طلا، با نقش اسلیمی) ساخته شده‌اند و تم انتخابی کاربر (<strong>کاشی، اقیانوس یا صبح فیروزه</strong>) به‌صورت مشترک در همهٔ صفحه‌ها باقی می‌ماند.</p>
 
     <!-- اسکرین‌شات لابی -->
     <figure class="shot">
       <picture>
         <source srcset="screenshots/lobby.webp" type="image/webp">
-        <img src="screenshots/lobby.jpg" alt="نمای لابی حکیمستان با کارت‌های بازی‌ها و پنج وادی دانش"
+        <img src="screenshots/lobby.jpg" alt="نمای لابی حکیمستان در تم کاشی — حکیم در قهرمان صفحه و کارت‌های بازی‌ها"
              width="1280" height="720" loading="lazy" decoding="async"
              onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
       </picture>
@@ -504,7 +499,7 @@
   </section>
 
   <!-- ۳. مسیر شکل‌گیری -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">📜 مسیر شکل‌گیری</h2>
     <div class="timeline">
       <div class="tl-item">
@@ -521,7 +516,7 @@
   </section>
 
   <!-- ۴. برای کدوم درس‌ها؟ -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">📚 برای کدوم درس‌ها؟</h2>
 
     <h3 class="sub-heading">بازی‌ها</h3>
@@ -603,6 +598,12 @@
             <td><span class="tag tag-fixed">محتوای ثابت</span></td>
           </tr>
           <tr>
+            <td>الگوستان (مدرسه ریاضی)</td>
+            <td>ریاضی (الگوهای هندسی و عددی)</td>
+            <td>پنجم</td>
+            <td><span class="tag tag-fixed">محتوای ثابت</span></td>
+          </tr>
+          <tr>
             <td>واژه‌ستان فارسی پنجم</td>
             <td>فارسی (واژگان هر ۱۷ درس)</td>
             <td>پنجم</td>
@@ -664,19 +665,20 @@
   </section>
 
   <!-- ۴ب. مدرسه ریاضی -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">🧮 مدرسه ریاضی</h2>
-    <p>«مدرسه ریاضی» بخش ویژه‌ی ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم که با هر به‌روزرسانی، بازی‌های تازه‌ای (از تقسیم و ساعت تا کسر، هندسه و مسائل کتاب درسی) به آن اضافه می‌شود.</p>
+    <p>«مدرسه ریاضی» بخش ویژه‌ی ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم که با هر به‌روزرسانی، بازی‌های تازه‌ای (از تقسیم و ساعت تا الگو، کسر، هندسه و مسائل کتاب درسی) به آن اضافه می‌شود.</p>
     <p><strong>بازی‌های فعلی:</strong></p>
     <ul class="feature-list">
       <li>🔨 <strong>تقسیم چکشی</strong> — یادگیری تقسیم، قدم‌به‌قدم و مرحله‌به‌مرحله با راهنمایی حکیم؛ ۵ مرحله، ۱۵ ستاره و گواهی‌نامه در پایان</li>
       <li>⏰ <strong>ماموریت زمان</strong> — خواندن ساعت، جمع و تفریق زمان و تبدیل واحدها در ۸ مرحله‌ی ماجراجویی، به‌همراه چالش ترکیبی، نشان‌ها و گواهی‌نامه</li>
+      <li>🧩 <strong>الگوستان</strong> — کشف الگوهای هندسی و عددی؛ جدول الگو، شکل بعدی، قانون الگو و گواهی پایان</li>
     </ul>
     <p>بازی‌های این بخش کاملاً آفلاین و واکنش‌گرا هستند، بازخورد فوری و راهنمایی گام‌به‌گام دارند و پیشرفت دانش‌آموز (ستاره‌ها و گواهی‌نامه) روی همان دستگاه ذخیره می‌شود.</p>
   </section>
 
   <!-- ۵. قابلیت شخصی‌سازی -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">⚙️ قابلیت شخصی‌سازی</h2>
     <p>همه‌ی بازی‌های سؤالی به جز «فتح کهن دیار ایران»، «آزمایشگاه ۲بعدی»، بازی‌های «مدرسه ریاضی» و «واژه‌ستان فارسی پنجم»، به صورت یک قالب آموزشی طراحی شده‌اند. یعنی معلم می‌تواند بدون دانش برنامه‌نویسی، سوال‌های هر بازی را مطابق درس خودش بسازد و تغییر دهد.</p>
     <p><strong>این ویژگی باعث می‌شود:</strong></p>
@@ -689,17 +691,26 @@
   </section>
 
   <!-- ۶. وضعیت فعلی — آمادهٔ تست میدانی -->
-  <section class="card ready-card">
+  <section class="hk-card ready-card reveal">
     <h2 class="section-title">🎯 آمادهٔ تست میدانی در فاز بعد</h2>
     <p>«حکیمستان» هنوز در اختیار مدارس یا کاربران عمومی قرار نگرفته و فعلاً <strong>فقط برای شرکت در این مسابقه</strong> آماده شده است.</p>
     <p>فاز بعدی پروژه، <strong>تست میدانی واقعی</strong> آن در کلاس درس و دریافت بازخورد مستقیم دانش‌آموزان و معلمان خواهد بود.</p>
   </section>
 
   <!-- ۶ب. نماها -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">🖼️ نماها</h2>
     <p>نمایی از محیط حکیمستان:</p>
     <div class="gallery">
+      <figure class="shot">
+        <picture>
+          <source srcset="screenshots/videos-page.webp" type="image/webp">
+          <img src="screenshots/videos-page.jpg" alt="نمای صفحهٔ فیلم‌های حکیمستان با کارت‌های ویدیویی شیشه‌ای در تم کاشی"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+        </picture>
+        <figcaption>صفحهٔ فیلم‌ها — ۲۷ ویدیوی معرفی بازی‌ها و ابزارها</figcaption>
+      </figure>
       <figure class="shot">
         <picture>
           <source srcset="screenshots/mancheh.webp" type="image/webp">
@@ -731,7 +742,7 @@
   </section>
 
   <!-- ۷. پیام‌رسان کلاسی حکیمستان -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">💬 پیام‌رسان کلاسی حکیمستان</h2>
     <p>یکی از ابزارهای مهم حکیمستان، پیام‌رسان کلاسی است که امکان ارتباط امن و ساده بین معلم و دانش‌آموزان را فراهم می‌کند.</p>
     <p><strong>قابلیت‌ها:</strong></p>
@@ -745,20 +756,20 @@
       <li>✏️ ویرایش پیام</li>
       <li>⭐ ستاره‌دار کردن پیام‌های مهم</li>
       <li>🛡️ پنل مدیریت برای معلم</li>
-      <li>🎨 ۴ تم رنگی قابل انتخاب</li>
+      <li>🎨 تم‌های رنگی متنوع قابل انتخاب</li>
       <li>🔐 فیلتر کلمات نامناسب</li>
     </ul>
   </section>
 
   <!-- ۸. گفت‌وگو با حکیم (هوش مصنوعی) -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">🧙 گفت‌وگو با حکیم (هوش مصنوعی)</h2>
     <p>«حکیم» یک شخصیت هوشمند مبتنی بر هوش مصنوعی است که در لابی حکیمستان حضور دارد. دانش‌آموزان می‌توانند با او گفت‌وگو کنند و درباره‌ی درس‌ها، تاریخ ایران، ریاضی و موضوعات دیگر بپرسند.</p>
     <p>حکیم با چهره‌ی متحرک، حالت‌های احساسی مختلف (شاد، متفکر، دانا و...) و پاسخ‌های آموزشی، محیطی گرم و دوستانه برای دانش‌آموزان ایجاد می‌کند.</p>
   </section>
 
   <!-- ۹. چطور یادگیری فعال ایجاد می‌کند؟ -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">⚡ چطور یادگیری فعال ایجاد می‌کند؟</h2>
     <ul class="checklist">
       <li><span class="tick">✓</span><span>هر بازی، یک قالب آموزشی است که معلم می‌تواند سوال‌های آن را مطابق درس خودش بسازد.</span></li>
@@ -771,29 +782,32 @@
   </section>
 
   <!-- ۱۰. ویژگی‌های فنی -->
-  <section class="card">
+  <section class="hk-card reveal">
     <h2 class="section-title">🛠️ ویژگی‌های فنی</h2>
     <div class="tech-grid">
-      <div class="tech-item"><span class="num">۱۲</span><span class="label">بازی تعاملی</span></div>
+      <div class="tech-item"><span class="num">۱۳</span><span class="label">بازی تعاملی</span></div>
       <div class="tech-item"><span class="num">۷</span><span class="label">ابزار معلم و دانش‌آموز</span></div>
-      <div class="tech-item"><span class="num">۸</span><span class="label">تم رنگی</span></div>
+      <div class="tech-item"><span class="num">۳</span><span class="label">تم رنگی هماهنگ در همهٔ صفحه‌ها</span></div>
       <div class="tech-item"><span class="num">۸۰+</span><span class="label">سؤال آماده</span></div>
+      <div class="tech-item"><span class="num">۲۷</span><span class="label">فیلم معرفی بازی‌ها و ابزارها</span></div>
       <div class="tech-item"><span class="num">PWA</span><span class="label">قابل نصب بدون فروشگاه</span></div>
       <div class="tech-item"><span class="num">AI</span><span class="label">گفت‌وگو با حکیم</span></div>
+      <div class="tech-item"><span class="num">🎨</span><span class="label">هویت بصری یکپارچه — کاشی</span></div>
       <div class="tech-item"><span class="num">HTML</span><span class="label">پایه‌ی فنی — بدون فریم‌ورک</span></div>
-      <div class="tech-item"><span class="num">📱</span><span class="label">موبایل‌پسند</span></div>
+      <div class="tech-item"><span class="num">a11y</span><span class="label">دسترس‌پذیری WCAG 2.2 AA</span></div>
+      <div class="tech-item"><span class="num">📱</span><span class="label">موبایل‌پسند و واکنش‌گرا</span></div>
       <div class="tech-item"><span class="num">👨‍🏫</span><span class="label">طراحی‌شده توسط معلم پایه پنجم</span></div>
     </div>
   </section>
 
   <!-- ۱۱. لینک‌های پروژه -->
-  <section class="card highlight-card">
+  <section class="hk-card highlight-card reveal">
     <h2 class="section-title">🔗 لینک‌های پروژه</h2>
     <div class="line">🌐 سایت اصلی: <a href="https://hakimistan.ir" target="_blank" rel="noopener">https://hakimistan.ir</a></div>
   </section>
 
   <!-- ۱۲. اطلاعات تماس -->
-  <section class="card highlight-card">
+  <section class="hk-card highlight-card reveal">
     <h2 class="section-title">📇 اطلاعات تماس</h2>
     <div class="line">👨‍🏫 نام: مهدی شریفیان</div>
     <div class="line">📱 شماره تماس: <span class="contact-star">***</span></div>
@@ -801,20 +815,58 @@
     <div class="line">📍 منطقه: <span class="contact-star">***</span></div>
   </section>
 
-  <!-- ۱۳. فوتر -->
-  <footer>
-    <div class="icon">🧙</div>
-    <div class="brand">حکیمستان — دیار حکیم، سرزمین یادگیری</div>
-    <div class="dev">طراح و توسعه‌دهنده: مهدی شریفیان — معلم پایه پنجم، استان گلستان</div>
-    <div class="note">حکیمستان — مهدی شریفیان</div>
-  </footer>
+  </div>
+</main>
+
+<!-- ================= فوتر (هم‌خانوادهٔ لابی) ================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 3l2.6 7.1L26 13l-7.4 2.9L16 23l-2.6-7.1L6 13l7.4-2.9L16 3z" fill="#f4cd84"/>
+              <path d="M16 9.5l1.4 3.8 3.8 1.4-3.8 1.4L16 19.9l-1.4-3.8-3.8-1.4 3.8-1.4L16 9.5z" fill="#0b1830"/>
+              <circle cx="16" cy="13" r="2" fill="#5eead4"/>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <b>حکیمستان</b>
+            <small>دیار حکیم · سرزمین یادگیری</small>
+          </span>
+        </div>
+        <p class="footer-note">پلتفرم آموزشی تعاملی پایه پنجم — رایگان، آفلاین و بدون نیاز به نصب.</p>
+      </div>
+
+      <nav class="footer-links" aria-label="پیوندهای پانوشت">
+        <a href="index.html">لابی</a>
+        <a href="videos.html">فیلم‌های آموزشی</a>
+        <a href="install-pwa.html">نصب برنامه</a>
+      </nav>
+
+      <div class="footer-dev">
+        طراح و توسعه‌دهنده<br>
+        <b>مهدی شریفیان</b> — معلم پایه پنجم
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>حکیمستان — دیار حکیم، سرزمین یادگیری</span>
+      <span>ساخته‌شده با HTML، CSS و JavaScript خالص</span>
+    </div>
+  </div>
+</footer>
+
+<button type="button" class="to-top" id="toTop" aria-label="بازگشت به بالای صفحه"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5m0 0-6 6m6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
 <!-- اهرم مخفی برای back-to-lobby.js -->
 <div style="text-align:center;margin:20px 0">
   <button style="display:none">ورود به پنل</button>
 </div>
-  
-</div>
+
 <script src="back-to-lobby.js"></script>
+<!-- هستهٔ هماهنگی تم و فضای لابی (کلید مشترک hakimestan_lobby_theme) -->
+<script src="js/hakim-theme.js" defer></script>
 <!-- 📊 ردیاب بازدید حکیمستان -->
 <script>
 (function(){

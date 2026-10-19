@@ -1,12 +1,13 @@
 /**
  * make-screenshots.mjs — ساخت فایل‌های screenshots/ از تصاویر موجود در videos/
  *
- * صفحهٔ judges.html انتظار چهار تصویر دارد:
- *   screenshots/lobby.jpg ، mancheh.jpg ، lab.jpg ، teacher-panel.jpg
+ * صفحهٔ judges.html انتظار پنج تصویر دارد:
+ *   screenshots/lobby.jpg ، videos-page.jpg ، mancheh.jpg ، lab.jpg ، teacher-panel.jpg
  *
- * تصاویر videos/*.jpg اسکرین‌شات‌های واقعی همان بخش‌های برنامه هستند،
- * پس همان‌ها را با اندازهٔ استاندارد ۱۲۸۰×۷۲۰ در screenshots/ می‌نویسیم
- * و نسخهٔ WebP هم کنارشان می‌سازیم.
+ * تصاویر videos/*.jpg اسکرین‌شات‌های واقعی همان بخش‌های برنامه هستند
+ * (lobby.jpg و videos-page.jpg هم از همین صفحه‌ها با کرومیوم headless
+ * گرفته شده‌اند)، پس همان‌ها را با اندازهٔ استاندارد ۱۲۸۰×۷۲۰ در
+ * screenshots/ می‌نویسیم و نسخهٔ WebP هم کنارشان می‌سازیم.
  *
  * اجرا: npm i sharp && node tools/make-screenshots.mjs
  */
@@ -19,10 +20,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
 const MAP = [
-  { out: 'lobby.jpg',        from: 'hakim-quest.jpg',        label: 'لابی حکیمستان' },
-  { out: 'mancheh.jpg',      from: 'mancheh-online.jpg',     label: 'منچِ دانش آنلاین' },
-  { out: 'lab.jpg',          from: 'lab2d.jpg',              label: 'آزمایشگاه ۲بعدی' },
-  { out: 'teacher-panel.jpg',from: 'teacher-panel.jpg',      label: 'پنل معلم' }
+  { out: 'lobby.jpg',        from: 'lobby.jpg',               label: 'لابی حکیمستان' },
+  { out: 'videos-page.jpg',  from: 'videos-page.jpg',         label: 'صفحهٔ فیلم‌ها' },
+  { out: 'mancheh.jpg',      from: 'mancheh-online.jpg',      label: 'منچِ دانش آنلاین' },
+  { out: 'lab.jpg',          from: 'lab2d.jpg',               label: 'آزمایشگاه ۲بعدی' },
+  { out: 'teacher-panel.jpg',from: 'teacher-panel.jpg',       label: 'پنل معلم' }
 ];
 
 const W = 1280, H = 720;

@@ -56,7 +56,9 @@ const THEME_COLORS = {
   'games/lab2d.html': '#08140a',
   'games/teacher.html': '#061c30',
   'hqf-converter.html': '#e7edff',
-  'videos.html': '#faf8f3'
+  /* فیلم‌ها و معرفی — همگام با تم پیش‌فرضِ لابی (کاشی) */
+  'videos.html': '#fbf8f1',
+  'judges.html': '#fbf8f1'
 };
 
 /* ══════════════ ابزار ══════════════ */

@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.4.1';
+const VERSION = 'hakim-v1.4.3';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -34,8 +34,10 @@ const SHELL_ASSETS = [
   './icon.svg',
   './css/a11y.css',
   './css/lobby.css?v=1405-07-kashi-light',
+  './css/hakim-ui.css?v=1405-08-kashi-light',
   './js/hakim-a11y.js',
   './js/hakim-security.js',
+  './js/hakim-theme.js',
   './js/hakim-sw-register.js'
 ];
 
