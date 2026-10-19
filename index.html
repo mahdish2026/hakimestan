@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss:; manifest-src 'self'; worker-src 'self' blob:">
-<meta name="theme-color" content="#050c1c">
+<meta name="theme-color" content="#f4f8fc">
 <meta name="color-scheme" content="dark light">
 <meta name="description" content="حکیمستان — دیار حکیم، سرزمین یادگیری. بازی‌های آموزشی تعاملی، آزمون‌ساز و ابزارهای کلاس درس برای معلمان و دانش‌آموزان پایه پنجم.">
 <meta property="og:title" content="حکیمستان — دیار حکیم، سرزمین یادگیری">
@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/lobby.css">
 </head>
-<body data-theme="night">
+<body data-theme="sunny">
 
 <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
@@ -93,7 +93,7 @@
   <p class="tp-title">تم صفحه</p>
   <button type="button" class="theme-opt" data-theme="night">
     <span class="theme-dot" style="--sw:linear-gradient(135deg,#0b1830,#5eead4 55%,#f4cd84)"></span>
-    <span class="theme-name">کاشی شبانه<small>پیش‌فرض · لاجورد و فیروزه</small></span>
+    <span class="theme-name">کاشی شبانه<small>لاجورد و فیروزه</small></span>
     <span class="theme-check" aria-hidden="true">✓</span>
   </button>
   <button type="button" class="theme-opt" data-theme="ocean">
@@ -103,7 +103,7 @@
   </button>
   <button type="button" class="theme-opt" data-theme="sunny">
     <span class="theme-dot" style="--sw:linear-gradient(135deg,#ffffff,#bae6fd 55%,#f4cd84)"></span>
-    <span class="theme-name">صبح فیروزه<small>روشن و آرام</small></span>
+    <span class="theme-name">صبح فیروزه<small>پیش‌فرض · روشن و آرام</small></span>
     <span class="theme-check" aria-hidden="true">✓</span>
   </button>
 </div>
@@ -702,9 +702,14 @@
     }
     if (save !== false){ try { localStorage.setItem(THEME_KEY, id); } catch(e){} }
   }
-  var savedTheme = 'night';
-  try { savedTheme = localStorage.getItem(THEME_KEY) || 'night'; } catch(e){}
-  applyTheme(savedTheme, false);
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem(THEME_KEY); } catch(e){}
+  if (!savedTheme) {
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'night' : 'sunny', false);
+  } else {
+    applyTheme(savedTheme, false);
+  }
 
   var themeBtn = document.getElementById('themeBtn');
   var themePanel = document.getElementById('themePanel');
