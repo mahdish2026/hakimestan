@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.4.0';
+const VERSION = 'hakim-v1.4.1';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -33,7 +33,7 @@ const SHELL_ASSETS = [
   './manifest.json',
   './icon.svg',
   './css/a11y.css',
-  './css/lobby.css',
+  './css/lobby.css?v=1405-07-kashi-light',
   './js/hakim-a11y.js',
   './js/hakim-security.js',
   './js/hakim-sw-register.js'
@@ -217,7 +217,9 @@ async function handleNavigation(event) {
 
 /** Cache-First برای دارایی‌های ایستا */
 async function handleAsset(request) {
-  const cached = await caches.match(request, { ignoreSearch: true });
+  // ignoreSearch عمداً حذف شده: لینک‌های نسخه‌دار (مثل lobby.css?v=...)
+  // باید نسخهٔ تازه را بیاورند، نه نسخهٔ کهنهٔ کش‌شده را.
+  const cached = await caches.match(request);
   if (cached) {
     // به‌روزرسانی در پس‌زمینه
     fetch(request).then((res) => putSafe(ASSETS_CACHE, request, res)).catch(() => {});
