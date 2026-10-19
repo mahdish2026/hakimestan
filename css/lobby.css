@@ -1086,3 +1086,55 @@ body[data-theme="sunny"] .bento-card:hover,body[data-theme="sunny"] .bento-card:
 body[data-theme="sunny"] .bento-card::after{
   background:linear-gradient(90deg,transparent,var(--a,#0d9488),var(--gold,#a9701c),transparent);
 }
+
+/* ── ۱۶. کاشی فیروزه‌ای: روشن، اصیل و الهام‌گرفته از اصفهان ─────────── */
+body[data-theme="kashi"]{
+  --ink:#1a2a3a;
+  --muted:#536577;
+  --muted-2:#718091;
+  --gold:#a87912;
+  --gold-2:#8f6510;
+  --teal:#008080;
+  --cyan:#078b88;
+  --violet:#7056a8;
+  --bg:#fbf8f1;
+  --bg-2:#f3eee2;
+  --card:rgba(255,255,255,.94);
+  --card-2:rgba(255,255,255,.84);
+  --brd:rgba(0,128,128,.19);
+  --brd-strong:rgba(0,128,128,.34);
+  --field:rgba(0,128,128,.045);
+  --hairline:rgba(0,128,128,.12);
+  --header-bg:rgba(255,253,248,.92);
+  --shadow:0 24px 60px -38px rgba(26,42,58,.22);
+}
+body[data-theme="kashi"] .bg{
+  background:
+    radial-gradient(58% 42% at 82% -6%,rgba(0,168,150,.13),transparent 64%),
+    radial-gradient(52% 40% at 4% -10%,rgba(212,175,55,.10),transparent 62%),
+    radial-gradient(46% 38% at 88% 104%,rgba(0,128,128,.07),transparent 66%);
+}
+body[data-theme="kashi"] .tile-veil{opacity:.055}
+body[data-theme="kashi"] .tile-veil::after{
+  background:linear-gradient(to bottom,rgba(251,248,241,0),rgba(251,248,241,.28) 55%,var(--bg) 100%);
+}
+body[data-theme="kashi"] .fade-bottom{background:linear-gradient(to top,var(--bg),rgba(251,248,241,0))}
+body[data-theme="kashi"] .cursor-glow{background:radial-gradient(circle,rgba(212,175,55,.12),rgba(0,128,128,.08) 40%,transparent 66%)}
+body[data-theme="kashi"] .header-inner{box-shadow:0 14px 38px -28px rgba(26,42,58,.28),inset 0 1px 0 rgba(255,255,255,.9)}
+body[data-theme="kashi"].is-scrolled .header-inner{box-shadow:0 18px 42px -28px rgba(26,42,58,.30),inset 0 1px 0 rgba(255,255,255,.95)}
+body[data-theme="kashi"] .brand-mark{background:linear-gradient(145deg,rgba(0,128,128,.14),rgba(212,175,55,.12));border-color:rgba(212,175,55,.52);box-shadow:0 5px 18px rgba(0,128,128,.10)}
+body[data-theme="kashi"] .nav a:hover,body[data-theme="kashi"] .nav a:focus-visible{background:rgba(0,128,128,.08)}
+body[data-theme="kashi"] .icon-btn{background:rgba(0,128,128,.045)}
+body[data-theme="kashi"] .icon-btn:hover{background:rgba(0,128,128,.09);border-color:rgba(212,175,55,.55);box-shadow:0 5px 18px rgba(0,128,128,.12)}
+body[data-theme="kashi"] .btn-primary{background:linear-gradient(135deg,#00a896,#007f7b);color:#fff;box-shadow:0 12px 28px -14px rgba(0,128,128,.55),inset 0 1px 0 rgba(255,255,255,.3)}
+body[data-theme="kashi"] .btn-primary:hover{box-shadow:0 18px 34px -14px rgba(0,128,128,.58),inset 0 1px 0 rgba(255,255,255,.35)}
+body[data-theme="kashi"] .btn-ghost{background:rgba(255,255,255,.64)}
+body[data-theme="kashi"] .btn-ghost:hover{background:#fff;border-color:rgba(0,128,128,.42)}
+body[data-theme="kashi"] .theme-panel{background:rgba(255,253,248,.98);border-color:rgba(0,128,128,.2);box-shadow:0 24px 60px -32px rgba(26,42,58,.28)}
+body[data-theme="kashi"] .theme-name{color:#1a2a3a}
+body[data-theme="kashi"] .theme-name small{color:#617182}
+body[data-theme="kashi"] .theme-opt:hover{background:rgba(0,128,128,.06)}
+body[data-theme="kashi"] .bento-card,body[data-theme="kashi"] .hkc-card,body[data-theme="kashi"] .acc{background:linear-gradient(155deg,#fff,#fffdf8);border-color:rgba(0,128,128,.20);box-shadow:0 16px 38px -30px rgba(26,42,58,.30),inset 0 1px 0 rgba(255,255,255,.95)}
+body[data-theme="kashi"] .bento-card::after{background:linear-gradient(90deg,transparent,#008080,#d4af37,transparent)}
+body[data-theme="kashi"] .kicker,body[data-theme="kashi"] .hero-stats b,body[data-theme="kashi"] .footer-dev b{color:#8f6510}
+body[data-theme="kashi"] ::selection{background:rgba(0,128,128,.2);color:#1a2a3a}
