@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss:; manifest-src 'self'; worker-src 'self' blob:">
-<meta name="theme-color" content="#f4f8fc">
+<meta name="theme-color" content="#fbf8f1">
 <meta name="color-scheme" content="dark light">
 <meta name="description" content="حکیمستان — دیار حکیم، سرزمین یادگیری. بازی‌های آموزشی تعاملی، آزمون‌ساز و ابزارهای کلاس درس برای معلمان و دانش‌آموزان پایه پنجم.">
 <meta property="og:title" content="حکیمستان — دیار حکیم، سرزمین یادگیری">
@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/lobby.css">
 </head>
-<body data-theme="sunny">
+<body data-theme="kashi">
 
 <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
@@ -91,9 +91,9 @@
 <!-- پنل انتخاب تم -->
 <div class="theme-panel" id="themePanel" role="dialog" aria-label="انتخاب تم صفحه">
   <p class="tp-title">تم صفحه</p>
-  <button type="button" class="theme-opt" data-theme="night">
-    <span class="theme-dot" style="--sw:linear-gradient(135deg,#0b1830,#5eead4 55%,#f4cd84)"></span>
-    <span class="theme-name">کاشی شبانه<small>لاجورد و فیروزه</small></span>
+  <button type="button" class="theme-opt" data-theme="kashi">
+    <span class="theme-dot" style="--sw:linear-gradient(135deg,#fbf8f1,#008080 55%,#d4af37)"></span>
+    <span class="theme-name">کاشی شبانه<small>گنبد فیروزه‌ای و طلای اصفهان</small></span>
     <span class="theme-check" aria-hidden="true">✓</span>
   </button>
   <button type="button" class="theme-opt" data-theme="ocean">
@@ -103,7 +103,7 @@
   </button>
   <button type="button" class="theme-opt" data-theme="sunny">
     <span class="theme-dot" style="--sw:linear-gradient(135deg,#ffffff,#bae6fd 55%,#f4cd84)"></span>
-    <span class="theme-name">صبح فیروزه<small>پیش‌فرض · روشن و آرام</small></span>
+    <span class="theme-name">صبح فیروزه<small>روشن و آرام</small></span>
     <span class="theme-check" aria-hidden="true">✓</span>
   </button>
 </div>
@@ -677,17 +677,17 @@
   /* شناسه‌های تم با بقیه‌ی صفحات مشترک‌اند تا انتخاب کاربر همه‌جا بماند.
      تم‌های قدیمی لابی به نزدیک‌ترین تمِ تازه نگاشت می‌شوند. */
   var THEMES = {
-    night: { light:false, tc:'#050c1c', stars:['#f4cd84','#e7dcff'], dust:'244,205,132', shoot:'255,225,170' },
+    kashi: { light:true, tc:'#fbf8f1', stars:['#008080','#d4af37'], dust:'0,128,128', shoot:'212,175,55' },
     ocean: { light:false, tc:'#030a18', stars:['#67e8f9','#e7dcff'], dust:'103,232,249', shoot:'186,230,253' },
     sunny: { light:true,  tc:'#eef3fa', stars:['#0d9488','#6366f1'], dust:'13,148,136',  shoot:'99,102,241' }
   };
-  var LEGACY = { kashi:'night', lapis:'ocean', rooz:'sunny', forest:'night', shad:'night', candy:'night', modern:'sunny', sky:'sunny' };
+  var LEGACY = { night:'kashi', lapis:'ocean', rooz:'sunny', forest:'kashi', shad:'kashi', candy:'kashi', modern:'sunny', sky:'sunny' };
   var THEME_KEY = 'hakimestan_lobby_theme';
   var starPal = { a:'#f4cd84', b:'#e7dcff', dust:'244,205,132', shoot:'255,225,170' };
 
   function applyTheme(id, save){
     if (LEGACY[id]) id = LEGACY[id];
-    if (!THEMES[id]) id = 'night';
+    if (!THEMES[id]) id = 'kashi';
     document.body.setAttribute('data-theme', id);
     var p = THEMES[id];
     starPal = { a:p.stars[0], b:p.stars[1], dust:p.dust, shoot:p.shoot };
@@ -705,8 +705,7 @@
   var savedTheme = null;
   try { savedTheme = localStorage.getItem(THEME_KEY); } catch(e){}
   if (!savedTheme) {
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(prefersDark ? 'night' : 'sunny', false);
+    applyTheme('kashi', false);
   } else {
     applyTheme(savedTheme, false);
   }
