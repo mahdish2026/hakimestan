@@ -11,7 +11,7 @@
 <meta name="description" content="مدرسهٔ ریاضی حکیمستان — بازی‌های آموزشی ریاضی پایهٔ پنجم: تقسیم، ساعت، کسر، هندسه و مباحث کتاب درسی.">
 
 <!-- PWA Meta -->
-<meta name="theme-color" content="#6654e8">
+<meta name="theme-color" content="#fbf8f1">
 <link rel="manifest" href="manifest.json">
 
 <!-- Favicon -->
@@ -110,8 +110,11 @@ body {
   gap: 12px;
 }
 
-.page-title .icon {
-  font-size: 1.3em;
+.page-title-icon {
+  width: clamp(38px,5vw,50px);
+  height: clamp(38px,5vw,50px);
+  flex: 0 0 auto;
+  color: var(--teal);
 }
 
 .page-subtitle {
@@ -172,7 +175,12 @@ body {
 .card-icon svg {
   width: 32px;
   height: 32px;
-  fill: white;
+  color: #fff;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .card-info {
@@ -459,6 +467,39 @@ body[data-theme="shad"]{
     var(--page);
 }
 
+/* کاشی — گنبد فیروزه‌ای روشن، هم‌پالت با لابی حکیمستان */
+body[data-theme="kashi"]{
+  color-scheme:light;
+  --page:#fbf8f1;--surface:#ffffff;--surface-soft:#fffdf7;--surface-line:rgba(0,128,128,.20);
+  --ink:#1a2a3a;--muted:#4f6274;--purple:#008080;--purple-dark:#00696a;
+  --teal:#008080;--yellow:#d4af37;--coral:#c25a48;--green:#0b7a5e;
+  --shadow:0 14px 36px rgba(26,42,58,.12);--soft-purple:#eaf5f2;--soft-green:#e9f6ef;
+  background-color:#fbf8f1;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22350%22%20height=%22350%22%20viewBox=%220%200%20350%20350%22%3E%20%3Cdefs%3E%20%3Cg%20id=%22petal%22%3E%20%3Cpath%20d=%22M0%20-14%20C%2015%20-27%2015%20-45%200%20-60%20C%20-15%20-45%20-15%20-27%200%20-14%20Z%22/%3E%20%3C/g%3E%20%3Cg%20id=%22rosette%22%3E%20%3Ccircle%20r=%2260%22/%3E%20%3Ccircle%20r=%2245%22%20stroke-dasharray=%223%206%22/%3E%20%3Cuse%20href=%22%23petal%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22rotate(45)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22rotate(90)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22rotate(135)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22rotate(180)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22rotate(225)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22rotate(270)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22rotate(315)%22/%3E%20%3Ccircle%20r=%2216%22/%3E%20%3Cpath%20d=%22M0%20-16%20L%209%20-6%20L%200%204%20L%20-9%20-6%20Z%22/%3E%20%3Cpath%20d=%22M0%2016%20L%209%206%20L%200%20-4%20L%20-9%206%20Z%22/%3E%20%3Cpath%20d=%22M-16%200%20L%20-6%20-9%20L%204%200%20L%20-6%209%20Z%22/%3E%20%3Cpath%20d=%22M16%200%20L%206%20-9%20L%20-4%200%20L%206%209%20Z%22/%3E%20%3C/g%3E%20%3Cg%20id=%22corner-rosette%22%3E%20%3Ccircle%20r=%2246%22/%3E%20%3Ccircle%20r=%2233%22%20stroke-dasharray=%223%206%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%20rotate(45)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%20rotate(90)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%20rotate(135)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%20rotate(180)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%20rotate(225)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%20rotate(270)%22/%3E%20%3Cuse%20href=%22%23petal%22%20transform=%22scale(.72)%20rotate(315)%22/%3E%20%3Ccircle%20r=%2212%22/%3E%20%3C/g%3E%20%3Cg%20id=%22star%22%3E%20%3Cpath%20d=%22M0%20-24%20L%206%20-6%20L%2024%200%20L%206%206%20L%200%2024%20L%20-6%206%20L%20-24%200%20L%20-6%20-6%20Z%22/%3E%20%3Ccircle%20r=%225%22/%3E%20%3C/g%3E%20%3C/defs%3E%20%3Cg%20fill=%22none%22%20stroke=%22%23008080%22%20stroke-width=%221.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%20opacity=%220.20%22%3E%20%3Cpath%20d=%22M175%200%20C%20222%2070%20280%20128%20350%20175%20C%20280%20222%20222%20280%20175%20350%20C%20128%20280%2070%20222%200%20175%20C%2070%20128%20128%2070%20175%200%20Z%22%20stroke=%22%23d4af37%22%20stroke-width=%221%22/%3E%20%3Cpath%20d=%22M0%200%20C%2055%2055%20120%2055%20175%200%20C%20230%2055%20295%2055%20350%200%22%20stroke=%22%23d4af37%22%20stroke-width=%22.9%22/%3E%20%3Cpath%20d=%22M0%20350%20C%2055%20295%20120%20295%20175%20350%20C%20230%20295%20295%20295%20350%20350%22%20stroke=%22%23d4af37%22%20stroke-width=%22.9%22/%3E%20%3Cpath%20d=%22M0%200%20C%2055%2055%2055%20120%200%20175%20C%2055%20230%2055%20295%200%20350%22%20stroke=%22%23d4af37%22%20stroke-width=%22.9%22/%3E%20%3Cpath%20d=%22M350%200%20C%20295%2055%20295%20120%20350%20175%20C%20295%20230%20295%20295%20350%20350%22%20stroke=%22%23d4af37%22%20stroke-width=%22.9%22/%3E%20%3Cuse%20href=%22%23rosette%22%20transform=%22translate(175%20175)%22/%3E%20%3Cuse%20href=%22%23corner-rosette%22%20transform=%22translate(0%200)%22/%3E%20%3Cuse%20href=%22%23corner-rosette%22%20transform=%22translate(350%200)%22/%3E%20%3Cuse%20href=%22%23corner-rosette%22%20transform=%22translate(0%20350)%22/%3E%20%3Cuse%20href=%22%23corner-rosette%22%20transform=%22translate(350%20350)%22/%3E%20%3Cuse%20href=%22%23star%22%20transform=%22translate(175%200)%22/%3E%20%3Cuse%20href=%22%23star%22%20transform=%22translate(0%20175)%22/%3E%20%3Cuse%20href=%22%23star%22%20transform=%22translate(350%20175)%22/%3E%20%3Cuse%20href=%22%23star%22%20transform=%22translate(175%20350)%22/%3E%20%3C/g%3E%20%3C/svg%3E"),
+    radial-gradient(circle at 9% 8%,rgba(212,175,55,.10),transparent 25rem),
+    radial-gradient(circle at 95% 26%,rgba(0,128,128,.08),transparent 27rem);
+  background-size:350px 350px, auto, auto;
+  background-repeat:repeat, no-repeat, no-repeat;
+}
+
+body[data-theme="kashi"] .tag.new{
+  background:#fff8e6;
+  color:#71591c;
+  border-color:rgba(212,175,55,.38);
+}
+
+body[data-theme="kashi"] .tag.math{
+  background:#e9f6ef;
+  color:#0b7a5e;
+  border-color:rgba(11,122,94,.28);
+}
+
+body[data-theme="kashi"] .tag.educational{
+  background:#eaf5f2;
+  color:#00696a;
+  border-color:rgba(0,128,128,.25);
+}
+
 /* مدرن = پالت پیش‌فرض صفحه (:root) — نیازی به بازنویسی نیست */
 
 </style>
@@ -467,13 +508,15 @@ body[data-theme="shad"]{
   <link rel="preload" href="hakim-core.js" as="script">
 
 </head>
-<body data-theme="modern">
+<body data-theme="kashi">
   <div class="app-shell">
     <!-- Header -->
     <header class="page-header">
       <button type="button" class="theme-btn" id="themeBtn" aria-label="انتخاب تم صفحه" title="تم صفحه" aria-expanded="false" aria-haspopup="true">🎨</button>
 <div class="theme-panel" id="themePanel" role="dialog" aria-label="انتخاب تم صفحه">
   <div class="theme-title">🎨 تم صفحه رو انتخاب کن</div>
+  <div class="theme-group">✨ تم اصلی حکیمستان</div>
+  <button type="button" class="theme-opt" data-theme="kashi"><span class="theme-dot" style="--sw:linear-gradient(135deg,#fbf8f1,#008080 55%,#d4af37)"></span><span class="theme-name">کاشی <small>(گنبد فیروزه‌ای — روشن)</small></span><span class="theme-check">✓</span></button>
   <div class="theme-group">تیره</div>
   <button type="button" class="theme-opt" data-theme="night"><span class="theme-dot" style="--sw:linear-gradient(135deg,#2a1a4a,#f5c76a)"></span><span class="theme-name">شب عرفانی</span><span class="theme-check">✓</span></button>
   <button type="button" class="theme-opt" data-theme="ocean"><span class="theme-dot" style="--sw:linear-gradient(135deg,#0a2740,#38bdf8)"></span><span class="theme-name">اقیانوس نیمه‌شب</span><span class="theme-check">✓</span></button>
@@ -485,14 +528,17 @@ body[data-theme="shad"]{
   <button type="button" class="theme-opt" data-theme="candy"><span class="theme-dot" style="--sw:linear-gradient(135deg,#f9a8d4,#a78bfa,#6ee7b7)"></span><span class="theme-name">آب‌نباتی</span><span class="theme-check">✓</span></button>
   <button type="button" class="theme-opt" data-theme="shad"><span class="theme-dot" style="--sw:linear-gradient(135deg,#ff7d3b,#3d8bff)"></span><span class="theme-name">حکیمستان شاد</span><span class="theme-check">✓</span></button>
   <div class="theme-group">✨ حالت ویژه</div>
-  <button type="button" class="theme-opt" data-theme="modern"><span class="theme-dot" style="--sw:linear-gradient(135deg,#ff7d3b,#3ba7ff)"></span><span class="theme-name">مدرن <small>(پیش‌فرض)</small></span><span class="theme-check">✓</span></button>
+  <button type="button" class="theme-opt" data-theme="modern"><span class="theme-dot" style="--sw:linear-gradient(135deg,#ff7d3b,#3ba7ff)"></span><span class="theme-name">مدرن</span><span class="theme-check">✓</span></button>
 </div>
       <a href="index.html" class="back-link reveal d1">
         <span>←</span>
         <span>بازگشت به لابی</span>
       </a>
       <h1 class="page-title reveal d2">
-        <span class="icon" aria-hidden="true">🧮</span>
+        <svg class="page-title-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
+          <path d="M8 40h32M12 36h24M15 36V26c0-7 4-12 9-15 5 3 9 8 9 15v10" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M24 12V5m0 0-2.5 3M24 5l2.5 3M19 36v-7a5 5 0 0 1 10 0v7M24 21v15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         <span>مدرسه ریاضی</span>
       </h1>
       <p class="page-subtitle reveal d3">بازی‌های آموزشی ریاضی پایهٔ پنجم — بازی کن، تمرین کن، ستاره بگیر</p>
@@ -504,7 +550,10 @@ body[data-theme="shad"]{
       <a href="games/math-learning-1.html" class="game-card reveal d1">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
-            <span class="gc-emoji">🔨</span>
+            <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <path d="m11 11 9-7 14 14-8 9L11 11Z"/>
+              <path d="m23 25 17 17M34 36l6 6"/>
+            </svg>
           </div>
           <div class="card-info">
             <h2 class="card-name">تقسیم چکشی</h2>
@@ -528,7 +577,10 @@ body[data-theme="shad"]{
       <a href="games/math-time-mission.html" class="game-card reveal d2">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
-            <span class="gc-emoji">⏰</span>
+            <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="26" r="16"/>
+              <path d="M24 15v11l8 5M18 5h12M24 5v5"/>
+            </svg>
           </div>
           <div class="card-info">
             <h2 class="card-name">ماموریت زمان</h2>
@@ -552,7 +604,10 @@ body[data-theme="shad"]{
       <a href="games/math-olgoha.html" class="game-card reveal d3">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
-            <span class="gc-emoji">🔷</span>
+            <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <path d="m24 4 18 20-18 20L6 24 24 4Z"/>
+              <path d="M6 24h36M24 4l-6 20 6 20 6-20-6-20Z"/>
+            </svg>
           </div>
           <div class="card-info">
             <h2 class="card-name">الگوستان</h2>
@@ -595,8 +650,12 @@ body[data-theme="shad"]{
   var panel = document.getElementById('themePanel');
   if (!btn || !panel) return;
 
+  var ALLOWED_THEMES = ['kashi', 'night', 'ocean', 'forest', 'sunny', 'sky', 'candy', 'shad', 'modern'];
+  var LEGACY_THEMES = { lapis: 'ocean', rooz: 'sunny' };
+
   function apply(id) {
-    if (!/^[a-z]+$/.test(id)) id = 'modern';
+    if (LEGACY_THEMES[id]) id = LEGACY_THEMES[id];
+    if (ALLOWED_THEMES.indexOf(id) === -1) id = 'kashi';
     document.body.setAttribute('data-theme', id);
     var opts = panel.querySelectorAll('.theme-opt');
     for (var i = 0; i < opts.length; i++) {
@@ -612,8 +671,8 @@ body[data-theme="shad"]{
     btn.setAttribute('aria-expanded', 'false');
   }
 
-  var saved = 'modern';
-  try { saved = localStorage.getItem(KEY) || 'modern'; } catch (e) {}
+  var saved = 'kashi';
+  try { saved = localStorage.getItem(KEY) || 'kashi'; } catch (e) {}
   apply(saved);
 
   btn.addEventListener('click', function (e) {
