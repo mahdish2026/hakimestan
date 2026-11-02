@@ -49,6 +49,7 @@ node tools/inject-csp.mjs [--dry]
 | `lab2d.html` | آزمایشگاه دوبعدی علوم |
 | `farsi5-vocab.html` | واژه‌ستان فارسی پنجم |
 | `math-olgoha.html` | الگوستان — الگوهای ریاضی پنجم |
+| `math-fasl2.html` | کسرستان — بازی مرحله‌ای فصل دوم ریاضی پنجم، همراه راهنمای حکیم، ثبت نتایج، معمای الگوی پایانی و یادداشت فرهنگ خواندن |
 | `hakim-cards.html` | کارت‌های حکیم |
 | `hakim-treasure.html` | راز گنج حکیم |
 | `jadval-hekmat.html` | جدول حکمت |
