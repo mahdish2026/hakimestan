@@ -586,7 +586,7 @@
       // ── موبایل ──────────────────────────────────────────
       '@media (max-width:420px){',
         '.hakim-avatar{width:80px;height:80px}',
-        '.hakim-text{font-size:.88rem}',
+        '.hakim-text{font-size:.88rem;min-height:1.6em}',
         '.hakim-panel{padding:12px;gap:11px}',
       '}',
 
@@ -663,7 +663,7 @@
         '</div>' +
         '<div class="hakim-bubble">' +
           '<div class="hakim-name"><span class="hakim-dot" aria-hidden="true"></span> حکیم، همراه تو</div>' +
-          '<div class="hakim-text" id="hakimText" aria-hidden="true"></div>' +
+          '<div class="hakim-text" id="hakimCoreText" aria-hidden="true"></div>' +
           '<div class="hakim-sr-only" id="hakimSrText" role="status" aria-live="polite"></div>' +
         '</div>' +
       '</div>'

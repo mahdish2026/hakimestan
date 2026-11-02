@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head><!-- hakim-core:start -->
+<head>
+<!-- hakim-csp:start -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
+<!-- hakim-csp:end -->
+
+<!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
 <!-- hakim-core:end -->
 
@@ -173,10 +178,13 @@ body[data-theme="sunny"] .video-card { box-shadow: 0 20px 50px -34px rgba(16,42,
 .card-thumb img {
   width: 100%; height: 100%;
   object-fit: cover;
-  display: none;
   position: absolute; inset: 0;
+  /* عمداً display:none نیست: تصویرِ display:none با loading="lazy" هرگز
+     بارگذاری نمی‌شود و همهٔ کارت‌ها برای همیشه خاکستری می‌ماندند. */
+  opacity: 0;
+  transition: opacity .35s ease;
 }
-.card-thumb img.loaded { display: block; }
+.card-thumb img.loaded { opacity: 1; }
 
 .thumb-ph {
   position: absolute; inset: 0;
@@ -464,6 +472,7 @@ body[data-theme="kashi"] .thumb-ph {
 <!-- hakim-meta:start -->
 <meta name="description" content="فیلم‌های آموزشی حکیمستان — مجموعهٔ ویدیوهای درس و کارگاه برای معلمان و دانش‌آموزان، با پخش روان روی موبایل.">
 <meta name="theme-color" content="#fbf8f1">
+<link rel="manifest" href="manifest.json">
 <link rel="canonical" href="https://hakimistan.ir/videos.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="حکیمستان">
@@ -787,10 +796,11 @@ function buildCard(video) {
      نسخه‌های WebP از tools/optimize-images.mjs ساخته می‌شوند و
      اگر موجود نباشند، مرورگر خودکار به JPEG برمی‌گردد. */
   const base = 'videos/' + video.id;
+  const webpBase = 'videos/optimized/' + video.id;   // نسخه‌های WebP همیشه در videos/optimized/ هستند
   const picture = document.createElement('picture');
   const source = document.createElement('source');
   source.type = 'image/webp';
-  source.srcset = `${base}-480.webp 480w, ${base}-960.webp 960w, videos/optimized/${video.id}.webp 1280w`;
+  source.srcset = `${webpBase}-480.webp 480w, ${webpBase}-960.webp 960w, ${webpBase}.webp 1280w`;
   source.sizes = '(max-width: 560px) 92vw, (max-width: 1000px) 46vw, 380px';
 
   const img = document.createElement('img');

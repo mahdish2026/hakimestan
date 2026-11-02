@@ -955,6 +955,25 @@
       return r;
     }
 
+    /* نزدیک‌ترین جدِّ ثابت/چسبان — نوارهای پایین (مثل نوار ضبط درسگاه)
+       خودشان fixed هستند اما دکمه‌های داخلشان position: static دارند؛
+       پس هم‌پوشانی باید با کادر همان نوار سنجیده شود، نه با دکمه.
+       فقط نوارهای کوتاه (کمتر از ۶۰٪ ارتفاع صفحه) در نظر گرفته می‌شوند تا
+       سایدبارهای تمام‌قد دکمه را بیهوده به بالای صفحه نبرند. */
+    function fixedBarOf(el) {
+      var n = el.parentElement, hops = 0;
+      while (n && n !== document.body && hops++ < 6) {
+        var cs = getComputedStyle(n);
+        if (cs.position === 'fixed' || cs.position === 'sticky') {
+          var r = n.getBoundingClientRect();
+          if (r.height > 0 && r.height < window.innerHeight * 0.6) return r;
+          return null;
+        }
+        n = n.parentElement;
+      }
+      return null;
+    }
+
     function collidingTops() {
       var fr = fab.getBoundingClientRect();
       var tops = [];
@@ -964,9 +983,14 @@
         if (el.closest && el.closest('#a11y-toolbar')) continue;
         if (!el.matches || !el.matches('button, a[href], input, select, textarea, [role="button"], [contenteditable="true"]')) continue;
         var cs = getComputedStyle(el);
-        if (cs.position !== 'fixed' && cs.position !== 'sticky') continue;
         if (cs.pointerEvents === 'none' || cs.visibility === 'hidden' || cs.display === 'none' || el.disabled) continue;
-        var r = el.getBoundingClientRect();
+        var r;
+        if (cs.position === 'fixed' || cs.position === 'sticky') {
+          r = el.getBoundingClientRect();
+        } else {
+          r = fixedBarOf(el);            // دکمه‌ای که داخل یک نوار ثابت نشسته
+          if (!r) continue;
+        }
         if (r.width < 10 || r.height < 10) continue;
         if (!(r.right < fr.left || r.left > fr.right || r.bottom < fr.top || r.top > fr.bottom)) {
           tops.push(r.top);
