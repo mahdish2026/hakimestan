@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head><!-- hakim-core:start -->
+<head>
+<!-- hakim-csp:start -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
+<!-- hakim-csp:end -->
+
+<!-- hakim-core:start -->
 <link rel="stylesheet" href="../css/a11y.css">
 <!-- hakim-core:end -->
 
@@ -182,7 +187,7 @@ a{color:inherit}
       <div id="tabList" class="tab-body"><div id="qList" class="q-list"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><button id="btnRestore" class="btn ghost" style="margin-top:12px"><svg class="icon sm"><use href="#i-refresh"/></svg> بازیابی سؤال‌های پیش‌فرض</button></div>
     </div></section>
 
-    <section id="scResults" class="screen hidden"><div class="card"><div class="toolbar"><div class="card-head" style="margin:0"><div><h2><svg class="icon"><use href="#i-chart"/></svg> نتایج بازی‌ها</h2><p>فیلتر، پشتیبان‌گیری، وارد کردن یا حذف نتایج</p></div></div><div class="toolbar-actions"><button id="btnExport" class="btn small"><svg class="icon sm"><use href="#i-download"/></svg> دانلود پشتیبان</button><button id="btnImport" class="btn info small"><svg class="icon sm"><use href="#i-upload"/></svg> بازگردانی از فایل</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="btnDeleteAll" class="btn danger small"><svg class="icon sm"><use href="#i-trash"/></svg> پاک کردن همه</button></div></div><div class="filters"><div><label>بازی</label><select id="fGame"><option value="">همه بازی‌ها</option><option value="snake-ladder">مار و پله</option><option value="snake-ladder-online">مار و پله آنلاین</option><option value="mancheh-online">منچ دانش آنلاین</option><option value="lab2d">آزمایشگاه ۲بعدی</option><option value="jadval-hekmat">جدول حکمت</option><option value="kohan-diyar">فتح کهن دیار ایران</option><option value="hakim-quest">ماجرای حکیم</option><option value="hakim-cards">کارت‌های حکیم</option><option value="hakim-treasure">گنج حکیم</option><option value="farsi5-vocab">واژه‌ستان فارسی پنجم</option><option value="math-learning-1">تقسیم چکشی</option><option value="math-time-mission">ماموریت زمان</option><option value="math-olgoha">الگوستان</option></select></div><div class="filter-wide"><label>دانش‌آموز</label><input id="fStudent" type="search" placeholder="نام دانش‌آموز..."></div><div><label>بازه زمانی</label><select id="fDays"><option value="0">همه</option><option value="1">امروز</option><option value="7">این هفته</option><option value="30">این ماه</option></select></div><div class="filter-btn"><button id="btnApplyFilter" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-search"/></svg> فیلتر</button></div></div><div id="resultsAlert" class="alert"></div><div id="resultsInfo" class="results-info"></div><div id="resultsTable"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><div id="resultCards" class="result-cards"></div></div></section>
+    <section id="scResults" class="screen hidden"><div class="card"><div class="toolbar"><div class="card-head" style="margin:0"><div><h2><svg class="icon"><use href="#i-chart"/></svg> نتایج بازی‌ها</h2><p>فیلتر، پشتیبان‌گیری، وارد کردن یا حذف نتایج</p></div></div><div class="toolbar-actions"><button id="btnExport" class="btn small"><svg class="icon sm"><use href="#i-download"/></svg> دانلود پشتیبان</button><button id="btnImport" class="btn info small"><svg class="icon sm"><use href="#i-upload"/></svg> بازگردانی از فایل</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="btnDeleteAll" class="btn danger small"><svg class="icon sm"><use href="#i-trash"/></svg> پاک کردن همه</button></div></div><div class="filters"><div><label for="fGame">بازی</label><select id="fGame"><option value="">همه بازی‌ها</option><option value="snake-ladder">مار و پله</option><option value="snake-ladder-online">مار و پله آنلاین</option><option value="mancheh-online">منچ دانش آنلاین</option><option value="lab2d">آزمایشگاه ۲بعدی</option><option value="jadval-hekmat">جدول حکمت</option><option value="kohan-diyar">فتح کهن دیار ایران</option><option value="hakim-quest">ماجرای حکیم</option><option value="hakim-cards">کارت‌های حکیم</option><option value="hakim-treasure">گنج حکیم</option><option value="farsi5-vocab">واژه‌ستان فارسی پنجم</option><option value="math-learning-1">تقسیم چکشی</option><option value="math-time-mission">ماموریت زمان</option><option value="math-olgoha">الگوستان</option></select></div><div class="filter-wide"><label for="fStudent">دانش‌آموز</label><input id="fStudent" type="search" placeholder="نام دانش‌آموز..."></div><div><label for="fDays">بازه زمانی</label><select id="fDays"><option value="0">همه</option><option value="1">امروز</option><option value="7">این هفته</option><option value="30">این ماه</option></select></div><div class="filter-btn"><button id="btnApplyFilter" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-search"/></svg> فیلتر</button></div></div><div id="resultsAlert" class="alert"></div><div id="resultsInfo" class="results-info"></div><div id="resultsTable"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><div id="resultCards" class="result-cards"></div></div></section>
 
     <section id="scStats" class="screen hidden">
       <div class="stats-grid">
@@ -227,15 +232,15 @@ a{color:inherit}
         </div>
         <div class="filters" style="margin-bottom:12px">
           <div class="filter-wide">
-            <label>جستجو (صفحه، کاربر، منبع...)</label>
+            <label for="vSearch">جستجو (صفحه، کاربر، منبع...)</label>
             <input id="vSearch" type="search" placeholder="مثلاً: snake یا موبایل...">
           </div>
           <div>
-            <label>دستگاه</label>
+            <label for="vDevice">دستگاه</label>
             <select id="vDevice"><option value="">همه</option><option>موبایل</option><option>تبلت</option><option>دسکتاپ</option></select>
           </div>
           <div>
-            <label>وضعیت</label>
+            <label for="vStatus">وضعیت</label>
             <select id="vStatus"><option value="">همه</option><option>جدید</option><option>برگشتی</option></select>
           </div>
           <div class="filter-btn">

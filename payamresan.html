@@ -17,7 +17,7 @@
 <meta name="author" content="مهدی شریفیان">
 <meta name="referrer" content="no-referrer">
 <!-- سیاست امنیتی محتوا (جلوگیری از XSS و اسکریپت بیرونی ناشناس) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https:; font-src 'self' data:; manifest-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: blob:; font-src 'self' data:; manifest-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'">
 <title>پیامرسان حکیمستان</title>
 <!-- مانیفست PWA (در زمان اجرا با مانیفست ساخته‌شده جایگزین می‌شود) -->
 <link rel="manifest" href="manifest.json">
@@ -1862,7 +1862,7 @@ body[data-bgimg="on"] #page-chat .main::before{
       <div class="set-item" style="flex-direction:column;align-items:stretch">
         <div class="row" style="align-items:center"><svg class="ic"><use href="#i-clip"/></svg><div class="meta"><div class="t">پیوست‌ها (عکس، ویس، فایل)</div><div class="d">برای فایل‌های بزرگ‌تر، یک سرویس آپلود معرفی کن</div></div></div>
         <div class="field" style="margin-top:10px">
-          <label>روش ارسال</label>
+          <label for="uploadProvider">روش ارسال</label>
           <select class="input" id="uploadProvider">
             <option value="inline">مستقیم (بدون سرویس) — محدود به حجم کم</option>
             <option value="imgbb">آپلود به imgbb (پیشنهادی)</option>
