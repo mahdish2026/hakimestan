@@ -179,6 +179,15 @@ try {
   // Number-line case.
   click($('.lab-scenario-btn[data-lab-id="units-line"]'));
   assert.equal($$('[data-lab-tick]').length, 13, '0..3 with quarters should have 13 ticks');
+  assert.equal($$('.lab-tick.start').length, 1, 'number line needs one start marker');
+  assert.equal($('.lab-tick.start').disabled, true, 'start marker must not be selectable');
+  assert.equal($$('.lab-tick.end').length, 1, 'number line needs one destination marker');
+  assert.match($('.lab-tick.end').getAttribute('aria-label'), /مقصد/, 'end marker aria-label should say destination');
+  assert.match($('.lab-tick[data-lab-tick="5"]').getAttribute('aria-label'), /از ۱۲ قدم/, 'tick aria-label should show total steps');
+  assert.match($('.lab-board-guide').textContent, /نقطه\u200cهای پرش همان/, 'line guide must explain exact jump points');
+  assert.ok(!/رسم متفاوت/.test($('.lab-board-guide').textContent), 'line guide must not promise equivalent drawings');
+  assert.match($('.lab-board-caption').textContent, /نقطه زرد مقصد/, 'axis caption should mention destination marker');
+
   solveCurrentLab();
   assert.match($('#labProgressPill').textContent, /۲ از/, 'second lab badge was not recorded');
 
@@ -205,14 +214,25 @@ try {
   click($('.lab-scenario-btn[data-lab-id="mixed-area"]'));
   solveCurrentLab();
   assert.match($('#labFeedback').textContent, /درست کشیدی/, 'mixed-area lab should be solvable');
+  click($('.lab-group-btn[data-lab-group="mixed"]'));
+  click($('.lab-scenario-btn[data-lab-id="review-choose-line"]'));
+  assert.equal($$('[data-lab-tick]').length, 31, 'longest axis should have 31 ticks');
+  assert.equal($$('.lab-tick.end').length, 1, 'longest axis needs a destination marker');
+  solveCurrentLab();
+  assert.match($('#labFeedback').textContent, /درست کشیدی/, 'longest axis should be solvable');
+
 
   clickSelector('#labBack');
   assert.equal($('#map').hidden, false, 'back from map lab should return to the map');
-  assert.match($('#openDrawLab').textContent, /۵ از/, 'map lab counter should reflect earned badges');
+  assert.match($('#openDrawLab').textContent, /۶ از/, 'map lab counter should reflect earned badges');
   clickSelector('#openCertificate');
   assert.ok($('.cert-cheers'), 'certificate should include encouragement messages');
   assert.match($('.cert-status').textContent, /پیام\u200cهای تشویقی/, 'certificate should count cheers');
-  assert.ok($$('.cert-cheers li').length >= 3, 'recent cheers should be listed in the certificate');
+  assert.ok($$('.cert-cheers li').length >= 2, 'recent cheers should be listed in the certificate');
+  assert.match($('.cert-cheers').textContent, /بار/, 'repeated cheers should show their count');
+  assert.match($('.cert-cheers').textContent, /جمعاً/, 'certificate should total all cheer occurrences');
+  assert.equal($$('.cert-cheers li small .frac').length, 0, 'Jalali cheer dates must not be parsed as fractions');
+  assert.match($('.cert-cheers li small').textContent, /[۰-۹]+\/[۰-۹]+\/[۰-۹]+/, 'cheer date should stay readable');
   clickSelector('#certificateBack');
 
 
@@ -241,7 +261,7 @@ try {
   }
 
   assert.equal(errors.length, 0, `unexpected jsdom errors: ${errors.join(' | ')}`);
-  console.log(JSON.stringify({ labs: labs.length, groups: groups.length, grid: labs.filter(l => l.mode === 'grid').length, line: labs.filter(l => l.mode === 'line').length, regions: labs.filter(l => l.mode === 'regions').length, solvedInTest: 5, pageRangesFixed: true, persisted: true, jsdomErrors: errors.length }, null, 2));
+  console.log(JSON.stringify({ labs: labs.length, groups: groups.length, grid: labs.filter(l => l.mode === 'grid').length, line: labs.filter(l => l.mode === 'line').length, regions: labs.filter(l => l.mode === 'regions').length, solvedInTest: 6, pageRangesFixed: true, persisted: true, jsdomErrors: errors.length }, null, 2));
 } finally {
   dom.window.close();
 }

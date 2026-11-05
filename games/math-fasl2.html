@@ -713,6 +713,7 @@
     .lab-board-legend i.start{background:#5146a7;border-color:#3d3290}
     .lab-board-legend i.jump{background:#3eb99e;border-color:#208e76}
     .lab-board-legend i.sample{background:#ffd45f;border-color:#d5a322}
+    .lab-board-legend i.end{background:#fff;border-color:#d5a322;box-shadow:inset 0 0 0 2px #ffd45f}
     .lab-board-progress{height:7px;border-radius:99px;background:#eceff8;overflow:hidden}
     .lab-board-note{margin:0;color:#6a7488;font-size:.64rem;line-height:1.7;text-align:center}
     .lab-board-progress i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#7768d8,#3eb99e);transition:width .2s}
@@ -721,6 +722,8 @@
     .lab-tick.selected i{background:#3eb99e;border-color:#208e76;height:23px;width:5px;margin-top:3px;box-shadow:0 0 0 3px #dff5ef}
     .lab-tick.selected small{color:#176e5b;font-weight:950}
     .lab-tick.start i{background:#5146a7}
+    .lab-tick.end i{background:#fff;border:2px solid #d5a322;box-shadow:0 0 0 3px #fff0bd}
+    .lab-tick:disabled{cursor:default}
     .lab-region.selected{outline:3px solid #7768d8;outline-offset:-3px}
     .lab-region.expected{outline:3px solid #d5a322;outline-offset:-3px}
     .cert-cheers{margin:16px 0 0;padding:12px 14px;border:1px solid #eadba7;border-radius:15px;background:rgba(255,255,255,.72)}
@@ -1491,17 +1494,19 @@
       state.bestStreak=Math.max(0,Number(loaded&&loaded.bestStreak)||0);
       state.labDone=Array.isArray(loaded&&loaded.labDone)?loaded.labDone.filter(id=>DRAW_LABS.some(lab=>lab.id===id)):[];
       state.labXp=Math.max(0,Number(loaded&&loaded.labXp)||0);
-      state.cheers=Array.isArray(loaded&&loaded.cheers)?loaded.cheers.filter(item=>item&&typeof item.text==='string').map(item=>({text:persianSpacing(item.text),kind:String(item.kind||'تشویق'),date:String(item.date||'')})).slice(-40):[];
+      state.cheers=Array.isArray(loaded&&loaded.cheers)?loaded.cheers.filter(item=>item&&typeof item.text==='string').map(item=>({text:persianSpacing(item.text),kind:String(item.kind||'تشویق'),date:String(item.date||''),count:Math.max(1,Number(item.count)||1)})).slice(-40):[];
       safeWrite(ACTIVE_NAME_KEY,name);
     }
     function persist(){
       safeWrite(profileKey(state.name),JSON.stringify({name:state.name,completed:state.completed,bestStars:state.bestStars,dates:state.dates,bestStreak:state.bestStreak,labDone:state.labDone,labXp:state.labXp,cheers:state.cheers}));
     }
+    function cheerTotal(){return (state.cheers||[]).reduce((sum,item)=>sum+Math.max(1,Number(item.count)||1),0);}
     function recordCheer(text,kind='تشویق'){
       if(!state.name||!text)return;
       const clean=persianSpacing(String(text)),date=toJalali(new Date());
-      if(state.cheers.some(item=>item.text===clean&&item.date===date))return;
-      state.cheers.push({text:clean,kind:String(kind),date});
+      const existing=state.cheers.find(item=>item.text===clean&&item.date===date);
+      if(existing){existing.count=(Number(existing.count)||1)+1;persist();return;}
+      state.cheers.push({text:clean,kind:String(kind),date,count:1});
       if(state.cheers.length>40)state.cheers=state.cheers.slice(-40);
       persist();
     }
@@ -1575,10 +1580,12 @@
     function labLineHTML(lab){
       const {maxWhole,denominator,start=0,end,direction='forward',jumpLabel='پرشها'}=lab.line,total=maxWhole*denominator;
       const ticks=Array.from({length:total+1},(_,i)=>{
-        const major=i%denominator===0,isStart=i===start,label=labTickLabel(lab,i);
-        return `<button class="lab-tick ${major?'major':''} ${isStart?'start':''}" type="button" data-lab-tick="${i}" aria-pressed="false" aria-label="نقطه ${fa(i)} قدم از ${fa(denominator)} قدم در هر واحد"><i aria-hidden="true"></i><small>${labText(label)}</small></button>`;
+        const major=i%denominator===0,isStart=i===start,isEnd=i===end,label=labTickLabel(lab,i);
+        const spoken=labSpoken(formatFraction(i,denominator)),role=isStart?'نقطه شروع':isEnd?'نقطه مقصد':`نقطه ${fa(i)} از ${fa(total)} قدم`;
+        const aria=`${role}؛ ${spoken} واحد`;
+        return `<button class="lab-tick ${major?'major':''} ${isStart?'start':''} ${isEnd?'end':''}" type="button" data-lab-tick="${i}" aria-pressed="false" aria-label="${esc(aria)}" ${isStart?'disabled aria-disabled="true"':''}><i aria-hidden="true"></i><small>${labText(label)}</small></button>`;
       }).join('');
-      return `<p class="lab-board-caption">${labText('روی نقاط پرش لمس کن؛ نقطهی شروع بنفش است.')}</p><div class="lab-line-board" data-direction="${esc(direction)}" style="--lab-ticks:${total+1}"><div class="lab-line-axis" role="group" aria-label="محور اعداد از صفر تا ${fa(maxWhole)}">${ticks}</div><p class="lab-axis-caption"><span>${labText(jumpLabel)}</span><span>مقصد: ${labText(labTickLabel(lab,end)||fa(end))}</span></p></div>`;
+      return `<p class="lab-board-caption">${labText('روی نقاط پرش لمس کن؛ نقطه بنفش شروع و نقطه زرد مقصد است.')}</p><div class="lab-line-board" data-direction="${esc(direction)}" style="--lab-ticks:${total+1}"><div class="lab-line-axis" role="group" aria-label="محور اعداد از صفر تا ${fa(maxWhole)}">${ticks}</div><p class="lab-axis-caption"><span>${labText(jumpLabel)}</span><span>مقصد: ${labText(labTickLabel(lab,end)||fa(end))}</span></p></div>`;
     }
     function labRegionsHTML(lab){
       const cells=lab.regions.cells;
@@ -1592,7 +1599,7 @@
         labText('خانهها را لمس کن تا بنفش شوند'),
         labText('تعداد یا الگوی درست را بساز')
       ]:line?[
-        labText('نقطه بنفش یعنی جای شروع'),
+        labText('نقطه بنفش شروع و نقطه زرد مقصد است'),
         labText('روی نقطههای پرش لمس کن'),
         labText('پرشها را تا مقصد بشمار')
       ]:[
@@ -1600,8 +1607,9 @@
         labText('روی هر تکه لمس کن تا مساحتش دیده شود'),
         labText('مساحتها را با هم جمع کن')
       ];
-      const legend=grid?`<span><i class="self"></i>انتخاب تو</span><span><i class="sample"></i>پاسخ نمونه</span>`:line?`<span><i class="start"></i>شروع</span><span><i class="jump"></i>پرش تو</span><span><i class="sample"></i>پاسخ نمونه</span>`:`<span><i class="self"></i>تکه انتخابشده</span><span><i class="sample"></i>پاسخ نمونه</span>`;
-      return `<div class="lab-board-guide" aria-label="راهنمای تابلو"><div class="lab-board-guide-head"><strong>${labText(title)}</strong><span class="lab-selection-count" id="labSelectionCount" aria-live="polite">${fa(0)} از ${fa(target)} علامت</span></div><ol>${steps.map((step,i)=>`<li><b>${fa(i+1)}</b>${step}</li>`).join('')}</ol><div class="lab-board-legend">${legend}</div><div class="lab-board-progress" aria-hidden="true"><i id="labSelectionBar"></i></div><p class="lab-board-note">${labText('مهم اندازه و الگوی تکههاست، نه جای دقیق خانهها. پاسخ نمونه فقط یکی از راههای درست است.')}</p></div>`;
+      const legend=grid?`<span><i class="self"></i>انتخاب تو</span><span><i class="sample"></i>پاسخ نمونه</span>`:line?`<span><i class="start"></i>شروع</span><span><i class="end"></i>مقصد</span><span><i class="jump"></i>پرش تو</span><span><i class="sample"></i>پاسخ نمونه</span>`:`<span><i class="self"></i>تکه انتخابشده</span><span><i class="sample"></i>پاسخ نمونه</span>`;
+      const note=line?labText('روی محور، نقطههای پرش همان جاهاییاند که گامها میگویند؛ پاسخ نمونه همان نقاط را نشان میدهد.'):labText('مهم اندازه و الگوی تکههاست، نه جای دقیق خانهها. پاسخ نمونه فقط یکی از راههای درست است.');
+      return `<div class="lab-board-guide" aria-label="راهنمای تابلو"><div class="lab-board-guide-head"><strong>${labText(title)}</strong><span class="lab-selection-count" id="labSelectionCount" aria-live="polite">${fa(0)} از ${fa(target)} علامت</span></div><ol>${steps.map((step,i)=>`<li><b>${fa(i+1)}</b>${step}</li>`).join('')}</ol><div class="lab-board-legend">${legend}</div><div class="lab-board-progress" aria-hidden="true"><i id="labSelectionBar"></i></div><p class="lab-board-note">${note}</p></div>`;
     }
     function labSameValues(a,b){return a.length===b.length&&a.every((value,i)=>value===b[i]);}
     function labIsCorrect(lab,selected){
@@ -1650,7 +1658,7 @@
       if(count)count.textContent=`${fa(labState.selected.size)} از ${fa(expected.length)} علامت`;
       if(bar)bar.style.width=`${Math.min(100,Math.round(labState.selected.size/Math.max(1,expected.length)*100))}%`;
       $$('[data-lab-cell]').forEach(button=>{const value=Number(button.dataset.labCell),on=labState.selected.has(value);button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));});
-      $$('[data-lab-tick]').forEach(button=>{const value=Number(button.dataset.labTick),on=labState.selected.has(value);button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));});
+      $$('[data-lab-tick]').forEach(button=>{const value=Number(button.dataset.labTick),on=!button.disabled&&labState.selected.has(value);button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));});
       $$('[data-lab-region]').forEach(button=>{const value=Number(button.dataset.labRegion),on=labState.selected.has(value),cell=lab.regions?.cells?.[value];button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));const small=button.querySelector('small');if(small){if(on||labState.showAnswer)small.innerHTML=labText(`= ${cell?.value||''}`);else small.textContent='لمس کن';}});
     }
     function updateLabSteps(){
@@ -1667,7 +1675,7 @@
     }
     function bindLabStage(){
       $$('[data-lab-cell]').forEach(button=>button.addEventListener('click',()=>toggleLabValue(Number(button.dataset.labCell))));
-      $$('[data-lab-tick]').forEach(button=>button.addEventListener('click',()=>toggleLabValue(Number(button.dataset.labTick))));
+      $$('[data-lab-tick]').forEach(button=>{if(!button.disabled)button.addEventListener('click',()=>toggleLabValue(Number(button.dataset.labTick)));});
       $$('[data-lab-region]').forEach(button=>button.addEventListener('click',()=>toggleLabValue(Number(button.dataset.labRegion))));
       $('#labStep')?.addEventListener('click',()=>{const lab=labScenario(labState.scenarioId);if(labState.step<lab.steps.length-1){labState.step++;updateLabSteps();}});
       $('#labHint')?.addEventListener('click',()=>{const lab=labScenario(labState.scenarioId);setLabFeedback('info','یک سرنخ',lab.hint);guideSay(labSpoken(lab.hint),'wise');});
@@ -2181,7 +2189,7 @@
         totalMistakes:session.mistakes,scorePercent:totalQuestions?Math.round(firstTryCorrect/totalQuestions*100):0,
         stars:stars||0,phase:session.phase,questionNumber:session.cursor+1,completedOnJalali:toJalali(new Date()),
         xp:session.xp||0,bestStreak:session.bestStreak||0,recordStreak:state.bestStreak||0,
-        labBadges:labDoneCount(),labXp:state.labXp||0,cheers:state.cheers.length
+        labBadges:labDoneCount(),labXp:state.labXp||0,cheers:cheerTotal()
       };
       sendTeacherRequest('session',{
         student_name:state.name,student_class:'',student_school:'',game_id:'math-fasl2',experiment_id:`stage-${session.index+1}`,
@@ -2271,16 +2279,16 @@
       $('#successMap').addEventListener('click',renderMap);$('#successCert').addEventListener('click',showCertificate);$('#successReplay').addEventListener('click',()=>startLevel(session.index));$('#successNext').addEventListener('click',()=>{if(session.index<LEVELS.length-1)startLevel(session.index+1);else showCertificate();});
     }
     function certificateCheers(){
-      const cheers=state.cheers||[];
+      const cheers=state.cheers||[],total=cheerTotal();
       if(!cheers.length)return `<section class="cert-cheers"><h2>${persianSpacing('💌 لحظه‌های تشویق')}</h2><p>${persianSpacing('هنوز پیام تشویقی ثبت نشده است. با اولین پاسخ درست، همان پیامی که دیدی اینجا هم می‌ماند.')}</p></section>`;
       const recent=cheers.slice(-5).reverse();
-      return `<section class="cert-cheers"><h2>${persianSpacing('💌 لحظه‌های تشویق')}</h2><p>${persianSpacing('همان پیام‌هایی که هنگام پاسخ‌های درست دیدی، اینجا در پروفایل تو ذخیره شده‌اند.')}</p><ul>${recent.map(item=>`<li><span>${esc(item.text)}</span><small>${esc(item.date||'')}</small></li>`).join('')}</ul><small>${persianSpacing(`جمعاً ${fa(cheers.length)} پیام تشویقی ثبت شده است.`)}</small></section>`;
+      return `<section class="cert-cheers"><h2>${persianSpacing('💌 لحظه‌های تشویق')}</h2><p>${persianSpacing('همان پیام‌هایی که هنگام پاسخ‌های درست دیدی، اینجا در پروفایل تو ذخیره شده‌اند؛ اگر پیامی تکرار شد، دفعاتش هم کنارش می‌ماند.')}</p><ul>${recent.map(item=>`<li><span>${esc(item.text)}</span><small><bdi class="jalali-date" dir="ltr">${esc(item.date||'')}</bdi>${(item.count||1)>1?` · ${fa(item.count)} بار`:''}</small></li>`).join('')}</ul><small>${persianSpacing(`جمعاً ${fa(total)} پیام تشویقی در ${fa(cheers.length)} نوع ثبت شده است.`)}</small></section>`;
     }
     function certificateList(){return `<div class="cert-list">${LEVELS.map((level,i)=>`<div class="cert-item ${state.completed[i]?'done':''}"><span class="cert-mark">${state.completed[i]?'✓':'○'}</span><span class="cert-stage-name">${fa(i+1)}. ${esc(level.short)}</span><span class="cert-stage-score">${state.completed[i]?`⭐ ${fa(state.bestStars[i])} · کامل`:'در انتظار'}</span></div>`).join('')}</div>`;}
     function showCertificate(){
       if(!state.name){showScreen('welcome');return;}
       const full=doneCount()===LEVELS.length;
-      $('#certificate').innerHTML=`<div class="cert-toolbar"><button class="btn light small" id="certificateBack" type="button">← بازگشت به نقشه</button><button class="btn primary small" id="printCertificate" type="button">🖨️ چاپ گواهی</button></div><article class="certificate-paper"><div class="cert-ornament" aria-hidden="true">✦　✧　✦　✧　✦</div><h1 class="cert-title" id="certificateTitle">${full?'گواهی‌نامه‌ی پایان فصل دوم':'گذرنامه‌ی پیشرفت کسرستان'}</h1><p class="cert-subtitle">بازی آموزشی فصل دوم ریاضی پایه‌ی پنجم</p><p class="cert-recipient">این گواهی با افتخار تقدیم می‌شود به</p><strong class="cert-name">${esc(state.name)}</strong><p class="cert-message">${full?'با پشتکار و اندیشه، همه‌ی مهارت‌های فصل دوم ریاضی پنجم را در شش جزیره‌ی کسرستان آموخت و به کار بست.':'سفر یادگیری فصل دوم ریاضی پنجم را آغاز کرده است. با تکمیل هر جزیره، تیک آن به این فهرست افزوده می‌شود.'}</p><div class="cert-status"><span class="cert-pill">🧭 مرحله‌های کامل‌شده: ${fa(doneCount())} از ${fa(LEVELS.length)}</span><span class="cert-pill">⭐ ستاره‌های به‌دست‌آمده: ${fa(starTotal())} از ${fa(LEVELS.length*3)}</span><span class="cert-pill">💌 پیام‌های تشویقی: ${fa(state.cheers.length)}</span><span class="cert-pill">🎨 نشان‌های رسم و محور: ${fa(labDoneCount())} از ${fa(DRAW_LABS.length)}</span></div>${certificateList()}${certificateCheers()}${full?'<div class="cert-seal">🏆 قهرمان کسرستان</div>':'<p class="cert-partial-note">این گذرنامه هر بار با پیشرفت، نشان‌ها و پیام‌های تشویقی تو به‌روز می‌شود.</p>'}<div class="cert-date">تاریخ صدور (شمسی): <bdi class="jalali-date" dir="ltr">${toJalali(new Date())}</bdi></div><div class="cert-credit">طراحی و توسعه‌دهنده: <strong>مهدی شریفیان معلم پایه پنجم است.</strong><br>کسرستان · سرزمین یادگیری</div></article>`;
+      $('#certificate').innerHTML=`<div class="cert-toolbar"><button class="btn light small" id="certificateBack" type="button">← بازگشت به نقشه</button><button class="btn primary small" id="printCertificate" type="button">🖨️ چاپ گواهی</button></div><article class="certificate-paper"><div class="cert-ornament" aria-hidden="true">✦　✧　✦　✧　✦</div><h1 class="cert-title" id="certificateTitle">${full?'گواهی‌نامه‌ی پایان فصل دوم':'گذرنامه‌ی پیشرفت کسرستان'}</h1><p class="cert-subtitle">بازی آموزشی فصل دوم ریاضی پایه‌ی پنجم</p><p class="cert-recipient">این گواهی با افتخار تقدیم می‌شود به</p><strong class="cert-name">${esc(state.name)}</strong><p class="cert-message">${full?'با پشتکار و اندیشه، همه‌ی مهارت‌های فصل دوم ریاضی پنجم را در شش جزیره‌ی کسرستان آموخت و به کار بست.':'سفر یادگیری فصل دوم ریاضی پنجم را آغاز کرده است. با تکمیل هر جزیره، تیک آن به این فهرست افزوده می‌شود.'}</p><div class="cert-status"><span class="cert-pill">🧭 مرحله‌های کامل‌شده: ${fa(doneCount())} از ${fa(LEVELS.length)}</span><span class="cert-pill">⭐ ستاره‌های به‌دست‌آمده: ${fa(starTotal())} از ${fa(LEVELS.length*3)}</span><span class="cert-pill">💌 پیام‌های تشویقی: ${fa(cheerTotal())}</span><span class="cert-pill">🎨 نشان‌های رسم و محور: ${fa(labDoneCount())} از ${fa(DRAW_LABS.length)}</span></div>${certificateList()}${certificateCheers()}${full?'<div class="cert-seal">🏆 قهرمان کسرستان</div>':'<p class="cert-partial-note">این گذرنامه هر بار با پیشرفت، نشان‌ها و پیام‌های تشویقی تو به‌روز می‌شود.</p>'}<div class="cert-date">تاریخ صدور (شمسی): <bdi class="jalali-date" dir="ltr">${toJalali(new Date())}</bdi></div><div class="cert-credit">طراحی و توسعه‌دهنده: <strong>مهدی شریفیان معلم پایه پنجم است.</strong><br>کسرستان · سرزمین یادگیری</div></article>`;
       formatMathIn($('#certificate'));
       showScreen('certificate');guideSay(full?`گواهی پایان فصل تو آماده است، ${state.name}! به تلاش خودت افتخار کن.`:`این گذرنامه‌ی توست، ${state.name}. هر بار که مرحله‌ای را کامل کنی، تیک و ستاره‌هایش اینجا می‌آیند.`,'happy');$('#certificateBack').addEventListener('click',renderMap);$('#printCertificate').addEventListener('click',()=>window.print());
     }
