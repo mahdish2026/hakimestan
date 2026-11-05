@@ -296,7 +296,6 @@
     .quick-method-example{min-width:0;padding:8px;border:1px solid #dce7e8;border-radius:9px;background:#fff}
     .quick-method-example>strong{display:block;margin:0 0 4px;color:#34445a;font-size:.75rem;line-height:1.6}
     .quick-method-example .math-line{display:flex;justify-content:center;flex-wrap:wrap;white-space:normal;gap:3px 5px;margin:4px auto;font-size:.76rem;line-height:1.8}
-    .draw-color-key.gold{background-color:#f1bf49;background-image:radial-gradient(circle,#6554c1 0 1px,transparent 1.35px),radial-gradient(circle,#258875 0 1px,transparent 1.35px);background-size:7px 7px;background-position:0 0,3.5px 3.5px}
     .draw-mode-panel{min-width:0;padding:10px;border:1px solid #dce4ed;border-radius:14px;background:linear-gradient(150deg,#fbfcff,#fff)}
     .draw-mode-panel>h4{margin:0 0 8px;color:#2d3e58;font-size:.9rem;line-height:1.65}
     .draw-along{--draw-progress:25%;min-width:0;padding:10px;border:1px solid #d6dff0;border-radius:13px;background:#fff;box-shadow:0 3px 10px rgba(53,65,100,.045)}
@@ -322,27 +321,27 @@
     .fraction-area-learning{min-width:0}
     .draw-dimension-notes{display:flex;justify-content:center;align-items:center;gap:7px 14px;flex-wrap:wrap;margin:0 auto 9px;color:#35445a;font-size:.76rem;font-weight:850;line-height:1.65}
     .draw-dimension-notes>span{display:inline-flex;align-items:center;gap:5px}
-    .draw-color-key{display:inline-block;width:13px;height:13px;flex:0 0 auto;border:1px solid rgba(50,60,90,.18);border-radius:4px;background:#7566dc}
-    .draw-color-key.mint{background:#4cb69f}
-    .draw-color-key.gold{background:#f1bf49}
+    .draw-color-key{display:inline-block;width:17px;height:17px;flex:0 0 auto;border:1px solid rgba(50,60,90,.18);border-radius:5px;background-color:#f0edff;background-image:radial-gradient(circle at center,#6554c1 0 3px,transparent 3.8px);background-repeat:no-repeat}
+    .draw-color-key.mint{background-color:#e7f6f1;background-image:radial-gradient(circle at center,#258875 0 3px,transparent 3.8px)}
+    .draw-color-key.gold{background-color:#fff3c9;background-image:radial-gradient(circle at 32% 35%,#6554c1 0 3px,transparent 3.8px),radial-gradient(circle at 68% 68%,#258875 0 3px,transparent 3.8px)}
     .area-model.draw-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));grid-auto-rows:auto;gap:0;width:min(100%,430px);aspect-ratio:4/3;margin:0 auto;padding:0;overflow:hidden;border:2px solid #56627a;border-radius:10px;background:#fff;direction:ltr;box-shadow:0 4px 12px rgba(52,64,97,.08)}
     .area-model.draw-product-grid>.draw-product-cell{min-width:0;min-height:0;border:1px solid transparent;border-radius:0;background:transparent;transition:background .35s,border-color .3s,filter .3s}
     .area-model.draw-product-grid>.draw-product-cell:nth-child(n+5):nth-child(-n+12){border-top-color:transparent}
     .draw-along[data-draw-along="fraction-product"][data-step="0"] .draw-product-grid>.draw-product-cell{background:transparent!important;border-color:transparent!important}
     .draw-along[data-draw-along="fraction-product"][data-step="1"] .draw-product-grid>.draw-product-cell{border-left-color:transparent!important;border-right-color:transparent!important;border-bottom-color:transparent!important}
-    .draw-along[data-draw-along="fraction-product"][data-step="1"] .draw-product-grid>.draw-product-cell.row-covered{background:#8173e8}
+    .draw-along[data-draw-along="fraction-product"][data-step="1"] .draw-product-grid>.draw-product-cell.row-covered{background-color:#f0edff;background-image:radial-gradient(circle at center,#6554c1 0 3px,transparent 3.8px);background-size:18px 18px;background-repeat:repeat}
     .draw-along[data-draw-along="fraction-product"][data-step="1"] .draw-product-grid>.draw-product-cell:nth-child(n+5):nth-child(-n+12){border-top:2px solid #53617a!important;border-top-color:#53617a!important}
     .draw-along[data-draw-along="fraction-product"][data-step="0"] .draw-product-cell.overlap,.draw-along[data-draw-along="fraction-product"][data-step="1"] .draw-product-cell.overlap,.draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-cell.overlap{box-shadow:none!important}
     .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell:not(:nth-child(4n)){border-right:2px solid #647187}
     .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell:nth-child(n+5):nth-child(-n+12){border-top:2px solid #647187}
-    .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell.row-covered:not(.col-covered){background:#8173e8}
-    .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell.col-covered:not(.row-covered){background:#79ccb8}
-    .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell.row-covered.col-covered{background-color:#fbf8e7;background-image:radial-gradient(circle at 3px 3px,#6959d1 0 2px,transparent 2.4px),radial-gradient(circle at 10px 10px,#318f7b 0 2px,transparent 2.4px);background-size:14px 14px}
+    .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell.row-covered:not(.col-covered){background-color:#f0edff;background-image:radial-gradient(circle at center,#6554c1 0 3px,transparent 3.8px);background-size:18px 18px;background-repeat:repeat}
+    .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell.col-covered:not(.row-covered){background-color:#e7f6f1;background-image:radial-gradient(circle at center,#258875 0 3px,transparent 3.8px);background-size:18px 18px;background-repeat:repeat}
+    .draw-along[data-draw-along="fraction-product"][data-step="2"] .draw-product-grid>.draw-product-cell.row-covered.col-covered{background-color:#fff3c9;background-image:radial-gradient(circle at 5px 5px,#6554c1 0 3px,transparent 3.8px),radial-gradient(circle at 15px 15px,#258875 0 3px,transparent 3.8px);background-size:20px 20px;background-repeat:repeat}
     .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell:not(:nth-child(4n)){border-right:2px solid #647187}
     .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell:nth-child(n+5):nth-child(-n+12){border-top:2px solid #647187}
-    .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell.row-covered:not(.col-covered){background:#8173e8}
-    .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell.col-covered:not(.row-covered){background:#79ccb8}
-    .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell.overlap{background-color:#f1bf49;background-image:radial-gradient(circle at 3px 3px,#6554c1 0 2px,transparent 2.4px),radial-gradient(circle at 10px 10px,#258875 0 2px,transparent 2.4px);background-size:14px 14px;border-color:#b58b23;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);animation:draw-pop .34s ease-out}
+    .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell.row-covered:not(.col-covered){background-color:#f0edff;background-image:radial-gradient(circle at center,#6554c1 0 3px,transparent 3.8px);background-size:18px 18px;background-repeat:repeat}
+    .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell.col-covered:not(.row-covered){background-color:#e7f6f1;background-image:radial-gradient(circle at center,#258875 0 3px,transparent 3.8px);background-size:18px 18px;background-repeat:repeat}
+    .draw-along[data-draw-along="fraction-product"][data-step="3"] .draw-product-grid>.draw-product-cell.overlap{background-color:#fff3c9;background-image:radial-gradient(circle at 5px 5px,#6554c1 0 3px,transparent 3.8px),radial-gradient(circle at 15px 15px,#258875 0 3px,transparent 3.8px);background-size:20px 20px;background-repeat:repeat;border-color:#b58b23;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);animation:draw-pop .34s ease-out}
     .draw-product-axis-labels{display:flex;justify-content:space-between;gap:8px;width:min(100%,430px);margin:4px auto 0;color:#44516a;font-size:.68rem;font-weight:850}
     .area-calculation{max-width:430px}
     .area-product-result{display:flex;justify-content:center;flex-wrap:wrap;margin:7px auto 0;font-size:.98rem;line-height:1.8}
@@ -999,9 +998,9 @@
     const DRAWING_PLANS={
       'fraction-product':[
         {text:'گام ۱: مستطیل = ۱ واحدِ کامل؛ هنوز آن را تقسیم نکرده‌ایم.',aria:'یک مستطیل کامل، برابر یک واحد؛ هنوز بخش‌بندی نشده است.'},
-        {text:'گام ۲: مخرجِ ۳ یعنی ۳ ردیفِ برابر؛ صورتِ ۲ یعنی ۲/۳ ردیف‌ها را بنفش کن.',aria:'سه ردیف برابر؛ دو ردیف از سه ردیف بنفش است.'},
-        {text:'گام ۳: مخرجِ ۴ یعنی ۴ ستون؛ صورتِ ۳ یعنی ۳/۴ ستون‌ها را سبز کن. نقطه‌های دو رنگ، خانه‌های مشترک را نشان می‌دهند.',aria:'سه ردیف و چهار ستون؛ دو ردیف بنفش و سه ستون سبز. نقطه‌های بنفش و سبز نشان می‌دهند کدام خانه‌ها در هر دو گروه‌اند.'},
-        {text:'گام ۴: ۲×۳=۶ خانه‌ی مشترک از ۳×۴=۱۲؛ پس ۶/۱۲=۱/۲.',aria:'دو در سه برابر شش خانه‌ی نقطه‌دار از دوازده خانه است؛ شش دوازدهم برابر یک دوم است.'}
+        {text:'گام ۲: مخرجِ ۳ یعنی ۳ ردیفِ برابر؛ روی ۲/۳ ردیف‌ها نقطه‌ی بنفش بگذار.',aria:'سه ردیف برابر؛ در دو ردیف از سه ردیف، نقطه‌های بنفش است.'},
+        {text:'گام ۳: مخرجِ ۴ یعنی ۴ ستون؛ روی ۳/۴ ستون‌ها نقطه‌ی سبز بگذار. نقطه‌های دو رنگ، خانه‌های مشترک را نشان می‌دهند.',aria:'سه ردیف و چهار ستون؛ دو ردیف بنفش و سه ستون سبز. نقطه‌های بنفش و سبز نشان می‌دهند کدام خانه‌ها در هر دو گروه‌اند.'},
+        {text:'گام ۴: نقطه‌های دورنگ: ۲×۳=۶ خانه‌ی مشترک از ۳×۴=۱۲؛ پس ۶/۱۲=۱/۲.',aria:'دو در سه برابر شش خانه‌ی نقطه‌دار از دوازده خانه است؛ شش دوازدهم برابر یک دوم است.'}
       ],
       'whole-product':[
         {text:'گام ۱: ۳ نوارِ هم‌اندازه بکش؛ هر نوار = ۱ واحدِ کامل.',aria:'سه نوار کامل و هم‌اندازه؛ هر نوار یک واحد است.'},
@@ -1052,7 +1051,7 @@
       const current=Math.max(0,Math.min(plan.length-1,step));widget.dataset.step=String(current);
       const count=widget.querySelector('[data-draw-count]'),instruction=widget.querySelector('[data-draw-instruction]');
       if(count)count.textContent=`گام ${fa(current+1)} از ${fa(plan.length)}`;
-      if(instruction)instruction.textContent=plan[current].text;
+      if(instruction){instruction.textContent=plan[current].text;formatMathIn(instruction);}
       widget.querySelectorAll('[data-draw-board]').forEach(board=>board.setAttribute('aria-label',plan[current].aria));
       widget.querySelectorAll('[data-draw-dot]').forEach(dot=>{const i=Number(dot.dataset.drawDot);dot.classList.toggle('done',i<current);dot.classList.toggle('current',i===current);});
       widget.style.setProperty('--draw-progress',`${((current+1)/plan.length)*100}%`);
@@ -1077,7 +1076,7 @@
     }
     function renderMultiplicationWorkbench(){
       const areaCells=Array.from({length:12},(_,i)=>{const row=Math.floor(i/4),col=i%4;return `<span class="area-cell draw-product-cell ${row<2?'row-covered':''} ${col<3?'col-covered':''} ${row<2&&col<3?'overlap':''}" aria-hidden="true"></span>`;}).join('');
-      const productBoard=`<div class="fraction-area-learning"><div class="draw-dimension-notes"><span><i class="draw-color-key purple"></i><bdi>۲/۳</bdi>: دو ردیف از سه</span><span><i class="draw-color-key mint"></i><bdi>۳/۴</bdi>: سه ستون از چهار</span><span><i class="draw-color-key gold"></i>اشتراکِ نقطه‌دار</span></div><div class="area-model draw-product-grid" style="--cols:4;--rows:3" data-draw-board role="img" aria-label="یک واحد؛ دو ردیف از سه ردیف و سه ستون از چهار ستون، خانه‌های نقطه‌دار اشتراک را نشان می‌دهند">${areaCells}</div><div class="draw-product-axis-labels"><span>۳ ردیفِ برابر</span><span>۴ ستونِ برابر</span></div><div class="area-calculation" dir="rtl" data-reveal-at="3"><div class="area-calc-row"><b class="area-step-number">۱</b><span>همه‌ی خانه‌ها</span><span class="math-line" dir="ltr">۳×۴=۱۲</span></div><div class="area-calc-row"><b class="area-step-number">۲</b><span>خانه‌های نقطه‌دار</span><span class="math-line" dir="ltr">۲×۳=۶</span></div><div class="area-calc-row result"><b class="area-step-number">۳</b><span>۶ خانه از ۱۲</span><span class="math-line" dir="ltr">۶/۱۲=۱/۲</span></div></div><p class="math-line area-product-result" data-reveal-at="3">۲/۳ × ۳/۴ = ۶/۱۲ = ۱/۲</p></div>`;
+      const productBoard=`<div class="fraction-area-learning"><div class="draw-dimension-notes"><span><i class="draw-color-key purple"></i><bdi>۲/۳</bdi>: نقطه‌های بنفشِ دو ردیف</span><span><i class="draw-color-key mint"></i><bdi>۳/۴</bdi>: نقطه‌های سبزِ سه ستون</span><span><i class="draw-color-key gold"></i>نقطه‌های دورنگ: اشتراک</span></div><div class="area-model draw-product-grid" style="--cols:4;--rows:3" data-draw-board role="img" aria-label="یک واحد؛ دو ردیف از سه ردیف و سه ستون از چهار ستون، خانه‌های نقطه‌دار اشتراک را نشان می‌دهند">${areaCells}</div><div class="draw-product-axis-labels"><span>۳ ردیفِ برابر</span><span>۴ ستونِ برابر</span></div><div class="area-calculation" dir="rtl" data-reveal-at="3"><div class="area-calc-row"><b class="area-step-number">۱</b><span>همه‌ی خانه‌ها</span><span class="math-line" dir="ltr">۳×۴=۱۲</span></div><div class="area-calc-row"><b class="area-step-number">۲</b><span>خانه‌های نقطه‌دار</span><span class="math-line" dir="ltr">۲×۳=۶</span></div><div class="area-calc-row result"><b class="area-step-number">۳</b><span>۶ خانه از ۱۲</span><span class="math-line" dir="ltr">۶/۱۲=۱/۲</span></div></div><p class="math-line area-product-result" data-reveal-at="3">۲/۳ × ۳/۴ = ۶/۱۲ = ۱/۲</p></div>`;
       const resultCells=Array.from({length:6},(_,i)=>`<i class="whole-product-result-cell ${i<5?'whole-part':''} ${i===5?'fraction-part':''}" aria-hidden="true"></i>`).join('');
       const wholeBoard=`<div class="whole-product-board" data-draw-board role="img" aria-label="سه واحد کامل؛ هر واحد به پنج قسمت برابر تقسیم می‌شود و در هر واحد دو پنجم رنگی است"><div class="whole-product-groups">${Array.from({length:3},(_,i)=>`<div class="whole-product-row"><strong>گروهِ ${fa(i+1)}</strong><div class="whole-product-bar">${Array.from({length:5},(_,j)=>`<i class="whole-product-cell ${j<2?'selected-part':''}" aria-hidden="true"></i>`).join('')}</div></div>`).join('')}</div><div class="whole-product-total" data-reveal-at="3"><strong>۶ پنجم را با هم بشمار</strong><div class="whole-product-answer-strip">${resultCells}</div><span>۵/۵ = ۱ واحد؛ ۱/۵ باقی می‌ماند.</span></div></div><p class="math-line whole-product-formula" data-reveal-at="3">۳ × ۲/۵ = ۶/۵ = ۱ و ۱/۵</p>`;
       return `${drawModeWorkbench('multiply',[
