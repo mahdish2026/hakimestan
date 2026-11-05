@@ -95,6 +95,185 @@
       @page{size:A4 portrait;margin:12mm}
       html,body{background:#fff!important;min-height:0!important}.app{width:100%!important;max-width:none!important;padding:0!important}.topbar,#welcome,#map,#play,.cert-toolbar,.toast,.credit{display:none!important}#certificate[hidden]{display:none!important}#certificate:not([hidden]){display:block!important;animation:none!important}.certificate-paper{max-width:none!important;box-shadow:none!important;border-width:7px!important;border-radius:4px!important;background:#fffdf6!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.cert-item,.cert-title,.cert-name,.cert-credit{print-color-adjust:exact;-webkit-print-color-adjust:exact}
     }
+    /* Readability-first learning visuals: direct labels, larger type, and visible step numbers. */
+    .example-card{padding:18px}
+    .example-card h3{font-size:1.02rem;line-height:1.65}
+    .example-card .example-prompt{font-size:.88rem;line-height:1.9}
+    .example-problem{min-height:60px}
+    .example-coach-note{font-size:.82rem;line-height:1.85;color:#40516a}
+    .example-steps{gap:9px;margin-top:12px}
+    .example-steps li{display:grid;grid-template-columns:32px minmax(0,1fr);align-items:start;gap:10px;padding:10px 11px;font-size:.84rem;line-height:1.95;color:#35445a}
+    .example-steps li::before{content:none;display:none}
+    .example-step-index{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#fff0bd;color:#704d08;font-size:.9rem;font-weight:1000}
+    .example-step-copy{min-width:0;direction:rtl;text-align:right;line-height:1.95}
+    .example-step-copy .math-run{font-weight:950;color:#302a70}
+    .reveal-btn{min-height:42px;font-size:.8rem;padding:8px 12px}
+    .visual-title{font-size:.88rem}
+    .visual-caption{font-size:.8rem;line-height:1.9}
+    .visual-side{font-size:.82rem;line-height:1.95}
+    .unit-visual-stack,.addition-model-stack,.mixed-model-stack{gap:12px}
+    .unit-strip-model,.unit-numberline-card,.addition-model-card,.borrow-visual-card,.mixed-area-card{padding:12px}
+    .unit-strip-model,.unit-numberline-card,.addition-model-card,.borrow-visual-card,.mixed-area-card{min-width:0;border:1px solid #d5e0eb;border-radius:15px;background:#fff;text-align:center}
+    .unit-strip-model h4,.unit-numberline-card h4,.addition-model-card h4,.borrow-visual-card h4,.mixed-area-card h4,.numberline-focus-card h4{margin:0 0 8px;color:#293d57;font-size:.9rem;font-weight:950;line-height:1.7}
+    .unit-strip-equation{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:6px;max-width:590px;margin:8px auto 0;direction:ltr}
+    .unit-strip-group{min-width:0;display:grid;justify-items:center;gap:5px;padding:7px 4px;border:1px solid #e1e6ee;border-radius:11px;background:#fbfcff;direction:rtl}
+    .unit-strip-group strong{min-height:2.8em;display:flex;align-items:center;justify-content:center;color:#35445a;font-size:.76rem;line-height:1.55;text-align:center}
+    .unit-strip-cells{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;width:100%;direction:ltr}
+    .unit-strip-cells i{display:block;min-width:0;height:31px;border:1px solid #c9d3e0;border-radius:5px;background:#fff}
+    .unit-strip-cells i.filled{border-color:#6855c9;background:#7566dc}
+    .unit-strip-group.partial .unit-strip-cells i.filled{border-color:#b47d0c;background:#f1bf49}
+    .unit-strip-value{direction:ltr;unicode-bidi:isolate;color:#302b70;font-size:.91rem;font-weight:1000}
+    .unit-strip-plus{color:#58627a;font-size:1.15rem;font-weight:950}
+    .unit-strip-total{display:flex;margin:10px auto 0;font-size:1.02rem}
+    .unit-strip-note{margin:5px 0 0;color:#40516a;font-size:.82rem;line-height:1.8}
+    .axis-explain,.axis-direction,.axis-zoom-card>p,.numberline-focus-card>p{margin:4px 0 8px;color:#40516a;font-size:.82rem;line-height:1.8}
+    .axis-legend{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin:7px auto;color:#34445a;font-size:.75rem;font-weight:850}
+    .axis-legend span{display:inline-flex;align-items:center;gap:6px}
+    .axis-legend i{display:inline-block;flex:0 0 auto;background:#4c5873}
+    .axis-legend-major{width:3px;height:17px;border-radius:2px}
+    .axis-legend-minor{width:3px;height:9px;border-radius:2px;background:#8b96aa!important}
+    .numberline-overview{display:grid;grid-template-columns:repeat(var(--axis-count),minmax(0,1fr));align-items:start;position:relative;direction:ltr;width:min(100%,480px);margin:8px auto 4px;padding:0 0 2px}
+    .numberline-overview::before{content:"";position:absolute;z-index:0;left:var(--axis-inset);right:var(--axis-inset);top:13px;height:3px;border-radius:99px;background:#aab3c3}
+    .axis-overview-point{position:relative;z-index:1;display:grid;grid-template-rows:26px 1.4em;justify-items:center;align-items:start;min-width:0;color:#3e4a62;text-align:center}
+    .axis-overview-point i{display:block;width:2px;height:9px;margin-top:9px;border-radius:2px;background:#8793a8}
+    .axis-overview-point.major i{height:16px;margin-top:6px;width:3px;background:#4f5873}
+    .axis-overview-point.focus-edge i{width:4px;height:19px;margin-top:4px;background:#5a4ab5}
+    .axis-overview-point small{min-height:1em;color:#34445a;font-size:.78rem;font-weight:950;white-space:nowrap}
+    .axis-overview-point.target i{position:relative;width:4px;height:21px;margin-top:2px;background:#b77a0e}
+    .axis-overview-point.target i::after{content:"";position:absolute;left:50%;top:-4px;width:11px;height:11px;transform:translateX(-50%);border:2px solid #a86a05;border-radius:50%;background:#fff4ca}
+    .axis-direction{margin-top:5px}
+    .axis-zoom-card,.numberline-focus-card{margin-top:9px;padding:10px;border:1px solid #e3e8f0;border-radius:12px;background:#f8faff}
+    .axis-zoom-card h5{margin:0 0 5px;color:#35445a;font-size:.83rem;font-weight:950}
+    .axis-zoom-card>p,.numberline-focus-card>p{margin:4px 0 8px}
+    .numberline-zoom-axis{display:grid;grid-template-columns:repeat(var(--axis-count),minmax(0,1fr));align-items:start;position:relative;direction:ltr;width:100%;margin:7px auto 2px;padding:0 0 3px}
+    .numberline-zoom-axis::before{content:"";position:absolute;left:var(--axis-inset);right:var(--axis-inset);top:15px;height:3px;border-radius:99px;background:#abb4c5}
+    .numberline-zoom-point{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;min-width:0;min-height:77px;padding:0 1px 5px;border:0;border-radius:9px;background:transparent;color:#38455c;text-align:center;text-decoration:none}
+    .numberline-zoom-point i{display:block;width:3px;height:19px;margin-top:7px;border-radius:2px;background:#66738b}
+    .numberline-zoom-label{display:block;max-width:100%;color:#35445a;font-size:.72rem;font-weight:950;line-height:1.5;direction:rtl;unicode-bidi:isolate;white-space:normal;overflow-wrap:anywhere}
+    .numberline-zoom-point.target i,.numberline-zoom-point[aria-pressed="true"] i{position:relative;width:5px;height:22px;margin-top:4px;background:#b77a0e}
+    .numberline-zoom-point.target i::after,.numberline-zoom-point[aria-pressed="true"] i::after{content:"";position:absolute;left:50%;top:-4px;width:12px;height:12px;transform:translateX(-50%);border:2px solid #a86a05;border-radius:50%;background:#fff1bf}
+    .numberline-zoom-axis.interactive .numberline-zoom-point{cursor:pointer;touch-action:manipulation}
+    .numberline-zoom-axis.interactive .numberline-zoom-point:hover{background:#eeedff}
+    .numberline-zoom-axis.interactive .numberline-zoom-point:focus-visible{outline:3px solid #7566dc;outline-offset:2px}
+    .numberline-zoom-point[aria-pressed="true"]{background:#fff6d7;box-shadow:inset 0 0 0 1px #e8c666}
+    .axis-final-answer{display:flex;margin:4px auto 0;color:#2f296f}
+    .numberline-step-note{display:flex;align-items:center;gap:8px;margin:0 0 5px;color:#35445a;font-size:.82rem;line-height:1.75}
+    .numberline-step-note b{display:grid;place-items:center;width:26px;height:26px;flex:0 0 auto;border-radius:8px;background:#e9e5ff;color:#5143ad}
+    .numberline-focus-card{margin-top:9px;padding:12px;background:#fff;border-color:#d8e2ef}
+    .numberline-focus-card h4{font-size:.9rem}
+    .numberline-focus-note{margin:3px 0 0!important;color:#45546b!important;font-size:.77rem!important}
+    .fraction-strip-equation{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:5px;max-width:620px;margin:9px auto 0;direction:ltr}
+    .fraction-strip-equation .fraction-strip-card{min-width:0;padding:8px 6px}
+    .fraction-strip-equation .fraction-strip-label{font-size:.76rem;line-height:1.6;color:#273b54}
+    .fraction-strip-equation .fraction-strip-cell{height:26px}
+    .fraction-strip-operation{color:#47566e;font-size:1.05rem;font-weight:1000}
+    .addition-model-card>.math-line,.borrow-visual-card>.math-line{font-size:.96rem;line-height:1.7}
+    .addition-model-card .borrow-caption,.borrow-visual-card .borrow-caption{font-size:.8rem;line-height:1.8;color:#40516a}
+    .borrow-trade{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:7px;max-width:500px;margin:8px auto}
+    .borrow-trade-box{display:grid;justify-items:center;gap:3px;min-width:0;padding:8px 5px;border:1px solid #dce4ec;border-radius:11px;background:#fbfcff}
+    .borrow-trade-box strong{color:#34445a;font-size:.8rem}
+    .borrow-trade-box .math-line{font-size:.93rem}
+    .borrow-trade-box small{color:#40516a;font-size:.75rem;font-weight:800;line-height:1.6}
+    .borrow-trade-box.after{background:#f0fbf8;border-color:#bce1d7}
+    .borrow-trade-arrow{color:#6c61bd;font-size:1.2rem;font-weight:1000}
+    .borrow-rule{margin:4px 0 5px;color:#35445a;font-size:.8rem;font-weight:850;line-height:1.8}
+    .borrow-visual{gap:10px;margin-top:3px;padding:8px 2px}
+    .borrow-group{display:grid;justify-items:center;gap:4px}
+    .borrow-group>strong{color:#34445a;font-size:.78rem}
+    .borrow-unit{width:39px;height:31px}
+    .borrow-quarter-strip{grid-template-columns:repeat(5,20px);gap:3px}
+    .borrow-quarter{width:20px;height:31px}
+    .borrow-key{font-size:.75rem;gap:12px;margin:4px auto}
+    .borrow-key i{width:13px;height:13px}
+    .borrow-visual-card>.math-line{display:flex;white-space:normal;flex-wrap:wrap;line-height:1.7}
+    .fraction-area-learning{min-width:0}
+    .area-model-instructions{display:grid;gap:7px;max-width:470px;margin:0 auto 9px;text-align:right}
+    .area-model-instructions>span{display:flex;align-items:flex-start;gap:8px;color:#35445a;font-size:.82rem;line-height:1.8}
+    .area-model-instructions b{display:grid;place-items:center;width:25px;height:25px;flex:0 0 auto;border-radius:8px;background:#eeebff;color:#5143ad}
+    .fraction-area-learning .area-model{grid-template-columns:repeat(var(--cols,4),minmax(42px,54px));grid-auto-rows:48px;gap:5px;padding:7px}
+    .fraction-area-learning .area-cell{border-radius:7px}
+    .fraction-area-learning .area-caption{gap:10px;font-size:.77rem;line-height:1.7}
+    .area-calculation{max-width:470px;gap:6px;margin-top:10px}
+    .area-product-result{display:flex;flex-wrap:wrap;margin:9px auto 0;font-size:1rem;line-height:1.8}
+    .area-calc-row{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:8px;padding:8px 9px;font-size:.8rem;line-height:1.65}
+    .area-step-number{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#eeeaff;color:#5143ad}
+    .area-calc-row .math-line{font-size:.86rem}
+    .area-calc-row.result{border-color:#e8d28d;background:#fff6d9}
+    .mixed-area-card h4{font-size:.92rem}
+    .mixed-area-intro,.mixed-area-cell-intro{margin:4px 0 8px;color:#40516a;font-size:.8rem;line-height:1.8}
+    .mixed-area-geometry{max-width:450px;margin:8px auto 12px;direction:ltr}
+    .mixed-area-columns{display:grid;grid-template-columns:4fr 1fr;gap:3px;margin:0 0 3px 56px;direction:ltr}
+    .mixed-area-columns span,.mixed-area-rows span{display:grid;place-items:center;min-width:0;padding:3px;color:#34445a;font-size:.72rem;font-weight:900;line-height:1.5;text-align:center;direction:rtl}
+    .mixed-area-columns span:first-child{background:#eeeaff;border-radius:7px 7px 0 0}
+    .mixed-area-columns span:last-child{background:#e4f6f1;border-radius:7px 7px 0 0}
+    .mixed-area-plane{display:grid;grid-template-columns:52px minmax(0,1fr);gap:4px;direction:ltr}
+    .mixed-area-rows{display:grid;grid-template-rows:2fr 1fr;gap:3px;direction:ltr}
+    .mixed-area-rows span:first-child{background:#eeeaff;border-radius:7px 0 0 7px}
+    .mixed-area-rows span:last-child{background:#fff1d0;border-radius:7px 0 0 7px}
+    .mixed-area-grid{width:100%;max-width:none;aspect-ratio:5/3;margin:0;padding:3px;gap:3px;border-radius:9px}
+    .mixed-area-cell{font-size:clamp(.72rem,3vw,.95rem)}
+    .mixed-area-cell-intro{margin:4px 0 6px}
+    .mixed-area-key{gap:7px}
+    .mixed-area-key>span{display:flex;align-items:center;gap:6px;min-width:0;padding:7px 8px;border:1px solid #e0e5ed;border-radius:9px;background:#fbfcff}
+    .mixed-area-key>span>i{width:14px;height:14px;flex:0 0 auto;border-radius:4px}
+    .mixed-area-key .part-purple>i{background:#7566dc}
+    .mixed-area-key .part-mint>i{background:#55bba4}
+    .mixed-area-key .part-gold>i{background:#f1bf49}
+    .mixed-area-key .part-coral>i{background:#ef9285}
+    .mixed-area-key .math-line{flex:1;min-width:0;padding:4px 2px;font-size:.79rem;white-space:normal}
+    .mixed-area-sum{display:flex;flex-wrap:wrap;white-space:normal;font-size:.96rem;line-height:1.7}
+    .mixed-second-method{margin-top:9px;border:1px solid #dce4ee;border-radius:10px;background:#f8faff;text-align:right}
+    .mixed-second-method summary{padding:8px 10px;color:#3c4582;font-size:.8rem;font-weight:900;cursor:pointer}
+    .mixed-second-method p{margin:5px 9px 8px;color:#35445a;font-size:.8rem;line-height:1.8}
+    .mixed-second-method .math-line{display:flex;justify-content:center}
+    .visual-card .visual-side{font-size:.82rem;line-height:1.95}
+    @media(max-width:650px){
+      .example-card{padding:15px}
+      .example-steps li{font-size:.82rem;gap:8px;padding:9px}
+      .unit-strip-equation{gap:3px}
+      .unit-strip-group{padding:6px 3px}
+      .unit-strip-group strong{font-size:.7rem}
+      .unit-strip-cells{gap:2px}
+      .unit-strip-cells i{height:25px}
+      .fraction-strip-equation{gap:3px}
+      .fraction-strip-equation .fraction-strip-card{padding:6px 3px}
+      .fraction-strip-equation .fraction-strip-label{font-size:.67rem}
+      .fraction-strip-equation .fraction-strip-cell{height:22px}
+      .fraction-area-learning .area-model{grid-template-columns:repeat(var(--cols,4),minmax(38px,48px));grid-auto-rows:43px;gap:4px}
+      .mixed-area-geometry{max-width:390px}
+      .mixed-area-columns{margin-left:50px}
+      .mixed-area-plane{grid-template-columns:47px minmax(0,1fr)}
+    }
+    @media(max-width:380px){
+      .example-steps li{grid-template-columns:28px minmax(0,1fr);gap:7px;font-size:.79rem;padding:8px}
+      .example-step-index{width:27px;height:27px;font-size:.82rem}
+      .unit-strip-equation{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:2px}
+      .unit-strip-group strong{font-size:.65rem}
+      .unit-strip-cells i{height:21px}
+      .unit-strip-value{font-size:.8rem}
+      .unit-strip-plus,.fraction-strip-operation{font-size:.88rem}
+      .fraction-strip-equation .fraction-strip-label{font-size:.61rem}
+      .fraction-strip-equation .fraction-strip-cell{height:19px}
+      .fraction-strip-equation .fraction-strip-card{padding:5px 2px}
+      .numberline-zoom-label{font-size:.66rem}
+      .borrow-unit{width:31px;height:26px}
+      .borrow-quarter-strip{grid-template-columns:repeat(5,17px);gap:2px}
+      .borrow-quarter{width:17px;height:26px}
+      .borrow-trade{gap:4px}
+      .borrow-trade-box{padding:7px 3px}
+      .borrow-trade-box strong,.borrow-trade-box small{font-size:.69rem}
+      .fraction-area-learning .area-model{grid-template-columns:repeat(var(--cols,4),minmax(34px,42px));grid-auto-rows:38px;gap:3px}
+      .area-calc-row{grid-template-columns:26px minmax(0,1fr) auto;gap:5px;padding:7px 6px;font-size:.74rem}
+      .area-step-number{width:23px;height:23px}
+      .area-calc-row .math-line{font-size:.78rem}
+      .mixed-area-columns{margin-left:45px}
+      .mixed-area-plane{grid-template-columns:42px minmax(0,1fr)}
+      .mixed-area-columns span,.mixed-area-rows span{font-size:.65rem}
+      .mixed-area-key{gap:5px}
+      .mixed-area-key>span{gap:4px;padding:5px 5px}
+      .mixed-area-key>span>i{width:11px;height:11px}
+      .mixed-area-key .math-line{font-size:.69rem}
+    }
   </style>
 </head>
 <body>
@@ -292,7 +471,7 @@
         intro:'هر واحد را به قسمت‌های هم‌اندازه‌ی مخرج تقسیم کن. اگر چند واحد کامل و چند قسمت از واحد بعدی داشته باشیم، می‌توانیم آن را عدد مخلوط یا یک کسر بزرگ‌تر از واحد بنویسیم.',
         keys:['کسر بزرگ‌تر از واحد: صورت از مخرج بزرگ‌تر است؛ مثل ۷/۴.','عدد مخلوط از یک عدد کامل (عدد صحیح) و یک کسر کوچک‌تر از واحد ساخته می‌شود؛ مثل ۱ و ۳/۴.','برای تبدیل عدد مخلوط: عدد کامل × مخرج + صورت؛ مخرج عوض نمی‌شود.','برای برگشت، صورت را بر مخرج تقسیم کن: خارج‌قسمت، بخش کامل و باقی‌مانده، صورت کسر است.'],
         formula:'صورتِ کسرِ جدید = عدد کامل × مخرج + صورتِ کسر؛ مخرجِ آن تغییر نمی‌کند',
-        example:{prompt:'۲ و ۳/۴ را به کسر تبدیل کن؛ سپس ۱۱/۴ را به عدد مخلوط برگردان.',expression:'2 3/4 = ?     |     11/4 = ?',steps:['۲ واحد کامل یعنی ۲ × ۴ = ۸ چهارم.','۳ چهارم دیگر را اضافه کن: ۸ + ۳ = ۱۱؛ پس ۲ و ۳/۴ = ۱۱/۴.','برای ۱۱/۴، تقسیم کن: ۱۱ ÷ ۴ = ۲ با باقی‌مانده‌ی ۳؛ پس ۱۱/۴ = ۲ و ۳/۴.']},
+        example:{prompt:'۲ و ۳/۴ را به کسر تبدیل کن؛ سپس ۱۱/۴ را به عدد مخلوط برگردان.',expression:'2 3/4 = ?     |     11/4 = ?',steps:['یک واحد ۴ چهارم دارد؛ دو واحد یعنی ۴+۴=۸ چهارم.','سه‌چهارمِ دیگر را اضافه کن: ۸ چهارم+۳ چهارم=۱۱ چهارم.','پس ۲ و ۳/۴ همان ۱۱/۴ است.','برای برگشت، ۱۱ چهارم را دسته‌های ۴تایی کن: ۲ واحد و ۳ چهارم باقی می‌ماند.']},
         tip:'روی محور، هر فاصله‌ی بین دو عدد کامل را به تعداد مخرج قسمت مساوی تقسیم کن. هرچه به راست می‌روی، عدد بزرگ‌تر می‌شود.', visual:'units',
         practice:[
           {kind:'parts',prompt:'۹/۴ را به عدد مخلوط تبدیل کن. عدد کامل (عدد صحیح) و صورتِ باقی‌مانده را بنویس.',expression:'9/4',denominator:4,whole:2,numerator:1,hint:'۹ را بر ۴ تقسیم کن. چند دسته‌ی کاملِ چهارتایی داری و چند چهارم باقی می‌ماند؟',solution:['۹ ÷ ۴ = ۲ با باقی‌مانده‌ی ۱.','پس ۹/۴ = ۲ و ۱/۴؛ مخرج همان ۴ می‌ماند.']},
@@ -316,7 +495,7 @@
         intro:'برای بخش‌های کسری، مخرج مشترک لازم است. بعد عددهای کامل و کسرها را حساب کن. اگر در تفریق، کسرِ اول کوچک‌تر بود، از یک واحد کامل قرض بگیر.',
         keys:['اگر مخرج‌ها برابر نیستند، کسرها را به کسرهای مساوی با مخرج مشترک تبدیل کن.','در جمع، صورت‌ها را جمع کن و مخرج مشترک را نگه دار.','در تفریق، اگر صورتِ کسر اول کم بود، یک واحد کامل را به چند قسمتِ مخرج تقسیم کن.','اگر صورتِ جواب به مخرج رسید یا از آن گذشت، یک واحد کامل بساز؛ پاسخ را در صورت نیاز ساده کن.'],
         formula:'۱/۲ = ۲/۴     |     ۵ و ۱/۴ = ۴ و ۵/۴ (برای قرض‌گرفتن)',
-        example:{prompt:'۵ و ۱/۴ − ۲ و ۳/۴ را گام‌به‌گام حل کن.',expression:'5 1/4 − 2 3/4 = ?',steps:['مخرج‌ها برابرند، اما ۱/۴ از ۳/۴ کوچک‌تر است؛ از ۵ یک واحد قرض می‌گیریم.','۵ و ۱/۴ = ۴ و ۵/۴، چون یک واحد برابر ۴/۴ است.','حالا ۴−۲ = ۲ و ۵/۴−۳/۴ = ۲/۴؛ جواب ۲ و ۲/۴ = ۲ و ۱/۲ است.']},
+        example:{prompt:'۵ و ۱/۴ − ۲ و ۳/۴ را گام‌به‌گام حل کن.',expression:'5 1/4 − 2 3/4 = ?',steps:['۱/۴ برای کم‌کردنِ ۳/۴ کافی نیست؛ پس یک واحد از ۵ قرض می‌گیریم.','یک واحد یعنی ۴/۴؛ بنابراین ۵ و ۱/۴ همان ۴ و ۵/۴ می‌شود.','عددهای کامل: ۴−۲=۲. چهارم‌ها: ۵/۴−۳/۴=۲/۴.','۲/۴ را ساده می‌کنیم: ۲/۴=۱/۲. پاسخ: ۲ و ۱/۲.']},
         tip:'در جمع و تفریق، مخرج‌ها را با هم جمع یا کم نکن! فقط صورت‌ها را حساب کن و مخرج مشترک را نگه دار.',visual:'addition',
         practice:[
           {kind:'answer',prompt:'حاصل را به صورت عدد مخلوط یا کسر مساوی بنویس.',expression:'1 1/2 + 2 1/4',answer:[15,4],hint:'۱/۲ را به مخرج ۴ تبدیل کن؛ یعنی ۲/۴. بعد عددهای کامل و چهارم‌ها را جمع کن.',solution:['۱/۲ = ۲/۴.','۱ و ۲/۴ + ۲ و ۱/۴ = ۳ و ۳/۴.','۳ و ۳/۴ = ۱۵/۴؛ هر دو شکل پاسخ درست‌اند.']},
@@ -340,7 +519,7 @@
         intro:'برای دیدنِ معنیِ ۲/۳×۳/۴، مستطیل را به ۳ ردیف و ۴ ستونِ برابر تقسیم می‌کنیم. بخشِ مشترکِ ردیف‌ها و ستون‌ها، حاصل است.',
         keys:['مستطیلِ ۳ ردیف و ۴ ستون، ۱۲ خانه‌ی برابر دارد.','۲/۳ یعنی ۲ ردیف از ۳ ردیف؛ ۳/۴ یعنی ۳ ستون از ۴ ستون.','۶ خانه در هر دو انتخاب است؛ پس حاصل ۶/۱۲ = ۱/۲ است.','اگر بتوانی، پیش از ضرب صورت و مخرجِ دو کسر را با عددی مشترک ساده کن.'],
         formula:'صورت‌ها را در هم ضرب کن؛ مخرج‌ها را هم در هم ضرب کن.',
-        example:{prompt:'۲/۳ از ۳/۴ یک زمین چه‌قدر است؟',expression:'2/3 × 3/4 = ?',steps:['مستطیل را ۳ ردیف و ۴ ستون می‌کنیم: ۳×۴=۱۲ خانه‌ی برابر.','بنفش: ۲ ردیف از ۳ ردیف. سبز: ۳ ستون از ۴ ستون.','۶ خانه‌ی طلایی در هر دو انتخاب است؛ پس ۶/۱۲ = ۱/۲.']},
+        example:{prompt:'۲/۳ از ۳/۴ یک زمین چه‌قدر است؟',expression:'2/3 × 3/4 = ?',steps:['مستطیل را به ۳ ردیف و ۴ ستونِ برابر تقسیم کن: ۱۲ خانه داریم.','۲/۳ یعنی ۲ ردیف بنفش؛ ۳/۴ یعنی ۳ ستون سبز.','خانه‌های طلایی جایی‌اند که هر دو رنگ روی هم می‌افتند: ۶ خانه.','۶ خانه از ۱۲ خانه یعنی ۶/۱۲؛ با ساده‌کردن، ۱/۲.']},
         tip:'ضربِ کسرها مخرجِ مشترک نمی‌خواهد. برای آسان‌ترشدن حساب، می‌توانی پیش از ضرب صورتِ یک کسر و مخرجِ کسرِ دیگر را با یک عدد مشترک ساده کنی.',visual:'area',
         practice:[
           {kind:'answer',prompt:'هشت گروهِ دوپنجم را پیدا کن.',expression:'8 × 2/5',answer:[16,5],hint:'۸ گروهِ ۲/۵ یعنی ۸ بار ۲/۵؛ عدد ۸ را به شکلِ ۸/۱ بنویس.',solution:['۸/۱ × ۲/۵ = ۱۶/۵.','۱۶/۵ برابرِ ۳ و ۱/۵ است.','پس هشت گروهِ ۲/۵ برابرِ ۳ و ۱/۵ می‌شود.']},
@@ -364,7 +543,7 @@
         intro:'تقسیم گاهی یعنی یک مقدار را بین چند نفر برابر قسمت کنیم؛ گاهی می‌پرسیم چند تکه‌ی اندازه‌دار در آن مقدار جا می‌شود. دو شکلِ پایین هر دو را نشان می‌دهند.',
         keys:['۲ لیتر را بین ۵ نفر برابر تقسیم کنیم؛ هر نفر ۲/۵ لیتر می‌گیرد.','۵/۸ ÷ ۲ یعنی نصفِ ۵/۸؛ پاسخ ۵/۱۶ است.','۳/۴ ÷ ۱/۲ می‌پرسد چند نیمه در سه‌چهارم جا می‌شود؛ پاسخ ۱ و ۱/۲ است.','اگر بر کسر تقسیم می‌کنی، فقط کسرِ دوم را برعکس کن و ضرب کن؛ کسرِ اول را دست‌نخورده بگذار.'],
         formula:'یادت بماند: فقط کسرِ دوم را برعکس کن.',
-        example:{prompt:'دو لیتر شیر را به طور مساوی میان پنج نفر تقسیم می‌کنیم. سهم هر نفر؟',expression:'2 ÷ 5 = ?',steps:['۲ لیتر را به ۵ سهمِ برابر تقسیم می‌کنیم؛ هر لیتر ۵ بخشِ یک‌پنجم دارد.','از دو لیتر، ۱۰ بخشِ یک‌پنجم داریم؛ هر نفر ۲ بخش می‌گیرد.','پس سهم هر نفر ۲/۵ لیتر است. بررسی: ۵×۲/۵=۲ لیتر.']},
+        example:{prompt:'دو لیتر شیر را به طور مساوی میان پنج نفر تقسیم می‌کنیم. سهم هر نفر؟',expression:'2 ÷ 5 = ?',steps:['دو لیتر شیر را بین ۵ نفر به اندازه‌های برابر تقسیم می‌کنیم.','از هر لیتر، هر نفر یک‌پنجم می‌گیرد؛ از دو لیتر، هر نفر دو‌پنجم می‌گیرد.','پاسخ: سهم هر نفر ۲/۵ لیتر است.','بررسی: ۵ نفر × ۲/۵ لیتر = ۲ لیتر؛ چیزی باقی نماند.']},
         tip:'برای وارسی، پاسخ را در عددِ دوم ضرب کن؛ باید عددِ اول به دست بیاید. تقسیم بر صفر انجام نمی‌شود.',visual:'division',
         practice:[
           {kind:'answer',prompt:'نصفِ ۵/۸ یک روبان را پیدا کن.',expression:'5/8 ÷ 2',answer:[5,16],hint:'نصف‌کردن یعنی تقسیم بر ۲؛ تقسیم بر ۲ همان ضرب در ۱/۲ است.',solution:['۵/۸ ÷ ۲ یعنی نصفِ ۵/۸.','۵/۸ × ۱/۲ = ۵/۱۶.','پس هر نیمه ۵/۱۶ از کلِ روبان است.']},
@@ -388,7 +567,7 @@
         intro:'برای مساحتِ مستطیل، طول و عرض را به بخشِ کامل و بخشِ کسری می‌شکنیم؛ چهار مساحت را جمع می‌کنیم. راه دوم این است که هر عدد مخلوط را به کسر تبدیل و کسرها را ضرب کنیم؛ هر دو راه باید یک جواب بدهند.',
         keys:['در مدل مساحتی، طول و عرض را به بخشِ کامل و بخشِ کسری تقسیم کن؛ چهار بخش به دست می‌آید.','برای روشِ کسری: عدد کامل × مخرج + صورت؛ مخرج همان می‌ماند.','صورت و مخرج را ضرب کن؛ اگر می‌توانی، پیش از ضرب عامل‌های مشترک را ساده کن.','در پایان حاصل را ساده کن و اگر لازم بود به عدد مخلوط برگردان.'],
         formula:'۲×۱ + ۲×۱/۲ + ۱/۲×۱ + ۱/۲×۱/۲',
-        example:{prompt:'مساحت باغچه‌ای به طول ۲ و ۱/۲ متر و عرض ۱ و ۱/۲ متر را با شکل و بعد با کسر پیدا کن.',expression:'2 1/2 × 1 1/2 = ?',steps:['شکل به چهار قسمت می‌شکند: ۲×۱=۲ و ۲×۱/۲=۱.','دو قسمت دیگر: ۱/۲×۱=۱/۲ و ۱/۲×۱/۲=۱/۴.','۲+۱+۱/۲+۱/۴=۳ و ۳/۴ مترمربع.','روش کسر: ۲ و ۱/۲=۵/۲ و ۱ و ۱/۲=۳/۲؛ ۵/۲×۳/۲=۱۵/۴=۳ و ۳/۴.']},
+        example:{prompt:'مساحت باغچه‌ای به طول ۲ و ۱/۲ متر و عرض ۱ و ۱/۲ متر را با شکل و بعد با کسر پیدا کن.',expression:'2 1/2 × 1 1/2 = ?',steps:['طول را به ۲ و نیم، و عرض را به ۱ و نیم می‌شکنیم؛ چهار مستطیل کوچک می‌سازیم.','بخش‌های بزرگ: ۲×۱=۲ و ۲×۱/۲=۱.','بخش‌های نیمه: ۱/۲×۱=۱/۲ و ۱/۲×۱/۲=۱/۴.','مساحت‌ها را جمع کن: ۲+۱+۱/۲+۱/۴=۳ و ۳/۴ مترمربع.','راه دوم: ۲ و ۱/۲=۵/۲، ۱ و ۱/۲=۳/۲؛ پس ۵/۲×۳/۲=۱۵/۴=۳ و ۳/۴.']},
         tip:'برای برآورد، ۳ و ۱/۴ را نزدیکِ ۳ بگیر و ۲ و ۱/۲ را همان ۲ و ۱/۲ نگه دار؛ حاصل تقریبی ۷ و ۱/۲ مترمربع است.',visual:'mixed',
         practice:[
           {kind:'answer',prompt:'هر دو عدد مخلوط را به کسر تبدیل کن و ضرب را انجام بده.',expression:'2 1/3 × 1 1/4',answer:[35,12],hint:'۲ و ۱/۳ = ۷/۳ و ۱ و ۱/۴ = ۵/۴؛ سپس صورت‌ها و مخرج‌ها را ضرب کن.',solution:['۲ و ۱/۳ = ۷/۳ و ۱ و ۱/۴ = ۵/۴.','۷/۳ × ۵/۴ = ۳۵/۱۲.','۳۵/۱۲ = ۲ و ۱۱/۱۲.']},
@@ -412,7 +591,7 @@
         intro:'در مسئله‌ی ترکیبی، اول معنی سؤال را پیدا کن: مقایسه است، جمع/تفریق مقدارهاست، «از» می‌گوید ضرب، یا سهم‌بندی و شمارش گروه‌ها تقسیم می‌خواهد. در الگوی پایانی هم تعداد خانه‌های رنگی و کل خانه‌ها را جداگانه بشمار.',
         keys:['برای مقایسه، مخرج مشترک، تبدیل به عدد مخلوط یا محور اعداد کمک می‌کند.','برای جمع و تفریق، کسرها را هم‌مخرج کن؛ در ضرب ساده کن و در تقسیم مقسوم‌علیه را معکوس کن.','در هر شکل دو ردیف داریم؛ تعداد ستون‌ها یک واحد بیشتر از دو برابرِ شماره‌ی شکل است و تعداد کل خانه‌ها دو برابرِ تعداد ستون‌هاست.','تعداد خانه‌های رنگی برابر شماره‌ی شکل است؛ این تعداد صورتِ کسر است و تعداد کل خانه‌ها مخرجِ آن. در شکل صدم، ۱۰۰ خانه از ۴۰۲ خانه رنگی است؛ کسر را ساده کن.'],
         formula:'صورتِ کسر: تعداد خانه‌های رنگی؛ مخرجِ کسر: تعداد کل خانه‌ها',
-        example:{prompt:'شکل اول ۲ ردیف و ۳ ستون دارد، شکل دوم ۵ ستون و شکل سوم ۷ ستون. هر بار دو ستون و یک خانه‌ی رنگی اضافه می‌شود. شکل چهارم چه کسری رنگی دارد؟',expression:'4/18 = 2/9',steps:['شکل چهارم ۲×۴+۱ = ۹ ستون دارد.','دو ردیف داریم؛ پس کل خانه‌ها ۲×۹ = ۱۸ است.','۴ خانه از ۱۸ خانه رنگی است؛ کسر ۴/۱۸ می‌شود.','۴/۱۸ را بر ۲ ساده کن: ۲/۹.']},
+        example:{prompt:'شکل اول ۲ ردیف و ۳ ستون دارد، شکل دوم ۵ ستون و شکل سوم ۷ ستون. هر بار دو ستون و یک خانه‌ی رنگی اضافه می‌شود. شکل چهارم چه کسری رنگی دارد؟',expression:'4/18 = 2/9',steps:['در شکل چهارم، ۲×۴+۱=۹ ستون می‌سازیم.','دو ردیف داریم؛ پس همه‌ی خانه‌ها ۲×۹=۱۸ تاست.','۴ خانه رنگی است؛ بنابراین کسر رنگی ۴/۱۸ است.','صورت و مخرج را هر دو بر ۲ تقسیم کن: ۴/۱۸=۲/۹.']},
         tip:'در مسئله‌های شکل‌دار، اول الگو را با شکل‌های اول، دوم و سوم کشف کن؛ بعد تعداد خانه‌ها را برای شکل خواسته‌شده حساب کن. جواب را با تخمین و ساده‌سازی بررسی کن.',visual:'review',
         practice:[
           {kind:'compare',prompt:'کدام مقدار بزرگ‌تر است؟ علامت درست را انتخاب کن.',expression:'5/8   □   4/7',answer:'>',hint:'مخرج مشترک ۵۶ بگیر: ۵/۸ چند پنجاه‌وششم و ۴/۷ چند پنجاه‌وششم است؟',solution:['۵/۸ = ۳۵/۵۶ و ۴/۷ = ۳۲/۵۶.','چون ۳۵/۵۶ > ۳۲/۵۶، پس ۵/۸ > ۴/۷.']},
@@ -530,24 +709,46 @@
       }));
       $('#backToMap').addEventListener('click',()=>{sendStageResult(false,0,'return-to-map');renderMap();});
     }
-    function fractionSquareModel(shaded,total,label){
-      const cells=Array.from({length:total},(_,i)=>`<span class="fraction-square-cell ${i<shaded?'shaded':''}"></span>`).join('');
-      return `<div class="fraction-square-card"><div class="fraction-square" role="img" aria-label="${fa(shaded)} خانه از ${fa(total)} خانه‌ی مساوی رنگی است">${cells}</div><div class="fraction-square-label">${esc(label)}</div><span class="math-line">${fa(shaded)}/${fa(total)}</span></div>`;
-    }
     function fractionStripModel(shaded,total,label){
       const cells=Array.from({length:total},(_,i)=>`<span class="fraction-strip-cell ${i<shaded?'active':''}"></span>`).join('');
       return `<div class="fraction-strip-card"><span class="fraction-strip-label">${esc(label)}</span><div class="fraction-strip" role="img" aria-label="${fa(shaded)} بخش از ${fa(total)} بخش مساوی رنگی است">${cells}</div></div>`;
     }
+    function mixedPointLabel(value,denominator){
+      const whole=Math.floor(value/denominator),remainder=value%denominator;
+      if(!remainder)return fa(whole);
+      const [numerator,den]=reduce(remainder,denominator);
+      return whole?`${fa(whole)} و ${fa(numerator)}/${fa(den)}`:`${fa(numerator)}/${fa(den)}`;
+    }
+    function numberlineOverview(maxWhole,denominator,{focusWhole=null,target=null}={}){
+      const total=maxWhole*denominator;
+      const points=Array.from({length:total+1},(_,i)=>{
+        const major=i%denominator===0,focusEdge=focusWhole!==null&&(i===focusWhole*denominator||i===(focusWhole+1)*denominator),isTarget=target!==null&&i===target;
+        return `<span class="axis-overview-point ${major?'major':''} ${focusEdge?'focus-edge':''} ${isTarget?'target':''}" aria-hidden="true"><i></i><small>${major?fa(i/denominator):''}</small></span>`;
+      }).join('');
+      return `<div class="numberline-overview" style="--axis-count:${total+1};--axis-inset:${50/(total+1)}%" role="img" aria-label="محور از صفر تا ${fa(maxWhole)}؛ هر فاصله‌ی بزرگ یک واحد و هر فاصله‌ی کوچک یک‌${fa(denominator)} واحد است">${points}</div>`;
+    }
+    function numberlineZoomAxis(startWhole,denominator,target,interactive=false){
+      const firstTick=startWhole*denominator;
+      const points=Array.from({length:denominator+1},(_,step)=>{
+        const value=firstTick+step,label=mixedPointLabel(value,denominator),isTarget=value===target;
+        if(interactive)return `<button class="numberline-zoom-point number-tick" type="button" data-tick="${value}" aria-label="انتخابِ ${esc(label)}" aria-pressed="false"><i aria-hidden="true"></i><span class="numberline-zoom-label">${esc(label)}</span></button>`;
+        return `<span class="numberline-zoom-point ${isTarget?'target':''}" aria-hidden="true"><i></i><span class="numberline-zoom-label">${esc(label)}</span></span>`;
+      }).join('');
+      return `<div class="numberline-zoom-axis ${interactive?'interactive':''}" style="--axis-count:${denominator+1};--axis-inset:${50/(denominator+1)}%" ${interactive?'role="group"':'role="img"'} aria-label="${interactive?'برای انتخاب پاسخ':'بزرگ‌نمایی'}: فاصله‌ی ${fa(startWhole)} تا ${fa(startWhole+1)} به ${fa(denominator)} بخش مساوی">${points}</div>`;
+    }
+    function unitFractionBars(){
+      const groups=[{label:'واحدِ اول',amount:4,value:'۴/۴',kind:'whole'},{label:'واحدِ دوم',amount:4,value:'۴/۴',kind:'whole'},{label:'از واحد سوم',amount:3,value:'۳/۴',kind:'partial'}];
+      return `<section class="unit-strip-model"><h4>هر واحد را به ۴ خانه‌ی برابر تقسیم می‌کنیم</h4><div class="unit-strip-equation">${groups.map((group,index)=>`${index?'<span class="unit-strip-plus" aria-hidden="true">+</span>':''}<div class="unit-strip-group ${group.kind}"><strong>${group.label}</strong><div class="unit-strip-cells" role="img" aria-label="${group.label}: ${fa(group.amount)} خانه از چهار خانه رنگی است">${Array.from({length:4},(_,i)=>`<i class="${i<group.amount?'filled':''}"></i>`).join('')}</div><span class="unit-strip-value">${group.value}</span></div>`).join('')}</div><p class="math-line unit-strip-total">۴/۴ + ۴/۴ + ۳/۴ = ۱۱/۴</p><p class="unit-strip-note">دو واحد کامل، به‌اضافه‌ی سه‌چهارمِ واحد بعدی.</p></section>`;
+    }
     function unitNumberLine(){
-      const points=Array.from({length:13},(_,i)=>{const major=i%4===0,target=i===11;return `<span class="unit-numberline-tick ${major?'major':''} ${target?'target':''}" aria-hidden="true"><i></i><small>${major?fa(i/4):''}</small></span>`;}).join('');
-      return `<div class="unit-numberline-card"><h4>همان مقدار روی محورِ چهارقسمتی</h4><div class="unit-numberline" role="img" aria-label="محور از صفر تا سه؛ هر واحد چهار قسمت دارد و نقطه‌ی یازده‌چهارم، یعنی دو و سه‌چهارم، مشخص شده است">${points}</div><div class="unit-numberline-caption"><span class="math-line">۲ و ۳/۴ = ۱۱/۴</span><small>از ۲، سه فاصله‌ی یک‌چهارمی جلو برو.</small></div></div>`;
+      return `<section class="unit-numberline-card"><h4>حالا همان مقدار را روی محور پیدا می‌کنیم</h4><p class="axis-explain">خطِ بلند تا عددِ بعدی = یک واحد. بین دو خطِ بلند، ۴ قدمِ کوچک برابر داریم.</p><div class="axis-legend"><span><i class="axis-legend-major"></i> عددِ کامل</span><span><i class="axis-legend-minor"></i> یک‌چهارمِ واحد</span></div>${numberlineOverview(3,4,{focusWhole:2,target:11})}<p class="axis-direction">از صفر به سمت راست می‌رویم؛ عددها بزرگ‌تر می‌شوند. <bdi dir="ltr">۰ → ۱ → ۲ → ۳</bdi></p><div class="axis-zoom-card"><h5>بزرگ‌نماییِ فاصله‌ی ۲ تا ۳</h5><p>از ۲ شروع کن؛ هر فاصله‌ی کوچک <b>یک‌چهارم</b> است.</p>${numberlineZoomAxis(2,4,11,false)}<p class="math-line">۲ + ۱/۴ + ۱/۴ + ۱/۴ = ۲ و ۳/۴</p><p class="math-line axis-final-answer">۲ و ۳/۴ = ۱۱/۴</p></div></section>`;
     }
     function renderVisual(type){
-      if(type==='units')return `<div class="unit-visual-stack"><div class="fraction-square-group" role="group" aria-label="دو مربع کامل و سه‌چهارمِ یک مربع؛ یازده‌چهارم">${fractionSquareModel(4,4,'واحد کامل')}${fractionSquareModel(4,4,'واحد کامل')}${fractionSquareModel(3,4,'باقی‌مانده')}</div>${unitNumberLine()}</div><div class="visual-side"><strong>یک مقدار، سه نمایش</strong><p>دو مربع کامل و سه خانه از چهار خانه‌ی مربع سوم رنگی است؛ پس ۲ و ۳/۴ = ۱۱/۴.</p><p>روی محور، هر واحد را به چهار فاصله‌ی برابر تقسیم می‌کنیم؛ ۱۱ چهارم دقیقاً روی ۲ و ۳/۴ می‌افتد.</p></div>`;
-      if(type==='addition')return `<div class="addition-model-stack"><section class="addition-model-card"><h4>جمع: هم‌مخرج‌کردن</h4><p class="borrow-caption">هر نوار یک واحد است و به چهار بخش برابر تقسیم شده.</p><div class="fraction-strip-row">${fractionStripModel(2,4,'۱/۲ = ۲/۴')}${fractionStripModel(1,4,'۱/۴')}${fractionStripModel(3,4,'۳/۴')}</div><p class="math-line">۱/۲ + ۱/۴ = ۲/۴ + ۱/۴ = ۳/۴</p></section><section class="borrow-visual-card"><h4>تفریق: یک واحد را به چهارم‌ها باز می‌کنیم</h4><p class="borrow-caption">۵ و ۱/۴ را به ۴ و ۵/۴ می‌نویسیم؛ بعد ۲ واحد و ۳/۴ را کم می‌کنیم.</p><div class="borrow-transform"><span class="math-line">۱ = ۴/۴</span><span aria-hidden="true">؛</span><span class="math-line">۵ و ۱/۴ = ۴ و ۵/۴</span></div><div class="borrow-visual" role="img" aria-label="پس از بازنویسی به چهار واحد و پنج چهارم، دو واحد کامل و سه چهارم کم می‌شود؛ دو واحد و دو چهارم باقی می‌ماند"><div class="borrow-wholes" aria-hidden="true">${Array.from({length:4},(_,i)=>`<span class="borrow-unit ${i<2?'removed':'remaining'}">${Array.from({length:4},()=>'<i></i>').join('')}</span>`).join('')}</div><span class="borrow-operator" aria-hidden="true">+</span><div class="borrow-quarter-strip" aria-hidden="true">${Array.from({length:5},(_,i)=>`<span class="borrow-quarter ${i<3?'removed':'remaining'} ${i===3?'whole-boundary':''}"></span>`).join('')}</div></div><div class="borrow-key"><span><i class="removed"></i> کم‌شده</span><span><i class="remaining"></i> باقی‌مانده</span><small>از پنج چهارم، سه چهارم کم شد.</small></div><p class="math-line">۴ و ۵/۴ − ۲ و ۳/۴ = ۲ و ۲/۴ = ۲ و ۱/۲</p></section></div><div class="visual-side"><strong>چرا قرض می‌گیریم؟</strong><p>برای جمع، اول کسرهای هم‌مخرج را جمع می‌کنیم. در تفریقِ ۱/۴−۳/۴، یک واحد کامل را به ۴/۴ باز می‌کنیم؛ بنابراین ۵ و ۱/۴ همان ۴ و ۵/۴ است.</p><p>در شکل، خاکستری‌ها کم شده‌اند و سبزها باقی مانده‌اند: ۲ واحد و ۲/۴، یعنی ۲ و ۱/۲.</p></div>`;
-      if(type==='area')return `<div><div class="area-model" style="--cols:4;--rows:3" role="img" aria-label="مستطیلِ ۳ ردیف و ۴ ستونِ برابر؛ ۲ ردیف بنفش، ۳ ستون سبز و ۶ خانه‌ی مشترک طلایی">${Array.from({length:12},(_,i)=>{const r=Math.floor(i/4),c=i%4;return `<span class="area-cell ${r<2?'row-covered':''} ${c<3?'col-covered':''} ${r<2&&c<3?'overlap':''}"></span>`;}).join('')}</div><div class="area-caption"><span class="legend-dot"><i></i> ۲/۳ ردیف‌ها</span><span class="legend-dot mint"><i></i> ۳/۴ ستون‌ها</span><span class="legend-dot gold"><i></i> خانه‌ی مشترک</span></div><div class="area-calculation" dir="rtl"><div class="area-calc-row"><span>همه‌ی خانه‌ها</span><span class="math-line" dir="ltr">۳×۴=۱۲</span></div><div class="area-calc-row"><span>خانه‌های مشترک</span><span class="math-line" dir="ltr">۲×۳=۶</span></div><div class="area-calc-row"><span>کسرِ پاسخ</span><span class="math-line" dir="ltr">۶/۱۲=۱/۲</span></div></div></div><div class="visual-side" dir="rtl"><strong>چطور شکل را بخوانیم؟</strong><p>بنفش دو ردیف را نشان می‌دهد. سبز سه ستون را. خانه‌های طلایی هم در ردیف‌های انتخاب‌شده‌اند و هم در ستون‌های انتخاب‌شده.</p><p>خانه‌های طلایی را برای صورت می‌شماریم؛ همه‌ی خانه‌ها را برای مخرج.</p></div>`;
+      if(type==='units')return `<div class="unit-visual-stack">${unitFractionBars()}${unitNumberLine()}</div><div class="visual-side"><strong>یادت بماند</strong><p>هر خانه‌ی کوچک یک‌چهارم است. دو نوارِ کامل ۸ چهارم‌اند؛ سه خانه‌ی دیگر را اضافه کن: ۱۱ چهارم.</p></div>`;
+      if(type==='addition')return `<div class="addition-model-stack"><section class="addition-model-card"><h4>جمع: هر دو نوار را به ۴ قسمت می‌بریم</h4><p class="borrow-caption">۱/۲ همان ۲/۴ است؛ بعد یک‌چهارم را اضافه می‌کنیم.</p><div class="fraction-strip-equation">${fractionStripModel(2,4,'۱/۲ = ۲/۴')}<span class="fraction-strip-operation" aria-hidden="true">+</span>${fractionStripModel(1,4,'۱/۴')}<span class="fraction-strip-operation" aria-hidden="true">=</span>${fractionStripModel(3,4,'۳/۴')}</div><p class="math-line">۲/۴ + ۱/۴ = ۳/۴</p></section><section class="borrow-visual-card"><h4>تفریق: یک واحد را به ۴ چهارم تبدیل می‌کنیم</h4><p class="borrow-caption">از ۱/۴ نمی‌توانیم ۳/۴ کم کنیم؛ پس ۱ واحد کامل را باز می‌کنیم.</p><div class="borrow-trade"><div class="borrow-trade-box"><strong>پیش از قرض</strong><span class="math-line">۵ و ۱/۴</span><small>۵ واحد + ۱ چهارم</small></div><span class="borrow-trade-arrow" aria-hidden="true">→</span><div class="borrow-trade-box after"><strong>پس از قرض</strong><span class="math-line">۴ و ۵/۴</span><small>۴ واحد + ۵ چهارم</small></div></div><p class="borrow-rule">یک واحد کامل = ۴ چهارم؛ پس ۱ چهارم + ۴ چهارم = ۵ چهارم.</p><div class="borrow-visual" role="img" aria-label="پس از قرض چهار واحد و پنج چهارم داریم. دو واحد و سه چهارم را کم می‌کنیم؛ دو واحد و دو چهارم می‌ماند. خاکستری کم‌شده و سبز باقی‌مانده است."><div class="borrow-group"><strong>۴ واحد کامل</strong><div class="borrow-wholes" aria-hidden="true">${Array.from({length:4},(_,i)=>`<span class="borrow-unit ${i<2?'removed':'remaining'}">${Array.from({length:4},()=>'<i></i>').join('')}</span>`).join('')}</div></div><span class="borrow-operator" aria-hidden="true">+</span><div class="borrow-group"><strong>۵ چهارم</strong><div class="borrow-quarter-strip" aria-hidden="true">${Array.from({length:5},(_,i)=>`<span class="borrow-quarter ${i<3?'removed':'remaining'} ${i===3?'whole-boundary':''}"></span>`).join('')}</div></div></div><div class="borrow-key"><span><i class="removed"></i> خاکستری: کم‌شده</span><span><i class="remaining"></i> سبز: باقی‌مانده</span></div><p class="math-line">۴ و ۵/۴ − ۲ و ۳/۴ = ۲ و ۲/۴ = ۲ و ۱/۲</p></section></div><div class="visual-side"><strong>قرض یعنی تبدیل، نه کم‌کردن</strong><p>یک واحد را به ۴ چهارم تبدیل می‌کنیم؛ مقدار عوض نمی‌شود، فقط شکل نوشتنش عوض می‌شود.</p><p>در تصویر، خاکستری‌ها کم شده‌اند و سبزها باقی مانده‌اند.</p></div>`
+      if(type==='area')return `<div class="fraction-area-learning"><div class="area-model-instructions"><span><b>۱</b> ۳ ردیف مساوی بساز؛ ۲ ردیف را بنفش کن.</span><span><b>۲</b> ۴ ستون مساوی بساز؛ ۳ ستون را سبز کن.</span></div><div class="area-model" style="--cols:4;--rows:3" role="img" aria-label="۱۲ خانه‌ی برابر در سه ردیف و چهار ستون. دو ردیف بنفش و سه ستون سبز؛ شش خانه‌ی طلایی در هر دو دسته‌اند.">${Array.from({length:12},(_,i)=>{const r=Math.floor(i/4),c=i%4;return `<span class="area-cell ${r<2?'row-covered':''} ${c<3?'col-covered':''} ${r<2&&c<3?'overlap':''}" aria-hidden="true"></span>`;}).join('')}</div><div class="area-caption"><span class="legend-dot"><i></i> بنفش: ۲ ردیف از ۳</span><span class="legend-dot mint"><i></i> سبز: ۳ ستون از ۴</span><span class="legend-dot gold"><i></i> طلایی: هر دو رنگ</span></div><div class="area-calculation" dir="rtl"><div class="area-calc-row"><b class="area-step-number">۱</b><span>همه‌ی خانه‌ها</span><span class="math-line" dir="ltr">۳×۴=۱۲</span></div><div class="area-calc-row"><b class="area-step-number">۲</b><span>طلایی‌ها (هر دو رنگ)</span><span class="math-line" dir="ltr">۲×۳=۶</span></div><div class="area-calc-row result"><b class="area-step-number">۳</b><span>۶ خانه از ۱۲ خانه</span><span class="math-line" dir="ltr">۶/۱۲=۱/۲</span></div></div><p class="math-line area-product-result">۲/۳ × ۳/۴ = ۶/۱۲ = ۱/۲</p></div><div class="visual-side" dir="rtl"><strong>طلایی یعنی «هر دو»</strong><p>بنفش می‌گوید کدام ردیف‌ها را انتخاب کرده‌ایم؛ سبز می‌گوید کدام ستون‌ها را.</p><p>خانه‌های طلایی جایی‌اند که ردیف و ستون با هم برخورد می‌کنند. آن‌ها را بشمار: ۶ از ۱۲.</p></div>`
       if(type==='division')return `<div class="division-visual-stack" dir="rtl"><section class="division-model-card"><h4 class="division-model-title">سهم‌کردنِ ۲ لیتر بین ۵ نفر</h4><div class="share-model" role="img" aria-label="دو لیتر، هر لیتر به پنج بخش برابر تقسیم شده است؛ هر ستونِ هم‌رنگ یک سهم است و از هر لیتر یک بخش دارد"><span class="share-model-label">لیترِ اول</span>${Array.from({length:5},(_,i)=>`<span class="share-cell s${i+1}"></span>`).join('')}<span class="share-model-label">لیترِ دوم</span>${Array.from({length:5},(_,i)=>`<span class="share-cell s${i+1}"></span>`).join('')}<span class="share-model-label" aria-hidden="true"></span>${Array.from({length:5},(_,i)=>`<span class="share-person s${i+1}">نفر ${fa(i+1)}</span>`).join('')}</div><span class="math-line" dir="ltr">۲÷۵=۲/۵</span><p class="division-model-note" dir="rtl">سهمِ هر نفر: دوپنجمِ لیتر.</p></section><section class="division-model-card"><h4 class="division-model-title">چند نیمه در سه‌چهارم جا می‌شود؟</h4><div class="measure-model" role="img" aria-label="یک واحد به چهار ربع برابر تقسیم شده است. سه ربع رنگی است: دو ربع یک نیمه‌ی کامل و ربع سوم نصفِ یک نیمه است؛ پس پاسخ یک و نیم است"><div class="measure-axis"><span>۰</span><span>۱</span></div><div class="measure-bar">${Array.from({length:4},(_,i)=>`<span class="measure-cell ${i<2?'full-group':i===2?'half-group':''}"></span>`).join('')}</div><div class="measure-groups"><span class="measure-group-label full">یک نیمه</span><span class="measure-group-label half">نصفِ نیمه</span><span class="measure-group-label empty" aria-hidden="true"></span></div></div><p class="measure-caption">بخشِ رنگی ۳/۴ است: یک نیمه‌ی کامل و نصفِ نیمه.</p><span class="math-line" dir="ltr">۳/۴÷۱/۲=۱ و ۱/۲</span></section></div><div class="visual-side" dir="rtl"><strong>دو جور پرسشِ تقسیم</strong><p><b>سهم‌کردن:</b> مقدار را بین چند نفر برابر تقسیم می‌کنیم.</p><p><b>اندازه‌گرفتن:</b> می‌شماریم یک تکه‌ی هم‌اندازه چند بار در مقدار جا می‌شود.</p></div>`;
-      if(type==='mixed')return `<div class="mixed-model-stack"><section class="mixed-area-card"><h4>مدل مساحتی: طول ۲ و ۱/۲، عرض ۱ و ۱/۲</h4><div class="mixed-area-dimensions"><span>۲ واحد و نیم در یک جهت</span><span>۱ واحد و نیم در جهت دیگر</span></div><div class="mixed-area-grid" role="img" aria-label="مستطیلِ دو و نیم در یک و نیم به چهار قسمت شکسته شده است: دو در یک برابر دو؛ دو در نیم برابر یک؛ نیم در یک برابر نیم؛ نیم در نیم برابر یک چهارم"><span class="mixed-area-cell whole-whole" dir="ltr">۲</span><span class="mixed-area-cell whole-half" dir="ltr">۱</span><span class="mixed-area-cell half-whole" dir="ltr">۱/۲</span><span class="mixed-area-cell half-half" dir="ltr">۱/۴</span></div><div class="mixed-area-key"><span class="math-line">۲ × ۱ = ۲</span><span class="math-line">۲ × ۱/۲ = ۱</span><span class="math-line">۱/۲ × ۱ = ۱/۲</span><span class="math-line">۱/۲ × ۱/۲ = ۱/۴</span></div><p class="math-line mixed-area-sum">۲ + ۱ + ۱/۲ + ۱/۴ = ۱۵/۴ = ۳ و ۳/۴</p></section><section class="mixed-conversion-card"><h4>همان مسئله با کسرهای بزرگ‌تر از واحد</h4><div class="flip-demo" dir="ltr"><span class="flip-box">۲ و ۱/۲<small>طولِ مخلوط</small></span><b>×</b><span class="flip-box">۱ و ۱/۲<small>عرضِ مخلوط</small></span><b>→</b><span class="flip-box">۵/۲ × ۳/۲<small>تبدیل به کسر</small></span><b>=</b><span class="flip-box">۱۵/۴<small>حاصل</small></span></div><p class="math-line">۵/۲ × ۳/۲ = ۱۵/۴ = ۳ و ۳/۴</p><p class="mixed-area-note">دو روش، دو نمایش از همان مساحت‌اند.</p></section></div><div class="visual-side"><strong>چهار خانه، چهار ضرب کوچک</strong><p>طول را به ۲ و ۱/۲ و عرض را به ۱ و ۱/۲ می‌شکنیم. هر تکه‌ی یک جهت در هر تکه‌ی جهت دیگر ضرب می‌شود؛ جمع چهار مساحت، مساحت کل است.</p><p>در روش دوم، ۲ و ۱/۲=۵/۲ و ۱ و ۱/۲=۳/۲؛ سپس کسرها را ضرب می‌کنیم. پیش از حساب دقیق، برآورد بزن و دو روش را با هم بسنج.</p></div>`;
+      if(type==='mixed')return `<div class="mixed-model-stack"><section class="mixed-area-card"><h4>یک مستطیل: طول ۲ و ۱/۲، عرض ۱ و ۱/۲</h4><p class="mixed-area-intro">خط‌های اندازه‌گیری نشان می‌دهند هر سمت از یک قسمت کامل و یک نیمه ساخته شده است.</p><div class="mixed-area-geometry"><div class="mixed-area-columns" dir="rtl"><span>۲ واحد کامل</span><span>نیم واحد</span></div><div class="mixed-area-plane"><div class="mixed-area-rows" dir="rtl"><span>۱ واحد کامل</span><span>نیم واحد</span></div><div class="mixed-area-grid" role="img" aria-label="مساحتِ طول دو و نیم و عرض یک و نیم به چهار مستطیل تقسیم شده است؛ خانه‌ی بالا-چپ ۲، بالا-راست ۱/۲، پایین-چپ ۱ و کوچکِ پایین-راست ۱/۴ است."><span class="mixed-area-cell whole-whole" dir="ltr">۲</span><span class="mixed-area-cell half-whole" dir="ltr">۱/۲</span><span class="mixed-area-cell whole-half" dir="ltr">۱</span><span class="mixed-area-cell half-half" dir="ltr">۱/۴</span></div></div></div><p class="mixed-area-cell-intro">مساحت هر تکه = طولِ همان تکه × عرضِ همان تکه:</p><div class="mixed-area-key"><span class="part-purple"><i></i><bdi class="math-line">۲×۱=۲</bdi></span><span class="part-mint"><i></i><bdi class="math-line">۲×۱/۲=۱</bdi></span><span class="part-gold"><i></i><bdi class="math-line">۱/۲×۱=۱/۲</bdi></span><span class="part-coral"><i></i><bdi class="math-line">۱/۲×۱/۲=۱/۴</bdi></span></div><p class="math-line mixed-area-sum">۲+۱+۱/۲+۱/۴=۱۵/۴=۳ و ۳/۴</p><details class="mixed-second-method mixed-conversion-card"><summary>راه دوم را ببین: تبدیلِ عدد مخلوط به کسر</summary><div class="flip-demo" dir="ltr"><span class="flip-box">۲ و ۱/۲<small>عددِ اول</small></span><b aria-hidden="true">→</b><span class="flip-box">۵/۲<small>کسرِ اول</small></span><span class="flip-box">۱ و ۱/۲<small>عددِ دوم</small></span><b aria-hidden="true">→</b><span class="flip-box">۳/۲<small>کسرِ دوم</small></span></div><p>عددِ کامل را در مخرج ضرب کن و صورت را اضافه کن: ۲×۲+۱=۵ و ۱×۲+۱=۳.</p><p class="math-line">۵/۲ × ۳/۲ = ۱۵/۴ = ۳ و ۳/۴</p></details></section></div><div class="visual-side"><strong>چهار تکه، چهار مساحت</strong><p>یک بار هر قسمتِ طول را در هر قسمتِ عرض ضرب می‌کنیم. بعد چهار جواب کوچک را جمع می‌کنیم تا مساحت کل به‌دست آید.</p></div>`
       return `<div><div class="pattern-preview" role="img" aria-label="الگوی پایانی کتاب: شکل اول دو ردیف و سه ستون با یک خانه‌ی رنگی؛ شکل دوم پنج ستون با دو خانه‌ی رنگی؛ شکل سوم هفت ستون با سه خانه‌ی رنگی دارد."><div class="pattern-figure"><strong>شکل اول · ۱/۶</strong><div class="pattern-grid" style="--pattern-cols:3">${Array.from({length:6},(_,i)=>`<span class="pattern-cell ${i===4?'shaded':''}"></span>`).join('')}</div></div><div class="pattern-figure"><strong>شکل دوم · ۲/۱۰</strong><div class="pattern-grid" style="--pattern-cols:5">${Array.from({length:10},(_,i)=>`<span class="pattern-cell ${i===3||i===6?'shaded':''}"></span>`).join('')}</div></div><div class="pattern-figure"><strong>شکل سوم · ۳/۱۴</strong><div class="pattern-grid" style="--pattern-cols:7">${Array.from({length:14},(_,i)=>`<span class="pattern-cell ${i===3||i===8||i===12?'shaded':''}"></span>`).join('')}</div></div></div><p class="pattern-explanation">هر بار ۲ ستون و ۱ خانه‌ی رنگی اضافه می‌شود.</p><div class="review-orbit"><span>مقایسه</span><b>⇄</b><span>جمع و تفریق</span><b>±</b><span>ضرب و تقسیم</span></div></div><div class="visual-side"><strong>اول معنی مسئله را بفهم</strong><br>سپس روش مناسب را انتخاب کن، الگوی شکل را ادامه بده و جواب را با تخمین یا ساده‌سازی بررسی کن.</div>`;
     }
     function renderLesson(level,index){
@@ -555,7 +756,7 @@
         <div class="lesson-top"><div><span class="lesson-label">📖 درس‌نامه‌ی کوتاه · جزیره‌ی ${fa(index+1)} · کتاب ص. ${esc(level.bookPages)}</span><h2>${esc(level.title)}</h2><p>${esc(level.story)}</p></div><div class="goal-badge">🎯 هدف من: ${esc(level.goal)}</div></div>
         <div class="lesson-grid">
           <section class="coach-card" aria-labelledby="coachTitle"><div class="coach-head"><span class="wizard hakim-inline-face" id="lessonHakimFace" role="img" aria-label="حکیم، راهنمای درس"></span><span><strong id="coachTitle">حکیم می‌گوید…</strong><small>آرام بخوان؛ لازم نیست چیزی را حفظ کنی.</small></span></div><p>${esc(level.intro)}</p><ul class="key-list">${level.keys.map(item=>`<li>${esc(item)}</li>`).join('')}</ul><div class="formula-box"><span aria-hidden="true">🧠</span><span>${esc(level.formula)}</span></div></section>
-          <section class="example-card" aria-labelledby="exampleTitle"><h3 id="exampleTitle">✨ یک نمونه را با هم حل کنیم</h3><p class="example-prompt">${esc(level.example.prompt)}</p><div class="example-problem"><span class="math-line large">${esc(fa(level.example.expression))}</span></div><p class="example-coach-note">پیش از دیدن حل، یک بار خودت فکر کن؛ بعد روش خودت را با آن بسنج.</p><button class="reveal-btn" id="revealWork" type="button" aria-expanded="false">👀 دیدن حلِ گام‌به‌گام</button><ol class="example-steps" id="exampleSteps" hidden>${level.example.steps.map(step=>`<li>${esc(step)}</li>`).join('')}</ol></section>
+          <section class="example-card" aria-labelledby="exampleTitle"><h3 id="exampleTitle">✨ نمونه را آرام‌آرام حل کنیم</h3><p class="example-prompt">${esc(level.example.prompt)}</p><div class="example-problem"><span class="math-line large">${esc(fa(level.example.expression))}</span></div><p class="example-coach-note">هر شماره یک کار است. اول همان کار را بخوان؛ بعد به گام بعدی برو.</p><button class="reveal-btn" id="revealWork" type="button" aria-expanded="true">🙈 راه‌حل را پنهان کن تا خودت امتحان کنی</button><ol class="example-steps" id="exampleSteps">${level.example.steps.map((step,stepIndex)=>`<li><span class="example-step-index">${fa(stepIndex+1)}</span><span class="example-step-copy">${esc(step)}</span></li>`).join('')}</ol></section>
         </div>
         <section class="visual-card" aria-label="مدل تصویری درس"><div><p class="visual-title">شکل را بخوان</p>${renderVisual(level.visual)}<p class="visual-caption">شکل‌ها کمک می‌کنند ببینی هر عدد یا عمل چه معنایی دارد.</p></div><div class="visual-side"><strong>نکته‌ی طلایی</strong><br>${esc(level.tip)}</div></section>
         ${index===5?'<aside class="reading-note" aria-label="یادداشت فرهنگ خواندن کتاب"><span class="reading-note-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5c3.6-.9 6.2-.1 8 1.4V20c-1.8-1.5-4.4-2.2-8-1.3V5.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M20 5.5c-3.6-.9-6.2-.1-8 1.4V20c1.8-1.5 4.4-2.2 8-1.3V5.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6.5 9.5c1.5-.3 2.6-.2 3.6.3M14 9.8c1-.5 2.1-.6 3.5-.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span><div><h3>فرهنگ خواندن · ریاضی و تاریخ</h3><p>در یادداشت پایان فصل، نقش دانشمندان مسلمان و ایرانی در گسترش دانش ریاضی آمده است. متن از محمدبن‌موسی خوارزمی نام می‌برد و ابداع خط کسری را به محمد بن حصار، دانشمند مسلمان، نسبت می‌دهد.</p></div></aside>':''}
@@ -564,15 +765,16 @@
     }
 
     function taskExpression(q){if(!q.expression)return '';const expression=String(q.expression),hasPersianText=/[\u0621-\u064A\u0671-\u06D3\u06FA-\u06FC]/.test(expression);return `<div class="task-expression"><span class="${hasPersianText?'text-expression':'math-line large'}" dir="${hasPersianText?'rtl':'ltr'}">${esc(fa(expression))}</span></div>`;}
+    function renderNumberlineTask(q){
+      const focusWhole=Math.max(0,Math.min(q.maxWhole-1,Math.floor(q.target/q.denominator)));
+      return `<div class="numberline-task"><div class="numberline-step-note"><b>۱</b><span>نمای کلی: خطِ بلند از یک عددِ کامل تا عددِ بعدی می‌رود.</span></div>${numberlineOverview(q.maxWhole,q.denominator,{focusWhole})}<div class="axis-legend"><span><i class="axis-legend-major"></i> عدد کامل</span><span><i class="axis-legend-minor"></i> هر گام کوچک = ۱/${fa(q.denominator)} واحد</span></div><div class="numberline-focus-card"><h4>۲) فاصله‌ی ${fa(focusWhole)} تا ${fa(focusWhole+1)} را بزرگ کرده‌ایم</h4><p>هر خط کوتاه = ۱/${fa(q.denominator)} واحد است. عددهای زیرِ نقطه‌ها را بخوان و جواب را لمس کن.</p>${numberlineZoomAxis(focusWhole,q.denominator,null,true)}<p class="numberline-focus-note">نکته: از عددِ سمت چپ شروع کن و فاصله‌های کوچک را بشمار.</p></div></div>`;
+    }
     function taskControl(q){
       if(q.kind==='answer')return `<div class="answer-row fraction-entry" role="group" aria-label="ورود پاسخ به صورت کسر یا عدد مخلوط"><div class="whole-entry"><label for="wholeAnswerInput">عدد کامل <small>(عدد صحیح؛ اختیاری)</small></label><input class="answer-input small" id="wholeAnswerInput" type="text" inputmode="numeric" autocomplete="off" aria-label="عدد کامل یا عدد صحیح"></div><span class="parts-and" aria-hidden="true">و</span><div class="fraction-entry-part"><label>کسر</label><span class="fraction-answer answer-fraction" dir="ltr"><input id="numeratorAnswerInput" type="text" inputmode="numeric" autocomplete="off" aria-label="صورتِ کسر"><i aria-hidden="true"></i><input id="denominatorAnswerInput" type="text" inputmode="numeric" autocomplete="off" aria-label="مخرجِ کسر"></span></div></div><p class="control-hint">برای کسر، صورت و مخرج را در دو خانه‌ی روی هم بنویس؛ برای عدد مخلوط، عدد کامل (عدد صحیح) را هم وارد کن.</p>`;
       if(q.kind==='parts')return `<div class="parts-inputs"><label class="parts-label" for="wholeInput"><span>عدد کامل (عدد صحیح)</span><input class="answer-input small" id="wholeInput" type="text" inputmode="numeric" autocomplete="off" aria-label="عدد کامل (عدد صحیح)"></label><span class="parts-and" aria-hidden="true">و</span><label class="fraction-answer" aria-label="صورتِ باقی‌مانده روی مخرج ثابت"><input class="answer-input small" id="numeratorInput" type="text" inputmode="numeric" autocomplete="off" aria-label="صورتِ باقی‌مانده"><i aria-hidden="true"></i><span>${fa(q.denominator)}</span></label></div><p class="control-hint">مخرج همان ${fa(q.denominator)} می‌ماند؛ عدد کامل (عدد صحیح) و صورتِ باقی‌مانده را وارد کن.</p>`;
       if(q.kind==='compare')return `<div class="choice-row" role="group" aria-label="انتخاب علامت مقایسه">${['<','=','>'].map(symbol=>`<button class="choice-chip compare-choice" type="button" data-value="${symbol}" aria-pressed="false">${symbol}</button>`).join('')}</div><p class="control-hint">یک علامت را انتخاب کن؛ اگر لازم است دو مقدار را روی محور تصور کن.</p>`;
       if(q.kind==='truth')return `<div class="choice-row" role="group" aria-label="درست یا نادرست">${[['true','درست است'],['false','نادرست است']].map(([value,label])=>`<button class="choice-chip truth-choice" type="button" data-value="${value}" aria-pressed="false">${label}</button>`).join('')}</div>`;
-      if(q.kind==='numberline'){
-        const ticks=q.maxWhole*q.denominator;
-        return `<p class="control-hint">هر فاصله‌ی بین دو عدد کامل به ${fa(q.denominator)} قسمت مساوی شده است.</p><div class="numberline-wrap"><div class="numberline" style="--ticks:${ticks+1}" role="group" aria-label="محور اعداد از صفر تا ${fa(q.maxWhole)}">${Array.from({length:ticks+1},(_,i)=>{const whole=i%q.denominator===0;const label=whole?fa(i/q.denominator):'';const value=formatFraction(i,q.denominator);return `<button class="tick-button number-tick" type="button" data-tick="${i}" aria-label="${esc(value)}" aria-pressed="false"><span class="tick-dot"></span><small>${label||' '}</small></button>`;}).join('')}</div></div>`;
-      }
+      if(q.kind==='numberline')return renderNumberlineTask(q);
       if(q.kind==='sort'||q.kind==='order')return `<p class="control-hint">${q.kind==='sort'?'از کوچک به بزرگ':'از گام اول تا آخر'} کارت‌ها را به ترتیب درست انتخاب کن.</p><div class="seq-list" id="sequenceList">${q.items.map(item=>`<button class="seq-chip sequence-choice" type="button" data-id="${esc(item.id)}" aria-pressed="false">${esc(item.label)}</button>`).join('')}</div><div class="sequence-controls"><button class="btn light small" id="resetSequence" type="button">↻ پاک‌کردن و دوباره چیدن</button></div>`;
       if(q.kind==='paint')return `<p class="paint-instructions">مستطیل ${fa(q.rows)} ردیف و ${fa(q.cols)} ستون دارد. خانه‌هایِ بخش مشترک را با لمس انتخاب کن.</p><div class="paint-grid" style="--cols:${q.cols}" role="group" aria-label="مدل مساحتی برای ضرب کسرها">${Array.from({length:q.rows*q.cols},(_,i)=>{const r=Math.floor(i/q.cols),c=i%q.cols;return `<button class="paint-cell ${r<q.rowCount?'row-covered':''} ${c<q.colCount?'col-covered':''} ${r<q.rowCount&&c<q.colCount?'overlap':''}" type="button" data-cell="${r},${c}" aria-label="ردیف ${fa(r+1)}، ستون ${fa(c+1)}" aria-pressed="false"></button>`;}).join('')}</div><div class="paint-legend"><span><i style="background:#7667e0"></i> بخشِ ${fa(q.rowCount)}/${fa(q.rows)}</span><span class="mint"><i></i> بخشِ ${fa(q.colCount)}/${fa(q.cols)}</span><span class="gold"><i></i> اشتراک را انتخاب کن</span></div><p class="control-hint">تعداد خانه‌های انتخاب‌شده: <strong id="paintCount" class="ltr-num">${fa(session.cells.size)}</strong></p>`;
       return '';
@@ -602,7 +804,7 @@
         guideSay(session.phase==='practice'?`حالا نوبت توست ${state.name}؛ هر پاسخ درست را با دلیل می‌بینیم.`:`چالش جزیره شروع شد ${state.name}؛ با حوصله جواب بده و پاسخ را با روش حل بررسی کن.`,session.phase==='practice'?'happy':'excited');
       }
       if(session.phase==='learn'){
-        $('#revealWork').addEventListener('click',()=>{const steps=$('#exampleSteps');const open=steps.hidden;steps.hidden=!open;$('#revealWork').setAttribute('aria-expanded',String(open));$('#revealWork').textContent=open?'🙈 پنهان‌کردن حل':'👀 دیدن حلِ گام‌به‌گام';});
+        $('#revealWork').addEventListener('click',()=>{const steps=$('#exampleSteps');const open=steps.hidden;steps.hidden=!open;$('#revealWork').setAttribute('aria-expanded',String(open));$('#revealWork').textContent=open?'🙈 راه‌حل را پنهان کن تا خودت امتحان کنی':'👀 حل ساده را نشان بده';});
         $('#toPractice').addEventListener('click',()=>{session.phase='practice';session.cursor=0;session.practiceDone=false;resetTaskInteraction();renderPlay();});
       }else bindTask(level);
     }
