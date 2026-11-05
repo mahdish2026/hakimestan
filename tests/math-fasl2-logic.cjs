@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 let html = fs.readFileSync('games/math-fasl2.html', 'utf8');
 const core = fs.readFileSync('hakim-core.js', 'utf8');
 html = html.replace('<script src="../hakim-core.js"></script>', `<script>${core.replace(/<\/script/gi, '<\\/script')}</script>`);
-html = html.replace('    const state = {name:', '    window.__LEVELS = LEVELS;\n    const state = {name:');
+html = html.replace('    const state = {name:', '    window.__LEVELS = LEVELS;\n    window.__isTaskCorrect = isTaskCorrect;\n    window.__persianSpacing = persianSpacing;\n    const state = {name:');
 
 const errors = [];
 const virtualConsole = new VirtualConsole();
@@ -28,7 +28,7 @@ const dom = new JSDOM(html, {
   }
 });
 
-const { document, __LEVELS: levels } = dom.window;
+const { document, __LEVELS: levels, __isTaskCorrect: isTaskCorrect, __persianSpacing: persianSpacing } = dom.window;
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const click = element => { assert.ok(element, 'expected a clickable element'); element.click(); };
@@ -40,6 +40,44 @@ const compareRationals = (a, b) => {
 };
 const isPositiveInteger = value => Number.isSafeInteger(value) && value > 0;
 const isNonNegativeInteger = value => Number.isSafeInteger(value) && value >= 0;
+const forbiddenWording = /کتاب|صفحه|bookPages|pageRange|فصل|گنجِ فصل|فرهنگ خواندن|الگوی پایانی کتاب|خط کسری|محمد|یادداشت پایان|تمرین\u200c?های خود/;
+function collectPersianStrings(value, path, out) {
+  if (typeof value === 'string') {
+    if (/[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(value)) out.push({ path, text: value });
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectPersianStrings(item, `${path}[${index}]`, out));
+    return;
+  }
+  if (value && typeof value === 'object') {
+    for (const [key, item] of Object.entries(value)) collectPersianStrings(item, `${path}.${key}`, out);
+  }
+}
+function expectedTaskAnswer(q) {
+  if (q.kind === 'answer') return q.answer.slice();
+  if (q.kind === 'parts') return { whole: q.whole, numerator: q.numerator };
+  if (q.kind === 'compare') return compareRationals(q.left, q.right) || q.answer;
+  if (q.kind === 'truth') return q.answer;
+  if (q.kind === 'numberline') return q.target;
+  if (q.kind === 'sort' || q.kind === 'order') return q.order.slice();
+  if (q.kind === 'paint') {
+    const cells = [];
+    for (let r = 0; r < q.rowCount; r += 1) for (let c = 0; c < q.colCount; c += 1) cells.push(`${r},${c}`);
+    return cells.sort();
+  }
+  return null;
+}
+function wrongTaskAnswer(q, expected) {
+  if (q.kind === 'answer') return [expected[0] + 1, expected[1]];
+  if (q.kind === 'parts') return { whole: expected.whole + 1, numerator: expected.numerator };
+  if (q.kind === 'compare') return expected === '>' ? '<' : '>';
+  if (q.kind === 'truth') return !expected;
+  if (q.kind === 'numberline') return expected + 1 <= q.maxWhole * q.denominator ? expected + 1 : expected - 1;
+  if (q.kind === 'sort' || q.kind === 'order') return expected.slice().reverse();
+  if (q.kind === 'paint') return expected.slice(1);
+  return null;
+}
 
 try {
   assert.equal(levels.length, 6, 'six islands are required');
@@ -49,7 +87,7 @@ try {
 
   levels.forEach((level, index) => {
     const label = `island ${index + 1}`;
-    for (const field of ['short', 'bookPages', 'coverage', 'title', 'summary', 'goal', 'story', 'intro', 'formula', 'tip', 'visual']) {
+    for (const field of ['short', 'topics', 'title', 'summary', 'goal', 'story', 'intro', 'formula', 'tip', 'visual']) {
       assert.ok(typeof level[field] === 'string' && level[field].trim(), `${label}: missing ${field}`);
     }
     assert.ok(Array.isArray(level.keys) && level.keys.length >= 3, `${label}: key points are incomplete`);
@@ -111,6 +149,11 @@ try {
             }
           }
         }
+        const expected = expectedTaskAnswer(q);
+        const wrong = wrongTaskAnswer(q, expected);
+        assert.equal(isTaskCorrect(q, expected), true, `${id}: stored expected answer is rejected by the validator`);
+        assert.equal(isTaskCorrect(q, wrong), false, `${id}: a clearly wrong answer was accepted`);
+        assert.equal(persianSpacing(persianSpacing(q.prompt)), persianSpacing(q.prompt), `${id}: spacing helper is not idempotent`);
         if (q.kind === 'paint') {
           assert.ok(isPositiveInteger(q.rows) && isPositiveInteger(q.cols), `${id}: grid size is invalid`);
           assert.ok(isNonNegativeInteger(q.rowCount) && isNonNegativeInteger(q.colCount), `${id}: selected area is invalid`);
@@ -156,8 +199,14 @@ try {
   assert.notEqual($('#hudXp').textContent, '۰', 'XP should increase after a correct answer');
   assert.equal($('#hudStreak').textContent, '۱', 'streak should start at one after a correct answer');
 
+  const dataStrings = [];
+  collectPersianStrings(levels, 'LEVELS', dataStrings);
+  for (const { path, text } of dataStrings) {
+    assert.doesNotMatch(text, forbiddenWording, `${path} still references the book, a page, or a chapter`);
+    assert.equal(persianSpacing(persianSpacing(text)), persianSpacing(text), `${path}: spacing helper is not idempotent`);
+  }
   assert.equal(errors.length, 0, `unexpected jsdom errors: ${errors.join(' | ')}`);
-  console.log(JSON.stringify({ islands: levels.length, tasks: totalActivities, compareRelations: [...compareSigns].sort(), choiceOrder: ['<', '=', '>'], xpStarted: true, soundOptIn: true, jsdomErrors: errors.length }, null, 2));
+  console.log(JSON.stringify({ islands: levels.length, tasks: totalActivities, validatedAnswers: allTasks.length, userStrings: dataStrings.length, compareRelations: [...compareSigns].sort(), choiceOrder: ['<', '=', '>'], xpStarted: true, soundOptIn: true, bookPageRefsRemoved: true, jsdomErrors: errors.length }, null, 2));
 } finally {
   dom.window.close();
 }

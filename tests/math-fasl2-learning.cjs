@@ -46,6 +46,7 @@ const { document, __LEVELS: levels } = dom.window;
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const click = element => { assert.ok(element, 'expected a clickable element'); element.click(); };
+const forbiddenWording = /کتاب|صفحه|bookPages|pageRange|فصل|گنجِ فصل|فرهنگ خواندن|الگوی پایانی کتاب|خط کسری|محمد|یادداشت پایان|تمرین\u200c?های خود/;
 
 try {
   click($('#entryForm button[type="submit"]'));
@@ -58,6 +59,10 @@ try {
   assert.equal(activityCount, 58, 'the 58 practice/challenge activities must remain');
   assert.equal($$('.level-card').length, 6, 'all six islands should remain available');
   assert.ok($('.level-card.recommended'), 'the map should recommend a next island without locking others');
+  assert.doesNotMatch(document.title, forbiddenWording, 'page title still names the printed chapter');
+  assert.doesNotMatch(document.querySelector('meta[name="description"]').getAttribute('content'), forbiddenWording, 'meta description still names the printed chapter');
+  assert.doesNotMatch($('#map').textContent, forbiddenWording, 'map still references the book, a page, or a chapter');
+  for (const level of levels) assert.doesNotMatch(level.topics, forbiddenWording, `island topics still reference the book: ${level.short}`);
 
   for (let index = 0; index < levels.length; index += 1) {
     const level = levels[index];
@@ -67,6 +72,13 @@ try {
     assert.ok(guess.prompt && guess.hint && guess.feedback, `island ${index + 1} prediction needs a prompt, a hint, and explanatory feedback`);
 
     click($(`.level-card[data-level="${index}"]`));
+    assert.doesNotMatch($('#play').textContent, forbiddenWording, `island ${index + 1} lesson still references the book, a page, or a chapter`);
+    assert.match($('.lesson-label').textContent, /تمرین و چالش/, `island ${index + 1} lesson label is not book-independent`);
+    if (index === 5) {
+      assert.ok($('.reading-note'), 'final review note is missing');
+      assert.match($('.reading-note').textContent, /یادداشت مروری/, 'final review note should be a general study reminder');
+      assert.doesNotMatch($('.reading-note').textContent, forbiddenWording, 'review note still quotes book-specific history');
+    }
     assert.ok($('#exampleSteps').hidden, `island ${index + 1} should keep the worked solution optional at first`);
     assert.equal($('#revealWork').getAttribute('aria-expanded'), 'false');
     assert.ok($$('#exampleSteps li').length >= 3, 'worked steps must be retained');
@@ -121,7 +133,7 @@ try {
   assert.equal(speechCancellations, 2, 'each new speech request should replace the previous one');
 
   assert.equal(errors.length, 0, `unexpected jsdom errors: ${errors.join(' | ')}`);
-  console.log(JSON.stringify({ islands: levels.length, activities: activityCount, predictions: levels.length, noPersianVoiceFallback: 'hidden controls', persianVoiceReadAloud: true, jsdomErrors: errors.length }, null, 2));
+  console.log(JSON.stringify({ islands: levels.length, activities: activityCount, predictions: levels.length, noPersianVoiceFallback: 'hidden controls', persianVoiceReadAloud: true, bookPageRefsRemoved: true, jsdomErrors: errors.length }, null, 2));
 } finally {
   dom.window.close();
 }

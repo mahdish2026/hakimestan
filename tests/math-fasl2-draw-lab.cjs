@@ -34,6 +34,7 @@ const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const click = element => { assert.ok(element, 'expected a clickable element'); element.click(); };
 const clickSelector = selector => click($(selector));
+const forbiddenWording = /کتاب|صفحه|bookPages|pageRange|فصل|گنجِ فصل|فرهنگ خواندن|الگوی پایانی کتاب|خط کسری|محمد|یادداشت پایان|تمرین\u200c?های خود/;
 
 function labExpected(lab) {
   if (lab.mode === 'grid') return lab.grid.expected.slice();
@@ -110,17 +111,22 @@ try {
   clickSelector('#entryForm button[type="submit"]');
   assert.equal($('#map').hidden, false, 'map should be visible');
 
-  const ranges = $$('.level-pages .page-range');
-  assert.equal(ranges.length, 6, 'every island needs an isolated page range');
-  assert.ok(ranges.every(node => node.getAttribute('dir') === 'ltr'), 'page ranges must be LTR');
-  assert.equal(ranges[0].textContent, '۴۰–۴۵', 'first page range must read ۴۰–۴۵');
-  assert.match($('.level-card[data-level="0"]').getAttribute('aria-label'), /۴۰ تا ۴۵/, 'spoken page range must be unambiguous');
+  assert.equal($$('.level-pages .page-range').length, 0, 'book page ranges must be removed from island cards');
+  assert.equal($$('.coverage-list .page-range').length, 0, 'book page ranges must be removed from the topic list');
+  const metas = $$('.level-meta');
+  assert.equal(metas.length, 6, 'every island needs a general activity count');
+  assert.ok(metas.every(node => /تمرین و چالش/.test(node.textContent)), 'island meta must count activities, not printed pages');
+  assert.match($('.level-card[data-level="0"]').getAttribute('aria-label'), /تمرین و چالش/, 'spoken island label must be book-independent');
+  assert.doesNotMatch($('#map').textContent, forbiddenWording, 'the map still references the book, a page, or a chapter');
   $('.coverage-panel').open = true;
-  assert.equal($$('.coverage-list .page-range').length, 6, 'coverage rows need isolated page ranges');
-  assert.match($('.coverage-intro').textContent, /تمرین تعاملی رسم و محور/, 'coverage should mention the drawing lab');
+  assert.equal($$('.coverage-list li').length, 6, 'all six topic rows should remain');
+  assert.match($('.coverage-intro').textContent, /تمرین تعاملی رسم و محور/, 'topic overview should mention the drawing lab');
+  assert.doesNotMatch($('.coverage-note').textContent, forbiddenWording, 'topic note still recommends the printed book exercises');
 
   clickSelector('#openDrawLab');
   assert.equal($('#lab').hidden, false, 'drawing lab did not open');
+  assert.doesNotMatch($('#lab').textContent, forbiddenWording, 'drawing lab still references the book, a page, or a chapter');
+  assert.doesNotMatch($('.lab-grid-board')?.getAttribute('aria-label') || '', /صفحه/, 'drawing board label must not say page');
   assert.equal($('#map').hidden, true, 'map should be hidden while the lab is open');
   assert.equal($$('.lab-group-btn').length, 5, 'all operation groups should be visible');
   assert.equal($$('.lab-scenario-btn').length, labs.filter(lab => lab.group === 'represent').length, 'scenario list should match the active group');
@@ -239,29 +245,34 @@ try {
   // From a lesson, the lab should return to that same lesson.
   click($('.level-card[data-level="0"]'));
   assert.ok($('#revealWork'), 'lesson should be visible');
-  assert.ok($('.lesson-label .page-range'), 'lesson page range must be isolated');
-  assert.equal($('.lesson-label .page-range').getAttribute('dir'), 'ltr', 'lesson page range must be LTR');
+  assert.ok(!$('.lesson-label .page-range'), 'lesson must not show a printed page range');
+  assert.match($('.lesson-label').textContent, /تمرین و چالش/, 'lesson label must be book-independent');
+  assert.doesNotMatch($('#play').textContent, forbiddenWording, 'first lesson still references the book, a page, or a chapter');
   clickSelector('#openDrawLabFromLesson');
   assert.equal($('#lab').hidden, false, 'lesson lab button did not open the lab');
   assert.match($('.lab-header-copy').textContent, /پیشنهاد ویژه/, 'lesson lab should preselect that island');
   clickSelector('#labBack');
   assert.ok($('#revealWork'), 'back from lesson lab should return to the lesson');
 
-  // Every island lesson must show a correct, isolated page range and a lab button.
+  // Every island lesson must stay independent of the printed book and keep its lab button.
   clickSelector('#backToMap');
   for (let i = 1; i < levels.length; i += 1) {
     click($(`.level-card[data-level="${i}"]`));
     assert.ok($('#revealWork'), `island ${i + 1}: lesson did not open`);
-    const lessonRange = $(`.lesson-label .page-range`);
-    assert.ok(lessonRange, `island ${i + 1}: lesson page range missing`);
-    assert.equal(lessonRange.getAttribute('dir'), 'ltr', `island ${i + 1}: lesson page range is not LTR`);
-    assert.equal(lessonRange.textContent, levels[i].bookPages, `island ${i + 1}: lesson page range text is wrong`);
+    assert.ok(!$('.lesson-label .page-range'), `island ${i + 1}: printed page range is still present`);
+    assert.match($('.lesson-label').textContent, /تمرین و چالش/, `island ${i + 1}: lesson label is not book-independent`);
+    assert.doesNotMatch($('#play').textContent, forbiddenWording, `island ${i + 1}: lesson still references the book, a page, or a chapter`);
+    if (i === 5) {
+      assert.ok($('.reading-note'), 'final review note is missing');
+      assert.match($('.reading-note').textContent, /یادداشت مروری/, 'final review note should be a general study reminder');
+      assert.doesNotMatch($('.reading-note').textContent, forbiddenWording, 'review note still quotes book-specific history');
+    }
     assert.ok($('#openDrawLabFromLesson'), `island ${i + 1}: lesson lab button missing`);
     clickSelector('#backToMap');
   }
 
   assert.equal(errors.length, 0, `unexpected jsdom errors: ${errors.join(' | ')}`);
-  console.log(JSON.stringify({ labs: labs.length, groups: groups.length, grid: labs.filter(l => l.mode === 'grid').length, line: labs.filter(l => l.mode === 'line').length, regions: labs.filter(l => l.mode === 'regions').length, solvedInTest: 6, pageRangesFixed: true, persisted: true, jsdomErrors: errors.length }, null, 2));
+  console.log(JSON.stringify({ labs: labs.length, groups: groups.length, grid: labs.filter(l => l.mode === 'grid').length, line: labs.filter(l => l.mode === 'line').length, regions: labs.filter(l => l.mode === 'regions').length, solvedInTest: 6, bookPageRefsRemoved: true, persisted: true, jsdomErrors: errors.length }, null, 2));
 } finally {
   dom.window.close();
 }
