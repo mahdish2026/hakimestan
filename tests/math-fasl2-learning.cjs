@@ -64,6 +64,36 @@ try {
   assert.doesNotMatch($('#map').textContent, forbiddenWording, 'map still references the book, a page, or a chapter');
   for (const level of levels) assert.doesNotMatch(level.topics, forbiddenWording, `island topics still reference the book: ${level.short}`);
 
+  assert.ok($('#openRepModal') && $('#openReviewModal'), 'linked-representation and interleaved-review buttons are missing from the map');
+  click($('#openRepModal'));
+  assert.ok(!$('#repModal').hidden, 'linked representations panel should open');
+  assert.equal($$('.rep-view').length, 3, 'bar, area, and number-line views should be linked');
+  assert.equal($$('.rep-cell').length, 16, 'two-unit bar and area grids should start with four parts per unit');
+  assert.ok($('.rep-axis .rep-marker'), 'the number-line marker should be visible');
+  click($('[data-rep-d="6"]'));
+  assert.equal($$('.rep-cell').length, 24, 'changing the denominator should update every view');
+  assert.equal($('#repRange').getAttribute('max'), '12', 'the range should cover two whole units');
+  click($('#repToggle'));
+  assert.match($('#repSymbol').className, /hidden-labels/, 'numeric labels should hide for a prediction');
+  assert.equal($$('[data-rep-guess]').length, 4, 'four benchmark estimates should be offered');
+  click($('[data-rep-guess="half"]'));
+  assert.match($('#repFeedback').textContent, /آفرین/, 'a correct magnitude estimate should get feedback');
+  click($('#repClose'));
+  assert.ok($('#repModal').hidden, 'linked representations panel should close');
+
+  click($('#openReviewModal'));
+  assert.ok(!$('#reviewModal').hidden, 'interleaved review should open');
+  assert.equal($$('.review-card').length, 3, 'three short review prompts should be drawn');
+  assert.equal(new Set($$('.review-card').map(card => card.dataset.reviewKind)).size, 3, 'review prompts should mix distinct topics');
+  click($('#reviewShuffle'));
+  assert.equal($$('.review-card').length, 3, 'reshuffling should keep three prompts');
+  click($('#reviewClose'));
+  assert.ok($('#reviewModal').hidden, 'interleaved review should close');
+
+  const truthWhy = levels[5].practice.concat(levels[5].challenge).filter(q => q.kind === 'truth');
+  assert.equal(truthWhy.length, 3, 'final island should have three error-analysis questions');
+  assert.ok(truthWhy.every(q => q.whyOptions && q.whyAnswer && q.whyText), 'each error-analysis question needs reasons and an explanation');
+
   for (let index = 0; index < levels.length; index += 1) {
     const level = levels[index];
     const guess = level.example.guess;
@@ -133,7 +163,7 @@ try {
   assert.equal(speechCancellations, 2, 'each new speech request should replace the previous one');
 
   assert.equal(errors.length, 0, `unexpected jsdom errors: ${errors.join(' | ')}`);
-  console.log(JSON.stringify({ islands: levels.length, activities: activityCount, predictions: levels.length, noPersianVoiceFallback: 'hidden controls', persianVoiceReadAloud: true, bookPageRefsRemoved: true, jsdomErrors: errors.length }, null, 2));
+  console.log(JSON.stringify({ islands: levels.length, activities: activityCount, predictions: levels.length, noPersianVoiceFallback: 'hidden controls', persianVoiceReadAloud: true, bookPageRefsRemoved: true, linkedViews: 3, reviewPrompts: 3, whyPanels: truthWhy.length, jsdomErrors: errors.length }, null, 2));
 } finally {
   dom.window.close();
 }

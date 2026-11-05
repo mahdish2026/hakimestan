@@ -84,6 +84,7 @@ try {
   const allTasks = [];
   const compareSigns = new Set();
   let totalActivities = 0;
+  let whyPanels = 0;
 
   levels.forEach((level, index) => {
     const label = `island ${index + 1}`;
@@ -128,7 +129,19 @@ try {
           assert.equal(compareRationals(q.left, q.right), q.answer, `${id}: stored sign contradicts the operands`);
           compareSigns.add(q.answer);
         }
-        if (q.kind === 'truth') assert.equal(typeof q.answer, 'boolean', `${id}: truth answer must be boolean`);
+        if (q.kind === 'truth') {
+          assert.equal(typeof q.answer, 'boolean', `${id}: truth answer must be boolean`);
+          if (index === 5) {
+            whyPanels += 1;
+            assert.ok(q.whyPrompt && q.whyText, `${id}: error-analysis question needs a prompt and an explanation`);
+            assert.ok(Array.isArray(q.whyOptions) && q.whyOptions.length === 3, `${id}: error analysis should offer three reasons`);
+            const whyIds = q.whyOptions.map(item => item.id);
+            assert.equal(new Set(whyIds).size, whyIds.length, `${id}: reason ids must be unique`);
+            assert.ok(q.whyOptions.every(item => item.label && item.label.trim()), `${id}: a reason label is empty`);
+            assert.ok(whyIds.includes(q.whyAnswer), `${id}: the correct reason is not among the choices`);
+            assert.ok(/نیم|برآورد|مخرج|ردیف|ستون|شکل|قاعده|ضرب|خانه/.test([q.whyText, ...q.whyOptions.map(item => item.label)].join(' ')), `${id}: reasons should use magnitude or structural reasoning`);
+          }
+        }
         if (q.kind === 'numberline') {
           assert.ok(isPositiveInteger(q.denominator) && isPositiveInteger(q.maxWhole), `${id}: number-line scale is invalid`);
           assert.ok(Number.isSafeInteger(q.target) && q.target >= 0 && q.target <= q.maxWhole * q.denominator, `${id}: target is outside the number line`);
@@ -164,6 +177,7 @@ try {
   });
 
   assert.equal(totalActivities, 58, 'the 58 activities must remain intact');
+  assert.equal(whyPanels, 3, 'the final island should carry three benchmark/error-analysis reason panels');
   assert.deepEqual([...compareSigns].sort(), ['<', '=', '>'].sort(), 'all three comparison relations must be exercised');
 
   // The comparison UI must be LTR, labelled, and driven by the selected symbol.
@@ -206,7 +220,7 @@ try {
     assert.equal(persianSpacing(persianSpacing(text)), persianSpacing(text), `${path}: spacing helper is not idempotent`);
   }
   assert.equal(errors.length, 0, `unexpected jsdom errors: ${errors.join(' | ')}`);
-  console.log(JSON.stringify({ islands: levels.length, tasks: totalActivities, validatedAnswers: allTasks.length, userStrings: dataStrings.length, compareRelations: [...compareSigns].sort(), choiceOrder: ['<', '=', '>'], xpStarted: true, soundOptIn: true, bookPageRefsRemoved: true, jsdomErrors: errors.length }, null, 2));
+  console.log(JSON.stringify({ islands: levels.length, tasks: totalActivities, validatedAnswers: allTasks.length, userStrings: dataStrings.length, compareRelations: [...compareSigns].sort(), choiceOrder: ['<', '=', '>'], xpStarted: true, soundOptIn: true, bookPageRefsRemoved: true, whyPanels, jsdomErrors: errors.length }, null, 2));
 } finally {
   dom.window.close();
 }

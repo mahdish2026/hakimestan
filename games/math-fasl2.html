@@ -742,6 +742,58 @@
       .lab-toolbar .btn{flex:1 1 44%;font-size:.68rem;padding:7px 8px}
     }
     @media(max-width:380px){.lab-col-label{display:none}.lab-grid-head{display:none}.lab-grid-row{grid-template-columns:50px repeat(var(--lab-cols),minmax(22px,32px))}}
+
+    /* الگوبرداری از ابزارهای نمایش چندگانه، برچسبهای پنهانشونده و مرور درهم */
+    .game-modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:14px;background:rgba(30,26,70,.55);overflow:auto}
+    .game-modal[hidden]{display:none}
+    .game-modal-card{width:min(940px,100%);max-height:92vh;overflow:auto;position:relative;background:#fff;border:2px solid #d6d1ff;border-radius:24px;padding:18px;box-shadow:0 18px 50px rgba(40,32,100,.3)}
+    .game-modal-card h2{margin:0 0 6px;color:#2b2667;font-size:1.15rem}
+    .modal-lead{margin:0 0 12px;color:#5a6380;font-size:.78rem;line-height:1.9}
+    .game-modal-card .modal-close{position:absolute;top:10px;left:10px;min-width:38px;min-height:38px;border:1px solid #ddd8f5;border-radius:11px;background:#f5f3ff;color:#433c91;font-size:1rem;font-weight:900;cursor:pointer}
+    .rep-toolbar{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:8px 0 10px}
+    .rep-toolbar-label{font-size:.72rem;font-weight:900;color:#433c91}
+    .rep-chip{min-height:38px;padding:6px 11px;border:1px solid #d9d6f5;border-radius:11px;background:#f7f6ff;color:#3d3487;font-weight:900;font-size:.74rem;cursor:pointer}
+    .rep-chip.active,.rep-chip[aria-pressed="true"]{background:#6554e8;color:#fff;border-color:#6554e8}
+    .rep-slider-row{display:flex;align-items:center;gap:9px;margin:8px 0 14px;flex-wrap:wrap}
+    .rep-slider{flex:1;min-width:160px;min-height:36px;accent-color:#6554e8}
+    .rep-views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .rep-view{min-width:0;padding:10px;border:1px solid #dfe6f1;border-radius:15px;background:#fbfcff}
+    .rep-view h3{margin:0 0 7px;font-size:.75rem;color:#33445a}
+    .rep-view-note{margin:6px 0 0;font-size:.63rem;line-height:1.7;color:#5b677c}
+    .rep-strip{display:grid;grid-template-rows:repeat(2,1fr);gap:3px;direction:ltr}
+    .rep-strip-row,.rep-area{display:grid;grid-template-columns:repeat(var(--rep-cols),minmax(0,1fr));gap:3px;direction:ltr}
+    .rep-cell{aspect-ratio:1;min-height:15px;border:1px solid #b9c9dc;border-radius:4px;background:#fff}
+    .rep-area .rep-cell{aspect-ratio:1.35}
+    .rep-cell.on{background:linear-gradient(135deg,#56bba5,#a6e2d2);border-color:#329b88}
+    .rep-axis{position:relative;height:64px;margin:14px 4px 4px;direction:ltr}
+    .rep-axis-line{position:absolute;top:26px;left:0;right:0;height:4px;border-radius:9px;background:#cfd7e8}
+    .rep-axis-tick{position:absolute;top:19px;width:2px;height:18px;background:#9aa6bd}
+    .rep-axis-label{position:absolute;top:40px;font-size:.62rem;color:#56627a;transform:translateX(-50%)}
+    .rep-marker{position:absolute;top:6px;width:14px;height:14px;border-radius:50%;background:#f1b23e;border:3px solid #fff;box-shadow:0 0 0 2px #c98a13;transform:translateX(-50%);transition:left .18s}
+    .rep-symbol{margin:12px 0 6px;padding:10px;border-radius:14px;background:#f1efff;text-align:center;font-size:1rem;font-weight:950;color:#39347f}
+    .rep-symbol.hidden-labels{letter-spacing:.3em;color:#8b86b5}
+    .rep-benchmark{margin:0;text-align:center;font-size:.76rem;color:#4c5870}
+    .rep-guess{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:10px 0 0}
+    .rep-guess .rep-chip{font-size:.7rem}
+    .rep-feedback{margin:9px 0 0;padding:9px 11px;border-radius:12px;font-size:.74rem;line-height:1.85}
+    .rep-feedback.good{background:#e5f8ec;color:#17734d}
+    .rep-feedback.bad{background:#fff2e8;color:#8a4a18}
+    .rep-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .review-list{display:grid;gap:9px;margin:10px 0}
+    .review-card{border:1px solid #dedaf8;border-radius:14px;background:#fbfaff;padding:10px 12px}
+    .review-card summary{cursor:pointer;font-weight:900;color:#433c91;font-size:.76rem;line-height:1.8}
+    .review-kind{display:inline-block;margin-inline-end:7px;padding:2px 7px;border-radius:99px;background:#e9e5ff;color:#4b3da4;font-size:.62rem}
+    .review-card p{margin:8px 0 0;font-size:.74rem;line-height:1.95;color:#3f4a60}
+    .why-panel{margin:12px 0 0;border:1px solid #d9e6df;border-radius:14px;background:#f6fdf9;overflow:hidden}
+    .why-panel>summary{padding:9px 12px;color:#1c6b4d;font-size:.75rem;font-weight:950;cursor:pointer}
+    .why-question{margin:6px 12px;font-size:.73rem;line-height:1.85;color:#3f4a60}
+    .why-options{display:flex;flex-wrap:wrap;gap:7px;margin:8px 12px}
+    .why-choice{min-height:38px;padding:6px 10px;border:1px solid #bfe0cf;border-radius:11px;background:#fff;color:#2c5a45;font-size:.7rem;font-weight:850;cursor:pointer}
+    .why-choice[aria-pressed="true"]{background:#d9f2e4;border-color:#57b98a}
+    .why-feedback{margin:8px 12px 12px;padding:8px 10px;border-radius:10px;font-size:.72rem;line-height:1.9}
+    .why-feedback.good{background:#e5f8ec;color:#17734d}
+    .why-feedback.bad{background:#fff4e4;color:#8a5a18}
+    @media(max-width:650px){.rep-views{grid-template-columns:1fr}.game-modal-card{padding:14px;border-radius:18px}.rep-slider{min-width:120px}}
   </style>
 </head>
 <body>
@@ -824,11 +876,15 @@
         <li><span class="g-icon">🎨</span><span><strong>در آزمایشگاه، خودت رسم کن.</strong> خانه\u200cها را رنگ می\u200cکنی یا روی محور پرش می\u200cگذاری. چند شکل می\u200cتواند درست باشد؛ مهم اندازه و الگوی تکه\u200cهاست، نه جای دقیق خانه\u200cها. سرنخ و پاسخ نمونه اختیاری\u200cاند.</span></li>
         <li><span class="g-icon">💡</span><span><strong>اگر اشتباه شد، بازخورد را بخوان.</strong> راهنمای کوتاه و حل کامل به تو کمک می‌کند دوباره با فهم بهتر امتحان کنی.</span></li>
         <li><span class="g-icon">🏅</span><span><strong>گواهی پیشرفت را هر وقت خواستی ببین.</strong> پس از تکمیل هر مرحله، تیک آن ثبت می‌شود؛ با تمام شش مرحله، گواهی پایان بازی کامل می‌شود.</span></li>
+        <li><span class="g-icon">🔍</span><span><strong>سه نگاه، یک عدد.</strong> از نقشه، یک کسر را همزمان به‌شکل نوار، خانه و نقطهٔ روی محور ببین؛ برچسبها را پنهان کن و اول خودت اندازهاش را حدس بزن.</span></li>
+        <li><span class="g-icon">🎲</span><span><strong>مرور درهم.</strong> سه پرسش کوتاه از موضوع‌های گوناگون، به‌هم‌ریخته؛ اول جواب بده، بعد پاسخ را باز کن. جابه‌جایی نوع پرسشها به یادگاری کمک می‌کند.</span></li>
       </ol>
       <div class="guide-tip">⭐ ستاره‌ها تلاش دقیق را تشویق می‌کنند، اما مهم‌تر از امتیاز این است که راه‌حل را بفهمی. می‌توانی هر مرحله را دوباره بازی کنی.</div>
     </div>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="game-modal" id="repModal" role="dialog" aria-modal="true" aria-labelledby="repTitle" hidden><div class="game-modal-card" id="repCard"></div></div>
+  <div class="game-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewTitle" hidden><div class="game-modal-card" id="reviewCard"></div></div>
 
   <script src="../hakim-core.js"></script>
   <script>
@@ -1071,18 +1127,18 @@
           {kind:'compare',prompt:'کدام علامت، رابطه‌ی این دو کسر را درست نشان می‌دهد؟',expression:'4/7   □   5/8',left:[4,7],right:[5,8],answer:'<',hint:'مخرج مشترک ۵۶ بگیر: ۴/۷ و ۵/۸ را به پنجاه‌و‌ششم تبدیل کن.',solution:['۴/۷ = ۳۲/۵۶ و ۵/۸ = ۳۵/۵۶.','چون ۳۲/۵۶ < ۳۵/۵۶، پس ۴/۷ < ۵/۸.']},
           {kind:'order',prompt:'برای حل ۲ و ۱/۴ − ۱ و ۱/۲، کارت‌های راه‌حل را به ترتیب درست انتخاب کن.',items:[{id:'a',label:'۱/۲ را به ۲/۴ تبدیل کن.'},{id:'b',label:'از ۲ و ۱/۴ یک واحد قرض بگیر: ۱ و ۵/۴.'},{id:'c',label:'۱ و ۵/۴ − ۱ و ۲/۴ = ۳/۴.'}],order:['a','b','c'],hint:'اول مخرج‌ها را یکسان کن؛ بعد اگر ۱/۴ برای کم‌کردن ۲/۴ کافی نبود، قرض بگیر.',solution:['۱/۲ = ۲/۴.','۲ و ۱/۴ = ۱ و ۵/۴.','۱ و ۵/۴ − ۱ و ۲/۴ = ۳/۴.']},
           {kind:'answer',prompt:'در شکل صدمِ این الگو، چه کسری از خانه‌ها رنگی است؟ پاسخ را ساده کن.',expression:'در شکل صدم، از ۴۰۲ خانه، ۱۰۰ خانه رنگی است',answer:[50,201],hint:'اول ۲×۱۰۰+۱ را حساب کن؛ این تعداد ستون‌هاست. دو ردیف را هم فراموش نکن.',solution:['ستون‌ها: ۲×۱۰۰+۱ = ۲۰۱.','خانه‌های کل: ۲×۲۰۱ = ۴۰۲؛ خانه‌های رنگی: ۱۰۰.','۱۰۰/۴۰۲ را بر ۲ ساده کن: ۵۰/۲۰۱.']},
-          {kind:'truth',prompt:'یک دوست می‌گوید: «در جمع ۱/۲ + ۱/۳، جواب ۲/۵ است.» آیا پاسخ او درست است؟',answer:false,hint:'اول مخرج مشترک ۶ بگیر؛ بعد صورت‌ها را جمع کن.',hints:['۱/۲ = ۳/۶ و ۱/۳ = ۲/۶.','۳/۶ + ۲/۶ = ۵/۶؛ مخرج‌ها را با هم جمع نکن.'],solution:['مخرج مشترک ۲ و ۳ برابر ۶ است.','۱/۲ = ۳/۶ و ۱/۳ = ۲/۶.','۳/۶ + ۲/۶ = ۵/۶؛ پس ۲/۵ نادرست است.']},
+          {kind:'truth',prompt:'یک دوست می‌گوید: «در جمع ۱/۲ + ۱/۳، جواب ۲/۵ است.» آیا پاسخ او درست است؟',answer:false,whyPrompt:'چرا بدون محاسبهٔ دقیق می‌توان گفت ۲/۵ پاسخ درستی نیست؟',whyOptions:[{id:'a',label:'چون ۲/۵ کوچکتر از نیم است، ولی مجموع باید بزرگتر از نیم باشد.'},{id:'b',label:'چون مخرج ۵ عددی فرد است.'},{id:'c',label:'چون ۱/۳ کوچکتر از ۱/۲ است.'}],whyAnswer:'a',whyText:'برآورد با نیم: ۱/۲ خودش نیم است و ۱/۳ هم مثبت است؛ پس حاصل حتماً بزرگتر از نیم می‌شود. ۲/۵ کوچکتر از نیم است، پس نمی‌تواند جواب باشد. مخرج مشترک ۶ است و پاسخ درست ۵/۶ است.',hint:'اول مخرج مشترک ۶ بگیر؛ بعد صورت‌ها را جمع کن.',hints:['۱/۲ = ۳/۶ و ۱/۳ = ۲/۶.','۳/۶ + ۲/۶ = ۵/۶؛ مخرج‌ها را با هم جمع نکن.'],solution:['مخرج مشترک ۲ و ۳ برابر ۶ است.','۱/۲ = ۳/۶ و ۱/۳ = ۲/۶.','۳/۶ + ۲/۶ = ۵/۶؛ پس ۲/۵ نادرست است.']},
           {kind:'answer',prompt:'سه‌چهارمِ دو و دو‌سوم را پیدا کن؛ این مسئله‌ی «کسر از مقدار» است.',expression:'3/4 × 2 2/3',answer:[2,1],hint:'عدد مخلوط را به کسر تبدیل کن؛ سپس در ۳/۴ ضرب کن.',hints:['۲ و ۲/۳=۸/۳.','۳/۴×۸/۳؛ عامل ۳ ساده می‌شود.'],solution:['۲ و ۲/۳=۸/۳.','۳/۴×۸/۳=۲۴/۱۲.','۲۴/۱۲=۲؛ پاسخ ۲ است.']},
           {kind:'answer',prompt:'هفت‌هشتمِ یک نوار را بین دو نفر برابر تقسیم کن؛ سهم هر نفر چه‌قدر است؟',expression:'7/8 ÷ 2',answer:[7,16],hint:'تقسیم بر ۲ یعنی نصف‌کردن؛ می‌توانی در ۱/۲ ضرب کنی.',hints:['۷/۸÷۲=۷/۸×۱/۲.','صورت‌ها و مخرج‌ها را ضرب کن.'],solution:['۷/۸×۱/۲=۷/۱۶.','پس سهم هر نفر ۷/۱۶ نوار است.','وارسی: ۲×۷/۱۶=۱۴/۱۶=۷/۸.']}
         ],
         challenge:[
           {kind:'answer',prompt:'زمان مطالعه‌ی صبح و عصر را جمع کن.',expression:'1 1/4 + 2 2/3',answer:[47,12],hint:'مخرج مشترک ۱۲ است: ۱/۴ = ۳/۱۲ و ۲/۳ = ۸/۱۲.',solution:['۱/۴ = ۳/۱۲ و ۲/۳ = ۸/۱۲.','۱ و ۳/۱۲ + ۲ و ۸/۱۲ = ۳ و ۱۱/۱۲.','۳ و ۱۱/۱۲ = ۴۷/۱۲.']},
           {kind:'answer',prompt:'پنج لیتر نوشیدنی داریم و گنجایش هر بطری ۳/۴ لیتر است. چند بطریِ کامل و چه سهمی از بطری بعدی پُر می‌شود؟',expression:'5 ÷ 3/4',answer:[20,3],hint:'می‌پرسیم چند سه‌چهارم در ۵ جا می‌شود؛ تقسیم بر ۳/۴ یعنی ضرب در ۴/۳.',solution:['۵ ÷ ۳/۴ = ۵ × ۴/۳.','۵ × ۴/۳ = ۲۰/۳ = ۶ و ۲/۳.','پس ۶ بطری کامل و ۲/۳ از بطری بعدی پُر می‌شود؛ در بطری آخر نیم‌لیتر نوشیدنی جا می‌گیرد.']},
-          {kind:'truth',prompt:'یک دوست می‌گوید: «در ضرب ۳/۵ × ۲/۴، جواب ۶/۹ است.» آیا پاسخ او درست است؟',expression:'3/5 × 2/4 = 6/9',answer:false,hint:'در ضرب، صورت‌ها و مخرج‌ها جداگانه ضرب می‌شوند؛ مخرج‌ها را با هم جمع نمی‌کنیم.',solution:['صورت‌ها: ۳ × ۲ = ۶؛ مخرج‌ها: ۵ × ۴ = ۲۰.','حاصل ۶/۲۰ است که با تقسیم بر ۲ ساده می‌شود: ۳/۱۰.','پس ۶/۹ نادرست است؛ پاسخ دوستت درست نیست.']},
+          {kind:'truth',prompt:'یک دوست می‌گوید: «در ضرب ۳/۵ × ۲/۴، جواب ۶/۹ است.» آیا پاسخ او درست است؟',expression:'3/5 × 2/4 = 6/9',answer:false,whyPrompt:'چرا ۶/۹ نمی‌تواند حاصل ۳/۵ × ۲/۴ باشد؟',whyOptions:[{id:'a',label:'چون مخرج‌ها باید ضرب شوند، نه با هم جمع.'},{id:'b',label:'چون ۶/۹ ساده نمی‌شود.'},{id:'c',label:'چون حاصل ضرب دو کسر کوچکتر از ۱ همیشه کوچکتر از نیم است.'}],whyAnswer:'a',whyText:'در ضرب، صورت‌ها و مخرج‌ها جداگانه ضرب می‌شوند: ۳×۲ = ۶ و ۵×۴ = ۲۰. پس ۶/۲۰ = ۳/۱۰ درست است؛ ۶/۹ یعنی مخرج‌ها را جمع کرده‌اند.',hint:'در ضرب، صورت‌ها و مخرج‌ها جداگانه ضرب می‌شوند؛ مخرج‌ها را با هم جمع نمی‌کنیم.',solution:['صورت‌ها: ۳ × ۲ = ۶؛ مخرج‌ها: ۵ × ۴ = ۲۰.','حاصل ۶/۲۰ است که با تقسیم بر ۲ ساده می‌شود: ۳/۱۰.','پس ۶/۹ نادرست است؛ پاسخ دوستت درست نیست.']},
           {kind:'answer',prompt:'یک باغچه ۴ و ۱/۲ متر طول دارد. دو‌سوم آن را گل‌کاری می‌کنند. چند متر از طول باغچه گل‌کاری می‌شود؟',expression:'4 1/2 × 2/3',answer:[3,1],hint:'۴ و ۱/۲ را به ۹/۲ تبدیل کن؛ سپس ۹/۲ × ۲/۳ را ساده کن.',solution:['۴ و ۱/۲ = ۹/۲.','۹/۲ × ۲/۳؛ عامل ۲ ساده می‌شود و ۹/۳ باقی می‌ماند.','۹/۳ = ۳ متر.']},
           {kind:'answer',prompt:'در کدام شماره‌ی شکل، کسرِ مساحت رنگ‌شده ۷۱/۲۸۶ است؟',expression:'71/286',answer:[71,1],hint:'در هر شکل، تعداد خانه‌های رنگی برابر شماره‌ی شکل است. تعداد ستون‌ها یک واحد بیش‌تر از دو برابر شماره‌ی شکل است و دو ردیف داریم؛ مخرج ۲۸۶ را با این الگو برابر کن.',solution:['دو ردیف داریم؛ پس ۲۸۶÷۲=۱۴۳ ستون در هر ردیف.','در الگو، تعداد ستون‌ها یک واحد بیش از دو برابرِ شماره‌ی شکل است؛ پس ۱۴۳−۱=۱۴۲.','۱۴۲÷۲=۷۱؛ پس شماره‌ی شکل ۷۱ است.','تعداد خانه‌های رنگی برابر شماره‌ی شکل است؛ پس ۷۱ خانه از ۲۸۶ خانه رنگی است.']},
           {kind:'order',prompt:'یک نوار ۳ و ۱/۲ متری داریم؛ ۱ و ۱/۴ متر مصرف می‌شود و باقی‌مانده بین سه نفر برابر تقسیم می‌شود. کارت‌های حل را بچین.',items:[{id:'a',label:'۳ و ۱/۲ − ۱ و ۱/۴ = ۲ و ۱/۴ متر باقی می‌ماند.'},{id:'b',label:'۲ و ۱/۴ = ۹/۴ متر.'},{id:'c',label:'۹/۴ ÷ ۳ = ۹/۱۲.'},{id:'d',label:'۹/۱۲ = ۳/۴ متر سهم هر نفر.'}],order:['a','b','c','d'],hint:'اول مقدارِ مصرف‌شده را کم کن؛ سپس باقی‌مانده را به ۹/۴ تبدیل و بین ۳ نفر تقسیم کن.',hints:['۳ و ۱/۲=۳ و ۲/۴؛ یک‌چهارم‌ها را کم کن.','۲ و ۱/۴=۹/۴؛ تقسیم بر ۳ را انجام بده و کسر را ساده کن.'],solution:['۳ و ۱/۲−۱ و ۱/۴=۲ و ۱/۴.','۲ و ۱/۴=۹/۴؛ ۹/۴÷۳=۹/۱۲.','۹/۱۲=۳/۴ متر برای هر نفر.']},
-          {kind:'truth',prompt:'در این الگو، تعداد خانه‌های رنگی برابرِ شماره‌ی شکل است؛ تعداد کل خانه‌ها هم ۴ برابرِ شماره‌ی شکل به‌علاوه‌ی ۲ است. آیا این قاعده درست است؟',answer:true,hint:'هر شکل دو ردیف دارد و تعداد ستون‌ها یک واحد بیش از دو برابرِ شماره‌ی شکل است.',hints:['تعداد ستون‌ها را این‌طور می‌سازیم: ۲ برابرِ شماره‌ی شکل، به‌علاوه‌ی ۱.','دو ردیف داریم: ۲ × (۲ برابرِ شماره + ۱)؛ خانه‌های رنگی هم برابرِ شماره‌اند.'],solution:['اگر شماره‌ی شکل ۱ باشد، ۳ ستون و ۶ خانه داریم؛ ۱ خانه رنگی است.','برای شماره‌ی شکل‌های دیگر هم کل خانه‌ها دو برابرِ (دو برابرِ شماره به‌علاوه‌ی ۱) می‌شود.','پس تعداد کل خانه‌ها ۴ برابرِ شماره به‌علاوه‌ی ۲ و خانه‌های رنگی برابرِ شماره است؛ قاعده درست است.']}
+          {kind:'truth',prompt:'در این الگو، تعداد خانه‌های رنگی برابرِ شماره‌ی شکل است؛ تعداد کل خانه‌ها هم ۴ برابرِ شماره‌ی شکل به‌علاوه‌ی ۲ است. آیا این قاعده درست است؟',answer:true,whyPrompt:'چرا «۴ برابر شماره به‌علاوهٔ ۲» برای کل خانه‌ها درست است؟',whyOptions:[{id:'a',label:'چون دو ردیف داریم و ستون‌ها دو برابر شماره به‌علاوهٔ ۱ است.'},{id:'b',label:'چون تعداد خانه‌های رنگی هم ۴ برابر شماره به‌علاوهٔ ۲ است.'},{id:'c',label:'چون شکلها گرد هستند.'}],whyAnswer:'a',whyText:'اگر شمارهٔ شکل را «ش» بگیریم، ستون‌ها دو برابر «ش» به‌علاوهٔ ۱ و ردیف‌ها ۲ تاست؛ پس کل خانه‌ها، دو برابر یک عدد بیش از دو برابر شماره، یعنی ۴ برابر شماره به‌علاوهٔ ۲ است. خانه‌های رنگی فقط به‌اندازهٔ شمارهٔ شکل است.',hint:'هر شکل دو ردیف دارد و تعداد ستون‌ها یک واحد بیش از دو برابرِ شماره‌ی شکل است.',hints:['تعداد ستون‌ها را این‌طور می‌سازیم: ۲ برابرِ شماره‌ی شکل، به‌علاوه‌ی ۱.','دو ردیف داریم: ۲ × (۲ برابرِ شماره + ۱)؛ خانه‌های رنگی هم برابرِ شماره‌اند.'],solution:['اگر شماره‌ی شکل ۱ باشد، ۳ ستون و ۶ خانه داریم؛ ۱ خانه رنگی است.','برای شماره‌ی شکل‌های دیگر هم کل خانه‌ها دو برابرِ (دو برابرِ شماره به‌علاوه‌ی ۱) می‌شود.','پس تعداد کل خانه‌ها ۴ برابرِ شماره به‌علاوه‌ی ۲ و خانه‌های رنگی برابرِ شماره است؛ قاعده درست است.']}
         ]
       }
     ];
@@ -1779,10 +1835,98 @@
       guideSay(`${state.name} عزیز، اینجا خودت شکل میکشی؛ اگر جایی سخت بود سرنخ و پاسخ اختیاری کنارت است.`,'wise');
     }
 
+    const REP_DENOMS=[2,3,4,5,6,8,10,12];
+    const REP_BENCH_LABELS={zero:'نزدیک به ۰',half:'نزدیک به نیم',one:'نزدیک به ۱',over:'بزرگتر از ۱'};
+    const REP_BENCH_TEXT={zero:'این عدد خیلی به صفر نزدیک است.',half:'این عدد حوالی نیم است.',one:'این عدد حوالی یک واحد کامل است.',over:'این عدد از یک واحد هم بزرگتر است.'};
+    let repState={d:4,n:3,hidden:false};
+    function repBenchmark(n,d){
+      const v=n/d;
+      if(v<=0.25)return 'zero';
+      if(v<=0.75)return 'half';
+      if(v<=1.25)return 'one';
+      return 'over';
+    }
+    function repViewsHTML(){
+      const d=repState.d,n=repState.n,max=2*d,bench=repBenchmark(n,d);
+      const strip=Array.from({length:2},(_,r)=>`<div class="rep-strip-row" style="--rep-cols:${d}">${Array.from({length:d},(_,i)=>`<span class="rep-cell ${r*d+i<n?'on':''}"></span>`).join('')}</div>`).join('');
+      const area=`<div class="rep-area" style="--rep-cols:${d}">${Array.from({length:max},(_,i)=>`<span class="rep-cell ${i<n?'on':''}"></span>`).join('')}</div>`;
+      const ticks=Array.from({length:max+1},(_,i)=>`<span class="rep-axis-tick" style="left:${(i/max*100).toFixed(2)}%"></span>`).join('');
+      const labels=[0,1,2].map(v=>`<span class="rep-axis-label" style="left:${v/2*100}%">${fa(v)}</span>`).join('');
+      const marker=`<span class="rep-marker" style="left:${(n/max*100).toFixed(2)}%" aria-hidden="true"></span>`;
+      const whole=Math.floor(n/d),rem=n%d;
+      const symbol=n===0?'۰':(whole>0?`${fa(whole)} و ${fa(rem)}/${fa(d)}`:`${fa(n)}/${fa(d)}`);
+      return `<div class="rep-views">
+        <section class="rep-view"><h3>🍫 نوارهای برابر</h3><div class="rep-strip" role="img" aria-label="${fa(n)} قسمت از ${fa(max)} قسمت دو واحد رنگی است">${strip}</div><p class="rep-view-note">دو واحد کامل؛ هر واحد ${fa(d)} قسمت مساوی.</p></section>
+        <section class="rep-view"><h3>🟦 خانه‌های مساحت</h3>${area}<p class="rep-view-note">همان ${fa(n)} قسمت، این‌بار به‌شکل خانه.</p></section>
+        <section class="rep-view"><h3>📍 نقطه روی محور</h3><div class="rep-axis" role="img" aria-label="نشانه روی ${fa(n)}/${fa(d)} از محور صفر تا دو"><div class="rep-axis-line"></div>${ticks}${labels}${marker}</div><p class="rep-view-note">جای عدد روی محور، اندازهٔ آن را نشان می‌دهد.</p></section>
+      </div>
+      <div class="rep-symbol ${repState.hidden?'hidden-labels':''}" id="repSymbol">${repState.hidden?'❓ ❓ ❓':`<span class="math-line" dir="ltr">${esc(fa(symbol))}</span>`}</div>
+      <p class="rep-benchmark" id="repBenchmark">${repState.hidden?'اول خودت حدس بزن؛ بعد برچسبها را نشان بده.':esc(REP_BENCH_TEXT[bench])}</p>
+      ${repState.hidden?`<div class="rep-guess" role="group" aria-label="حدس اندازه">${Object.keys(REP_BENCH_LABELS).map(key=>`<button class="rep-chip" type="button" data-rep-guess="${key}" aria-pressed="false">${esc(REP_BENCH_LABELS[key])}</button>`).join('')}</div><p class="rep-feedback" id="repFeedback" role="status" aria-live="polite" hidden></p>`:''}`;
+    }
+    function bindRepGuess(){
+      $$('[data-rep-guess]',$('#repCard')).forEach(btn=>btn.addEventListener('click',()=>{
+        const fb=$('#repFeedback');if(!fb)return;
+        const key=btn.dataset.repGuess,correct=key===repBenchmark(repState.n,repState.d);
+        $$('[data-rep-guess]',$('#repCard')).forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+        fb.hidden=false;fb.className=`rep-feedback ${correct?'good':'bad'}`;
+        fb.innerHTML=correct?`<strong>آفرین!</strong> ${esc(REP_BENCH_TEXT[key])}`:`<strong>نه، دوباره نگاه کن.</strong> به فاصلهٔ نشانه تا ۰، نیم، ۱ و ۲ روی محور نگاه کن؛ بعد برچسبها را نشان بده.`;
+        formatMathIn(fb);
+      }));
+    }
+    function renderRepCard(){
+      const card=$('#repCard');
+      card.innerHTML=`<button class="modal-close" id="repClose" type="button" aria-label="بستن پنجره">✕</button>
+        <h2 id="repTitle">🔍 سه نگاه، یک عدد</h2>
+        <p class="modal-lead">یک کسر را همزمان به‌شکل نوار، خانه و نقطه روی محور ببین؛ مثل ابزارهایی که برچسبها را پنهان می‌کنند، اول خودت اندازهاش را حدس بزن.</p>
+        <div class="rep-toolbar"><span class="rep-toolbar-label">تعداد قسمت‌های هر واحد:</span>${REP_DENOMS.map(d=>`<button class="rep-chip ${d===repState.d?'active':''}" type="button" data-rep-d="${d}" aria-pressed="${d===repState.d}">${fa(d)}</button>`).join('')}</div>
+        <div class="rep-slider-row"><span class="rep-toolbar-label">قسمت‌های رنگی:</span><button class="rep-chip" id="repMinus" type="button" aria-label="یک قسمت کمتر">−</button><input class="rep-slider" id="repRange" type="range" min="0" max="${2*repState.d}" step="1" value="${repState.n}" aria-label="تعداد قسمت‌های رنگی"><button class="rep-chip" id="repPlus" type="button" aria-label="یک قسمت بیشتر">+</button><strong class="ltr-num" id="repCount">${fa(repState.n)}</strong></div>
+        <div id="repViews">${repViewsHTML()}</div>
+        <div class="rep-actions"><button class="btn soft small" id="repToggle" type="button" aria-pressed="${repState.hidden}">${repState.hidden?'👁 نشان دادن برچسبها':'🙈 پنهان‌کردن برچسبها و حدس زدن'}</button><button class="btn light small" id="repReset" type="button">↻ از نو</button></div>`;
+      formatMathIn(card);
+      $('#repClose').addEventListener('click',()=>{$('#repModal').hidden=true;});
+      $$('[data-rep-d]',card).forEach(btn=>btn.addEventListener('click',()=>{
+        repState.d=Number(btn.dataset.repD);repState.n=Math.min(repState.n,2*repState.d);renderRepCard();
+      }));
+      const range=$('#repRange');
+      const update=()=>{repState.n=Number(range.value);const c=$('#repCount');if(c)c.textContent=fa(repState.n);const v=$('#repViews');if(v){v.innerHTML=repViewsHTML();formatMathIn(v);bindRepGuess();}};
+      range.addEventListener('input',update);
+      $('#repMinus').addEventListener('click',()=>{range.value=String(Math.max(0,Number(range.value)-1));update();});
+      $('#repPlus').addEventListener('click',()=>{range.value=String(Math.min(2*repState.d,Number(range.value)+1));update();});
+      $('#repToggle').addEventListener('click',()=>{repState.hidden=!repState.hidden;renderRepCard();});
+      $('#repReset').addEventListener('click',()=>{repState={d:4,n:3,hidden:false};renderRepCard();});
+      bindRepGuess();
+    }
+    const REVIEW_ITEMS=[
+      {kind:'مقایسه',q:'بدون مخرج مشترک بگو کدام بزرگتر است: ۴/۷ یا ۵/۸؟',a:'۵/۸ بزرگتر است؛ ۴/۷ کمی کمتر از نیم است و ۵/۸ کمی بیشتر از نیم.'},
+      {kind:'برآورد',q:'آیا ۲/۵ + ۱/۲ = ۳/۷ می‌تواند درست باشد؟',a:'نه؛ ۳/۷ کوچکتر از نیم است، در حالی که ۲/۵ خودش نزدیک نیم است و با اضافه‌کردن نیم باید بزرگتر از نیم شود.'},
+      {kind:'ضرب',q:'۳/۴ × ۲/۳ را تخمین بزن: کوچکتر از ۳/۴ است یا بزرگتر؟',a:'کوچکتر؛ چون در کسری کوچکتر از ۱ ضرب کرده‌ایم. حاصل دقیق ۱/۲ است.'},
+      {kind:'تقسیم',q:'۱ ÷ ۱/۲ چند می‌شود؟ آیا تقسیم همیشه عدد را کوچک می‌کند؟',a:'۲ می‌شود؛ تقسیم بر کسری کوچکتر از ۱ عدد را بزرگ می‌کند، پس قاعدهٔ همیشگی نیست.'},
+      {kind:'جمع',q:'مخرجِ ۱/۲ + ۱/۳ برابر ۵ است یا ۶؟',a:'۶؛ مخرج‌ها را با هم جمع نمی‌کنیم. ۱/۲ = ۳/۶ و ۱/۳ = ۲/۶؛ پس ۵/۶.'},
+      {kind:'الگو',q:'اگر هر شکل ۲ ستون و ۱ خانهٔ رنگی اضافه کند، شکل پنجم چند خانه دارد؟',a:'۲۲ خانه؛ ستون‌ها ۱۱ تا و دو ردیف داریم. خانه‌های رنگی ۵ تاست.'},
+      {kind:'محور',q:'۷/۸ روی محور به ۱ نزدیکتر است یا به نیم؟',a:'به ۱؛ فقط ۱/۸ تا ۱ فاصله دارد، ولی تا نیم ۳/۸ فاصله دارد.'},
+      {kind:'خطایابی',q:'دوستی می‌گوید ۳/۵ × ۲/۴ = ۶/۹؛ کجای کار اشتباه است؟',a:'مخرج‌ها را جمع کرده است؛ در ضرب، ۵×۴ = ۲۰ مخرج است. حاصل درست ۶/۲۰ = ۳/۱۰ است.'}
+    ];
+    function shuffled(items){const a=items.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+    function renderReviewCard(){
+      const picks=shuffled(REVIEW_ITEMS).slice(0,3),card=$('#reviewCard');
+      card.innerHTML=`<button class="modal-close" id="reviewX" type="button" aria-label="بستن پنجره">✕</button>
+        <h2 id="reviewTitle">🎲 مرور درهم</h2>
+        <p class="modal-lead">سه پرسش کوتاه از موضوع‌های گوناگون، به‌هم‌ریخته. اول خودت جواب بده، بعد پاسخ را باز کن؛ تشخیص اینکه هر پرسش چه کاری می‌خواهد، خودش یک تمرین است.</p>
+        <div class="review-list">${picks.map((item,i)=>`<details class="review-card" data-review-kind="${esc(item.kind)}"><summary><span class="review-kind">${esc(item.kind)}</span>پرسش ${fa(i+1)}: ${esc(item.q)}</summary><p>${esc(item.a)}</p></details>`).join('')}</div>
+        <div class="rep-actions"><button class="btn soft small" id="reviewShuffle" type="button">🎲 دوباره بچین</button><button class="btn light small" id="reviewClose" type="button">بستن</button></div>`;
+      formatMathIn(card);
+      $('#reviewShuffle').addEventListener('click',renderReviewCard);
+      $('#reviewClose').addEventListener('click',()=>{$('#reviewModal').hidden=true;});
+      $('#reviewX').addEventListener('click',()=>{$('#reviewModal').hidden=true;});
+    }
+    function closeGameModals(){['repModal','reviewModal'].forEach(id=>{const m=$('#'+id);if(m)m.hidden=true;});}
+    function openRepModal(){closeGameModals();const m=$('#repModal');m.hidden=false;renderRepCard();$('#repClose').focus();}
+    function openReviewModal(){closeGameModals();const m=$('#reviewModal');m.hidden=false;renderReviewCard();$('#reviewX').focus();}
     function renderMap(){
       const count=doneCount(),percent=Math.round(count/LEVELS.length*100),activityCount=LEVELS.reduce((n,level)=>n+level.practice.length+level.challenge.length,0),nextMission=state.completed.findIndex(done=>!done);
       $('#map').innerHTML=`<div class="map-shell">
-        <div class="map-heading"><div class="map-greeting"><span class="avatar-mini hakim-inline-face" id="mapHakimFace" aria-hidden="true"></span><div><h1 id="mapTitle">سلام ${esc(state.name)}! کدام جزیره را می‌گشایی؟</h1><p>نشانِ طلایی، مأموریت پیشنهادی حکیم است؛ بقیه‌ی جزیره‌ها هم بازند!</p></div></div><div class="map-actions"><button class="btn teal small" id="openDrawLab" type="button">🎨 آزمایشگاه رسم و محور (${fa(labDoneCount())} از ${fa(DRAW_LABS.length)})</button><button class="btn soft small" id="openCertificate" type="button">🏅 گذرنامه‌ی من</button><button class="btn light small" id="changeName" type="button">✏️ تغییر نام</button></div></div>
+        <div class="map-heading"><div class="map-greeting"><span class="avatar-mini hakim-inline-face" id="mapHakimFace" aria-hidden="true"></span><div><h1 id="mapTitle">سلام ${esc(state.name)}! کدام جزیره را می‌گشایی؟</h1><p>نشانِ طلایی، مأموریت پیشنهادی حکیم است؛ بقیه‌ی جزیره‌ها هم بازند!</p></div></div><div class="map-actions"><button class="btn teal small" id="openDrawLab" type="button">🎨 آزمایشگاه رسم و محور (${fa(labDoneCount())} از ${fa(DRAW_LABS.length)})</button><button class="btn soft small" id="openRepModal" type="button">🔍 سه نگاه، یک عدد</button><button class="btn light small" id="openReviewModal" type="button">🎲 مرور درهم</button><button class="btn soft small" id="openCertificate" type="button">🏅 گذرنامه‌ی من</button><button class="btn light small" id="changeName" type="button">✏️ تغییر نام</button></div></div>
         <div class="progress-overview"><div class="progress-copy"><strong>نقشه‌ی پیشرفتت</strong><small>${count===LEVELS.length?'همه‌ی جزیره‌ها را با موفقیت پیموده‌ای؛ آفرین!':'هر بار که یک جزیره را کامل کنی، تیک آن ثبت می‌شود.'}</small><small>🏆 رکورد پاسخ‌های پیاپی: ${fa(state.bestStreak||0)} · ✨ تجربه و صداهای تشویقی منتظر توست!</small><small>🎨 نشانهای آزمایشگاه رسم: ${fa(labDoneCount())} از ${fa(DRAW_LABS.length)} · ✨ تجربهی رسم: ${fa(state.labXp||0)}</small><div class="progress-track" role="progressbar" aria-label="پیشرفت بازی" aria-valuemin="0" aria-valuemax="${LEVELS.length}" aria-valuenow="${count}"><div class="progress-fill" style="width:${percent}%"></div></div></div><div class="progress-number">${fa(count)} از ${fa(LEVELS.length)}<small>جزیره</small></div></div>
         <div class="map-intro">🧭 نقشه‌ی سفر <small>۶ جزیره و ${fa(activityCount)} تمرین و چالش؛ از نشانِ پیشنهادی شروع کن یا هر جزیره‌ای را خودت انتخاب کن.</small></div>
         <div class="level-grid">${LEVELS.map((level,index)=>`<button type="button" class="level-card ${level.theme} ${state.completed[index]?'done':''} ${index===nextMission?'recommended':''}" data-level="${index}" aria-label="ورود به مرحله‌ی ${fa(index+1)}، ${esc(level.short)}، ${fa(level.practice.length+level.challenge.length)} تمرین و چالش${state.completed[index]?'، تکمیل شده':''}${index===nextMission?'، مأموریت پیشنهادی حکیم':''}">
@@ -1801,6 +1945,8 @@
       guideSay(`خوش آمدی ${state.name}! از هر جزیره‌ای که دوست داری شروع کن؛ من در آموزش و پاسخ‌ها کنارت هستم.`, 'happy');
       $$('.level-card',$('#map')).forEach(card=>card.addEventListener('click',()=>startLevel(Number(card.dataset.level))));
       $('#openDrawLab').addEventListener('click',()=>renderDrawLab());
+      $('#openRepModal').addEventListener('click',openRepModal);
+      $('#openReviewModal').addEventListener('click',openReviewModal);
       $('#openCertificate').addEventListener('click',showCertificate);
       $('#changeName').addEventListener('click',()=>{const input=$('#studentName');input.value=state.name;$('#nameError').textContent='نام را تغییر بده و دوباره وارد شو؛ پیشرفت هر نام جداگانه ذخیره می‌شود.';showScreen('welcome');input.focus();});
     }
@@ -2039,6 +2185,10 @@
       </article>`;
     }
 
+    function whyPanelHTML(q){
+      if(q.kind!=='truth'||!Array.isArray(q.whyOptions)||!q.whyOptions.length)return '';
+      return `<details class="why-panel" id="whyPanel"><summary>🧠 چرا؟ دلیلش را پیدا کن</summary><p class="why-question">${esc(q.whyPrompt||'چرا این پاسخ درست یا نادرست است؟')}</p><div class="why-options" role="group" aria-label="گزینه‌های دلیل">${q.whyOptions.map(item=>`<button class="why-choice" type="button" data-why="${esc(item.id)}" aria-pressed="false">${esc(item.label)}</button>`).join('')}</div><p class="why-feedback" id="whyFeedback" role="status" aria-live="polite" hidden></p></details>`;
+    }
     function taskExpression(q){if(!q.expression)return '';const expression=String(q.expression),hasPersianText=/[\u0621-\u064A\u0671-\u06D3\u06FA-\u06FC]/.test(expression);return `<div class="task-expression"><span class="${hasPersianText?'text-expression':'math-line large'}" dir="${hasPersianText?'rtl':'ltr'}">${esc(fa(expression))}</span></div>`;}
     function renderNumberlineTask(q){
       const focusWhole=Math.max(0,Math.min(q.maxWhole-1,Math.floor(q.target/q.denominator)));
@@ -2070,7 +2220,7 @@
       const badge=isPractice?'🧩 تمرینِ راهنما':'🚩 چالشِ جزیره';
       const counter=`${fa(session.cursor+1)} از ${fa(tasks.length)}`;
       const intro=isPractice?'اگر اشتباه کنی، راهنمایی‌ات می‌کنیم. هر پاسخ درست را با توضیح می‌بینی.':'در این بخش همه‌ی پاسخ‌ها را خودت پیدا کن؛ هر خطا یک نکته‌ی تازه به تو یاد می‌دهد.';
-      return `<article class="task-shell"><div class="task-top"><span class="task-kind">${badge}</span><span class="task-counter">${isPractice?'تمرین':'چالش'} ${counter}</span></div><div class="task-hud" aria-label="وضعیت بازی"><span class="hud-chip">✨ تجربه <b id="hudXp">۰</b></span><span class="hud-chip">🔥 پیاپی <b id="hudStreak">۰</b></span><div class="hud-progress" id="hudProgressTrack" role="progressbar" aria-label="پیشرفت این بخش" aria-valuemin="0" aria-valuemax="${tasks.length}" aria-valuenow="0"><i id="hudProgressBar"></i></div></div><div class="challenge-ribbon"><span>${isPractice?'🪄':'🧭'}</span><span>${intro}</span></div><div class="task-guide"><span class="task-guide-face hakim-inline-face" id="taskHakimFace" aria-hidden="true"></span><span><strong>حکیم، همراه تو</strong><small id="taskHakimMessage">${isPractice?'با آرامش حل کن؛ پاسخ و دلیلش را با هم می‌بینیم.':'با دقت پاسخ بده؛ چالش مهارت‌های این جزیره را می‌سنجد.'}</small></span></div><h2>${esc(q.prompt)}</h2>${q.kind==='compare'?'':taskExpression(q)}<form id="taskForm" novalidate><div class="task-control" id="taskControl">${taskControl(q)}</div><div class="task-actions"><button class="btn primary" id="checkTask" type="submit">ثبت پاسخ</button><button class="btn teal" id="nextTask" type="button" hidden>آفرین! قدم بعدی ←</button></div></form><div class="feedback" id="taskFeedback" role="status" aria-live="polite" hidden></div><p class="task-bottom-note">${isPractice?'هر تمرین یک پله برای رسیدن به چالش است.':'بازخورد را بخوان و اگر لازم شد از راهنمای گام‌به‌گام کمک بگیر.'}</p></article>`;
+      return `<article class="task-shell"><div class="task-top"><span class="task-kind">${badge}</span><span class="task-counter">${isPractice?'تمرین':'چالش'} ${counter}</span></div><div class="task-hud" aria-label="وضعیت بازی"><span class="hud-chip">✨ تجربه <b id="hudXp">۰</b></span><span class="hud-chip">🔥 پیاپی <b id="hudStreak">۰</b></span><div class="hud-progress" id="hudProgressTrack" role="progressbar" aria-label="پیشرفت این بخش" aria-valuemin="0" aria-valuemax="${tasks.length}" aria-valuenow="0"><i id="hudProgressBar"></i></div></div><div class="challenge-ribbon"><span>${isPractice?'🪄':'🧭'}</span><span>${intro}</span></div><div class="task-guide"><span class="task-guide-face hakim-inline-face" id="taskHakimFace" aria-hidden="true"></span><span><strong>حکیم، همراه تو</strong><small id="taskHakimMessage">${isPractice?'با آرامش حل کن؛ پاسخ و دلیلش را با هم می‌بینیم.':'با دقت پاسخ بده؛ چالش مهارت‌های این جزیره را می‌سنجد.'}</small></span></div><h2>${esc(q.prompt)}</h2>${q.kind==='compare'?'':taskExpression(q)}<form id="taskForm" novalidate><div class="task-control" id="taskControl">${taskControl(q)}</div><div class="task-actions"><button class="btn primary" id="checkTask" type="submit">ثبت پاسخ</button><button class="btn teal" id="nextTask" type="button" hidden>آفرین! قدم بعدی ←</button></div></form><div class="feedback" id="taskFeedback" role="status" aria-live="polite" hidden></div>${whyPanelHTML(q)}<p class="task-bottom-note">${isPractice?'هر تمرین یک پله برای رسیدن به چالش است.':'بازخورد را بخوان و اگر لازم شد از راهنمای گام‌به‌گام کمک بگیر.'}</p></article>`;
     }
     function updateTaskHud(){
       const level=LEVELS[session.index],tasks=session.phase==='practice'?level.practice:level.challenge;
@@ -2113,6 +2263,18 @@
     function bindTask(level){
       const q=(session.phase==='practice'?level.practice:level.challenge)[session.cursor];
       $('#taskForm').addEventListener('submit',event=>{event.preventDefault();submitTask(q);});
+      const whyPanel=$('#whyPanel');
+      if(whyPanel){
+        $$('.why-choice',whyPanel).forEach(button=>button.addEventListener('click',()=>{
+          const fb=$('#whyFeedback');if(!fb)return;
+          const correct=button.dataset.why===q.whyAnswer;
+          $$('.why-choice',whyPanel).forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+          fb.hidden=false;fb.className=`why-feedback ${correct?'good':'bad'}`;
+          fb.innerHTML=correct?`<strong>درست است!</strong> ${esc(q.whyText||'')}`:`<strong>این دلیل کامل نیست.</strong> دوباره به شکل و برآورد نگاه کن؛ گزینهٔ دیگری را امتحان کن.`;
+          formatMathIn(fb);
+        }));
+      }
+
       $('#nextTask').addEventListener('click',()=>advanceTask(level));
       const compareLab=$('.compare-lab',$('#play'));
       const updateComparePreview=symbol=>{
@@ -2348,7 +2510,9 @@
     $('#guideButton').addEventListener('click',revealGuide);$('#closeGuide').addEventListener('click',closeGuide);
     $('#soundToggle').addEventListener('click',()=>{soundEnabled=!soundEnabled;safeWrite(SOUND_KEY,soundEnabled?'1':'0');syncSoundButton();if(soundEnabled)playChime('toggle');});
     $('#guideModal').addEventListener('click',event=>{if(event.target===$('#guideModal'))closeGuide();});
-    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('#guideModal').hidden)closeGuide();});
+    $('#repModal').addEventListener('click',event=>{if(event.target===$('#repModal'))$('#repModal').hidden=true;});
+    $('#reviewModal').addEventListener('click',event=>{if(event.target===$('#reviewModal'))$('#reviewModal').hidden=true;});
+    document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(!$('#repModal').hidden)$('#repModal').hidden=true;if(!$('#reviewModal').hidden)$('#reviewModal').hidden=true;if(!$('#guideModal').hidden)closeGuide();});
     const savedName=safeRead(ACTIVE_NAME_KEY)||'';$('#studentName').value=savedName;
     syncSoundButton();bootGuide(savedName||'دوست من');logGameVisit();
     guideSay(savedName?`سلام ${savedName}! من حکیم هستم؛ برای ادامه نامت را تأیید کن.`:'سلام! من حکیم هستم، راهنمای کسرستان. اول نامت را وارد کن تا با هم سفر یادگیری را آغاز کنیم.',savedName?'happy':'wise');
