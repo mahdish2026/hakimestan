@@ -125,6 +125,11 @@ try {
   assert.equal($$('.lab-group-btn').length, 5, 'all operation groups should be visible');
   assert.equal($$('.lab-scenario-btn').length, labs.filter(lab => lab.group === 'represent').length, 'scenario list should match the active group');
   assert.match($('#labProgressPill').textContent, /۰ از/, 'lab progress should start at zero');
+  assert.ok($('.lab-howto') && $('.lab-board-guide') && $('#labSelectionCount') && $('#labSelectionBar'), 'new lab guide is missing');
+  assert.match($('#labSelectionCount').textContent, /۰ از/, 'selection counter should start at zero');
+  const labTextSample = $('.lab-prompt').textContent;
+  assert.ok(labTextSample.includes('\u200c'), 'Persian words need half-spaces');
+  assert.ok(!/خانهها|میشود|نقطهی|تکهها/.test(labTextSample), `glued Persian words remain: ${labTextSample}`);
   const equationText = $('.lab-equation-line').textContent;
   assert.ok(!/[0-9۰-۹٠-٩]+\s*\/\s*[0-9۰-۹٠-٩]+/.test(equationText), `lab equation still shows slash fractions: ${equationText}`);
   assert.ok($('.lab-equation-line .lab-frac'), 'lab equation must use a stacked fraction bar');
@@ -154,6 +159,14 @@ try {
   assert.ok($('#labSolution .lab-frac'), 'solution should use stacked fractions, not decimals');
   assert.ok(!/[0-9۰-۹٠-٩]+\s*\/\s*[0-9۰-۹٠-٩]+/.test($('#labSolution').textContent), 'solution still shows raw slash fractions');
   assert.equal($('#labCheck').disabled, true, 'check should be disabled after a solved lab');
+  // A different but equivalent 11-cell drawing must also be accepted.
+  click($('.lab-scenario-btn[data-lab-id="units-strips"]'));
+  for (let i = 1; i <= 11; i += 1) click($(`[data-lab-cell="${i}"]`));
+  assert.match($('#labSelectionCount').textContent, /۱۱ از ۱۱/, 'selection counter should update');
+  clickSelector('#labCheck');
+  assert.match($('#labFeedback').textContent, /رسم متفاوت تو هم درست/, 'equivalent grid drawing should be accepted');
+  assert.match($('#labSolution').textContent, /رسم تو با نمونه فرق داشت/, 'solution should explain the alternative');
+
   let rawProfile = '';
   for (let i = 0; i < localStorage.length; i += 1) {
     const key = localStorage.key(i);
@@ -161,6 +174,7 @@ try {
   }
   assert.match(rawProfile, /labDone/, 'lab badge should be persisted in the profile');
   assert.match(rawProfile, /labXp/, 'lab XP should be persisted in the profile');
+  assert.match(rawProfile, /cheers/, 'encouragement messages should be persisted in the profile');
 
   // Number-line case.
   click($('.lab-scenario-btn[data-lab-id="units-line"]'));
@@ -172,6 +186,14 @@ try {
   click($('.lab-group-btn[data-lab-group="multiply"]'));
   click($('.lab-scenario-btn[data-lab-id="mul-area"]'));
   solveCurrentLab();
+  // Any 2 rows × 3 columns intersection is valid, not only the sample rectangle.
+  click($('.lab-group-btn[data-lab-group="multiply"]'));
+  click($('.lab-scenario-btn[data-lab-id="mul-area"]'));
+  [5,6,7,9,10,11].forEach(i => click($(`[data-lab-cell="${i}"]`)));
+  clickSelector('#labCheck');
+  assert.match($('#labFeedback').textContent, /رسم متفاوت تو هم درست/, 'alternative area model should be accepted');
+  assert.match($('#labSolution').textContent, /رسم تو با نمونه فرق داشت/, 'area alternative should be explained');
+
 
   // Division measurement case on the number line.
   click($('.lab-group-btn[data-lab-group="divide"]'));
@@ -187,6 +209,12 @@ try {
   clickSelector('#labBack');
   assert.equal($('#map').hidden, false, 'back from map lab should return to the map');
   assert.match($('#openDrawLab').textContent, /۵ از/, 'map lab counter should reflect earned badges');
+  clickSelector('#openCertificate');
+  assert.ok($('.cert-cheers'), 'certificate should include encouragement messages');
+  assert.match($('.cert-status').textContent, /پیام\u200cهای تشویقی/, 'certificate should count cheers');
+  assert.ok($$('.cert-cheers li').length >= 3, 'recent cheers should be listed in the certificate');
+  clickSelector('#certificateBack');
+
 
   // From a lesson, the lab should return to that same lesson.
   click($('.level-card[data-level="0"]'));
