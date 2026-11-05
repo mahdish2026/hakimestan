@@ -69,8 +69,9 @@ try {
     assert.ok(groupIds.has(lab.group), `${id}: unknown group`);
     assert.ok(levelIndexes.has(lab.level), `${id}: unknown island`);
     assert.ok(['grid', 'line', 'regions'].includes(lab.mode), `${id}: unknown mode`);
-    for (const field of ['title', 'equation', 'prompt', 'hint']) assert.ok(typeof lab[field] === 'string' && lab[field].trim(), `${id}: missing ${field}`);
+    for (const field of ['title', 'equation', 'idea', 'prompt', 'hint']) assert.ok(typeof lab[field] === 'string' && lab[field].trim(), `${id}: missing ${field}`);
     assert.ok(Array.isArray(lab.steps) && lab.steps.length >= 3, `${id}: steps are incomplete`);
+    assert.ok(lab.steps.every(step => step && typeof step.title === 'string' && step.title.trim() && typeof step.text === 'string' && step.text.trim()), `${id}: every step needs a clear action and a reason`);
     assert.ok(Array.isArray(lab.solution) && lab.solution.length >= 2, `${id}: solution is incomplete`);
     const expected = labExpected(lab);
     assert.ok(expected.length > 0, `${id}: expected drawing is empty`);
@@ -124,6 +125,13 @@ try {
   assert.equal($$('.lab-group-btn').length, 5, 'all operation groups should be visible');
   assert.equal($$('.lab-scenario-btn').length, labs.filter(lab => lab.group === 'represent').length, 'scenario list should match the active group');
   assert.match($('#labProgressPill').textContent, /۰ از/, 'lab progress should start at zero');
+  const equationText = $('.lab-equation-line').textContent;
+  assert.ok(!/[0-9۰-۹٠-٩]+\s*\/\s*[0-9۰-۹٠-٩]+/.test(equationText), `lab equation still shows slash fractions: ${equationText}`);
+  assert.ok($('.lab-equation-line .lab-frac'), 'lab equation must use a stacked fraction bar');
+  assert.ok($$('.lab-scenario-btn').every(button => !/[0-9۰-۹٠-٩]+\s*\/\s*[0-9۰-۹٠-٩]+/.test(button.textContent)), 'scenario titles still contain raw slash fractions');
+  assert.ok($('.lab-idea') && $('.lab-step-head') && $('#labStepProgress'), 'step explanation header is missing');
+  assert.match($('#labStepProgress').textContent, /گام ۱ از/, 'step progress should be readable');
+  assert.ok($$('.lab-steps li strong').length >= 3 && $$('.lab-steps li p').length >= 3, 'steps must have a bold action and a plain explanation');
 
   const first = $('.lab-card').dataset.labId;
   assert.equal(first, 'units-strips', 'the lab should start with unit strips');
@@ -131,7 +139,7 @@ try {
   clickSelector('#labStep');
   assert.equal($$('.lab-steps li:not([hidden])').length, 2, 'stepper should reveal one more step');
   clickSelector('#labHint');
-  assert.match($('#labFeedback').textContent, /دو واحد کامل/, 'hint should be helpful');
+  assert.match($('#labFeedback').textContent, /دو ردیف کامل/, 'hint should be helpful');
   // A wrong check must be gentle and unlock the optional answer after two tries.
   click($('[data-lab-cell="0"]'));
   clickSelector('#labCheck');
@@ -143,6 +151,8 @@ try {
 
   solveCurrentLab();
   assert.match($('#labProgressPill').textContent, /۱ از/, 'first lab badge was not recorded');
+  assert.ok($('#labSolution .lab-frac'), 'solution should use stacked fractions, not decimals');
+  assert.ok(!/[0-9۰-۹٠-٩]+\s*\/\s*[0-9۰-۹٠-٩]+/.test($('#labSolution').textContent), 'solution still shows raw slash fractions');
   assert.equal($('#labCheck').disabled, true, 'check should be disabled after a solved lab');
   let rawProfile = '';
   for (let i = 0; i < localStorage.length; i += 1) {

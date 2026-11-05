@@ -637,9 +637,15 @@
     .lab-badge{display:inline-flex;padding:5px 10px;border-radius:99px;background:#fff2c4;border:1px solid #ecd495;color:#75550d;font-size:.67rem;font-weight:950}
     .lab-equation{width:100%;margin:5px 0 0;padding:7px 10px;border:1px dashed #c9c3ee;border-radius:12px;background:#fff;color:#39308d;font-size:.95rem;font-weight:950;text-align:center}
     .lab-prompt{margin:6px 0 10px;color:#4d5870;font-size:.8rem;line-height:1.9}
-    .lab-steps{display:grid;gap:5px;margin:0 0 12px;padding:0;list-style:none;counter-reset:labstep}
-    .lab-steps li{counter-increment:labstep;display:flex;gap:8px;align-items:flex-start;padding:7px 9px;border:1px solid #e3e7f1;border-radius:10px;background:#fff;color:#4c5870;font-size:.72rem;line-height:1.75}
-    .lab-steps li::before{content:counter(labstep);flex:0 0 auto;display:grid;place-items:center;width:21px;height:21px;border-radius:7px;background:#eeebff;color:#4b3da4;font-size:.66rem;font-weight:950}
+    .lab-idea{margin:8px 0 8px;padding:9px 12px;border:1px solid #d9e9ff;border-radius:12px;background:#f2f8ff;color:#305174;font-size:.76rem;line-height:1.85}
+    .lab-step-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 6px;color:#3d367f;font-size:.74rem;font-weight:950}
+    .lab-step-head span{color:#7a718f;font-size:.67rem;font-weight:850}
+    .lab-steps{display:grid;gap:7px;margin:0 0 12px;padding:0;list-style:none}
+    .lab-steps li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:9px;align-items:start;padding:9px 10px;border:1px solid #e3e7f1;border-radius:12px;background:#fff;color:#4c5870;font-size:.74rem;line-height:1.85}
+    .lab-steps li.current{border-color:#a99cf0;background:#faf8ff;box-shadow:inset 0 0 0 1px #ece8ff}
+    .lab-step-num{display:grid;place-items:center;width:26px;height:26px;border-radius:9px;background:#eeebff;color:#4b3da4;font-size:.7rem;font-weight:950}
+    .lab-steps li strong{display:block;color:#33405c;font-size:.75rem;font-weight:950;margin:0 0 3px}
+    .lab-steps li p{margin:0;color:#56627a;font-size:.72rem;line-height:1.9}
     .lab-steps li[hidden]{display:none}
     .lab-board{min-width:0;padding:10px;border:1px solid #dce4ed;border-radius:16px;background:#fff;overflow-x:auto}
     .lab-board-caption{margin:0 0 8px;color:#5a657c;font-size:.7rem;font-weight:850;text-align:center;line-height:1.7}
@@ -677,6 +683,17 @@
     .lab-feedback strong{display:block;margin-bottom:3px}.lab-feedback ul{margin:6px 0 0;padding-right:20px}
     .lab-solution{margin:10px 0 0;padding:9px 11px;border:1px dashed #d5d0f2;border-radius:12px;background:#fff;color:#4b436f;font-size:.72rem;line-height:1.85}
     .lab-solution[hidden]{display:none!important}
+    .lab-equation-line{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.34em;min-height:48px;margin:7px 0 0;padding:9px 12px;border:1px dashed #c9c3ee;border-radius:14px;background:#fff;color:#302a79;font-size:clamp(.95rem,2.4vw,1.1rem);font-weight:950;line-height:2;direction:ltr;unicode-bidi:isolate}
+    .lab-math .lab-frac{display:inline-grid;grid-template-rows:auto 2px auto;align-items:center;justify-items:center;direction:ltr;unicode-bidi:isolate;vertical-align:middle;min-width:1.35em;margin:0 .13em;color:inherit;font-size:.98em;font-weight:950;line-height:1.05}
+    .lab-math .lab-frac>span{display:block;padding:0 .16em;white-space:nowrap}
+    .lab-math .lab-frac>i{display:block;width:100%;height:2px;background:currentColor;border-radius:2px}
+    .lab-math .lab-mixed{display:inline-flex;align-items:center;gap:.15em;direction:ltr;unicode-bidi:isolate;white-space:nowrap;font-weight:950}
+    .lab-math .ltr-num{direction:ltr;unicode-bidi:isolate;font-variant-numeric:lining-nums;white-space:nowrap}
+    .lab-equation-line .lab-frac{font-size:1.08em;min-width:1.45em}
+    .lab-scenario-btn .lab-frac{font-size:.9em;min-width:1.25em}
+    .lab-scenario-btn .lab-mixed{gap:.1em}
+    .lab-feedback span{display:block;margin-top:2px}
+    .lab-solution ul{margin:6px 0 0;padding-right:20px}
     @media(max-width:650px){
       .lab-shell{border-radius:20px}.lab-header{gap:9px}.lab-progress-pill{font-size:.7rem}
       .lab-group-btn{min-height:44px;padding:6px 9px}.lab-group-btn small{display:none}
@@ -750,7 +767,7 @@
       </section>
 
       <section class="screen" id="map" hidden aria-labelledby="mapTitle"></section>
-      <section class="screen" id="lab" hidden aria-labelledby="labTitle"></section>
+      <section class="screen no-math-format" id="lab" hidden aria-labelledby="labTitle"></section>
       <section class="screen" id="play" hidden aria-live="off"></section>
       <section class="screen" id="certificate" hidden aria-labelledby="certificateTitle"></section>
       <section id="hakimPanelMount" class="hakim-guide" aria-label="حکیم، راهنمای بازی"></section>
@@ -1048,159 +1065,251 @@
       {
         id:'units-strips',level:0,group:'represent',mode:'grid',
         title:'۲ و ۳/۴ را با نوارها بکش',equation:'11/4 = 2 3/4',
-        prompt:'هر ردیف یک واحد کامل است. خانههایی را رنگ کن که ۱۱/۴ یا همان ۲ و ۳/۴ را نشان دهد.',
+        idea:'عدد مخلوط یعنی «چند واحد کامل» بهعلاوهی «تکهای از واحد بعدی».',
+        prompt:'هر ردیف یک واحد کامل است؛ آن را به ۴ قسمت برابر کن. خانههایی را رنگ کن که ۱۱/۴، یعنی ۲ واحد کامل و ۳ قسمت از واحد سوم را نشان دهد.',
         grid:{rows:3,cols:4,rowLabels:['واحد ۱','واحد ۲','واحد ۳'],colLabels:['۱/۴','۲/۴','۳/۴','۴/۴'],expected:labRange(0,10)},
-        steps:['هر واحد را به ۴ قسمت برابر تقسیم کن.','دو ردیف اول را کامل رنگ کن: ۸ چهارم داریم.','در ردیف سوم ۳ خانه رنگ کن؛ ۸ + ۳ = ۱۱ چهارم.'],
-        hint:'دو واحد کامل یعنی ۲ × ۴ = ۸ خانه؛ فقط ۳ خانهی دیگر لازم است.',
-        solution:['۱۱/۴ = ۸/۴ + ۳/۴ = ۲ و ۳/۴.','روی نوارها: ۲ ردیف کامل بهعلاوهی ۳ خانه از ردیف سوم.']
+        steps:[
+          {title:'هر واحد را خرد کن',text:'هر ردیف را ۴ خانهی هماندازه بگیر؛ پس هر خانه یعنی ۱/۴ واحد.'},
+          {title:'دو واحد کامل بساز',text:'ردیف اول و دوم را کامل رنگ کن: ۲ × ۴ = ۸ خانه، یعنی ۸/۴ واحد.'},
+          {title:'تکهی آخر را اضافه کن',text:'فقط ۳ خانهی اول ردیف سوم را رنگ کن. ۸ + ۳ = ۱۱ خانه؛ پس ۱۱/۴ همان ۲ و ۳/۴ است.'}
+        ],
+        hint:'اول ۸ خانهی دو ردیف کامل را بزن، بعد ۳ خانهی اول ردیف سوم را.',
+        solution:['۱۱/۴ = ۸/۴ + ۳/۴ = ۲ و ۳/۴.','دو ردیف کامل بهعلاوهی ۳ خانه = ۱۱ خانه از ۱۲ خانه، یعنی دقیقاً ۲ و ۳/۴.']
       },
       {
         id:'units-line',level:0,group:'represent',mode:'line',
         title:'۱۱/۴ را روی محور پیدا کن',equation:'11/4 = 2 3/4',
-        prompt:'از صفر شروع کن؛ نقاط ۱، ۲ و ۲ و ۳/۴ را علامت بزن تا پرشها دیده شوند.',
+        idea:'روی محور، بهجای شمردن خانهها، قدمهای کوچک یکچهارمی را میشماریم.',
+        prompt:'از صفر شروع کن. نقاط ۱، ۲ و ۲ و ۳/۴ را علامت بزن تا پرشها دیده شوند.',
         line:{maxWhole:3,denominator:4,start:0,end:11,expected:[4,8,11],jumpLabel:'پرش ۱ واحدی، سپس ۳/۴'},
-        steps:['بین هر دو عدد کامل، ۴ قدم کوچک بکش.','از ۰ به ۱ و سپس به ۲ بپر.','از ۲، سه قدم یکچهارمی جلو برو تا ۲ و ۳/۴.'],
-        hint:'هر عدد کامل ۴ قدم کوچک دارد؛ نقطهی آخر ۳ قدم بعد از ۲ است.',
-        solution:['۱۱ قدم یکچهارمی = ۲ واحد کامل + ۳/۴.','پس ۱۱/۴ همان ۲ و ۳/۴ است.']
+        steps:[
+          {title:'محور را قدمبندی کن',text:'بین هر دو عدد کامل، ۴ قدم کوچک بگذار؛ هر قدم ۱/۴ واحد است.'},
+          {title:'دو پرش کامل بزن',text:'از ۰ به ۱ برو، دوباره از ۱ به ۲ برو. هر پرش ۴ قدم است؛ پس به نقطهی ۸ رسیدهای.'},
+          {title:'سه قدم دیگر جلو برو',text:'از نقطهی ۸، سه قدم ۱/۴ ی جلو برو تا نقطهی ۱۱. این همان ۲ و ۳/۴ است.'}
+        ],
+        hint:'هر عدد کامل ۴ قدم دارد؛ نقطهی آخر فقط ۳ قدم بعد از ۲ است.',
+        solution:['۱۱ قدم یکچهارمی = ۲ واحد کامل + ۳/۴.','پس ۱۱/۴ و ۲ و ۳/۴ دو نام برای یک نقطهاند.']
       },
       {
         id:'compare-line',level:0,group:'represent',mode:'line',
         title:'۵/۳ و ۷/۳ را روی محور بگذار',equation:'5/3 = 1 2/3 < 7/3',
+        idea:'هرچه روی محور جلوتر بروی، عدد بزرگتر است؛ لازم نیست فقط به صورت و مخرج نگاه کنی.',
         prompt:'هر واحد را ۳ قسمت کن. جای ۵/۳ و ۷/۳ را علامت بزن؛ ۱ و ۲/۳ کدام نقطه است؟',
         line:{maxWhole:3,denominator:3,start:0,end:7,expected:[5,7],jumpLabel:'قدمهای یکسوم'},
-        steps:['هر واحد ۳ قدم یکسوم دارد.','۵/۳ یعنی ۵ قدم؛ همان ۱ و ۲/۳.','۷/۳ یعنی ۷ قدم؛ سمت راست ۵/۳ قرار میگیرد.'],
-        hint:'۵ قدم = ۱ واحد کامل + ۲ قدم؛ ۷ قدم = ۲ واحد کامل + ۱ قدم.',
-        solution:['۵/۳ = ۱ و ۲/۳.','۷/۳ = ۲ و ۱/۳.','چون ۷/۳ جلوتر است، ۵/۳ < ۷/۳.']
+        steps:[
+          {title:'واحدها را سوم کن',text:'بین ۰ و ۱، سه قدم بگذار؛ بین ۱ و ۲ و بین ۲ و ۳ هم همینطور.'},
+          {title:'۵ قدم بشمار',text:'۵/۳ یعنی ۵ قدم یکسوم: ۳ قدم تا ۱، و ۲ قدم دیگر؛ یعنی ۱ و ۲/۳.'},
+          {title:'۷ قدم بشمار',text:'۷/۳ یعنی ۷ قدم: ۶ قدم تا ۲، و ۱ قدم دیگر؛ یعنی ۲ و ۱/۳. چون جلوتر است، بزرگتر است.'}
+        ],
+        hint:'۵ قدم = ۱ واحد + ۲ قدم؛ ۷ قدم = ۲ واحد + ۱ قدم. کدام جلوتر است؟',
+        solution:['۵/۳ = ۱ و ۲/۳.','۷/۳ = ۲ و ۱/۳.','نقطهی ۷ جلوتر از نقطهی ۵ است؛ پس ۵/۳ < ۷/۳.']
       },
       {
         id:'add-common-grid',level:1,group:'add',mode:'grid',
         title:'۱/۲ + ۱/۴ را با مخرج مشترک رسم کن',equation:'1/2 + 1/4 = 3/4',
+        idea:'وقتی تکهها هماندازه نباشند، اول آنها را هماندازه میکنیم، بعد جمع میکنیم.',
         prompt:'یک نوار واحد را به ۴ قسمت کن؛ خانههای حاصل جمع را رنگ کن.',
         grid:{rows:1,cols:4,rowLabels:['یک واحد'],colLabels:['۱/۴','۲/۴','۳/۴','۴/۴'],expected:labRange(0,2)},
-        steps:['مخرج مشترک ۴ است: ۱/۲ = ۲/۴.','دو خانهی اول را برای ۲/۴ رنگ کن.','یک خانهی ۱/۴ اضافه کن؛ مجموع ۳/۴ میشود.'],
-        hint:'۱/۲ همان ۲/۴ است؛ با ۱/۴ جمع کن تا ۳/۴ شود.',
-        solution:['۲/۴ + ۱/۴ = ۳/۴.','صورت ها جمع میشوند و مخرج مشترک ۴ میماند.']
+        steps:[
+          {title:'تکهها را هماندازه کن',text:'نیم یعنی ۲ تا از ۴ قسمت؛ پس ۱/۲ = ۲/۴.'},
+          {title:'اولی را رنگ کن',text:'دو خانهی اول نوار را برای ۲/۴ رنگ کن.'},
+          {title:'دومی را اضافه کن',text:'یک خانهی دیگر برای ۱/۴ رنگ کن. حالا ۳ خانه از ۴ خانه رنگی است: ۳/۴.'}
+        ],
+        hint:'۱/۲ همان ۲/۴ است؛ ۲ خانه + ۱ خانه = ۳ خانه.',
+        solution:['۲/۴ + ۱/۴ = ۳/۴.','صورت‌ها با هم جمع میشوند؛ مخرج ۴ چون اندازهی تکهها عوض نشده، همان میماند.']
       },
       {
         id:'add-mixed-grid',level:1,group:'add',mode:'grid',
         title:'۲ و ۳/۵ + ۱ و ۱/۱۰ را بساز',equation:'2 3/5 + 1 1/10 = 3 7/10',
+        idea:'مخرج مشترک یعنی خرد کردن هر دو عدد به تکههای هماندازه؛ اینجا تکهها دهماند.',
         prompt:'هر ردیف ۱۰ خانه دارد. بعد از هممخرجکردن، خانههای حاصل را رنگ کن.',
         grid:{rows:4,cols:10,rowLabels:['واحد ۱','واحد ۲','واحد ۳','واحد ۴'],colLabels:labRange(1,10).map(n=>`${n}/10`),expected:labRange(0,36)},
-        steps:['۳/۵ = ۶/۱۰؛ پس ۲ و ۳/۵ = ۲ و ۶/۱۰.','با ۱ و ۱/۱۰ جمع کن: ۳ و ۷/۱۰.','روی نوارها ۳ ردیف کامل و ۷ خانه از ردیف چهارم رنگ کن.'],
-        hint:'مخرج مشترک ۱۰ است؛ ۳۷ خانهی دهم رنگ میشود.',
+        steps:[
+          {title:'پنجمها را دهم کن',text:'هر پنجم را نصف کن: ۳/۵ = ۶/۱۰. پس ۲ و ۳/۵ همان ۲ و ۶/۱۰ است.'},
+          {title:'واحدها و دهمها را جدا جمع کن',text:'۲ واحد + ۱ واحد = ۳ واحد، و ۶ دهم + ۱ دهم = ۷ دهم؛ یعنی ۳ و ۷/۱۰.'},
+          {title:'روی نوار نشان بده',text:'۳ ردیف کامل و ۷ خانه از ردیف چهارم را رنگ کن؛ جمعاً ۳۷ خانهی دهم.'}
+        ],
+        hint:'مخرج مشترک ۱۰ است؛ ۳ ردیف کامل + ۷ خانه = ۳۷ خانه.',
         solution:['۲ و ۶/۱۰ + ۱ و ۱/۱۰ = ۳ و ۷/۱۰.','۳ واحد کامل + ۷ دهم = ۳۷/۱۰.']
       },
       {
         id:'add-mixed-line',level:1,group:'add',mode:'line',
         title:'۱ و ۱/۲ + ۲ و ۱/۴ را با پرش نشان بده',equation:'1 1/2 + 2 1/4 = 3 3/4',
+        idea:'جمع روی محور یعنی از نقطهی اول شروع کنی و به اندازهی عدد دوم جلو بپری.',
         prompt:'از ۱ و ۱/۲ شروع کن؛ دو پرش بزن و نقاط پایان هر پرش را علامت بزن.',
         line:{maxWhole:4,denominator:4,start:6,end:15,expected:[14,15],jumpLabel:'پرش ۲ واحدی + پرش ۱/۴'},
-        steps:['نقطهی شروع ۶ قدم یکچهارمی است (۱ و ۱/۲).','پرش ۲ واحدی یعنی ۸ قدم؛ به نقطهی ۱۴ میرسی.','پرش ۱/۴ یعنی ۱ قدم؛ به نقطهی ۱۵ یعنی ۳ و ۳/۴ میرسی.'],
+        steps:[
+          {title:'نقطهی شروع را پیدا کن',text:'هر واحد ۴ قدم است؛ ۱ و ۱/۲ یعنی ۴ + ۲ = ۶ قدم یکچهارمی.'},
+          {title:'پرش ۲ واحدی بزن',text:'۲ واحد یعنی ۸ قدم. از ۶ به ۱۴ میرسی؛ یعنی ۳ و ۲/۴.'},
+          {title:'پرش کوچک آخر را بزن',text:'۱/۴ یعنی ۱ قدم دیگر. از ۱۴ به ۱۵ میرسی؛ یعنی ۳ و ۳/۴.'}
+        ],
         hint:'۲ واحد = ۸ قدم کوچک؛ بعد فقط ۱ قدم دیگر بردار.',
         solution:['۶ + ۸ + ۱ = ۱۵ قدم یکچهارمی.','۱۵/۴ = ۳ و ۳/۴.']
       },
       {
         id:'sub-borrow-grid',level:1,group:'add',mode:'grid',
         title:'۵ و ۱/۴ − ۲ و ۳/۴؛ خانههای باقیمانده',equation:'5 1/4 - 2 3/4 = 2 1/2',
+        idea:'وقتی تکهی کمشده بیشتر از تکهی داری است، یکی از واحدهای کامل را باز میکنی؛ مقدار عوض نمیشود.',
         prompt:'یک واحد را به ۴ چهارم تبدیل کن؛ خانههایی را که بعد از کمکردن باقی میماند رنگ کن.',
         grid:{rows:3,cols:4,rowLabels:['واحد ۱','واحد ۲','واحد ۳'],colLabels:['۱/۴','۲/۴','۳/۴','۴/۴'],expected:labRange(0,9)},
-        steps:['۵ و ۱/۴ = ۴ و ۵/۴؛ یک واحد کامل را باز کردیم.','۲ واحد و ۳ چهارم را بردار.','۴ واحد منهای ۲ واحد = ۲ واحد و ۵/۴ منهای ۳/۴ = ۲/۴.','باقیمانده ۲ و ۲/۴ = ۲ و ۱/۲؛ یعنی ۱۰ خانهی چهارم.'],
-        hint:'قرضگرفتن مقدار را عوض نمیکند؛ فقط ۱ واحد را به ۴/۴ تبدیل میکند.',
+        steps:[
+          {title:'یک واحد را باز کن',text:'۵ و ۱/۴ = ۴ و ۵/۴؛ یعنی ۱ واحد کامل را به ۴/۴ تبدیل کردیم و به تکهها اضافه کردیم.'},
+          {title:'واحدها را کم کن',text:'از ۴ واحد، ۲ واحد بردار؛ ۲ واحد میماند.'},
+          {title:'تکهها را کم کن',text:'از ۵ چهارم، ۳ چهارم بردار؛ ۲ چهارم میماند، یعنی ۱/۲.'},
+          {title:'باقیمانده را رنگ کن',text:'۲ واحد کامل + ۲ خانه = ۱۰ خانهی چهارم؛ یعنی ۲ و ۱/۲.'}
+        ],
+        hint:'قرضگرفتن فقط شکل نوشتن را عوض میکند؛ ۵ و ۱/۴ همان ۴ و ۵/۴ است.',
         solution:['۴ و ۵/۴ − ۲ و ۳/۴ = ۲ و ۲/۴.','۲ و ۲/۴ = ۲ و ۱/۲.']
       },
       {
         id:'sub-borrow-line',level:1,group:'add',mode:'line',
         title:'همان تفریق را روی محور برگرد عقب',equation:'5 1/4 - 2 3/4 = 2 1/2',
+        idea:'تفریق روی محور یعنی به عقب برگشتن؛ هر پرش عقب، همان قدرتی است که کم میکنی.',
         prompt:'از ۵ و ۱/۴ شروع کن؛ دو پرش به عقب بزن و نقاط توقف را علامت بزن.',
         line:{maxWhole:6,denominator:4,start:21,end:10,expected:[13,10],direction:'backward',jumpLabel:'۲ واحد عقب + ۳/۴ عقب'},
-        steps:['نقطهی شروع ۲۱ قدم یکچهارمی است.','۲ واحد یعنی ۸ قدم عقب؛ نقطهی ۱۳ (۳ و ۱/۴).','۳ چهارم یعنی ۳ قدم عقب؛ نقطهی ۱۰ (۲ و ۱/۲).'],
+        steps:[
+          {title:'نقطهی شروع را بگذار',text:'۵ و ۱/۴ یعنی ۲۱ قدم یکچهارمی؛ از همانجا شروع کن.'},
+          {title:'۲ واحد عقب برو',text:'۲ واحد یعنی ۸ قدم عقب؛ به نقطهی ۱۳ میرسی، یعنی ۳ و ۱/۴.'},
+          {title:'۳ چهارم دیگر عقب برو',text:'۳ قدم عقب بزن؛ به نقطهی ۱۰ میرسی، یعنی ۲ و ۱/۲.'}
+        ],
         hint:'برگشتن به عقب یعنی کمکردن؛ ۸ + ۳ = ۱۱ قدم عقب.',
         solution:['۲۱ − ۸ − ۳ = ۱۰ قدم.','۱۰/۴ = ۲ و ۱/۲.']
       },
       {
         id:'sub-unlike-grid',level:1,group:'add',mode:'grid',
         title:'۶ و ۱/۴ − ۳ و ۵/۸؛ مخرج مشترک ۸',equation:'6 1/4 - 3 5/8 = 2 5/8',
+        idea:'اول چهارمها را هشتم کن، بعد اگر تکهی کمشده زیاد بود، یک واحد باز کن.',
         prompt:'همهچیز را به هشتم تبدیل کن؛ خانههای باقیمانده را رنگ کن.',
         grid:{rows:3,cols:8,rowLabels:['واحد ۱','واحد ۲','واحد ۳'],colLabels:labRange(1,8).map(n=>`${n}/8`),expected:labRange(0,20)},
-        steps:['۶ و ۱/۴ = ۶ و ۲/۸.','چون ۲/۸ از ۵/۸ کمتر است، قرض بگیر: ۵ و ۱۰/۸.','۵ و ۱۰/۸ − ۳ و ۵/۸ = ۲ و ۵/۸.','۲ ردیف کامل و ۵ خانه از ردیف سوم رنگ کن.'],
-        hint:'باقیمانده ۲۱ خانهی هشتم است.',
+        steps:[
+          {title:'چهارمها را هشتم کن',text:'۱/۴ = ۲/۸؛ پس ۶ و ۱/۴ همان ۶ و ۲/۸ است.'},
+          {title:'یک واحد را باز کن',text:'۲ هشتم نمیتواند ۵ هشتم پس بدهد؛ ۱ واحد را به ۸/۸ تبدیل کن: ۵ و ۱۰/۸.'},
+          {title:'کم کن',text:'۵ واحد − ۳ واحد = ۲ واحد، و ۱۰ هشتم − ۵ هشتم = ۵ هشتم؛ یعنی ۲ و ۵/۸.'},
+          {title:'روی نوار نشان بده',text:'۲ ردیف کامل و ۵ خانه از ردیف سوم را رنگ کن؛ جمعاً ۲۱ خانهی هشتم.'}
+        ],
+        hint:'باقیمانده ۲۱ خانهی هشتم است: ۲ ردیف کامل + ۵ خانه.',
         solution:['۶ و ۲/۸ = ۵ و ۱۰/۸.','۵ و ۱۰/۸ − ۳ و ۵/۸ = ۲ و ۵/۸.']
       },
       {
         id:'mul-area',level:2,group:'multiply',mode:'grid',
         title:'۲/۳ × ۳/۴؛ خانههای مشترک',equation:'2/3 × 3/4 = 1/2',
-        prompt:'مستطیل ۳ ردیف و ۴ ستون دارد. فقط خانههایی را رنگ کن که هم در ۲/۳ ردیف و هم در ۳/۴ ستون هستند.',
+        idea:'ضرب دو کسر یعنی «همینقدر از همان قسمت»؛ خانههایی که هم در ردیفها و هم در ستونها انتخاب شدند، جواباند.',
+        prompt:'مستطیل ۳ ردیف و ۴ ستون دارد. فقط خانههایی را رنگ کن که هم در ۲ ردیف بالا و هم در ۳ ستون اول هستند.',
         grid:{rows:3,cols:4,rowLabels:['ردیف ۱','ردیف ۲','ردیف ۳'],colLabels:['ستون ۱','ستون ۲','ستون ۳','ستون ۴'],expected:labRect(3,4,0,0,2,3)},
-        steps:['مستطیل واحد را ۳ ردیف و ۴ ستون کن: ۱۲ خانه.','۲ ردیف از ۳ ردیف، یعنی ۲/۳.','۳ ستون از ۴ ستون، یعنی ۳/۴.','اشتراک ۲ × ۳ = ۶ خانه است؛ ۶/۱۲ = ۱/۲.'],
+        steps:[
+          {title:'مستطیل را خانهکشی کن',text:'۳ ردیف و ۴ ستون بساز؛ ۳ × ۴ = ۱۲ خانهی هماندازه.'},
+          {title:'۲/۳ ردیفها را انتخاب کن',text:'۲ ردیف از ۳ ردیف، یعنی ۲/۳؛ ردیفها را در ذهنت مشخص کن.'},
+          {title:'۳/۴ ستونها را انتخاب کن',text:'۳ ستون از ۴ ستون، یعنی ۳/۴؛ حالا فقط جایی را بگیر که هر دو شرط را دارد.'},
+          {title:'اشتراک را بشمار',text:'۲ × ۳ = ۶ خانه مشترک داریم؛ ۶/۱۲ ساده میشود ۱/۲.'}
+        ],
         hint:'خانههای مشترک در دو ردیف بالا و سه ستون اولاند.',
         solution:['۲ × ۳ = ۶ خانهی مشترک.','۳ × ۴ = ۱۲ خانهی کل؛ ۶/۱۲ = ۱/۲.']
       },
       {
         id:'mul-whole',level:2,group:'multiply',mode:'grid',
         title:'۳ × ۲/۵؛ سه گروه تکراری',equation:'3 × 2/5 = 1 1/5',
+        idea:'ضرب در عدد طبیعی یعنی همان تکه را چند بار تکرار کنی.',
         prompt:'سه نوار واحد بکش؛ در هر نوار ۲/۵ را رنگ کن.',
         grid:{rows:3,cols:5,rowLabels:['گروه ۱','گروه ۲','گروه ۳'],colLabels:labRange(1,5).map(n=>`${n}/5`),expected:labRows(3,5,2)},
-        steps:['هر نوار را به ۵ قسمت برابر کن.','در هر نوار ۲ خانه رنگ کن.','۳ × ۲ = ۶ پنجم داریم.','۶/۵ = ۵/۵ + ۱/۵ = ۱ و ۱/۵.'],
+        steps:[
+          {title:'هر نوار را پنجم کن',text:'هر ردیف ۵ خانه دارد؛ هر خانه ۱/۵ واحد است.'},
+          {title:'در هر گروه ۲ خانه رنگ کن',text:'۲/۵ یعنی ۲ خانه از ۵ خانه؛ همین کار را در هر سه ردیف تکرار کن.'},
+          {title:'خانهها را جمع کن',text:'۳ گروه × ۲ خانه = ۶ پنجم، یعنی ۶/۵.'},
+          {title:'بزرگتر از واحد را بنویس',text:'۵ پنجم میشود ۱ واحد کامل و ۱ پنجم میماند؛ پس ۶/۵ = ۱ و ۱/۵.'}
+        ],
         hint:'در هر ردیف فقط ۲ خانهی اول رنگ میشود؛ جمعاً ۶ خانه.',
-        solution:['۳ × ۲/۵ = ۶/۵.','۶/۵ = ۱ و ۱/۵.']
+        solution:['۳ × ۲/۵ = ۶/۵.','۶/۵ = ۵/۵ + ۱/۵ = ۱ و ۱/۵.']
       },
       {
         id:'mul-commute-line',level:2,group:'multiply',mode:'line',
         title:'۲/۳ × ۳؛ سه پرش مساوی',equation:'2/3 × 3 = 2',
+        idea:'ضرب در ۳ یعنی سه بار همان پرش را تکرار کنی؛ جابهجایی عاملها جواب را عوض نمیکند.',
         prompt:'هر پرش ۲/۳ است. سه بار بپر و نقاط توقف را علامت بزن.',
         line:{maxWhole:2,denominator:3,start:0,end:6,expected:[2,4,6],jumpLabel:'پرشهای ۲/۳'},
-        steps:['هر واحد ۳ قدم دارد؛ ۲/۳ یعنی ۲ قدم.','پرش اول به ۲/۳، پرش دوم به ۴/۳، پرش سوم به ۶/۳.','۶/۳ = ۲ واحد کامل.'],
+        steps:[
+          {title:'قدمها را بساز',text:'هر واحد ۳ قدم دارد؛ ۲/۳ یعنی ۲ قدم از آن ۳ قدم.'},
+          {title:'سه بار بپر',text:'پرش اول به نقطهی ۲، پرش دوم به ۴، پرش سوم به ۶ قدمی.'},
+          {title:'نتیجه را بخوان',text:'۶ قدم یکسوم یعنی ۶/۳ = ۲ واحد کامل.'}
+        ],
         hint:'نقاط ۲، ۴ و ۶ قدمی را علامت بزن.',
         solution:['۲/۳ + ۲/۳ + ۲/۳ = ۶/۳.','۶/۳ = ۲.']
       },
       {
         id:'div-share-whole',level:3,group:'divide',mode:'grid',
         title:'۲ ÷ ۵؛ سهم یک نفر',equation:'2 ÷ 5 = 2/5',
+        idea:'تقسیم تسهیمی یعنی هر واحد را بین همه قسمت کنی، بعد سهم یک نفر را جمع کنی.',
         prompt:'دو نوار یکلیتری داری. سهم نفر اول را از هر نوار رنگ کن.',
         grid:{rows:2,cols:5,rowLabels:['لیتر ۱','لیتر ۲'],colLabels:labRange(1,5).map(n=>`نفر ${n}`),expected:[0,5]},
-        steps:['هر لیتر را بین ۵ نفر برابر تقسیم کن.','از لیتر اول ۱/۵ و از لیتر دوم ۱/۵ به نفر اول میرسد.','۱/۵ + ۱/۵ = ۲/۵ لیتر.'],
+        steps:[
+          {title:'هر لیتر را ۵ قسمت کن',text:'دو لیتر داریم؛ هر کدام را بین ۵ نفر برابر تقسیم کن.'},
+          {title:'سهم نفر اول را بردار',text:'از لیتر اول ۱/۵ و از لیتر دوم هم ۱/۵ به نفر اول میرسد.'},
+          {title:'سهمها را جمع کن',text:'۱/۵ + ۱/۵ = ۲/۵ لیتر؛ یعنی ۲ ÷ ۵ = ۲/۵.'}
+        ],
         hint:'فقط خانهی اولِ هر ردیف سهم نفر اول است.',
         solution:['۲ ÷ ۵ = ۲/۵.','وارسی: ۵ × ۲/۵ = ۲ لیتر.']
       },
       {
         id:'div-frac-whole',level:3,group:'divide',mode:'grid',
         title:'۵/۸ ÷ ۲؛ نصفکردن',equation:'5/8 ÷ 2 = 5/16',
+        idea:'نصف کردن یک کسر یعنی هر تکهاش را دوباره نصف کنی؛ مخرج دو برابر میشود.',
         prompt:'یک واحد را ۱۶ قسمت کن؛ سهم یک نفر از ۵/۸ را رنگ کن.',
         grid:{rows:1,cols:16,rowLabels:['یک واحد = ۱۶/۱۶'],colLabels:labRange(1,16).map(n=>`${n}/16`),expected:labRange(0,4)},
-        steps:['۵/۸ = ۱۰/۱۶.','ده شانزدهم را به دو سهم مساوی تقسیم کن.','هر سهم ۵/۱۶ است.'],
+        steps:[
+          {title:'هشتمها را شانزدهم کن',text:'۵/۸ = ۱۰/۱۶؛ یعنی ۱۰ خانه از ۱۶ خانه.'},
+          {title:'دو سهم مساوی بساز',text:'۱۰ خانه را بین ۲ نفر تقسیم کن؛ هر نفر ۵ خانه میگیرد.'},
+          {title:'سهم را بنویس',text:'۵ خانه از ۱۶ خانه یعنی ۵/۱۶؛ پس ۵/۸ ÷ ۲ = ۵/۱۶.'}
+        ],
         hint:'۵/۸ همان ۱۰/۱۶ است؛ نصفش ۵/۱۶.',
         solution:['۵/۸ ÷ ۲ = ۵/۱۶.','وارسی: ۲ × ۵/۱۶ = ۱۰/۱۶ = ۵/۸.']
       },
       {
         id:'div-whole-frac',level:3,group:'divide',mode:'line',
         title:'۳ ÷ ۱/۴؛ چند پرش یکچهارمی؟',equation:'3 ÷ 1/4 = 12',
+        idea:'تقسیم اندازهای میپرسد: «چند تا از این تکه، در اندازهی ما جا میشود؟»',
         prompt:'همهی فاصلههای ۱/۴ را از ۰ تا ۳ علامت بزن.',
         line:{maxWhole:3,denominator:4,start:0,end:12,expected:labRange(1,12),jumpLabel:'پرشهای ۱/۴'},
-        steps:['هر واحد ۴ فاصلهی ۱/۴ دارد.','تا ۳ واحد، ۳ × ۴ = ۱۲ فاصله وجود دارد.','هر فاصله یک پرش است؛ پس ۱۲ پرش.'],
+        steps:[
+          {title:'هر واحد را چهار تکه کن',text:'بین ۰ و ۱ چهار فاصلهی ۱/۴ وجود دارد.'},
+          {title:'تا ۳ واحد بشمار',text:'۳ واحد × ۴ فاصله = ۱۲ فاصلهی یکچهارمی.'},
+          {title:'پرشها را علامت بزن',text:'هر فاصله یک پرش است؛ نقاط ۱ تا ۱۲ قدمی یعنی ۱۲ پرش.'}
+        ],
         hint:'نقاط ۱ تا ۱۲ قدمی، یعنی همهی علامتهای کوچک.',
         solution:['۳ ÷ ۱/۴ = ۳ × ۴ = ۱۲.','یعنی ۱۲ پرش یکچهارمی در ۳ واحد جا میشود.']
       },
       {
         id:'div-frac-frac',level:3,group:'divide',mode:'line',
         title:'۳/۴ ÷ ۱/۲؛ اندازهگیری روی محور',equation:'3/4 ÷ 1/2 = 1 1/2',
+        idea:'میپرسیم چند «نیمه» در ۳/۴ جا میشود؛ ممکن است جواب کامل نباشد و نیمهای هم داشته باشیم.',
         prompt:'یک نیمهی کامل و نصف نیمهی بعدی را علامت بزن.',
         line:{maxWhole:1,denominator:4,start:0,end:3,expected:[2,3],jumpLabel:'نیمهها و باقیمانده'},
-        steps:['از ۰ تا ۱ را ۴ قسمت کن.','۱/۲ = ۲/۴؛ یک پرش کامل تا نقطهی ۲.','تا ۳/۴ فقط ۱/۴ مانده؛ نصف پرش بعدی است.','پس ۱ + ۱/۲ = ۱ و ۱/۲ نیمه در ۳/۴ جا میشود.'],
+        steps:[
+          {title:'محور را چهارم کن',text:'از ۰ تا ۱ را ۴ قدم بگذار؛ هر قدم ۱/۴ است.'},
+          {title:'یک نیمهی کامل پیدا کن',text:'۱/۲ = ۲/۴؛ پس یک پرش کامل تا نقطهی ۲ قدمی داریم.'},
+          {title:'باقیمانده را ببین',text:'تا ۳/۴ فقط ۱ قدم مانده؛ این نصفِ یک نیمه است.'},
+          {title:'جمع پرشها را بنویس',text:'۱ نیمهی کامل + ۱/۲ نیمه = ۱ و ۱/۲؛ یعنی ۳/۴ ÷ ۱/۲ = ۳/۲.'}
+        ],
         hint:'نقطهی ۲/۴ و نقطهی ۳/۴ را علامت بزن.',
         solution:['۳/۴ = ۲/۴ + ۱/۴.','۲/۴ یک نیمهی کامل و ۱/۴ نصف نیمه است؛ پاسخ ۳/۲.']
       },
       {
         id:'div-mixed-frac',level:3,group:'divide',mode:'line',
         title:'۲ و ۱/۴ ÷ ۳/۸؛ پرشهای سههشتمی',equation:'2 1/4 ÷ 3/8 = 6',
+        idea:'وقتی دو کسر همنام شدند، فقط صورت‌ها را تقسیم میکنیم؛ روی محور همان شمردن پرشهاست.',
         prompt:'۲ و ۱/۴ = ۱۸/۸ است. پایان هر پرش ۳/۸ را علامت بزن.',
         line:{maxWhole:3,denominator:8,start:0,end:18,expected:[3,6,9,12,15,18],jumpLabel:'پرشهای ۳/۸'},
-        steps:['هر واحد ۸ هشتم دارد؛ ۲ و ۱/۴ = ۱۸/۸.','هر پرش ۳ هشتم است.','پرشها: ۳، ۶، ۹، ۱۲، ۱۵، ۱۸ هشتم.','۶ پرش کامل شد؛ پاسخ ۶ است.'],
+        steps:[
+          {title:'همهچیز را هشتم کن',text:'هر واحد ۸ هشتم دارد؛ ۲ و ۱/۴ = ۱۸/۸.'},
+          {title:'اندازهی هر پرش را بگیر',text:'هر پرش ۳ هشتم است، یعنی ۳ قدم روی محور.'},
+          {title:'پرشها را بشمار',text:'۳، ۶، ۹، ۱۲، ۱۵، ۱۸؛ شش نقطهی توقف داری.'},
+          {title:'جواب را بخوان',text:'۶ پرش کامل شد؛ ۱۸ ÷ ۳ = ۶.'}
+        ],
         hint:'دنبالهی ۳، ۶، ۹، ۱۲، ۱۵، ۱۸ را علامت بزن.',
         solution:['۱۸/۸ ÷ ۳/۸ = ۱۸ ÷ ۳ = ۶.','یعنی ۶ پرش سههشتمی در ۲ و ۱/۴ جا میشود.']
       },
       {
         id:'mixed-area',level:4,group:'mixed',mode:'regions',
         title:'۲ و ۱/۲ × ۱ و ۱/۲؛ چهار تکهی مساحت',equation:'2 1/2 × 1 1/2 = 3 3/4',
+        idea:'طول و عرض عدد مخلوطاند؛ مستطیل را چهار تکه کن، مساحت هر تکه را جدا حساب کن، بعد جمع کن.',
         prompt:'روی هر چهار تکه لمس کن تا مساحتش آشکار شود؛ بعد بررسی کن.',
         regions:{
           cells:[
@@ -1210,16 +1319,27 @@
             {label:'۱/۲ × ۱/۲',value:'۱/۴',cls:'half-half'}
           ],expected:[0,1,2,3]
         },
-        steps:['طول = ۲ + ۱/۲ و عرض = ۱ + ۱/۲.','مستطیل به چهار تکه تقسیم میشود.','مساحتها: ۲، ۱، ۱/۲ و ۱/۴.','جمع آنها ۱۵/۴ = ۳ و ۳/۴ است.'],
+        steps:[
+          {title:'طول و عرض را باز کن',text:'طول = ۲ + ۱/۲ و عرض = ۱ + ۱/۲.'},
+          {title:'چهار تکه بساز',text:'بخشهای کامل×کامل، کامل×نیمه، نیمه×کامل و نیمه×نیمه را جدا کن.'},
+          {title:'مساحت هر تکه را حساب کن',text:'۲، ۱، ۱/۲ و ۱/۴ بهدست میآید.'},
+          {title:'تکهها را جمع کن',text:'۲ + ۱ + ۱/۲ + ۱/۴ = ۱۵/۴ = ۳ و ۳/۴.'}
+        ],
         hint:'چهار تکه وجود دارد؛ همه را انتخاب کن و مقدار هرکدام را بخوان.',
         solution:['۲ + ۱ + ۱/۲ + ۱/۴ = ۱۵/۴.','۱۵/۴ = ۳ و ۳/۴ مترمربع.']
       },
       {
         id:'review-choose-line',level:5,group:'mixed',mode:'line',
         title:'۴ و ۱/۲ × ۲/۳؛ پرشهای دوسومی',equation:'4 1/2 × 2/3 = 3',
+        idea:'دوسومِ یک عدد یعنی آن را به ۳ قسمت کنی و ۲ قسمتش را بگیری؛ روی محور همان پرشهای مساوی است.',
         prompt:'دوسومِ ۴ و ۱/۲ را با پرشهای مساوی روی محور نشان بده.',
         line:{maxWhole:5,denominator:6,start:0,end:18,expected:[4,8,12,16,18],jumpLabel:'پرش ۲/۳، سپس نیم پرش'},
-        steps:['۴ و ۱/۲ = ۲۷/۶.','دوسوم یعنی ضرب در ۴/۶؛ حاصل ۱۸/۶ = ۳.','روی محور، چهار پرش ۲/۳ (هرکدام ۴ قدم) تا ۱۶/۶ میرویم.','یک نیمپرش ۲/۶ هم لازم است تا به ۱۸/۶ = ۳ برسیم.'],
+        steps:[
+          {title:'عدد را ششم کن',text:'۴ و ۱/۲ = ۲۷/۶؛ چون مخرج ۶ برای نیم و سوم مشترک است.'},
+          {title:'دوسوم را حساب کن',text:'دوسوم یعنی ضرب در ۴/۶؛ حاصل ۱۸/۶ = ۳.'},
+          {title:'پرشهای کامل بزن',text:'هر پرش ۲/۳ = ۴ قدم ششم است؛ چهار پرش تا نقطهی ۱۶ میرویم.'},
+          {title:'نیمپرش آخر را بزن',text:'۲ قدم دیگر تا نقطهی ۱۸ لازم است؛ یعنی نصف یک پرش. به ۳ رسیدیم.'}
+        ],
         hint:'نقاط ۴، ۸، ۱۲، ۱۶ و ۱۸ قدمی را علامت بزن.',
         solution:['۴ و ۱/۲ × ۲/۳ = ۹/۲ × ۲/۳ = ۳.','روی محور: چهار پرش دوسومی + نیم پرش.']
       }
@@ -1249,6 +1369,30 @@
       const [a,b]=reduce(n,d);
       if(b===1)return fa(a);
       return `${fa(a)}/${fa(b)}`;
+    }
+    function labFrac(n,d){
+      let [a,b]=reduce(Number(ascii(n)),Number(ascii(d)));
+      if(!Number.isFinite(a)||!Number.isFinite(b)||b===0)return `<bdi class="ltr-num" dir="ltr">${fa(ascii(n))}</bdi>`;
+      if(b===1)return `<bdi class="ltr-num" dir="ltr">${fa(a)}</bdi>`;
+      return `<bdi class="lab-frac" dir="ltr" role="img" aria-label="کسر ${fa(a)} بر ${fa(b)}"><span>${fa(a)}</span><i aria-hidden="true"></i><span>${fa(b)}</span></bdi>`;
+    }
+    function labMath(value){
+      const text=String(value??''),pattern=/([−–-]?[0-9۰-۹٠-٩]+)\s+(?:و\s+)?([0-9۰-۹٠-٩]+)\s*\/\s*([0-9۰-۹٠-٩]+)|([−–-]?[0-9۰-۹٠-٩]+)\s*\/\s*([0-9۰-۹٠-٩]+)|([−–-]?[0-9۰-۹٠-٩]+)/g;
+      let out='',last=0,match;
+      while((match=pattern.exec(text))){
+        out+=esc(text.slice(last,match.index));
+        if(match[3]!==undefined)out+=`<bdi class="lab-mixed" dir="ltr"><span>${fa(ascii(match[1]))}</span>${labFrac(match[2],match[3])}</bdi>`;
+        else if(match[5]!==undefined)out+=labFrac(match[4],match[5]);
+        else out+=`<bdi class="ltr-num" dir="ltr">${fa(match[6])}</bdi>`;
+        last=pattern.lastIndex;
+      }
+      out+=esc(text.slice(last));return out;
+    }
+    function labSpoken(value){
+      return String(value??'')
+        .replace(/([−–-]?[0-9۰-۹٠-٩]+)\s*\/\s*([0-9۰-۹٠-٩]+)/g,(_all,a,b)=>`${fa(ascii(a))} بر ${fa(ascii(b))}`)
+        .replace(/×/g,' ضربدر ').replace(/÷/g,' تقسیم بر ').replace(/−/g,' منهای ').replace(/=/g,' مساوی ').replace(/</g,' کوچکتر از ').replace(/>/g,' بزرگتر از ')
+        .replace(/[0-9۰-۹٠-٩]+/g,n=>fa(ascii(n)));
     }
     function compareRationals(a,b){
       if(!Array.isArray(a)||!Array.isArray(b)||a.length!==2||b.length!==2||!a[1]||!b[1])return null;
@@ -1359,44 +1503,45 @@
     }
     function labGridHTML(lab){
       const {rows,cols,rowLabels=[],colLabels=[]}=lab.grid;
-      const head=`<div class="lab-grid-head"><span></span>${Array.from({length:cols},(_,c)=>`<span class="lab-col-label">${esc(colLabels[c]||fa(c+1))}</span>`).join('')}</div>`;
-      const body=Array.from({length:rows},(_,r)=>`<div class="lab-grid-row"><span class="lab-row-label">${esc(rowLabels[r]||`ردیف ${fa(r+1)}`)}</span>${Array.from({length:cols},(_,c)=>{const i=r*cols+c;return `<button class="lab-cell" type="button" data-lab-cell="${i}" aria-pressed="false" aria-label="ردیف ${fa(r+1)}، خانه ${fa(c+1)}"></button>`;}).join('')}</div>`).join('');
-      return `<p class="lab-board-caption">روی خانهها لمس کن تا رنگ شوند؛ هر خانه یک قسمت برابر است.</p><div class="lab-grid-board" style="--lab-cols:${cols}" role="group" aria-label="صفحهی رسم ${esc(lab.title)}">${head}${body}</div>`;
+      const head=`<div class="lab-grid-head"><span></span>${Array.from({length:cols},(_,c)=>`<span class="lab-col-label">${labMath(colLabels[c]||fa(c+1))}</span>`).join('')}</div>`;
+      const body=Array.from({length:rows},(_,r)=>`<div class="lab-grid-row"><span class="lab-row-label">${labMath(rowLabels[r]||`ردیف ${fa(r+1)}`)}</span>${Array.from({length:cols},(_,c)=>{const i=r*cols+c;return `<button class="lab-cell" type="button" data-lab-cell="${i}" aria-pressed="false" aria-label="ردیف ${fa(r+1)}، خانه ${fa(c+1)}"></button>`;}).join('')}</div>`).join('');
+      return `<p class="lab-board-caption">${labMath('روی خانهها لمس کن تا رنگ شوند؛ هر خانه یک قسمت برابر است.')}</p><div class="lab-grid-board" style="--lab-cols:${cols}" role="group" aria-label="صفحهی رسم ${esc(lab.title)}">${head}${body}</div>`;
     }
     function labLineHTML(lab){
       const {maxWhole,denominator,start=0,end,direction='forward',jumpLabel='پرشها'}=lab.line,total=maxWhole*denominator;
       const ticks=Array.from({length:total+1},(_,i)=>{
         const major=i%denominator===0,isStart=i===start,label=labTickLabel(lab,i);
-        return `<button class="lab-tick ${major?'major':''} ${isStart?'start':''}" type="button" data-lab-tick="${i}" aria-pressed="false" aria-label="نقطه ${fa(i)} قدم از ${fa(denominator)} قدم در هر واحد"><i aria-hidden="true"></i><small>${esc(label)}</small></button>`;
+        return `<button class="lab-tick ${major?'major':''} ${isStart?'start':''}" type="button" data-lab-tick="${i}" aria-pressed="false" aria-label="نقطه ${fa(i)} قدم از ${fa(denominator)} قدم در هر واحد"><i aria-hidden="true"></i><small>${labMath(label)}</small></button>`;
       }).join('');
-      return `<p class="lab-board-caption">روی نقاط پرش لمس کن؛ نقطهی شروع بنفش است.</p><div class="lab-line-board" data-direction="${esc(direction)}" style="--lab-ticks:${total+1}"><div class="lab-line-axis" role="group" aria-label="محور اعداد از صفر تا ${fa(maxWhole)}">${ticks}</div><p class="lab-axis-caption"><span>${esc(jumpLabel)}</span><span>مقصد: ${esc(labTickLabel(lab,end)||fa(end))}</span></p></div>`;
+      return `<p class="lab-board-caption">${labMath('روی نقاط پرش لمس کن؛ نقطهی شروع بنفش است.')}</p><div class="lab-line-board" data-direction="${esc(direction)}" style="--lab-ticks:${total+1}"><div class="lab-line-axis" role="group" aria-label="محور اعداد از صفر تا ${fa(maxWhole)}">${ticks}</div><p class="lab-axis-caption"><span>${labMath(jumpLabel)}</span><span>مقصد: ${labMath(labTickLabel(lab,end)||fa(end))}</span></p></div>`;
     }
     function labRegionsHTML(lab){
       const cells=lab.regions.cells;
-      return `<p class="lab-board-caption">هر تکه را لمس کن تا مساحتش دیده شود.</p><div class="lab-regions" role="group" aria-label="چهار تکهی مدل مساحت">${cells.map((cell,i)=>`<button class="lab-region ${cell.cls}" type="button" data-lab-region="${i}" data-value="${esc(cell.value)}" aria-pressed="false"><span>${esc(cell.label)}</span><small>لمس کن</small></button>`).join('')}</div>`;
+      return `<p class="lab-board-caption">${labMath('هر تکه را لمس کن تا مساحتش دیده شود.')}</p><div class="lab-regions" role="group" aria-label="چهار تکهی مدل مساحت">${cells.map((cell,i)=>`<button class="lab-region ${cell.cls}" type="button" data-lab-region="${i}" data-value="${esc(cell.value)}" aria-pressed="false"><span>${labMath(cell.label)}</span><small>لمس کن</small></button>`).join('')}</div>`;
     }
     function labBoardHTML(lab){return lab.mode==='grid'?labGridHTML(lab):lab.mode==='line'?labLineHTML(lab):labRegionsHTML(lab);}
     function labStageHTML(lab){
       const done=state.labDone.includes(lab.id);
-      const steps=lab.steps.map((text,i)=>`<li data-lab-step="${i}" ${i>labState.step?'hidden':''}>${esc(text)}</li>`).join('');
-      return `<section class="lab-card" data-lab-id="${esc(lab.id)}"><div class="lab-card-head"><h2>${esc(lab.title)}</h2><span class="lab-badge">${done?'✓ نشان گرفته شد':'🎯 نشان رسم'}</span></div><p class="lab-equation math-line no-math-format" dir="ltr">${esc(fa(lab.equation))}</p><p class="lab-prompt">${esc(lab.prompt)}</p><ol class="lab-steps" aria-label="گامهای رسم">${steps}</ol><div class="lab-board">${labBoardHTML(lab)}</div><div class="lab-toolbar"><button class="btn light small" id="labStep" type="button">💡 گام بعدی</button><button class="btn soft small" id="labHint" type="button">💬 یک سرنخ</button><button class="btn primary small" id="labCheck" type="button">✅ بررسی رسم</button><button class="btn light small" id="labReset" type="button">↻ از اول</button><button class="btn teal small" id="labReveal" type="button" hidden>👀 دیدن پاسخ</button><button class="btn soft small" id="labNext" type="button">رسم بعدی ←</button></div><div class="lab-feedback" id="labFeedback" role="status" aria-live="polite" hidden></div><div class="lab-solution" id="labSolution" hidden></div></section>`;
+      const steps=lab.steps.map((step,i)=>`<li class="lab-step-card" data-lab-step="${i}" ${i>labState.step?'hidden':''}><span class="lab-step-num">${fa(i+1)}</span><div><strong>${labMath(step.title)}</strong><p>${labMath(step.text)}</p></div></li>`).join('');
+      return `<section class="lab-card lab-math no-math-format" data-lab-id="${esc(lab.id)}"><div class="lab-card-head"><h2>${labMath(lab.title)}</h2><span class="lab-badge">${done?'✓ نشان گرفته شد':'🎯 نشان رسم'}</span></div><div class="lab-equation-line" dir="ltr">${labMath(lab.equation)}</div><p class="lab-idea">💡 ${labMath(lab.idea)}</p><p class="lab-prompt">${labMath(lab.prompt)}</p><div class="lab-step-head"><strong>گامبهگام بساز</strong><span id="labStepProgress"></span></div><ol class="lab-steps" aria-label="گامهای رسم">${steps}</ol><div class="lab-board">${labBoardHTML(lab)}</div><div class="lab-toolbar"><button class="btn light small" id="labStep" type="button">💡 گام بعدی</button><button class="btn soft small" id="labHint" type="button">💬 یک سرنخ</button><button class="btn primary small" id="labCheck" type="button">✅ بررسی رسم</button><button class="btn light small" id="labReset" type="button">↻ از اول</button><button class="btn teal small" id="labReveal" type="button" hidden>👀 دیدن پاسخ</button><button class="btn soft small" id="labNext" type="button">رسم بعدی ←</button></div><div class="lab-feedback lab-math" id="labFeedback" role="status" aria-live="polite" hidden></div><div class="lab-solution lab-math" id="labSolution" hidden></div></section>`;
     }
     function setLabFeedback(kind,title,text,solution){
       const fb=$('#labFeedback'),sol=$('#labSolution');
-      if(fb){fb.hidden=false;fb.className=`lab-feedback ${kind}`;fb.innerHTML=`<strong>${esc(title)}</strong>${esc(text)}`;formatMathIn(fb);}
-      if(sol){if(solution&&solution.length){sol.hidden=false;sol.innerHTML=`<strong>چرا اینطور رسم کردیم؟</strong><ul>${solution.map(item=>`<li>${esc(item)}</li>`).join('')}</ul>`;formatMathIn(sol);}else sol.hidden=true;}
+      if(fb){fb.hidden=false;fb.className=`lab-feedback lab-math ${kind}`;fb.innerHTML=`<strong>${labMath(title)}</strong><span>${labMath(text)}</span>`;}
+      if(sol){if(solution&&solution.length){sol.hidden=false;sol.innerHTML=`<strong>چرا اینطور رسم کردیم؟</strong><ul>${solution.map(item=>`<li>${labMath(item)}</li>`).join('')}</ul>`;}else sol.hidden=true;}
     }
     function clearLabFeedback(){const fb=$('#labFeedback'),sol=$('#labSolution');if(fb)fb.hidden=true;if(sol)sol.hidden=true;}
     function updateLabBoard(){
       const lab=labScenario(labState.scenarioId),expected=labExpected(lab);
       $$('[data-lab-cell]').forEach(button=>{const value=Number(button.dataset.labCell),on=labState.selected.has(value);button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));});
       $$('[data-lab-tick]').forEach(button=>{const value=Number(button.dataset.labTick),on=labState.selected.has(value);button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));});
-      $$('[data-lab-region]').forEach(button=>{const value=Number(button.dataset.labRegion),on=labState.selected.has(value),cell=lab.regions?.cells?.[value];button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));const small=button.querySelector('small');if(small)small.textContent=on||labState.showAnswer?`= ${cell?.value||''}`:'لمس کن';});
+      $$('[data-lab-region]').forEach(button=>{const value=Number(button.dataset.labRegion),on=labState.selected.has(value),cell=lab.regions?.cells?.[value];button.setAttribute('aria-pressed',String(on));button.classList.toggle('selected',on);button.classList.toggle('expected',labState.showAnswer&&expected.includes(value));const small=button.querySelector('small');if(small){if(on||labState.showAnswer)small.innerHTML=labMath(`= ${cell?.value||''}`);else small.textContent='لمس کن';}});
     }
     function updateLabSteps(){
       const lab=labScenario(labState.scenarioId);
-      $$('[data-lab-step]').forEach((item,i)=>{item.hidden=i>labState.step;});
-      const button=$('#labStep');if(button){const done=labState.step>=lab.steps.length-1;button.disabled=done;button.textContent=done?'همهی گامها دیده شد ✓':'💡 گام بعدی';}
+      $$('[data-lab-step]').forEach((item,i)=>{item.hidden=i>labState.step;item.classList.toggle('current',i===labState.step);});
+      const progress=$('#labStepProgress');if(progress)progress.textContent=`گام ${fa(labState.step+1)} از ${fa(lab.steps.length)}`;
+      const button=$('#labStep');if(button){const done=labState.step>=lab.steps.length-1;button.disabled=done;button.textContent=done?'همهی گامها دیده شد ✓':`💡 گام بعدی (${fa(labState.step+1)} از ${fa(lab.steps.length)})`;}
     }
     function updateLabHeader(){const pill=$('#labProgressPill');if(pill)pill.textContent=`🏅 ${fa(labDoneCount())} از ${fa(DRAW_LABS.length)} نشان رسم`;}
     function toggleLabValue(value){
@@ -1409,7 +1554,7 @@
       $$('[data-lab-tick]').forEach(button=>button.addEventListener('click',()=>toggleLabValue(Number(button.dataset.labTick))));
       $$('[data-lab-region]').forEach(button=>button.addEventListener('click',()=>toggleLabValue(Number(button.dataset.labRegion))));
       $('#labStep')?.addEventListener('click',()=>{const lab=labScenario(labState.scenarioId);if(labState.step<lab.steps.length-1){labState.step++;updateLabSteps();}});
-      $('#labHint')?.addEventListener('click',()=>{const lab=labScenario(labState.scenarioId);setLabFeedback('info','یک سرنخ',lab.hint);guideSay(lab.hint,'wise');});
+      $('#labHint')?.addEventListener('click',()=>{const lab=labScenario(labState.scenarioId);setLabFeedback('info','یک سرنخ',lab.hint);guideSay(labSpoken(lab.hint),'wise');});
       $('#labCheck')?.addEventListener('click',checkLab);
       $('#labReset')?.addEventListener('click',()=>{labState.selected=new Set();labState.attempts=0;labState.solved=false;labState.step=0;labState.showAnswer=false;renderLabStage();});
       $('#labReveal')?.addEventListener('click',()=>{const lab=labScenario(labState.scenarioId);labState.showAnswer=true;updateLabBoard();const reveal=$('#labReveal');if(reveal)reveal.hidden=true;setLabFeedback('info','پاسخ را با هم دیدیم','خانهها یا نقاط طلایی، جای درستاند. پاک کن و خودت دوباره بساز؛ هیچ امتیازی کم نمیشود.',lab.solution);});
@@ -1418,7 +1563,7 @@
     function renderLabStage(){
       const lab=labScenario(labState.scenarioId);
       $('#labStage').innerHTML=labStageHTML(lab);
-      formatMathIn($('#labStage'));updateLabBoard();updateLabSteps();bindLabStage();
+      updateLabBoard();updateLabSteps();bindLabStage();
       if(state.labDone.includes(lab.id))setLabFeedback('info','این نشان را قبلاً گرفته ای','دوباره رسم کن تا یادت بماند؛ تمرین اضافی همیشه آزاد است.');
     }
     function checkLab(){
@@ -1431,12 +1576,12 @@
         playChime('correct');showToast(fresh?'🏅 نشان رسم گرفتی! +۱۰ تجربه':'🎉 آفرین! رسم درست است');
         setLabFeedback('good','درست کشیدی! 🎉',`${fa(selected.length)} علامت درست انتخاب کردی. ${lab.solution[0]}`,lab.solution);
         const check=$('#labCheck'),reveal=$('#labReveal');if(check)check.disabled=true;if(reveal)reveal.hidden=true;
-        guideSay(`آفرین ${state.name}! رسمت درست بود؛ حالا میدانی چرا این شکل جواب میدهد.`,'happy');
+        guideSay(labSpoken(`آفرین ${state.name}! رسمت درست بود؛ حالا میدانی چرا این شکل جواب میدهد.`),'happy');
       }else{
         labState.attempts++;playChime('nudge');
         setLabFeedback('bad','هنوز کامل نشده؛ اشکالی ندارد!',`من ${fa(expected.length)} علامت انتظار داشتم و تو ${fa(selected.length)} علامت زدی. ${lab.hint}`);
         const reveal=$('#labReveal');if(reveal&&labState.attempts>=2)reveal.hidden=false;
-        guideSay('اشکالی ندارد؛ به گامها و سرنخ نگاه کن و دوباره رسم کن.','wise');
+        guideSay(labSpoken('اشکالی ندارد؛ به گامها و سرنخ نگاه کن و دوباره رسم کن.'),'wise');
       }
     }
     function nextLabScenario(){
@@ -1452,17 +1597,16 @@
     function updateLabGroups(){$$('.lab-group-btn').forEach(button=>button.classList.toggle('active',button.dataset.labGroup===labState.group));}
     function updateLabScenarioList(){
       const list=$('#labScenarioList');if(!list)return;
-      list.innerHTML=DRAW_LABS.filter(lab=>lab.group===labState.group).map(lab=>`<button class="lab-scenario-btn ${lab.id===labState.scenarioId?'active':''} ${state.labDone.includes(lab.id)?'done':''}" type="button" data-lab-id="${esc(lab.id)}" aria-pressed="${lab.id===labState.scenarioId}">${esc(lab.title)}${lab.level===labState.levelFilter?' · پیشنهاد جزیره':''}</button>`).join('');
+      list.innerHTML=DRAW_LABS.filter(lab=>lab.group===labState.group).map(lab=>`<button class="lab-scenario-btn ${lab.id===labState.scenarioId?'active':''} ${state.labDone.includes(lab.id)?'done':''}" type="button" data-lab-id="${esc(lab.id)}" aria-pressed="${lab.id===labState.scenarioId}">${labMath(lab.title)}${lab.level===labState.levelFilter?' · پیشنهاد جزیره':''}</button>`).join('');
       $$('.lab-scenario-btn',list).forEach(button=>button.addEventListener('click',()=>selectLabScenario(button.dataset.labId)));
-      formatMathIn(list);
     }
     function renderDrawLab(levelIndex=null,origin='map'){
       labState.origin=origin;labState.levelFilter=Number.isInteger(levelIndex)?levelIndex:null;
       const preferred=(labState.levelFilter!==null?DRAW_LABS.find(lab=>lab.level===labState.levelFilter):null)||DRAW_LABS.find(lab=>!state.labDone.includes(lab.id))||DRAW_LABS[0];
       labState.scenarioId=preferred.id;labState.group=preferred.group;labState.selected=new Set();labState.attempts=0;labState.solved=state.labDone.includes(preferred.id);labState.step=0;labState.showAnswer=false;
-      const filterNote=labState.levelFilter!==null?`<p>🌟 پیشنهاد ویژه برای جزیره‌ی ${fa(labState.levelFilter+1)}:${' '}${esc(LEVELS[labState.levelFilter].short)} انتخاب شد؛ بقیهی رسمها هم بازاند.</p>`:'';
-      $('#lab').innerHTML=`<div class="lab-shell"><header class="lab-header"><button class="btn light small" id="labBack" type="button">${origin==='lesson'?'← ادامهی درس':'← نقشه'}</button><div class="lab-header-copy"><span class="eyebrow">🎨 آزمایشگاه رسم و محور</span><h1 id="labTitle">خودت بکش، خودت بفهم</h1><p>برای جمع، تفریق، ضرب و تقسیم، هم شکل میسازی هم روی محور پرش میزنی. هیچ نمرهای کم نمیشود؛ هر رسم درست یک نشان میگیرد.</p>${filterNote}</div><span class="lab-progress-pill" id="labProgressPill">🏅 ${fa(labDoneCount())} از ${fa(DRAW_LABS.length)} نشان رسم</span></header><nav class="lab-groups" aria-label="دستههای رسم">${LAB_GROUPS.map(group=>`<button class="lab-group-btn ${group.id===labState.group?'active':''}" type="button" data-lab-group="${esc(group.id)}"><strong>${group.icon} ${esc(group.title)}</strong><small>${esc(group.subtitle)}</small></button>`).join('')}</nav><div class="lab-scenario-list" id="labScenarioList" aria-label="رسمهای این دسته"></div><section class="lab-stage" id="labStage"></section><footer class="credit">طراحی و توسعهدهنده: <strong>مهدی شریفیان معلم پایه پنجم است.</strong></footer></div>`;
-      formatMathIn($('#lab'));showScreen('lab');updateLabGroups();updateLabScenarioList();renderLabStage();
+      const filterNote=labState.levelFilter!==null?`<p>🌟 پیشنهاد ویژه برای جزیره‌ی ${fa(labState.levelFilter+1)}:${' '}${labMath(LEVELS[labState.levelFilter].short)} انتخاب شد؛ بقیهی رسمها هم بازاند.</p>`:'';
+      $('#lab').innerHTML=`<div class="lab-shell no-math-format"><header class="lab-header"><button class="btn light small" id="labBack" type="button">${origin==='lesson'?'← ادامهی درس':'← نقشه'}</button><div class="lab-header-copy"><span class="eyebrow">🎨 آزمایشگاه رسم و محور</span><h1 id="labTitle">خودت بکش، خودت بفهم</h1><p>برای جمع، تفریق، ضرب و تقسیم، هم شکل میسازی هم روی محور پرش میزنی. هیچ نمرهای کم نمیشود؛ هر رسم درست یک نشان میگیرد.</p>${filterNote}</div><span class="lab-progress-pill" id="labProgressPill">🏅 ${fa(labDoneCount())} از ${fa(DRAW_LABS.length)} نشان رسم</span></header><nav class="lab-groups" aria-label="دستههای رسم">${LAB_GROUPS.map(group=>`<button class="lab-group-btn ${group.id===labState.group?'active':''}" type="button" data-lab-group="${esc(group.id)}"><strong>${group.icon} ${esc(group.title)}</strong><small>${esc(group.subtitle)}</small></button>`).join('')}</nav><div class="lab-scenario-list lab-math" id="labScenarioList" aria-label="رسمهای این دسته"></div><section class="lab-stage no-math-format" id="labStage"></section><footer class="credit">طراحی و توسعهدهنده: <strong>مهدی شریفیان معلم پایه پنجم است.</strong></footer></div>`;
+      showScreen('lab');updateLabGroups();updateLabScenarioList();renderLabStage();
       $$('.lab-group-btn').forEach(button=>button.addEventListener('click',()=>{labState.group=button.dataset.labGroup;const first=DRAW_LABS.find(lab=>lab.group===labState.group);if(first)selectLabScenario(first.id);}));
       $('#labBack').addEventListener('click',()=>{if(labState.origin==='lesson'&&session&&session.index===labState.levelFilter)renderPlay();else renderMap();});
       guideSay(`${state.name} عزیز، اینجا خودت شکل میکشی؛ اگر جایی سخت بود سرنخ و پاسخ اختیاری کنارت است.`,'wise');
