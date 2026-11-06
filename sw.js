@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.16';
+const VERSION = 'hakim-v1.5.17';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -48,7 +48,8 @@ const PREFETCH_PAGES = [
   './judges.html',
   './install-pwa.html',
   './math-learning.html',
-  './games/math-fasl2.html'
+  './games/math-fasl2.html',
+  './games/math-nesbat.html'
 ];
 
 /* ── آزمایشگاه‌های تعاملی بازی lab2d ──────────────────────────

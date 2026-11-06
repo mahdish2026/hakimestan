@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/fonts.css">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>مدرسه ریاضی | حکیمستان</title>
-<meta name="description" content="مدرسهٔ ریاضی حکیمستان — چهار بازی آموزشی ریاضی پایهٔ پنجم: تقسیم چکشی، ماموریت زمان، الگوستان و کسرستان (کسر‌ها و چهار عمل).">
+<meta name="description" content="مدرسهٔ ریاضی حکیمستان — پنج بازی آموزشی ریاضی پایهٔ پنجم: تقسیم چکشی، ماموریت زمان، الگوستان، کسرستان (کسر‌ها و چهار عمل) و نسبتستان (نسبت، تناسب و درصد).">
 
 <!-- PWA Meta -->
 <meta name="theme-color" content="#fbf8f1">
@@ -224,6 +224,50 @@ body[data-theme="forest"] .kasrestan-card .card-cta{ color:#ffc76a; }
 @media (prefers-reduced-motion: reduce){
   .kasrestan-card{ transition:none; }
 }
+
+
+/* ── کارت اختصاصی «نسبتستان» ── */
+.nesbat-card{
+  position:relative;overflow:hidden;
+  border-color:rgba(20,184,166,.42);
+  background:
+    radial-gradient(circle at 8% 2%, rgba(245,158,11,.16), transparent 15rem),
+    linear-gradient(160deg, rgba(20,184,166,.09), var(--surface) 55%);
+}
+.nesbat-card::before{
+  content:"";position:absolute;top:0;right:0;left:0;height:4px;
+  background:linear-gradient(90deg,#14b8a6,#f59e0b 55%,#fb7185);
+}
+.nesbat-card:hover{border-color:#14b8a6;box-shadow:0 20px 48px rgba(20,184,166,.22)}
+.nesbat-card .card-icon{background:linear-gradient(135deg,#14b8a6,#0f766e);box-shadow:0 8px 20px rgba(20,184,166,.32)}
+.nesbat-card .card-name .badge{background:#ccfbf1;color:#115e59;border:1px solid #99f6e4}
+.nesbat-card .card-cta{color:#0f766e}
+.nesbat-card .tag.ns{background:#f0fdfa;color:#115e59;border-color:#99f6e4}
+.nesbat-ribbon{
+  display:inline-flex;align-items:center;gap:5px;
+  margin:0 0 12px;padding:3px 10px;border-radius:999px;
+  background:linear-gradient(135deg,#14b8a6,#f59e0b);
+  color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.2px;
+  box-shadow:0 4px 12px rgba(20,184,166,.28);
+}
+.nesbat-note{
+  margin:12px 0 0;padding:9px 11px;border-radius:12px;
+  background:var(--surface-soft);border:1px dashed rgba(20,184,166,.5);
+  color:var(--muted);font-size:.76rem;line-height:1.8;
+}
+.nesbat-note strong{color:var(--ink)}
+body[data-theme="night"] .nesbat-card,body[data-theme="ocean"] .nesbat-card,body[data-theme="forest"] .nesbat-card{
+  background:radial-gradient(circle at 8% 2%,rgba(245,158,11,.12),transparent 15rem),var(--surface);
+  border-color:rgba(20,184,166,.45);
+}
+body[data-theme="night"] .nesbat-card .card-name .badge,body[data-theme="ocean"] .nesbat-card .card-name .badge,body[data-theme="forest"] .nesbat-card .card-name .badge{
+  background:rgba(20,184,166,.16);color:#5eead4;border-color:rgba(20,184,166,.34);
+}
+body[data-theme="night"] .nesbat-card .tag.ns,body[data-theme="ocean"] .nesbat-card .tag.ns,body[data-theme="forest"] .nesbat-card .tag.ns{
+  background:rgba(20,184,166,.14);color:#5eead4;border-color:rgba(20,184,166,.32);
+}
+body[data-theme="night"] .nesbat-card .card-cta,body[data-theme="ocean"] .nesbat-card .card-cta,body[data-theme="forest"] .nesbat-card .card-cta{color:#5eead4}
+@media (prefers-reduced-motion: reduce){.nesbat-card{transition:none}}
 
 .card-top {
   display: flex;
@@ -613,7 +657,7 @@ body[data-theme="kashi"] .tag.educational{
         </svg>
         <span>مدرسه ریاضی</span>
       </h1>
-      <p class="page-subtitle reveal d3">چهار بازی آموزشی ریاضی پایهٔ پنجم — تقسیم، ساعت، الگو و کسر‌ها؛ بازی کن، تمرین کن، ستاره بگیر</p>
+      <p class="page-subtitle reveal d3">پنج بازی آموزشی ریاضی پایهٔ پنجم — تقسیم، ساعت، الگو، کسر‌ها و نسبت و درصد؛ بازی کن، تمرین کن، ستاره بگیر</p>
     </header>
 
     <!-- Games Grid -->
@@ -726,6 +770,36 @@ body[data-theme="kashi"] .tag.educational{
         <p class="kasrestan-note"><strong>تازهترین نسخه:</strong> پرسش‌ها کاملاً مشخص و خودبسنده هستند، مرور درهم، حدس اندازه، خطایابی با دلیل و گواهی‌نامهٔ پیشرفت دارند و به‌صورت تکفایل آفلاین هم در دسترس هستند.</p>
         <span class="card-cta">
           ورود به کسرستان
+          <span class="arrow" aria-hidden="true">←</span>
+        </span>
+      </a>
+      <!-- Game 5: نسبتستان — کارت اختصاصی نسبت، تناسب و درصد -->
+      <a href="games/math-nesbat.html" class="game-card nesbat-card reveal d4" data-game="math-nesbat" aria-label="ورود به نسبتستان؛ نسبت، تناسب و درصد در پنج سرزمین">
+        <span class="nesbat-ribbon" aria-hidden="true">✨ کارت ویژهٔ نسبتستان — تازه!</span>
+        <div class="card-top">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <circle cx="24" cy="24" r="17"/>
+              <path d="M24 7a17 17 0 0 1 17 17H24Z" style="fill:currentColor;fill-opacity:.26;stroke:none"/>
+              <path d="M12 34h24M16 28h16"/>
+            </svg>
+          </div>
+          <div class="card-info">
+            <h2 class="card-name">نسبتستان <span class="badge">نسبت، تناسب و درصد</span></h2>
+            <p class="card-desc">فصل سوم ریاضی پنجم قدم‌به‌قدم: در باغ شربت نسبت را یاد بگیر، روی پل تناسب جدول‌های تناسب دوریدفه را کامل کن، در آزمایشگاه صدخانه درصد را با دست خودت رنگ کن، در بازار تخفیف‌ها حساب کن و روی قلهٔ نسبت طلایی مرور کن؛ همهٔ تیپ‌های تمرین کتاب، با حکیم و گواهی فهرست‌دارِ تیک‌خورده.</p>
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag math">🧮 ریاضی</span>
+          <span class="tag educational">📚 آموزشی</span>
+          <span class="tag">پایه پنجم</span>
+          <span class="tag">🧙 همراهِ حکیم</span>
+          <span class="tag ns">✨ ۵ سرزمین · ۶۷ فعالیت</span>
+          <span class="tag ns">🔗 پنل معلم</span>
+        </div>
+        <p class="nesbat-note"><strong>درسنامهٔ قدم‌به‌قدم:</strong> هر سرزمین اول با شکل و مثال آموزش می‌دهد، بعد تمرین تعاملی می‌گیرد؛ پیشرفتت ذخیره می‌شود و گواهی را هر وقت بخواهی از نقشه می‌گیری.</p>
+        <span class="card-cta">
+          ورود به نسبتستان
           <span class="arrow" aria-hidden="true">←</span>
         </span>
       </a>

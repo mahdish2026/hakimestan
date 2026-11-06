@@ -1,0 +1,2410 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<!-- hakim-csp:start -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
+<!-- hakim-csp:end -->
+
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../css/fonts.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>نسبتستان | بازی نسبت، تناسب و درصد ریاضی پنجم</title>
+<meta name="description" content="نسبتستان — بازی تعاملی آموزش نسبت، تناسب و درصد ریاضی پایه پنجم (فصل سوم کتاب)؛ درسنامهٔ قدم‌به‌قدم، شکل‌های رنگی، جدول تناسب، صدخانهٔ درصد، بازار تخفیف و گواهی پایان با فهرست تیک‌دار.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💯</text></svg>">
+<link rel="manifest" href="../manifest.json">
+<style>
+:root{
+  --ink:#1e1b4b; --muted:#5b5678; --paper:#fffdf8; --line:#e8e0ff;
+  --purple:#6654e8; --purple-d:#4c3cc7; --gold:#f5c542; --gold-d:#d4a017;
+  --teal:#14b8a6; --coral:#fb7185; --green:#22c55e; --sky:#38bdf8;
+  --shadow:0 18px 40px rgba(76,60,199,.16);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;min-height:100%}
+body{
+  font-family:Vazirmatn,'Segoe UI',Tahoma,sans-serif;
+  color:var(--ink); background:#0b0830;
+  min-height:100vh; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(1000px 560px at 92% -8%, rgba(139,92,246,.7), transparent 58%),
+    radial-gradient(800px 480px at -8% 108%, rgba(20,184,166,.42), transparent 58%),
+    radial-gradient(520px 360px at 50% 38%, rgba(245,197,66,.18), transparent 70%),
+    radial-gradient(280px 220px at 20% 20%, rgba(251,113,133,.22), transparent 70%),
+    repeating-linear-gradient(58deg, rgba(255,255,255,.04) 0 10px, transparent 10px 26px);
+}
+.hidden{display:none !important}
+.app{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:16px 14px 56px}
+.btn{
+  cursor:pointer;border:none;font-family:inherit;font-weight:800;
+  border-radius:16px;padding:12px 20px;font-size:1rem;
+  transition:transform .12s, box-shadow .12s; color:#fff;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(2px)!important}
+.btn.primary{background:linear-gradient(180deg,#fbbf24,#f59e0b);color:#451a03;box-shadow:0 5px 0 #b45309}
+.btn.primary:active{box-shadow:0 1px 0 #b45309}
+.btn.purple{background:linear-gradient(180deg,#8b7cf7,#6654e8);box-shadow:0 5px 0 #4c3cc7}
+.btn.purple:active{box-shadow:0 1px 0 #4c3cc7}
+.btn.teal{background:linear-gradient(180deg,#2dd4bf,#0d9488);box-shadow:0 5px 0 #0f766e}
+.btn.ghost{background:#f4f0ff;color:#3b3472;box-shadow:0 3px 0 #d4c9ff}
+.btn.icon{padding:8px 11px;font-size:1.15rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:none}
+.btn.big{width:100%;padding:14px 22px;font-size:1.08rem;margin-top:8px}
+.card{
+  background:var(--paper); border-radius:28px; padding:24px 20px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.card h1,.card h2{font-family:Lalezar,Vazirmatn,sans-serif;margin:0 0 8px}
+.hero-shapes{height:120px;position:relative;margin:0 auto 8px}
+.float{position:absolute;animation:bob 3.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.pop{animation:pop .35s ease}
+.mascot{width:92px;height:92px;margin:0 auto 8px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));font-size:0}
+.mascot.big{width:118px;height:118px}
+.mascot svg,.face svg,#certFace svg{width:100%;height:100%;display:block}
+.bubble .face{width:64px;height:64px;font-size:0}
+.bubble p{color:#1e1b4b;font-weight:800}
+.title{
+  font-size:clamp(1.8rem,6vw,2.6rem); color:#4c3cc7; text-align:center; font-weight:900;
+}
+.sub{text-align:center;color:var(--muted);line-height:1.9;margin:0 0 14px}
+.name-row{
+  display:flex;align-items:center;gap:10px;background:#f5f3ff;
+  border:2px solid #d9d2ff;border-radius:16px;padding:10px 14px;margin:12px 0;
+}
+.name-row:focus-within{border-color:#8b7cf7;box-shadow:0 0 0 4px rgba(102,84,232,.2)}
+.name-row.err{border-color:#fca5a5;background:#fef2f2}
+.name-row input{
+  flex:1;min-width:0;border:none;outline:none;background:transparent;
+  font:inherit;font-weight:800;font-size:1.05rem;color:#4c3cc7;
+}
+.name-err{display:none;color:#dc2626;font-weight:800;font-size:.86rem;margin:-4px 0 8px}
+.name-err.show{display:block}
+.credit{margin-top:18px;padding-top:12px;border-top:2px dashed #e8e0ff;text-align:center;color:#6b6588;font-size:.82rem;line-height:1.9}
+.credit b{color:#4c3cc7}
+.howto-grid{display:grid;gap:10px;margin:14px 0}
+.howto-item{
+  display:flex;gap:12px;align-items:flex-start;background:#f7f4ff;
+  border:1px solid #e8e0ff;border-radius:16px;padding:12px;
+}
+.howto-item .n{
+  flex:0 0 38px;height:38px;border-radius:12px;background:linear-gradient(180deg,#8b7cf7,#6654e8);
+  color:#fff;display:grid;place-items:center;font-weight:900;
+}
+.howto-item b{display:block;color:#3b3472}
+.howto-item span{color:#5b5678;font-size:.9rem;line-height:1.7}
+
+/* map */
+.map-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.stat-pill{
+  background:#fff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:.86rem;
+  box-shadow:0 6px 16px rgba(76,60,199,.12); color:#4c3cc7;
+}
+.lands{display:grid;gap:12px}
+.land{
+  display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;
+  background:#fff;border-radius:20px;padding:14px;border:2px solid #efeaff;
+  cursor:pointer;transition:transform .15s, border-color .2s, box-shadow .2s;
+  text-align:right;
+}
+.land:hover{transform:translateY(-3px);border-color:#c4b5fd;box-shadow:var(--shadow)}
+.land.locked{opacity:.55;cursor:not-allowed;transform:none}
+.land.done{border-color:#86efac;background:#f0fdf4}
+.land .ic{font-size:2rem;text-align:center}
+.land h3{margin:0;font-size:1.05rem;color:#3b3472}
+.land p{margin:2px 0 0;font-size:.82rem;color:#6b6588}
+.land .stars{font-weight:900;color:#d97706}
+
+/* HUD */
+.hud{
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;
+}
+.hud .grow{flex:1;min-width:140px}
+.hud-title{font-weight:900;color:#fff}
+.hud-sub{color:#ddd6fe;font-size:.8rem}
+.progress{height:10px;background:rgba(255,255,255,.18);border-radius:99px;overflow:hidden;margin-top:6px}
+.progress > i{display:block;height:100%;width:0;background:linear-gradient(90deg,#fbbf24,#fb7185);border-radius:99px;transition:width .35s}
+.play-card{padding:18px 16px 22px}
+.page-badge{
+  display:inline-flex;gap:6px;align-items:center;background:#efeaff;color:#4c3cc7;
+  border-radius:999px;padding:4px 10px;font-weight:800;font-size:.78rem;margin-bottom:8px;
+}
+.q-title{font-size:1.12rem;font-weight:900;color:#3b3472;margin:0 0 8px;line-height:1.8}
+.q-body{color:#4b456c;line-height:1.9;margin:0 0 12px}
+.visual{
+  background:linear-gradient(180deg,#fbf8ff,#f3f0ff);
+  border:2px dashed #ddd6fe;border-radius:20px;padding:12px;margin:10px 0 14px;
+  overflow-x:auto; text-align:center;
+}
+.fig-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:flex-end}
+.fig{display:flex;flex-direction:column;align-items:center;gap:6px}
+.fig small{color:#6b6588;font-weight:800}
+.fig svg{display:block;max-width:100%;height:auto}
+.bubble{
+  display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;
+  background:#eef2ff;border-radius:18px;padding:10px;margin:8px 0 14px;
+}
+.bubble .face{width:64px;height:64px}
+.bubble p{margin:0;line-height:1.8;font-weight:700;color:#3730a3}
+.answer-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.num-in{
+  width:110px;border:2px solid #ddd6fe;border-radius:14px;padding:10px 12px;
+  font:inherit;font-weight:900;font-size:1.15rem;text-align:center;color:#4c3cc7;background:#fff;
+}
+.num-in:focus{outline:none;border-color:#8b7cf7;box-shadow:0 0 0 4px rgba(102,84,232,.18)}
+.num-in.err, .tbl input.err{border-color:#fb7185;background:#fff1f2}
+#answerBox.err{box-shadow:0 0 0 3px rgba(251,113,133,.45);border-radius:16px}
+.unit{font-weight:800;color:#6b6588}
+.choices{display:grid;gap:8px}
+.choice{
+  background:#fff;border:2px solid #e8e0ff;border-radius:16px;padding:12px 14px;
+  font:inherit;font-weight:800;color:#3b3472;text-align:right;cursor:pointer;
+}
+.choice:hover{border-color:#a78bfa;background:#f8f5ff}
+.choice.ok{border-color:#22c55e;background:#f0fdf4;color:#166534}
+.choice.bad{border-color:#fb7185;background:#fff1f2;color:#9f1239}
+.pick-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pick{
+  background:#fff;border:3px solid #e8e0ff;border-radius:18px;padding:10px 8px;
+  cursor:pointer;font:inherit;min-width:110px;color:#3b3472;font-weight:800;
+}
+.pick:hover{border-color:#a78bfa;background:#f8f5ff}
+.pick.ok{border-color:#22c55e;background:#f0fdf4}
+.pick.bad{border-color:#fb7185;background:#fff1f2}
+.pick small{display:block;margin-top:6px}
+.pick svg{width:108px!important;max-width:100%;height:auto;max-height:92px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl input{width:72px;min-height:44px;font-size:1.05rem}
+.feedback{
+  border-radius:16px;padding:12px 14px;margin:10px 0;font-weight:700;line-height:1.85;
+}
+.feedback.ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+.feedback.bad{background:#fff1f2;color:#9f1239;border:1px solid #fecdd3}
+.steps-mini{background:#fffbeb;border:1px solid #fde68a;border-radius:16px;padding:12px;margin-top:8px}
+.steps-mini ol{margin:6px 0 0;padding-right:20px;line-height:1.9;color:#78350f}
+.tbl{width:100%;border-collapse:separate;border-spacing:6px;margin:8px 0}
+.tbl th,.tbl td{background:#fef9c3;border-radius:10px;padding:8px 4px;text-align:center;font-weight:800}
+.tbl th{background:#ddd6fe;color:#4c3cc7}
+.tbl .lab{background:#c4f0e8;color:#115e59}
+.tbl input{
+  width:64px;max-width:100%;border:2px solid #fde68a;border-radius:10px;
+  padding:6px 4px;font:inherit;font-weight:900;text-align:center;color:#4c3cc7;
+}
+.grid-build{
+  display:inline-grid;gap:3px;background:#c4b5fd;padding:6px;border-radius:12px;direction:ltr;
+}
+.gcell{
+  width:28px;height:28px;background:#fff;border-radius:6px;cursor:pointer;border:1px solid #ddd6fe;
+}
+.gcell.on{background:linear-gradient(180deg,#fbcfe8,#fb7185);border-color:#e11d48}
+.gcell.on.blue{background:linear-gradient(180deg,#bae6fd,#38bdf8);border-color:#0284c7}
+.gcell.on.gold{background:linear-gradient(180deg,#fde68a,#f59e0b);border-color:#d97706}
+.gcell.on.green{background:linear-gradient(180deg,#bbf7d0,#22c55e);border-color:#15803d}
+.hex-board{display:flex;flex-direction:column;align-items:center;gap:2px;direction:ltr}
+.hex-row{display:flex;gap:2px}
+.hex{
+  width:34px;height:38px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  background:#e5e7eb;cursor:pointer;
+}
+.hex.on{background:linear-gradient(180deg,#f9a8d4,#ec4899)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.toast{
+  position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+  background:#1e1b4b;color:#fff;padding:10px 16px;border-radius:999px;
+  font-weight:800;z-index:20;box-shadow:var(--shadow);
+}
+
+/* certificate */
+.cert{
+  background:#fffdf6;border:10px solid #f5c542;border-radius:18px;padding:22px 18px;
+  position:relative; overflow:hidden; text-align:center;
+}
+.cert::before{
+  content:"";position:absolute;inset:8px;border:2px dashed #c4b5fd;border-radius:10px;pointer-events:none;
+}
+.cert h1{font-family:Lalezar,sans-serif;font-size:clamp(1.6rem,5vw,2.3rem);color:#4c3cc7;margin:8px 0}
+.cert-name{font-size:clamp(1.4rem,4vw,2rem);color:#b45309;display:block;margin:8px 0 12px}
+.seal{
+  width:90px;height:90px;margin:8px auto;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fde68a,#f59e0b);
+  display:grid;place-items:center;font-weight:900;color:#78350f;box-shadow:0 8px 0 #b45309;
+  transform:rotate(-8deg);
+}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:12px 0}
+.cert-stat{background:#f5f3ff;border-radius:14px;padding:10px}
+.cert-stat b{display:block;font-size:1.2rem;color:#4c3cc7}
+.orn{color:#c4b5fd;letter-spacing:6px;margin:6px 0}
+.cert-list{
+  list-style:none;margin:14px 0 4px;padding:0;text-align:right;
+}
+.cert-list li{
+  display:flex;align-items:center;gap:10px;background:#f8f5ff;
+  border:1.5px solid #e8e0ff;border-radius:14px;padding:10px 12px;margin:8px 0;
+  font-weight:800;color:#3b3472;
+}
+.cert-list li.ok{background:#ecfdf5;border-color:#86efac;color:#166534}
+.cert-list li.wait{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.cert-list .tick{
+  flex:0 0 32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:#e5e7eb;color:#6b7280;font-size:1.1rem;
+}
+.cert-list li.ok .tick{background:#22c55e;color:#fff}
+.cert-list li.wait .tick{background:#fbbf24;color:#78350f}
+.cert-list .meta{flex:1;min-width:0}
+.cert-list small{display:block;font-size:.78rem;font-weight:700;opacity:.8;margin-top:2px}
+.cert-list .st{white-space:nowrap;font-weight:900;color:#d97706}
+@media print{
+  body::before,.hud,.actions,.no-print,.topbar,.aurora{display:none!important}
+  body{background:#fff}
+  .app{max-width:none}
+  .cert{box-shadow:none}
+}
+
+/* ===== juice ===== */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sky span{
+  position:absolute;font-size:22px;opacity:.22;filter:drop-shadow(0 0 8px rgba(255,255,255,.4));
+  animation:drift 16s linear infinite;
+}
+.sky .o1{top:8%;right:8%;animation-duration:18s}
+.sky .o2{top:22%;left:6%;animation-duration:22s;animation-delay:-4s;font-size:28px}
+.sky .o3{bottom:18%;right:12%;animation-duration:20s;animation-delay:-8s}
+.sky .o4{bottom:8%;left:16%;animation-duration:24s;animation-delay:-2s}
+.sky .o5{top:46%;right:28%;animation-duration:14s;font-size:16px}
+.sky .o6{top:62%;left:8%;animation-duration:19s;animation-delay:-6s}
+.sky .o7{top:12%;left:40%;animation-duration:26s}
+.sky .o8{bottom:28%;left:42%;animation-duration:17s;animation-delay:-9s}
+@keyframes drift{
+  0%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-28px) rotate(18deg)}
+  100%{transform:translateY(0) rotate(0)}
+}
+@keyframes shine{
+  0%{background-position:120% 0}
+  100%{background-position:-20% 0}
+}
+@keyframes wiggle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes bounceIn{0%{transform:scale(.4) translateY(18px);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes starfly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(245,197,66,.45)}50%{box-shadow:0 0 0 10px rgba(245,197,66,0)}}
+@keyframes pathPulse{50%{opacity:.35}}
+.title{
+  background:linear-gradient(90deg,#fde68a,#fff,#c4b5fd,#f9a8d4,#fde68a);
+  background-size:220% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 6s linear infinite;
+  filter:drop-shadow(0 3px 0 rgba(76,60,199,.25));
+}
+.gate-badge{
+  display:inline-flex;align-items:center;gap:6px;margin:0 auto 10px;
+  background:linear-gradient(180deg,#fff7d6,#fde68a);color:#78350f;
+  border-radius:999px;padding:6px 14px;font-weight:900;font-size:.82rem;
+  box-shadow:0 6px 0 #d97706; transform:rotate(-2deg);
+}
+.mission-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 4px}
+.mission-row span{
+  background:#efeaff;color:#4c3cc7;border-radius:999px;padding:6px 12px;
+  font-weight:800;font-size:.8rem;border:1.5px solid #ddd6fe;
+}
+.card{
+  background:linear-gradient(180deg,#fffefb 0%,#fff 55%,#f6f3ff 100%);
+  border:2px solid rgba(255,255,255,.7);
+}
+.card::after{
+  content:"";position:absolute;inset:-40% auto auto -20%;width:160px;height:160px;
+  background:radial-gradient(circle,rgba(253,224,71,.35),transparent 70%);
+  pointer-events:none;
+}
+.land{
+  position:relative;overflow:hidden;
+  grid-template-columns:72px 1fr auto;
+  border-width:3px;
+  background:linear-gradient(135deg,#fff,#f8f5ff);
+}
+.land .ic{
+  width:64px;height:64px;border-radius:20px;display:grid;place-items:center;
+  font-size:2rem;background:linear-gradient(180deg,#fff,#efeaff);
+  box-shadow:0 6px 0 #ddd6fe; animation:bob 3s ease-in-out infinite;
+}
+.land.current{border-color:#f5c542;box-shadow:0 0 0 4px rgba(245,197,66,.35),var(--shadow);animation:pulseGlow 1.8s ease-in-out infinite}
+.land.done .ic{background:linear-gradient(180deg,#dcfce7,#86efac);box-shadow:0 6px 0 #22c55e}
+.land[data-i="0"] .ic{background:linear-gradient(180deg,#ddd6fe,#a78bfa)}
+.land[data-i="1"] .ic{background:linear-gradient(180deg,#fde68a,#fbbf24)}
+.land[data-i="2"] .ic{background:linear-gradient(180deg,#99f6e4,#2dd4bf)}
+.land[data-i="3"] .ic{background:linear-gradient(180deg,#bae6fd,#38bdf8)}
+.land[data-i="4"] .ic{background:linear-gradient(180deg,#fde68a,#fb7185)}
+.land .bar{height:6px;background:#ede9fe;border-radius:99px;margin-top:8px;overflow:hidden}
+.land .bar>i{display:block;height:100%;background:linear-gradient(90deg,#fbbf24,#fb7185);border-radius:99px}
+.land .go{
+  background:linear-gradient(180deg,#fde68a,#f59e0b);color:#78350f;border-radius:12px;
+  padding:6px 10px;font-weight:900;font-size:.78rem;box-shadow:0 3px 0 #b45309;
+}
+.land.locked .go{background:#e5e7eb;color:#6b7280;box-shadow:none}
+.land.done .go{background:#dcfce7;color:#166534;box-shadow:0 3px 0 #22c55e}
+.path-dot{height:18px;display:flex;justify-content:center;color:#c4b5fd;font-size:12px;opacity:.7;animation:pathPulse 1.6s ease-in-out infinite}
+.map-hero{
+  background:linear-gradient(135deg,#6654e8,#8b5cf6 50%,#14b8a6);
+  border-radius:24px;padding:16px 18px;margin-bottom:14px;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  box-shadow:0 16px 32px rgba(76,60,199,.28); position:relative; overflow:hidden;
+}
+.map-hero::before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.12);left:-40px;top:-50px}
+.map-hero h2{margin:0;font-family:Lalezar,Vazirmatn,sans-serif;font-size:1.5rem;font-weight:400}
+.map-hero p{margin:4px 0 0;opacity:.92;font-size:.88rem}
+.xp{
+  background:rgba(255,255,255,.18);border-radius:16px;padding:8px 12px;text-align:center;min-width:88px
+}
+.xp b{display:block;font-size:1.3rem}
+.play-card{border:3px solid #ede9fe}
+body[data-land="0"] .play-card{border-color:#c4b5fd;background:linear-gradient(180deg,#fff,#f5f3ff)}
+body[data-land="1"] .play-card{border-color:#fde68a;background:linear-gradient(180deg,#fff,#fffbeb)}
+body[data-land="2"] .play-card{border-color:#99f6e4;background:linear-gradient(180deg,#fff,#f0fdfa)}
+body[data-land="3"] .play-card{border-color:#bae6fd;background:linear-gradient(180deg,#fff,#f0f9ff)}
+body[data-land="4"] .play-card{border-color:#fbcfe8;background:linear-gradient(180deg,#fff,#fff1f2)}
+.visual{
+  background:
+    radial-gradient(circle at 12% 20%, rgba(253,224,71,.25), transparent 40%),
+    radial-gradient(circle at 88% 80%, rgba(167,139,250,.22), transparent 42%),
+    linear-gradient(180deg,#fff,#f6f3ff);
+  border:3px solid #e9e4ff; box-shadow:inset 0 0 0 6px #fff;
+}
+.fig{animation:bounceIn .45s cubic-bezier(.34,1.56,.64,1) both}
+.fig:nth-child(2){animation-delay:.06s}
+.fig:nth-child(3){animation-delay:.12s}
+.fig:nth-child(4){animation-delay:.18s}
+.fig svg{filter:drop-shadow(0 8px 8px rgba(76,60,199,.22))}
+.fig small{
+  background:#4c3cc7;color:#fff;border-radius:999px;padding:2px 10px;font-size:.75rem
+}
+.choice,.pick{
+  transition:transform .12s, box-shadow .12s, border-color .15s, background .15s;
+  box-shadow:0 4px 0 #e8e0ff;
+}
+.choice:hover,.pick:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 0 #ddd6fe}
+.choice:active,.pick:active{transform:translateY(2px);box-shadow:0 1px 0 #e8e0ff}
+.hud-dots{display:flex;gap:5px;flex-wrap:wrap;margin:2px 4px 10px;justify-content:flex-start}
+.hud-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.28)}
+.hud-dots i.on{background:#fbbf24;box-shadow:0 0 8px #fbbf24}
+.hud-dots i.done{background:#4ade80}
+.combo{
+  display:none;background:linear-gradient(180deg,#fb7185,#e11d48);color:#fff;
+  border-radius:999px;padding:6px 12px;font-weight:900;font-size:.8rem;
+  animation:pulse 1s ease-in-out infinite;
+}
+.combo.show{display:inline-flex}
+.star-pop{
+  position:fixed;z-index:40;pointer-events:none;font-size:22px;
+  animation:starfly .8s ease-out forwards;
+}
+.celeb{
+  position:fixed;inset:0;z-index:30;background:rgba(18,12,58,.55);
+  display:grid;place-items:center;padding:18px;
+  backdrop-filter:blur(6px);
+}
+.celeb.hidden{display:none !important}
+.celeb-card{
+  background:linear-gradient(180deg,#fffdf8,#fff7d6);border-radius:28px;padding:26px 20px;
+  text-align:center;max-width:420px;width:100%;
+  box-shadow:0 24px 50px rgba(0,0,0,.28);border:4px solid #f5c542;
+  animation:bounceIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+.celeb-card h2{font-family:Lalezar,sans-serif;font-size:1.8rem;color:#4c3cc7;margin:8px 0}
+.celeb-ico{font-size:3.2rem;animation:wiggle 1.2s ease-in-out infinite}
+.num-in{font-size:1.35rem;min-height:52px;box-shadow:0 4px 0 #ddd6fe}
+.btn.primary,.btn.purple,.btn.teal{position:relative;overflow:hidden}
+.btn.primary::after,.btn.purple::after{
+  content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:translateX(120%); animation:shineBtn 2.8s ease-in-out infinite;
+}
+@keyframes shineBtn{0%,60%{transform:translateX(120%)}100%{transform:translateX(-120%)}}
+.howto-item{border:2px solid #e8e0ff;background:linear-gradient(90deg,#fff,#f7f4ff)}
+.howto-item:nth-child(2n){background:linear-gradient(90deg,#fffbeb,#fff)}
+.seal{animation:wiggle 2.4s ease-in-out infinite}
+#gate .mascot.big{animation:bob 2.8s ease-in-out infinite}
+.sub b{color:#4c3cc7}
+.toast{background:linear-gradient(90deg,#4c3cc7,#7c3aed);border:2px solid #fde68a}
+@media (prefers-reduced-motion:reduce){
+  .sky span,.title,.float,.land .ic,.seal,.combo,.btn.primary::after{animation:none!important}
+}
+
+@media (max-width:520px){
+  .gcell{width:24px;height:24px}
+  .land{grid-template-columns:48px 1fr auto}
+  .bubble{grid-template-columns:52px 1fr}
+}
+
+/* ===== NESBAT identity ===== */
+body{background:#062a2e}
+body::before{background:
+ radial-gradient(1000px 560px at 92% -8%, rgba(20,184,166,.65), transparent 58%),
+ radial-gradient(800px 480px at -8% 108%, rgba(245,158,11,.5), transparent 58%),
+ radial-gradient(520px 360px at 50% 38%, rgba(251,113,133,.25), transparent 70%),
+ repeating-linear-gradient(58deg, rgba(255,255,255,.045) 0 10px, transparent 10px 26px)}
+.card h1.title,.title{background:linear-gradient(90deg,#99f6e4,#fff,#fde68a,#fda4af,#99f6e4);background-size:220% auto;-webkit-background-clip:text;background-clip:text}
+.land[data-i="0"] .ic{background:linear-gradient(180deg,#fda4af,#fb7185)}
+.land[data-i="1"] .ic{background:linear-gradient(180deg,#fde68a,#f59e0b)}
+.land[data-i="2"] .ic{background:linear-gradient(180deg,#99f6e4,#14b8a6)}
+.land[data-i="3"] .ic{background:linear-gradient(180deg,#fdba74,#fb923c)}
+.land[data-i="4"] .ic{background:linear-gradient(180deg,#fde68a,#eab308)}
+body[data-land="0"] .play-card{border-color:#fda4af;background:linear-gradient(180deg,#fff,#fff1f2)}
+body[data-land="1"] .play-card{border-color:#fde68a;background:linear-gradient(180deg,#fff,#fffbeb)}
+body[data-land="2"] .play-card{border-color:#5eead4;background:linear-gradient(180deg,#fff,#f0fdfa)}
+body[data-land="3"] .play-card{border-color:#fdba74;background:linear-gradient(180deg,#fff,#fff7ed)}
+body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(180deg,#fff,#fefce8)}
+.map-hero{background:linear-gradient(135deg,#0f766e,#14b8a6 48%,#f59e0b)}
+.cert{border-color:#14b8a6}
+.cert::before{border-color:#f59e0b}
+.seal{background:radial-gradient(circle at 30% 30%,#99f6e4,#14b8a6);color:#042f2e;box-shadow:0 8px 0 #0f766e}
+
+/* کسرهای طبقاتی: صورت روی خط، مخرج زیر خط؛ با عدد اعشاری اشتباه نمی‌شود */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;
+ margin:0 .18em;line-height:1.08;font-size:.86em;font-weight:900;text-align:center}
+.frac .frac-n{padding:0 .34em .08em;border-bottom:2.2px solid currentColor}
+.frac .frac-d{padding:.08em .34em 0}
+.choice .frac,.pick .frac{font-size:.82em}
+.tbl th .frac{font-size:.9em}
+.lesson-note{background:#f0fdfa;border:1.5px dashed #14b8a6;border-radius:14px;padding:10px 12px;margin:10px 0;line-height:1.9;color:#134e4a}
+@media(max-width:520px){.pick{min-width:96px}}
+
+
+/* ===== WOW overhaul: scene, 3D, motion, play-labs ===== */
+body{background:#071a2e}
+body::before{background:
+ radial-gradient(900px 520px at 95% -5%, rgba(20,184,166,.75), transparent 55%),
+ radial-gradient(800px 520px at -10% 105%, rgba(245,158,11,.65), transparent 55%),
+ radial-gradient(600px 420px at 48% 30%, rgba(251,113,133,.35), transparent 65%),
+ radial-gradient(420px 300px at 18% 18%, rgba(56,189,248,.35), transparent 65%),
+ repeating-linear-gradient(58deg, rgba(255,255,255,.05) 0 10px, transparent 10px 26px)}
+.sky span{opacity:.38;font-size:30px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.card{border-radius:32px;border:3px solid rgba(255,255,255,.85);
+ box-shadow:0 24px 50px rgba(2,20,30,.45), inset 0 2px 0 #fff}
+.gate-badge{font-size:.95rem;padding:9px 18px}
+.scene-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 4px}
+.scene-card{border-radius:20px;padding:12px 8px;text-align:center;color:#134e4a;
+ background:linear-gradient(180deg,#fff,#f0fdfa);border:2px solid #99f6e4;
+ box-shadow:0 8px 0 rgba(13,148,136,.35);animation:bob 3.2s ease-in-out infinite}
+.scene-card small{display:block;color:#5b5678;font-weight:700;margin-top:2px;line-height:1.5}
+.scene-card b{font-size:1.02rem}
+.scene-ico{display:block;font-size:2rem;filter:drop-shadow(0 5px 5px rgba(0,0,0,.2))}
+.sc2{background:linear-gradient(180deg,#fff,#fffbeb);border-color:#fde68a;box-shadow:0 8px 0 rgba(217,119,6,.35);animation-delay:.25s}
+.sc3{background:linear-gradient(180deg,#fff,#eff6ff);border-color:#93c5fd;box-shadow:0 8px 0 rgba(37,99,235,.3);animation-delay:.5s}
+.sc4{background:linear-gradient(180deg,#fff,#fff7ed);border-color:#fdba74;box-shadow:0 8px 0 rgba(234,88,12,.3);animation-delay:.75s}
+@media(max-width:560px){.scene-strip{grid-template-columns:repeat(2,1fr)}}
+.land{border-radius:24px;padding:16px;box-shadow:0 12px 24px rgba(2,20,30,.18)}
+.land .ic{font-size:2.6rem;width:76px;height:76px;border-radius:24px;
+ box-shadow:0 8px 0 rgba(76,60,199,.25), inset 0 3px 0 rgba(255,255,255,.7)}
+.land:hover{transform:translateY(-5px) scale(1.01)}
+.land h3{font-size:1.18rem}
+.xp small{display:block;font-size:.72rem;font-weight:900;opacity:.95}
+.play-card{border-radius:30px}
+.q-title{font-size:clamp(1.25rem,3.6vw,1.55rem)}
+.q-body{font-size:1.02rem}
+.learn-box{background:linear-gradient(90deg,#f0fdfa,#fffbeb);border:2px dashed #14b8a6;
+ border-radius:18px;padding:12px 16px;margin:6px 0 12px;line-height:2;color:#134e4a;
+ box-shadow:inset 0 0 0 4px #fff}
+.learn-box ol{margin:6px 0 2px;padding-right:22px}
+.visual{border-radius:26px;padding:18px 14px;
+ background:radial-gradient(circle at 15% 15%,rgba(253,224,71,.35),transparent 42%),
+ radial-gradient(circle at 85% 85%,rgba(20,184,166,.25),transparent 45%),linear-gradient(180deg,#fff,#f0fdfa);
+ border:3px solid #99f6e4;box-shadow:inset 0 0 0 6px #fff,0 12px 22px rgba(13,148,136,.14)}
+.fig svg{animation:bounceIn .5s cubic-bezier(.34,1.56,.64,1) both}
+.bubble{border-radius:22px;border:2px solid #99f6e4;background:linear-gradient(90deg,#f0fdfa,#fffbeb);box-shadow:0 10px 18px rgba(13,148,136,.12)}
+.bubble .face{filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+.btn{border-radius:18px;letter-spacing:.1px}
+.btn.primary{box-shadow:0 6px 0 #b45309,0 14px 22px rgba(245,158,11,.3)}
+.choice,.pick{border-radius:20px}
+.choice:hover,.pick:hover{transform:translateY(-4px) scale(1.02) rotate(-.4deg)}
+.num-in{border-radius:16px}
+.progress{height:13px;border:2px solid rgba(255,255,255,.35)}
+/* play labs (hands-on) */
+.play-lab{background:linear-gradient(180deg,#fff,#f8fafc);border:2px dashed #a5b4fc;border-radius:22px;padding:16px;box-shadow:inset 0 0 0 5px #fff}
+.lab-row{display:grid;gap:6px;margin:10px 0;text-align:right}
+.lab-row label{font-weight:900;color:#3730a3}
+.lab-row input[type=range]{width:100%;accent-color:#f59e0b;height:34px;cursor:pointer}
+.lab-msg{margin-top:10px;font-weight:900;color:#4c3cc7;background:#eef2ff;border-radius:14px;padding:10px 12px;line-height:1.9;text-align:center}
+.lab-msg.good{background:#ecfdf5;color:#065f46;border:1.5px solid #6ee7b7}
+.paint-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:430px;margin:0 auto}
+.paint-cell{aspect-ratio:1;border-radius:7px;border:1.5px solid #c7d2fe;background:#eef2ff;cursor:pointer;padding:0;transition:transform .08s,background .12s}
+.paint-cell:hover{transform:scale(1.12)}
+.paint-cell.on{background:linear-gradient(180deg,#fcd34d,#f59e0b);border-color:#b45309;box-shadow:0 3px 0 #b45309}
+.cert{border-width:12px}
+@media (prefers-reduced-motion:reduce){.scene-card,.fig svg{animation:none!important}}
+
+
+/* ===== GRAPHICS x100: aurora, banners, ptable, multi ===== */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora i{position:absolute;border-radius:50%;filter:blur(50px);opacity:.5;animation:auroraMove 14s ease-in-out infinite alternate}
+.aurora .a1{width:420px;height:420px;background:#14b8a6;top:-120px;right:-80px}
+.aurora .a2{width:380px;height:380px;background:#f59e0b;bottom:-140px;left:-60px;animation-delay:-6s}
+.aurora .a3{width:260px;height:260px;background:#fb7185;top:38%;left:55%;animation-delay:-3s;opacity:.35}
+@keyframes auroraMove{from{transform:translate(0,0) scale(1)}to{transform:translate(-46px,34px) scale(1.14)}}
+.card{background:linear-gradient(180deg,#fffefb,#fff 55%,#f0fdfa)}
+.play-card.enter{animation:cardIn .38s cubic-bezier(.22,1,.36,1)}
+@keyframes cardIn{from{opacity:.25;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+.land-banner{display:flex;align-items:center;gap:12px;border-radius:20px;padding:11px 14px;margin-bottom:12px;color:#fff;
+ background:linear-gradient(120deg,#0f766e,#14b8a6 55%,#f59e0b);box-shadow:0 12px 22px rgba(13,148,136,.28);position:relative;overflow:hidden}
+.land-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.22) 48%,transparent 62%);transform:translateX(120%);animation:bannerShine 3.6s ease-in-out infinite}
+@keyframes bannerShine{0%,55%{transform:translateX(120%)}100%{transform:translateX(-120%)}}
+.land-banner[data-land="0"]{background:linear-gradient(120deg,#be123c,#fb7185 55%,#f59e0b)}
+.land-banner[data-land="1"]{background:linear-gradient(120deg,#92400e,#f59e0b 55%,#14b8a6)}
+.land-banner[data-land="2"]{background:linear-gradient(120deg,#0f766e,#2dd4bf 55%,#38bdf8)}
+.land-banner[data-land="3"]{background:linear-gradient(120deg,#9a3412,#fb923c 55%,#f59e0b)}
+.land-banner[data-land="4"]{background:linear-gradient(120deg,#a16207,#eab308 55%,#fb7185)}
+.lb-ico{font-size:2.15rem;filter:drop-shadow(0 5px 6px rgba(0,0,0,.3));animation:bob 2.8s ease-in-out infinite}
+.land-banner b{display:block;font-size:1.06rem;line-height:1.5}
+.land-banner small{display:block;opacity:.94;font-weight:700;line-height:1.55}
+.lb-badge{margin-inline-start:auto;background:rgba(255,255,255,.22);border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:5px 11px;font-weight:900;font-size:.78rem;white-space:nowrap}
+.tbl.ptable th{background:linear-gradient(180deg,#8b7cf7,#6654e8);color:#fff}
+.tbl.ptable td.given{background:#dbeafe;color:#1e3a8a}
+.tbl.ptable .lab{background:linear-gradient(180deg,#ccfbf1,#99f6e4)}
+.multi-box{display:grid;gap:10px}
+.multi-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#f8fafc;border:2px solid #e0e7ff;border-radius:16px;padding:10px 12px}
+.multi-row label{font-weight:900;color:#3730a3;min-width:120px}
+.multi-affix{font-weight:900;color:#92400e}
+.land{position:relative}
+.land::before{content:attr(data-emoji);position:absolute;left:10px;top:2px;font-size:3.4rem;opacity:.13;pointer-events:none}
+.map-hero{box-shadow:0 18px 34px rgba(13,148,136,.35)}
+.seal{width:104px;height:104px;font-size:1.02rem}
+.cert{background:linear-gradient(180deg,#fffdf6,#fff7ed);border-image:linear-gradient(120deg,#14b8a6,#f59e0b,#fb7185) 1}
+@media (prefers-reduced-motion:reduce){.aurora i,.land-banner::after,.play-card.enter{animation:none!important}}
+
+
+/* ===== 3D WORLD: depth, glass, scenes, parallax tilt ===== */
+:root{--depth:0 22px 44px rgba(3,25,38,.35);--lift:0 30px 60px rgba(3,25,38,.42)}
+body{background:#04182b}
+.app{perspective:1200px}
+.card{transform-style:preserve-3d;box-shadow:var(--depth),inset 0 2px 0 #fff,inset 0 -10px 24px rgba(20,184,166,.06)}
+.tilt{transition:transform .18s ease;will-change:transform}
+.title{font-size:clamp(2.4rem,8vw,3.6rem);letter-spacing:.5px;
+ text-shadow:0 2px 0 rgba(255,255,255,.65),0 5px 0 rgba(13,148,136,.35),0 12px 24px rgba(2,32,42,.35)}
+.mascot.big{width:132px;height:132px;position:relative}
+#gate .mascot.big::before{content:"";position:absolute;inset:-14px;border-radius:50%;
+ background:conic-gradient(from 40deg,#14b8a6,#f5c542,#fb7185,#38bdf8,#14b8a6);
+ z-index:-1;animation:scSpin 9s linear infinite;filter:drop-shadow(0 12px 16px rgba(0,0,0,.25))}
+#gate .mascot.big::after{content:"";position:absolute;inset:-5px;border-radius:50%;background:#fffdf8;z-index:-1}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+.hero-scene{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:8px 0 4px}
+.gate-scene-card{margin:0;border-radius:18px;padding:7px 5px 6px;text-align:center;overflow:hidden;
+ background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(240,253,250,.92));
+ border:2px solid rgba(153,246,228,.9);box-shadow:0 10px 0 rgba(13,148,136,.28),0 16px 24px rgba(2,32,42,.16);
+ animation:bob 3.4s ease-in-out infinite}
+.gate-scene-card:nth-child(2){animation-delay:.2s}.gate-scene-card:nth-child(3){animation-delay:.4s}
+.gate-scene-card:nth-child(4){animation-delay:.6s}.gate-scene-card:nth-child(5){animation-delay:.8s}
+.gate-scene-card figcaption{font-size:.66rem;font-weight:900;color:#134e4a;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scene-svg{width:100%;height:auto;display:block;overflow:visible}
+@media(max-width:640px){.hero-scene{grid-template-columns:repeat(3,1fr)}.gate-scene-card:nth-child(n+4){display:none}}
+.sc-bob{animation:scBob 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes scBob{50%{transform:translateY(-4px)}}
+.sc-swing{animation:scSwing 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 12%}
+@keyframes scSwing{0%,100%{transform:rotate(-3.4deg)}50%{transform:rotate(3.4deg)}}
+.sc-bub{animation:scBub 2.2s ease-in infinite}
+.sc-bub.b2{animation-delay:.6s}.sc-bub.b3{animation-delay:1.1s}
+@keyframes scBub{0%{transform:translateY(5px);opacity:0}35%{opacity:.9}100%{transform:translateY(-9px);opacity:0}}
+.sc-cell{animation:scCell 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes scCell{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
+.sc-tag{animation:scBob 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.sc-spin-slow{animation:scSpinSlow 14s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes scSpinSlow{to{transform:rotate(360deg)}}
+.sc-spark{animation:scSpark 1.8s ease-in-out infinite}
+.sc-spark.s2{animation-delay:.5s}.sc-spark.s3{animation-delay:1s}
+@keyframes scSpark{0%,100%{opacity:.25}50%{opacity:1}}
+.land{transform-style:preserve-3d;background:linear-gradient(150deg,#fff 55%,#f0fdfa);
+ box-shadow:0 14px 0 rgba(13,148,136,.18),0 22px 34px rgba(2,32,42,.2)}
+.land .ic{position:relative;overflow:hidden;transform:translateZ(28px)}
+.ic-scene{position:absolute;inset:3px;opacity:.92}
+.ic-emoji{position:relative;z-index:1;font-size:1.55rem;filter:drop-shadow(0 4px 5px rgba(0,0,0,.3))}
+.map-hero{transform-style:preserve-3d;box-shadow:var(--lift)}
+.land-banner{min-height:86px;padding:13px 16px}
+.lb-scene{flex:0 0 92px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.3))}
+.lb-scene .scene-svg{max-height:64px}
+.lb-ico{font-size:1.7rem;align-self:flex-start}
+.visual.stage3d{position:relative;transform-style:preserve-3d;
+ background:radial-gradient(ellipse 70% 34% at 50% 88%,rgba(13,148,136,.22),transparent 70%),
+ radial-gradient(circle at 15% 15%,rgba(253,224,71,.38),transparent 42%),
+ radial-gradient(circle at 85% 85%,rgba(20,184,166,.26),transparent 45%),linear-gradient(180deg,#fff,#ecfdf5);
+ box-shadow:inset 0 0 0 6px #fff,inset 0 -18px 28px rgba(13,148,136,.12),0 18px 30px rgba(13,148,136,.18)}
+.visual.stage3d::before{content:"✦ 🍋 ✦ 💯 ✦";position:absolute;top:8px;left:12px;font-size:.8rem;letter-spacing:5px;opacity:.45;animation:bob 3.6s ease-in-out infinite}
+.visual.stage3d .fig svg{filter:drop-shadow(0 16px 14px rgba(2,32,42,.28))}
+.btn{transform-style:preserve-3d}
+.btn.primary:active,.btn.purple:active,.btn.teal:active{transform:translateY(4px) scale(.985)!important}
+.choice,.pick{background:linear-gradient(180deg,#fff,#f8fafc);box-shadow:0 6px 0 #ddd6fe,0 14px 22px rgba(76,60,199,.13)}
+.stat-pill,.hud .btn.icon{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);box-shadow:0 8px 0 rgba(76,60,199,.22),0 14px 22px rgba(2,32,42,.2)}
+.progress{box-shadow:inset 0 2px 5px rgba(0,0,0,.28)}
+.progress>i{background:linear-gradient(90deg,#fbbf24,#fb7185,#14b8a6);background-size:200% 100%;animation:progFlow 2.2s linear infinite}
+@keyframes progFlow{to{background-position:-200% 0}}
+.play-card.winflash{animation:winFlash .65s ease}
+@keyframes winFlash{0%{box-shadow:0 0 0 0 rgba(245,197,66,.75),var(--depth)}100%{box-shadow:0 0 0 26px rgba(245,197,66,0),var(--depth)}}
+.cert{box-shadow:var(--lift),inset 0 2px 0 #fff}
+.cert::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,215,90,.22) 48%,transparent 62%);transform:translateX(130%);animation:bannerShine 4.2s ease-in-out infinite;pointer-events:none}
+.seal{box-shadow:0 10px 0 #0f766e,0 20px 28px rgba(13,148,136,.4),inset 0 3px 0 rgba(255,255,255,.65)}
+.scene-card{transform-style:preserve-3d;box-shadow:0 10px 0 rgba(13,148,136,.3),0 18px 28px rgba(2,32,42,.18)}
+.paint-cell.on{box-shadow:0 4px 0 #b45309,0 8px 14px rgba(245,158,11,.4)}
+input[type=range]{filter:drop-shadow(0 4px 5px rgba(245,158,11,.35))}
+@media (prefers-reduced-motion:reduce){.sc-bob,.sc-swing,.sc-bub,.sc-cell,.sc-spin-slow,.sc-spark,.gate-scene-card,.progress>i,.cert::after{animation:none!important}}
+
+
+/* ============================================================
+   MASTERPIECE SHELL — mobile-first architecture (final layer)
+   ============================================================ */
+:root{--accent:#0d9488;--accent2:#f59e0b;--glass:rgba(255,255,255,.9);--r-lg:28px}
+body[data-land="0"]{--accent:#e11d48;--accent2:#f59e0b}
+body[data-land="1"]{--accent:#d97706;--accent2:#0d9488}
+body[data-land="2"]{--accent:#0d9488;--accent2:#0284c7}
+body[data-land="3"]{--accent:#ea580c;--accent2:#f59e0b}
+body[data-land="4"]{--accent:#ca8a04;--accent2:#e11d48}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100dvh}
+.app{max-width:1120px;padding:max(12px,env(safe-area-inset-top)) clamp(12px,3vw,26px) calc(64px + env(safe-area-inset-bottom))}
+.topbar{position:sticky;top:calc(8px + env(safe-area-inset-top));z-index:60;display:flex;align-items:center;gap:10px;
+ margin-bottom:16px;padding:9px 12px;border-radius:20px;background:var(--glass);backdrop-filter:blur(14px);
+ border:1.5px solid rgba(255,255,255,.85);box-shadow:0 14px 30px rgba(3,25,38,.25)}
+.top-back{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border-radius:14px;
+ background:#f0fdfa;border:1.5px solid #99f6e4;color:#115e59;text-decoration:none;font-weight:900;font-size:.82rem}
+.top-brand{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+.top-mark{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;border-radius:15px;color:#fff;font-size:1.35rem;font-weight:1000;
+ background:linear-gradient(140deg,var(--accent),var(--accent2));box-shadow:0 8px 16px rgba(13,148,136,.35),inset 0 2px 0 rgba(255,255,255,.5)}
+.top-titles{min-width:0}
+.top-titles b{display:block;font-size:1rem;line-height:1.35;color:#14342e;white-space:nowrap}
+.top-titles small{display:block;font-size:.68rem;color:#5b6b66;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-pill{flex:0 0 auto;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+ background:#fff7ed;border:1.5px solid #fde68a;color:#92400e;border-radius:999px;padding:8px 12px;font-weight:900;font-size:.78rem}
+.card{border-radius:var(--r-lg)}
+.btn{min-height:52px;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn.big{min-height:56px}
+.choice{min-height:56px}
+.pick{min-height:104px}
+.num-in,.tbl input,.multi-in{min-height:52px}
+input,select,textarea{font-size:16px} /* iOS: no auto-zoom */
+/* gate hero */
+#gate{padding:clamp(20px,4vw,38px)}
+#gate .title{margin-top:2px}
+#gate .sub{max-width:56ch;margin-inline:auto}
+.hero-scene{gap:12px}
+.gate-scene-card{border-radius:22px;padding:10px 7px 8px}
+.gate-scene-card figcaption{font-size:.72rem}
+.name-row{min-height:60px;border-radius:18px}
+.name-row input{font-size:1.08rem!important}
+/* map = journey */
+.map-hero{border-radius:26px;padding:20px}
+.lands{gap:14px;position:relative}
+.land{min-height:104px}
+@media(min-width:920px){
+  .lands{grid-template-columns:1fr 1fr;gap:16px}
+  .lands .path-dot{display:none}
+  .hero-scene{grid-template-columns:repeat(5,1fr)}
+  /* play: two-column stage on desktop */
+  .play-card{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);column-gap:22px;align-items:start;
+   grid-template-areas:"banner banner" "badge badge" "title visual" "body visual" "learn visual" "bubble bubble" "answer answer" "feed feed" "acts acts"}
+  .land-banner{grid-area:banner}.page-badge{grid-area:badge}.q-title{grid-area:title}.q-body{grid-area:body}
+  #learnBox{grid-area:learn}.play-card .visual{grid-area:visual;margin-top:0}.play-card .bubble{grid-area:bubble}
+  #answerBox{grid-area:answer}#feed{grid-area:feed}.play-card .actions{grid-area:acts}
+}
+/* play: sticky HUD + sticky actions on phones */
+.hud{position:sticky;top:calc(76px + env(safe-area-inset-top));z-index:45;padding:9px 10px;border-radius:18px;
+ background:rgba(10,32,44,.72);backdrop-filter:blur(12px);box-shadow:0 14px 26px rgba(3,25,38,.3)}
+@media(max-width:760px){
+  .actions{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom));z-index:45;
+   background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border:1.5px solid #e8e0ff;
+   border-radius:18px;padding:9px;box-shadow:0 -8px 24px rgba(76,60,199,.14)}
+  .actions .btn{flex:1}
+  .page-badge{display:none}
+  .land-banner{min-height:0;padding:10px 12px}
+  .lb-scene{flex-basis:64px}.lb-scene .scene-svg{max-height:46px}
+  .lb-badge{display:none}
+  .top-titles small{display:none}
+  .player-pill{max-width:128px}
+  .visual{padding:13px 9px}
+  .tbl th,.tbl td{padding:7px 3px}
+}
+.tbl-wrap{scrollbar-width:thin}
+.tbl td.lab{position:sticky;right:0;z-index:2;box-shadow:-4px 0 10px rgba(76,60,199,.08)}
+:focus-visible{outline:3px solid rgba(245,158,11,.75);outline-offset:2px}
+@media(max-height:520px) and (orientation:landscape){
+  .hero-scene,.hero-shapes{display:none}
+  .mascot.big{width:84px;height:84px}
+  #gate .title{font-size:2rem}
+}
+.cert-grid .cert-stat{border-radius:18px}
+#cert .actions .btn{flex:1}
+
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+<div class="sky" aria-hidden="true">
+  <span class="o1">🍋</span><span class="o2">💯</span><span class="o3">⚖️</span><span class="o4">🛒</span>
+  <span class="o5">٪</span><span class="o6">✨</span><span class="o7">⭐</span><span class="o8">🍊</span>
+</div>
+<div class="app">
+  <header class="topbar" aria-label="نوار بالای نسبتستان">
+    <a class="top-back" href="../math-learning.html">🏫 مدرسهٔ ریاضی</a>
+    <div class="top-brand"><span class="top-mark">٪</span><span class="top-titles"><b>نسبتستان</b><small>فصل سوم ریاضی پنجم · نسبت، تناسب و درصد</small></span></div>
+    <span class="player-pill hidden" id="playerPill"></span>
+  </header>
+
+  <!-- GATE -->
+  <section id="gate" class="card">
+    <div class="hero-scene" id="gateScene" aria-hidden="true"></div>
+    <div class="hero-shapes" aria-hidden="true">
+      <svg class="float" style="left:8%;top:10px" width="54" height="54" viewBox="0 0 54 54"><rect x="4" y="4" width="46" height="46" rx="10" fill="#8b7cf7"/></svg>
+      <svg class="float" style="left:38%;top:28px;animation-delay:.4s" width="50" height="50" viewBox="0 0 50 50"><polygon points="25,3 47,44 3,44" fill="#f5c542"/></svg>
+      <svg class="float" style="left:62%;top:6px;animation-delay:.8s" width="56" height="50" viewBox="0 0 56 50"><polygon points="28,2 54,14 54,36 28,48 2,36 2,14" fill="#14b8a6"/></svg>
+      <svg class="float" style="left:82%;top:30px;animation-delay:.2s" width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="#fb7185"/></svg>
+    </div>
+    <div style="text-align:center"><span class="gate-badge">🍋 سفر خوشمزهٔ نسبت، تناسب و درصد</span></div>
+    <div class="mascot big" id="gateFace" data-hakim-face="excited"></div>
+    <h1 class="title">نسبتستان</h1>
+    <p class="sub">فصل سوم ریاضی پنجم، قدم‌به‌قدم و بازی‌وار!<br><b>مقایسه کن، تناسب ببند، درصد بگیر، تخفیف حساب کن و ستاره جمع کن.</b></p>
+    <div class="scene-strip" aria-hidden="true">
+      <div class="scene-card sc1"><span class="scene-ico">🍋</span><b>نسبت</b><small>۲ به ۳ یعنی مقایسه</small></div>
+      <div class="scene-card sc2"><span class="scene-ico">⚖️</span><b>تناسب</b><small>دو نسبت برابر</small></div>
+      <div class="scene-card sc3"><span class="scene-ico">💯</span><b>درصد</b><small>از هر ۱۰۰ تا</small></div>
+      <div class="scene-card sc4"><span class="scene-ico">🛒</span><b>تخفیف</b><small>در بازار درصد بگیر</small></div>
+    </div>
+    <div class="mission-row"><span>🗺️ ۵ سرزمین</span><span>🍋 نسبت</span><span>⚖️ تناسب</span><span>💯 درصد</span><span>📜 گواهی قهرمانی</span></div>
+    <div class="name-row" id="nameRow">
+      <span aria-hidden="true">✏️</span>
+      <input id="nameIn" maxlength="32" autocomplete="name" placeholder="نام و نام خانوادگی‌ات را بنویس…">
+    </div>
+    <div class="name-err" id="nameErr">برای ورود و گرفتن گواهی، نوشتن نام اجباری است.</div>
+    <button class="btn primary big" id="btnEnter">🚀 بزن بریم نسبتستان!</button>
+    <button class="btn purple big" id="btnHow">🎮 چطور بازی کنیم؟</button>
+    <p class="credit">طراح و توسعه‌دهنده: <b>مهدی شریفیان معلم پایه پنجم</b><br>حکیمستان — دیار حکیم، سرزمین یادگیری</p>
+  </section>
+
+  <!-- HOWTO -->
+  <section id="howto" class="card hidden">
+    <div class="mascot" id="howFace"></div>
+    <h2 class="title" style="font-size:1.8rem">نسبتستان چطور بازی می‌شود؟</h2>
+    <p class="sub">تو آشپز و حسابدار نسبتستانی! همهٔ سرزمین‌ها بازند و هرکدام را دوست داشتی انتخاب می‌کنی؛ اول با حکیم درس را قدم‌به‌قدم یاد می‌گیری، بعد با شکل‌های رنگی تمرین می‌کنی و ستاره می‌گیری.</p>
+    <div class="howto-grid">
+      <div class="howto-item"><div class="n">۱</div><div><b>اسم قهرمان را بنویس</b><span>گواهی فقط به نام خودت صادر می‌شود — مثل کارت قهرمانی!</span></div></div>
+      <div class="howto-item"><div class="n">۲</div><div><b>با حکیم درس را قدم‌به‌قدم یاد بگیر</b><span>هر درس اول با یک شکل خوشمزه شروع می‌شود؛ حکیم آهسته و با مثال یادت می‌دهد، بعد نوبت بازی توست.</span></div></div>
+      <div class="howto-item"><div class="n">۳</div><div><b>جدول تناسب، درصد و تخفیف</b><span>گاهی عدد می‌نویسی، گاهی گزینه انتخاب می‌کنی، گاهی شکل و نمودار درست را لمس می‌کنی و گاهی جدول را کامل می‌کنی.</span></div></div>
+      <div class="howto-item"><div class="n">۴</div><div><b>ستاره و کمبو بگیر</b><span>اولین تلاش درست ۳ ستاره دارد. چند تا پشت‌سرهم درست بگی، کمبو روشن می‌شود!</span></div></div>
+      <div class="howto-item"><div class="n">۵</div><div><b>هر ۵ سرزمین باز است</b><span>از هرجا دوست داری شروع کن؛ اما گواهی قهرمانی وقتی کامل می‌شود که هر پنج سرزمین را تمام کرده باشی.</span></div></div>
+    </div>
+    <button class="btn primary big" id="btnHowGo">فهمیدم، بریم!</button>
+    <button class="btn ghost big" id="btnHowBack">بازگشت</button>
+  </section>
+
+  <!-- MAP -->
+  <section id="map" class="hidden">
+    <div class="map-hero">
+      <div>
+        <h2 id="hello"></h2>
+        <p>نقشهٔ نسبتستان — همهٔ سرزمین‌ها بازند؛ هرکدام را دوست داری لمس کن</p>
+      </div>
+      <div class="xp">⭐<b id="mapStars">۰</b>ستاره<small id="mapRank"></small></div>
+    </div>
+    <div class="lands" id="lands"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+      <button class="btn ghost" id="btnCertMap">📜 گواهی</button>
+      <button class="btn ghost" id="btnReset">↻ شروع مجدد</button>
+      <a class="btn ghost" href="../math-learning.html">🏫 مدرسهٔ ریاضی</a>
+    </div>
+    <p class="credit" style="color:#ddd6fe">طراح و توسعه‌دهنده: <b style="color:#fde68a">مهدی شریفیان معلم پایه پنجم</b></p>
+  </section>
+
+  <!-- PLAY -->
+  <section id="play" class="hidden">
+    <div class="hud">
+      <button class="btn icon ghost" id="btnBackMap" title="نقشه">🗺️</button>
+      <div class="grow">
+        <div class="hud-title" id="hudTitle"></div>
+        <div class="progress"><i id="hudBar"></i></div>
+      </div>
+      <div class="combo" id="comboPill">🔥 ×۲</div>
+      <div class="stat-pill">⭐ <span id="hudStars">۰</span></div>
+      <button class="btn icon ghost" id="btnSound" title="صدا">🔊</button>
+    </div>
+    <div class="hud-dots" id="hudDots"></div>
+    <div class="card play-card">
+<div class="land-banner" id="landBanner"><span class="lb-scene" id="lbScene"></span><span class="lb-ico" id="lbIco"></span><div><b id="lbName"></b><small id="lbRule"></small></div><span class="lb-badge" id="lbBadge"></span></div>
+            <div class="page-badge" id="pageBadge"></div>
+      <h2 class="q-title" id="qTitle"></h2>
+      <p class="q-body" id="qBody"></p>
+      <div id="learnBox" class="learn-box hidden"></div>
+      <div class="visual" id="visual"></div>
+      <div class="bubble">
+        <div class="face" id="playFace"></div>
+        <p id="hakimText"></p>
+      </div>
+      <div id="answerBox"></div>
+      <div id="feed"></div>
+      <div class="actions" id="acts"></div>
+    </div>
+  </section>
+
+  <!-- CERT -->
+  <section id="cert" class="hidden">
+    <article class="cert" id="certPage">
+      <div class="orn">✦　✧　✦　✧　✦</div>
+      <div class="mascot" id="certFace"></div>
+      <h1>گواهی‌نامهٔ قهرمانی نسبتستان</h1>
+      <p>این گواهی با افتخار تقدیم می‌شود به</p>
+      <strong class="cert-name" id="certName"></strong>
+      <div class="seal">قهرمان<br>نسبتستان</div>
+      <p>دانش‌آموز پایهٔ پنجم که فصل <b>نسبت، تناسب و درصد</b> را با موفقیت به پایان رساند.</p>
+      <div class="cert-grid">
+        <div class="cert-stat">ستاره<br><b id="certStars"></b></div>
+        <div class="cert-stat">درستی<br><b id="certPct"></b></div>
+        <div class="cert-stat">سرزمین‌ها<br><b id="certPages"></b></div>
+        <div class="cert-stat">بهترین کمبو 🔥<br><b id="certCombo"></b></div>
+      </div>
+      <ul class="cert-list" id="certList"></ul>
+      <p id="certDate"></p>
+      <p class="credit">طراح و توسعه‌دهنده: <b>مهدی شریفیان معلم پایه پنجم</b><br>حکیمستان — مدرسهٔ ریاضی</p>
+    </article>
+    <div class="actions no-print" style="margin-top:14px">
+      <button class="btn primary" id="btnPrint">🖨️ چاپ گواهی</button>
+      <button class="btn purple" id="btnCertMap2">🗺️ نقشه</button>
+    </div>
+  </section>
+</div>
+<div id="celeb" class="celeb hidden" role="dialog" aria-modal="true">
+  <div class="celeb-card">
+    <div class="celeb-ico" id="celebIco">🎉</div>
+    <h2 id="celebTitle">سرزمین فتح شد!</h2>
+    <p id="celebText"></p>
+    <button class="btn primary big" id="celebGo">ادامهٔ سفر</button>
+  </div>
+</div>
+
+<script src="../hakim-core.js"></script>
+<script>
+(function(){
+'use strict';
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const fa = '۰۱۲۳۴۵۶۷۸۹';
+const toFa = n => String(n).replace(/\d/g, d => fa[d]);
+const fromFa = s => String(s||'').trim()
+  .replace(/[۰-۹]/g, d => fa.indexOf(d))
+  .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+  .replace(/[٬,]/g,'');
+const KEY = 'hakimestan_nesbat_v2';
+const OLD_KEY = 'hakimestan_nesbat_v1';
+const LANDS = [
+  {id:'ratio', icon:'🍋', name:'باغ شربت نسبت‌ها', desc:'نسبت یعنی مقایسهٔ دو مقدار — فصل ۳، نسبت', rule:'نسبت یعنی «اول به دوم»؛ ترتیب مهم است و ساده‌کردن مزه را عوض نمی‌کند.'},
+  {id:'prop', icon:'⚖️', name:'پل تناسب طلایی', desc:'نسبت‌های مساوی و جدول تناسب', rule:'در تناسب، هر دو طرف را در یک عدد ضرب یا بر یک عدد تقسیم کن.'},
+  {id:'pct', icon:'💯', name:'آزمایشگاه صدخانه', desc:'درصد یعنی «از هر صد تا»', rule:'درصد یعنی از هر ۱۰۰ تا؛ هر خانهٔ صدخانه ۱٪ است.'},
+  {id:'shop', icon:'🛒', name:'بازار تخفیف‌ها', desc:'درصد در خرید، تخفیف و زندگی روزانه', rule:'اول تخفیف را حساب کن، بعد از قیمت کم کن.'},
+  {id:'gold', icon:'🏆', name:'قلهٔ نسبت طلایی', desc:'مرور ترکیبی، نسبت طلایی و چالش نهایی', rule:'نسبت، تناسب و درصد سه دوست‌اند؛ هر سه را به هم تبدیل می‌کنی.'}
+];
+
+function jalali(date){
+  const g = [date.getFullYear(), date.getMonth()+1, date.getDate()];
+  const gy=g[0]-1600, gm=g[1]-1, gd=g[2]-1;
+  let g_day = 365*gy + Math.floor((gy+3)/4) - Math.floor((gy+99)/100) + Math.floor((gy+399)/400);
+  const v=[0,31,59,90,120,151,181,212,243,273,304,334];
+  g_day += v[gm] + gd;
+  if(gm>1 && ((g[0]%4===0 && g[0]%100!==0) || g[0]%400===0)) g_day++;
+  let j_day = g_day - 79;
+  const j_np = Math.floor(j_day/12053); j_day %= 12053;
+  let jy = 979 + 33*j_np + 4*Math.floor(j_day/1461); j_day %= 1461;
+  if(j_day >= 366){ jy += Math.floor((j_day-1)/365); j_day = (j_day-1)%365; }
+  const jm = j_day<186 ? 1+Math.floor(j_day/31) : 7+Math.floor((j_day-186)/30);
+  const jd = 1 + (j_day<186 ? j_day%31 : (j_day-186)%30);
+  const months=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+  return toFa(jd)+' '+months[jm-1]+' '+toFa(jy);
+}
+
+/* ===== SFX ===== */
+let actx, soundOn=true;
+function ctx(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+function beep(f, t, type='sine', g=.08){
+  if(!soundOn) return;
+  try{
+    const c=ctx(), o=c.createOscillator(), a=c.createGain();
+    o.type=type; o.frequency.value=f; a.gain.value=g;
+    o.connect(a); a.connect(c.destination);
+    o.start(); a.gain.exponentialRampToValueAtTime(.0001, c.currentTime+t);
+    o.stop(c.currentTime+t);
+  }catch(e){}
+}
+const SFX = {
+  click(){ beep(640,.08,'triangle',.05); },
+  ok(){ beep(523,.1,'triangle',.07); setTimeout(()=>beep(659,.1),80); setTimeout(()=>beep(784,.12),160); setTimeout(()=>beep(1046,.2,'sine',.06),260); },
+  bad(){ beep(220,.2,'sawtooth',.05); },
+  star(){ beep(880,.1); setTimeout(()=>beep(1174,.16),80); },
+  fanfare(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,'triangle',.08), i*90)); }
+};
+
+/* ===== SVG FIGURES ===== */
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${Math.min(w,320)}" style="max-width:100%" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`; }
+function sq(x,y,s,fill,stroke,sw=2.2){
+  const r=Math.min(7,s/5);
+  return `<g>
+    <rect x="${x}" y="${y+2}" width="${s}" height="${s}" rx="${r}" fill="${stroke}" opacity=".22"/>
+    <rect x="${x}" y="${y}" width="${s}" height="${s}" rx="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>
+    <rect x="${x+3}" y="${y+3}" width="${Math.max(4,s*0.42)}" height="${Math.max(3,s*0.22)}" rx="2" fill="#fff" opacity=".38"/>
+  </g>`;
+}
+function polyomino(cells, opt={}){
+  const s=opt.s||26, fill=opt.fill||'#c4b5fd', stroke=opt.stroke||'#5b21b6';
+  let maxx=0,maxy=0;
+  cells.forEach(([x,y])=>{ maxx=Math.max(maxx,x); maxy=Math.max(maxy,y); });
+  const inner = cells.map(([x,y])=>sq(x*s+3,y*s+3,s-4,fill,stroke)).join('');
+  return svg((maxx+1)*s+6,(maxy+1)*s+6, inner);
+}
+function stair(n, fill='#a78bfa', stroke='#5b21b6'){
+  const cells=[];
+  for(let c=0;c<n;c++) for(let r=0;r<c+1;r++) cells.push([c, n-1-r]);
+  return polyomino(cells,{fill,stroke});
+}
+function rectGrid(w,h, fill='#93c5fd', stroke='#1d4ed8'){
+  const cells=[]; for(let y=0;y<h;y++) for(let x=0;x<w;x++) cells.push([x,y]);
+  return polyomino(cells,{fill,stroke});
+}
+function pyramid(n, fill='#fda4af', stroke='#be123c'){
+  const cells=[];
+  for(let r=0;r<n;r++){
+    const count=r+1, x0=n-1-r;
+    for(let i=0;i<count;i++) cells.push([x0+i, r]);
+  }
+  return polyomino(cells,{fill,stroke});
+}
+function Lshape(n, fill='#fb7185', stroke='#be123c'){
+  // 2 rows, n+1 cols, missing bottom-left
+  const cells=[]; const w=n+1;
+  for(let x=0;x<w;x++) cells.push([x,0]);
+  for(let x=1;x<w;x++) cells.push([x,1]);
+  return polyomino(cells,{fill,stroke});
+}
+function greenZ(n, fill='#4ade80', stroke='#15803d'){
+  const top=2*n+1, bot=2*n, off=n;
+  const cells=[];
+  for(let x=0;x<top;x++) cells.push([x,0]);
+  for(let x=0;x<bot;x++) cells.push([off+x,1]);
+  return polyomino(cells,{fill,stroke,s:18});
+}
+function bluePlus(n, fill='#38bdf8', stroke='#0369a1'){
+  const cells=[];
+  for(let y=0;y<n;y++) for(let x=1;x<=n;x++) cells.push([x,y]);
+  cells.push([0,n-1]); // extra bottom-left
+  if(n===1){ /* 1x1 + extra left of it already */ }
+  return polyomino(cells,{fill,stroke});
+}
+function wood(x1,y1,x2,y2){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#b45309" stroke-width="5" stroke-linecap="round"/>
+          <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>`;
+}
+function matchTris(n){
+  const s=34, h=s*Math.sqrt(3)/2, pad=12;
+  let d='';
+  for(let i=0;i<n;i++){
+    const x=pad+i*s, y=pad+h;
+    d += wood(x,y,x+s/2,pad)+wood(x+s/2,pad,x+s,y)+wood(x,y,x+s,y);
+  }
+  return svg(pad*2+n*s, pad*2+h, d);
+}
+function matchHouses(n, share){
+  const W=36, gap = share?0:14, pad=10, roof=22;
+  let d='', x=pad;
+  for(let i=0;i<n;i++){
+    const y=pad+roof;
+    d += wood(x,y,x+W,y)+wood(x+W,y,x+W,y+W)+wood(x+W,y+W,x,y+W);
+    if(!share || i===0) d += wood(x,y+W,x,y);
+    d += wood(x,y,x+W/2,y-roof)+wood(x+W/2,y-roof,x+W,y);
+    x += W + gap;
+  }
+  return svg(x+pad-(share?0:gap), pad+roof+W+10, d);
+}
+function circlesTri(n, r=9){
+  const gap=r*2+4, pad=12;
+  let d='';
+  for(let row=0; row<n; row++){
+    const count=row+1;
+    const y=pad+row*gap+r;
+    const x0=pad + (n-count)*gap/2 + r;
+    for(let i=0;i<count;i++){
+      d += `<circle cx="${x0+i*gap}" cy="${y+1.5}" r="${r}" fill="#1d4ed8" opacity=".18"/><circle cx="${x0+i*gap}" cy="${y}" r="${r}" fill="#dbeafe" stroke="#2563eb" stroke-width="2.4"/><circle cx="${x0+i*gap-2}" cy="${y-2}" r="${r*0.28}" fill="#fff" opacity=".7"/>`;
+    }
+  }
+  return svg(pad*2+n*gap, pad*2+n*gap, d);
+}
+function circlesSq(n, r=8){
+  const gap=r*2+4, pad=10;
+  let d='';
+  for(let y=0;y<n;y++) for(let x=0;x<n;x++){
+    d += `<circle cx="${pad+r+x*gap}" cy="${pad+r+y*gap+1.5}" r="${r}" fill="#1d4ed8" opacity=".18"/><circle cx="${pad+r+x*gap}" cy="${pad+r+y*gap}" r="${r}" fill="#dbeafe" stroke="#2563eb" stroke-width="2.4"/><circle cx="${pad+r+x*gap-2}" cy="${pad+r+y*gap-2}" r="${r*0.28}" fill="#fff" opacity=".7"/>`;
+  }
+  return svg(pad*2+n*gap, pad*2+n*gap, d);
+}
+function triTiles(n){
+  const s=22, h=s*Math.sqrt(3)/2, pad=8;
+  let d='';
+  for(let row=0; row<n; row++){
+    const y=pad+row*h;
+    const x0=pad+(n-1-row)*s/2;
+    for(let i=0;i<row+1;i++){
+      const x=x0+i*s;
+      d += `<polygon points="${x+s/2},${y} ${x+s},${y+h} ${x},${y+h}" fill="#fde68a" stroke="#b45309" stroke-width="1.4"/>`;
+      if(i<row){
+        d += `<polygon points="${x+s},${y+h} ${x+s/2},${y} ${x+s+s/2},${y}" fill="#fef3c7" stroke="#b45309" stroke-width="1.4"/>`;
+      }
+    }
+  }
+  return svg(pad*2+n*s, pad*2+n*h, d);
+}
+function hexesTri(n){
+  const size=14, w=Math.sqrt(3)*size, h=2*size, pad=16;
+  let d='';
+  function hex(cx,cy,on){
+    const pts=[];
+    for(let i=0;i<6;i++){
+      const a=Math.PI/180*(60*i-30);
+      pts.push((cx+size*Math.cos(a)).toFixed(1)+','+(cy+size*Math.sin(a)).toFixed(1));
+    }
+    return `<polygon points="${pts.join(' ')}" fill="${on?'#ec4899':'#f3f4f6'}" stroke="${on?'#9d174d':'#d1d5db'}" stroke-width="1.4"/>`;
+  }
+  for(let row=0; row<n; row++){
+    const count=row+1;
+    const cy=pad+size+row*(h*0.75);
+    const cx0=pad + (n-count)*w/2 + w/2;
+    for(let i=0;i<count;i++) d += hex(cx0+i*w, cy, true);
+  }
+  return svg(pad*2+n*w, pad*2+n*(h*0.75)+size, d);
+}
+function figCap(html, cap){
+  return `<div class="fig">${html}<small>${cap}</small></div>`;
+}
+function figs(arr){ return `<div class="fig-row">${arr.join('')}</div>`; }
+
+
+/* هر «عدد/عدد» در متن‌ها را به کسر طبقاتی تبدیل می‌کند (نمایش، نه داده) */
+function fracify(s){
+  return String(s==null?'':s).replace(/([۰-۹؟]+)\/([۰-۹]+)/g,
+    '<span class="frac"><span class="frac-n">$1</span><span class="frac-d">$2</span></span>');
+}
+/* شکل واقعی نسبت: ردیف مثلث‌ها و ردیف مربع‌ها */
+function ratioShapes(a,b){
+  const u=34, w=Math.max(a,b)*u+12;
+  let tris='', sqs='';
+  for(let i=0;i<a;i++){ const x=8+i*u; tris += `<polygon points="${x+u/2-3},6 ${x+u-6},34 ${x+2},34" fill="#fda4af" stroke="#be123c" stroke-width="2" stroke-linejoin="round"/>`; }
+  for(let i=0;i<b;i++){ const x=8+i*u; sqs += `<rect x="${x+3}" y="44" width="26" height="26" rx="5" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>`; }
+  return svg(w,78, tris+sqs)
+    + `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="font-weight:900;color:#9f1239">▲ مثلث: ${toFa(a)}</span><span style="font-weight:900;color:#1e40af">■ مربع: ${toFa(b)}</span></div>`;
+}
+
+/* جدول تناسب نمونه برای درس */
+function propTableDemo(){
+  const head=['','×۱','×۲','×۳','×۵'];
+  const r1=['آب‌لیمو','۲','۴','۶','۱۰'], r2=['آب','۳','۶','۹','۱۵'];
+  const row=(r,cls)=>'<tr>'+r.map((c,i)=>`<td class="${i===0?'lab':cls}">${c}</td>`).join('')+'</tr>';
+  return `<div class="tbl-wrap"><table class="tbl ptable"><tr>${head.map((c,i)=>`<th>${i===0?'مقدار':c}</th>`).join('')}</tr>${row(r1,'')}${row(r2,'')}</table></div>
+  <div style="font-weight:900;color:#4c3cc7">ستون‌ها با هم بزرگ می‌شوند؛ در هر ستون نسبت آب‌لیمو به آب همان ۲ به ۳ است.</div>`;
+}
+
+/* ===== 3D SCENES (SVG, animated) ===== */
+let __scUid=0;
+function sceneSVG(i){
+  const u='g'+(++__scUid);
+  const defs=`<defs>
+    <linearGradient id="${u}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+    <linearGradient id="${u}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#99f6e4"/><stop offset="1" stop-color="#0d9488"/></linearGradient>
+    <linearGradient id="${u}c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fda4af"/><stop offset="1" stop-color="#e11d48"/></linearGradient>
+    <linearGradient id="${u}d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bae6fd"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
+  </defs>`;
+  const scenes=[
+   // 0 syrup pitcher + lemon
+   `${defs}<ellipse cx="60" cy="76" rx="34" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-bob"><path d="M38 22 h44 l-6 50 a6 6 0 0 1 -6 5 h-20 a6 6 0 0 1 -6 -5 Z" fill="rgba(255,255,255,.55)" stroke="#fff" stroke-width="2"/>
+    <path d="M41 40 h38 l-4 32 a4 4 0 0 1 -4 3 h-22 a4 4 0 0 1 -4 -3 Z" fill="url(#${u}a)"/>
+    <line x1="66" y1="8" x2="58" y2="38" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="88" cy="58" r="13" fill="#fde047" stroke="#eab308" stroke-width="2.5"/><circle cx="88" cy="58" r="7.5" fill="#fef9c3"/>
+    <circle cx="50" cy="50" r="2.6" fill="#fff" opacity=".8" class="sc-bub"/><circle cx="60" cy="58" r="2" fill="#fff" opacity=".7" class="sc-bub b2"/><circle cx="55" cy="66" r="1.6" fill="#fff" opacity=".6" class="sc-bub b3"/></g>`,
+   // 1 balance scale
+   `${defs}<ellipse cx="60" cy="78" rx="36" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-swing"><line x1="60" y1="14" x2="60" y2="66" stroke="#92400e" stroke-width="5" stroke-linecap="round"/>
+    <line x1="22" y1="24" x2="98" y2="24" stroke="#92400e" stroke-width="5" stroke-linecap="round"/>
+    <path d="M22 24 L10 44 a12 8 0 0 0 24 0 Z" fill="url(#${u}a)" stroke="#b45309" stroke-width="1.6"/>
+    <path d="M98 24 L86 44 a12 8 0 0 0 24 0 Z" fill="url(#${u}b)" stroke="#0f766e" stroke-width="1.6"/>
+    <circle cx="22" cy="38" r="4" fill="#e11d48"/><circle cx="98" cy="38" r="4" fill="#0d9488"/></g>
+    <rect x="44" y="66" width="32" height="7" rx="3.5" fill="#92400e"/><circle cx="60" cy="12" r="5" fill="url(#${u}a)" stroke="#b45309" stroke-width="1.6"/>`,
+   // 2 percent grid
+   `${defs}<ellipse cx="60" cy="78" rx="34" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-bob">${(()=>{let c='';for(let r=0;r<5;r++)for(let k=0;k<5;k++){const on=(r*5+k)<11;c+=`<rect class="sc-cell" style="animation-delay:${(r*5+k)*70}ms" x="${18+k*13}" y="${12+r*12}" width="10.5" height="9.5" rx="2.6" fill="${on?`url(#${u}b)`:'#e0f2fe'}" stroke="${on?'#0f766e':'#7dd3fc'}" stroke-width="1.1"/>`;}return c;})()}
+    <text x="92" y="46" font-size="30" font-weight="900" fill="#f59e0b" stroke="#fff" stroke-width="1">٪</text></g>`,
+   // 3 shop
+   `${defs}<ellipse cx="60" cy="78" rx="38" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-bob"><path d="M18 30 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 4 0 Z" fill="url(#${u}c)"/>
+    <rect x="24" y="30" width="72" height="38" rx="4" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+    <rect x="24" y="56" width="72" height="5" fill="#fb923c"/>
+    <circle cx="40" cy="44" r="6" fill="url(#${u}a)"/><rect x="56" y="38" width="12" height="12" rx="3" fill="url(#${u}d)"/><polygon points="82,50 88,36 94,50" fill="url(#${u}b)"/>
+    <g class="sc-tag"><rect x="72" y="58" width="26" height="15" rx="4" fill="#ef4444"/><text x="85" y="69" text-anchor="middle" font-size="8.5" font-weight="900" fill="#fff">٪۲۰-</text></g></g>`,
+   // 4 golden spiral
+   `${defs}<ellipse cx="60" cy="78" rx="34" ry="5" fill="rgba(0,0,0,.16)"/>
+    <g class="sc-spin-slow"><rect x="20" y="14" width="80" height="56" rx="8" fill="rgba(254,243,199,.65)" stroke="#d97706" stroke-width="2"/>
+    <path d="M20 70 V30 a40 40 0 0 1 40 40 a24 24 0 0 0 24 -24 a14 14 0 0 1 -14 14 a8 8 0 0 0 -8 -8" fill="none" stroke="#d97706" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="66" cy="52" r="3.4" fill="#f59e0b"/></g>
+    <text class="sc-spark" x="26" y="24" font-size="13" fill="#f59e0b">✦</text><text class="sc-spark s2" x="94" y="30" font-size="11" fill="#fb7185">✦</text><text class="sc-spark s3" x="88" y="66" font-size="12" fill="#14b8a6">✦</text>`
+  ];
+  return `<svg class="scene-svg" viewBox="0 0 120 84" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${scenes[i]||scenes[0]}</svg>`;
+}
+function bindTilt(el, max){
+  if(!el || !window.matchMedia) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(!window.matchMedia('(pointer: fine)').matches) return;
+  el.classList.add('tilt');
+  el.addEventListener('mousemove', e=>{
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/Math.max(1,r.width)-.5, y=(e.clientY-r.top)/Math.max(1,r.height)-.5;
+    el.style.transform=`perspective(700px) rotateY(${(-x*max).toFixed(2)}deg) rotateX(${(y*max).toFixed(2)}deg) translateY(-3px)`;
+  });
+  el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
+}
+/* ===== NESBAT VISUALS: ratio bars, dots, percent grid/pie ===== */
+function dotsRow(n, fill, stroke){
+  let d='';
+  for(let i=0;i<n;i++) d += `<circle cx="${18+i*34}" cy="20" r="12" fill="${fill}" stroke="${stroke}" stroke-width="2.2"/><circle cx="${14+i*34}" cy="16" r="3.4" fill="#fff" opacity=".65"/>`;
+  return d;
+}
+function ratioDots(a,b,la,lb){
+  const w=Math.max(a,b)*34+10;
+  return svg(w,96,`<g transform="translate(4,2)">${dotsRow(a,'#fda4af','#be123c')}</g><g transform="translate(4,48)">${dotsRow(b,'#93c5fd','#1d4ed8')}</g>`)
+    + `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:4px"><span style="background:#fff1f2;color:#9f1239;border:1.5px solid #fda4af;border-radius:999px;padding:3px 10px;font-weight:900;font-size:.8rem">🔴 ${la} : ${toFa(a)}</span><span style="background:#eff6ff;color:#1e40af;border:1.5px solid #93c5fd;border-radius:999px;padding:3px 10px;font-weight:900;font-size:.8rem">🔵 ${lb} : ${toFa(b)}</span></div>`;
+}
+function ratioBars(a,b,la,lb){
+  const unit=26, w=Math.max(a,b)*unit+16;
+  let cellsA='',cellsB='';
+  for(let i=0;i<a;i++) cellsA += `<rect x="${8+i*unit}" y="8" width="${unit-4}" height="24" rx="6" fill="#fb7185" stroke="#be123c" stroke-width="1.6"/>`;
+  for(let i=0;i<b;i++) cellsB += `<rect x="${8+i*unit}" y="44" width="${unit-4}" height="24" rx="6" fill="#38bdf8" stroke="#0369a1" stroke-width="1.6"/>`;
+  return svg(w,80, cellsA+cellsB)
+    + `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="font-weight:900;color:#9f1239">${la} ${toFa(a)}</span><span style="font-weight:900;color:#075985">${lb} ${toFa(b)}</span></div>`;
+}
+function pctGrid(p, color){
+  color = color || '#f59e0b';
+  let cells='';
+  for(let r=0;r<10;r++) for(let c=0;c<10;c++){
+    const on = (r*10+c) < p;
+    cells += `<rect x="${6+c*17}" y="${6+r*17}" width="14" height="14" rx="3.5" fill="${on?color:'#eef2ff'}" stroke="${on?'#b45309':'#c7d2fe'}" stroke-width="1.1"/>`;
+  }
+  return svg(182,182,cells) + `<div style="font-weight:900;color:#92400e;margin-top:2px">${toFa(p)} از ۱۰۰ خانه رنگی است</div>`;
+}
+function pctPie(p, color){
+  color = color || '#14b8a6';
+  const ang = Math.max(0,Math.min(100,p))/100*Math.PI*2;
+  const x = 70+62*Math.sin(ang), y = 70-62*Math.cos(ang);
+  const large = p>50?1:0;
+  const wedge = p>=100 ? `<circle cx="70" cy="70" r="62" fill="${color}"/>` : (p<=0?'':`<path d="M70 70 L70 8 A62 62 0 ${large} 1 ${x.toFixed(1)} ${y.toFixed(1)} Z" fill="${color}"/>`);
+  return svg(140,140,`<circle cx="70" cy="70" r="62" fill="#eef2ff" stroke="#a5b4fc" stroke-width="2"/>${wedge}<circle cx="70" cy="70" r="62" fill="none" stroke="#6366f1" stroke-width="2"/><text x="70" y="76" text-anchor="middle" font-size="20" font-weight="900" fill="#312e81">${toFa(p)}٪</text>`);
+}
+function balanceViz(a,b,c,d){
+  return svg(300,120,`<line x1="150" y1="18" x2="150" y2="86" stroke="#4c3cc7" stroke-width="5" stroke-linecap="round"/><line x1="36" y1="34" x2="264" y2="34" stroke="#4c3cc7" stroke-width="5" stroke-linecap="round"/><path d="M36 34 L18 72 H54 Z" fill="#fde68a" stroke="#b45309" stroke-width="2"/><path d="M264 34 L246 72 H282 Z" fill="#99f6e4" stroke="#0f766e" stroke-width="2"/><rect x="118" y="86" width="64" height="12" rx="6" fill="#4c3cc7"/><text x="36" y="62" text-anchor="middle" font-weight="900" fill="#92400e" font-size="15">${a} به ${b}</text><text x="264" y="62" text-anchor="middle" font-weight="900" fill="#115e59" font-size="15">${c} به ${d}</text>`)
+   + `<div style="font-weight:900;color:#4c3cc7">⚖️ دو نسبت روی ترازو؛ اگر برابر باشند ترازو صاف می‌ایستد!</div>`;
+}
+function shopTag(price, off){
+  return `<div style="display:inline-block;background:linear-gradient(160deg,#fff,#fff7ed);border:3px dashed #fb923c;border-radius:18px;padding:14px 20px;box-shadow:0 10px 18px rgba(234,88,12,.18)"><div style="font-size:.82rem;color:#9a3412;font-weight:900">🏷️ برچسب قیمت</div><div style="font-size:1.5rem;font-weight:900;color:#7c2d12">${toFa(price)} هزار تومان</div><div style="display:inline-block;background:#ef4444;color:#fff;border-radius:999px;padding:3px 12px;font-weight:900;margin-top:4px">${toFa(off)}٪ تخفیف</div></div>`;
+}
+function goldRect(){
+  return svg(300,150,`<rect x="14" y="14" width="272" height="122" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="3"/><rect x="14" y="14" width="168" height="122" rx="14" fill="#fde68a" stroke="#d97706" stroke-width="2"/><rect x="182" y="14" width="104" height="74" fill="#fcd34d" stroke="#d97706" stroke-width="2"/><rect x="182" y="88" width="62" height="48" fill="#fbbf24" stroke="#d97706" stroke-width="2"/><text x="92" y="82" text-anchor="middle" font-weight="900" fill="#92400e">بزرگ</text><text x="232" y="56" text-anchor="middle" font-weight="900" fill="#92400e" font-size="13">کوچک</text>`)
+   + `<div style="font-weight:900;color:#92400e">✨ مستطیل طلایی: نسبت طول به عرضش در همهٔ اندازه‌ها یکی می‌ماند (نزدیک ۱٫۶)</div>`;
+}
+
+
+/* ===== STATE ===== */
+function fresh(){
+  return {name:'', stars:0, sound:true, land:0, step:0, tries:{}, done:{}, started:Date.now(), maxByQ:{}, sentLands:[], landCleared:{}, combo:0, maxCombo:0};
+}
+let S = fresh();
+let migratedSave = false;
+try{
+  const raw=localStorage.getItem(KEY);
+  if(raw) S = Object.assign(fresh(), JSON.parse(raw));
+  else {
+    /* ذخیرهٔ قدیمی با شمارهٔ گام‌ها نگه داشته می‌شد و با اضافه‌شدن سؤال‌های تازه
+       جابه‌جا شده بود؛ فقط نام را نگه می‌داریم تا بازی از گام اولِ درست شروع شود. */
+    const old=localStorage.getItem(OLD_KEY);
+    if(old){ const o=JSON.parse(old); if(o && o.name){ S.name=o.name; migratedSave=true; persist(); } }
+  }
+}catch(e){}
+soundOn = S.sound !== false;
+function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+function paintFace(el, mood){
+  if(!el) return;
+  const m = mood||'happy';
+  if(window.Hakim && typeof Hakim.renderFace==='function'){
+    Hakim.renderFace(m, el);
+  } else {
+    el.textContent = {happy:'😊',excited:'🤩',thinking:'🤔',sad:'🥺',normal:'🧙',wise:'🧙',wink:'😉',surprised:'😮',sleepy:'😴'}[m]||'🧙';
+    el.style.fontSize='42px'; el.style.display='grid'; el.style.placeItems='center';
+  }
+}
+/* حکیم فقط یک‌جا در صفحه است: حباب داخل کارت بازی.
+   چهره را Hakim.renderFace از hakim-core.js (فایل خارجی سایت) می‌سازد؛
+   هیچ کد/تصویری از حکیم داخل این فایل نیست تا حجم بازی کم بماند.
+   Hakim.saveSession و Hakim.setName هم از همان هسته صدا زده می‌شوند. */
+function hkSay(text, mood){
+  const m = mood || 'happy';
+  faceMood(m);
+  const el = $('#hakimText');
+  const play = $('#play');
+  if(el && play && !play.classList.contains('hidden')) el.innerHTML = fracify(text||'');
+}
+
+/* ===== STEPS ===== */
+const STEPS = [
+ /* ================= LAND 0: نسبت ================= */
+ {land:0, teach:true, title:'درس ۱: نسبت یعنی مقایسه',
+  learn:['دو مقدار را خوب بشمار؛ مثلاً چند لیوان آب‌لیمو و چند لیوان آب داری.','به همان ترتیبی که سؤال می‌گوید بنویس: مقدار اول «به» مقدار دوم.','ترتیب را جابه‌جا نکن؛ ۲ به ۳ با ۳ به ۲ فرق دارد!'],
+  body:'وقتی می‌خواهیم دو مقدار را با هم مقایسه کنیم، از <b>نسبت</b> استفاده می‌کنیم. مثال: برای شربت، به ازای هر <b>۲ لیوان آب‌لیمو</b>، <b>۳ لیوان آب</b> می‌ریزیم؛ یعنی نسبت آب‌لیمو به آب، <b>۲ به ۳</b> است. ترتیب مهم است!',
+  visual:()=>figs([figCap(ratioBars(2,3,'آب‌لیمو','آب'),'نسبت ۲ به ۳')]),
+  hakim:'نسبت را این‌طوری می‌خوانیم: «۲ به ۳». اول آب‌لیمو، بعد آب. اگر جایشان عوض شود، نسبت عوض می‌شود!'},
+ {land:0, title:'کدام نسبت قرمز به آبی است؟',
+  body:'توپ‌ها را بشمار: اول قرمزها، بعد آبی‌ها. نسبت توپ قرمز به توپ آبی کدام است؟',
+  visual:()=>figs([figCap(ratioDots(4,6,'قرمز','آبی'),'قرمزها بالا، آبی‌ها پایین')]),
+  hakim:'ترتیب را یادت نرود: اول قرمز، بعد آبی.',
+  type:'choice', options:['۶ به ۴','۴ به ۶','۴ به ۱۰','۱۰ به ۴'], answer:1,
+  why:['۴ توپ قرمز و ۶ توپ آبی داریم.','نسبت قرمز به آبی یعنی اول ۴، بعد ۶: «۴ به ۶».']},
+ {land:0, title:'همهٔ توپ‌ها چندتاست؟',
+  body:'در شکل قبلی ۴ توپ قرمز و ۶ توپ آبی بود. تعداد همهٔ توپ‌ها چندتاست؟',
+  type:'input', answer:10, unit:'توپ',
+  hakim:'برای نسبتِ «بخشی به کل» اول باید کل را داشته باشیم: ۴+۶.',
+  hint:'۴ + ۶ = ؟',
+  why:['کل = قسمت اول + قسمت دوم = ۴ + ۶ = ۱۰ توپ.']},
+ {land:0, title:'نسبت آبی به کل',
+  body:'همان ۴ قرمز و ۶ آبی. نسبت توپ‌های آبی به همهٔ توپ‌ها به صورت کسر کدام است؟',
+  type:'choice', options:['۶/۴','۴/۱۰','۶/۱۰','۱۰/۶'], answer:2,
+  hakim:'یادت باشد: صورت کسر، همان مقداری است که اول گفته می‌شود؛ مخرج، مقدار دوم (اینجا کل ۱۰ تا).',
+  why:['نسبت «آبی به کل» = ۶ به ۱۰.','به صورت کسر می‌نویسیم: ۶/۱۰.']},
+ {land:0, teach:true, title:'درس ۲: نسبت و کسر، ساده کردن',
+  learn:['یک عدد پیدا کن که هر دو طرف بر آن بخش‌پذیر باشند.','صورت و مخرج را هر دو بر همان عدد تقسیم کن.','تا وقتی دیگر نشد، ادامه بده؛ نسبت کوچک‌شده همان نسبت قبلی است.'],
+  body:'نسبت «الف به ب» را می‌توانیم به صورت کسر <b>الف/ب</b> بنویسیم. مثل کسرها، نسبت را هم می‌شود <b>ساده</b> کرد: صورت و مخرج را بر یک عدد تقسیم می‌کنیم. ۶ به ۹، هر دو بر ۳ تقسیم می‌شوند و می‌شود <b>۲ به ۳</b>؛ مزهٔ شربت عوض نمی‌شود!',
+  visual:()=>figs([figCap(ratioBars(6,9,'قبل از ساده','کردن'),'۶ به ۹'), figCap(ratioBars(2,3,'بعد از ساده','کردن'),'۲ به ۳')]),
+  hakim:'ساده کردن یعنی همان نسبت، با عددهای کوچک‌تر. هر دو طرف را بر یک عدد تقسیم کن.'},
+ {land:0, title:'ساده‌شدهٔ ۶ به ۹',
+  body:'نسبت ۶ به ۹ وقتی کاملاً ساده شود کدام است؟',
+  type:'choice', options:['۳ به ۲','۲ به ۳','۱ به ۳','۶ به ۳'], answer:1,
+  hakim:'هر دو عدد بر ۳ بخش‌پذیرند: ۶÷۳ و ۹÷۳.',
+  why:['۶ ÷ ۳ = ۲ و ۹ ÷ ۳ = ۳.','پس ۶ به ۹ ساده می‌شود: ۲ به ۳.']},
+ {land:0, title:'ساده کن: ۱۰ به ۱۵',
+  body:'نسبت ۱۰ به ۱۵ را ساده می‌کنیم و می‌شود «؟ به ۳». عدد گمشده (صورت نسبت ساده) چند است؟',
+  type:'input', answer:2,
+  hakim:'هر دو بر ۵ تقسیم می‌شوند. ۱۰÷۵ چند می‌شود؟',
+  hint:'۱۰ ÷ ۵ = ۲',
+  why:['۱۰ ÷ ۵ = ۲ و ۱۵ ÷ ۵ = ۳.','نسبت ساده: ۲ به ۳.']},
+ {land:0, title:'آزمایشگاه شربت: هم‌مزه بساز!',
+  body:'دستور اصلی شربت ۲ به ۳ است. حالا با دسته‌ها یک شربت <b>بزرگ‌تر ولی هم‌مزه</b> بساز: نسبتی برابر دستور اصلی، ولی با لیوان‌های بیشتر!',
+  hakim:'هر دو دسته را با هم حرکت بده. وقتی نسبتت با ۲ به ۳ برابر شد و از دستور اصلی بزرگ‌تر بود، دکمهٔ بررسی را بزن.',
+  type:'mixer', ratio:[2,3],
+  why:['نسبت هم‌مزه یعنی هر دو طرف در یک عدد ضرب شده باشند.','مثلاً ۴ به ۶ یعنی هر دو ×۲؛ مزه همان است، فقط شربت بیشتر شده!']},
+ {land:0, title:'شکلِ نسبت ۳ به ۲ را پیدا کن',
+  body:'کدام شکل نسبت مثلث به مربعِ «۳ به ۲» را نشان می‌دهد؟',
+  type:'pick', answer:0,
+  options:[
+    {svg:()=>ratioShapes(3,2), label:'۳ مثلث، ۲ مربع'},
+    {svg:()=>ratioShapes(2,3), label:'۲ مثلث، ۳ مربع'},
+    {svg:()=>ratioShapes(3,3), label:'۳ مثلث، ۳ مربع'}
+  ],
+  hakim:'اول مثلث‌ها را بشمار، بعد مربع‌ها؛ ترتیب مهم است.',
+  why:['نسبت ۳ به ۲ یعنی ۳ مثلث در برابر ۲ مربع.']},
+ {land:0, title:'جدول نسبت شکل‌ها',
+  body:'در یک قاب، ۸ دایره و ۱۲ مربع کشیده‌ایم. جدول نسبت‌ها را کامل کن (همه را ساده کن).',
+  type:'table',
+  table:{head:['نسبت','دایره به مربع','مربع به دایره','دایره به کل'], lab:'صورت نسبت ساده', given:{}, answers:{0:2,1:3,2:2}},
+  hakim:'دایره به مربع: ۸ به ۱۲، هر دو بر ۴ → ۲ به ۳، صورتش ۲ است. مربع به دایره برعکس می‌شود. دایره به کل: ۸ به ۲۰ → ۲ به ۵، صورتش ۲.',
+  why:['۸ به ۱۲ ساده می‌شود ۲ به ۳.','۱۲ به ۸ ساده می‌شود ۳ به ۲.','۸ به ۲۰ ساده می‌شود ۲ به ۵.']},
+ {land:0, title:'مستطیل رنگی کتاب: قسمت به قسمت، قسمت به کل',
+  body:'یک مستطیل به ۸ قسمت مساوی تقسیم شده و ۳ قسمت آن رنگی است (دقیقاً تمرین اول کتاب). نسبت قسمت رنگ‌شده به رنگ‌نشده کدام است؟',
+  visual:()=>figs([figCap(rectGrid(4,2,'#fda4af','#be123c'),'۳ قسمت از ۸ قسمت رنگی است')]),
+  hakim:'رنگ‌شده ۳ قسمت و رنگ‌نشده ۵ قسمت است. سؤال «رنگی به رنگ‌نشده» را می‌خواهد، نه به کل!',
+  type:'choice', options:['۳ به ۸','۳ به ۵','۵ به ۳','۵ به ۸'], answer:1,
+  why:['قسمت رنگ‌شده: ۳ و قسمت رنگ‌نشده: ۸−۳=۵.','نسبت رنگ‌شده به رنگ‌نشده: ۳ به ۵.','اگر به کل می‌خواست می‌شد ۳ به ۸؛ به ترتیب سؤال دقت کن!']},
+ {land:0, title:'چاشنی سه‌تایی کتاب: نسبت سه مقدار',
+  body:'برای چاشنی کتاب، ۳ قاشق زردچوبه، ۱ قاشق فلفل و ۲ قاشق زنجبیل مخلوط می‌شود. اگر این دستور را دو برابر کنیم (۱۲ قاشق)، از هر ادویه چند قاشق داریم؟ هر سه را بنویس.',
+  hakim:'نسبت می‌تواند سه مقداری هم باشد! هر سه را ×۲ کن.',
+  type:'multi',
+  fields:[
+    {label:'قاشق زردچوبه', answer:6, unit:'قاشق'},
+    {label:'قاشق فلفل', answer:2, unit:'قاشق'},
+    {label:'قاشق زنجبیل', answer:4, unit:'قاشق'}
+  ],
+  why:['نسبت سه‌تایی: ۳ به ۱ به ۲.','دو برابر: ۶ به ۲ به ۴ و جمعشان ۱۲ قاشق است.']},
+ {land:0, title:'مستطیل کتاب: طول چند برابر عرض است؟',
+  body:'در مستطیل روبه‌رو طول ۶ واحد و عرض ۲ واحد است. نسبت طول به عرض را ساده کن؛ طول چند برابر عرض است؟ همان عدد را بنویس.',
+  visual:()=>figs([figCap(rectGrid(6,2,'#99f6e4','#0f766e'),'طول ۶ و عرض ۲')]),
+  hakim:'۶ به ۲ را ساده کن: هر دو بر ۲. جواب ساده‌شده می‌گوید طول چند برابر عرض است.',
+  type:'input', answer:3, unit:'برابر',
+  hint:'۶ ÷ ۲ = ۳',
+  why:['نسبت طول به عرض: ۶ به ۲ که ساده می‌شود ۳ به ۱.','پس طول ۳ برابر عرض است.']},
+ {land:0, title:'چالش باغ: نسبت برعکس',
+  body:'نسبت گل‌های زرد به قرمز در باغ ۵ به ۳ است و روی هم ۱۶ گل داریم. گل‌های زرد چندتاست؟ (راهنما: هر «دور» نسبت ۵+۳=۸ گل دارد؛ ۱۶ یعنی ۲ دور؛ پس زردها ۲×۵ تا هستند.)',
+  type:'input', answer:10, unit:'گل',
+  hakim:'۱۶ ÷ ۸ = ۲ دور. در هر دور ۵ گل زرد هست؛ ۲×۵=۱۰.',
+  hint:'اول ۱۶ را بر ۸ تقسیم کن، بعد در ۵ ضرب کن.',
+  why:['هر دور: ۵+۳=۸ گل.','۱۶÷۸=۲ دور.','گل زرد: ۲×۵=۱۰.']},
+
+ /* ================= LAND 1: تناسب ================= */
+ {land:1, teach:true, title:'درس ۱: نسبت‌های مساوی و تناسب',
+  learn:['اول ببین یک طرف چند برابر شده است.','دقیقاً همان کار را با طرف دیگر هم بکن.','اگر هر دو طرف یک کار دیدند، نسبت عوض نشده و تناسب درست است.'],
+  body:'اگر صورت و مخرج یک نسبت را در یک عدد (غیر صفر) <b>ضرب</b> یا بر یک عدد <b>تقسیم</b> کنیم، نسبت تازه با قبلی <b>مساوی</b> است. وقتی دو نسبت مساوی باشند، یک <b>تناسب</b> ساخته‌اند؛ مثل ۲/۳ = ۴/۶. در تناسب، جدول هم با ضرب جلو می‌رود.',
+  visual:()=>figs([figCap(balanceViz('۲','۳','۴','۶'),'۲ به ۳ = ۴ به ۶')]),
+  hakim:'تناسب یعنی دو نسبت دست هم را گرفته‌اند و برابرند. هر دو طرف را در ۲ ضرب کن: ۲ به ۳ می‌شود ۴ به ۶.'},
+ {land:1, teach:true, title:'درس ۲: جدول تناسب؛ ماشین حساب نسبت‌ها',
+  body:'<b>جدول تناسب</b> بهترین ابزار این فصل است: دو ردیف برای دو مقدار و چند ستون برای حالت‌های مختلف. در هر ستون، نسبت دو ردیف یکی است. برای پر کردن جدول دو راه داری: <b>در ستون‌ها</b> جلو برو (هر دو ردیف در یک عدد ضرب می‌شوند) یا <b>در ردیف</b> جلو برو (از یک ستون به ستون دیگر). اگر یک خانه خالی بود، اول ببین ستونش چند برابر ستون معلوم شده است.',
+  learn:['دو ردیف را با برچسب بنویس؛ مثلاً ردیف بالا آب‌لیمو و ردیف پایین آب.','در هر ستون نسبت بالا به پایین باید همان نسبت اصلی بماند.','برای خانهٔ خالی، ضریب ستون را پیدا کن و همان را روی ردیف دیگر اعمال کن.','آخر کار یک ستون را چک کن: آیا نسبتش با ستون اول برابر است؟'],
+  visual:()=>propTableDemo(),
+  hakim:'جدول تناسب مثل یک ماشین است: یک ستون را می‌دهی، ستون‌های هم‌مزه بیرون می‌آیند. الان خودت چند جدول را کامل می‌کنی؛ چند خانه با هم!'},
+ {land:1, title:'جدول تناسب شربت',
+  body:'دستور شربت باغ: ۲ لیوان آب‌لیمو برای ۳ لیوان آب. اگر دستور را ۲ برابر و ۳ برابر کنیم، جدول را کامل کن.',
+  visual:()=>figs([figCap(ratioBars(2,3,'آب‌لیمو','آب'),'دستور اصلی')]),
+  type:'table',
+  table:{head:['','×۱','×۲','×۳'], lab:'لیوان آب‌لیمو', given:{0:2}, answers:{1:4,2:6}},
+  hakim:'هر دو مقدار با هم ضرب می‌شوند: آب‌لیمو ۲، ۴، ۶ و آب ۳، ۶، ۹.',
+  why:['×۲: آب‌لیمو ۴ و آب ۶.','×۳: آب‌لیمو ۶ و آب ۹.','چون هر دو طرف در یک عدد ضرب شدند، نسبت عوض نشده است.']},
+ {land:1, title:'آشپزخانهٔ تناسب: دستور را ۳ برابر کن',
+  body:'دستور شربت ۲ لیوان آب‌لیمو و ۳ لیوان آب است. مهمان‌ها زیاد شده‌اند! دسته را حرکت بده تا دستور دقیقاً <b>۳ برابر</b> شود، بعد بررسی کن.',
+  hakim:'به عددهای زیر دسته نگاه کن؛ هر دو مقدار باید با هم ۳ برابر شوند.',
+  type:'scale', base:[2,3], factor:3, names:['آب‌لیمو','آب'],
+  why:['۳ برابر یعنی هر دو مقدار ×۳: آب‌لیمو ۶ و آب ۹ لیوان.','چون هر دو با هم ضرب شدند، مزه عوض نشده است.']},
+ {land:1, title:'عدد گمشدهٔ تناسب',
+  body:'در تناسب ۲/۳ = ؟/۱۲ عدد گمشده چند است؟ (راهنما: ۳ تا ۱۲ یعنی ×۴؛ پس صورت هم ×۴ می‌شود.)',
+  type:'input', answer:8,
+  hakim:'ببین مخرج چند برابر شده؛ صورت را هم همان‌قدر برابر کن. ۳×۴=۱۲، پس ۲×۴=۸.',
+  hint:'۲ × ۴ = ۸',
+  why:['مخرج از ۳ به ۱۲ رسیده: ×۴.','صورت: ۲×۴=۸.','تناسب: ۲/۳ = ۸/۱۲.']},
+ {land:1, title:'کدام تناسب درست است؟',
+  body:'کدام گزینه یک تناسب درست (دو نسبت مساوی) است؟',
+  type:'choice', options:['۳/۴ = ۶/۱۰','۲/۵ = ۴/۱۰','۱/۳ = ۳/۶','۴/۶ = ۲/۴'], answer:1,
+  hakim:'در هر گزینه هر دو طرف را ساده کن و ببین برابر می‌شوند یا نه. ۴/۱۰ ساده می‌شود ۲/۵.',
+  why:['۴/۱۰ با تقسیم بر ۲ می‌شود ۲/۵.','پس ۲/۵ = ۴/۱۰ یک تناسب درست است.','بقیه بعد از ساده کردن برابر نمی‌شوند.']},
+ {land:1, title:'جدول تناسب کامل شربت (هر دو ردیف!)',
+  body:'حالا دیگر فقط یک ردیف نیست؛ <b>هر دو ردیف</b> جدول را کامل کن. دستور اصلی ستون اول است: ۲ لیوان آب‌لیمو و ۳ لیوان آب.',
+  hakim:'ستون‌به‌ستون جلو برو: ×۲، ×۳، ×۴. در هر ستون هر دو عدد را با هم ببر بالا.',
+  type:'table2',
+  table2:{head:['مقدار','ستون ۱','ستون ۲','ستون ۳','ستون ۴'],
+    rows:[
+      {lab:'🍋 آب‌لیمو', given:{0:2}, answers:{1:4,2:6,3:8}},
+      {lab:'💧 آب', given:{0:3}, answers:{1:6,2:9,3:12}}
+    ]},
+  why:['ستون ۲ یعنی ×۲: ۴ و ۶.','ستون ۳ یعنی ×۳: ۶ و ۹.','ستون ۴ یعنی ×۴: ۸ و ۱۲. در همهٔ ستون‌ها نسبت ۲ به ۳ مانده است.']},
+ {land:1, title:'جدول تناسب خرید مداد',
+  body:'هر مداد ۲ هزار تومان است. جدول قیمت را کامل کن: برای ۱، ۳ و ۵ مداد چند هزار تومان می‌دهیم؟ (خانهٔ ۱ مداد داده شده است.)',
+  type:'table',
+  table:{head:['تعداد مداد','۱','۳','۵'], lab:'قیمت (هزار تومان)', given:{0:2}, answers:{1:6,2:10}},
+  hakim:'قیمت هر مداد ثابت است: تعداد × ۲. این ثابت بودن همان قلب تناسب است!',
+  why:['۳ مداد: ۳×۲=۶ هزار تومان.','۵ مداد: ۵×۲=۱۰ هزار تومان.']},
+ {land:1, title:'جدول تناسب شیر و کلسیم (کتاب)',
+  body:'در آزمایشگاه شیر کتاب درسی دیدیم که کلسیم و شیر متناسب‌اند: در هر ۵ لیتر شیر، ۳ گرم کلسیم هست. جدول را کامل کن؛ از جدول بخوان که برای ۶ گرم کلسیم چند لیتر شیر لازم است، آن را هم در خانهٔ آخر ردیف شیر می‌بینی!',
+  hakim:'ردیف‌ها را با هم ببر جلو: شیر ×۲ و ×۴ می‌شود، کلسیم هم همان کار را می‌کند.',
+  type:'table2',
+  table2:{head:['مقدار','حالت ۱','حالت ۲','حالت ۳','حالت ۴'],
+    rows:[
+      {lab:'🥛 شیر (لیتر)', given:{0:5}, answers:{1:10,2:20,3:15}},
+      {lab:'🦴 کلسیم (گرم)', given:{0:3}, answers:{1:6,2:12,3:9}}
+    ]},
+  why:['۵ لیتر ← ۳ گرم، پس ۱۰ لیتر ← ۶ گرم و ۲۰ لیتر ← ۱۲ گرم.','۱۵ لیتر ← ۹ گرم؛ چون ۱۵ سه برابر ۵ است و ۹ سه برابر ۳.']},
+ {land:1, title:'تناسب در دستور کیک',
+  body:'برای کیک، نسبت آرد به شکر ۵ به ۲ است. اگر ۱۰ پیمانه آرد بریزیم، چند پیمانه شکر لازم است؟',
+  type:'input', answer:4, unit:'پیمانه',
+  hakim:'آرد از ۵ به ۱۰ رسیده یعنی ×۲؛ شکر هم ×۲ می‌شود: ۲×۲=۴.',
+  hint:'۵×۲=۱۰، پس ۲×۲=۴.',
+  why:['آرد دو برابر شده (۵→۱۰).','شکر هم دو برابر می‌شود: ۲×۲=۴ پیمانه.']},
+ {land:1, title:'جدول تناسب سرعت حلزون',
+  body:'حلزون کتاب در ۴ ساعت ۴۸ متر می‌رود و سرعتش ثابت است. جدول زمان و مسافت را کامل کن تا سرعتش را خودت کشف کنی.',
+  hakim:'اگر ۴ ساعت ۴۸ متر است، ۱ ساعت یک‌چهارم آن است. از همانجا بقیهٔ ردیف را بساز.',
+  type:'table2',
+  table2:{head:['','۱ ساعت','۲ ساعت','۴ ساعت','۸ ساعت'],
+    rows:[
+      {lab:'⏱️ زمان (ساعت)', given:{0:1,1:2,2:4,3:8}, answers:{}},
+      {lab:'🐌 مسافت (متر)', given:{2:48}, answers:{0:12,1:24,3:96}}
+    ]},
+  why:['۴۸ ÷ ۴ = ۱۲ متر در ۱ ساعت.','۲ ساعت: ۲۴ متر و ۸ ساعت: ۹۶ متر.','مسافت و زمان متناسب‌اند؛ جدول این را نشان می‌دهد.']},
+ {land:1, title:'کدام شکل نسبت مساوی دارد؟',
+  body:'نسبت اصلی ۲ به ۴ (ساده: ۱ به ۲) است. کدام نوار نسبت مساوی با آن را نشان می‌دهد؟',
+  type:'pick', answer:1,
+  options:[
+    {svg:()=>ratioBars(2,3,'قرمز','آبی'), label:'۲ به ۳'},
+    {svg:()=>ratioBars(3,6,'قرمز','آبی'), label:'۳ به ۶'},
+    {svg:()=>ratioBars(4,4,'قرمز','آبی'), label:'۴ به ۴'}
+  ],
+  hakim:'۳ به ۶ را ساده کن: هر دو بر ۳ → ۱ به ۲. همان نسبت اصلی است!',
+  why:['۳/۶ ساده می‌شود ۱/۲.','۲/۴ هم ساده می‌شود ۱/۲. پس این دو نسبت مساوی‌اند.']},
+ {land:1, title:'زنجیرهٔ نسبت‌های مساوی (سه جای خالی)',
+  body:'این زنجیره را کامل کن تا چهار نسبت مساوی کنار هم بنشینند. هر سه جای خالی را پر کن.',
+  hakim:'از اولین نسبت شروع کن: صورت و مخرج هر بار در یک عدد ضرب می‌شوند. هر خانه را از همسایه‌اش پیدا کن.',
+  type:'multi',
+  fields:[
+    {label:'نسبت دوم: صورتِ ۶ به ؟', answer:8, prefix:'۶ به'},
+    {label:'نسبت سوم: ؟ به ۲۰', answer:15, suffix:'به ۲۰'},
+    {label:'نسبت چهارم: ۱۲ به ؟', answer:16, prefix:'۱۲ به'}
+  ],
+  why:['زنجیره از نسبت ۳ به ۴ شروع می‌شود.','×۲ می‌شود ۶ به ۸، ×۵ (از ۴) می‌شود ۱۵ به ۲۰، و ۱۲ به ۱۶ یعنی ×۴.','هر چهار نسبت با هم برابرند.']},
+ {land:1, title:'نرخ واحد: خودروی کتاب',
+  body:'یک خودرو ۴۰۰ کیلومتر را در ۵ ساعت می‌رود (تمرین کتاب) و سرعتش ثابت است. این خودرو در ۱ ساعت چند کیلومتر می‌رود؟',
+  hakim:'نرخ واحد یعنی مقدار برای ۱ واحد. ۴۰۰ را بر ۵ تقسیم کن.',
+  type:'input', answer:80, unit:'کیلومتر در ساعت',
+  hint:'۴۰۰ ÷ ۵ = ۸۰',
+  why:['در ۵ ساعت ۴۰۰ کیلومتر، پس در ۱ ساعت: ۴۰۰ ÷ ۵ = ۸۰ کیلومتر.','به این «نرخ واحد» می‌گوییم؛ قلب همهٔ جدول‌های تناسب است.']},
+ {land:1, title:'نسبت مساوی با مخرج داده‌شده (کتاب)',
+  body:'یک نسبت مساوی با نسبت سه‌چهارم بنویس که مخرج آن ۲۰ باشد. صورت آن چند می‌شود؟',
+  hakim:'مخرج از ۴ به ۲۰ یعنی ×۵؛ صورت هم ×۵ می‌شود.',
+  type:'input', answer:15,
+  hint:'۳ × ۵ = ۱۵',
+  why:['۴ × ۵ = ۲۰، پس صورت: ۳ × ۵ = ۱۵.','نسبت تازه: پانزده بیستم که با سه‌چهارم برابر است.']},
+ {land:1, title:'کدام دو نسبت در مربی‌ها مساوی‌اند؟ (کتاب)',
+  body:'در تمرین کتاب آمده: برای ۴۰ شناگر ۶ مربی و برای ۶۰ شناگر ۹ مربی هست. نسبت شناگر به مربی در هر دو گروه را ساده کن؛ آیا این دو نسبت مساوی‌اند؟',
+  hakim:'هر دو را ساده کن: ۴۰ به ۶ و ۶۰ به ۹؛ هر دو بر عددهایشان تقسیم می‌شوند.',
+  type:'choice',
+  options:['مساوی نیستند','مساوی‌اند؛ هر دو ۲۰ به ۳ می‌شوند','مساوی‌اند؛ هر دو ۶ به ۱ می‌شوند','فقط دومی بزرگ‌تر است'],
+  answer:1,
+  why:['۴۰ به ۶ با تقسیم بر ۲ می‌شود ۲۰ به ۳.','۶۰ به ۹ با تقسیم بر ۳ می‌شود ۲۰ به ۳.','پس دو نسبت مساوی‌اند و یک تناسب می‌سازند.']},
+ {land:1, title:'مقیاس نقشه',
+  body:'روی نقشه، هر ۱ سانتی‌متر برابر ۱۰۰ متر راه واقعی است. فاصلهٔ دو نقطه روی نقشه ۴ سانتی‌متر است. فاصلهٔ واقعی چند متر است؟',
+  type:'input', answer:400, unit:'متر',
+  hakim:'مقیاس هم یک تناسب است: ۱ به ۱۰۰. ۴ سانتی‌متر یعنی ۴ برابر.',
+  hint:'۴ × ۱۰۰ = ۴۰۰',
+  why:['۱ سانتی‌متر ← ۱۰۰ متر.','۴ سانتی‌متر ← ۴×۱۰۰ = ۴۰۰ متر.']},
+ {land:1, title:'بتن‌سازی کتاب: تقسیم به نسبت',
+  body:'برای بتن، ۷ پیمانه ماسه را با ۲ پیمانه سیمان مخلوط می‌کنند (کتاب درسی). در ۱۸۹ پیمانه از این مخلوط، چند پیمانه ماسه و چند پیمانه سیمان هست؟ هر دو را بنویس.',
+  hakim:'هر «دور» مخلوط ۷+۲=۹ پیمانه است. ۱۸۹ یعنی چند دور؟ بعد سهم هرکدام را حساب کن.',
+  type:'multi',
+  fields:[
+    {label:'پیمانه ماسه', answer:147, unit:'پیمانه'},
+    {label:'پیمانه سیمان', answer:42, unit:'پیمانه'}
+  ],
+  why:['هر دور: ۹ پیمانه؛ ۱۸۹ ÷ ۹ = ۲۱ دور.','ماسه: ۲۱ × ۷ = ۱۴۷ پیمانه.','سیمان: ۲۱ × ۲ = ۴۲ پیمانه.']},
+ {land:1, title:'اختلافِ نسبت‌دار (مرور کتاب): آب دو خانواده',
+  body:'نسبت مصرف آب خانوادهٔ خسرو به فرهاد ۳ به ۵ است و خانوادهٔ فرهاد روزی ۸ لیتر بیشتر مصرف می‌کند. مصرف هر خانواده چند لیتر است؟ هر دو را بنویس.',
+  hakim:'اختلاف نسبت ۵−۳=۲ واحد است و همان ۲ واحد یعنی ۸ لیتر؛ پس هر واحد ۴ لیتر است.',
+  type:'multi',
+  fields:[
+    {label:'مصرف خانوادهٔ خسرو', answer:12, unit:'لیتر'},
+    {label:'مصرف خانوادهٔ فرهاد', answer:20, unit:'لیتر'}
+  ],
+  why:['اختلاف: ۲ واحد = ۸ لیتر، پس هر واحد ۴ لیتر.','خسرو: ۳ × ۴ = ۱۲ لیتر و فرهاد: ۵ × ۴ = ۲۰ لیتر. اختلافشان هم ۸ است؛ چک شد!']},
+ {land:1, title:'چالش پل: تناسب سه‌تایی',
+  body:'می‌دانیم ۳/۷ = ؟/۲۱. عدد گمشده چند است؟',
+  type:'input', answer:9,
+  hakim:'۷ تا ۲۱ یعنی ×۳؛ صورت هم ×۳: ۳×۳=۹.',
+  hint:'۷×۳=۲۱، پس ۳×۳=۹.',
+  why:['مخرج ×۳ شده است.','صورت: ۳×۳=۹.','۳/۷ = ۹/۲۱.']},
+
+ /* ================= LAND 2: درصد ================= */
+ {land:2, teach:true, title:'درس ۱: درصد یعنی «از صد»',
+  learn:['صدخانه ۱۰۰ خانه دارد؛ هر خانه یعنی ۱ از ۱۰۰، یعنی ۱٪.','خانه‌های رنگی را بشمار؛ همان عدد، درصد است.','هر کسری را می‌توانی به «از ۱۰۰» برسانی تا درصدش معلوم شود.'],
+  body:'<b>درصد</b> یعنی «از هر ۱۰۰ تا». نشانه‌اش ٪ است. ۲۵٪ یعنی ۲۵ از ۱۰۰، یعنی کسر ۲۵/۱۰۰ که ساده می‌شود ۱/۴. برای دیدن درصد، یک صفحهٔ <b>صدخانه</b> (۱۰×۱۰) داریم؛ هر خانه ۱٪ است!',
+  visual:()=>figs([figCap(pctGrid(25),'۲۵٪ رنگی'), figCap(pctPie(25),'نمودار دایره‌ای ۲۵٪')]),
+  hakim:'هر خانهٔ کوچک صدخانه دقیقاً ۱ درصد است. ۲۵ خانه رنگی یعنی ۲۵٪.'},
+ {land:2, title:'خودت رنگ کن: ۳۵٪ بساز',
+  body:'این صدخانه مال توست! روی خانه‌ها بزن تا رنگی شوند. دقیقاً <b>۳۵ خانه</b> را رنگ کن (یعنی ۳۵٪) و بعد بررسی کن.',
+  hakim:'هر خانه ۱٪ است. شمارنده کمکت می‌کند؛ اگر اشتباه زدی، دوباره روی همان خانه بزن تا خاموش شود.',
+  type:'pctpaint', target:35,
+  why:['۳۵ خانه از ۱۰۰ خانه یعنی ۳۵ از ۱۰۰.','پس ۳۵ خانهٔ رنگی = ۳۵٪.']},
+ {land:2, title:'چند خانه رنگی است؟',
+  body:'به صدخانه نگاه کن. چند درصد از خانه‌ها رنگی است؟',
+  visual:()=>figs([figCap(pctGrid(40,'#38bdf8'),'صدخانه')]),
+  type:'input', answer:40, unit:'درصد',
+  hakim:'خانه‌های رنگی را بشمار: ۴ ردیف کاملِ ۱۰تایی.',
+  hint:'۴ × ۱۰ = ۴۰ خانه، یعنی ۴۰٪.',
+  why:['۴۰ خانه از ۱۰۰ خانه رنگی است.','پس ۴۰٪ رنگی است.']},
+ {land:2, title:'نصف یعنی چند درصد؟',
+  body:'کسر ۱/۲ (نصف) برابر چند درصد است؟',
+  visual:()=>figs([figCap(pctGrid(50,'#14b8a6'),'نصف صدخانه')]),
+  type:'choice', options:['۲۰٪','۲۵٪','۵۰٪','۱۰۰٪'], answer:2,
+  hakim:'نصف ۱۰۰ می‌شود ۵۰. روی صدخانه هم ۵۰ خانه رنگی است.',
+  why:['۱/۲ یعنی ۵۰ از ۱۰۰.','پس ۱/۲ = ۵۰٪.']},
+ {land:2, title:'جدول تبدیل کسر به درصد',
+  body:'این کسرهای معروف را به درصد تبدیل کن: ۱/۴ ، ۳/۴ و ۱/۱۰ چند درصدند؟',
+  type:'table',
+  table:{head:['کسر','۱/۴','۳/۴','۱/۱۰'], lab:'درصد', given:{}, answers:{0:25,1:75,2:10}},
+  hakim:'کسر را به مخرج ۱۰۰ برسان: ۱/۴=۲۵/۱۰۰، ۳/۴=۷۵/۱۰۰، ۱/۱۰=۱۰/۱۰۰.',
+  why:['۱/۴ = ۲۵/۱۰۰ = ۲۵٪.','۳/۴ = ۷۵/۱۰۰ = ۷۵٪.','۱/۱۰ = ۱۰/۱۰۰ = ۱۰٪.']},
+ {land:2, title:'جدول کامل کسر و درصد',
+  body:'این جدول دو ردیفه را کامل کن: برای هر کسر، درصدش را در ردیف پایین بنویس. این چهار کسر را باید مثل اسم خودت بلد باشی!',
+  hakim:'هر کسر را اول به «از ۱۰۰» برسان، عددش همان درصد است.',
+  type:'table2',
+  table2:{head:['شکل','الف','ب','پ','ت'],
+    rows:[
+      {lab:'کسر', given:{0:'۱/۲',1:'۱/۴',2:'۳/۴',3:'۱/۱۰'}, answers:{}},
+      {lab:'درصد', given:{}, answers:{0:50,1:25,2:75,3:10}}
+    ]},
+  why:['هر کسر به مخرج ۱۰۰ رسید: ۵۰، ۲۵، ۷۵ و ۱۰ از ۱۰۰.','پس درصدها: ۵۰٪، ۲۵٪، ۷۵٪ و ۱۰٪.']},
+ {land:2, title:'نمودار ۷۵٪ را پیدا کن',
+  body:'کدام نمودار دایره‌ای ۷۵٪ (یعنی سه‌چهارم) را نشان می‌دهد؟',
+  type:'pick', answer:2,
+  options:[
+    {svg:()=>pctPie(25,'#fb7185'), label:'۲۵٪'},
+    {svg:()=>pctPie(50,'#38bdf8'), label:'۵۰٪'},
+    {svg:()=>pctPie(75,'#14b8a6'), label:'۷۵٪'}
+  ],
+  hakim:'۷۵٪ یعنی ۷۵ از ۱۰۰؛ سه قسمت از چهار قسمت دایره.',
+  why:['سه‌چهارم دایره رنگی = ۷۵/۱۰۰ = ۷۵٪.']},
+ {land:2, title:'پرندگان میانکاله (کتاب): چند درصد ماندند؟',
+  body:'به تالاب میانکاله ۱۰٬۰۰۰ قو و ۲۰٬۰۰۰ اردک آمدند؛ ۲۰۰ قو و ۱٬۰۰۰ اردک ماندند. چند درصد از هر کدام در تالاب ماندند؟ هر دو درصد را بنویس.',
+  hakim:'برای هر پرنده جدا حساب کن: مانده‌ها را به کل همان پرنده نسبت بگیر و به درصد برسان.',
+  type:'multi',
+  fields:[
+    {label:'درصد قوهای مانده', answer:2, unit:'٪'},
+    {label:'درصد اردک‌های مانده', answer:5, unit:'٪'}
+  ],
+  why:['قو: ۲۰۰ از ۱۰٬۰۰۰ یعنی ۲ از ۱۰۰، پس ۲٪.','اردک: ۱٬۰۰۰ از ۲۰٬۰۰۰ یعنی ۵ از ۱۰۰، پس ۵٪.']},
+ {land:2, title:'نمودار درصدی ورزش (کتاب): نمودار را بخوان',
+  body:'نمودار درصد علاقه‌مندان رشته‌های ورزشی مدرسه در کتاب این‌هاست: فوتبال ۳۳٪ ، والیبال ۲۰٪ ، بسکتبال ۱۷٪ ، شطرنج ۱۶٪ ، بدمینتون ۸٪ و تنیس ۶٪. محبوب‌ترین رشته چند درصد دارد؟ همان درصد را بنویس.',
+  visual:()=>`<div style="display:grid;gap:6px;text-align:right">${[['⚽ فوتبال',33,'#fb7185'],['🏐 والیبال',20,'#f59e0b'],['🏀 بسکتبال',17,'#14b8a6'],['♟️ شطرنج',16,'#38bdf8'],['🏸 بدمینتون',8,'#a78bfa'],['🏓 تنیس',6,'#94a3b8']].map(r=>`<div style="display:flex;align-items:center;gap:8px"><span style="min-width:92px;font-weight:900">${r[0]}</span><span style="height:16px;border-radius:99px;background:${r[2]};width:${r[1]*2.2}px"></span><b>${toFa(r[1])}٪</b></div>`).join('')}</div>`,
+  hakim:'نمودار درصدی را مثل صدخانه بخوان؛ بلندترین نوار یعنی بیشترین درصد. جمع همهٔ درصدها هم باید ۱۰۰ شود!',
+  type:'input', answer:33, unit:'درصد',
+  hint:'بلندترین نوار مال فوتبال است.',
+  why:['فوتبال با ۳۳٪ محبوب‌ترین رشته است.','جمع درصدها: ۳۳+۲۰+۱۷+۱۶+۸+۶ = ۱۰۰٪؛ نمودار کامل است.']},
+ {land:2, title:'درصد را به کسر ساده تبدیل کن (کتاب)',
+  body:'در تمرین کتاب آمده: درصدها را به صورت کسر بنویس و ساده کن. ۳۸٪ وقتی به صورت کسر نوشته و کاملاً ساده شود کدام است؟',
+  hakim:'۳۸٪ یعنی ۳۸ از ۱۰۰؛ هر دو زوج‌اند، بر ۲ تقسیم کن.',
+  type:'choice',
+  options:['۳۸/۱۰۰','۱۹/۲۵','۱۹/۵۰','۳۸/۵۰'],
+  answer:2,
+  why:['۳۸٪ = ۳۸ از ۱۰۰.','هر دو بر ۲: ۱۹ از ۵۰. دیگر ساده‌تر نمی‌شود.']},
+ {land:2, title:'عدد اعشاری و درصد',
+  body:'عدد ۰٫۳ برابر چند درصد است؟',
+  type:'choice', options:['۳٪','۳۰٪','۳۰۰٪','۰٫۳٪'], answer:1,
+  hakim:'۰٫۳ یعنی ۳ از ۱۰؛ آن را به از ۱۰۰ برسان: ۳۰ از ۱۰۰.',
+  hint:'۰٫۳ = ۳۰/۱۰۰',
+  why:['۰٫۳ = ۳/۱۰ = ۳۰/۱۰۰ = ۳۰٪.']},
+ {land:2, title:'درصدِ رنگیِ صدخانه',
+  body:'در یک صدخانه، ۲ ردیف و نیم (۲۵ خانه) با رنگ سبز و ۱۵ خانه با رنگ زرد رنگ شده است. روی هم چند درصد رنگی است؟',
+  visual:()=>figs([figCap(pctGrid(40,'#22c55e'),'سبز و زرد روی هم')]),
+  type:'input', answer:40, unit:'درصد',
+  hakim:'۲۵ + ۱۵ را حساب کن؛ هر خانه ۱٪ است.',
+  hint:'۲۵ + ۱۵ = ۴۰',
+  why:['۲۵ خانه سبز + ۱۵ خانه زرد = ۴۰ خانه.','۴۰ خانه از ۱۰۰ یعنی ۴۰٪.']},
+ {land:2, title:'کدام درست است؟',
+  body:'کدام جمله درست است؟',
+  type:'choice', options:['۱۰۰٪ یعنی نصف کل','۵۰٪ یعنی همهٔ کل','۲۵٪ یعنی یک‌چهارم کل','۱۰٪ یعنی همهٔ کل'], answer:2,
+  hakim:'۱۰۰٪ یعنی همه، ۵۰٪ یعنی نصف، ۲۵٪ یعنی یک‌چهارم.',
+  why:['۲۵/۱۰۰ ساده می‌شود ۱/۴.','پس ۲۵٪ یعنی یک‌چهارم کل.']},
+
+ /* ================= LAND 3: کاربرد درصد ================= */
+ {land:3, teach:true, title:'درس ۱: درصد در خرید و تخفیف',
+  learn:['قدم اول: مقدار تخفیف را پیدا کن (درصد × قیمت).','قدم دوم: تخفیف را از قیمت کم کن.','عدد آخر همان پولی است که می‌پردازی.'],
+  body:'در بازار، درصد برای <b>تخفیف</b> به کار می‌رود: اول مقدار تخفیف را پیدا می‌کنیم (درصد × قیمت)، بعد از قیمت کم می‌کنیم. مثال: کالای ۱۰۰ هزار تومانی با ۲۰٪ تخفیف: تخفیف ۲۰ هزار، قیمت پایانی <b>۸۰ هزار تومان</b>.',
+  visual:()=>figs([figCap(shopTag(100,20),'مثال بازار')]),
+  hakim:'دو قدم: ۱) تخفیف را حساب کن. ۲) از قیمت کم کن. جواب نهایی همان است که می‌پردازی.'},
+ {land:3, title:'چانه‌زنی در بازار: تخفیف را پیدا کن',
+  body:'قیمت این کفش ۳۰۰ هزار تومان است. دستهٔ تخفیف را حرکت بده تا تخفیف دقیقاً <b>۲۰٪</b> شود و قیمت پایانی را ببینی؛ بعد بررسی کن.',
+  hakim:'به سه عدد نگاه کن: قیمت، تخفیف و قیمت پایانی. با دسته بازی کن تا رابطه‌شان را خودت کشف کنی!',
+  type:'shop', price:300, off:20,
+  why:['۲۰٪ از ۳۰۰ یعنی ۶۰ هزار تومان تخفیف.','قیمت پایانی: ۳۰۰ − ۶۰ = ۲۴۰ هزار تومان.']},
+ {land:3, title:'۱۰٪ از ۲۰۰ هزار تومان',
+  body:'قیمت یک کیف ۲۰۰ هزار تومان است و ۱۰٪ تخفیف دارد. مقدار تخفیف چند هزار تومان است؟',
+  visual:()=>figs([figCap(shopTag(200,10),'کیف')]),
+  type:'input', answer:20, unit:'هزار تومان',
+  hakim:'۱۰٪ یعنی یک‌دهم. یک‌دهم ۲۰۰ می‌شود ۲۰.',
+  hint:'۲۰۰ ÷ ۱۰ = ۲۰',
+  why:['۱۰٪ = ۱/۱۰.','۱/۱۰ × ۲۰۰ = ۲۰ هزار تومان تخفیف.']},
+ {land:3, title:'قیمت پایانی بعد از تخفیف',
+  body:'همان کیف ۲۰۰ هزار تومانی با تخفیف ۲۰ هزار تومانی. چقدر می‌پردازیم؟',
+  type:'input', answer:180, unit:'هزار تومان',
+  hakim:'قدم دوم: تخفیف را از قیمت کم کن: ۲۰۰−۲۰.',
+  hint:'۲۰۰ − ۲۰ = ۱۸۰',
+  why:['قیمت پایانی = ۲۰۰ − ۲۰ = ۱۸۰ هزار تومان.']},
+ {land:3, title:'تخفیف ۲۵٪',
+  body:'یک دوچرخه ۴۰۰ هزار تومان قیمت دارد و ۲۵٪ تخفیف خورده است. قیمت پایانی چند هزار تومان است؟',
+  visual:()=>figs([figCap(shopTag(400,25),'دوچرخه')]),
+  type:'choice', options:['۱۰۰','۳۰۰','۳۵۰','۴۰۰'], answer:1,
+  hakim:'۲۵٪ یعنی یک‌چهارم. تخفیف = یک‌چهارم ۴۰۰ = ۱۰۰. پایانی = ۴۰۰−۱۰۰.',
+  why:['تخفیف: ۲۵٪ × ۴۰۰ = ۱۰۰ هزار تومان.','قیمت پایانی: ۴۰۰ − ۱۰۰ = ۳۰۰ هزار تومان.']},
+ {land:3, title:'استان سبز (کتاب): دو درصد از یک عدد',
+  body:'مساحت یک استان ۵۰٬۰۰۰ کیلومتر مربع است؛ ۴۲٪ آن جنگل و ۱۶٪ آن زمین کشاورزی است. مساحت جنگل و زمین کشاورزی را هر دو حساب کن.',
+  hakim:'هر درصد را جدا روی ۵۰٬۰۰۰ اعمال کن. ۱۰٪ آن ۵٬۰۰۰ است؛ از همان جا بساز!',
+  type:'multi',
+  fields:[
+    {label:'مساحت جنگل', answer:21000, unit:'کیلومتر مربع'},
+    {label:'مساحت زمین کشاورزی', answer:8000, unit:'کیلومتر مربع'}
+  ],
+  why:['۴۲٪ از ۵۰٬۰۰۰ = ۲۱٬۰۰۰ کیلومتر مربع جنگل.','۱۶٪ از ۵۰٬۰۰۰ = ۸٬۰۰۰ کیلومتر مربع زمین کشاورزی.']},
+ {land:3, title:'جدول تخفیف ۱۰٪ بازار',
+  body:'همهٔ کالاهای این میز ۱۰٪ تخفیف دارند. قیمت پایانی هر کالا را حساب کن (به هزار تومان).',
+  type:'table',
+  table:{head:['قیمت اول','۱۰۰','۲۰۰','۵۰'], lab:'قیمت پایانی', given:{}, answers:{0:90,1:180,2:45}},
+  hakim:'۱۰٪ را کم کن، یعنی ۹۰٪ قیمت می‌ماند: ۱۰۰→۹۰، ۲۰۰→۱۸۰، ۵۰→۴۵.',
+  why:['۱۰۰ − ۱۰ = ۹۰.','۲۰۰ − ۲۰ = ۱۸۰.','۵۰ − ۵ = ۴۵.']},
+ {land:3, title:'پول مریم (کتاب): سه حساب با هم',
+  body:'پدر مریم ۵۰۰٬۰۰۰ ریال به او داد. مریم ۶۰٪ را به خیریه بخشید و ۱۰٪ را پس‌انداز کرد. هر سه جواب را بنویس: خیریه، پس‌انداز و درصد باقی‌مانده.',
+  hakim:'اول دو مقدار پولی را حساب کن؛ درصد باقی‌مانده از ۱۰۰ کم می‌شود: ۱۰۰ منهای ۶۰ و ۱۰.',
+  type:'multi',
+  fields:[
+    {label:'خیریه', answer:300000, unit:'ریال'},
+    {label:'پس‌انداز', answer:50000, unit:'ریال'},
+    {label:'درصد باقی‌مانده', answer:30, unit:'٪'}
+  ],
+  why:['۶۰٪ از ۵۰۰٬۰۰۰ = ۳۰۰٬۰۰۰ ریال خیریه.','۱۰٪ از ۵۰۰٬۰۰۰ = ۵۰٬۰۰۰ ریال پس‌انداز.','باقی‌مانده: ۱۰۰ − ۶۰ − ۱۰ = ۳۰٪.']},
+ {land:3, title:'درصد دانش‌آموزان کلاس',
+  body:'در کلاس ۴۰ نفره، ۱۰ نفر عینک می‌زنند. چند درصد کلاس عینکی‌اند؟',
+  type:'input', answer:25, unit:'درصد',
+  hakim:'نسبت ۱۰ به ۴۰ را به از ۱۰۰ برسان: ۱۰/۴۰ ساده می‌شود ۱/۴ و ۱/۴ یعنی ۲۵٪.',
+  hint:'۱۰ از ۴۰ یعنی یک‌چهارم؛ یک‌چهارم = ۲۵٪.',
+  why:['۱۰/۴۰ = ۱/۴.','۱/۴ = ۲۵/۱۰۰ = ۲۵٪.']},
+ {land:3, title:'راه مدرسهٔ نادر (کتاب)',
+  body:'نادر باید ۸۰۰ متر تا مدرسه برود و ۲۰۰ متر را پیموده است. چند درصد راه را رفته و چند درصد مانده است؟ هر دو را بنویس.',
+  hakim:'۲۰۰ از ۸۰۰ یعنی یک‌چهارم راه. درصد رفته و مانده با هم ۱۰۰ می‌شوند.',
+  type:'multi',
+  fields:[
+    {label:'درصد راهِ رفته', answer:25, unit:'٪'},
+    {label:'درصد راهِ مانده', answer:75, unit:'٪'}
+  ],
+  why:['۲۰۰/۸۰۰ = ۱/۴ = ۲۵٪ رفته است.','مانده: ۱۰۰ − ۲۵ = ۷۵٪.']},
+ {land:3, title:'کدام مغازه ارزان‌تر است؟',
+  body:'یک اسباب‌بازی در هر دو مغازه ۱۰۰ هزار تومان است. مغازهٔ اول ۱۰٪ و مغازهٔ دوم ۲۰٪ تخفیف می‌دهد. کجا ارزان‌تر درمی‌آید؟',
+  type:'choice', options:['مغازهٔ اول (۹۰ هزار)','مغازهٔ دوم (۸۰ هزار)','هر دو برابرند','مغازهٔ اول (۸۰ هزار)'], answer:1,
+  hakim:'تخفیف بیشتر یعنی پرداخت کمتر: ۲۰٪ از ۱۰۰ می‌شود ۲۰ تخفیف.',
+  why:['مغازهٔ اول: ۱۰۰−۱۰=۹۰ هزار.','مغازهٔ دوم: ۱۰۰−۲۰=۸۰ هزار.','پس مغازهٔ دوم ارزان‌تر است.']},
+ {land:3, title:'چالش بازار: نمره و درصد',
+  body:'سارا در آزمون ۲۰ سؤالی، ۱۵ پاسخ درست داده است. درصد درستی او چند است؟',
+  type:'input', answer:75, unit:'درصد',
+  hakim:'۱۵ از ۲۰ را به از ۱۰۰ برسان: هر دو را در ۵ ضرب کن: ۷۵ از ۱۰۰.',
+  hint:'۱۵×۵=۷۵ و ۲۰×۵=۱۰۰.',
+  why:['۱۵/۲۰ = ۷۵/۱۰۰.','پس درصد درستی سارا ۷۵٪ است.']},
+
+ /* ================= LAND 4: قله طلایی ================= */
+ {land:4, teach:true, title:'درس پایانی: نسبت طلایی و مرور',
+  learn:['اول تشخیص بده سؤال از کدام دوست است: نسبت، تناسب یا درصد.','بعد قانون همان دوست را صدا بزن و قدم‌به‌قدم حساب کن.','آخر کار جواب را با شکل یا جدول چک کن.'],
+  body:'در طبیعت و هنر، یک نسبت ویژه هست: <b>نسبت طلایی</b> (نزدیک ۱٫۶ به ۱)؛ در صدف‌ها، گل‌ها و ساختمان‌های قدیمی دیده می‌شود. امروز در قله، همهٔ فصل را مرور می‌کنیم: نسبت، ساده کردن، تناسب، درصد و تخفیف!',
+  visual:()=>figs([figCap(goldRect(),'مستطیل طلایی')]),
+  hakim:'قله یعنی مرور همه‌چیز. نفس عمیق؛ تو از باغ شربت تا بازار را بلدی!'},
+ {land:4, title:'مرور ۱: ساده کردن نسبت',
+  body:'نسبت ۱۲ به ۱۸ وقتی کاملاً ساده شود کدام است؟',
+  type:'choice', options:['۲ به ۳','۳ به ۲','۱ به ۲','۶ به ۹'], answer:0,
+  hakim:'هر دو بر ۶ تقسیم می‌شوند.',
+  why:['۱۲÷۶=۲ و ۱۸÷۶=۳.','نسبت ساده: ۲ به ۳.']},
+ {land:4, title:'جدول کتاب: ضلع و محیط مربع متناسب‌اند؟',
+  body:'جدول ضلع و محیط مربع را کامل کن. بعد در گام بعد می‌بینی چرا محیط با ضلع متناسب است ولی مساحت نیست!',
+  hakim:'محیط مربع یعنی ۴ برابر ضلع؛ ردیف پایین همیشه ×۴ ردیف بالاست.',
+  type:'table2',
+  table2:{head:['','مربع ۱','مربع ۲','مربع ۳','مربع ۴'],
+    rows:[
+      {lab:'📏 ضلع', given:{0:1,1:2,2:5,3:10}, answers:{}},
+      {lab:'🔲 محیط', given:{0:4}, answers:{1:8,2:20,3:40}}
+    ]},
+  why:['محیط = ۴ × ضلع: ۴، ۸، ۲۰ و ۴۰.','چون ضریب همیشه ۴ است، ضلع و محیط متناسب‌اند.']},
+ {land:4, title:'مرور ۲: عدد گمشده',
+  body:'در تناسب ۴/۵ = ؟/۲۰ عدد گمشده چند است؟',
+  type:'input', answer:16,
+  hakim:'۵ تا ۲۰ یعنی ×۴؛ ۴×۴=۱۶.',
+  hint:'۴ × ۴ = ۱۶',
+  why:['مخرج ×۴ شده؛ صورت هم ×۴: ۴×۴=۱۶.']},
+ {land:4, title:'چرا مساحت متناسب نیست؟',
+  body:'ضلع مربع اگر ۲ برابر شود، محیط ۲ برابر می‌شود ولی مساحت ۴ برابر! پس کدام جمله درست است؟',
+  type:'choice',
+  options:['ضلع و مساحت هم متناسب‌اند','ضلع و محیط متناسب‌اند ولی ضلع و مساحت نه','هیچ‌کدام متناسب نیستند','مساحت همیشه ثابت می‌ماند'],
+  answer:1,
+  hakim:'مساحت از ضلع × ضلع ساخته می‌شود؛ وقتی ضلع ×۲ شود، مساحت ×۴ می‌شود، نه ×۲. پس ضریب ثابتی ندارد.',
+  why:['محیط ضریب ثابت ۴ دارد، پس با ضلع متناسب است.','مساحت ضریب ثابت ندارد (۱، ۴، ۹، ۱۶…)، پس با ضلع متناسب نیست.']},
+ {land:4, title:'مرور ۳: درصد از عدد',
+  body:'۲۰٪ از ۱۵۰ چند می‌شود؟',
+  type:'input', answer:30,
+  hakim:'۲۰٪ یعنی ۲۰ از هر ۱۰۰؛ یا یک‌پنجم. یک‌پنجم ۱۵۰ چقدر است؟ ۱۵۰÷۵.',
+  hint:'۱۵۰ ÷ ۵ = ۳۰',
+  why:['۲۰٪ = ۱/۵.','۱/۵ × ۱۵۰ = ۳۰.']},
+ {land:4, title:'مرور ۴: قیمت پایانی',
+  body:'کفشی ۲۵۰ هزار تومان است و ۲۰٪ تخفیف دارد. قیمت پایانی چند هزار تومان است؟',
+  visual:()=>figs([figCap(shopTag(250,20),'کفش')]),
+  type:'choice', options:['۵۰','۲۰۰','۲۳۰','۲۵۰'], answer:1,
+  hakim:'تخفیف: ۲۰٪ از ۲۵۰ = ۵۰. پایانی: ۲۵۰−۵۰.',
+  why:['تخفیف = ۵۰ هزار تومان.','قیمت پایانی = ۲۵۰−۵۰ = ۲۰۰ هزار تومان.']},
+ {land:4, title:'مرور ۵: از نسبت تا درصد',
+  body:'در تیم ۲۰ نفره، ۳ نفر دروازه‌بان‌اند. دروازه‌بان‌ها چند درصد تیم‌اند؟',
+  type:'input', answer:15, unit:'درصد',
+  hakim:'۳ از ۲۰؛ هر دو را در ۵ ضرب کن تا به ۱۰۰ برسی: ۱۵ از ۱۰۰.',
+  hint:'۳×۵=۱۵، ۲۰×۵=۱۰۰.',
+  why:['۳/۲۰ = ۱۵/۱۰۰ = ۱۵٪.']},
+ {land:4, title:'مرور ۶: نمودار درست',
+  body:'کدام نمودار ۵۰٪ را نشان می‌دهد؟',
+  type:'pick', answer:1,
+  options:[
+    {svg:()=>pctPie(25,'#fb7185'), label:'یک‌چهارم'},
+    {svg:()=>pctPie(50,'#14b8a6'), label:'نصف'},
+    {svg:()=>pctPie(75,'#38bdf8'), label:'سه‌چهارم'}
+  ],
+  hakim:'۵۰٪ یعنی نصف دایره.',
+  why:['نصف دایره = ۵۰/۱۰۰ = ۵۰٪.']},
+ {land:4, title:'درصد برعکس: کل را پیدا کن',
+  body:'دو مسئلهٔ برعکسی کتاب: الف) ۹۰٪ جرم یک هندوانهٔ ۱۰ کیلوگرمی آب است؛ چند کیلو آب دارد؟ ب) ۴۰٪ گنجایش یک منبع ۸٬۰۰۰ لیتر است؛ گنجایش کل منبع چقدر است؟ هر دو را بنویس.',
+  hakim:'در دومی کل را نمی‌دانی! اگر ۴۰٪ یعنی ۸٬۰۰۰، اول ۱۰٪ را پیدا کن (تقسیم بر ۴) و بعد ×۱۰ کن تا ۱۰۰٪ ساخته شود.',
+  type:'multi',
+  fields:[
+    {label:'آب هندوانه', answer:9, unit:'کیلوگرم'},
+    {label:'گنجایش کل منبع', answer:20000, unit:'لیتر'}
+  ],
+  why:['۹۰٪ از ۱۰ = ۹ کیلوگرم آب.','۴۰٪ = ۸٬۰۰۰، پس ۱۰٪ = ۲٬۰۰۰ و ۱۰۰٪ = ۲۰٬۰۰۰ لیتر.']},
+ {land:4, title:'چالش صدخانهٔ قله: ۶۰٪',
+  body:'آخرین دست‌ورزی قله! دقیقاً <b>۶۰ خانه</b> از صدخانه را رنگ کن.',
+  hakim:'۶۰ خانه یعنی ۶ ردیف کامل؛ یا هر جور دیگری که جمعش ۶۰ شود!',
+  type:'pctpaint', target:60,
+  why:['۶۰ خانه از ۱۰۰ خانه = ۶۰٪.','آفرین؛ درصد را با دست‌های خودت ساختی!']},
+ {land:4, title:'نسبت طلایی کتاب را حساب کن',
+  body:'در فرهنگ خواندن کتاب آمده: مستطیلی با طول ۱۶ و عرض ۱۰ سانتی‌متر تقریباً طلایی است، چون نسبت طول به عرض آن به نسبت طلایی (نزدیک ۱٫۶) نزدیک است. آن نسبت کدام است؟',
+  hakim:'۱۶ را بر ۱۰ تقسیم کن؛ یا کسر ۱۶/۱۰ را به اعشار برسان.',
+  type:'choice',
+  options:['۰٫۶','۱٫۶','۲٫۶','۱۶'],
+  answer:1,
+  why:['نسبت طول به عرض: ۱۶ به ۱۰ که می‌شود ۱٫۶.','همان عدد جادویی نسبت طلایی است!']},
+ {land:4, title:'معمای کتاب: درصدِ درصد',
+  body:'معمای کتاب: حدود ۱۰٪ محصولات کشاورزی از کشت دیم به دست می‌آید و ۳۰٪ از محصولات دیم، گندم است. گندم دیم چند درصد از کل محصولات کشاورزی است؟',
+  hakim:'درصدِ درصد یعنی دو بار «از» بگیری: ۳۰٪ از ۱۰٪. ده درصد یعنی یک‌دهم؛ یک‌دهمِ ۳۰٪ را حساب کن.',
+  type:'input', answer:3, unit:'درصد',
+  hint:'۳۰٪ از ۱۰ می‌شود ۳.',
+  why:['۳۰٪ از ۱۰٪ یعنی ۰٫۳ × ۱۰٪ = ۳٪.','پس گندم دیم ۳٪ از کل محصولات است.']},
+ {land:4, title:'مستطیل با نسبت داده‌شده را انتخاب کن (کتاب)',
+  body:'در تمرین کتاب باید مستطیلی بکشی که نسبت طول به عرضش ۳ به ۱ باشد. کدام مستطیل همین نسبت را دارد؟',
+  type:'pick', answer:0,
+  options:[
+    {svg:()=>rectGrid(6,2,'#99f6e4','#0f766e'), label:'طول ۶ و عرض ۲'},
+    {svg:()=>rectGrid(4,4,'#fda4af','#be123c'), label:'طول ۴ و عرض ۴'},
+    {svg:()=>rectGrid(5,3,'#fde68a','#b45309'), label:'طول ۵ و عرض ۳'}
+  ],
+  hakim:'نسبت هر کدام را ساده کن: ۶ به ۲ می‌شود ۳ به ۱.',
+  why:['۶ به ۲ ساده می‌شود ۳ به ۱.','۴ به ۴ یعنی ۱ به ۱ و ۵ به ۳ ساده نمی‌شود؛ پس فقط اولی درست است.']},
+ {land:4, title:'چالش نهایی قله',
+  body:'برای جشن مدرسه با دستور شربتِ ۲ به ۳ (آب‌لیمو به آب) می‌خواهیم ۱۵ لیوان آب بریزیم. چند لیوان آب‌لیمو لازم داریم؟ و این چند درصدِ کل شربت است؟ اول لیوان آب‌لیمو را بگو. (راهنما: آب از ۳ به ۱۵ یعنی ×۵؛ آب‌لیمو هم ×۵ می‌شود و کل شربت ۲۵ لیوان می‌شود؛ بعد نسبت آب‌لیمو به کل را به درصد برسان.)',
+  type:'input', answer:10, unit:'لیوان',
+  hakim:'آب ×۵ شده (۳→۱۵)، پس آب‌لیمو هم ×۵: ۲×۵=۱۰ لیوان. (درصدش هم ۱۰ از ۲۵ یعنی ۴۰٪ است؛ آفرین اگر آن را هم گفتی!)',
+  hint:'۲ × ۵ = ۱۰',
+  why:['آب: ۳→۱۵ یعنی ×۵.','آب‌لیمو: ۲×۵=۱۰ لیوان.','کل شربت ۲۵ لیوان و نسبت آب‌لیمو به کل ۱۰/۲۵=۴۰٪ است.']}
+];
+
+STEPS.forEach(s => { s._id = s.land + '|' + s.title; });
+const sid = i => STEPS[i]._id;
+const QSTEPS = STEPS.filter(s => s.type);
+function maxStars(){ return QSTEPS.length * 3; }
+
+/* ===== UI ===== */
+function show(id){
+  ['gate','howto','map','play','cert'].forEach(s => $('#'+s).classList.toggle('hidden', s!==id));
+  document.body.dataset.screen=id;
+  const c=$('#celeb'); if(c && id!=='play') c.classList.add('hidden');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function landSteps(i){ return STEPS.map((s,idx)=>({s,idx})).filter(x=>x.s.land===i); }
+function landDone(i){
+  return !!(S.landCleared && S.landCleared[i]) || landSteps(i).every(({idx}) => !STEPS[idx].type || S.done[sid(idx)]);
+}
+function unlocked(i){
+  /* همهٔ سرزمین‌ها از اول بازند؛ دانش‌آموز هرکدام را دوست داشت انتخاب می‌کند.
+     گواهی قهرمانی فقط وقتی صادر می‌شود که هر پنج سرزمین کامل شده باشند. */
+  return true;
+}
+
+function renderMap(){
+  const nDone = LANDS.filter((_,i)=>landDone(i)).length;
+  $('#hello').textContent = 'سلام '+S.name+'، قهرمان نسبتستان!';
+  $('#mapStars').textContent = toFa(S.stars);
+  const pp=$('#playerPill'); if(pp){ pp.textContent='👤 '+S.name+' · ⭐ '+toFa(S.stars)+((S.maxCombo||0)>=2 ? ' · 🔥 ×'+toFa(S.maxCombo) : ''); pp.classList.toggle('hidden', !S.name); }
+  const rk=$('#mapRank'); if(rk){ const mx=maxStars(); rk.textContent = S.stars>=mx ? '👑 استاد نسبتستان' : (S.stars>=mx*0.6 ? '🌟 حسابگر ماهر' : (S.stars>=mx*0.3 ? '🍋 شربت‌ساز' : '🌱 تازه‌کار')); }
+  const box = $('#lands'); box.innerHTML='';
+  LANDS.forEach((L,i)=>{
+    const done = landDone(i), lock=!unlocked(i);
+    const qs = landSteps(i).filter(x=>x.s.type);
+    const got = qs.reduce((a,x)=>a+(S.maxByQ[sid(x.idx)]||0),0);
+    const fin = qs.filter(x=>S.done[sid(x.idx)]).length;
+    const pct = qs.length ? Math.round(fin/qs.length*100) : 0;
+    const current = !done && i===LANDS.findIndex((_,k)=>!landDone(k));
+    if(i){
+      const d=document.createElement('div'); d.className='path-dot'; d.textContent='✦  ·  ·  ·  ✦'; box.appendChild(d);
+    }
+    const el = document.createElement('button');
+    el.className = 'land'+(done?' done':'')+(lock?' locked':'')+(current?' current':'');
+    el.type='button';
+    el.dataset.i = String(i); el.dataset.emoji=L.icon;
+    const go = lock ? 'قفل' : (done ? 'دوباره' : (fin?'ادامه':'بزن بریم'));
+    el.innerHTML = `<div class="ic">${lock?'🔒':`<span class="ic-scene">${sceneSVG(i)}</span><span class="ic-emoji">${L.icon}</span>`}</div>
+      <div><h3>${L.name}</h3><p>${L.desc}</p><div class="bar"><i style="width:${pct}%"></i></div></div>
+      <div class="go">${go}<div class="stars">${done?'✅ تمام شد':'⭐ '+toFa(got)+' · '+toFa(fin)+' از '+toFa(qs.length)+' فعالیت'}</div></div>`;
+    el.onclick = ()=>{
+      if(lock){ toast('این سرزمین هنوز باز نیست 🗺️'); return; }
+      SFX.click(); startLand(i);
+    };
+    box.appendChild(el); bindTilt(el, 5);
+  });
+  paintFace($('#gateFace'),'excited');
+  document.body.removeAttribute('data-land');
+}
+
+function startLand(i){
+  S.land=i;
+  const list = landSteps(i);
+  if(list.length && list.every(x => !x.s.type || S.done[sid(x.idx)])){
+    /* سرزمین قبلاً کامل شده: برای بازیِ دوباره از اول بازش می‌کنیم.
+       تیک گواهی با landCleared سر جایش می‌ماند و ستاره فقط بالای رکورد قبلی اضافه می‌شود. */
+    S.landCleared = S.landCleared || {}; S.landCleared[i]=true;
+    list.forEach(x => { delete S.done[sid(x.idx)]; S.tries[sid(x.idx)]=0; });
+    toast('این سرزمین را قبلاً تمام کرده بودی؛ این بار برای بازیِ دوباره از اول باز شد 🔁');
+  }
+  const next = list.find(x => !S.done[sid(x.idx)]);
+  S.step = next ? next.idx : list[0].idx;
+  persist(); renderPlay(); show('play');
+}
+
+function faceMood(m){ paintFace($('#playFace'), m); }
+
+function renderPlay(){
+  const i=S.step, st=STEPS[i];
+  if(!st){ renderMap(); show('map'); return; }
+  const L=LANDS[st.land];
+  const list=landSteps(st.land);
+  const pos=list.findIndex(x=>x.idx===i);
+  document.body.setAttribute('data-land', String(st.land));
+  $('#hudTitle').textContent = L.icon+' '+L.name;
+  $('#hudStars').textContent = toFa(S.stars);
+  updateCombo();
+  $('#hudBar').style.width = ((pos)/Math.max(1,list.length-1)*100)+'%';
+  const dots = $('#hudDots');
+  if(dots){
+    dots.innerHTML = list.map((x,k)=>`<i class="${k<pos?'done':(k===pos?'on':'')}"></i>`).join('');
+  }
+  $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length)+(st.type?' · ✏️ فعالیت':' · 📖 درس کوتاه');
+  document.querySelector('.play-card').classList.remove('enter'); void document.querySelector('.play-card').offsetWidth; document.querySelector('.play-card').classList.add('enter');
+  const bn=$('#landBanner'); if(bn){ bn.dataset.land=String(st.land); $('#lbIco').textContent=L.icon; const ls=$('#lbScene'); if(ls) ls.innerHTML=sceneSVG(st.land); $('#lbName').textContent=L.name; $('#lbRule').textContent=L.rule||L.desc; $('#lbBadge').textContent='گام '+toFa(pos+1)+' از '+toFa(list.length); }
+  $('#qTitle').innerHTML = fracify(st.title);
+  $('#qBody').innerHTML = fracify(st.body||'');
+  const lb=$('#learnBox');
+  if(lb){ if(st.learn && st.learn.length){ lb.classList.remove('hidden'); lb.innerHTML='<b>🧭 قدم‌به‌قدم یاد بگیر:</b><ol>'+st.learn.map(x=>'<li>'+fracify(x)+'</li>').join('')+'</ol>'; } else { lb.classList.add('hidden'); lb.innerHTML=''; } }
+  const vis = st.visual ? st.visual() : '';
+  $('#visual').innerHTML = vis;
+  $('#visual').style.display = vis ? '' : 'none';
+  $('#visual').classList.toggle('stage3d', !!vis);
+  $('#hakimText').innerHTML = fracify(st.hakim||'با دقت نگاه کن، بعد جواب بده.');
+  $('#feed').innerHTML='';
+  hkSay(st.hakim||'با دقت نگاه کن، بعد جواب بده.', st.teach?'wise':'thinking');
+  const box=$('#answerBox'); box.innerHTML='';
+  const acts=$('#acts'); acts.innerHTML='';
+
+  if(!st.type){
+    const b=document.createElement('button'); b.className='btn primary big';
+    const nx=list[pos+1];
+    b.textContent = (nx && nx.s.type) ? 'فهمیدم؛ سؤال‌ها شروع می‌شود ✨' : 'فهمیدم، بریم بعدی ✨';
+    b.onclick=()=>{ SFX.click(); S.done[sid(i)]=true; persist(); nextStep(true); };
+    acts.appendChild(b);
+    addNav(acts,i,list);
+    return;
+  }
+
+  if(S.done[sid(i)]){
+    showWhy(st, true);
+    const b=document.createElement('button'); b.className='btn primary'; b.textContent='بریم بعدی';
+    b.onclick=()=>{ SFX.click(); nextStep(true); };
+    acts.appendChild(b);
+    const redo=document.createElement('button'); redo.className='btn purple'; redo.textContent='🔁 دوباره حلش می‌کنم';
+    redo.onclick=()=>{ SFX.click(); S.tries[sid(i)]=0; delete S.done[sid(i)]; persist(); renderPlay(); };
+    acts.appendChild(redo);
+    addNav(acts,i,list);
+    return;
+  }
+
+  S.tries[sid(i)]=S.tries[sid(i)]||0;
+
+  if(st.type==='input'){
+    box.innerHTML = `<div class="answer-row">
+      <input class="num-in" id="ans" inputmode="numeric" autocomplete="off" placeholder="؟">
+      <span class="unit">${st.unit||''}</span>
+    </div>`;
+    setTimeout(()=>{ const el=$('#ans'); if(el){ el.focus(); el.addEventListener('keydown', e=>{ if(e.key==='Enter') checkCurrent(st); }); } }, 200);
+  }
+  if(st.type==='choice'){
+    const wrap=document.createElement('div'); wrap.className='choices';
+    st.options.forEach((op,k)=>{
+      const b=document.createElement('button'); b.className='choice'; b.type='button';
+      b.innerHTML = fracify(op);
+      b.onclick=()=> grade(k===st.answer, st, b, wrap);
+      wrap.appendChild(b);
+    });
+    box.appendChild(wrap);
+  }
+  if(st.type==='table'){
+    const t=st.table;
+    let h='<div class="tbl-wrap"><table class="tbl"><tr>';
+    t.head.forEach((c,ci)=> h += `<th>${fracify(ci===0?c:toFa(c))}</th>`);
+    h += `</tr><tr><td class="lab">${fracify(t.lab)}</td>`;
+    const n=t.head.length-1;
+    for(let k=0;k<n;k++){
+      if(t.given[k]!=null) h += `<td>${toFa(t.given[k])}</td>`;
+      else h += `<td><input data-k="${k}" inputmode="numeric" dir="ltr" autocomplete="off"></td>`;
+    }
+    h += '</tr></table></div>';
+    box.innerHTML=h;
+  }
+  if(st.type==='pick'){
+    const wrap=document.createElement('div'); wrap.className='pick-row';
+    st.options.forEach((op,k)=>{
+      const b=document.createElement('button'); b.type='button'; b.className='pick';
+      const svg = typeof op.svg==='function' ? op.svg() : (op.svg||'');
+      b.innerHTML = `${svg}<small>${fracify(op.label||'')}</small>`;
+      b.onclick=()=> grade(k===st.answer, st, b, wrap);
+      wrap.appendChild(b);
+    });
+    box.appendChild(wrap);
+  }
+
+
+
+  if(st.type==='table2'){
+    const t=st.table2;
+    let hh='<div class="tbl-wrap"><table class="tbl ptable"><tr>';
+    t.head.forEach((c,ci)=> hh += `<th>${fracify(ci===0?c:toFa(c))}</th>`);
+    hh += '</tr>';
+    t.rows.forEach((row,ri)=>{
+      hh += `<tr><td class="lab">${fracify(row.lab)}</td>`;
+      const n=t.head.length-1;
+      for(let k=0;k<n;k++){
+        if(row.given && row.given[k]!=null) hh += `<td class="given">${fracify(toFa(row.given[k]))}</td>`;
+        else hh += `<td><input data-r="${ri}" data-k="${k}" inputmode="numeric" dir="ltr" autocomplete="off" aria-label="${row.lab} ستون ${k+1}"></td>`;
+      }
+      hh += '</tr>';
+    });
+    hh += '</table></div><div class="lab-msg">💡 هر ستون را با ستون‌های کناری‌اش مقایسه کن؛ نسبت دو ردیف در همهٔ ستون‌ها یکی است.</div>';
+    box.innerHTML=hh;
+  }
+  if(st.type==='multi'){
+    box.innerHTML = '<div class="multi-box">' + st.fields.map((f,fi)=>
+      `<div class="multi-row"><label>${fracify(f.label||'')}</label><span class="multi-affix">${fracify(f.prefix||'')}</span><input class="num-in multi-in" id="mf${fi}" inputmode="numeric" autocomplete="off" placeholder="؟"><span class="unit">${f.unit||''}</span><span class="multi-affix">${fracify(f.suffix||'')}</span></div>`
+    ).join('') + '</div>';
+    $$('.multi-in',box).forEach(inp=> inp.addEventListener('keydown', e=>{ if(e.key==='Enter') checkCurrent(st); }));
+  }
+  if(st.type==='mixer'){
+    box.innerHTML = `<div class="play-lab">
+      <div class="lab-row"><label>🍋 آب‌لیمو <b id="mixAv">۱</b></label><input type="range" id="mixA" min="1" max="9" value="1" step="1"></div>
+      <div class="lab-row"><label>💧 آب <b id="mixBv">۱</b></label><input type="range" id="mixB" min="1" max="9" value="1" step="1"></div>
+      <div id="mixView"></div><div class="lab-msg" id="mixMsg">دسته‌ها را حرکت بده و نسبت را بساز!</div></div>`;
+    const upd=()=>{ const a=+$('#mixA').value, b=+$('#mixB').value;
+      $('#mixAv').textContent=toFa(a); $('#mixBv').textContent=toFa(b);
+      $('#mixView').innerHTML = ratioBars(a,b,'آب‌لیمو','آب');
+      const eq = a*st.ratio[1]===b*st.ratio[0];
+      $('#mixMsg').textContent = eq ? (a>st.ratio[0] ? '🎉 آفرین! هم‌مزه و بزرگ‌تر شد؛ حالا بررسی کن!' : 'این همان دستور اصلی است؛ بزرگ‌ترش کن!') : 'نسبت تو: '+toFa(a)+' به '+toFa(b)+' — هنوز هم‌مزهٔ ۲ به ۳ نیست.';
+      $('#mixMsg').className='lab-msg'+(eq&&a>st.ratio[0]?' good':'');
+    };
+    $('#mixA').addEventListener('input',upd); $('#mixB').addEventListener('input',upd); upd();
+  }
+  if(st.type==='scale'){
+    box.innerHTML = `<div class="play-lab">
+      <div class="lab-row"><label>✖️ چند برابر شود؟ <b id="scFv">۱ برابر</b></label><input type="range" id="scF" min="1" max="5" value="1" step="1"></div>
+      <div id="scView"></div><div class="lab-msg" id="scMsg"></div></div>`;
+    const upd=()=>{ const f=+$('#scF').value, a=st.base[0]*f, b=st.base[1]*f;
+      $('#scFv').textContent=toFa(f)+' برابر';
+      $('#scView').innerHTML = ratioBars(a,b,st.names[0],st.names[1]);
+      $('#scMsg').textContent = st.names[0]+' '+toFa(a)+' لیوان و '+st.names[1]+' '+toFa(b)+' لیوان';
+      $('#scMsg').className='lab-msg'+(f===st.factor?' good':'');
+    };
+    $('#scF').addEventListener('input',upd); upd();
+  }
+  if(st.type==='pctpaint'){
+    let cells='';
+    for(let k=0;k<100;k++) cells += `<button type="button" class="gcell paint-cell" data-on="0" aria-label="خانه ${k+1}"></button>`;
+    box.innerHTML = `<div class="play-lab"><div class="paint-grid" dir="ltr">${cells}</div>
+      <div class="lab-msg" id="pcMsg">رنگی: ۰ از ${toFa(st.target)}</div></div>`;
+    const upd=()=>{ const n=$$('.paint-cell',box).filter(c=>c.dataset.on==='1').length;
+      const m=$('#pcMsg'); m.textContent='رنگی: '+toFa(n)+' از '+toFa(st.target)+(n===st.target?' 🎉 دقیق شد؛ بررسی کن!':'');
+      m.className='lab-msg'+(n===st.target?' good':''); };
+    $$('.paint-cell',box).forEach(c=> c.onclick=()=>{ c.dataset.on = c.dataset.on==='1'?'0':'1'; c.classList.toggle('on', c.dataset.on==='1'); SFX.click(); upd(); });
+    upd();
+  }
+  if(st.type==='shop'){
+    box.innerHTML = `<div class="play-lab">
+      <div class="lab-row"><label>🏷️ درصد تخفیف <b id="shOv">۰٪</b></label><input type="range" id="shO" min="0" max="50" value="0" step="5"></div>
+      <div id="shView"></div><div class="lab-msg" id="shMsg"></div></div>`;
+    const upd=()=>{ const o=+$('#shO').value, off=Math.round(st.price*o/100), fin=st.price-off;
+      $('#shOv').textContent=toFa(o)+'٪';
+      $('#shView').innerHTML = shopTag(st.price,o);
+      $('#shMsg').innerHTML='تخفیف: <b>'+toFa(off)+'</b> هزار تومان · قیمت پایانی: <b>'+toFa(fin)+'</b> هزار تومان';
+      $('#shMsg').className='lab-msg'+(o===st.off?' good':''); };
+    $('#shO').addEventListener('input',upd); upd();
+  }
+
+  if(st.type!=='choice' && st.type!=='pick'){
+    const chk=document.createElement('button'); chk.className='btn primary'; chk.textContent='بررسی پاسخ';
+    chk.onclick=()=> checkCurrent(st);
+    acts.appendChild(chk);
+  }
+    const hint=document.createElement('button'); hint.className='btn ghost'; hint.textContent='💡 راهنمایی حکیم';
+  hint.onclick=()=>{ SFX.click(); const t=st.hint || st.hakim || 'اول درس همین گام را یک بار دیگر بخوان.'; $('#hakimText').innerHTML = fracify(t); hkSay(t, 'wink'); };
+  acts.appendChild(hint);
+  addNav(acts,i,list);
+}
+
+function addNav(acts,i,list){
+  const back=document.createElement('button'); back.className='btn ghost'; back.textContent='قبلی';
+  const pos=list.findIndex(x=>x.idx===i);
+  back.disabled = pos<=0;
+  back.onclick=()=>{ SFX.click(); S.step=list[pos-1].idx; persist(); renderPlay(); };
+  acts.appendChild(back);
+}
+
+function checkCurrent(st){
+  if(st.type==='table2'){
+    const inps=$$('#answerBox input');
+    if(!inps.length || inps.some(inp=>!String(inp.value).trim())){ shake(); return; }
+    let ok=true;
+    inps.forEach(inp=>{ const row=st.table2.rows[+inp.dataset.r]; const v=Number(fromFa(inp.value)); if(!isFinite(v)||v!==Number(row.answers[+inp.dataset.k])) ok=false; });
+    grade(ok, st); return;
+  }
+  if(st.type==='multi'){
+    const vals=st.fields.map((f,fi)=>{ const el=$('#mf'+fi); return el? Number(fromFa(el.value)) : NaN; });
+    if(vals.some(v=>!isFinite(v))){ shake(); return; }
+    grade(vals.every((v,fi)=> v===Number(st.fields[fi].answer)), st); return;
+  }
+  if(st.type==='mixer'){
+    const a=+($('#mixA')||{}).value, b=+($('#mixB')||{}).value;
+    grade(a*st.ratio[1]===b*st.ratio[0] && a>st.ratio[0], st); return;
+  }
+  if(st.type==='scale'){
+    grade(+($('#scF')||{}).value===st.factor, st); return;
+  }
+  if(st.type==='pctpaint'){
+    grade($$('.paint-cell').filter(c=>c.dataset.on==='1').length===st.target, st); return;
+  }
+  if(st.type==='shop'){
+    grade(+($('#shO')||{}).value===st.off, st); return;
+  }
+  if(st.type==='input'){
+    const el=$('#ans');
+    if(!el || !el.value.trim()){ shake(); return; }
+    const v = Number(fromFa(el.value));
+    if(!isFinite(v)){ shake(); return; }
+    grade(v===Number(st.answer), st);
+  } else if(st.type==='table'){
+    const t=st.table; const inps=$$('#answerBox input');
+    if(!inps.length || inps.some(inp=>!String(inp.value).trim())){ shake(); return; }
+    let ok=true;
+    inps.forEach(inp=>{
+      const k=+inp.dataset.k; const v=Number(fromFa(inp.value));
+      if(!isFinite(v) || v!==Number(t.answers[k])) ok=false;
+    });
+    grade(ok, st);
+  }
+}
+function grade(ok, st, btn, wrap){
+  const i=S.step, k=sid(i);
+  S.tries[k]=(S.tries[k]||0)+1;
+  if(ok){
+    SFX.ok(); SFX.star();
+    const pc=document.querySelector('.play-card'); if(pc){ pc.classList.remove('winflash'); void pc.offsetWidth; pc.classList.add('winflash'); }
+    S.combo = (S.combo||0) + 1;
+    S.maxCombo = Math.max(S.maxCombo||0, S.combo);
+    updateCombo();
+    if(S.combo>=5 && S.combo%5===0) setTimeout(()=>toast('🔥 وااای! کمبو ×'+toFa(S.combo)+' — پشت‌سرهم داری می‌ترکونی!'), 350);
+    const gain = Math.max(1, 4-S.tries[k]); // 3,2,1
+    if(!S.done[k]){
+      const prev = S.maxByQ[k]||0;
+      S.stars += Math.max(0, gain-prev); /* بازیِ دوباره ستارهٔ تکراری نمی‌دهد؛ فقط رکورد بهتر حساب می‌شود */
+      S.maxByQ[k] = Math.max(prev, gain);
+      S.done[k]=true;
+    }
+    persist();
+    $('#hudStars').textContent=toFa(S.stars);
+    burstStars(gain);
+    if(gain>=2) confetti();
+    if(btn){ btn.classList.add('ok'); }
+    if(wrap) $$('.choice, .pick',wrap).forEach(c=>c.disabled=true);
+    let praise = ['آفرین قهرمان نسبتستان!','وااای چه حسابی کردی!','ستاره مال توست ⭐','دمت گرم، جادو کردی!','حکیم کیف کرد!'][Math.floor(Math.random()*5)];
+    if(S.combo>=2) praise += ' 🔥 کمبو ×'+toFa(S.combo);
+    $('#hakimText').textContent = praise;
+    hkSay(praise, 'excited');
+    showWhy(st, true, gain);
+    const b=document.createElement('button'); b.className='btn primary big'; b.textContent='بزن بعدی ✨';
+    b.onclick=()=>{ SFX.click(); nextStep(true); };
+    $('#acts').innerHTML=''; $('#acts').appendChild(b);
+  } else {
+    S.combo=0; updateCombo(); persist();
+    SFX.bad();
+    if(btn) btn.classList.add('bad');
+    const miss = S.tries[k]>=3 ? 'اشکال ندارد؛ راه حل را با هم می‌بینیم و بعد دوباره می‌روی جلو.' : 'هنوز نه. دوباره نگاه کن یا از من راهنمایی بگیر.';
+    $('#hakimText').textContent = miss;
+    hkSay(miss, 'sad');
+    const fb=$('#feed');
+    const scaffold = (S.tries[k]>=2 && st.why && st.why.length) ? '<div class="feedback bad">قدم اول راه‌حل را با هم برمی‌داریم: '+fracify(st.why[0])+' حالا خودت ادامه بده!</div>' : '';
+    fb.innerHTML = scaffold || `<div class="feedback bad">این بار درست نبود. ${st.hint? 'راهنمایی: '+fracify(st.hint) : 'دوباره با دقت به شکل و درس نگاه کن.'}</div>`;
+    if(S.tries[k]>=3){
+      showWhy(st, false);
+      S.done[k]=true; S.maxByQ[k]=S.maxByQ[k]||0; persist();
+      if(wrap) $$('.choice, .pick',wrap).forEach(c=>c.disabled=true);
+      const b=document.createElement('button'); b.className='btn purple big'; b.textContent='متوجه شدم، بعدی';
+      b.onclick=()=>{ SFX.click(); nextStep(true); };
+      $('#acts').appendChild(b);
+    }
+  }
+}
+
+function showWhy(st, ok, gain){
+  const fb=$('#feed');
+  const star = ok && gain ? `<div class="feedback ok">درست گفتی! ${'⭐'.repeat(gain)} (${toFa(gain)} ستاره)</div>` : '';
+  const steps = (st.why||[]).map(x=>`<li>${fracify(x)}</li>`).join('');
+  fb.innerHTML = star + (steps? `<div class="steps-mini"><b>راه حل گام‌به‌گام</b><ol>${steps}</ol></div>`:'');
+}
+
+function nextStep(fromPlay){
+  const i=S.step, st=STEPS[i];
+  const list=landSteps(st.land);
+  const pos=list.findIndex(x=>x.idx===i);
+  if(pos<list.length-1){
+    S.step=list[pos+1].idx; persist(); renderPlay(); return;
+  }
+  persist();
+  sendLand(st.land, true);
+  const L = LANDS[st.land];
+  const full = LANDS.every((_,k)=>landDone(k));
+  SFX.fanfare(); confetti();
+  if(full){
+    hkSay('آفرین قهرمان! همهٔ سرزمین‌ها را فتح کردی. گواهی‌ات آماده است.', 'excited');
+    openCeleb(L.icon+' قله فتح شد!', 'همهٔ ۵ سرزمین نسبتستان مال توست. گواهی قهرمانی آماده‌ست!', ()=>{ showCert(); });
+    return;
+  }
+  hkSay('آفرین! این سرزمین تمام شد. حالا هر سرزمین دیگری را که دوست داری انتخاب کن.', 'happy');
+  openCeleb(L.icon+' '+L.name+' فتح شد!', 'این سرزمین کامل شد! قانون طلایی‌اش: '+(L.rule||'')+' حالا هر سرزمین دیگری را که دوست داری انتخاب کن.', ()=>{
+    renderMap(); show('map');
+  });
+}
+
+function updateCombo(){
+  const el=$('#comboPill'); if(!el) return;
+  const c=S.combo||0;
+  if(c>=2){ el.textContent = '🔥 کمبو ×'+toFa(c); el.classList.add('show'); }
+  else el.classList.remove('show');
+}
+function burstStars(n){
+  const hud = $('#hudStars') || document.body;
+  const r = hud.getBoundingClientRect();
+  for(let k=0;k<Math.min(6, 2+n);k++){
+    const s=document.createElement('div'); s.className='star-pop'; s.textContent='⭐';
+    s.style.left = (innerWidth/2 - 20 + (Math.random()*80-40))+'px';
+    s.style.top = (innerHeight*0.45)+'px';
+    s.style.setProperty('--dx', (r.left - innerWidth/2 + Math.random()*30)+'px');
+    s.style.setProperty('--dy', (r.top - innerHeight*0.45)+'px');
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(), 850);
+  }
+}
+function openCeleb(title, text, go){
+  $('#celebTitle').textContent = title;
+  $('#celebText').textContent = text;
+  $('#celebIco').textContent = '🎉';
+  $('#celeb').classList.remove('hidden');
+  $('#celebGo').onclick = ()=>{
+    SFX.click(); $('#celeb').classList.add('hidden'); go();
+  };
+}
+
+function shake(){
+  const box=$('#answerBox') || $('.name-row');
+  if(!box) return;
+  box.classList.add('err');
+  const inp=box.querySelector('input');
+  if(inp){ inp.classList.add('err'); setTimeout(()=>inp.classList.remove('err'), 500); }
+  setTimeout(()=>box.classList.remove('err'), 500);
+}
+
+function toast(t){
+  const el=document.createElement('div'); el.className='toast'; el.textContent=t;
+  document.body.appendChild(el); setTimeout(()=>el.remove(), 2400);
+}
+
+function confetti(){
+  const c=document.createElement('canvas');
+  c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:50';
+  c.width=innerWidth; c.height=innerHeight; document.body.appendChild(c);
+  const g=c.getContext('2d');
+  if(!g){ c.remove(); return; }
+  const ps=Array.from({length:90},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height,v:2+Math.random()*4,s:4+Math.random()*6,c:['#f5c542','#6654e8','#14b8a6','#fb7185','#38bdf8'][Math.floor(Math.random()*5)],r:Math.random()*6}));
+  let n=0;
+  (function tick(){
+    g.clearRect(0,0,c.width,c.height);
+    ps.forEach(p=>{ p.y+=p.v; p.x+=Math.sin(p.y/20); g.fillStyle=p.c; g.fillRect(p.x,p.y,p.s,p.s*.6); });
+    if(++n<180) requestAnimationFrame(tick); else c.remove();
+  })();
+}
+function showCert(){
+  const q = QSTEPS.length;
+  const answered = QSTEPS.filter(s => S.done[s._id]).length;
+  const pct = Math.round((S.stars / maxStars())*100);
+  const full = LANDS.every((_,i)=>landDone(i));
+  $('#certPage').querySelector('h1').textContent = full ? 'گواهی‌نامهٔ قهرمانی نسبتستان' : 'گواهی‌نامهٔ پیشرفت نسبتستان';
+  $('#certName').textContent = S.name;
+  $('#certStars').textContent = toFa(S.stars)+' از '+toFa(maxStars());
+  $('#certPct').textContent = toFa(pct)+'٪';
+  $('#certPages').textContent = toFa(LANDS.filter((_,i)=>landDone(i)).length)+' از ۵';
+  const cb=$('#certCombo'); if(cb) cb.textContent = (S.maxCombo||0)>=1 ? '×'+toFa(S.maxCombo) : '—';
+  const list = $('#certList'); list.innerHTML = '';
+  LANDS.forEach((L,i)=>{
+    const done = landDone(i);
+    const st = landStats(i);
+    const li = document.createElement('li');
+    li.className = done ? 'ok' : 'wait';
+    li.innerHTML = `<span class="tick">${done?'✓':'○'}</span>
+      <span class="meta">${L.icon} ${L.name}<small>${done ? 'کامل شد ✓ همهٔ فعالیت‌ها انجام شده' : ('پیشرفت: '+toFa(st.doneCount)+' از '+toFa(st.totalQuestions)+' فعالیت انجام شده')}</small></span>
+      <span class="st">${done ? '⭐ '+toFa(st.stars) : '—'}</span>`;
+    list.appendChild(li);
+  });
+  $('#certDate').textContent = 'تاریخ: '+jalali(new Date());
+  paintFace($('#certFace'),'excited');
+  show('cert');
+  if(full){ SFX.star(); confetti(); }
+}
+
+function sendResultsToPanel(score, stars, level, duration, details, completed){
+  try{
+    const payload = {
+      student_name: S.name || 'دانش‌آموز',
+      student_class: '',
+      student_school: '',
+      game_id: 'math-nesbat',
+      experiment_id: '',
+      duration: Math.round(duration || 0),
+      score: Math.round(score || 0),
+      stars: Math.round(stars || 0),
+      completed: !!completed,
+      attempts: 1,
+      started_at: new Date(S.started || Date.now()).toISOString(),
+      finished_at: new Date().toISOString(),
+      details: JSON.stringify(Object.assign({ level: level }, details || {}))
+    };
+    if(window.Hakim && typeof Hakim.saveSession === 'function'){
+      Hakim.saveSession(payload);
+      return;
+    }
+    payload.action = 'session';
+    payload.device = /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : (/ipad|tablet/i.test(navigator.userAgent) ? 'تبلت' : 'دسکتاپ');
+    fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).catch(function(){});
+  }catch(e){}
+}
+function landStats(i){
+  const qs = landSteps(i).filter(x => x.s.type);
+  const stars = qs.reduce((a,x)=>a+(S.maxByQ[sid(x.idx)]||0),0);
+  const doneCount = qs.filter(x=>S.done[sid(x.idx)]).length;
+  return { totalQuestions: qs.length, stars, doneCount };
+}
+function sendLand(i, completedLand){
+  S.sentLands = S.sentLands || [];
+  if(completedLand && S.sentLands.indexOf(i) !== -1) return;
+  if(completedLand) S.sentLands.push(i);
+  persist();
+  const st = landStats(i), L = LANDS[i];
+  const full = LANDS.every((_,k)=>landDone(k));
+  sendResultsToPanel(st.stars, st.stars, L.name, Math.round((Date.now()-(S.started||Date.now()))/1000), {
+    landName: L.name,
+    maxCombo: S.maxCombo||0,
+    totalQuestions: st.totalQuestions,
+    stars: st.stars,
+    landsDone: LANDS.filter((_,k)=>landDone(k)).length,
+    accuracy: st.totalQuestions ? Math.round(100 * st.stars / (st.totalQuestions * 3)) : 0
+  }, full);
+}
+
+function enter(){
+  const n=$('#nameIn').value.trim();
+  if(n.length<2){
+    $('#nameRow').classList.add('err'); $('#nameErr').classList.add('show'); SFX.bad(); return;
+  }
+  $('#nameRow').classList.remove('err'); $('#nameErr').classList.remove('show');
+  S.name=n; persist(); SFX.ok();
+  if(window.Hakim && Hakim.setName) try{ Hakim.setName(n); }catch(e){}
+  hkSay('سلام '+n+'! من حکیم‌ام. نقشهٔ نسبتستان باز شد — از باغ شربت شروع کن تا نسبت را با هم یاد بگیریم!', 'excited');
+  renderMap(); show('map');
+}
+
+$('#btnEnter').onclick=enter;
+$('#nameIn').addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
+$('#btnHow').onclick=()=>{ SFX.click(); paintFace($('#howFace'),'happy');
+ show('howto'); };
+$('#btnHowBack').onclick=()=>{ SFX.click(); show('gate'); };
+$('#btnHowGo').onclick=()=>{
+  SFX.click();
+  if(S.name && S.name.length>=2){ renderMap(); show('map'); }
+  else show('gate');
+};
+$('#btnBackMap').onclick=()=>{ SFX.click(); renderMap(); show('map'); };
+$('#btnSound').onclick=()=>{
+  soundOn=!soundOn; S.sound=soundOn; persist();
+  $('#btnSound').textContent = soundOn?'🔊':'🔇';
+  SFX.click();
+};
+$('#btnCertMap').onclick=()=>{ SFX.click(); if(!S.name){ show('gate'); return;} showCert(); };
+$('#btnCertMap2').onclick=()=>{ SFX.click(); renderMap(); show('map'); };
+$('#btnPrint').onclick=()=>window.print();
+$('#btnReset').onclick=()=>{
+  if(!confirm('همهٔ پیشرفت پاک شود؟')) return;
+  const name=S.name; S=fresh(); S.name=name; persist(); renderMap(); toast('از نو شروع شد');
+};
+
+if(S.name){ $('#nameIn').value=S.name; }
+if(migratedSave){ setTimeout(()=>toast('نسخهٔ تازهٔ بازی رسید؛ اسمت ماند و سفر از گام اول شروع می‌شود 🌟'), 600); }
+paintFace($('#gateFace'),'excited');
+paintFace($('#howFace'),'happy');
+const gs=$('#gateScene'); if(gs) gs.innerHTML = LANDS.map((L,i)=>`<figure class="gate-scene-card">${sceneSVG(i)}<figcaption>${L.icon} ${L.name}</figcaption></figure>`).join('');
+bindTilt($('#gate'), 3);
+$('#btnSound').textContent = soundOn?'🔊':'🔇';
+hkSay('سلام! من حکیم‌ام. اسمت را بنویس تا با هم وارد نسبتستان شویم؛ نسبت، تناسب و درصد را بازی‌وار یاد می‌گیریم!', 'happy');
+})();
+</script>
+<!-- 📊 ردیاب بازدید حکیمستان -->
+<script>
+(function(){
+  try {
+    var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    var userId = localStorage.getItem('hk_uid');
+    var isNew = false;
+    if (!userId) {
+      userId = 'hk_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('hk_uid', userId);
+      isNew = true;
+    }
+    var ua = navigator.userAgent;
+    var device = 'دسکتاپ';
+    if (/mobile|android|iphone|ipod/i.test(ua)) device = 'موبایل';
+    else if (/ipad|tablet/i.test(ua)) device = 'تبلت';
+    var browser = 'سایر';
+    if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+    else if (ua.indexOf('Edg') > -1) browser = 'Edge';
+    else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+    else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+    var os = 'سایر';
+    if (/android/i.test(ua)) os = 'Android';
+    else if (/iphone|ipad|ipod/i.test(ua)) os = 'iOS';
+    else if (/windows/i.test(ua)) os = 'Windows';
+    else if (/mac/i.test(ua)) os = 'Mac';
+    else if (/linux/i.test(ua)) os = 'Linux';
+    var ref = 'مستقیم';
+    if (document.referrer) {
+      if (document.referrer.indexOf('hakimistan.ir') > -1) ref = 'داخلی';
+      else if (document.referrer.indexOf('google') > -1) ref = 'گوگل';
+      else if (document.referrer.indexOf('eitaa') > -1) ref = 'ایتا';
+      else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
+      else ref = 'سایر';
+    }
+    fetch(API, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'logVisit',
+        userId: userId,
+        page: (function(){ var p = location.pathname.replace(/^\//, '').split('/').filter(Boolean); if (p.length === 0) return 'index.html'; if (p.length === 1) return p[0]; return p.slice(-2).join('/'); })(),
+        device: device,
+        browser: browser,
+        os: os,
+        lang: navigator.language || 'fa',
+        ref: ref,
+        isNew: isNew
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
+</html>
