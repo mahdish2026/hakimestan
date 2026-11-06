@@ -576,6 +576,80 @@ body::before{background:
 .cert{background:linear-gradient(180deg,#fffdf6,#fff7ed);border-image:linear-gradient(120deg,#14b8a6,#f59e0b,#fb7185) 1}
 @media (prefers-reduced-motion:reduce){.aurora i,.land-banner::after,.play-card.enter{animation:none!important}}
 
+
+/* ===== 3D WORLD: depth, glass, scenes, parallax tilt ===== */
+:root{--depth:0 22px 44px rgba(3,25,38,.35);--lift:0 30px 60px rgba(3,25,38,.42)}
+body{background:#04182b}
+.app{perspective:1200px}
+.card{transform-style:preserve-3d;box-shadow:var(--depth),inset 0 2px 0 #fff,inset 0 -10px 24px rgba(20,184,166,.06)}
+.tilt{transition:transform .18s ease;will-change:transform}
+.title{font-size:clamp(2.4rem,8vw,3.6rem);letter-spacing:.5px;
+ text-shadow:0 2px 0 rgba(255,255,255,.65),0 5px 0 rgba(13,148,136,.35),0 12px 24px rgba(2,32,42,.35)}
+.mascot.big{width:132px;height:132px;position:relative}
+#gate .mascot.big::before{content:"";position:absolute;inset:-14px;border-radius:50%;
+ background:conic-gradient(from 40deg,#14b8a6,#f5c542,#fb7185,#38bdf8,#14b8a6);
+ z-index:-1;animation:scSpin 9s linear infinite;filter:drop-shadow(0 12px 16px rgba(0,0,0,.25))}
+#gate .mascot.big::after{content:"";position:absolute;inset:-5px;border-radius:50%;background:#fffdf8;z-index:-1}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+.hero-scene{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:8px 0 4px}
+.gate-scene-card{margin:0;border-radius:18px;padding:7px 5px 6px;text-align:center;overflow:hidden;
+ background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(240,253,250,.92));
+ border:2px solid rgba(153,246,228,.9);box-shadow:0 10px 0 rgba(13,148,136,.28),0 16px 24px rgba(2,32,42,.16);
+ animation:bob 3.4s ease-in-out infinite}
+.gate-scene-card:nth-child(2){animation-delay:.2s}.gate-scene-card:nth-child(3){animation-delay:.4s}
+.gate-scene-card:nth-child(4){animation-delay:.6s}.gate-scene-card:nth-child(5){animation-delay:.8s}
+.gate-scene-card figcaption{font-size:.66rem;font-weight:900;color:#134e4a;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scene-svg{width:100%;height:auto;display:block;overflow:visible}
+@media(max-width:640px){.hero-scene{grid-template-columns:repeat(3,1fr)}.gate-scene-card:nth-child(n+4){display:none}}
+.sc-bob{animation:scBob 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes scBob{50%{transform:translateY(-4px)}}
+.sc-swing{animation:scSwing 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 12%}
+@keyframes scSwing{0%,100%{transform:rotate(-3.4deg)}50%{transform:rotate(3.4deg)}}
+.sc-bub{animation:scBub 2.2s ease-in infinite}
+.sc-bub.b2{animation-delay:.6s}.sc-bub.b3{animation-delay:1.1s}
+@keyframes scBub{0%{transform:translateY(5px);opacity:0}35%{opacity:.9}100%{transform:translateY(-9px);opacity:0}}
+.sc-cell{animation:scCell 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes scCell{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
+.sc-tag{animation:scBob 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.sc-spin-slow{animation:scSpinSlow 14s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes scSpinSlow{to{transform:rotate(360deg)}}
+.sc-spark{animation:scSpark 1.8s ease-in-out infinite}
+.sc-spark.s2{animation-delay:.5s}.sc-spark.s3{animation-delay:1s}
+@keyframes scSpark{0%,100%{opacity:.25}50%{opacity:1}}
+.land{transform-style:preserve-3d;background:linear-gradient(150deg,#fff 55%,#f0fdfa);
+ box-shadow:0 14px 0 rgba(13,148,136,.18),0 22px 34px rgba(2,32,42,.2)}
+.land .ic{position:relative;overflow:hidden;transform:translateZ(28px)}
+.ic-scene{position:absolute;inset:3px;opacity:.92}
+.ic-emoji{position:relative;z-index:1;font-size:1.55rem;filter:drop-shadow(0 4px 5px rgba(0,0,0,.3))}
+.map-hero{transform-style:preserve-3d;box-shadow:var(--lift)}
+.land-banner{min-height:86px;padding:13px 16px}
+.lb-scene{flex:0 0 92px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.3))}
+.lb-scene .scene-svg{max-height:64px}
+.lb-ico{font-size:1.7rem;align-self:flex-start}
+.visual.stage3d{position:relative;transform-style:preserve-3d;
+ background:radial-gradient(ellipse 70% 34% at 50% 88%,rgba(13,148,136,.22),transparent 70%),
+ radial-gradient(circle at 15% 15%,rgba(253,224,71,.38),transparent 42%),
+ radial-gradient(circle at 85% 85%,rgba(20,184,166,.26),transparent 45%),linear-gradient(180deg,#fff,#ecfdf5);
+ box-shadow:inset 0 0 0 6px #fff,inset 0 -18px 28px rgba(13,148,136,.12),0 18px 30px rgba(13,148,136,.18)}
+.visual.stage3d::before{content:"✦ 🍋 ✦ 💯 ✦";position:absolute;top:8px;left:12px;font-size:.8rem;letter-spacing:5px;opacity:.45;animation:bob 3.6s ease-in-out infinite}
+.visual.stage3d .fig svg{filter:drop-shadow(0 16px 14px rgba(2,32,42,.28))}
+.btn{transform-style:preserve-3d}
+.btn.primary:active,.btn.purple:active,.btn.teal:active{transform:translateY(4px) scale(.985)!important}
+.choice,.pick{background:linear-gradient(180deg,#fff,#f8fafc);box-shadow:0 6px 0 #ddd6fe,0 14px 22px rgba(76,60,199,.13)}
+.stat-pill,.hud .btn.icon{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);box-shadow:0 8px 0 rgba(76,60,199,.22),0 14px 22px rgba(2,32,42,.2)}
+.progress{box-shadow:inset 0 2px 5px rgba(0,0,0,.28)}
+.progress>i{background:linear-gradient(90deg,#fbbf24,#fb7185,#14b8a6);background-size:200% 100%;animation:progFlow 2.2s linear infinite}
+@keyframes progFlow{to{background-position:-200% 0}}
+.play-card.winflash{animation:winFlash .65s ease}
+@keyframes winFlash{0%{box-shadow:0 0 0 0 rgba(245,197,66,.75),var(--depth)}100%{box-shadow:0 0 0 26px rgba(245,197,66,0),var(--depth)}}
+.cert{box-shadow:var(--lift),inset 0 2px 0 #fff}
+.cert::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,215,90,.22) 48%,transparent 62%);transform:translateX(130%);animation:bannerShine 4.2s ease-in-out infinite;pointer-events:none}
+.seal{box-shadow:0 10px 0 #0f766e,0 20px 28px rgba(13,148,136,.4),inset 0 3px 0 rgba(255,255,255,.65)}
+.scene-card{transform-style:preserve-3d;box-shadow:0 10px 0 rgba(13,148,136,.3),0 18px 28px rgba(2,32,42,.18)}
+.paint-cell.on{box-shadow:0 4px 0 #b45309,0 8px 14px rgba(245,158,11,.4)}
+input[type=range]{filter:drop-shadow(0 4px 5px rgba(245,158,11,.35))}
+@media (prefers-reduced-motion:reduce){.sc-bob,.sc-swing,.sc-bub,.sc-cell,.sc-spin-slow,.sc-spark,.gate-scene-card,.progress>i,.cert::after{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -588,6 +662,7 @@ body::before{background:
 
   <!-- GATE -->
   <section id="gate" class="card">
+    <div class="hero-scene" id="gateScene" aria-hidden="true"></div>
     <div class="hero-shapes" aria-hidden="true">
       <svg class="float" style="left:8%;top:10px" width="54" height="54" viewBox="0 0 54 54"><rect x="4" y="4" width="46" height="46" rx="10" fill="#8b7cf7"/></svg>
       <svg class="float" style="left:38%;top:28px;animation-delay:.4s" width="50" height="50" viewBox="0 0 50 50"><polygon points="25,3 47,44 3,44" fill="#f5c542"/></svg>
@@ -663,7 +738,7 @@ body::before{background:
     </div>
     <div class="hud-dots" id="hudDots"></div>
     <div class="card play-card">
-<div class="land-banner" id="landBanner"><span class="lb-ico" id="lbIco"></span><div><b id="lbName"></b><small id="lbRule"></small></div><span class="lb-badge" id="lbBadge"></span></div>
+<div class="land-banner" id="landBanner"><span class="lb-scene" id="lbScene"></span><span class="lb-ico" id="lbIco"></span><div><b id="lbName"></b><small id="lbRule"></small></div><span class="lb-badge" id="lbBadge"></span></div>
             <div class="page-badge" id="pageBadge"></div>
       <h2 class="q-title" id="qTitle"></h2>
       <p class="q-body" id="qBody"></p>
@@ -937,6 +1012,65 @@ function propTableDemo(){
   const row=(r,cls)=>'<tr>'+r.map((c,i)=>`<td class="${i===0?'lab':cls}">${c}</td>`).join('')+'</tr>';
   return `<div class="tbl-wrap"><table class="tbl ptable"><tr>${head.map((c,i)=>`<th>${i===0?'مقدار':c}</th>`).join('')}</tr>${row(r1,'')}${row(r2,'')}</table></div>
   <div style="font-weight:900;color:#4c3cc7">ستون‌ها با هم بزرگ می‌شوند؛ در هر ستون نسبت آب‌لیمو به آب همان ۲ به ۳ است.</div>`;
+}
+
+/* ===== 3D SCENES (SVG, animated) ===== */
+let __scUid=0;
+function sceneSVG(i){
+  const u='g'+(++__scUid);
+  const defs=`<defs>
+    <linearGradient id="${u}a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>
+    <linearGradient id="${u}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#99f6e4"/><stop offset="1" stop-color="#0d9488"/></linearGradient>
+    <linearGradient id="${u}c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fda4af"/><stop offset="1" stop-color="#e11d48"/></linearGradient>
+    <linearGradient id="${u}d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bae6fd"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
+  </defs>`;
+  const scenes=[
+   // 0 syrup pitcher + lemon
+   `${defs}<ellipse cx="60" cy="76" rx="34" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-bob"><path d="M38 22 h44 l-6 50 a6 6 0 0 1 -6 5 h-20 a6 6 0 0 1 -6 -5 Z" fill="rgba(255,255,255,.55)" stroke="#fff" stroke-width="2"/>
+    <path d="M41 40 h38 l-4 32 a4 4 0 0 1 -4 3 h-22 a4 4 0 0 1 -4 -3 Z" fill="url(#${u}a)"/>
+    <line x1="66" y1="8" x2="58" y2="38" stroke="#e11d48" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="88" cy="58" r="13" fill="#fde047" stroke="#eab308" stroke-width="2.5"/><circle cx="88" cy="58" r="7.5" fill="#fef9c3"/>
+    <circle cx="50" cy="50" r="2.6" fill="#fff" opacity=".8" class="sc-bub"/><circle cx="60" cy="58" r="2" fill="#fff" opacity=".7" class="sc-bub b2"/><circle cx="55" cy="66" r="1.6" fill="#fff" opacity=".6" class="sc-bub b3"/></g>`,
+   // 1 balance scale
+   `${defs}<ellipse cx="60" cy="78" rx="36" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-swing"><line x1="60" y1="14" x2="60" y2="66" stroke="#92400e" stroke-width="5" stroke-linecap="round"/>
+    <line x1="22" y1="24" x2="98" y2="24" stroke="#92400e" stroke-width="5" stroke-linecap="round"/>
+    <path d="M22 24 L10 44 a12 8 0 0 0 24 0 Z" fill="url(#${u}a)" stroke="#b45309" stroke-width="1.6"/>
+    <path d="M98 24 L86 44 a12 8 0 0 0 24 0 Z" fill="url(#${u}b)" stroke="#0f766e" stroke-width="1.6"/>
+    <circle cx="22" cy="38" r="4" fill="#e11d48"/><circle cx="98" cy="38" r="4" fill="#0d9488"/></g>
+    <rect x="44" y="66" width="32" height="7" rx="3.5" fill="#92400e"/><circle cx="60" cy="12" r="5" fill="url(#${u}a)" stroke="#b45309" stroke-width="1.6"/>`,
+   // 2 percent grid
+   `${defs}<ellipse cx="60" cy="78" rx="34" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-bob">${(()=>{let c='';for(let r=0;r<5;r++)for(let k=0;k<5;k++){const on=(r*5+k)<11;c+=`<rect class="sc-cell" style="animation-delay:${(r*5+k)*70}ms" x="${18+k*13}" y="${12+r*12}" width="10.5" height="9.5" rx="2.6" fill="${on?`url(#${u}b)`:'#e0f2fe'}" stroke="${on?'#0f766e':'#7dd3fc'}" stroke-width="1.1"/>`;}return c;})()}
+    <text x="92" y="46" font-size="30" font-weight="900" fill="#f59e0b" stroke="#fff" stroke-width="1">٪</text></g>`,
+   // 3 shop
+   `${defs}<ellipse cx="60" cy="78" rx="38" ry="5" fill="rgba(0,0,0,.18)"/>
+    <g class="sc-bob"><path d="M18 30 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 16 0 a8 8 0 0 1 4 0 Z" fill="url(#${u}c)"/>
+    <rect x="24" y="30" width="72" height="38" rx="4" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+    <rect x="24" y="56" width="72" height="5" fill="#fb923c"/>
+    <circle cx="40" cy="44" r="6" fill="url(#${u}a)"/><rect x="56" y="38" width="12" height="12" rx="3" fill="url(#${u}d)"/><polygon points="82,50 88,36 94,50" fill="url(#${u}b)"/>
+    <g class="sc-tag"><rect x="72" y="58" width="26" height="15" rx="4" fill="#ef4444"/><text x="85" y="69" text-anchor="middle" font-size="8.5" font-weight="900" fill="#fff">٪۲۰-</text></g></g>`,
+   // 4 golden spiral
+   `${defs}<ellipse cx="60" cy="78" rx="34" ry="5" fill="rgba(0,0,0,.16)"/>
+    <g class="sc-spin-slow"><rect x="20" y="14" width="80" height="56" rx="8" fill="rgba(254,243,199,.65)" stroke="#d97706" stroke-width="2"/>
+    <path d="M20 70 V30 a40 40 0 0 1 40 40 a24 24 0 0 0 24 -24 a14 14 0 0 1 -14 14 a8 8 0 0 0 -8 -8" fill="none" stroke="#d97706" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="66" cy="52" r="3.4" fill="#f59e0b"/></g>
+    <text class="sc-spark" x="26" y="24" font-size="13" fill="#f59e0b">✦</text><text class="sc-spark s2" x="94" y="30" font-size="11" fill="#fb7185">✦</text><text class="sc-spark s3" x="88" y="66" font-size="12" fill="#14b8a6">✦</text>`
+  ];
+  return `<svg class="scene-svg" viewBox="0 0 120 84" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${scenes[i]||scenes[0]}</svg>`;
+}
+function bindTilt(el, max){
+  if(!el || !window.matchMedia) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(!window.matchMedia('(pointer: fine)').matches) return;
+  el.classList.add('tilt');
+  el.addEventListener('mousemove', e=>{
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/Math.max(1,r.width)-.5, y=(e.clientY-r.top)/Math.max(1,r.height)-.5;
+    el.style.transform=`perspective(700px) rotateY(${(-x*max).toFixed(2)}deg) rotateX(${(y*max).toFixed(2)}deg) translateY(-3px)`;
+  });
+  el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
 }
 /* ===== NESBAT VISUALS: ratio bars, dots, percent grid/pie ===== */
 function dotsRow(n, fill, stroke){
@@ -1577,14 +1711,14 @@ function renderMap(){
     el.type='button';
     el.dataset.i = String(i); el.dataset.emoji=L.icon;
     const go = lock ? 'قفل' : (done ? 'دوباره' : (fin?'ادامه':'بزن بریم'));
-    el.innerHTML = `<div class="ic">${lock?'🔒':L.icon}</div>
+    el.innerHTML = `<div class="ic">${lock?'🔒':`<span class="ic-scene">${sceneSVG(i)}</span><span class="ic-emoji">${L.icon}</span>`}</div>
       <div><h3>${L.name}</h3><p>${L.desc}</p><div class="bar"><i style="width:${pct}%"></i></div></div>
       <div class="go">${go}<div class="stars">${done?'✅':'⭐ '+toFa(got)}</div></div>`;
     el.onclick = ()=>{
       if(lock){ toast('این سرزمین هنوز باز نیست 🗺️'); return; }
       SFX.click(); startLand(i);
     };
-    box.appendChild(el);
+    box.appendChild(el); bindTilt(el, 5);
   });
   paintFace($('#gateFace'),'excited');
   document.body.removeAttribute('data-land');
@@ -1616,7 +1750,7 @@ function renderPlay(){
   }
   $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length);
   document.querySelector('.play-card').classList.remove('enter'); void document.querySelector('.play-card').offsetWidth; document.querySelector('.play-card').classList.add('enter');
-  const bn=$('#landBanner'); if(bn){ bn.dataset.land=String(st.land); $('#lbIco').textContent=L.icon; $('#lbName').textContent=L.name; $('#lbRule').textContent=L.rule||L.desc; $('#lbBadge').textContent='گام '+toFa(pos+1)+' از '+toFa(list.length); }
+  const bn=$('#landBanner'); if(bn){ bn.dataset.land=String(st.land); $('#lbIco').textContent=L.icon; const ls=$('#lbScene'); if(ls) ls.innerHTML=sceneSVG(st.land); $('#lbName').textContent=L.name; $('#lbRule').textContent=L.rule||L.desc; $('#lbBadge').textContent='گام '+toFa(pos+1)+' از '+toFa(list.length); }
   $('#qTitle').innerHTML = fracify(st.title);
   $('#qBody').innerHTML = fracify(st.body||'');
   const lb=$('#learnBox');
@@ -1624,6 +1758,7 @@ function renderPlay(){
   const vis = st.visual ? st.visual() : '';
   $('#visual').innerHTML = vis;
   $('#visual').style.display = vis ? '' : 'none';
+  $('#visual').classList.toggle('stage3d', !!vis);
   $('#hakimText').innerHTML = fracify(st.hakim||'با دقت نگاه کن، بعد جواب بده.');
   $('#feed').innerHTML='';
   hkSay(st.hakim||'با دقت نگاه کن، بعد جواب بده.', st.teach?'wise':'thinking');
@@ -1832,6 +1967,7 @@ function grade(ok, st, btn, wrap){
   S.tries[i]=(S.tries[i]||0)+1;
   if(ok){
     SFX.ok(); SFX.star();
+    const pc=document.querySelector('.play-card'); if(pc){ pc.classList.remove('winflash'); void pc.offsetWidth; pc.classList.add('winflash'); }
     combo++;
     updateCombo();
     const gain = Math.max(1, 4-S.tries[i]); // 3,2,1
@@ -2053,7 +2189,8 @@ function enter(){
 
 $('#btnEnter').onclick=enter;
 $('#nameIn').addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
-$('#btnHow').onclick=()=>{ SFX.click(); paintFace($('#howFace'),'happy'); show('howto'); };
+$('#btnHow').onclick=()=>{ SFX.click(); paintFace($('#howFace'),'happy');
+ show('howto'); };
 $('#btnHowBack').onclick=()=>{ SFX.click(); show('gate'); };
 $('#btnHowGo').onclick=()=>{
   SFX.click();
@@ -2077,6 +2214,8 @@ $('#btnReset').onclick=()=>{
 if(S.name){ $('#nameIn').value=S.name; }
 paintFace($('#gateFace'),'excited');
 paintFace($('#howFace'),'happy');
+const gs=$('#gateScene'); if(gs) gs.innerHTML = LANDS.map((L,i)=>`<figure class="gate-scene-card">${sceneSVG(i)}<figcaption>${L.icon} ${L.name}</figcaption></figure>`).join('');
+bindTilt($('#gate'), 3);
 $('#btnSound').textContent = soundOn?'🔊':'🔇';
 hkSay('سلام! من حکیم‌ام. اسمت را بنویس تا با هم وارد نسبتستان شویم؛ نسبت، تناسب و درصد را بازی‌وار یاد می‌گیریم!', 'happy');
 })();
