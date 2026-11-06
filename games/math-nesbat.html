@@ -891,7 +891,8 @@ const fromFa = s => String(s||'').trim()
   .replace(/[۰-۹]/g, d => fa.indexOf(d))
   .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
   .replace(/[٬,]/g,'');
-const KEY = 'hakimestan_nesbat_v1';
+const KEY = 'hakimestan_nesbat_v2';
+const OLD_KEY = 'hakimestan_nesbat_v1';
 const LANDS = [
   {id:'ratio', icon:'🍋', name:'باغ شربت نسبت‌ها', desc:'نسبت یعنی مقایسهٔ دو مقدار — فصل ۳، نسبت', rule:'نسبت یعنی «اول به دوم»؛ ترتیب مهم است و ساده‌کردن مزه را عوض نمی‌کند.'},
   {id:'prop', icon:'⚖️', name:'پل تناسب طلایی', desc:'نسبت‌های مساوی و جدول تناسب', rule:'در تناسب، هر دو طرف را در یک عدد ضرب یا بر یک عدد تقسیم کن.'},
@@ -1214,10 +1215,20 @@ function goldRect(){
 
 /* ===== STATE ===== */
 function fresh(){
-  return {name:'', stars:0, sound:true, land:0, step:0, tries:{}, done:{}, started:Date.now(), maxByQ:{}, sentLands:[]};
+  return {name:'', stars:0, sound:true, land:0, step:0, tries:{}, done:{}, started:Date.now(), maxByQ:{}, sentLands:[], landCleared:{}};
 }
 let S = fresh();
-try{ const raw=localStorage.getItem(KEY); if(raw) S = Object.assign(fresh(), JSON.parse(raw)); }catch(e){}
+let migratedSave = false;
+try{
+  const raw=localStorage.getItem(KEY);
+  if(raw) S = Object.assign(fresh(), JSON.parse(raw));
+  else {
+    /* ذخیرهٔ قدیمی با شمارهٔ گام‌ها نگه داشته می‌شد و با اضافه‌شدن سؤال‌های تازه
+       جابه‌جا شده بود؛ فقط نام را نگه می‌داریم تا بازی از گام اولِ درست شروع شود. */
+    const old=localStorage.getItem(OLD_KEY);
+    if(old){ const o=JSON.parse(old); if(o && o.name){ S.name=o.name; migratedSave=true; persist(); } }
+  }
+}catch(e){}
 soundOn = S.sound !== false;
 function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
@@ -1762,6 +1773,8 @@ const STEPS = [
   why:['آب: ۳→۱۵ یعنی ×۵.','آب‌لیمو: ۲×۵=۱۰ لیوان.','کل شربت ۲۵ لیوان و نسبت آب‌لیمو به کل ۱۰/۲۵=۴۰٪ است.']}
 ];
 
+STEPS.forEach(s => { s._id = s.land + '|' + s.title; });
+const sid = i => STEPS[i]._id;
 const QSTEPS = STEPS.filter(s => s.type);
 function maxStars(){ return QSTEPS.length * 3; }
 
@@ -1774,7 +1787,7 @@ function show(id){
 }
 function landSteps(i){ return STEPS.map((s,idx)=>({s,idx})).filter(x=>x.s.land===i); }
 function landDone(i){
-  return landSteps(i).every(({idx}) => !STEPS[idx].type || S.done[idx]);
+  return !!(S.landCleared && S.landCleared[i]) || landSteps(i).every(({idx}) => !STEPS[idx].type || S.done[sid(idx)]);
 }
 function unlocked(i){
   /* همهٔ سرزمین‌ها از اول بازند؛ دانش‌آموز هرکدام را دوست داشت انتخاب می‌کند.
@@ -1792,8 +1805,8 @@ function renderMap(){
   LANDS.forEach((L,i)=>{
     const done = landDone(i), lock=!unlocked(i);
     const qs = landSteps(i).filter(x=>x.s.type);
-    const got = qs.reduce((a,x)=>a+(S.maxByQ[x.idx]||0),0);
-    const fin = qs.filter(x=>S.done[x.idx]).length;
+    const got = qs.reduce((a,x)=>a+(S.maxByQ[sid(x.idx)]||0),0);
+    const fin = qs.filter(x=>S.done[sid(x.idx)]).length;
     const pct = qs.length ? Math.round(fin/qs.length*100) : 0;
     const current = !done && i===LANDS.findIndex((_,k)=>!landDone(k));
     if(i){
@@ -1806,7 +1819,7 @@ function renderMap(){
     const go = lock ? 'قفل' : (done ? 'دوباره' : (fin?'ادامه':'بزن بریم'));
     el.innerHTML = `<div class="ic">${lock?'🔒':`<span class="ic-scene">${sceneSVG(i)}</span><span class="ic-emoji">${L.icon}</span>`}</div>
       <div><h3>${L.name}</h3><p>${L.desc}</p><div class="bar"><i style="width:${pct}%"></i></div></div>
-      <div class="go">${go}<div class="stars">${done?'✅':'⭐ '+toFa(got)}</div></div>`;
+      <div class="go">${go}<div class="stars">${done?'✅ تمام شد':'⭐ '+toFa(got)+' · '+toFa(fin)+' از '+toFa(qs.length)+' فعالیت'}</div></div>`;
     el.onclick = ()=>{
       if(lock){ toast('این سرزمین هنوز باز نیست 🗺️'); return; }
       SFX.click(); startLand(i);
@@ -1820,7 +1833,14 @@ function renderMap(){
 function startLand(i){
   S.land=i;
   const list = landSteps(i);
-  const next = list.find(x => !S.done[x.idx]);
+  if(list.length && list.every(x => !x.s.type || S.done[sid(x.idx)])){
+    /* سرزمین قبلاً کامل شده: برای بازیِ دوباره از اول بازش می‌کنیم.
+       تیک گواهی با landCleared سر جایش می‌ماند و ستاره فقط بالای رکورد قبلی اضافه می‌شود. */
+    S.landCleared = S.landCleared || {}; S.landCleared[i]=true;
+    list.forEach(x => { delete S.done[sid(x.idx)]; S.tries[sid(x.idx)]=0; });
+    toast('این سرزمین را قبلاً تمام کرده بودی؛ این بار برای بازیِ دوباره از اول باز شد 🔁');
+  }
+  const next = list.find(x => !S.done[sid(x.idx)]);
   S.step = next ? next.idx : list[0].idx;
   persist(); renderPlay(); show('play');
 }
@@ -1841,7 +1861,7 @@ function renderPlay(){
   if(dots){
     dots.innerHTML = list.map((x,k)=>`<i class="${k<pos?'done':(k===pos?'on':'')}"></i>`).join('');
   }
-  $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length);
+  $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length)+(st.type?' · ✏️ فعالیت':' · 📖 درس کوتاه');
   document.querySelector('.play-card').classList.remove('enter'); void document.querySelector('.play-card').offsetWidth; document.querySelector('.play-card').classList.add('enter');
   const bn=$('#landBanner'); if(bn){ bn.dataset.land=String(st.land); $('#lbIco').textContent=L.icon; const ls=$('#lbScene'); if(ls) ls.innerHTML=sceneSVG(st.land); $('#lbName').textContent=L.name; $('#lbRule').textContent=L.rule||L.desc; $('#lbBadge').textContent='گام '+toFa(pos+1)+' از '+toFa(list.length); }
   $('#qTitle').innerHTML = fracify(st.title);
@@ -1859,23 +1879,28 @@ function renderPlay(){
   const acts=$('#acts'); acts.innerHTML='';
 
   if(!st.type){
-    const b=document.createElement('button'); b.className='btn primary big'; b.textContent='فهمیدم، بریم بعدی ✨';
-    b.onclick=()=>{ SFX.click(); S.done[i]=true; persist(); nextStep(true); };
+    const b=document.createElement('button'); b.className='btn primary big';
+    const nx=list[pos+1];
+    b.textContent = (nx && nx.s.type) ? 'فهمیدم؛ سؤال‌ها شروع می‌شود ✨' : 'فهمیدم، بریم بعدی ✨';
+    b.onclick=()=>{ SFX.click(); S.done[sid(i)]=true; persist(); nextStep(true); };
     acts.appendChild(b);
     addNav(acts,i,list);
     return;
   }
 
-  if(S.done[i]){
+  if(S.done[sid(i)]){
     showWhy(st, true);
     const b=document.createElement('button'); b.className='btn primary'; b.textContent='بریم بعدی';
     b.onclick=()=>{ SFX.click(); nextStep(true); };
     acts.appendChild(b);
+    const redo=document.createElement('button'); redo.className='btn purple'; redo.textContent='🔁 دوباره حلش می‌کنم';
+    redo.onclick=()=>{ SFX.click(); S.tries[sid(i)]=0; delete S.done[sid(i)]; persist(); renderPlay(); };
+    acts.appendChild(redo);
     addNav(acts,i,list);
     return;
   }
 
-  S.tries[i]=S.tries[i]||0;
+  S.tries[sid(i)]=S.tries[sid(i)]||0;
 
   if(st.type==='input'){
     box.innerHTML = `<div class="answer-row">
@@ -2056,18 +2081,19 @@ function checkCurrent(st){
   }
 }
 function grade(ok, st, btn, wrap){
-  const i=S.step;
-  S.tries[i]=(S.tries[i]||0)+1;
+  const i=S.step, k=sid(i);
+  S.tries[k]=(S.tries[k]||0)+1;
   if(ok){
     SFX.ok(); SFX.star();
     const pc=document.querySelector('.play-card'); if(pc){ pc.classList.remove('winflash'); void pc.offsetWidth; pc.classList.add('winflash'); }
     combo++;
     updateCombo();
-    const gain = Math.max(1, 4-S.tries[i]); // 3,2,1
-    if(!S.done[i]){
-      S.stars += gain;
-      S.maxByQ[i] = gain;
-      S.done[i]=true;
+    const gain = Math.max(1, 4-S.tries[k]); // 3,2,1
+    if(!S.done[k]){
+      const prev = S.maxByQ[k]||0;
+      S.stars += Math.max(0, gain-prev); /* بازیِ دوباره ستارهٔ تکراری نمی‌دهد؛ فقط رکورد بهتر حساب می‌شود */
+      S.maxByQ[k] = Math.max(prev, gain);
+      S.done[k]=true;
     }
     persist();
     $('#hudStars').textContent=toFa(S.stars);
@@ -2086,15 +2112,15 @@ function grade(ok, st, btn, wrap){
     combo=0; updateCombo();
     SFX.bad();
     if(btn) btn.classList.add('bad');
-    const miss = S.tries[i]>=3 ? 'اشکال ندارد؛ راه حل را با هم می‌بینیم و بعد دوباره می‌روی جلو.' : 'هنوز نه. دوباره نگاه کن یا از من راهنمایی بگیر.';
+    const miss = S.tries[k]>=3 ? 'اشکال ندارد؛ راه حل را با هم می‌بینیم و بعد دوباره می‌روی جلو.' : 'هنوز نه. دوباره نگاه کن یا از من راهنمایی بگیر.';
     $('#hakimText').textContent = miss;
     hkSay(miss, 'sad');
     const fb=$('#feed');
-    const scaffold = (S.tries[i]>=2 && st.why && st.why.length) ? '<div class="feedback bad">قدم اول راه‌حل را با هم برمی‌داریم: '+fracify(st.why[0])+' حالا خودت ادامه بده!</div>' : '';
+    const scaffold = (S.tries[k]>=2 && st.why && st.why.length) ? '<div class="feedback bad">قدم اول راه‌حل را با هم برمی‌داریم: '+fracify(st.why[0])+' حالا خودت ادامه بده!</div>' : '';
     fb.innerHTML = scaffold || `<div class="feedback bad">این بار درست نبود. ${st.hint? 'راهنمایی: '+fracify(st.hint) : 'دوباره با دقت به شکل و درس نگاه کن.'}</div>`;
-    if(S.tries[i]>=3){
+    if(S.tries[k]>=3){
       showWhy(st, false);
-      S.done[i]=true; S.maxByQ[i]=S.maxByQ[i]||0; persist();
+      S.done[k]=true; S.maxByQ[k]=S.maxByQ[k]||0; persist();
       if(wrap) $$('.choice, .pick',wrap).forEach(c=>c.disabled=true);
       const b=document.createElement('button'); b.className='btn purple big'; b.textContent='متوجه شدم، بعدی';
       b.onclick=()=>{ SFX.click(); nextStep(true); };
@@ -2191,7 +2217,7 @@ function confetti(){
 }
 function showCert(){
   const q = QSTEPS.length;
-  const answered = QSTEPS.filter(s => S.done[STEPS.indexOf(s)]).length;
+  const answered = QSTEPS.filter(s => S.done[s._id]).length;
   const pct = Math.round((S.stars / maxStars())*100);
   const full = LANDS.every((_,i)=>landDone(i));
   $('#certPage').querySelector('h1').textContent = full ? 'گواهی‌نامهٔ قهرمانی نسبتستان' : 'گواهی‌نامهٔ پیشرفت نسبتستان';
@@ -2248,8 +2274,8 @@ function sendResultsToPanel(score, stars, level, duration, details, completed){
 }
 function landStats(i){
   const qs = landSteps(i).filter(x => x.s.type);
-  const stars = qs.reduce((a,x)=>a+(S.maxByQ[x.idx]||0),0);
-  const doneCount = qs.filter(x=>S.done[x.idx]).length;
+  const stars = qs.reduce((a,x)=>a+(S.maxByQ[sid(x.idx)]||0),0);
+  const doneCount = qs.filter(x=>S.done[sid(x.idx)]).length;
   return { totalQuestions: qs.length, stars, doneCount };
 }
 function sendLand(i, completedLand){
@@ -2305,6 +2331,7 @@ $('#btnReset').onclick=()=>{
 };
 
 if(S.name){ $('#nameIn').value=S.name; }
+if(migratedSave){ setTimeout(()=>toast('نسخهٔ تازهٔ بازی رسید؛ اسمت ماند و سفر از گام اول شروع می‌شود 🌟'), 600); }
 paintFace($('#gateFace'),'excited');
 paintFace($('#howFace'),'happy');
 const gs=$('#gateScene'); if(gs) gs.innerHTML = LANDS.map((L,i)=>`<figure class="gate-scene-card">${sceneSVG(i)}<figcaption>${L.icon} ${L.name}</figcaption></figure>`).join('');
