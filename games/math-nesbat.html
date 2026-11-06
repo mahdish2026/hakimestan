@@ -71,25 +71,6 @@ body::before{
 .mascot.big{width:118px;height:118px}
 .mascot svg,.face svg,#certFace svg{width:100%;height:100%;display:block}
 .bubble .face{width:64px;height:64px;font-size:0}
-#hakimPanelMount{margin:14px 0 0;position:relative;z-index:2}
-#hakimPanelMount .hakim-panel{
-  background:#fffdf8 !important;border:2px solid #c4b5fd !important;border-radius:22px;
-  box-shadow:0 12px 28px rgba(76,60,199,.16); color:#1e1b4b !important;
-}
-#hakimPanelMount .hakim-panel::before{background:radial-gradient(ellipse at right,rgba(102,84,232,.12),transparent 65%) !important}
-#hakimPanelMount .hakim-bubble{
-  background:#f5f3ff !important;border:1.5px solid #c4b5fd !important;
-}
-#hakimPanelMount .hakim-bubble::after{
-  background:#f5f3ff !important;border-color:#c4b5fd !important;
-}
-#hakimPanelMount .hakim-text{
-  color:#1e1b4b !important;font-weight:800 !important;
-}
-#hakimPanelMount .hakim-name{
-  color:#4c3cc7 !important;background:#ede9fe !important;border-color:#c4b5fd !important;
-}
-#hakimPanelMount .hakim-report-line{color:#1e1b4b !important}
 .bubble p{color:#1e1b4b;font-weight:800}
 .title{
   font-size:clamp(1.8rem,6vw,2.6rem); color:#4c3cc7; text-align:center; font-weight:900;
@@ -281,7 +262,7 @@ body::before{
 .cert-list small{display:block;font-size:.78rem;font-weight:700;opacity:.8;margin-top:2px}
 .cert-list .st{white-space:nowrap;font-weight:900;color:#d97706}
 @media print{
-  body::before,.hud,.actions,.no-print,#hakimPanelMount{display:none!important}
+  body::before,.hud,.actions,.no-print{display:none!important}
   body{background:#fff}
   .app{max-width:none}
   .cert{box-shadow:none}
@@ -482,6 +463,14 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
 .cert{border-color:#14b8a6}
 .cert::before{border-color:#f59e0b}
 .seal{background:radial-gradient(circle at 30% 30%,#99f6e4,#14b8a6);color:#042f2e;box-shadow:0 8px 0 #0f766e}
+
+/* کسرهای طبقاتی: صورت روی خط، مخرج زیر خط؛ با عدد اعشاری اشتباه نمی‌شود */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;
+ margin:0 .18em;line-height:1.08;font-size:.86em;font-weight:900;text-align:center}
+.frac .frac-n{padding:0 .34em .08em;border-bottom:2.2px solid currentColor}
+.frac .frac-d{padding:.08em .34em 0}
+.choice .frac,.pick .frac{font-size:.82em}
+.tbl th .frac{font-size:.9em}
 .lesson-note{background:#f0fdfa;border:1.5px dashed #14b8a6;border-radius:14px;padding:10px 12px;margin:10px 0;line-height:1.9;color:#134e4a}
 @media(max-width:520px){.pick{min-width:96px}}
 
@@ -521,13 +510,13 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
   <section id="howto" class="card hidden">
     <div class="mascot" id="howFace"></div>
     <h2 class="title" style="font-size:1.8rem">نسبتستان چطور بازی می‌شود؟</h2>
-    <p class="sub">تو آشپز و حسابدار نسبتستانی! اول با حکیم درس را قدم‌به‌قدم یاد می‌گیری، بعد با شکل‌های رنگی تمرین می‌کنی، ستاره می‌گیری و قفل سرزمین بعدی را باز می‌کنی.</p>
+    <p class="sub">تو آشپز و حسابدار نسبتستانی! همهٔ سرزمین‌ها بازند و هرکدام را دوست داشتی انتخاب می‌کنی؛ اول با حکیم درس را قدم‌به‌قدم یاد می‌گیری، بعد با شکل‌های رنگی تمرین می‌کنی و ستاره می‌گیری.</p>
     <div class="howto-grid">
       <div class="howto-item"><div class="n">۱</div><div><b>اسم قهرمان را بنویس</b><span>گواهی فقط به نام خودت صادر می‌شود — مثل کارت قهرمانی!</span></div></div>
       <div class="howto-item"><div class="n">۲</div><div><b>با حکیم درس را قدم‌به‌قدم یاد بگیر</b><span>هر درس اول با یک شکل خوشمزه شروع می‌شود؛ حکیم آهسته و با مثال یادت می‌دهد، بعد نوبت بازی توست.</span></div></div>
       <div class="howto-item"><div class="n">۳</div><div><b>جدول تناسب، درصد و تخفیف</b><span>گاهی عدد می‌نویسی، گاهی گزینه انتخاب می‌کنی، گاهی شکل و نمودار درست را لمس می‌کنی و گاهی جدول را کامل می‌کنی.</span></div></div>
       <div class="howto-item"><div class="n">۴</div><div><b>ستاره و کمبو بگیر</b><span>اولین تلاش درست ۳ ستاره دارد. چند تا پشت‌سرهم درست بگی، کمبو روشن می‌شود!</span></div></div>
-      <div class="howto-item"><div class="n">۵</div><div><b>۵ سرزمین را فتح کن</b><span>هر سرزمین که تمام شود، قفل بعدی باز می‌شود. آخر کار، گواهی قهرمانی مال توست.</span></div></div>
+      <div class="howto-item"><div class="n">۵</div><div><b>هر ۵ سرزمین باز است</b><span>از هرجا دوست داری شروع کن؛ اما گواهی قهرمانی وقتی کامل می‌شود که هر پنج سرزمین را تمام کرده باشی.</span></div></div>
     </div>
     <button class="btn primary big" id="btnHowGo">فهمیدم، بریم!</button>
     <button class="btn ghost big" id="btnHowBack">بازگشت</button>
@@ -538,7 +527,7 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
     <div class="map-hero">
       <div>
         <h2 id="hello"></h2>
-        <p>نقشهٔ نسبتستان — یک سرزمین را لمس کن و سفر را شروع کن</p>
+        <p>نقشهٔ نسبتستان — همهٔ سرزمین‌ها بازند؛ هرکدام را دوست داری لمس کن</p>
       </div>
       <div class="xp">⭐<b id="mapStars">۰</b>ستاره</div>
     </div>
@@ -603,7 +592,6 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
       <button class="btn purple" id="btnCertMap2">🗺️ نقشه</button>
     </div>
   </section>
-  <section id="hakimPanelMount" aria-label="پیام از حکیم"></section>
 </div>
 <div id="celeb" class="celeb hidden" role="dialog" aria-modal="true">
   <div class="celeb-card">
@@ -815,6 +803,21 @@ function figCap(html, cap){
 }
 function figs(arr){ return `<div class="fig-row">${arr.join('')}</div>`; }
 
+
+/* هر «عدد/عدد» در متن‌ها را به کسر طبقاتی تبدیل می‌کند (نمایش، نه داده) */
+function fracify(s){
+  return String(s==null?'':s).replace(/([۰-۹؟]+)\/([۰-۹]+)/g,
+    '<span class="frac"><span class="frac-n">$1</span><span class="frac-d">$2</span></span>');
+}
+/* شکل واقعی نسبت: ردیف مثلث‌ها و ردیف مربع‌ها */
+function ratioShapes(a,b){
+  const u=34, w=Math.max(a,b)*u+12;
+  let tris='', sqs='';
+  for(let i=0;i<a;i++){ const x=8+i*u; tris += `<polygon points="${x+u/2-3},6 ${x+u-6},34 ${x+2},34" fill="#fda4af" stroke="#be123c" stroke-width="2" stroke-linejoin="round"/>`; }
+  for(let i=0;i<b;i++){ const x=8+i*u; sqs += `<rect x="${x+3}" y="44" width="26" height="26" rx="5" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>`; }
+  return svg(w,78, tris+sqs)
+    + `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="font-weight:900;color:#9f1239">▲ مثلث: ${toFa(a)}</span><span style="font-weight:900;color:#1e40af">■ مربع: ${toFa(b)}</span></div>`;
+}
 /* ===== NESBAT VISUALS: ratio bars, dots, percent grid/pie ===== */
 function dotsRow(n, fill, stroke){
   let d='';
@@ -883,19 +886,16 @@ function paintFace(el, mood){
     el.style.fontSize='42px'; el.style.display='grid'; el.style.placeItems='center';
   }
 }
-function bootHakim(){
-  if(!window.Hakim || typeof Hakim.init!=='function') return;
-  try{
-    Hakim.init({ container:'#hakimPanelMount', name: S.name||'دوست من', font:false, autoHideMs:8000 });
-    if(S.name && Hakim.setName) Hakim.setName(S.name);
-  }catch(e){}
-}
+/* حکیم فقط یک‌جا در صفحه است: حباب داخل کارت بازی.
+   چهره را Hakim.renderFace از hakim-core.js (فایل خارجی سایت) می‌سازد؛
+   هیچ کد/تصویری از حکیم داخل این فایل نیست تا حجم بازی کم بماند.
+   Hakim.saveSession و Hakim.setName هم از همان هسته صدا زده می‌شوند. */
 function hkSay(text, mood){
   const m = mood || 'happy';
   faceMood(m);
-  if(window.Hakim && typeof Hakim.say==='function'){
-    try{ Hakim.say(String(text||'').replace(/<[^>]+>/g,' '), {mood:m}); }catch(e){}
-  }
+  const el = $('#hakimText');
+  const play = $('#play');
+  if(el && play && !play.classList.contains('hidden')) el.innerHTML = fracify(text||'');
 }
 
 /* ===== STEPS ===== */
@@ -941,9 +941,9 @@ const STEPS = [
   body:'کدام شکل نسبت مثلث به مربعِ «۳ به ۲» را نشان می‌دهد؟',
   type:'pick', answer:0,
   options:[
-    {svg:()=>ratioBars(3,2,'مثلث','مربع'), label:'۳ مثلث، ۲ مربع'},
-    {svg:()=>ratioBars(2,3,'مثلث','مربع'), label:'۲ مثلث، ۳ مربع'},
-    {svg:()=>ratioBars(3,3,'مثلث','مربع'), label:'۳ مثلث، ۳ مربع'}
+    {svg:()=>ratioShapes(3,2), label:'۳ مثلث، ۲ مربع'},
+    {svg:()=>ratioShapes(2,3), label:'۲ مثلث، ۳ مربع'},
+    {svg:()=>ratioShapes(3,3), label:'۳ مثلث، ۳ مربع'}
   ],
   hakim:'اول مثلث‌ها را بشمار، بعد مربع‌ها؛ ترتیب مهم است.',
   why:['نسبت ۳ به ۲ یعنی ۳ مثلث در برابر ۲ مربع.']},
@@ -1185,8 +1185,9 @@ function landDone(i){
   return landSteps(i).every(({idx}) => !STEPS[idx].type || S.done[idx]);
 }
 function unlocked(i){
-  if(i===0) return true;
-  return landDone(i-1);
+  /* همهٔ سرزمین‌ها از اول بازند؛ دانش‌آموز هرکدام را دوست داشت انتخاب می‌کند.
+     گواهی قهرمانی فقط وقتی صادر می‌شود که هر پنج سرزمین کامل شده باشند. */
+  return true;
 }
 
 function renderMap(){
@@ -1200,7 +1201,7 @@ function renderMap(){
     const got = qs.reduce((a,x)=>a+(S.maxByQ[x.idx]||0),0);
     const fin = qs.filter(x=>S.done[x.idx]).length;
     const pct = qs.length ? Math.round(fin/qs.length*100) : 0;
-    const current = !lock && !done && (i===0 || landDone(i-1));
+    const current = !done && i===LANDS.findIndex((_,k)=>!landDone(k));
     if(i){
       const d=document.createElement('div'); d.className='path-dot'; d.textContent='✦  ·  ·  ·  ✦'; box.appendChild(d);
     }
@@ -1213,7 +1214,7 @@ function renderMap(){
       <div><h3>${L.name}</h3><p>${L.desc}</p><div class="bar"><i style="width:${pct}%"></i></div></div>
       <div class="go">${go}<div class="stars">${done?'✅':'⭐ '+toFa(got)}</div></div>`;
     el.onclick = ()=>{
-      if(lock){ toast('اول سرزمین قبلی را فتح کن 🗺️'); return; }
+      if(lock){ toast('این سرزمین هنوز باز نیست 🗺️'); return; }
       SFX.click(); startLand(i);
     };
     box.appendChild(el);
@@ -1247,12 +1248,12 @@ function renderPlay(){
     dots.innerHTML = list.map((x,k)=>`<i class="${k<pos?'done':(k===pos?'on':'')}"></i>`).join('');
   }
   $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length);
-  $('#qTitle').textContent = st.title;
-  $('#qBody').innerHTML = st.body||'';
+  $('#qTitle').innerHTML = fracify(st.title);
+  $('#qBody').innerHTML = fracify(st.body||'');
   const vis = st.visual ? st.visual() : '';
   $('#visual').innerHTML = vis;
   $('#visual').style.display = vis ? '' : 'none';
-  $('#hakimText').innerHTML = st.hakim||'با دقت نگاه کن، بعد جواب بده.';
+  $('#hakimText').innerHTML = fracify(st.hakim||'با دقت نگاه کن، بعد جواب بده.');
   $('#feed').innerHTML='';
   hkSay(st.hakim||'با دقت نگاه کن، بعد جواب بده.', st.teach?'wise':'thinking');
   const box=$('#answerBox'); box.innerHTML='';
@@ -1288,7 +1289,7 @@ function renderPlay(){
     const wrap=document.createElement('div'); wrap.className='choices';
     st.options.forEach((op,k)=>{
       const b=document.createElement('button'); b.className='choice'; b.type='button';
-      b.textContent = op;
+      b.innerHTML = fracify(op);
       b.onclick=()=> grade(k===st.answer, st, b, wrap);
       wrap.appendChild(b);
     });
@@ -1297,8 +1298,8 @@ function renderPlay(){
   if(st.type==='table'){
     const t=st.table;
     let h='<div class="tbl-wrap"><table class="tbl"><tr>';
-    t.head.forEach((c,ci)=> h += `<th>${ci===0?c:toFa(c)}</th>`);
-    h += `</tr><tr><td class="lab">${t.lab}</td>`;
+    t.head.forEach((c,ci)=> h += `<th>${fracify(ci===0?c:toFa(c))}</th>`);
+    h += `</tr><tr><td class="lab">${fracify(t.lab)}</td>`;
     const n=t.head.length-1;
     for(let k=0;k<n;k++){
       if(t.given[k]!=null) h += `<td>${toFa(t.given[k])}</td>`;
@@ -1312,7 +1313,7 @@ function renderPlay(){
     st.options.forEach((op,k)=>{
       const b=document.createElement('button'); b.type='button'; b.className='pick';
       const svg = typeof op.svg==='function' ? op.svg() : (op.svg||'');
-      b.innerHTML = `${svg}<small>${op.label||''}</small>`;
+      b.innerHTML = `${svg}<small>${fracify(op.label||'')}</small>`;
       b.onclick=()=> grade(k===st.answer, st, b, wrap);
       wrap.appendChild(b);
     });
@@ -1325,7 +1326,7 @@ function renderPlay(){
     acts.appendChild(chk);
   }
     const hint=document.createElement('button'); hint.className='btn ghost'; hint.textContent='💡 راهنمایی حکیم';
-  hint.onclick=()=>{ SFX.click(); const t=st.hint || st.hakim || 'اول دو شکل پشت سر هم را نگاه کن و ببین چقدر زیاد شده.'; $('#hakimText').innerHTML = t; hkSay(t, 'wink'); };
+  hint.onclick=()=>{ SFX.click(); const t=st.hint || st.hakim || 'اول درس همین گام را یک بار دیگر بخوان.'; $('#hakimText').innerHTML = fracify(t); hkSay(t, 'wink'); };
   acts.appendChild(hint);
   addNav(acts,i,list);
 }
@@ -1390,7 +1391,7 @@ function grade(ok, st, btn, wrap){
     $('#hakimText').textContent = miss;
     hkSay(miss, 'sad');
     const fb=$('#feed');
-    fb.innerHTML = `<div class="feedback bad">این بار درست نبود. ${st.hint? 'راهنمایی: '+st.hint : 'گام بین دو شکل را یک‌بار دیگر حساب کن.'}</div>`;
+    fb.innerHTML = `<div class="feedback bad">این بار درست نبود. ${st.hint? 'راهنمایی: '+fracify(st.hint) : 'دوباره با دقت به شکل و درس نگاه کن.'}</div>`;
     if(S.tries[i]>=3){
       showWhy(st, false);
       S.done[i]=true; S.maxByQ[i]=S.maxByQ[i]||0; persist();
@@ -1405,7 +1406,7 @@ function grade(ok, st, btn, wrap){
 function showWhy(st, ok, gain){
   const fb=$('#feed');
   const star = ok && gain ? `<div class="feedback ok">درست گفتی! ${'⭐'.repeat(gain)} (${toFa(gain)} ستاره)</div>` : '';
-  const steps = (st.why||[]).map(x=>`<li>${x}</li>`).join('');
+  const steps = (st.why||[]).map(x=>`<li>${fracify(x)}</li>`).join('');
   fb.innerHTML = star + (steps? `<div class="steps-mini"><b>راه حل گام‌به‌گام</b><ol>${steps}</ol></div>`:'');
 }
 
@@ -1421,14 +1422,13 @@ function nextStep(fromPlay){
   const L = LANDS[st.land];
   const full = LANDS.every((_,k)=>landDone(k));
   SFX.fanfare(); confetti();
-  if(window.Hakim && typeof Hakim.react==='function') try{ Hakim.react('win'); }catch(e){}
   if(full){
     hkSay('آفرین قهرمان! همهٔ سرزمین‌ها را فتح کردی. گواهی‌ات آماده است.', 'excited');
     openCeleb(L.icon+' قله فتح شد!', 'همهٔ ۵ سرزمین نسبتستان مال توست. گواهی قهرمانی آماده‌ست!', ()=>{ showCert(); });
     return;
   }
-  hkSay('آفرین! این سرزمین تمام شد. قفل بعدی باز شد.', 'happy');
-  openCeleb(L.icon+' '+L.name+' فتح شد!', 'قفل سرزمین بعدی باز شد. آماده‌ای ادامه بدهی؟', ()=>{
+  hkSay('آفرین! این سرزمین تمام شد. حالا هر سرزمین دیگری را که دوست داری انتخاب کن.', 'happy');
+  openCeleb(L.icon+' '+L.name+' فتح شد!', 'این سرزمین کامل شد! روی نقشه هر سرزمین دیگری را که دوست داری انتخاب کن.', ()=>{
     renderMap(); show('map');
   });
 }
@@ -1513,7 +1513,7 @@ function showCert(){
   $('#certDate').textContent = 'تاریخ: '+jalali(new Date());
   paintFace($('#certFace'),'excited');
   show('cert');
-  if(full){ SFX.star(); confetti(); if(window.Hakim && Hakim.celebrate) try{ Hakim.celebrate(); }catch(e){} }
+  if(full){ SFX.star(); confetti(); }
 }
 
 function sendResultsToPanel(score, stars, level, duration, details, completed){
@@ -1604,7 +1604,6 @@ $('#btnReset').onclick=()=>{
 };
 
 if(S.name){ $('#nameIn').value=S.name; }
-bootHakim();
 paintFace($('#gateFace'),'excited');
 paintFace($('#howFace'),'happy');
 $('#btnSound').textContent = soundOn?'🔊':'🔇';
