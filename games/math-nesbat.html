@@ -538,9 +538,48 @@ body::before{background:
 .cert{border-width:12px}
 @media (prefers-reduced-motion:reduce){.scene-card,.fig svg{animation:none!important}}
 
+
+/* ===== GRAPHICS x100: aurora, banners, ptable, multi ===== */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora i{position:absolute;border-radius:50%;filter:blur(50px);opacity:.5;animation:auroraMove 14s ease-in-out infinite alternate}
+.aurora .a1{width:420px;height:420px;background:#14b8a6;top:-120px;right:-80px}
+.aurora .a2{width:380px;height:380px;background:#f59e0b;bottom:-140px;left:-60px;animation-delay:-6s}
+.aurora .a3{width:260px;height:260px;background:#fb7185;top:38%;left:55%;animation-delay:-3s;opacity:.35}
+@keyframes auroraMove{from{transform:translate(0,0) scale(1)}to{transform:translate(-46px,34px) scale(1.14)}}
+.card{background:linear-gradient(180deg,#fffefb,#fff 55%,#f0fdfa)}
+.play-card.enter{animation:cardIn .38s cubic-bezier(.22,1,.36,1)}
+@keyframes cardIn{from{opacity:.25;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+.land-banner{display:flex;align-items:center;gap:12px;border-radius:20px;padding:11px 14px;margin-bottom:12px;color:#fff;
+ background:linear-gradient(120deg,#0f766e,#14b8a6 55%,#f59e0b);box-shadow:0 12px 22px rgba(13,148,136,.28);position:relative;overflow:hidden}
+.land-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.22) 48%,transparent 62%);transform:translateX(120%);animation:bannerShine 3.6s ease-in-out infinite}
+@keyframes bannerShine{0%,55%{transform:translateX(120%)}100%{transform:translateX(-120%)}}
+.land-banner[data-land="0"]{background:linear-gradient(120deg,#be123c,#fb7185 55%,#f59e0b)}
+.land-banner[data-land="1"]{background:linear-gradient(120deg,#92400e,#f59e0b 55%,#14b8a6)}
+.land-banner[data-land="2"]{background:linear-gradient(120deg,#0f766e,#2dd4bf 55%,#38bdf8)}
+.land-banner[data-land="3"]{background:linear-gradient(120deg,#9a3412,#fb923c 55%,#f59e0b)}
+.land-banner[data-land="4"]{background:linear-gradient(120deg,#a16207,#eab308 55%,#fb7185)}
+.lb-ico{font-size:2.15rem;filter:drop-shadow(0 5px 6px rgba(0,0,0,.3));animation:bob 2.8s ease-in-out infinite}
+.land-banner b{display:block;font-size:1.06rem;line-height:1.5}
+.land-banner small{display:block;opacity:.94;font-weight:700;line-height:1.55}
+.lb-badge{margin-inline-start:auto;background:rgba(255,255,255,.22);border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:5px 11px;font-weight:900;font-size:.78rem;white-space:nowrap}
+.tbl.ptable th{background:linear-gradient(180deg,#8b7cf7,#6654e8);color:#fff}
+.tbl.ptable td.given{background:#dbeafe;color:#1e3a8a}
+.tbl.ptable .lab{background:linear-gradient(180deg,#ccfbf1,#99f6e4)}
+.multi-box{display:grid;gap:10px}
+.multi-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#f8fafc;border:2px solid #e0e7ff;border-radius:16px;padding:10px 12px}
+.multi-row label{font-weight:900;color:#3730a3;min-width:120px}
+.multi-affix{font-weight:900;color:#92400e}
+.land{position:relative}
+.land::before{content:attr(data-emoji);position:absolute;left:10px;top:2px;font-size:3.4rem;opacity:.13;pointer-events:none}
+.map-hero{box-shadow:0 18px 34px rgba(13,148,136,.35)}
+.seal{width:104px;height:104px;font-size:1.02rem}
+.cert{background:linear-gradient(180deg,#fffdf6,#fff7ed);border-image:linear-gradient(120deg,#14b8a6,#f59e0b,#fb7185) 1}
+@media (prefers-reduced-motion:reduce){.aurora i,.land-banner::after,.play-card.enter{animation:none!important}}
+
 </style>
 </head>
 <body>
+<div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
 <div class="sky" aria-hidden="true">
   <span class="o1">🍋</span><span class="o2">💯</span><span class="o3">⚖️</span><span class="o4">🛒</span>
   <span class="o5">٪</span><span class="o6">✨</span><span class="o7">⭐</span><span class="o8">🍊</span>
@@ -624,7 +663,8 @@ body::before{background:
     </div>
     <div class="hud-dots" id="hudDots"></div>
     <div class="card play-card">
-      <div class="page-badge" id="pageBadge"></div>
+<div class="land-banner" id="landBanner"><span class="lb-ico" id="lbIco"></span><div><b id="lbName"></b><small id="lbRule"></small></div><span class="lb-badge" id="lbBadge"></span></div>
+            <div class="page-badge" id="pageBadge"></div>
       <h2 class="q-title" id="qTitle"></h2>
       <p class="q-body" id="qBody"></p>
       <div id="learnBox" class="learn-box hidden"></div>
@@ -889,6 +929,15 @@ function ratioShapes(a,b){
   return svg(w,78, tris+sqs)
     + `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><span style="font-weight:900;color:#9f1239">▲ مثلث: ${toFa(a)}</span><span style="font-weight:900;color:#1e40af">■ مربع: ${toFa(b)}</span></div>`;
 }
+
+/* جدول تناسب نمونه برای درس */
+function propTableDemo(){
+  const head=['','×۱','×۲','×۳','×۵'];
+  const r1=['آب‌لیمو','۲','۴','۶','۱۰'], r2=['آب','۳','۶','۹','۱۵'];
+  const row=(r,cls)=>'<tr>'+r.map((c,i)=>`<td class="${i===0?'lab':cls}">${c}</td>`).join('')+'</tr>';
+  return `<div class="tbl-wrap"><table class="tbl ptable"><tr>${head.map((c,i)=>`<th>${i===0?'مقدار':c}</th>`).join('')}</tr>${row(r1,'')}${row(r2,'')}</table></div>
+  <div style="font-weight:900;color:#4c3cc7">ستون‌ها با هم بزرگ می‌شوند؛ در هر ستون نسبت آب‌لیمو به آب همان ۲ به ۳ است.</div>`;
+}
 /* ===== NESBAT VISUALS: ratio bars, dots, percent grid/pie ===== */
 function dotsRow(n, fill, stroke){
   let d='';
@@ -1044,6 +1093,11 @@ const STEPS = [
   body:'اگر صورت و مخرج یک نسبت را در یک عدد (غیر صفر) <b>ضرب</b> یا بر یک عدد <b>تقسیم</b> کنیم، نسبت تازه با قبلی <b>مساوی</b> است. وقتی دو نسبت مساوی باشند، یک <b>تناسب</b> ساخته‌اند؛ مثل ۲/۳ = ۴/۶. در تناسب، جدول هم با ضرب جلو می‌رود.',
   visual:()=>figs([figCap(balanceViz('۲','۳','۴','۶'),'۲ به ۳ = ۴ به ۶')]),
   hakim:'تناسب یعنی دو نسبت دست هم را گرفته‌اند و برابرند. هر دو طرف را در ۲ ضرب کن: ۲ به ۳ می‌شود ۴ به ۶.'},
+ {land:1, teach:true, title:'درس ۲: جدول تناسب؛ ماشین حساب نسبت‌ها',
+  body:'<b>جدول تناسب</b> بهترین ابزار این فصل است: دو ردیف برای دو مقدار و چند ستون برای حالت‌های مختلف. در هر ستون، نسبت دو ردیف یکی است. برای پر کردن جدول دو راه داری: <b>در ستون‌ها</b> جلو برو (هر دو ردیف در یک عدد ضرب می‌شوند) یا <b>در ردیف</b> جلو برو (از یک ستون به ستون دیگر). اگر یک خانه خالی بود، اول ببین ستونش چند برابر ستون معلوم شده است.',
+  learn:['دو ردیف را با برچسب بنویس؛ مثلاً ردیف بالا آب‌لیمو و ردیف پایین آب.','در هر ستون نسبت بالا به پایین باید همان نسبت اصلی بماند.','برای خانهٔ خالی، ضریب ستون را پیدا کن و همان را روی ردیف دیگر اعمال کن.','آخر کار یک ستون را چک کن: آیا نسبتش با ستون اول برابر است؟'],
+  visual:()=>propTableDemo(),
+  hakim:'جدول تناسب مثل یک ماشین است: یک ستون را می‌دهی، ستون‌های هم‌مزه بیرون می‌آیند. الان خودت چند جدول را کامل می‌کنی؛ چند خانه با هم!'},
  {land:1, title:'جدول تناسب شربت',
   body:'دستور شربت باغ: ۲ لیوان آب‌لیمو برای ۳ لیوان آب. اگر دستور را ۲ برابر و ۳ برابر کنیم، جدول را کامل کن.',
   visual:()=>figs([figCap(ratioBars(2,3,'آب‌لیمو','آب'),'دستور اصلی')]),
@@ -1067,18 +1121,48 @@ const STEPS = [
   type:'choice', options:['۳/۴ = ۶/۱۰','۲/۵ = ۴/۱۰','۱/۳ = ۳/۶','۴/۶ = ۲/۴'], answer:1,
   hakim:'در هر گزینه هر دو طرف را ساده کن و ببین برابر می‌شوند یا نه. ۴/۱۰ ساده می‌شود ۲/۵.',
   why:['۴/۱۰ با تقسیم بر ۲ می‌شود ۲/۵.','پس ۲/۵ = ۴/۱۰ یک تناسب درست است.','بقیه بعد از ساده کردن برابر نمی‌شوند.']},
+ {land:1, title:'جدول تناسب کامل شربت (هر دو ردیف!)',
+  body:'حالا دیگر فقط یک ردیف نیست؛ <b>هر دو ردیف</b> جدول را کامل کن. دستور اصلی ستون اول است: ۲ لیوان آب‌لیمو و ۳ لیوان آب.',
+  hakim:'ستون‌به‌ستون جلو برو: ×۲، ×۳، ×۴. در هر ستون هر دو عدد را با هم ببر بالا.',
+  type:'table2',
+  table2:{head:['مقدار','ستون ۱','ستون ۲','ستون ۳','ستون ۴'],
+    rows:[
+      {lab:'🍋 آب‌لیمو', given:{0:2}, answers:{1:4,2:6,3:8}},
+      {lab:'💧 آب', given:{0:3}, answers:{1:6,2:9,3:12}}
+    ]},
+  why:['ستون ۲ یعنی ×۲: ۴ و ۶.','ستون ۳ یعنی ×۳: ۶ و ۹.','ستون ۴ یعنی ×۴: ۸ و ۱۲. در همهٔ ستون‌ها نسبت ۲ به ۳ مانده است.']},
  {land:1, title:'جدول تناسب خرید مداد',
   body:'هر مداد ۲ هزار تومان است. جدول قیمت را کامل کن: برای ۱، ۳ و ۵ مداد چند هزار تومان می‌دهیم؟ (خانهٔ ۱ مداد داده شده است.)',
   type:'table',
   table:{head:['تعداد مداد','۱','۳','۵'], lab:'قیمت (هزار تومان)', given:{0:2}, answers:{1:6,2:10}},
   hakim:'قیمت هر مداد ثابت است: تعداد × ۲. این ثابت بودن همان قلب تناسب است!',
   why:['۳ مداد: ۳×۲=۶ هزار تومان.','۵ مداد: ۵×۲=۱۰ هزار تومان.']},
+ {land:1, title:'جدول تناسب شیر و کلسیم (کتاب)',
+  body:'در آزمایشگاه شیر کتاب درسی دیدیم که کلسیم و شیر متناسب‌اند: در هر ۵ لیتر شیر، ۳ گرم کلسیم هست. جدول را کامل کن؛ از جدول بخوان که برای ۶ گرم کلسیم چند لیتر شیر لازم است، آن را هم در خانهٔ آخر ردیف شیر می‌بینی!',
+  hakim:'ردیف‌ها را با هم ببر جلو: شیر ×۲ و ×۴ می‌شود، کلسیم هم همان کار را می‌کند.',
+  type:'table2',
+  table2:{head:['مقدار','حالت ۱','حالت ۲','حالت ۳','حالت ۴'],
+    rows:[
+      {lab:'🥛 شیر (لیتر)', given:{0:5}, answers:{1:10,2:20,3:15}},
+      {lab:'🦴 کلسیم (گرم)', given:{0:3}, answers:{1:6,2:12,3:9}}
+    ]},
+  why:['۵ لیتر ← ۳ گرم، پس ۱۰ لیتر ← ۶ گرم و ۲۰ لیتر ← ۱۲ گرم.','۱۵ لیتر ← ۹ گرم؛ چون ۱۵ سه برابر ۵ است و ۹ سه برابر ۳.']},
  {land:1, title:'تناسب در دستور کیک',
   body:'برای کیک، نسبت آرد به شکر ۵ به ۲ است. اگر ۱۰ پیمانه آرد بریزیم، چند پیمانه شکر لازم است؟',
   type:'input', answer:4, unit:'پیمانه',
   hakim:'آرد از ۵ به ۱۰ رسیده یعنی ×۲؛ شکر هم ×۲ می‌شود: ۲×۲=۴.',
   hint:'۵×۲=۱۰، پس ۲×۲=۴.',
   why:['آرد دو برابر شده (۵→۱۰).','شکر هم دو برابر می‌شود: ۲×۲=۴ پیمانه.']},
+ {land:1, title:'جدول تناسب سرعت حلزون',
+  body:'حلزون کتاب در ۴ ساعت ۴۸ متر می‌رود و سرعتش ثابت است. جدول زمان و مسافت را کامل کن تا سرعتش را خودت کشف کنی.',
+  hakim:'اگر ۴ ساعت ۴۸ متر است، ۱ ساعت یک‌چهارم آن است. از همانجا بقیهٔ ردیف را بساز.',
+  type:'table2',
+  table2:{head:['','۱ ساعت','۲ ساعت','۴ ساعت','۸ ساعت'],
+    rows:[
+      {lab:'⏱️ زمان (ساعت)', given:{0:1,1:2,2:4,3:8}, answers:{}},
+      {lab:'🐌 مسافت (متر)', given:{2:48}, answers:{0:12,1:24,3:96}}
+    ]},
+  why:['۴۸ ÷ ۴ = ۱۲ متر در ۱ ساعت.','۲ ساعت: ۲۴ متر و ۸ ساعت: ۹۶ متر.','مسافت و زمان متناسب‌اند؛ جدول این را نشان می‌دهد.']},
  {land:1, title:'کدام شکل نسبت مساوی دارد؟',
   body:'نسبت اصلی ۲ به ۴ (ساده: ۱ به ۲) است. کدام نوار نسبت مساوی با آن را نشان می‌دهد؟',
   type:'pick', answer:1,
@@ -1089,12 +1173,31 @@ const STEPS = [
   ],
   hakim:'۳ به ۶ را ساده کن: هر دو بر ۳ → ۱ به ۲. همان نسبت اصلی است!',
   why:['۳/۶ ساده می‌شود ۱/۲.','۲/۴ هم ساده می‌شود ۱/۲. پس این دو نسبت مساوی‌اند.']},
+ {land:1, title:'زنجیرهٔ نسبت‌های مساوی (سه جای خالی)',
+  body:'این زنجیره را کامل کن تا چهار نسبت مساوی کنار هم بنشینند. هر سه جای خالی را پر کن.',
+  hakim:'از اولین نسبت شروع کن: صورت و مخرج هر بار در یک عدد ضرب می‌شوند. هر خانه را از همسایه‌اش پیدا کن.',
+  type:'multi',
+  fields:[
+    {label:'نسبت دوم: صورتِ ۶ به ؟', answer:8, prefix:'۶ به'},
+    {label:'نسبت سوم: ؟ به ۲۰', answer:15, suffix:'به ۲۰'},
+    {label:'نسبت چهارم: ۱۲ به ؟', answer:16, prefix:'۱۲ به'}
+  ],
+  why:['زنجیره از نسبت ۳ به ۴ شروع می‌شود.','×۲ می‌شود ۶ به ۸، ×۵ (از ۴) می‌شود ۱۵ به ۲۰، و ۱۲ به ۱۶ یعنی ×۴.','هر چهار نسبت با هم برابرند.']},
  {land:1, title:'مقیاس نقشه',
   body:'روی نقشه، هر ۱ سانتی‌متر برابر ۱۰۰ متر راه واقعی است. فاصلهٔ دو نقطه روی نقشه ۴ سانتی‌متر است. فاصلهٔ واقعی چند متر است؟',
   type:'input', answer:400, unit:'متر',
   hakim:'مقیاس هم یک تناسب است: ۱ به ۱۰۰. ۴ سانتی‌متر یعنی ۴ برابر.',
   hint:'۴ × ۱۰۰ = ۴۰۰',
   why:['۱ سانتی‌متر ← ۱۰۰ متر.','۴ سانتی‌متر ← ۴×۱۰۰ = ۴۰۰ متر.']},
+ {land:1, title:'بتن‌سازی کتاب: تقسیم به نسبت',
+  body:'برای بتن، ۷ پیمانه ماسه را با ۲ پیمانه سیمان مخلوط می‌کنند (کتاب درسی). در ۱۸۹ پیمانه از این مخلوط، چند پیمانه ماسه و چند پیمانه سیمان هست؟ هر دو را بنویس.',
+  hakim:'هر «دور» مخلوط ۷+۲=۹ پیمانه است. ۱۸۹ یعنی چند دور؟ بعد سهم هرکدام را حساب کن.',
+  type:'multi',
+  fields:[
+    {label:'پیمانه ماسه', answer:147, unit:'پیمانه'},
+    {label:'پیمانه سیمان', answer:42, unit:'پیمانه'}
+  ],
+  why:['هر دور: ۹ پیمانه؛ ۱۸۹ ÷ ۹ = ۲۱ دور.','ماسه: ۲۱ × ۷ = ۱۴۷ پیمانه.','سیمان: ۲۱ × ۲ = ۴۲ پیمانه.']},
  {land:1, title:'چالش پل: تناسب سه‌تایی',
   body:'می‌دانیم ۳/۷ = ؟/۲۱. عدد گمشده چند است؟',
   type:'input', answer:9,
@@ -1132,6 +1235,16 @@ const STEPS = [
   table:{head:['کسر','۱/۴','۳/۴','۱/۱۰'], lab:'درصد', given:{}, answers:{0:25,1:75,2:10}},
   hakim:'کسر را به مخرج ۱۰۰ برسان: ۱/۴=۲۵/۱۰۰، ۳/۴=۷۵/۱۰۰، ۱/۱۰=۱۰/۱۰۰.',
   why:['۱/۴ = ۲۵/۱۰۰ = ۲۵٪.','۳/۴ = ۷۵/۱۰۰ = ۷۵٪.','۱/۱۰ = ۱۰/۱۰۰ = ۱۰٪.']},
+ {land:2, title:'جدول کامل کسر و درصد',
+  body:'این جدول دو ردیفه را کامل کن: برای هر کسر، درصدش را در ردیف پایین بنویس. این چهار کسر را باید مثل اسم خودت بلد باشی!',
+  hakim:'هر کسر را اول به «از ۱۰۰» برسان، عددش همان درصد است.',
+  type:'table2',
+  table2:{head:['شکل','الف','ب','پ','ت'],
+    rows:[
+      {lab:'کسر', given:{0:'۱/۲',1:'۱/۴',2:'۳/۴',3:'۱/۱۰'}, answers:{}},
+      {lab:'درصد', given:{}, answers:{0:50,1:25,2:75,3:10}}
+    ]},
+  why:['هر کسر به مخرج ۱۰۰ رسید: ۵۰، ۲۵، ۷۵ و ۱۰ از ۱۰۰.','پس درصدها: ۵۰٪، ۲۵٪، ۷۵٪ و ۱۰٪.']},
  {land:2, title:'نمودار ۷۵٪ را پیدا کن',
   body:'کدام نمودار دایره‌ای ۷۵٪ (یعنی سه‌چهارم) را نشان می‌دهد؟',
   type:'pick', answer:2,
@@ -1142,6 +1255,15 @@ const STEPS = [
   ],
   hakim:'۷۵٪ یعنی ۷۵ از ۱۰۰؛ سه قسمت از چهار قسمت دایره.',
   why:['سه‌چهارم دایره رنگی = ۷۵/۱۰۰ = ۷۵٪.']},
+ {land:2, title:'پرندگان میانکاله (کتاب): چند درصد ماندند؟',
+  body:'به تالاب میانکاله ۱۰٬۰۰۰ قو و ۲۰٬۰۰۰ اردک آمدند؛ ۲۰۰ قو و ۱٬۰۰۰ اردک ماندند. چند درصد از هر کدام در تالاب ماندند؟ هر دو درصد را بنویس.',
+  hakim:'برای هر پرنده جدا حساب کن: مانده‌ها را به کل همان پرنده نسبت بگیر و به درصد برسان.',
+  type:'multi',
+  fields:[
+    {label:'درصد قوهای مانده', answer:2, unit:'٪'},
+    {label:'درصد اردک‌های مانده', answer:5, unit:'٪'}
+  ],
+  why:['قو: ۲۰۰ از ۱۰٬۰۰۰ یعنی ۲ از ۱۰۰، پس ۲٪.','اردک: ۱٬۰۰۰ از ۲۰٬۰۰۰ یعنی ۵ از ۱۰۰، پس ۵٪.']},
  {land:2, title:'عدد اعشاری و درصد',
   body:'عدد ۰٫۳ برابر چند درصد است؟',
   type:'choice', options:['۳٪','۳۰٪','۳۰۰٪','۰٫۳٪'], answer:1,
@@ -1191,18 +1313,46 @@ const STEPS = [
   type:'choice', options:['۱۰۰','۳۰۰','۳۵۰','۴۰۰'], answer:1,
   hakim:'۲۵٪ یعنی یک‌چهارم. تخفیف = یک‌چهارم ۴۰۰ = ۱۰۰. پایانی = ۴۰۰−۱۰۰.',
   why:['تخفیف: ۲۵٪ × ۴۰۰ = ۱۰۰ هزار تومان.','قیمت پایانی: ۴۰۰ − ۱۰۰ = ۳۰۰ هزار تومان.']},
+ {land:3, title:'استان سبز (کتاب): دو درصد از یک عدد',
+  body:'مساحت یک استان ۵۰٬۰۰۰ کیلومتر مربع است؛ ۴۲٪ آن جنگل و ۱۶٪ آن زمین کشاورزی است. مساحت جنگل و زمین کشاورزی را هر دو حساب کن.',
+  hakim:'هر درصد را جدا روی ۵۰٬۰۰۰ اعمال کن. ۱۰٪ آن ۵٬۰۰۰ است؛ از همان جا بساز!',
+  type:'multi',
+  fields:[
+    {label:'مساحت جنگل', answer:21000, unit:'کیلومتر مربع'},
+    {label:'مساحت زمین کشاورزی', answer:8000, unit:'کیلومتر مربع'}
+  ],
+  why:['۴۲٪ از ۵۰٬۰۰۰ = ۲۱٬۰۰۰ کیلومتر مربع جنگل.','۱۶٪ از ۵۰٬۰۰۰ = ۸٬۰۰۰ کیلومتر مربع زمین کشاورزی.']},
  {land:3, title:'جدول تخفیف ۱۰٪ بازار',
   body:'همهٔ کالاهای این میز ۱۰٪ تخفیف دارند. قیمت پایانی هر کالا را حساب کن (به هزار تومان).',
   type:'table',
   table:{head:['قیمت اول','۱۰۰','۲۰۰','۵۰'], lab:'قیمت پایانی', given:{}, answers:{0:90,1:180,2:45}},
   hakim:'۱۰٪ را کم کن، یعنی ۹۰٪ قیمت می‌ماند: ۱۰۰→۹۰، ۲۰۰→۱۸۰، ۵۰→۴۵.',
   why:['۱۰۰ − ۱۰ = ۹۰.','۲۰۰ − ۲۰ = ۱۸۰.','۵۰ − ۵ = ۴۵.']},
+ {land:3, title:'پول مریم (کتاب): سه حساب با هم',
+  body:'پدر مریم ۵۰۰٬۰۰۰ ریال به او داد. مریم ۶۰٪ را به خیریه بخشید و ۱۰٪ را پس‌انداز کرد. هر سه جواب را بنویس: خیریه، پس‌انداز و درصد باقی‌مانده.',
+  hakim:'اول دو مقدار پولی را حساب کن؛ درصد باقی‌مانده از ۱۰۰ کم می‌شود: ۱۰۰ منهای ۶۰ و ۱۰.',
+  type:'multi',
+  fields:[
+    {label:'خیریه', answer:300000, unit:'ریال'},
+    {label:'پس‌انداز', answer:50000, unit:'ریال'},
+    {label:'درصد باقی‌مانده', answer:30, unit:'٪'}
+  ],
+  why:['۶۰٪ از ۵۰۰٬۰۰۰ = ۳۰۰٬۰۰۰ ریال خیریه.','۱۰٪ از ۵۰۰٬۰۰۰ = ۵۰٬۰۰۰ ریال پس‌انداز.','باقی‌مانده: ۱۰۰ − ۶۰ − ۱۰ = ۳۰٪.']},
  {land:3, title:'درصد دانش‌آموزان کلاس',
   body:'در کلاس ۴۰ نفره، ۱۰ نفر عینک می‌زنند. چند درصد کلاس عینکی‌اند؟',
   type:'input', answer:25, unit:'درصد',
   hakim:'نسبت ۱۰ به ۴۰ را به از ۱۰۰ برسان: ۱۰/۴۰ ساده می‌شود ۱/۴ و ۱/۴ یعنی ۲۵٪.',
   hint:'۱۰ از ۴۰ یعنی یک‌چهارم؛ یک‌چهارم = ۲۵٪.',
   why:['۱۰/۴۰ = ۱/۴.','۱/۴ = ۲۵/۱۰۰ = ۲۵٪.']},
+ {land:3, title:'راه مدرسهٔ نادر (کتاب)',
+  body:'نادر باید ۸۰۰ متر تا مدرسه برود و ۲۰۰ متر را پیموده است. چند درصد راه را رفته و چند درصد مانده است؟ هر دو را بنویس.',
+  hakim:'۲۰۰ از ۸۰۰ یعنی یک‌چهارم راه. درصد رفته و مانده با هم ۱۰۰ می‌شوند.',
+  type:'multi',
+  fields:[
+    {label:'درصد راهِ رفته', answer:25, unit:'٪'},
+    {label:'درصد راهِ مانده', answer:75, unit:'٪'}
+  ],
+  why:['۲۰۰/۸۰۰ = ۱/۴ = ۲۵٪ رفته است.','مانده: ۱۰۰ − ۲۵ = ۷۵٪.']},
  {land:3, title:'کدام مغازه ارزان‌تر است؟',
   body:'یک اسباب‌بازی در هر دو مغازه ۱۰۰ هزار تومان است. مغازهٔ اول ۱۰٪ و مغازهٔ دوم ۲۰٪ تخفیف می‌دهد. کجا ارزان‌تر درمی‌آید؟',
   type:'choice', options:['مغازهٔ اول (۹۰ هزار)','مغازهٔ دوم (۸۰ هزار)','هر دو برابرند','مغازهٔ اول (۸۰ هزار)'], answer:1,
@@ -1226,12 +1376,29 @@ const STEPS = [
   type:'choice', options:['۲ به ۳','۳ به ۲','۱ به ۲','۶ به ۹'], answer:0,
   hakim:'هر دو بر ۶ تقسیم می‌شوند.',
   why:['۱۲÷۶=۲ و ۱۸÷۶=۳.','نسبت ساده: ۲ به ۳.']},
+ {land:4, title:'جدول کتاب: ضلع و محیط مربع متناسب‌اند؟',
+  body:'جدول ضلع و محیط مربع را کامل کن. بعد در گام بعد می‌بینی چرا محیط با ضلع متناسب است ولی مساحت نیست!',
+  hakim:'محیط مربع یعنی ۴ برابر ضلع؛ ردیف پایین همیشه ×۴ ردیف بالاست.',
+  type:'table2',
+  table2:{head:['','مربع ۱','مربع ۲','مربع ۳','مربع ۴'],
+    rows:[
+      {lab:'📏 ضلع', given:{0:1,1:2,2:5,3:10}, answers:{}},
+      {lab:'🔲 محیط', given:{0:4}, answers:{1:8,2:20,3:40}}
+    ]},
+  why:['محیط = ۴ × ضلع: ۴، ۸، ۲۰ و ۴۰.','چون ضریب همیشه ۴ است، ضلع و محیط متناسب‌اند.']},
  {land:4, title:'مرور ۲: عدد گمشده',
   body:'در تناسب ۴/۵ = ؟/۲۰ عدد گمشده چند است؟',
   type:'input', answer:16,
   hakim:'۵ تا ۲۰ یعنی ×۴؛ ۴×۴=۱۶.',
   hint:'۴ × ۴ = ۱۶',
   why:['مخرج ×۴ شده؛ صورت هم ×۴: ۴×۴=۱۶.']},
+ {land:4, title:'چرا مساحت متناسب نیست؟',
+  body:'ضلع مربع اگر ۲ برابر شود، محیط ۲ برابر می‌شود ولی مساحت ۴ برابر! پس کدام جمله درست است؟',
+  type:'choice',
+  options:['ضلع و مساحت هم متناسب‌اند','ضلع و محیط متناسب‌اند ولی ضلع و مساحت نه','هیچ‌کدام متناسب نیستند','مساحت همیشه ثابت می‌ماند'],
+  answer:1,
+  hakim:'مساحت از ضلع × ضلع ساخته می‌شود؛ وقتی ضلع ×۲ شود، مساحت ×۴ می‌شود، نه ×۲. پس ضریب ثابتی ندارد.',
+  why:['محیط ضریب ثابت ۴ دارد، پس با ضلع متناسب است.','مساحت ضریب ثابت ندارد (۱، ۴، ۹، ۱۶…)، پس با ضلع متناسب نیست.']},
  {land:4, title:'مرور ۳: درصد از عدد',
   body:'۲۰٪ از ۱۵۰ چند می‌شود؟',
   type:'input', answer:30,
@@ -1260,6 +1427,15 @@ const STEPS = [
   ],
   hakim:'۵۰٪ یعنی نصف دایره.',
   why:['نصف دایره = ۵۰/۱۰۰ = ۵۰٪.']},
+ {land:4, title:'درصد برعکس: کل را پیدا کن',
+  body:'دو مسئلهٔ برعکسی کتاب: الف) ۹۰٪ جرم یک هندوانهٔ ۱۰ کیلوگرمی آب است؛ چند کیلو آب دارد؟ ب) ۴۰٪ گنجایش یک منبع ۸٬۰۰۰ لیتر است؛ گنجایش کل منبع چقدر است؟ هر دو را بنویس.',
+  hakim:'در دومی کل را نمی‌دانی! اگر ۴۰٪ یعنی ۸٬۰۰۰، اول ۱۰٪ را پیدا کن (تقسیم بر ۴) و بعد ×۱۰ کن تا ۱۰۰٪ ساخته شود.',
+  type:'multi',
+  fields:[
+    {label:'آب هندوانه', answer:9, unit:'کیلوگرم'},
+    {label:'گنجایش کل منبع', answer:20000, unit:'لیتر'}
+  ],
+  why:['۹۰٪ از ۱۰ = ۹ کیلوگرم آب.','۴۰٪ = ۸٬۰۰۰، پس ۱۰٪ = ۲٬۰۰۰ و ۱۰۰٪ = ۲۰٬۰۰۰ لیتر.']},
  {land:4, title:'چالش صدخانهٔ قله: ۶۰٪',
   body:'آخرین دست‌ورزی قله! دقیقاً <b>۶۰ خانه</b> از صدخانه را رنگ کن.',
   hakim:'۶۰ خانه یعنی ۶ ردیف کامل؛ یا هر جور دیگری که جمعش ۶۰ شود!',
@@ -1311,7 +1487,7 @@ function renderMap(){
     const el = document.createElement('button');
     el.className = 'land'+(done?' done':'')+(lock?' locked':'')+(current?' current':'');
     el.type='button';
-    el.dataset.i = String(i);
+    el.dataset.i = String(i); el.dataset.emoji=L.icon;
     const go = lock ? 'قفل' : (done ? 'دوباره' : (fin?'ادامه':'بزن بریم'));
     el.innerHTML = `<div class="ic">${lock?'🔒':L.icon}</div>
       <div><h3>${L.name}</h3><p>${L.desc}</p><div class="bar"><i style="width:${pct}%"></i></div></div>
@@ -1351,6 +1527,8 @@ function renderPlay(){
     dots.innerHTML = list.map((x,k)=>`<i class="${k<pos?'done':(k===pos?'on':'')}"></i>`).join('');
   }
   $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length);
+  document.querySelector('.play-card').classList.remove('enter'); void document.querySelector('.play-card').offsetWidth; document.querySelector('.play-card').classList.add('enter');
+  const bn=$('#landBanner'); if(bn){ bn.dataset.land=String(st.land); $('#lbIco').textContent=L.icon; $('#lbName').textContent=L.name; $('#lbRule').textContent=L.rule||L.desc; $('#lbBadge').textContent='گام '+toFa(pos+1)+' از '+toFa(list.length); }
   $('#qTitle').innerHTML = fracify(st.title);
   $('#qBody').innerHTML = fracify(st.body||'');
   const lb=$('#learnBox');
@@ -1426,6 +1604,30 @@ function renderPlay(){
   }
 
 
+
+  if(st.type==='table2'){
+    const t=st.table2;
+    let hh='<div class="tbl-wrap"><table class="tbl ptable"><tr>';
+    t.head.forEach((c,ci)=> hh += `<th>${fracify(ci===0?c:toFa(c))}</th>`);
+    hh += '</tr>';
+    t.rows.forEach((row,ri)=>{
+      hh += `<tr><td class="lab">${fracify(row.lab)}</td>`;
+      const n=t.head.length-1;
+      for(let k=0;k<n;k++){
+        if(row.given && row.given[k]!=null) hh += `<td class="given">${fracify(toFa(row.given[k]))}</td>`;
+        else hh += `<td><input data-r="${ri}" data-k="${k}" inputmode="numeric" dir="ltr" autocomplete="off" aria-label="${row.lab} ستون ${k+1}"></td>`;
+      }
+      hh += '</tr>';
+    });
+    hh += '</table></div><div class="lab-msg">💡 هر ستون را با ستون‌های کناری‌اش مقایسه کن؛ نسبت دو ردیف در همهٔ ستون‌ها یکی است.</div>';
+    box.innerHTML=hh;
+  }
+  if(st.type==='multi'){
+    box.innerHTML = '<div class="multi-box">' + st.fields.map((f,fi)=>
+      `<div class="multi-row"><label>${fracify(f.label||'')}</label><span class="multi-affix">${fracify(f.prefix||'')}</span><input class="num-in multi-in" id="mf${fi}" inputmode="numeric" autocomplete="off" placeholder="؟"><span class="unit">${f.unit||''}</span><span class="multi-affix">${fracify(f.suffix||'')}</span></div>`
+    ).join('') + '</div>';
+    $$('.multi-in',box).forEach(inp=> inp.addEventListener('keydown', e=>{ if(e.key==='Enter') checkCurrent(st); }));
+  }
   if(st.type==='mixer'){
     box.innerHTML = `<div class="play-lab">
       <div class="lab-row"><label>🍋 آب‌لیمو <b id="mixAv">۱</b></label><input type="range" id="mixA" min="1" max="9" value="1" step="1"></div>
@@ -1495,6 +1697,18 @@ function addNav(acts,i,list){
 }
 
 function checkCurrent(st){
+  if(st.type==='table2'){
+    const inps=$$('#answerBox input');
+    if(!inps.length || inps.some(inp=>!String(inp.value).trim())){ shake(); return; }
+    let ok=true;
+    inps.forEach(inp=>{ const row=st.table2.rows[+inp.dataset.r]; const v=Number(fromFa(inp.value)); if(!isFinite(v)||v!==Number(row.answers[+inp.dataset.k])) ok=false; });
+    grade(ok, st); return;
+  }
+  if(st.type==='multi'){
+    const vals=st.fields.map((f,fi)=>{ const el=$('#mf'+fi); return el? Number(fromFa(el.value)) : NaN; });
+    if(vals.some(v=>!isFinite(v))){ shake(); return; }
+    grade(vals.every((v,fi)=> v===Number(st.fields[fi].answer)), st); return;
+  }
   if(st.type==='mixer'){
     const a=+($('#mixA')||{}).value, b=+($('#mixB')||{}).value;
     grade(a*st.ratio[1]===b*st.ratio[0] && a>st.ratio[0], st); return;
