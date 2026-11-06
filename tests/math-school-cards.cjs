@@ -56,6 +56,11 @@ const kasrestanRows = [...judges.querySelectorAll('table tbody tr')]
 assert.equal(kasrestanRows.length, 1, 'games table must list کسرستان once');
 assert.match(kasrestanRows[0].textContent, /۶ جزیره/);
 assert.match(kasrestanRows[0].textContent, /محتوای ثابت/);
+const nesbatRows = [...judges.querySelectorAll('table tbody tr')]
+  .filter(tr => tr.textContent.includes('نسبتستان (مدرسه ریاضی)'));
+assert.equal(nesbatRows.length, 1, 'games table must list نسبتستان once');
+assert.match(nesbatRows[0].textContent, /۵ سرزمین/);
+assert.match(nesbatRows[0].textContent, /محتوای ثابت/);
 
 const schoolSection = [...judges.querySelectorAll('section')]
   .find(sec => sec.textContent.includes('🧮 مدرسه ریاضی'));
@@ -70,10 +75,10 @@ assert.ok(schoolSection.querySelector('a[href="games/math-fasl2.html"]'), 'link 
 assert.match(judgesSource, /\.ks-spotlight\s*\{/);
 
 // Stale, contradictory counts used to say ۱۳ / ۱۲ / ۱۳.
-assert.match(judgesSource, /<strong>۱۴ بازی آموزشی<\/strong>/);
-assert.match(judgesSource, /پلتفرمی کامل با ۱۴ بازی آموزشی/);
-assert.match(judgesSource, /<span class="num">۱۴<\/span><span class="label">بازی تعاملی/);
-assert.ok(!/۱۳ بازی آموزشی|۱۲ بازی آموزشی|<span class="num">۱۳<\/span>/.test(judgesSource),
+assert.match(judgesSource, /<strong>۱۵ بازی آموزشی<\/strong>/);
+assert.match(judgesSource, /پلتفرمی کامل با ۱۵ بازی آموزشی/);
+assert.match(judgesSource, /<span class="num">۱۵<\/span><span class="label">بازی تعاملی/);
+assert.ok(!/۱۴ بازی آموزشی|۱۳ بازی آموزشی|۱۲ بازی آموزشی|<span class="num">۱۴<\/span>/.test(judgesSource),
   'stale game counts remain');
 
 // ---- 3) lobby, cache, docs ----------------------------------------------
@@ -111,7 +116,7 @@ console.log(JSON.stringify({
   descriptionRowsForKasrestan: kasrestanRows.length,
   mathSchoolGamesListed: features.length,
   spotlight: true,
-  gameCountsFixedTo: 14,
+  gameCountsFixedTo: 15,
   cacheVersion: 'hakim-v1.5.17',
   schoolPagePrefetched: true,
   docsUpdated: true
