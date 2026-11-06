@@ -859,6 +859,7 @@ input,select,textarea{font-size:16px} /* iOS: no auto-zoom */
         <div class="cert-stat">ستاره<br><b id="certStars"></b></div>
         <div class="cert-stat">درستی<br><b id="certPct"></b></div>
         <div class="cert-stat">سرزمین‌ها<br><b id="certPages"></b></div>
+        <div class="cert-stat">بهترین کمبو 🔥<br><b id="certCombo"></b></div>
       </div>
       <ul class="cert-list" id="certList"></ul>
       <p id="certDate"></p>
@@ -938,7 +939,6 @@ const SFX = {
   star(){ beep(880,.1); setTimeout(()=>beep(1174,.16),80); },
   fanfare(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,'triangle',.08), i*90)); }
 };
-let combo = 0;
 
 /* ===== SVG FIGURES ===== */
 function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}" width="${Math.min(w,320)}" style="max-width:100%" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`; }
@@ -1215,7 +1215,7 @@ function goldRect(){
 
 /* ===== STATE ===== */
 function fresh(){
-  return {name:'', stars:0, sound:true, land:0, step:0, tries:{}, done:{}, started:Date.now(), maxByQ:{}, sentLands:[], landCleared:{}};
+  return {name:'', stars:0, sound:true, land:0, step:0, tries:{}, done:{}, started:Date.now(), maxByQ:{}, sentLands:[], landCleared:{}, combo:0, maxCombo:0};
 }
 let S = fresh();
 let migratedSave = false;
@@ -1799,7 +1799,7 @@ function renderMap(){
   const nDone = LANDS.filter((_,i)=>landDone(i)).length;
   $('#hello').textContent = 'سلام '+S.name+'، قهرمان نسبتستان!';
   $('#mapStars').textContent = toFa(S.stars);
-  const pp=$('#playerPill'); if(pp){ pp.textContent='👤 '+S.name+' · ⭐ '+toFa(S.stars); pp.classList.toggle('hidden', !S.name); }
+  const pp=$('#playerPill'); if(pp){ pp.textContent='👤 '+S.name+' · ⭐ '+toFa(S.stars)+((S.maxCombo||0)>=2 ? ' · 🔥 ×'+toFa(S.maxCombo) : ''); pp.classList.toggle('hidden', !S.name); }
   const rk=$('#mapRank'); if(rk){ const mx=maxStars(); rk.textContent = S.stars>=mx ? '👑 استاد نسبتستان' : (S.stars>=mx*0.6 ? '🌟 حسابگر ماهر' : (S.stars>=mx*0.3 ? '🍋 شربت‌ساز' : '🌱 تازه‌کار')); }
   const box = $('#lands'); box.innerHTML='';
   LANDS.forEach((L,i)=>{
@@ -1856,6 +1856,7 @@ function renderPlay(){
   document.body.setAttribute('data-land', String(st.land));
   $('#hudTitle').textContent = L.icon+' '+L.name;
   $('#hudStars').textContent = toFa(S.stars);
+  updateCombo();
   $('#hudBar').style.width = ((pos)/Math.max(1,list.length-1)*100)+'%';
   const dots = $('#hudDots');
   if(dots){
@@ -2086,8 +2087,10 @@ function grade(ok, st, btn, wrap){
   if(ok){
     SFX.ok(); SFX.star();
     const pc=document.querySelector('.play-card'); if(pc){ pc.classList.remove('winflash'); void pc.offsetWidth; pc.classList.add('winflash'); }
-    combo++;
+    S.combo = (S.combo||0) + 1;
+    S.maxCombo = Math.max(S.maxCombo||0, S.combo);
     updateCombo();
+    if(S.combo>=5 && S.combo%5===0) setTimeout(()=>toast('🔥 وااای! کمبو ×'+toFa(S.combo)+' — پشت‌سرهم داری می‌ترکونی!'), 350);
     const gain = Math.max(1, 4-S.tries[k]); // 3,2,1
     if(!S.done[k]){
       const prev = S.maxByQ[k]||0;
@@ -2101,7 +2104,8 @@ function grade(ok, st, btn, wrap){
     if(gain>=2) confetti();
     if(btn){ btn.classList.add('ok'); }
     if(wrap) $$('.choice, .pick',wrap).forEach(c=>c.disabled=true);
-    const praise = ['آفرین قهرمان نسبتستان!','وااای چه حسابی کردی!','ستاره مال توست ⭐','دمت گرم، جادو کردی!','حکیم کیف کرد!'][Math.floor(Math.random()*5)];
+    let praise = ['آفرین قهرمان نسبتستان!','وااای چه حسابی کردی!','ستاره مال توست ⭐','دمت گرم، جادو کردی!','حکیم کیف کرد!'][Math.floor(Math.random()*5)];
+    if(S.combo>=2) praise += ' 🔥 کمبو ×'+toFa(S.combo);
     $('#hakimText').textContent = praise;
     hkSay(praise, 'excited');
     showWhy(st, true, gain);
@@ -2109,7 +2113,7 @@ function grade(ok, st, btn, wrap){
     b.onclick=()=>{ SFX.click(); nextStep(true); };
     $('#acts').innerHTML=''; $('#acts').appendChild(b);
   } else {
-    combo=0; updateCombo();
+    S.combo=0; updateCombo(); persist();
     SFX.bad();
     if(btn) btn.classList.add('bad');
     const miss = S.tries[k]>=3 ? 'اشکال ندارد؛ راه حل را با هم می‌بینیم و بعد دوباره می‌روی جلو.' : 'هنوز نه. دوباره نگاه کن یا از من راهنمایی بگیر.';
@@ -2161,7 +2165,8 @@ function nextStep(fromPlay){
 
 function updateCombo(){
   const el=$('#comboPill'); if(!el) return;
-  if(combo>=2){ el.textContent = '🔥 کمبو ×'+toFa(combo); el.classList.add('show'); }
+  const c=S.combo||0;
+  if(c>=2){ el.textContent = '🔥 کمبو ×'+toFa(c); el.classList.add('show'); }
   else el.classList.remove('show');
 }
 function burstStars(n){
@@ -2225,6 +2230,7 @@ function showCert(){
   $('#certStars').textContent = toFa(S.stars)+' از '+toFa(maxStars());
   $('#certPct').textContent = toFa(pct)+'٪';
   $('#certPages').textContent = toFa(LANDS.filter((_,i)=>landDone(i)).length)+' از ۵';
+  const cb=$('#certCombo'); if(cb) cb.textContent = (S.maxCombo||0)>=1 ? '×'+toFa(S.maxCombo) : '—';
   const list = $('#certList'); list.innerHTML = '';
   LANDS.forEach((L,i)=>{
     const done = landDone(i);
@@ -2287,6 +2293,7 @@ function sendLand(i, completedLand){
   const full = LANDS.every((_,k)=>landDone(k));
   sendResultsToPanel(st.stars, st.stars, L.name, Math.round((Date.now()-(S.started||Date.now()))/1000), {
     landName: L.name,
+    maxCombo: S.maxCombo||0,
     totalQuestions: st.totalQuestions,
     stars: st.stars,
     landsDone: LANDS.filter((_,k)=>landDone(k)).length,
