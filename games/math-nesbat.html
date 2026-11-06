@@ -474,12 +474,76 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
 .lesson-note{background:#f0fdfa;border:1.5px dashed #14b8a6;border-radius:14px;padding:10px 12px;margin:10px 0;line-height:1.9;color:#134e4a}
 @media(max-width:520px){.pick{min-width:96px}}
 
+
+/* ===== WOW overhaul: scene, 3D, motion, play-labs ===== */
+body{background:#071a2e}
+body::before{background:
+ radial-gradient(900px 520px at 95% -5%, rgba(20,184,166,.75), transparent 55%),
+ radial-gradient(800px 520px at -10% 105%, rgba(245,158,11,.65), transparent 55%),
+ radial-gradient(600px 420px at 48% 30%, rgba(251,113,133,.35), transparent 65%),
+ radial-gradient(420px 300px at 18% 18%, rgba(56,189,248,.35), transparent 65%),
+ repeating-linear-gradient(58deg, rgba(255,255,255,.05) 0 10px, transparent 10px 26px)}
+.sky span{opacity:.38;font-size:30px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.card{border-radius:32px;border:3px solid rgba(255,255,255,.85);
+ box-shadow:0 24px 50px rgba(2,20,30,.45), inset 0 2px 0 #fff}
+.gate-badge{font-size:.95rem;padding:9px 18px}
+.scene-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 4px}
+.scene-card{border-radius:20px;padding:12px 8px;text-align:center;color:#134e4a;
+ background:linear-gradient(180deg,#fff,#f0fdfa);border:2px solid #99f6e4;
+ box-shadow:0 8px 0 rgba(13,148,136,.35);animation:bob 3.2s ease-in-out infinite}
+.scene-card small{display:block;color:#5b5678;font-weight:700;margin-top:2px;line-height:1.5}
+.scene-card b{font-size:1.02rem}
+.scene-ico{display:block;font-size:2rem;filter:drop-shadow(0 5px 5px rgba(0,0,0,.2))}
+.sc2{background:linear-gradient(180deg,#fff,#fffbeb);border-color:#fde68a;box-shadow:0 8px 0 rgba(217,119,6,.35);animation-delay:.25s}
+.sc3{background:linear-gradient(180deg,#fff,#eff6ff);border-color:#93c5fd;box-shadow:0 8px 0 rgba(37,99,235,.3);animation-delay:.5s}
+.sc4{background:linear-gradient(180deg,#fff,#fff7ed);border-color:#fdba74;box-shadow:0 8px 0 rgba(234,88,12,.3);animation-delay:.75s}
+@media(max-width:560px){.scene-strip{grid-template-columns:repeat(2,1fr)}}
+.land{border-radius:24px;padding:16px;box-shadow:0 12px 24px rgba(2,20,30,.18)}
+.land .ic{font-size:2.6rem;width:76px;height:76px;border-radius:24px;
+ box-shadow:0 8px 0 rgba(76,60,199,.25), inset 0 3px 0 rgba(255,255,255,.7)}
+.land:hover{transform:translateY(-5px) scale(1.01)}
+.land h3{font-size:1.18rem}
+.xp small{display:block;font-size:.72rem;font-weight:900;opacity:.95}
+.play-card{border-radius:30px}
+.q-title{font-size:clamp(1.25rem,3.6vw,1.55rem)}
+.q-body{font-size:1.02rem}
+.learn-box{background:linear-gradient(90deg,#f0fdfa,#fffbeb);border:2px dashed #14b8a6;
+ border-radius:18px;padding:12px 16px;margin:6px 0 12px;line-height:2;color:#134e4a;
+ box-shadow:inset 0 0 0 4px #fff}
+.learn-box ol{margin:6px 0 2px;padding-right:22px}
+.visual{border-radius:26px;padding:18px 14px;
+ background:radial-gradient(circle at 15% 15%,rgba(253,224,71,.35),transparent 42%),
+ radial-gradient(circle at 85% 85%,rgba(20,184,166,.25),transparent 45%),linear-gradient(180deg,#fff,#f0fdfa);
+ border:3px solid #99f6e4;box-shadow:inset 0 0 0 6px #fff,0 12px 22px rgba(13,148,136,.14)}
+.fig svg{animation:bounceIn .5s cubic-bezier(.34,1.56,.64,1) both}
+.bubble{border-radius:22px;border:2px solid #99f6e4;background:linear-gradient(90deg,#f0fdfa,#fffbeb);box-shadow:0 10px 18px rgba(13,148,136,.12)}
+.bubble .face{filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+.btn{border-radius:18px;letter-spacing:.1px}
+.btn.primary{box-shadow:0 6px 0 #b45309,0 14px 22px rgba(245,158,11,.3)}
+.choice,.pick{border-radius:20px}
+.choice:hover,.pick:hover{transform:translateY(-4px) scale(1.02) rotate(-.4deg)}
+.num-in{border-radius:16px}
+.progress{height:13px;border:2px solid rgba(255,255,255,.35)}
+/* play labs (hands-on) */
+.play-lab{background:linear-gradient(180deg,#fff,#f8fafc);border:2px dashed #a5b4fc;border-radius:22px;padding:16px;box-shadow:inset 0 0 0 5px #fff}
+.lab-row{display:grid;gap:6px;margin:10px 0;text-align:right}
+.lab-row label{font-weight:900;color:#3730a3}
+.lab-row input[type=range]{width:100%;accent-color:#f59e0b;height:34px;cursor:pointer}
+.lab-msg{margin-top:10px;font-weight:900;color:#4c3cc7;background:#eef2ff;border-radius:14px;padding:10px 12px;line-height:1.9;text-align:center}
+.lab-msg.good{background:#ecfdf5;color:#065f46;border:1.5px solid #6ee7b7}
+.paint-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:430px;margin:0 auto}
+.paint-cell{aspect-ratio:1;border-radius:7px;border:1.5px solid #c7d2fe;background:#eef2ff;cursor:pointer;padding:0;transition:transform .08s,background .12s}
+.paint-cell:hover{transform:scale(1.12)}
+.paint-cell.on{background:linear-gradient(180deg,#fcd34d,#f59e0b);border-color:#b45309;box-shadow:0 3px 0 #b45309}
+.cert{border-width:12px}
+@media (prefers-reduced-motion:reduce){.scene-card,.fig svg{animation:none!important}}
+
 </style>
 </head>
 <body>
 <div class="sky" aria-hidden="true">
-  <span class="o1">◆</span><span class="o2">▲</span><span class="o3">●</span><span class="o4">■</span>
-  <span class="o5">✦</span><span class="o6">⬡</span><span class="o7">★</span><span class="o8">◇</span>
+  <span class="o1">🍋</span><span class="o2">💯</span><span class="o3">⚖️</span><span class="o4">🛒</span>
+  <span class="o5">٪</span><span class="o6">✨</span><span class="o7">⭐</span><span class="o8">🍊</span>
 </div>
 <div class="app">
 
@@ -495,6 +559,12 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
     <div class="mascot big" id="gateFace" data-hakim-face="excited"></div>
     <h1 class="title">نسبتستان</h1>
     <p class="sub">فصل سوم ریاضی پنجم، قدم‌به‌قدم و بازی‌وار!<br><b>مقایسه کن، تناسب ببند، درصد بگیر، تخفیف حساب کن و ستاره جمع کن.</b></p>
+    <div class="scene-strip" aria-hidden="true">
+      <div class="scene-card sc1"><span class="scene-ico">🍋</span><b>نسبت</b><small>۲ به ۳ یعنی مقایسه</small></div>
+      <div class="scene-card sc2"><span class="scene-ico">⚖️</span><b>تناسب</b><small>دو نسبت برابر</small></div>
+      <div class="scene-card sc3"><span class="scene-ico">💯</span><b>درصد</b><small>از هر ۱۰۰ تا</small></div>
+      <div class="scene-card sc4"><span class="scene-ico">🛒</span><b>تخفیف</b><small>در بازار درصد بگیر</small></div>
+    </div>
     <div class="mission-row"><span>🗺️ ۵ سرزمین</span><span>🍋 نسبت</span><span>⚖️ تناسب</span><span>💯 درصد</span><span>📜 گواهی قهرمانی</span></div>
     <div class="name-row" id="nameRow">
       <span aria-hidden="true">✏️</span>
@@ -529,7 +599,7 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
         <h2 id="hello"></h2>
         <p>نقشهٔ نسبتستان — همهٔ سرزمین‌ها بازند؛ هرکدام را دوست داری لمس کن</p>
       </div>
-      <div class="xp">⭐<b id="mapStars">۰</b>ستاره</div>
+      <div class="xp">⭐<b id="mapStars">۰</b>ستاره<small id="mapRank"></small></div>
     </div>
     <div class="lands" id="lands"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
@@ -557,6 +627,7 @@ body[data-land="4"] .play-card{border-color:#fde047;background:linear-gradient(1
       <div class="page-badge" id="pageBadge"></div>
       <h2 class="q-title" id="qTitle"></h2>
       <p class="q-body" id="qBody"></p>
+      <div id="learnBox" class="learn-box hidden"></div>
       <div class="visual" id="visual"></div>
       <div class="bubble">
         <div class="face" id="playFace"></div>
@@ -616,11 +687,11 @@ const fromFa = s => String(s||'').trim()
   .replace(/[٬,]/g,'');
 const KEY = 'hakimestan_nesbat_v1';
 const LANDS = [
-  {id:'ratio', icon:'🍋', name:'باغ شربت نسبت‌ها', desc:'نسبت یعنی مقایسهٔ دو مقدار — فصل ۳، نسبت'},
-  {id:'prop', icon:'⚖️', name:'پل تناسب طلایی', desc:'نسبت‌های مساوی و جدول تناسب'},
-  {id:'pct', icon:'💯', name:'آزمایشگاه صدخانه', desc:'درصد یعنی «از هر صد تا»'},
-  {id:'shop', icon:'🛒', name:'بازار تخفیف‌ها', desc:'درصد در خرید، تخفیف و زندگی روزانه'},
-  {id:'gold', icon:'🏆', name:'قلهٔ نسبت طلایی', desc:'مرور ترکیبی، نسبت طلایی و چالش نهایی'}
+  {id:'ratio', icon:'🍋', name:'باغ شربت نسبت‌ها', desc:'نسبت یعنی مقایسهٔ دو مقدار — فصل ۳، نسبت', rule:'نسبت یعنی «اول به دوم»؛ ترتیب مهم است و ساده‌کردن مزه را عوض نمی‌کند.'},
+  {id:'prop', icon:'⚖️', name:'پل تناسب طلایی', desc:'نسبت‌های مساوی و جدول تناسب', rule:'در تناسب، هر دو طرف را در یک عدد ضرب یا بر یک عدد تقسیم کن.'},
+  {id:'pct', icon:'💯', name:'آزمایشگاه صدخانه', desc:'درصد یعنی «از هر صد تا»', rule:'درصد یعنی از هر ۱۰۰ تا؛ هر خانهٔ صدخانه ۱٪ است.'},
+  {id:'shop', icon:'🛒', name:'بازار تخفیف‌ها', desc:'درصد در خرید، تخفیف و زندگی روزانه', rule:'اول تخفیف را حساب کن، بعد از قیمت کم کن.'},
+  {id:'gold', icon:'🏆', name:'قلهٔ نسبت طلایی', desc:'مرور ترکیبی، نسبت طلایی و چالش نهایی', rule:'نسبت، تناسب و درصد سه دوست‌اند؛ هر سه را به هم تبدیل می‌کنی.'}
 ];
 
 function jalali(date){
@@ -902,6 +973,7 @@ function hkSay(text, mood){
 const STEPS = [
  /* ================= LAND 0: نسبت ================= */
  {land:0, teach:true, title:'درس ۱: نسبت یعنی مقایسه',
+  learn:['دو مقدار را خوب بشمار؛ مثلاً چند لیوان آب‌لیمو و چند لیوان آب داری.','به همان ترتیبی که سؤال می‌گوید بنویس: مقدار اول «به» مقدار دوم.','ترتیب را جابه‌جا نکن؛ ۲ به ۳ با ۳ به ۲ فرق دارد!'],
   body:'وقتی می‌خواهیم دو مقدار را با هم مقایسه کنیم، از <b>نسبت</b> استفاده می‌کنیم. مثال: برای شربت، به ازای هر <b>۲ لیوان آب‌لیمو</b>، <b>۳ لیوان آب</b> می‌ریزیم؛ یعنی نسبت آب‌لیمو به آب، <b>۲ به ۳</b> است. ترتیب مهم است!',
   visual:()=>figs([figCap(ratioBars(2,3,'آب‌لیمو','آب'),'نسبت ۲ به ۳')]),
   hakim:'نسبت را این‌طوری می‌خوانیم: «۲ به ۳». اول آب‌لیمو، بعد آب. اگر جایشان عوض شود، نسبت عوض می‌شود!'},
@@ -923,6 +995,7 @@ const STEPS = [
   hakim:'یادت باشد: صورت کسر، همان مقداری است که اول گفته می‌شود؛ مخرج، مقدار دوم (اینجا کل ۱۰ تا).',
   why:['نسبت «آبی به کل» = ۶ به ۱۰.','به صورت کسر می‌نویسیم: ۶/۱۰.']},
  {land:0, teach:true, title:'درس ۲: نسبت و کسر، ساده کردن',
+  learn:['یک عدد پیدا کن که هر دو طرف بر آن بخش‌پذیر باشند.','صورت و مخرج را هر دو بر همان عدد تقسیم کن.','تا وقتی دیگر نشد، ادامه بده؛ نسبت کوچک‌شده همان نسبت قبلی است.'],
   body:'نسبت «الف به ب» را می‌توانیم به صورت کسر <b>الف/ب</b> بنویسیم. مثل کسرها، نسبت را هم می‌شود <b>ساده</b> کرد: صورت و مخرج را بر یک عدد تقسیم می‌کنیم. ۶ به ۹، هر دو بر ۳ تقسیم می‌شوند و می‌شود <b>۲ به ۳</b>؛ مزهٔ شربت عوض نمی‌شود!',
   visual:()=>figs([figCap(ratioBars(6,9,'قبل از ساده','کردن'),'۶ به ۹'), figCap(ratioBars(2,3,'بعد از ساده','کردن'),'۲ به ۳')]),
   hakim:'ساده کردن یعنی همان نسبت، با عددهای کوچک‌تر. هر دو طرف را بر یک عدد تقسیم کن.'},
@@ -937,6 +1010,11 @@ const STEPS = [
   hakim:'هر دو بر ۵ تقسیم می‌شوند. ۱۰÷۵ چند می‌شود؟',
   hint:'۱۰ ÷ ۵ = ۲',
   why:['۱۰ ÷ ۵ = ۲ و ۱۵ ÷ ۵ = ۳.','نسبت ساده: ۲ به ۳.']},
+ {land:0, title:'آزمایشگاه شربت: هم‌مزه بساز!',
+  body:'دستور اصلی شربت ۲ به ۳ است. حالا با دسته‌ها یک شربت <b>بزرگ‌تر ولی هم‌مزه</b> بساز: نسبتی برابر دستور اصلی، ولی با لیوان‌های بیشتر!',
+  hakim:'هر دو دسته را با هم حرکت بده. وقتی نسبتت با ۲ به ۳ برابر شد و از دستور اصلی بزرگ‌تر بود، دکمهٔ بررسی را بزن.',
+  type:'mixer', ratio:[2,3],
+  why:['نسبت هم‌مزه یعنی هر دو طرف در یک عدد ضرب شده باشند.','مثلاً ۴ به ۶ یعنی هر دو ×۲؛ مزه همان است، فقط شربت بیشتر شده!']},
  {land:0, title:'شکلِ نسبت ۳ به ۲ را پیدا کن',
   body:'کدام شکل نسبت مثلث به مربعِ «۳ به ۲» را نشان می‌دهد؟',
   type:'pick', answer:0,
@@ -962,6 +1040,7 @@ const STEPS = [
 
  /* ================= LAND 1: تناسب ================= */
  {land:1, teach:true, title:'درس ۱: نسبت‌های مساوی و تناسب',
+  learn:['اول ببین یک طرف چند برابر شده است.','دقیقاً همان کار را با طرف دیگر هم بکن.','اگر هر دو طرف یک کار دیدند، نسبت عوض نشده و تناسب درست است.'],
   body:'اگر صورت و مخرج یک نسبت را در یک عدد (غیر صفر) <b>ضرب</b> یا بر یک عدد <b>تقسیم</b> کنیم، نسبت تازه با قبلی <b>مساوی</b> است. وقتی دو نسبت مساوی باشند، یک <b>تناسب</b> ساخته‌اند؛ مثل ۲/۳ = ۴/۶. در تناسب، جدول هم با ضرب جلو می‌رود.',
   visual:()=>figs([figCap(balanceViz('۲','۳','۴','۶'),'۲ به ۳ = ۴ به ۶')]),
   hakim:'تناسب یعنی دو نسبت دست هم را گرفته‌اند و برابرند. هر دو طرف را در ۲ ضرب کن: ۲ به ۳ می‌شود ۴ به ۶.'},
@@ -972,6 +1051,11 @@ const STEPS = [
   table:{head:['','×۱','×۲','×۳'], lab:'لیوان آب‌لیمو', given:{0:2}, answers:{1:4,2:6}},
   hakim:'هر دو مقدار با هم ضرب می‌شوند: آب‌لیمو ۲، ۴، ۶ و آب ۳، ۶، ۹.',
   why:['×۲: آب‌لیمو ۴ و آب ۶.','×۳: آب‌لیمو ۶ و آب ۹.','چون هر دو طرف در یک عدد ضرب شدند، نسبت عوض نشده است.']},
+ {land:1, title:'آشپزخانهٔ تناسب: دستور را ۳ برابر کن',
+  body:'دستور شربت ۲ لیوان آب‌لیمو و ۳ لیوان آب است. مهمان‌ها زیاد شده‌اند! دسته را حرکت بده تا دستور دقیقاً <b>۳ برابر</b> شود، بعد بررسی کن.',
+  hakim:'به عددهای زیر دسته نگاه کن؛ هر دو مقدار باید با هم ۳ برابر شوند.',
+  type:'scale', base:[2,3], factor:3, names:['آب‌لیمو','آب'],
+  why:['۳ برابر یعنی هر دو مقدار ×۳: آب‌لیمو ۶ و آب ۹ لیوان.','چون هر دو با هم ضرب شدند، مزه عوض نشده است.']},
  {land:1, title:'عدد گمشدهٔ تناسب',
   body:'در تناسب ۲/۳ = ؟/۱۲ عدد گمشده چند است؟ (راهنما: ۳ تا ۱۲ یعنی ×۴؛ پس صورت هم ×۴ می‌شود.)',
   type:'input', answer:8,
@@ -1020,9 +1104,15 @@ const STEPS = [
 
  /* ================= LAND 2: درصد ================= */
  {land:2, teach:true, title:'درس ۱: درصد یعنی «از صد»',
+  learn:['صدخانه ۱۰۰ خانه دارد؛ هر خانه یعنی ۱ از ۱۰۰، یعنی ۱٪.','خانه‌های رنگی را بشمار؛ همان عدد، درصد است.','هر کسری را می‌توانی به «از ۱۰۰» برسانی تا درصدش معلوم شود.'],
   body:'<b>درصد</b> یعنی «از هر ۱۰۰ تا». نشانه‌اش ٪ است. ۲۵٪ یعنی ۲۵ از ۱۰۰، یعنی کسر ۲۵/۱۰۰ که ساده می‌شود ۱/۴. برای دیدن درصد، یک صفحهٔ <b>صدخانه</b> (۱۰×۱۰) داریم؛ هر خانه ۱٪ است!',
   visual:()=>figs([figCap(pctGrid(25),'۲۵٪ رنگی'), figCap(pctPie(25),'نمودار دایره‌ای ۲۵٪')]),
   hakim:'هر خانهٔ کوچک صدخانه دقیقاً ۱ درصد است. ۲۵ خانه رنگی یعنی ۲۵٪.'},
+ {land:2, title:'خودت رنگ کن: ۳۵٪ بساز',
+  body:'این صدخانه مال توست! روی خانه‌ها بزن تا رنگی شوند. دقیقاً <b>۳۵ خانه</b> را رنگ کن (یعنی ۳۵٪) و بعد بررسی کن.',
+  hakim:'هر خانه ۱٪ است. شمارنده کمکت می‌کند؛ اگر اشتباه زدی، دوباره روی همان خانه بزن تا خاموش شود.',
+  type:'pctpaint', target:35,
+  why:['۳۵ خانه از ۱۰۰ خانه یعنی ۳۵ از ۱۰۰.','پس ۳۵ خانهٔ رنگی = ۳۵٪.']},
  {land:2, title:'چند خانه رنگی است؟',
   body:'به صدخانه نگاه کن. چند درصد از خانه‌ها رنگی است؟',
   visual:()=>figs([figCap(pctGrid(40,'#38bdf8'),'صدخانه')]),
@@ -1073,9 +1163,15 @@ const STEPS = [
 
  /* ================= LAND 3: کاربرد درصد ================= */
  {land:3, teach:true, title:'درس ۱: درصد در خرید و تخفیف',
+  learn:['قدم اول: مقدار تخفیف را پیدا کن (درصد × قیمت).','قدم دوم: تخفیف را از قیمت کم کن.','عدد آخر همان پولی است که می‌پردازی.'],
   body:'در بازار، درصد برای <b>تخفیف</b> به کار می‌رود: اول مقدار تخفیف را پیدا می‌کنیم (درصد × قیمت)، بعد از قیمت کم می‌کنیم. مثال: کالای ۱۰۰ هزار تومانی با ۲۰٪ تخفیف: تخفیف ۲۰ هزار، قیمت پایانی <b>۸۰ هزار تومان</b>.',
   visual:()=>figs([figCap(shopTag(100,20),'مثال بازار')]),
   hakim:'دو قدم: ۱) تخفیف را حساب کن. ۲) از قیمت کم کن. جواب نهایی همان است که می‌پردازی.'},
+ {land:3, title:'چانه‌زنی در بازار: تخفیف را پیدا کن',
+  body:'قیمت این کفش ۳۰۰ هزار تومان است. دستهٔ تخفیف را حرکت بده تا تخفیف دقیقاً <b>۲۰٪</b> شود و قیمت پایانی را ببینی؛ بعد بررسی کن.',
+  hakim:'به سه عدد نگاه کن: قیمت، تخفیف و قیمت پایانی. با دسته بازی کن تا رابطه‌شان را خودت کشف کنی!',
+  type:'shop', price:300, off:20,
+  why:['۲۰٪ از ۳۰۰ یعنی ۶۰ هزار تومان تخفیف.','قیمت پایانی: ۳۰۰ − ۶۰ = ۲۴۰ هزار تومان.']},
  {land:3, title:'۱۰٪ از ۲۰۰ هزار تومان',
   body:'قیمت یک کیف ۲۰۰ هزار تومان است و ۱۰٪ تخفیف دارد. مقدار تخفیف چند هزار تومان است؟',
   visual:()=>figs([figCap(shopTag(200,10),'کیف')]),
@@ -1121,6 +1217,7 @@ const STEPS = [
 
  /* ================= LAND 4: قله طلایی ================= */
  {land:4, teach:true, title:'درس پایانی: نسبت طلایی و مرور',
+  learn:['اول تشخیص بده سؤال از کدام دوست است: نسبت، تناسب یا درصد.','بعد قانون همان دوست را صدا بزن و قدم‌به‌قدم حساب کن.','آخر کار جواب را با شکل یا جدول چک کن.'],
   body:'در طبیعت و هنر، یک نسبت ویژه هست: <b>نسبت طلایی</b> (نزدیک ۱٫۶ به ۱)؛ در صدف‌ها، گل‌ها و ساختمان‌های قدیمی دیده می‌شود. امروز در قله، همهٔ فصل را مرور می‌کنیم: نسبت، ساده کردن، تناسب، درصد و تخفیف!',
   visual:()=>figs([figCap(goldRect(),'مستطیل طلایی')]),
   hakim:'قله یعنی مرور همه‌چیز. نفس عمیق؛ تو از باغ شربت تا بازار را بلدی!'},
@@ -1163,6 +1260,11 @@ const STEPS = [
   ],
   hakim:'۵۰٪ یعنی نصف دایره.',
   why:['نصف دایره = ۵۰/۱۰۰ = ۵۰٪.']},
+ {land:4, title:'چالش صدخانهٔ قله: ۶۰٪',
+  body:'آخرین دست‌ورزی قله! دقیقاً <b>۶۰ خانه</b> از صدخانه را رنگ کن.',
+  hakim:'۶۰ خانه یعنی ۶ ردیف کامل؛ یا هر جور دیگری که جمعش ۶۰ شود!',
+  type:'pctpaint', target:60,
+  why:['۶۰ خانه از ۱۰۰ خانه = ۶۰٪.','آفرین؛ درصد را با دست‌های خودت ساختی!']},
  {land:4, title:'چالش نهایی قله',
   body:'برای جشن مدرسه با دستور شربتِ ۲ به ۳ (آب‌لیمو به آب) می‌خواهیم ۱۵ لیوان آب بریزیم. چند لیوان آب‌لیمو لازم داریم؟ و این چند درصدِ کل شربت است؟ اول لیوان آب‌لیمو را بگو. (راهنما: آب از ۳ به ۱۵ یعنی ×۵؛ آب‌لیمو هم ×۵ می‌شود و کل شربت ۲۵ لیوان می‌شود؛ بعد نسبت آب‌لیمو به کل را به درصد برسان.)',
   type:'input', answer:10, unit:'لیوان',
@@ -1194,6 +1296,7 @@ function renderMap(){
   const nDone = LANDS.filter((_,i)=>landDone(i)).length;
   $('#hello').textContent = 'سلام '+S.name+'، قهرمان نسبتستان!';
   $('#mapStars').textContent = toFa(S.stars);
+  const rk=$('#mapRank'); if(rk){ const mx=maxStars(); rk.textContent = S.stars>=mx ? '👑 استاد نسبتستان' : (S.stars>=mx*0.6 ? '🌟 حسابگر ماهر' : (S.stars>=mx*0.3 ? '🍋 شربت‌ساز' : '🌱 تازه‌کار')); }
   const box = $('#lands'); box.innerHTML='';
   LANDS.forEach((L,i)=>{
     const done = landDone(i), lock=!unlocked(i);
@@ -1250,6 +1353,8 @@ function renderPlay(){
   $('#pageBadge').textContent = L.icon+'  گام '+toFa(pos+1)+' از '+toFa(list.length);
   $('#qTitle').innerHTML = fracify(st.title);
   $('#qBody').innerHTML = fracify(st.body||'');
+  const lb=$('#learnBox');
+  if(lb){ if(st.learn && st.learn.length){ lb.classList.remove('hidden'); lb.innerHTML='<b>🧭 قدم‌به‌قدم یاد بگیر:</b><ol>'+st.learn.map(x=>'<li>'+fracify(x)+'</li>').join('')+'</ol>'; } else { lb.classList.add('hidden'); lb.innerHTML=''; } }
   const vis = st.visual ? st.visual() : '';
   $('#visual').innerHTML = vis;
   $('#visual').style.display = vis ? '' : 'none';
@@ -1320,6 +1425,56 @@ function renderPlay(){
     box.appendChild(wrap);
   }
 
+
+  if(st.type==='mixer'){
+    box.innerHTML = `<div class="play-lab">
+      <div class="lab-row"><label>🍋 آب‌لیمو <b id="mixAv">۱</b></label><input type="range" id="mixA" min="1" max="9" value="1" step="1"></div>
+      <div class="lab-row"><label>💧 آب <b id="mixBv">۱</b></label><input type="range" id="mixB" min="1" max="9" value="1" step="1"></div>
+      <div id="mixView"></div><div class="lab-msg" id="mixMsg">دسته‌ها را حرکت بده و نسبت را بساز!</div></div>`;
+    const upd=()=>{ const a=+$('#mixA').value, b=+$('#mixB').value;
+      $('#mixAv').textContent=toFa(a); $('#mixBv').textContent=toFa(b);
+      $('#mixView').innerHTML = ratioBars(a,b,'آب‌لیمو','آب');
+      const eq = a*st.ratio[1]===b*st.ratio[0];
+      $('#mixMsg').textContent = eq ? (a>st.ratio[0] ? '🎉 آفرین! هم‌مزه و بزرگ‌تر شد؛ حالا بررسی کن!' : 'این همان دستور اصلی است؛ بزرگ‌ترش کن!') : 'نسبت تو: '+toFa(a)+' به '+toFa(b)+' — هنوز هم‌مزهٔ ۲ به ۳ نیست.';
+      $('#mixMsg').className='lab-msg'+(eq&&a>st.ratio[0]?' good':'');
+    };
+    $('#mixA').addEventListener('input',upd); $('#mixB').addEventListener('input',upd); upd();
+  }
+  if(st.type==='scale'){
+    box.innerHTML = `<div class="play-lab">
+      <div class="lab-row"><label>✖️ چند برابر شود؟ <b id="scFv">۱ برابر</b></label><input type="range" id="scF" min="1" max="5" value="1" step="1"></div>
+      <div id="scView"></div><div class="lab-msg" id="scMsg"></div></div>`;
+    const upd=()=>{ const f=+$('#scF').value, a=st.base[0]*f, b=st.base[1]*f;
+      $('#scFv').textContent=toFa(f)+' برابر';
+      $('#scView').innerHTML = ratioBars(a,b,st.names[0],st.names[1]);
+      $('#scMsg').textContent = st.names[0]+' '+toFa(a)+' لیوان و '+st.names[1]+' '+toFa(b)+' لیوان';
+      $('#scMsg').className='lab-msg'+(f===st.factor?' good':'');
+    };
+    $('#scF').addEventListener('input',upd); upd();
+  }
+  if(st.type==='pctpaint'){
+    let cells='';
+    for(let k=0;k<100;k++) cells += `<button type="button" class="gcell paint-cell" data-on="0" aria-label="خانه ${k+1}"></button>`;
+    box.innerHTML = `<div class="play-lab"><div class="paint-grid" dir="ltr">${cells}</div>
+      <div class="lab-msg" id="pcMsg">رنگی: ۰ از ${toFa(st.target)}</div></div>`;
+    const upd=()=>{ const n=$$('.paint-cell',box).filter(c=>c.dataset.on==='1').length;
+      const m=$('#pcMsg'); m.textContent='رنگی: '+toFa(n)+' از '+toFa(st.target)+(n===st.target?' 🎉 دقیق شد؛ بررسی کن!':'');
+      m.className='lab-msg'+(n===st.target?' good':''); };
+    $$('.paint-cell',box).forEach(c=> c.onclick=()=>{ c.dataset.on = c.dataset.on==='1'?'0':'1'; c.classList.toggle('on', c.dataset.on==='1'); SFX.click(); upd(); });
+    upd();
+  }
+  if(st.type==='shop'){
+    box.innerHTML = `<div class="play-lab">
+      <div class="lab-row"><label>🏷️ درصد تخفیف <b id="shOv">۰٪</b></label><input type="range" id="shO" min="0" max="50" value="0" step="5"></div>
+      <div id="shView"></div><div class="lab-msg" id="shMsg"></div></div>`;
+    const upd=()=>{ const o=+$('#shO').value, off=Math.round(st.price*o/100), fin=st.price-off;
+      $('#shOv').textContent=toFa(o)+'٪';
+      $('#shView').innerHTML = shopTag(st.price,o);
+      $('#shMsg').innerHTML='تخفیف: <b>'+toFa(off)+'</b> هزار تومان · قیمت پایانی: <b>'+toFa(fin)+'</b> هزار تومان';
+      $('#shMsg').className='lab-msg'+(o===st.off?' good':''); };
+    $('#shO').addEventListener('input',upd); upd();
+  }
+
   if(st.type!=='choice' && st.type!=='pick'){
     const chk=document.createElement('button'); chk.className='btn primary'; chk.textContent='بررسی پاسخ';
     chk.onclick=()=> checkCurrent(st);
@@ -1340,6 +1495,19 @@ function addNav(acts,i,list){
 }
 
 function checkCurrent(st){
+  if(st.type==='mixer'){
+    const a=+($('#mixA')||{}).value, b=+($('#mixB')||{}).value;
+    grade(a*st.ratio[1]===b*st.ratio[0] && a>st.ratio[0], st); return;
+  }
+  if(st.type==='scale'){
+    grade(+($('#scF')||{}).value===st.factor, st); return;
+  }
+  if(st.type==='pctpaint'){
+    grade($$('.paint-cell').filter(c=>c.dataset.on==='1').length===st.target, st); return;
+  }
+  if(st.type==='shop'){
+    grade(+($('#shO')||{}).value===st.off, st); return;
+  }
   if(st.type==='input'){
     const el=$('#ans');
     if(!el || !el.value.trim()){ shake(); return; }
@@ -1391,7 +1559,8 @@ function grade(ok, st, btn, wrap){
     $('#hakimText').textContent = miss;
     hkSay(miss, 'sad');
     const fb=$('#feed');
-    fb.innerHTML = `<div class="feedback bad">این بار درست نبود. ${st.hint? 'راهنمایی: '+fracify(st.hint) : 'دوباره با دقت به شکل و درس نگاه کن.'}</div>`;
+    const scaffold = (S.tries[i]>=2 && st.why && st.why.length) ? '<div class="feedback bad">قدم اول راه‌حل را با هم برمی‌داریم: '+fracify(st.why[0])+' حالا خودت ادامه بده!</div>' : '';
+    fb.innerHTML = scaffold || `<div class="feedback bad">این بار درست نبود. ${st.hint? 'راهنمایی: '+fracify(st.hint) : 'دوباره با دقت به شکل و درس نگاه کن.'}</div>`;
     if(S.tries[i]>=3){
       showWhy(st, false);
       S.done[i]=true; S.maxByQ[i]=S.maxByQ[i]||0; persist();
@@ -1428,7 +1597,7 @@ function nextStep(fromPlay){
     return;
   }
   hkSay('آفرین! این سرزمین تمام شد. حالا هر سرزمین دیگری را که دوست داری انتخاب کن.', 'happy');
-  openCeleb(L.icon+' '+L.name+' فتح شد!', 'این سرزمین کامل شد! روی نقشه هر سرزمین دیگری را که دوست داری انتخاب کن.', ()=>{
+  openCeleb(L.icon+' '+L.name+' فتح شد!', 'این سرزمین کامل شد! قانون طلایی‌اش: '+(L.rule||'')+' حالا هر سرزمین دیگری را که دوست داری انتخاب کن.', ()=>{
     renderMap(); show('map');
   });
 }
