@@ -1,0 +1,117 @@
+// Run with: npm install --no-save --package-lock=false jsdom@26 && node tests/math-school-cards.cjs
+// Guards the integration of «کسرستان» into the math-school page and the
+// detailed project description (معرفی تفصیلی), plus the offline cache wiring.
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const { JSDOM } = require('jsdom');
+
+const root = path.resolve(__dirname, '..');
+const read = rel => fs.readFileSync(path.join(root, rel), 'utf8');
+const parse = html => new JSDOM(html, { url: 'https://hakimistan.ir/' }).window.document;
+
+// ---- 1) school page: four cards, one dedicated to کسرستان -----------------
+const schoolSource = read('math-learning.html');
+const school = parse(schoolSource);
+const cards = [...school.querySelectorAll('main.games-grid > a.game-card')];
+assert.equal(cards.length, 4, 'school page must show exactly four game cards');
+const hrefs = cards.map(card => card.getAttribute('href'));
+assert.deepEqual(hrefs, [
+  'games/math-learning-1.html',
+  'games/math-time-mission.html',
+  'games/math-olgoha.html',
+  'games/math-fasl2.html'
+], 'card order/links changed');
+for (const href of hrefs) {
+  assert.ok(fs.existsSync(path.join(root, href)), `broken card link: ${href}`);
+}
+
+const ks = cards[3];
+assert.ok(ks.classList.contains('kasrestan-card'), 'کسرستان card has no dedicated class');
+assert.equal(ks.getAttribute('data-game'), 'math-fasl2');
+assert.match(ks.getAttribute('aria-label') || '', /کسرستان/);
+assert.ok(ks.querySelector('.kasrestan-ribbon'), 'dedicated ribbon missing');
+assert.ok(ks.querySelector('.kasrestan-note'), 'dedicated note missing');
+assert.ok(ks.querySelector('.card-icon svg'), 'dedicated icon missing');
+assert.ok(ks.querySelector('.card-cta'), 'dedicated CTA missing');
+const tags = [...ks.querySelectorAll('.card-tags .tag')].map(t => t.textContent.trim());
+assert.ok(tags.some(t => t.includes('۶ جزیره') && t.includes('۵۸ فعالیت')), 'activity tags missing');
+assert.ok(tags.some(t => t.includes('پنل معلم')), 'teacher-panel tag missing');
+assert.ok(ks.textContent.includes('پرسش'), 'card copy does not describe the questions');
+assert.ok(ks.textContent.includes('گواهی'), 'card copy does not mention the certificate');
+assert.ok(!ks.textContent.includes('گذرنامه'), 'old passport wording leaked into the card');
+// The dedicated look must be real CSS, not just a class name.
+assert.match(schoolSource, /\.kasrestan-card::before\s*\{/);
+assert.match(schoolSource, /\.kasrestan-ribbon\s*\{/);
+assert.match(schoolSource, /\.kasrestan-card \.card-icon\s*\{/);
+assert.match(schoolSource, /body\[data-theme="night"\] \.kasrestan-card/, 'dark themes not covered');
+assert.match(schoolSource, /چهار بازی/, 'subtitle/meta do not mention four games');
+
+// ---- 2) detailed description page ---------------------------------------
+const judgesSource = read('judges.html');
+const judges = parse(judgesSource);
+const kasrestanRows = [...judges.querySelectorAll('table tbody tr')]
+  .filter(tr => tr.textContent.includes('کسرستان (مدرسه ریاضی)'));
+assert.equal(kasrestanRows.length, 1, 'games table must list کسرستان once');
+assert.match(kasrestanRows[0].textContent, /۶ جزیره/);
+assert.match(kasrestanRows[0].textContent, /محتوای ثابت/);
+
+const schoolSection = [...judges.querySelectorAll('section')]
+  .find(sec => sec.textContent.includes('🧮 مدرسه ریاضی'));
+assert.ok(schoolSection, 'math-school section is missing');
+const features = [...schoolSection.querySelectorAll('.feature-list > li')];
+assert.equal(features.length, 4, 'math-school section must list four games');
+assert.ok(features.some(li => li.textContent.includes('کسرستان')));
+assert.ok(schoolSection.querySelector('.ks-spotlight'), 'dedicated spotlight block missing');
+assert.ok(schoolSection.querySelector('.ks-chips'), 'feature chips missing');
+assert.ok(schoolSection.querySelector('a[href="math-learning.html"]'), 'link to school page missing');
+assert.ok(schoolSection.querySelector('a[href="games/math-fasl2.html"]'), 'link to game missing');
+assert.match(judgesSource, /\.ks-spotlight\s*\{/);
+
+// Stale, contradictory counts used to say ۱۳ / ۱۲ / ۱۳.
+assert.match(judgesSource, /<strong>۱۴ بازی آموزشی<\/strong>/);
+assert.match(judgesSource, /پلتفرمی کامل با ۱۴ بازی آموزشی/);
+assert.match(judgesSource, /<span class="num">۱۴<\/span><span class="label">بازی تعاملی/);
+assert.ok(!/۱۳ بازی آموزشی|۱۲ بازی آموزشی|<span class="num">۱۳<\/span>/.test(judgesSource),
+  'stale game counts remain');
+
+// ---- 3) lobby, cache, docs ----------------------------------------------
+const lobby = parse(read('index.html'));
+const schoolBento = [...lobby.querySelectorAll('a.bento-card')]
+  .find(a => a.getAttribute('href') === 'math-learning.html');
+assert.ok(schoolBento, 'lobby link to math school missing');
+assert.match(schoolBento.textContent, /چهار بازی/);
+
+const sw = read('sw.js');
+assert.match(sw, /const VERSION = 'hakim-v1\.5\.16'/);
+assert.match(sw, /'\.\/math-learning\.html'/);
+assert.match(sw, /'\.\/judges\.html'/);
+assert.match(sw, /'\.\/games\/math-fasl2\.html'/);
+
+const readme = read('README.md');
+for (const rel of ['math-fasl2.html', 'math-learning-1.html', 'math-time-mission.html', 'math-olgoha.html']) {
+  assert.ok(readme.includes('`' + rel + '`'), `README is missing ${rel}`);
+}
+assert.ok(readme.includes('math-learning.html'), 'README does not mention the school page');
+
+// No new external dependency in the changed pages.
+for (const rel of ['math-learning.html', 'judges.html', 'index.html']) {
+  const html = read(rel);
+  for (const url of html.match(/(?:src|href)="(https?:\/\/[^"]+)"/g) || []) {
+    assert.ok(/drive\.google|script\.google|hakimistan\.ir|w3\.org/.test(url),
+      `${rel}: unexpected external resource ${url}`);
+  }
+}
+
+console.log(JSON.stringify({
+  schoolCards: cards.length,
+  dedicatedCard: 'kasrestan-card',
+  cardLinksResolve: true,
+  descriptionRowsForKasrestan: kasrestanRows.length,
+  mathSchoolGamesListed: features.length,
+  spotlight: true,
+  gameCountsFixedTo: 14,
+  cacheVersion: 'hakim-v1.5.16',
+  schoolPagePrefetched: true,
+  docsUpdated: true
+}, null, 2));
