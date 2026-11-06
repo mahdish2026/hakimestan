@@ -15,6 +15,7 @@ dist/
 build/
 out/
 .cache/
+.drive-export/
 
 # فایل‌های موقت و پشتیبان
 *.tmp

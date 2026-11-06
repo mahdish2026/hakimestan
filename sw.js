@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.4.4';
+const VERSION = 'hakim-v1.5.16';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -32,6 +32,7 @@ const SHELL_ASSETS = [
   './offline.html',
   './manifest.json',
   './icon.svg',
+  './hakim-core.js',
   './css/a11y.css',
   './css/lobby.css?v=1405-07-kashi-light',
   './css/hakim-ui.css?v=1405-08-kashi-light',
@@ -45,7 +46,9 @@ const SHELL_ASSETS = [
 const PREFETCH_PAGES = [
   './videos.html',
   './judges.html',
-  './install-pwa.html'
+  './install-pwa.html',
+  './math-learning.html',
+  './games/math-fasl2.html'
 ];
 
 /* ── آزمایشگاه‌های تعاملی بازی lab2d ──────────────────────────
