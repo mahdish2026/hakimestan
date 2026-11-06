@@ -11,6 +11,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
 <title>نسبتستان | بازی نسبت، تناسب و درصد ریاضی پنجم</title>
 <meta name="description" content="نسبتستان — بازی تعاملی آموزش نسبت، تناسب و درصد ریاضی پایه پنجم (فصل سوم کتاب)؛ درسنامهٔ قدم‌به‌قدم، شکل‌های رنگی، جدول تناسب، صدخانهٔ درصد، بازار تخفیف و گواهی پایان با فهرست تیک‌دار.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💯</text></svg>">
@@ -262,7 +263,7 @@ body::before{
 .cert-list small{display:block;font-size:.78rem;font-weight:700;opacity:.8;margin-top:2px}
 .cert-list .st{white-space:nowrap;font-weight:900;color:#d97706}
 @media print{
-  body::before,.hud,.actions,.no-print{display:none!important}
+  body::before,.hud,.actions,.no-print,.topbar,.aurora{display:none!important}
   body{background:#fff}
   .app{max-width:none}
   .cert{box-shadow:none}
@@ -650,6 +651,91 @@ body{background:#04182b}
 input[type=range]{filter:drop-shadow(0 4px 5px rgba(245,158,11,.35))}
 @media (prefers-reduced-motion:reduce){.sc-bob,.sc-swing,.sc-bub,.sc-cell,.sc-spin-slow,.sc-spark,.gate-scene-card,.progress>i,.cert::after{animation:none!important}}
 
+
+/* ============================================================
+   MASTERPIECE SHELL — mobile-first architecture (final layer)
+   ============================================================ */
+:root{--accent:#0d9488;--accent2:#f59e0b;--glass:rgba(255,255,255,.9);--r-lg:28px}
+body[data-land="0"]{--accent:#e11d48;--accent2:#f59e0b}
+body[data-land="1"]{--accent:#d97706;--accent2:#0d9488}
+body[data-land="2"]{--accent:#0d9488;--accent2:#0284c7}
+body[data-land="3"]{--accent:#ea580c;--accent2:#f59e0b}
+body[data-land="4"]{--accent:#ca8a04;--accent2:#e11d48}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100dvh}
+.app{max-width:1120px;padding:max(12px,env(safe-area-inset-top)) clamp(12px,3vw,26px) calc(64px + env(safe-area-inset-bottom))}
+.topbar{position:sticky;top:calc(8px + env(safe-area-inset-top));z-index:60;display:flex;align-items:center;gap:10px;
+ margin-bottom:16px;padding:9px 12px;border-radius:20px;background:var(--glass);backdrop-filter:blur(14px);
+ border:1.5px solid rgba(255,255,255,.85);box-shadow:0 14px 30px rgba(3,25,38,.25)}
+.top-back{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border-radius:14px;
+ background:#f0fdfa;border:1.5px solid #99f6e4;color:#115e59;text-decoration:none;font-weight:900;font-size:.82rem}
+.top-brand{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+.top-mark{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;border-radius:15px;color:#fff;font-size:1.35rem;font-weight:1000;
+ background:linear-gradient(140deg,var(--accent),var(--accent2));box-shadow:0 8px 16px rgba(13,148,136,.35),inset 0 2px 0 rgba(255,255,255,.5)}
+.top-titles{min-width:0}
+.top-titles b{display:block;font-size:1rem;line-height:1.35;color:#14342e;white-space:nowrap}
+.top-titles small{display:block;font-size:.68rem;color:#5b6b66;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-pill{flex:0 0 auto;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+ background:#fff7ed;border:1.5px solid #fde68a;color:#92400e;border-radius:999px;padding:8px 12px;font-weight:900;font-size:.78rem}
+.card{border-radius:var(--r-lg)}
+.btn{min-height:52px;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn.big{min-height:56px}
+.choice{min-height:56px}
+.pick{min-height:104px}
+.num-in,.tbl input,.multi-in{min-height:52px}
+input,select,textarea{font-size:16px} /* iOS: no auto-zoom */
+/* gate hero */
+#gate{padding:clamp(20px,4vw,38px)}
+#gate .title{margin-top:2px}
+#gate .sub{max-width:56ch;margin-inline:auto}
+.hero-scene{gap:12px}
+.gate-scene-card{border-radius:22px;padding:10px 7px 8px}
+.gate-scene-card figcaption{font-size:.72rem}
+.name-row{min-height:60px;border-radius:18px}
+.name-row input{font-size:1.08rem!important}
+/* map = journey */
+.map-hero{border-radius:26px;padding:20px}
+.lands{gap:14px;position:relative}
+.land{min-height:104px}
+@media(min-width:920px){
+  .lands{grid-template-columns:1fr 1fr;gap:16px}
+  .lands .path-dot{display:none}
+  .hero-scene{grid-template-columns:repeat(5,1fr)}
+  /* play: two-column stage on desktop */
+  .play-card{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);column-gap:22px;align-items:start;
+   grid-template-areas:"banner banner" "badge badge" "title visual" "body visual" "learn visual" "bubble bubble" "answer answer" "feed feed" "acts acts"}
+  .land-banner{grid-area:banner}.page-badge{grid-area:badge}.q-title{grid-area:title}.q-body{grid-area:body}
+  #learnBox{grid-area:learn}.play-card .visual{grid-area:visual;margin-top:0}.play-card .bubble{grid-area:bubble}
+  #answerBox{grid-area:answer}#feed{grid-area:feed}.play-card .actions{grid-area:acts}
+}
+/* play: sticky HUD + sticky actions on phones */
+.hud{position:sticky;top:calc(76px + env(safe-area-inset-top));z-index:45;padding:9px 10px;border-radius:18px;
+ background:rgba(10,32,44,.72);backdrop-filter:blur(12px);box-shadow:0 14px 26px rgba(3,25,38,.3)}
+@media(max-width:760px){
+  .actions{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom));z-index:45;
+   background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border:1.5px solid #e8e0ff;
+   border-radius:18px;padding:9px;box-shadow:0 -8px 24px rgba(76,60,199,.14)}
+  .actions .btn{flex:1}
+  .page-badge{display:none}
+  .land-banner{min-height:0;padding:10px 12px}
+  .lb-scene{flex-basis:64px}.lb-scene .scene-svg{max-height:46px}
+  .lb-badge{display:none}
+  .top-titles small{display:none}
+  .player-pill{max-width:128px}
+  .visual{padding:13px 9px}
+  .tbl th,.tbl td{padding:7px 3px}
+}
+.tbl-wrap{scrollbar-width:thin}
+.tbl td.lab{position:sticky;right:0;z-index:2;box-shadow:-4px 0 10px rgba(76,60,199,.08)}
+:focus-visible{outline:3px solid rgba(245,158,11,.75);outline-offset:2px}
+@media(max-height:520px) and (orientation:landscape){
+  .hero-scene,.hero-shapes{display:none}
+  .mascot.big{width:84px;height:84px}
+  #gate .title{font-size:2rem}
+}
+.cert-grid .cert-stat{border-radius:18px}
+#cert .actions .btn{flex:1}
+
 </style>
 </head>
 <body>
@@ -659,6 +745,11 @@ input[type=range]{filter:drop-shadow(0 4px 5px rgba(245,158,11,.35))}
   <span class="o5">٪</span><span class="o6">✨</span><span class="o7">⭐</span><span class="o8">🍊</span>
 </div>
 <div class="app">
+  <header class="topbar" aria-label="نوار بالای نسبتستان">
+    <a class="top-back" href="../math-learning.html">🏫 مدرسهٔ ریاضی</a>
+    <div class="top-brand"><span class="top-mark">٪</span><span class="top-titles"><b>نسبتستان</b><small>فصل سوم ریاضی پنجم · نسبت، تناسب و درصد</small></span></div>
+    <span class="player-pill hidden" id="playerPill"></span>
+  </header>
 
   <!-- GATE -->
   <section id="gate" class="card">
@@ -1677,6 +1768,7 @@ function maxStars(){ return QSTEPS.length * 3; }
 /* ===== UI ===== */
 function show(id){
   ['gate','howto','map','play','cert'].forEach(s => $('#'+s).classList.toggle('hidden', s!==id));
+  document.body.dataset.screen=id;
   const c=$('#celeb'); if(c && id!=='play') c.classList.add('hidden');
   window.scrollTo({top:0, behavior:'smooth'});
 }
@@ -1694,6 +1786,7 @@ function renderMap(){
   const nDone = LANDS.filter((_,i)=>landDone(i)).length;
   $('#hello').textContent = 'سلام '+S.name+'، قهرمان نسبتستان!';
   $('#mapStars').textContent = toFa(S.stars);
+  const pp=$('#playerPill'); if(pp){ pp.textContent='👤 '+S.name+' · ⭐ '+toFa(S.stars); pp.classList.toggle('hidden', !S.name); }
   const rk=$('#mapRank'); if(rk){ const mx=maxStars(); rk.textContent = S.stars>=mx ? '👑 استاد نسبتستان' : (S.stars>=mx*0.6 ? '🌟 حسابگر ماهر' : (S.stars>=mx*0.3 ? '🍋 شربت‌ساز' : '🌱 تازه‌کار')); }
   const box = $('#lands'); box.innerHTML='';
   LANDS.forEach((L,i)=>{
