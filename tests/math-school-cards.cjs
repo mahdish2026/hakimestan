@@ -10,17 +10,18 @@ const root = path.resolve(__dirname, '..');
 const read = rel => fs.readFileSync(path.join(root, rel), 'utf8');
 const parse = html => new JSDOM(html, { url: 'https://hakimistan.ir/' }).window.document;
 
-// ---- 1) school page: four cards, one dedicated to کسرستان -----------------
+// ---- 1) school page: five cards, one dedicated to کسرستان -----------------
 const schoolSource = read('math-learning.html');
 const school = parse(schoolSource);
 const cards = [...school.querySelectorAll('main.games-grid > a.game-card')];
-assert.equal(cards.length, 4, 'school page must show exactly four game cards');
+assert.equal(cards.length, 5, 'school page must show exactly five game cards');
 const hrefs = cards.map(card => card.getAttribute('href'));
 assert.deepEqual(hrefs, [
   'games/math-learning-1.html',
   'games/math-time-mission.html',
   'games/math-olgoha.html',
-  'games/math-fasl2.html'
+  'games/math-fasl2.html',
+  'games/math-nesbat.html'
 ], 'card order/links changed');
 for (const href of hrefs) {
   assert.ok(fs.existsSync(path.join(root, href)), `broken card link: ${href}`);
@@ -45,7 +46,7 @@ assert.match(schoolSource, /\.kasrestan-card::before\s*\{/);
 assert.match(schoolSource, /\.kasrestan-ribbon\s*\{/);
 assert.match(schoolSource, /\.kasrestan-card \.card-icon\s*\{/);
 assert.match(schoolSource, /body\[data-theme="night"\] \.kasrestan-card/, 'dark themes not covered');
-assert.match(schoolSource, /چهار بازی/, 'subtitle/meta do not mention four games');
+assert.match(schoolSource, /پنج بازی/, 'subtitle/meta do not mention five games');
 
 // ---- 2) detailed description page ---------------------------------------
 const judgesSource = read('judges.html');
@@ -60,7 +61,7 @@ const schoolSection = [...judges.querySelectorAll('section')]
   .find(sec => sec.textContent.includes('🧮 مدرسه ریاضی'));
 assert.ok(schoolSection, 'math-school section is missing');
 const features = [...schoolSection.querySelectorAll('.feature-list > li')];
-assert.equal(features.length, 4, 'math-school section must list four games');
+assert.equal(features.length, 5, 'math-school section must list five games');
 assert.ok(features.some(li => li.textContent.includes('کسرستان')));
 assert.ok(schoolSection.querySelector('.ks-spotlight'), 'dedicated spotlight block missing');
 assert.ok(schoolSection.querySelector('.ks-chips'), 'feature chips missing');
@@ -80,10 +81,10 @@ const lobby = parse(read('index.html'));
 const schoolBento = [...lobby.querySelectorAll('a.bento-card')]
   .find(a => a.getAttribute('href') === 'math-learning.html');
 assert.ok(schoolBento, 'lobby link to math school missing');
-assert.match(schoolBento.textContent, /چهار بازی/);
+assert.match(schoolBento.textContent, /پنج بازی/);
 
 const sw = read('sw.js');
-assert.match(sw, /const VERSION = 'hakim-v1\.5\.16'/);
+assert.match(sw, /const VERSION = 'hakim-v1\.5\.17'/);
 assert.match(sw, /'\.\/math-learning\.html'/);
 assert.match(sw, /'\.\/judges\.html'/);
 assert.match(sw, /'\.\/games\/math-fasl2\.html'/);
@@ -111,7 +112,7 @@ console.log(JSON.stringify({
   mathSchoolGamesListed: features.length,
   spotlight: true,
   gameCountsFixedTo: 14,
-  cacheVersion: 'hakim-v1.5.16',
+  cacheVersion: 'hakim-v1.5.17',
   schoolPagePrefetched: true,
   docsUpdated: true
 }, null, 2));

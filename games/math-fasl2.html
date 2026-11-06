@@ -795,6 +795,17 @@
     .why-feedback.bad{background:#fff4e4;color:#8a5a18}
     @media(max-width:650px){.rep-views{grid-template-columns:1fr}.game-modal-card{padding:14px;border-radius:18px}.rep-slider{min-width:120px}}
   </style>
+
+  <style id="platform-polish">
+    /* لایهٔ پلتفرم: نوار بالا همیشه در دسترس، امن برای بریدگی صفحه، دکمهٔ مدرسه در همهٔ گوشی‌ها */
+    body{min-height:100dvh}
+    .app{padding-bottom:calc(46px + env(safe-area-inset-bottom))}
+    .topbar{position:sticky;top:calc(8px + env(safe-area-inset-top));z-index:90}
+    @media(max-width:360px){
+      .top-actions .top-link{display:inline-flex;min-height:34px;padding:6px 7px;font-size:.62rem}
+      .topbar{flex-wrap:wrap}
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#mainContent">پرش به محتوای بازی</a>
@@ -963,7 +974,10 @@
       if(!element)return;
       const core=window.Hakim;
       if(core&&typeof core.renderFace==='function'){core.renderFace(mood,element);return;}
-      element.innerHTML=mascotSvg();
+      /* چهرهٔ حکیم فقط و فقط از hakim-core.js فراخوانده می‌شود؛ داخل این فایل هیچ
+         نقاشیِ حکیم نگه نداشته‌ایم. اگر هسته در دسترس نبود، فقط یک نشانهٔ ساده می‌آید. */
+      element.textContent='🧙';
+      element.style.fontSize='42px'; element.style.display='grid'; element.style.placeItems='center';
     }
     function bootGuide(name='دوست من'){
       const core=window.Hakim;
@@ -1610,7 +1624,6 @@
     }
     function doneCount(){return state.completed.filter(Boolean).length;}
     function starTotal(){return state.bestStars.reduce((a,b)=>a+b,0);}
-    function mascotSvg(){return `<svg viewBox="0 0 100 100" role="img" aria-label="راهنمای مهربان بازی"><path d="M21 91c3-20 13-29 29-29s26 9 29 29" fill="#3e9188"/><path d="M37 62h26l6 29H31z" fill="#58b9a5"/><circle cx="50" cy="44" r="24" fill="#ffd7ad"/><path d="M27 43c1-20 12-30 25-30 14 0 23 11 23 30-6-6-11-9-17-10-10 9-20 10-31 10Z" fill="#544333"/><path d="M28 25 50 5l24 20-5 5H33z" fill="#6c5ae7"/><path d="M44 6h13l-6-6z" fill="#f6be42"/><circle cx="42" cy="46" r="2.5" fill="#30254f"/><circle cx="59" cy="46" r="2.5" fill="#30254f"/><path d="M43 55q7 7 14 0" fill="none" stroke="#a34c43" stroke-width="2.5" stroke-linecap="round"/><path d="M15 80l8-5 8 5-8 5zM75 78l7-4 7 4-7 5z" fill="#f3c04e"/><path d="M50 63v27" stroke="#d9fff3" stroke-width="2"/></svg>`;}
     function levelIconSVG(index){
       const drawings=[
         `<path d="M8 13h32M8 35h32M18 13v22M29 13v22"/><path d="M11 19h4v4h-4zM22 25h4v4h-4zM33 17h4v4h-4z" fill="currentColor" opacity=".3"/>`,
