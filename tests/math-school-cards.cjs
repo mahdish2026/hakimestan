@@ -89,10 +89,15 @@ assert.ok(schoolBento, 'lobby link to math school missing');
 assert.match(schoolBento.textContent, /پنج بازی/);
 
 const sw = read('sw.js');
-assert.match(sw, /const VERSION = 'hakim-v1\.5\.17'/);
+assert.match(sw, /const VERSION = 'hakim-v1\.5\.19'/);
 assert.match(sw, /'\.\/math-learning\.html'/);
 assert.match(sw, /'\.\/judges\.html'/);
 assert.match(sw, /'\.\/games\/math-fasl2\.html'/);
+assert.match(sw, /'\.\/js\/hakim-read-aloud\.js'/);
+for (const rel of ['games/math-learning-1.html', 'games/math-olgoha.html', 'games/math-nesbat.html']) {
+  assert.ok(read(rel).includes('../js/hakim-read-aloud.js'), `${rel}: local read-aloud helper missing`);
+}
+assert.ok(read('js/hakim-read-aloud.js').includes('SpeechSynthesisUtterance'), 'read-aloud speech fallback missing');
 
 const readme = read('README.md');
 for (const rel of ['math-fasl2.html', 'math-learning-1.html', 'math-time-mission.html', 'math-olgoha.html']) {
@@ -117,7 +122,7 @@ console.log(JSON.stringify({
   mathSchoolGamesListed: features.length,
   spotlight: true,
   gameCountsFixedTo: 15,
-  cacheVersion: 'hakim-v1.5.17',
+  cacheVersion: 'hakim-v1.5.19',
   schoolPagePrefetched: true,
   docsUpdated: true
 }, null, 2));
