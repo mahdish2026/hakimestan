@@ -95,8 +95,8 @@ const pickTheme = (page, id) => page.evaluate((id) => {
 const wait = (page, ms) => page.evaluate((ms) => new Promise((r) => setTimeout(r, ms)), ms);
 const show = (s) => `${s.theme}: ${s.light ? 'hk-hc-light' : '—'} / ${s.color}`;
 
-const LOBBY_LIGHT = ['sunny', 'sky', 'candy', 'shad', 'modern'];
-const LOBBY_DARK = ['night', 'ocean', 'forest'];
+const LOBBY_LIGHT = ['kashi', 'sunny'];
+const LOBBY_DARK = ['ocean'];
 
 /* ══════ ۱) تم روشن مدرسهٔ ریاضی + کنتراست ══════ */
 console.log('\n۱) مدرسهٔ ریاضی، تم «مدرن» (روشن) + کنتراست');
@@ -113,7 +113,7 @@ console.log('\n۱) مدرسهٔ ریاضی، تم «مدرن» (روشن) + کن
 /* ══════ ۲) تم تاریک لابی + کنتراست ══════ */
 console.log('\n۲) لابی، تم «شب عرفانی» (تاریک) + کنتراست');
 {
-  const { page, ctx } = await open('/index.html', { theme: 'night' });
+  const { page, ctx } = await open('/index.html', { theme: 'ocean' });
   await clickContrast(page); await nextFrame(page);
   const s = await state(page);
   ok('hk-hc-light نیست و متن بدنه سفید است', s.hc && !s.light && s.color === WHITE, show(s));
@@ -124,7 +124,7 @@ console.log('\n۲) لابی، تم «شب عرفانی» (تاریک) + کنتر
 console.log('\n۳) تعویض تم با کنتراست روشن (سنجش در فریم بعد، بدون صبر برای ترنزیشن)');
 for (const [path, seq, light] of [
   ['/math-learning.html', ['modern', 'night', 'sunny', 'ocean', 'sky', 'forest', 'modern'], { modern: 1, sunny: 1, sky: 1 }],
-  ['/index.html', ['night', 'sunny', 'ocean', 'modern', 'forest', 'sky', 'night'], { sunny: 1, modern: 1, sky: 1 }]
+  ['/index.html', ['ocean', 'sunny', 'kashi', 'ocean'], { sunny: 1, kashi: 1 }]
 ]) {
   const { page, ctx } = await open(path, { theme: seq[0] });
   await clickContrast(page); await nextFrame(page);
@@ -158,7 +158,7 @@ for (const t of [...LOBBY_LIGHT, ...LOBBY_DARK]) {
 console.log('\n۵) کنتراست ذخیره‌شده + بارگذاری مجدد');
 for (const [path, t, want] of [
   ['/math-learning.html', 'modern', true], ['/math-learning.html', 'ocean', false], ['/math-learning.html', 'night', false],
-  ['/math-learning.html', 'sunny', true], ['/index.html', 'sunny', true], ['/index.html', 'modern', true], ['/index.html', 'night', false]
+  ['/math-learning.html', 'sunny', true], ['/index.html', 'sunny', true], ['/index.html', 'kashi', true], ['/index.html', 'ocean', false]
 ]) {
   const { page, ctx } = await open(path, { theme: t, contrast: true });
   const s = await state(page);

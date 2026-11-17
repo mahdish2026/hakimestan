@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.17';
+const VERSION = 'hakim-v1.5.19';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -39,7 +39,8 @@ const SHELL_ASSETS = [
   './js/hakim-a11y.js',
   './js/hakim-security.js',
   './js/hakim-theme.js',
-  './js/hakim-sw-register.js'
+  './js/hakim-sw-register.js',
+  './js/hakim-read-aloud.js'
 ];
 
 /* ── صفحات کلیدی که پیش‌بارگذاری می‌شوند (سبک‌ها) ──────────── */

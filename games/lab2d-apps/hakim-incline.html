@@ -462,6 +462,7 @@ body {
   color: #b93a58 !important;
 }
 
+.tb-btn.hk-read-aloud{width:auto;height:auto;min-height:2.5em;max-width:8em;flex:0 1 auto;font-size:.68em;padding:.25em .5em;white-space:normal;line-height:1.15}.tb-btn.hk-read-aloud[hidden]{display:none}.tb-btn.hk-read-aloud:focus-visible{outline:3px solid #4338ca;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -561,6 +562,7 @@ body {
       <span id="level-chip">مرحله ۱</span>
       <div id="star-tray"></div>
       <button class="tb-btn" id="btn-sound" title="صدا">🔊</button>
+      <button class="tb-btn hk-read-aloud" data-hk-read-aloud="#bubble-text" data-hk-read-aloud-label="شنیدن پیام" aria-controls="bubble-text" aria-pressed="false" aria-label="شنیدن پیام حکیم با صدای مرد فارسی دستگاه" hidden>🔊 شنیدن پیام حکیم</button>
     </header>
     <div id="stage-wrap">
       <div id="stage">
@@ -2044,6 +2046,7 @@ function openReport(){
 })();
 </script>
 <!-- hakim-core:start -->
+<script src="../../js/hakim-read-aloud.js" defer></script>
 <script src="../../js/hakim-security.js" defer></script>
 <script src="../../js/hakim-a11y.js" defer></script>
 <script src="../../js/hakim-sw-register.js" defer></script>

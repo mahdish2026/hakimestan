@@ -150,7 +150,10 @@ try {
   }
 
   // With a Persian voice available, the same controls become visible and read both the question and the drawing step.
-  persianVoices.push({ lang: 'fa-IR', name: 'Persian test voice' });
+  persianVoices.push({ lang: 'fa-IR', name: 'Persian female test voice' });
+  speechSynthesis.dispatch('voiceschanged');
+  assert.ok($$('[data-read-aloud]').every(button => button.hidden), 'a feminine Persian system voice must not be selected for Hakim');
+  persianVoices.push({ lang: 'fa-IR', name: 'Persian male test voice' });
   speechSynthesis.dispatch('voiceschanged');
   click($('.level-card[data-level="2"]'));
   assert.ok(!$('#listenPrediction').hidden, 'read-aloud controls should appear when a Persian voice exists');
@@ -160,7 +163,15 @@ try {
   assert.equal(spoken.at(-1).voice.lang, 'fa-IR', 'speech must use the Persian voice');
   click($('[data-speak-step]'));
   assert.match(spoken.at(-1).text, /یک مستطیل کامل/, 'the current drawing step should be read aloud');
-  assert.equal(speechCancellations, 2, 'each new speech request should replace the previous one');
+  $('.lesson-reference').open = true;
+  assert.ok(!$('#listenLessonReference').hidden, 'the island rules should offer Persian read-aloud');
+  click($('#listenLessonReference'));
+  assert.ok(spoken.at(-1).text.includes(levels[2].story), 'the lesson rule and explanation should be read aloud');
+  click($('#toPractice'));
+  assert.ok(!$('#listenTaskPrompt').hidden, 'practice questions should offer Persian read-aloud');
+  click($('#listenTaskPrompt'));
+  assert.equal(spoken.at(-1).text, levels[2].practice[0].prompt, 'the current practice question should be read aloud');
+  assert.equal(speechCancellations, 4, 'each new speech request should replace the previous one');
 
   assert.equal(errors.length, 0, `unexpected jsdom errors: ${errors.join(' | ')}`);
   console.log(JSON.stringify({ islands: levels.length, activities: activityCount, predictions: levels.length, noPersianVoiceFallback: 'hidden controls', persianVoiceReadAloud: true, bookPageRefsRemoved: true, linkedViews: 3, reviewPrompts: 3, whyPanels: truthWhy.length, jsdomErrors: errors.length }, null, 2));
