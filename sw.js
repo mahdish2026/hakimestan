@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.19';
+const VERSION = 'hakim-v1.5.20';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -30,6 +30,7 @@ const SHELL_ASSETS = [
   './',
   './index.html',
   './offline.html',
+  './assets/fonts/vazirmatn-100-900.woff2',
   './manifest.json',
   './icon.svg',
   './hakim-core.js',

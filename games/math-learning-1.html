@@ -280,7 +280,7 @@ a.btn{ display:inline-flex; align-items:center; justify-content:center; text-dec
         <a href="../math-learning.html" class="btn ghost school-link">🏫 مدرسه ریاضی</a>
       </div>
       <div class="credit">
-        <div>طراحی و توسعه‌دهنده: <b>مهدی شریفیان</b></div>
+        <div>طراح و توسعه‌دهنده: <b>مهدی شریفیان</b></div>
         <div>آموزگار پایه‌ی پنجم</div>
       </div>
     </div>
@@ -396,10 +396,10 @@ function optionsFor(q){
 }
 
 const LEVELS = [
-  { name:'شروع ماجرا',    icon:'🌱', desc:'دو رقمی بر یک رقمی، بدون باقیمانده' },
-  { name:'با باقیمانده',  icon:'🎯', desc:'یه باقیمانده هم باقی می‌مونه!' },
+  { name:'شروع ماجرا',    icon:'🌱', desc:'دورقمی بر یک‌رقمی، بدون باقی‌مانده' },
+  { name:'با باقی‌مانده',  icon:'🎯', desc:'یه باقی‌مانده هم باقی می‌مونه!' },
   { name:'رمزِ صفر',       icon:'🌀', desc:'وقتی صفر وسط جواب می‌آید' },
-  { name:'مقسوم‌علیه بزرگ',icon:'🚀', desc:'تقسیم بر عدد دو رقمی' },
+  { name:'مقسوم‌علیه بزرگ',icon:'🚀', desc:'تقسیم بر عدد دورقمی' },
   { name:'استاد تقسیم',   icon:'🏆', desc:'چند رقمی بر چند رقمی؛ ویژه‌ی قهرمان‌ها!' },
 ];
 
@@ -784,9 +784,9 @@ function bringMsg(st){
 function finalMsg(S, stars){
   let t;
   if(S.remainder === 0){
-    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span><br>باقیمانده ${N(0)} — تقسیم «بر جا» شد! ⭐`;
+    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span><br>باقی‌مانده ${N(0)} — تقسیم «بر جا» شد! ⭐`;
   } else {
-    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span> و باقیمانده ${N(S.remainder)} 🌟`;
+    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span> و باقی‌مانده ${N(S.remainder)} 🌟`;
   }
   if(G.mode === 'game'){
     t += `<br><span class="check">✅ بررسی: <span class="m">${N(S.quotient)} × ${N(S.divi)} + ${N(S.remainder)} = ${N(S.divStr)}</span></span>`;
@@ -984,7 +984,7 @@ function buildCertHTML(){
       <p class="cert-note">به پاسِ پشت‌کار و دقتِ او در آموختنِ «تقسیم چکشی»،<br>مرحله به مرحله 💚</p>
       <ul class="cert-list">${rows}</ul>
       <div class="cert-legend">✅ = بدونِ هیچ اشتباهی • ✏️ = با کمی تلاش و تمرین • 🔒 = هنوز بازی نشده</div>
-      <div class="cert-total">مجموع امتیازها: <b>${toFa(total)} از ۷۵</b> ⭐${champion ? '' : ' — ادامه بده تا قهرمان شوی! 🚀'}</div>
+      <div class="cert-total">مجموع امتیاز‌ها: <b>${toFa(total)} از ۷۵</b> ⭐${champion ? '' : ' — ادامه بده تا قهرمان شوی! 🚀'}</div>
       <div class="cert-seal"><span class="seal-ic" data-hakim-seal></span><span class="seal-tx">گواهیِ رسمی<br>تقسیم چکشی</span></div>
       <div class="cert-foot">
         ${certDate ? `<div class="cert-date">📅 ${certDate}</div>` : ''}
@@ -1006,7 +1006,7 @@ function showCertificate(){
 }
 
 // ارسال نتایج به پنل معلم — همان قالب استاندارد «session» که بقیهٔ بازی‌ها
-// می‌فرستند (action + فیلدهای Sessions) تا بدون تغییر در Apps Script ثبت شود.
+// می‌فرستند (action + فیلد‌های Sessions) تا بدون تغییر در Apps Script ثبت شود.
 function sendResultsToPanel(gameId, score, stars, level, duration, details = {}) {
   try {
     const ua = navigator.userAgent;

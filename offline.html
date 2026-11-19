@@ -9,103 +9,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0a1f">
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="یک مکث کوتاه در مسیر دانایی؛ حکیم در حالت آفلاین هم همراه شماست.">
 <title>آفلاین — حکیمستان</title>
+<script>
+(function () {
+  var controller = navigator.serviceWorker && navigator.serviceWorker.controller;
+  if (controller) {
+    var base = document.createElement('base');
+    base.href = new URL('./', controller.scriptURL).href;
+    document.head.appendChild(base);
+  }
+})();
+</script>
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="css/a11y.css">
 <style>
-:root{
-  --bg:#0d0a1f; --bg2:#171033; --violet:#8b5cf6; --gold:#f5c76a;
-  --teal:#5eead4; --ink:#f1ecff; --muted:#b6a9db;
-  --font:'Vazirmatn','Vazir',Tahoma,'Segoe UI',Arial,sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  font-family:var(--font); color:var(--ink); min-height:100vh;
-  display:grid; place-items:center; padding:28px 18px; line-height:1.9;
-  background:
-    radial-gradient(900px 600px at 80% -10%, rgba(139,92,246,.25), transparent 60%),
-    radial-gradient(700px 500px at 5% 110%, rgba(94,234,212,.12), transparent 55%),
-    linear-gradient(180deg,#0d0a1f,#151033 50%,#0d0a1f);
-}
-.card{
-  max-width:620px; width:100%; text-align:center;
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.16);
-  border-radius:26px; padding:38px 26px; -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  box-shadow:0 24px 60px -26px rgba(0,0,0,.75);
-}
-.badge{
-  display:inline-flex; align-items:center; gap:8px; font-size:.78rem; font-weight:700;
-  padding:6px 14px; border-radius:999px; margin-bottom:20px;
-  background:rgba(245,199,106,.14); color:var(--gold);
-  border:1px solid rgba(245,199,106,.35);
-}
-h1{font-size:1.9rem; margin:0 0 12px; font-weight:900; letter-spacing:-.4px}
-p{color:var(--muted); margin:0 0 22px; font-size:.98rem}
-.art{width:150px; height:150px; margin:0 auto 18px; display:block}
-ul{text-align:right; color:var(--muted); font-size:.9rem; padding-inline-start:20px; margin:0 0 26px}
-li{margin-bottom:7px}
-.row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
-.btn{
-  display:inline-flex; align-items:center; gap:9px; justify-content:center;
-  padding:13px 24px; border-radius:14px; font-weight:800; font-size:.92rem;
-  text-decoration:none; border:2px solid transparent; cursor:pointer;
-  font-family:inherit; transition:transform .2s ease, box-shadow .2s ease;
-}
-.btn-primary{background:linear-gradient(145deg,#f5c76a,#e9a94d); color:#1b1035; border-color:#ffd98a}
-.btn-ghost{background:rgba(255,255,255,.07); color:var(--ink); border-color:rgba(255,255,255,.24)}
-.btn:hover{transform:translateY(-2px)}
-.btn:active{transform:translateY(0)}
-.status{margin-top:24px; font-size:.8rem; color:var(--muted)}
-.dot{display:inline-block; width:9px; height:9px; border-radius:50%; background:#e74c3c; margin-inline-end:7px}
-.dot.on{background:#2ecc71}
-@media(max-width:520px){h1{font-size:1.5rem}.card{padding:28px 20px}}
-</style>
-<!-- hakim-meta:start -->
-<meta name="description" content="اتصال اینترنت قطع است. بخش زیادی از حکیمستان آفلاین کار می‌کند — می‌توانید به کار خود ادامه دهید.">
-<meta name="robots" content="noindex, follow">
-<!-- hakim-meta:end -->
-</head>
-<body>
+@font-face{font-family:Vazirmatn;src:url('assets/fonts/vazirmatn-100-900.woff2') format('woff2');font-weight:100 900;font-display:swap}
+:root{color-scheme:dark;--ink:#eef4ff;--muted:#b4c3d8;--gold:#f4cd84;--teal:#79ddcf}
+*{box-sizing:border-box}html,body{margin:0}body{font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);line-height:1.95;min-height:100vh;min-height:100svh;background:radial-gradient(ellipse at 85% 15%,#143a4b88,transparent 50%),radial-gradient(ellipse at 5% 85%,#39275c77,transparent 50%),#080f21;padding:32px 24px;display:flex;flex-direction:column;align-items:center}
+body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:radial-gradient(#a4cbd8 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(#000,transparent)}
+a{color:inherit}.brand{position:relative;display:flex;align-items:center;gap:12px;text-decoration:none;align-self:flex-start}.brand-mark{display:grid;place-items:center;width:44px;height:44px;border:1px solid #f4cd8455;border-radius:14px;color:var(--gold);font-size:26px;background:#f4cd840b}.brand b{display:block;font-size:19px}.brand small{display:block;color:var(--muted);font-size:11px}
+main{position:relative;width:min(100%,1040px);margin:auto;padding:44px 0}.card{display:grid;grid-template-columns:1.15fr 1fr;border:1px solid #9ebada30;border-radius:32px;background:linear-gradient(125deg,#14263ce8,#10182ce8);box-shadow:0 28px 90px #0005;overflow:hidden}.copy{padding:52px 44px}.badge{display:inline-flex;align-items:center;gap:9px;color:var(--gold);border:1px solid #f4cd8438;background:#f4cd840b;border-radius:30px;padding:5px 14px;font-size:12px;font-weight:600}.badge svg{width:18px;height:18px}h1{font-size:clamp(28px,3.4vw,40px);line-height:1.65;letter-spacing:-1px;margin:22px 0 16px;font-weight:850}h1 span{color:var(--gold)}.intro{color:var(--muted);font-size:14px;margin:0 0 28px}.actions{display:flex;flex-wrap:wrap;gap:12px}.btn{font:700 13px Vazirmatn,Tahoma,sans-serif;min-height:50px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:12px 20px;border-radius:13px;text-decoration:none;cursor:pointer;border:1px solid #93adc83d;transition:transform .2s,background .2s;background:#ffffff06;color:var(--ink)}.btn.primary{background:linear-gradient(120deg,#f7d997,#eab65e);border-color:#f4cd84;color:#1a2335}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px #0003}.btn:disabled{opacity:.65;cursor:wait}.btn svg{width:18px;height:18px}a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:5px}.status{display:flex;align-items:baseline;gap:8px;font-size:11px;color:var(--muted);margin:22px 0 0;min-height:44px}.dot{flex:none;width:7px;height:7px;border-radius:50%;background:var(--gold)}.dot.on{background:var(--teal)}
+.scene{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:34px 26px;background:radial-gradient(ellipse at 50% 40%,#4a547c44,transparent 65%);border-inline-start:1px solid #9ebada18}.portrait{position:relative;width:min(100%,300px);aspect-ratio:1;display:grid;place-items:center}.portrait:before,.portrait:after{content:'';position:absolute;border:1px solid #f4cd8430;border-radius:50%;inset:0}.portrait:after{inset:18px;border-style:dashed;border-color:#79ddcf25}.portrait svg{width:85%;height:85%;position:relative;filter:drop-shadow(0 14px 18px #0005);animation:bob 6s ease-in-out infinite}.spark{position:absolute;color:var(--gold);font-size:25px}.spark.one{top:8%;right:10%}.spark.two{bottom:18%;left:4%;font-size:18px}.quote{position:relative;margin:24px 0 0;border:1px solid #f4cd842b;border-radius:16px;background:#0c1729b0;padding:14px 23px;text-align:center;font-size:14px;color:#e6dfce}.quote small{display:block;font-size:10px;letter-spacing:.2px;color:var(--teal);margin-top:5px}.tips{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}.tip{display:flex;gap:14px;padding:18px 22px;border:1px solid #9ebada20;border-radius:18px;background:#12223866}.tip-icon{color:var(--teal);font-size:22px}.tip h2{font-size:13px;margin:0 0 3px}.tip p{font-size:11px;color:var(--muted);margin:0}footer{position:relative;font-size:11px;color:var(--muted);text-align:center}footer span{color:var(--gold);padding:0 8px}@keyframes bob{50%{transform:translateY(-7px)}}
+@media(min-width:1100px){.brand{margin-inline-start:calc((100% - 1040px)/2)}}
+@media(max-width:720px){body{padding:20px 16px}.brand small{font-size:10px}main{padding:26px 0}.card{grid-template-columns:1fr;border-radius:24px}.scene{grid-row:1;border-inline-start:0;border-bottom:1px solid #9ebada18;padding:24px 16px 20px}.portrait{width:200px}.quote{margin-top:12px;padding:8px 20px;font-size:12px}.copy{padding:26px 24px;text-align:center}h1{margin-top:16px;font-size:29px}.intro{font-size:13px}.actions{justify-content:center}.status{justify-content:center;min-height:0}.tips{gap:10px}.tip{padding:14px;gap:9px}.tip-icon{font-size:18px}}
+@media(max-width:400px){.tips{grid-template-columns:1fr}.btn{flex:1;padding:12px 10px;font-size:12px}.copy{padding:24px 18px}h1{font-size:26px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style></head><body>
 <a class="skip-link" href="#offline-main">پرش به محتوای اصلی</a>
-
-<main id="offline-main" class="card" tabindex="-1">
-  <div class="badge"><span aria-hidden="true">📴</span> حالت آفلاین</div>
-
-  <svg class="art" viewBox="0 0 200 200" role="img" aria-label="تصویر حکیم در حالت آفلاین">
-    <circle cx="100" cy="100" r="82" fill="rgba(139,92,246,.18)" stroke="rgba(245,199,106,.4)" stroke-width="2"/>
-    <path d="M52 96 L100 40 L148 96 Z" fill="#5b4a9e" stroke="#7a68c9" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="44" y="94" width="112" height="12" rx="6" fill="#e9b44c"/>
-    <circle cx="100" cy="30" r="7" fill="#f7d88a"/>
-    <ellipse cx="100" cy="126" rx="46" ry="42" fill="#f3c98b"/>
-    <path d="M70 112 q10 -10 20 0" stroke="#2a1a0a" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M110 112 q10 -10 20 0" stroke="#2a1a0a" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M86 146 q14 12 28 0" stroke="#7a3b2e" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <path d="M54 152 q46 46 92 0 q-14 34 -46 34 q-32 0 -46 -34 Z" fill="#fff7ef" stroke="#e7dcc6" stroke-width="2"/>
-    <path d="M32 66 l10 -22 10 22 z" fill="rgba(94,234,212,.5)"/>
-    <path d="M148 82 l8 -18 8 18 z" fill="rgba(245,199,106,.5)"/>
-  </svg>
-
-  <h1>اتصال اینترنت قطع است</h1>
-  <p>نگران نباشید — حکیم همراه شماست. بخش‌هایی از حکیمستان که قبلاً باز کرده‌اید، بدون اینترنت هم کار می‌کنند.</p>
-
-  <ul>
-    <li>برای دیدن محتوای ذخیره‌شده، دکمهٔ «تلاش دوباره» را بزنید.</li>
-    <li>بازی‌ها و آزمون‌ساز آفلاین همیشه روی دستگاه شما کار می‌کنند.</li>
-    <li>پس از برقراری اتصال، همه‌چیز خودکار همگام می‌شود.</li>
-  </ul>
-
-  <div class="row">
-    <a class="btn btn-primary" href="./index.html">🏠 بازگشت به لابی</a>
-    <button class="btn btn-ghost" type="button" id="retry">🔄 تلاش دوباره</button>
-  </div>
-
-  <p class="status"><span class="dot" id="dot"></span><span id="statusText">وضعیت اتصال در حال بررسی…</span></p>
+<a class="brand" href="index.html" aria-label="حکیمستان، صفحهٔ اصلی"><span class="brand-mark" aria-hidden="true">✦</span><span><b>حکیمستان</b><small>دیار حکیم · سرزمین یادگیری</small></span></a>
+<main id="offline-main" tabindex="-1">
+<section class="card" aria-labelledby="offline-title">
+<div class="copy">
+<div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3 3 18 18M2 8a17 17 0 0 1 4-2m4-1a17 17 0 0 1 12 3M5 12a12 12 0 0 1 5-2m5 1 4 1M8 16a6 6 0 0 1 8 0"/><circle cx="12" cy="20" r="1"/></svg> حالت آفلاین</div>
+<h1 id="offline-title">یک مکث کوتاه،<br><span>نه پایان ماجرا!</span></h1>
+<p class="intro">فعلاً به این صفحه دسترسی نداریم؛ ممکن است اینترنت قطع باشد یا سایت پاسخ ندهد. نگران نباش، حکیم همین‌جاست! می‌توانی به لابی برگردی و بخش‌های ذخیره‌شده را امتحان کنی.</p>
+<div class="actions"><button class="btn primary" type="button" id="retry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M19 11a7 7 0 0 0-12-5l-3 3m16 6-3 3A7 7 0 0 1 5 13"/></svg><span>تلاش دوباره</span></button><a class="btn" href="index.html">بازگشت به لابی <span aria-hidden="true">←</span></a></div>
+<p class="status" role="status" aria-live="polite"><span class="dot" id="dot" aria-hidden="true"></span><span id="statusText">برای ادامه، اتصال اینترنت را بررسی کن.</span></p>
+</div>
+<div class="scene"><div class="portrait"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="حکیم، راهنمای مهربان حکیمستان"><defs><radialGradient id="hkSkin1" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#fadfae"/><stop offset="65%" stop-color="#f3c98b"/><stop offset="100%" stop-color="#e0a86a"/></radialGradient><linearGradient id="hkBeard1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#fff7ef"/></linearGradient><linearGradient id="hkHat1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7a68c9"/><stop offset="100%" stop-color="#5b4a9e"/></linearGradient><linearGradient id="hkRobe1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#41306e"/><stop offset="100%" stop-color="#2a1f52"/></linearGradient><radialGradient id="hkGold1" cx="35%" cy="30%" r="75%"><stop offset="0%" stop-color="#f9e3a4"/><stop offset="55%" stop-color="#e9b44c"/><stop offset="100%" stop-color="#c9922f"/></radialGradient></defs><g class="hk-body"><ellipse cx="100" cy="193" rx="66" ry="9" fill="rgba(0,0,0,.28)"/><path d="M 32 200 L 36 150 Q 40 138 70 134 L 130 134 Q 160 138 164 150 L 168 200 Z" fill="url(#hkRobe1)"/><path d="M 42 156 Q 100 145 158 156" stroke="#2a1f52" stroke-width="3" fill="none" opacity=".55"/><rect x="159" y="50" width="9" height="122" rx="4.5" fill="#8a5a2b"/><rect x="160.5" y="50" width="2.5" height="122" rx="1.2" fill="#6b4219" opacity=".5"/><rect x="162" y="52" width="1.6" height="118" rx="0.8" fill="#c99a5e" opacity=".6"/><circle cx="163.5" cy="46" r="9.5" fill="url(#hkGold1)"/><circle cx="161" cy="43.5" r="3" fill="#fff" opacity=".8"/><path class="hk-spark" d="M 146 35.5 Q 148.7 37.3 150.5 40 Q 148.7 42.7 146 44.5 Q 143.3 42.7 141.5 40 Q 143.3 37.3 146 35.5 Z" fill="#f7d88a"/><path class="hk-spark" d="M 180 46.5 Q 182.1 47.9 183.5 50 Q 182.1 52.1 180 53.5 Q 177.9 52.1 176.5 50 Q 177.9 47.9 180 46.5 Z" fill="#f7d88a"/><path class="hk-spark" d="M 176 27 Q 177.8 28.2 179 30 Q 177.8 31.8 176 33 Q 174.2 31.8 173 30 Q 174.2 28.2 176 27 Z" fill="#f7d88a"/><ellipse cx="66" cy="93" rx="7.5" ry="10.5" fill="#e0a86a"/><ellipse cx="66" cy="94" rx="3" ry="5" fill="#c98a4e" opacity=".55"/><ellipse cx="134" cy="93" rx="7.5" ry="10.5" fill="#e0a86a"/><ellipse cx="134" cy="94" rx="3" ry="5" fill="#c98a4e" opacity=".55"/><ellipse cx="100" cy="92" rx="35" ry="37" fill="url(#hkSkin1)"/><path d="M 76 120 Q 100 130 124 120" stroke="#c98a4e" stroke-width="1.5" fill="none" opacity=".3"/><ellipse cx="100" cy="105" rx="7.5" ry="9" fill="#e0a86a"/><path d="M 96 112 Q 100 115 104 112" stroke="#c98a4e" stroke-width="1.6" fill="none" opacity=".7"/><ellipse cx="102" cy="101" rx="2.4" ry="2.8" fill="#fff" opacity=".45"/><path d="M 66 108 C 62 138 74 162 100 168 C 126 162 138 138 134 108 C 126 120 114 124 100 124 C 86 124 74 120 66 108 Z" fill="url(#hkBeard1)"/><path d="M 84 138 Q 100 148 116 138" stroke="#e7dcc6" stroke-width="1.6" fill="none"/><path d="M 88 150 Q 100 158 112 150" stroke="#e7dcc6" stroke-width="1.4" fill="none" opacity=".7"/><path d="M 76 124 Q 86 130 94 126" stroke="#e7dcc6" stroke-width="1.4" fill="none" opacity=".6"/><path d="M 106 126 Q 114 130 124 124" stroke="#e7dcc6" stroke-width="1.4" fill="none" opacity=".6"/><path d="M 74 120 Q 88 110 100 118 Q 112 110 126 120 Q 113 130 100 124 Q 87 130 74 120 Z" fill="#fff7ef" stroke="#e7dcc6" stroke-width="1"/><circle cx="79" cy="104" r="6.5" fill="#f2a68c" opacity=".55"/><circle cx="121" cy="104" r="6.5" fill="#f2a68c" opacity=".55"/><path d="M 92 127 Q 100 140 108 127 Q 100 133 92 127 Z" fill="#7a3b2e"/><ellipse cx="100" cy="134" rx="3.5" ry="2.6" fill="#e98a8a"/><g><path d="M 81 96 Q 88 88 95 96" stroke="#2a1a0a" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M 105 96 Q 112 88 119 96" stroke="#2a1a0a" stroke-width="3" stroke-linecap="round" fill="none"/></g><path d="M 75 76 Q 87 70 101 75" stroke="#fff7ef" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M 99 75 Q 113 70 125 76" stroke="#fff7ef" stroke-width="6" stroke-linecap="round" fill="none"/><g class="hk-hat"><ellipse cx="100" cy="57" rx="54" ry="14" fill="#46377f"/><ellipse cx="100" cy="55" rx="50" ry="11" fill="#7a68c9" opacity=".25"/><path d="M 54 56 C 60 26 92 13 128 12 C 138 11.6 146 18 147 56 C 126 63 74 63 54 56 Z" fill="url(#hkHat1)"/><path d="M 72 45 C 82 27 96 19 116 16" stroke="#7a68c9" stroke-width="2.5" fill="none" opacity=".4"/><path d="M 58 58 Q 100 48 146 58" stroke="#e9b44c" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M 62 59 Q 100 51 142 59" stroke="#c9922f" stroke-width="1.6" fill="none" opacity=".5"/><circle cx="128" cy="12" r="5" fill="url(#hkGold1)"/><circle cx="126.5" cy="10.5" r="1.6" fill="#fff" opacity=".85"/><path class="hk-spark" d="M 97 27.5 Q 99.7 29.3 101.5 32 Q 99.7 34.7 97 36.5 Q 94.3 34.7 92.5 32 Q 94.3 29.3 97 27.5 Z" fill="#f7d88a"/></g></g></svg><span class="spark one" aria-hidden="true">✦</span><span class="spark two" aria-hidden="true">✧</span></div><blockquote class="quote">«راه دانایی همیشه باز است!»<small>حکیم، همراه تو در این سفر</small></blockquote></div>
+</section>
+<section class="tips" aria-label="راهنمای حالت آفلاین"><div class="tip"><span class="tip-icon" aria-hidden="true">▤</span><div><h2>یادگیری هنوز ادامه دارد</h2><p>بخش‌هایی که روی دستگاه ذخیره شده‌اند، ممکن است بدون اینترنت هم در دسترس باشند.</p></div></div><div class="tip"><span class="tip-icon" aria-hidden="true">↻</span><div><h2>یک بار دیگر امتحان کن</h2><p>وای‌فای یا اینترنت همراه را بررسی کن و سپس «تلاش دوباره» را بزن.</p></div></div></section>
 </main>
-
+<footer>هر درس، یک ماجرا <span aria-hidden="true">✦</span> هر بازی، یک گنج</footer>
 <script src="js/hakim-security.js"></script>
 <script src="js/hakim-a11y.js"></script>
 <script>
@@ -114,36 +63,29 @@ li{margin-bottom:7px}
   var dot = document.getElementById('dot');
   var text = document.getElementById('statusText');
   var retry = document.getElementById('retry');
-
   function paint() {
-    var on = navigator.onLine;
-    dot.classList.toggle('on', on);
-    text.textContent = on
-      ? 'اتصال برقرار است — می‌توانید دوباره تلاش کنید.'
-      : 'همچنان آفلاین هستید. محتوای ذخیره‌شده در دسترس است.';
+    dot.classList.toggle('on', navigator.onLine);
+    text.textContent = navigator.onLine
+      ? 'شبکه در دسترس است؛ برای بررسی دسترسی به سایت دوباره تلاش کن.'
+      : 'اینترنت قطع است؛ فعلاً بخش‌های ذخیره‌شده را امتحان کن.';
   }
-
   retry.addEventListener('click', function () {
     retry.disabled = true;
-    retry.textContent = '⏳ در حال تلاش…';
-    if (navigator.onLine) {
-      location.href = './index.html';
+    retry.querySelector('span').textContent = 'در حال تلاش…';
+    // A fallback keeps the requested URL: retry that page, not the lobby.
+    if (location.pathname === new URL('offline.html', document.baseURI).pathname) {
+      location.assign(new URL('index.html', document.baseURI).href);
     } else {
-      fetch('./manifest.json', { cache: 'no-store' }).then(function () {
-        location.href = './index.html';
-      }).catch(function () {
-        paint();
-        retry.disabled = false;
-        retry.textContent = '🔄 تلاش دوباره';
-        if (window.HakimA11y) window.HakimA11y.announce('اتصال برقرار نشد. لطفاً اتصال اینترنت را بررسی کنید.', true);
-      });
+      location.reload();
     }
   });
-
+  window.addEventListener('pageshow', function () {
+    retry.disabled = false;
+    retry.querySelector('span').textContent = 'تلاش دوباره';
+    paint();
+  });
   window.addEventListener('online', paint);
   window.addEventListener('offline', paint);
   paint();
 })();
-</script>
-</body>
-</html>
+</script></body></html>
