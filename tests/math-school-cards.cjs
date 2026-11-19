@@ -31,8 +31,15 @@ const ks = cards[3];
 assert.ok(ks.classList.contains('kasrestan-card'), 'کسرستان card has no dedicated class');
 assert.equal(ks.getAttribute('data-game'), 'math-fasl2');
 assert.match(ks.getAttribute('aria-label') || '', /کسرستان/);
-assert.ok(ks.querySelector('.kasrestan-ribbon'), 'dedicated ribbon missing');
-assert.ok(ks.querySelector('.kasrestan-note'), 'dedicated note missing');
+// All games share the same content hierarchy, without privileged extra notes.
+for (const card of cards) {
+  assert.deepEqual([...card.children].map(el => el.className), ['card-top', 'card-tags', 'card-cta']);
+  assert.equal(card.querySelectorAll('.card-desc').length, 1);
+  assert.equal(card.querySelectorAll('p').length, 1, 'each card has one concise description');
+  assert.equal(card.querySelector('.card-name').children.length, 0, 'titles should not have extra badges');
+  const description = card.querySelector('.card-desc').textContent.trim();
+  assert.ok(description.length >= 100 && description.length <= 200, 'keep descriptions concise and comparable');
+}
 assert.ok(ks.querySelector('.card-icon svg'), 'dedicated icon missing');
 assert.ok(ks.querySelector('.card-cta'), 'dedicated CTA missing');
 const tags = [...ks.querySelectorAll('.card-tags .tag')].map(t => t.textContent.trim());
@@ -43,7 +50,7 @@ assert.ok(ks.textContent.includes('گواهی'), 'card copy does not mention the
 assert.ok(!ks.textContent.includes('گذرنامه'), 'old passport wording leaked into the card');
 // The dedicated look must be real CSS, not just a class name.
 assert.match(schoolSource, /\.kasrestan-card::before\s*\{/);
-assert.match(schoolSource, /\.kasrestan-ribbon\s*\{/);
+assert.doesNotMatch(schoolSource, /(?:kasrestan|nesbat)-(?:ribbon|note)/);
 assert.match(schoolSource, /\.kasrestan-card \.card-icon\s*\{/);
 assert.match(schoolSource, /body\[data-theme="night"\] \.kasrestan-card/, 'dark themes not covered');
 assert.match(schoolSource, /پنج بازی/, 'subtitle/meta do not mention five games');
