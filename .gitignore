@@ -47,3 +47,7 @@ lighthouse-report*.html
 lighthouse-report*.json
 reports/
 coverage/
+
+# Local tooling and distributable exports
+.venv/
+exports/
