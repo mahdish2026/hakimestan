@@ -18,7 +18,8 @@ for (const file of files) {
   if (file === 'math-learning.html') {
     const cards = dom.window.document.querySelector('.games-grid').textContent;
     assert(!/تازه.?ترین|جدیدترین|آخرین نسخه|تازه!/.test(cards));
-    assert(cards.includes('دربارهٔ کسرستان'));
+    assert(cards.includes('کسرها، عددهای مخلوط و چهار عمل'));
+    assert(!cards.includes('کارت ویژه'));
     assert(cards.includes('دو ردیفه'));
   }
   dom.window.close();
