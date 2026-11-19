@@ -6,7 +6,7 @@
  *   • پوستهٔ برنامه (HTML/CSS/JS/آیکون) → Precache + Stale-While-Revalidate
  *   • ناوبری صفحه      → Network-First با فالبک آفلاین (offline.html)
  *   • تصاویر          → Cache-First با سقف تعداد
- *   • ویدیو و صدا      → هرگز کش نمی‌شود (Network Only، پشتیبانی از Range)
+ *   • ویدیو و صدا      → شبکه؛ استثنا: ده صوت کوتاه نقشستان با کش و Range
  *   • منابع بیرونی     → Stale-While-Revalidate با سقف
  *
  * امنیت: درخواست‌های غیر-GET و مبدأهای ناشناس هرگز کش نمی‌شوند.
@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.20';
+const VERSION = 'hakim-v1.5.43';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -30,6 +30,29 @@ const SHELL_ASSETS = [
   './',
   './index.html',
   './offline.html',
+  './games/math-geometry/style.css',
+  './games/math-geometry/studio.css',
+  './games/math-geometry/layout.css',
+  './games/math-geometry/studio.js',
+  './games/math-geometry/tools.js',
+  './games/math-geometry/practice.js',
+  './games/math-geometry/narration.js',
+  './games/math-geometry/audio/symmetry.mp3',
+  './games/math-geometry/audio/angles.mp3',
+  './games/math-geometry/audio/quadrilaterals.mp3',
+  './games/math-geometry/audio/mirror.mp3',
+  './games/math-geometry/audio/center.mp3',
+  './games/math-geometry/audio/rotation.mp3',
+  './games/math-geometry/audio/tool-0.mp3',
+  './games/math-geometry/audio/tool-1.mp3',
+  './games/math-geometry/audio/tool-2.mp3',
+  './games/math-geometry/audio/tool-3.mp3',
+  './games/math-geometry/audio/tool-4.mp3',
+  './games/math-geometry/audio/tool-5.mp3',
+  './games/math-geometry/audio/tool-6.mp3',
+
+  './games/math-geometry/data.js',
+  './games/math-geometry/app.js',
   './assets/fonts/vazirmatn-100-900.woff2',
   './manifest.json',
   './icon.svg',
@@ -50,6 +73,7 @@ const PREFETCH_PAGES = [
   './judges.html',
   './install-pwa.html',
   './math-learning.html',
+  './games/math-geometry.html',
   './games/math-fasl2.html',
   './games/math-nesbat.html'
 ];
@@ -279,20 +303,45 @@ async function handleExternal(request) {
 /* ══════════════════════════════════════════════════════════
    رویداد fetch
    ══════════════════════════════════════════════════════════ */
+// Only the ten short, bundled geometry clips are served from cache with Range support.
+// Other media retain the site's network-only policy.
+function isGeometryAudio(url) {
+  const prefix = new URL('games/math-geometry/audio/', self.registration.scope);
+  if (url.origin !== prefix.origin || !url.pathname.startsWith(prefix.pathname)) return false;
+  return /^(?:symmetry|angles|quadrilaterals|mirror|center|rotation|tool-[0-6])\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
+}
+async function handleGeometryAudio(request) {
+  const full = await caches.match(request.url, { ignoreSearch: true });
+  if (!full || full.status !== 200) return fetch(request);
+  const range = request.headers.get('range');
+  if (!range) return full;
+  const bytes = await full.arrayBuffer(), size = bytes.byteLength;
+  const match = /^bytes=(\d*)-(\d*)$/.exec(range.trim());
+  const invalid = () => new Response(null, { status: 416, headers: { 'Content-Range': `bytes */${size}` } });
+  if (!match || (!match[1] && !match[2])) return invalid();
+  let start, end;
+  if (!match[1]) { const suffix = Number(match[2]); if (!Number.isSafeInteger(suffix) || suffix <= 0) return invalid(); start = Math.max(0, size - suffix); end = size - 1; }
+  else { start = Number(match[1]); end = match[2] ? Number(match[2]) : size - 1; }
+  if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || start >= size || end < start) return invalid();
+  end = Math.min(end, size - 1);
+  return new Response(bytes.slice(start, end + 1), { status: 206, headers: { 'Content-Type': full.headers.get('Content-Type') || 'audio/mpeg', 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': String(end-start+1), 'Accept-Ranges': 'bytes' } });
+}
 self.addEventListener('fetch', (event) => {
   const request = event.request;
 
   // فقط GET کش می‌شود؛ POST/PUT/… مستقیم به شبکه
   if (request.method !== 'GET') return;
 
-  // درخواست‌های دارای Range (ویدیو/صدا) را دست نزن
-  if (request.headers.get('range')) return;
 
   let url;
   try { url = new URL(request.url); } catch (e) { return; }
 
   // پروتکل‌های غیر http (مثل chrome-extension) نادیده گرفته شوند
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+
+  if (isGeometryAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
+  // سایر Rangeها بدون تغییر به شبکه می‌روند.
+  if (request.headers.get('range')) return;
 
   // ویدیو، صدا و PDF: همیشه شبکه (حجم بالا، پشتیبانی Range)
   if (isMedia(url)) return;
