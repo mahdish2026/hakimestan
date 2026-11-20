@@ -559,6 +559,35 @@ body[data-theme="kashi"] .tag.educational{
   .school-drawing { grid-column:1 / -1; grid-row:3; width:180px; }
   .card-icon { width: 46px; height: 46px; }
 }
+.board-axis { display:block; width:min(180px,70%); height:auto; margin-top:10px; }
+.class-register { display:inline-grid; place-items:center; flex:none; width:36px; height:36px; border-radius:10px; color:var(--ink); background:var(--surface-soft); border:1px solid var(--surface-line); }
+.class-register svg { width:24px; height:24px; }
+.card-cta .arrow { display:inline-grid; place-items:center; width:1.8em; height:1.8em; border-radius:50%; background:color-mix(in srgb,var(--pastel) 24%,var(--surface)); }
+@media (max-width:600px) { .board-axis { margin-inline:auto; } }
+.topic-row { flex-basis:100%; display:flex; gap:8px; flex-wrap:wrap; margin-bottom:3px; }
+.topic { color:var(--lesson-ink); font-weight:700; font-size:.82rem; }
+.topic::before { content:""; display:inline-block; width:.4em; height:.4em; margin-inline-end:.38em; background:currentColor; transform:rotate(45deg); vertical-align:middle; }
+/* A chalk underline and subject stamps, like sketches in a maths notebook. */
+.board-title-ink { display:inline-block; position:relative; padding-bottom:.12em; }
+.board-title-ink::after { content:""; position:absolute; inset:auto 3% 0 1%; height:4px; border-radius:75% 30%; background:#f4cb79; transform:rotate(-2deg); }
+.lesson-stamp { position:absolute; left:0; top:-16px; padding:4px 8px 3px; border:1px dashed currentColor; border-top:0; border-radius:0 0 7px 7px; color:var(--lesson-ink); font:600 .75rem/1.4 'Vazirmatn',sans-serif; direction:ltr; pointer-events:none; }
+.game-card .card-top { position:relative; }
+.school-drawing { overflow:visible; }
+@media (min-width:601px) { .school-drawing { width:min(100%,400px); } }
+@media (max-width:600px) { .school-drawing { width:min(100%,240px); } }
+@media (prefers-reduced-motion:no-preference) {
+  .flight-line { animation:chalk-flight 1.4s ease-out both; }
+  .paper-plane { animation:plane-arrival 1.4s ease-out both; }
+  .yard-pupil { animation:yard-hop .55s 1.2s ease-out 2; }
+  @keyframes chalk-flight { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+  @keyframes plane-arrival { from { transform:translate(-74px,17px) rotate(-4deg); opacity:0; } 35% { opacity:1; } to { transform:none; } }
+  @keyframes yard-hop { 50% { transform:translateY(-4px); } }
+}
+.class-bell { width:1.25em; height:1.25em; vertical-align:middle; margin-inline-end:.25em; transform-origin:50% 15%; }
+@media (prefers-reduced-motion:no-preference) {
+  .class-bell { animation:class-ring .75s ease-out 1; }
+  @keyframes class-ring { 25% { transform:rotate(15deg); } 55% { transform:rotate(-10deg); } 80% { transform:rotate(5deg); } }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .game-card, .card-cta .arrow, .page-header * { transition: none; animation: none; }
@@ -597,11 +626,22 @@ body[data-theme="kashi"] .tag.educational{
         <span>بازگشت به لابی</span>
       </a>
       <div class="board-copy">
-        <span class="board-label">دفتر کلاس · پایهٔ پنجم</span>
-        <h1 class="page-title">مدرسه ریاضی</h1>
+        <span class="board-label"><svg class="class-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 17h14l-2-4v-3a5 5 0 0 0-10 0v3zm5 2a2 2 0 0 0 4 0M12 3V1M3 6l-2-2m20 2 2-2"/></svg> زنگ بازی · پایهٔ پنجم</span>
+        <h1 class="page-title"><span class="board-title-ink">مدرسه ریاضی</span></h1>
         <p class="page-subtitle">زنگ ریاضی است! از میان هفت بازی، درس امروزت را انتخاب کن.</p>
+        <svg class="board-axis" viewBox="0 0 182 25" fill="none" aria-hidden="true" focusable="false">
+          <path d="M5 17h170l-5-3m5 3-5 3M13 13v8m32-8v8m32-8v8m32-8v8m32-8v8" stroke="#a5daca" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M13 14q16-21 32 0m0 0q16-21 32 0m0 0q16-21 32 0" stroke="#ffda84" stroke-dasharray="3 2"/><circle cx="109" cy="17" r="3" fill="#ffda84"/>
+        </svg>
       </div>
-      <svg class="school-drawing" viewBox="0 0 360 150" fill="none" aria-hidden="true" focusable="false">
+      <svg class="school-drawing" viewBox="0 0 360 178" fill="none" aria-hidden="true" focusable="false">
+        <!-- A paper plane traces a chalk arc above the classroom. -->
+        <path class="flight-line" pathLength="1" stroke-dasharray="1" d="M222 30q22-24 39-10c12 9-2 17-7 8s16-21 41-18" stroke="#96d9cb" stroke-width="1.5"/>
+        <g class="paper-plane" stroke="#fff1c2" stroke-width="1.4" stroke-linejoin="round"><path d="m292 9 28-8-13 18-5-7-10-3Z" fill="#e9bc73"/><path d="m302 12 18-11-14 13-2 5z" fill="#ffe6b0"/></g>
+        <!-- Bunting across the yard and warm light behind the chalk windows. -->
+        <path d="M8 11Q78 44 148 12" stroke="#eef0c6" stroke-width="1.5"/>
+        <path d="m26 19 6 13 8-9" fill="#f6bc92"/><path d="m53 26 7 12 8-11" fill="#99daca"/><path d="m82 27 8 11 6-13" fill="#ffdb80"/><path d="m110 24 9 8 4-12" fill="#eaaec4"/>
+        <path d="M94 91h14v17H94zm23 0h13v17h-13zm114 0h13v17h-13zm23 0h13v17h-13z" fill="#ffda84" opacity=".58"/>
         <!-- A school drawn from the shapes of a geometry lesson. -->
         <g stroke="#ecf4db" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
           <path d="M35 128h291m-244-4V80h56m84 0h56v44M75 80l15-19h49m83 0h48l15 19"/>
@@ -611,15 +651,21 @@ body[data-theme="kashi"] .tag.educational{
         </g>
         <g stroke="#9ddac8" stroke-width="1.8" stroke-linejoin="round"><path d="m19 97 29-38 18 36zM44 66l7 6"/><circle cx="309" cy="42" r="17"/><path d="m296 53 26-22m-12-3v29" stroke-dasharray="3 4"/></g>
         <g stroke="#ffda84" stroke-width="2"><path d="M79 38h13m-6-7v14m206 56 8 8m0-8-8 8M48 136h45m175 0h35"/></g>
+        <!-- Two pupils and a perspective hopscotch path made of polygons. -->
+        <g stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4">
+          <g class="yard-pupil" stroke="#ffd395"><circle cx="98" cy="132" r="4"/><path d="m98 137-1 10-5 7m5-7 6 6m-6-14-7-4m7 5 8-4"/></g>
+          <g stroke="#abcfe8"><circle cx="260" cy="131" r="4"/><path d="m260 136 1 10 6 6m-6-6-6 8m5-15-7-6m7 7 8-3"/></g>
+          <g stroke="#cfdfc8" stroke-width="1.3"><path d="m174 130-3 8h18l-3-8zm-12 8-4 9h44l-4-9zm18 0v9m-12 0-5 11h34l-5-11zm-17 11-6 11h70l-6-11zm29 0v11"/></g>
+        </g>
       </svg>
     </header>
 
     <!-- Games Grid -->
-    <div class="lesson-heading" id="lessonList">فهرست درس‌های بازی‌محور</div>
+    <div class="lesson-heading" id="lessonList"><span class="class-register" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 6Q7 3 2 5v14q5-2 10 1 5-3 10-1V5q-5-2-10 1v14"/><path d="m5 8 4 1m6 0 4-1m-14 4 4 1m6 0 4-1"/></svg></span>کلاس امروزت را انتخاب کن</div>
     <main class="games-grid" aria-labelledby="lessonList">
       <!-- Game 1: تقسیم چکشی -->
       <a href="games/math-learning-1.html" class="game-card division-card">
-        <div class="card-top">
+        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۸ ÷ ۲</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <path d="m11 11 9-7 14 14-8 9L11 11Z"/>
@@ -632,17 +678,16 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
+          <div class="topic-row"><span class="topic">تقسیم</span><span class="topic">باقی‌مانده</span></div>
           <span class="tag">✨ ۵ مرحله</span>
         </div>
-        <span class="card-cta">
-          شروع بازی
-          <span class="arrow" aria-hidden="true">←</span>
+        <span class="card-cta">ورود به تقسیم چکشی <span class="arrow" aria-hidden="true">←</span>
         </span>
       </a>
 
       <!-- Game 2: مأموریت زمان -->
       <a href="games/math-time-mission.html" class="game-card time-card">
-        <div class="card-top">
+        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۱۲:۳۰</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <circle cx="24" cy="26" r="16"/>
@@ -655,17 +700,16 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
+          <div class="topic-row"><span class="topic">ساعت</span><span class="topic">گذر زمان</span></div>
           <span class="tag">⏱️ ۸ مرحله</span>
         </div>
-        <span class="card-cta">
-          شروع بازی
-          <span class="arrow" aria-hidden="true">←</span>
+        <span class="card-cta">ورود به مأموریت زمان <span class="arrow" aria-hidden="true">←</span>
         </span>
       </a>
 
       <!-- Game 3: الگوستان -->
       <a href="games/math-olgoha.html" class="game-card pattern-card">
-        <div class="card-top">
+        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۲، ۴، ۶</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <path d="m24 4 18 20-18 20L6 24 24 4Z"/>
@@ -678,17 +722,16 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
+          <div class="topic-row"><span class="topic">الگوی عددی</span><span class="topic">الگوی شکلی</span></div>
           <span class="tag">✨ ۵ سرزمین</span>
         </div>
-        <span class="card-cta">
-          شروع بازی
-          <span class="arrow" aria-hidden="true">←</span>
+        <span class="card-cta">ورود به الگوستان <span class="arrow" aria-hidden="true">←</span>
         </span>
       </a>
 
       <!-- Game 4: کسرستان — کارت با هویت رنگی کسرستان -->
       <a href="games/math-fasl2.html" class="game-card kasrestan-card" data-game="math-fasl2" aria-label="ورود به کسرستان؛ کسر‌ها و چهار عمل در شش جزیره و ۵۸ فعالیت">
-        <div class="card-top">
+        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">¾</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <circle cx="24" cy="24" r="17"/>
@@ -702,17 +745,16 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
+          <div class="topic-row"><span class="topic">کسر</span><span class="topic">عدد مخلوط</span></div>
           <span class="tag ks">✨ ۶ جزیره · ۵۸ فعالیت</span>
           <span class="tag ks">🔗 پنل معلم</span>
         </div>
-        <span class="card-cta">
-          ورود به کسرستان
-          <span class="arrow" aria-hidden="true">←</span>
+        <span class="card-cta">ورود به کسرستان <span class="arrow" aria-hidden="true">←</span>
         </span>
       </a>
       <!-- Game 5: نسبتستان — کارت اختصاصی نسبت، تناسب و درصد -->
       <a href="games/math-nesbat.html" class="game-card nesbat-card" data-game="math-nesbat" aria-label="ورود به نسبتستان؛ نسبت، تناسب و درصد در پنج سرزمین">
-        <div class="card-top">
+        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۲۵٪</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <circle cx="24" cy="24" r="17"/>
@@ -726,25 +768,28 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
+          <div class="topic-row"><span class="topic">تناسب</span><span class="topic">درصد</span></div>
           <span class="tag ns">✨ ۵ سرزمین · ۶۷ فعالیت</span>
           <span class="tag ns">🔗 پنل معلم</span>
         </div>
-        <span class="card-cta">
-          ورود به نسبتستان
-          <span class="arrow" aria-hidden="true">←</span>
+        <span class="card-cta">ورود به نسبتستان <span class="arrow" aria-hidden="true">←</span>
         </span>
       </a>
       <!-- Game 6: نقشستان -->
       <a href="games/math-geometry.html" class="game-card geometry-card" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
-        <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m24 5 6 13 13 6-13 6-6 13-6-13-13-6 13-6Z"/><path d="M24 5v38M5 24h38"/></svg></div>
+        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۹۰°</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m24 5 6 13 13 6-13 6-6 13-6-13-13-6 13-6Z"/><path d="M24 5v38M5 24h38"/></svg></div>
           <div class="card-info"><h2 class="card-name">نقشستان</h2><p class="card-desc">تقارن، زاویه و چندضلعی‌ها را با ساختن یاد بگیر؛ نقطه‌ها را قرینه کن، نیمساز بساز و راز قطرها را کشف کن. همراه حکیم، تمرین‌ها را انجام بده و گواهیِ فهرست‌دار پیشرفتت را بگیر.</p></div>
         </div>
-        <div class="card-tags"><span class="tag">✨ ۱۲ ایستگاه · ۴۸ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
+        <div class="card-tags">
+          <div class="topic-row"><span class="topic">تقارن</span><span class="topic">چندضلعی</span></div>
+          <span class="tag">✨ ۱۲ ایستگاه · ۴۸ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به نقشستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
       <a href="games/math-decimals.html" class="game-card decimals-card" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
-        <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="32" rx="6"/><path d="M18 8v32M30 8v32M6 24h36"/></svg></div><div class="card-info"><h2 class="card-name">ممیزستان</h2><p class="card-desc">بین صفر و یک چه عددهایی پنهان شده‌اند؟ با دهم‌ها و صدم‌ها عدد بساز، جایش را روی محور پیدا کن و با شکل‌ها نشان بده وقتی دو عدد اعشاری را جمع می‌کنی چه اتفاقی می‌افتد.</p></div></div>
-        <div class="card-tags"><span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
+        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۰٫۷</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="32" rx="6"/><path d="M18 8v32M30 8v32M6 24h36"/></svg></div><div class="card-info"><h2 class="card-name">ممیزستان</h2><p class="card-desc">بین صفر و یک چه عددهایی پنهان شده‌اند؟ با دهم‌ها و صدم‌ها عدد بساز، جایش را روی محور پیدا کن و با شکل‌ها نشان بده وقتی دو عدد اعشاری را جمع می‌کنی چه اتفاقی می‌افتد.</p></div></div>
+        <div class="card-tags">
+          <div class="topic-row"><span class="topic">اعشار</span><span class="topic">محور اعداد</span></div>
+          <span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به ممیزستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
     </main>
