@@ -41,6 +41,7 @@ for (const card of cards) {
   assert.equal(card.querySelector('.card-name').children.length, 0, 'titles should not have extra badges');
   assert.equal(card.querySelectorAll('.topic').length, 2, 'each lesson needs two topic keywords');
   assert.equal(card.querySelector('.card-cta').textContent.trim(), `ورود به ${card.querySelector('.card-name').textContent} ←`);
+  assert.equal(card.querySelectorAll('.lesson-cover[aria-hidden="true"] svg').length, 1, 'each card has one decorative subject illustration');
   const description = card.querySelector('.card-desc').textContent.trim();
   assert.ok(description.length >= 100 && description.length <= 200, 'keep descriptions concise and comparable');
 }
