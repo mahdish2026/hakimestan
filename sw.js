@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.43';
+const VERSION = 'hakim-v1.5.49';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -36,6 +36,7 @@ const SHELL_ASSETS = [
   './games/math-geometry/studio.js',
   './games/math-geometry/tools.js',
   './games/math-geometry/practice.js',
+  './games/math-geometry/skills.js',
   './games/math-geometry/narration.js',
   './games/math-geometry/audio/symmetry.mp3',
   './games/math-geometry/audio/angles.mp3',
