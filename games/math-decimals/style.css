@@ -401,3 +401,36 @@ html[data-theme=dark] #clearPaint{background:#2a2340;border-color:#493c64;color:
   .station-icon{width:44px;height:44px;border-radius:14px;font-size:calc(23px*var(--fs,1))}
   .station-count{font-size:calc(10px*var(--fs,1))}
 }
+/* Answer guidance + optional on-screen keypad. The physical keyboard stays the primary path. */
+.answer-block{max-width:470px;margin:18px 0 0}
+.answer-block .answer{display:block;margin:0 0 7px}
+.answer-row{display:flex;gap:8px;align-items:stretch}
+.answer-row .text-input{flex:1;min-width:0;margin:0}
+.keypad-toggle{flex:0 0 auto;min-height:48px;padding:0 11px;font:inherit;font-size:11px;font-weight:800;white-space:nowrap;border:1px solid #d6c6e8;border-radius:12px;background:#f4eefb;color:#4d3a6c;cursor:pointer}
+.keypad-toggle[aria-expanded=true]{background:#5b3f82;border-color:#5b3f82;color:#fff}
+.keypad-toggle:disabled{opacity:.45;cursor:not-allowed}
+.answer-hint{margin:7px 0 0;font-size:11px;line-height:1.8;color:#5f556d}
+.answer-hint b{color:#3f2f59}
+.keypad{max-width:100%;margin-top:9px;scroll-margin-top:112px;padding:9px;border:1px solid #dcd0e9;border-radius:16px;background:linear-gradient(160deg,#fbf8ff,#f4eefb);box-shadow:0 12px 26px -22px rgba(52,32,80,.6)}
+.keypad[hidden]{display:none}
+.keypad-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:1px 3px 7px;font-size:10.5px;color:#5b4d6c}
+.keypad-head button{min-height:32px;padding:2px 7px;border:0;background:transparent;color:#5b477b;font:inherit;font-size:10px;font-weight:800;text-decoration:underline;cursor:pointer}
+.keypad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.keypad-grid button{min-height:48px;padding:0;border:1px solid #ded3e9;border-radius:10px;background:#fff;color:#342a46;font:inherit;font-size:20px;font-weight:800;cursor:pointer}
+.keypad-grid button[data-key=sep]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;background:#efe4fb;color:#4f3b74;font-size:20px;line-height:1}
+.keypad-grid button[data-key=sep] .sep-word{font-size:12.5px;font-weight:900}
+.keypad-grid button[data-key=sep] small{font-size:9px;font-weight:700;color:#6a567f;margin-top:3px;letter-spacing:.5px}
+.keypad-grid button[data-key=back]{background:#fbf0ee;color:#7a4f4f;font-size:17px}
+.keypad-grid button:active{transform:translateY(1px)}
+.keypad-clear{display:block;width:100%;min-height:36px;margin-top:5px;border:1px dashed #d8c9e6;border-radius:9px;background:transparent;color:#6a567f;font:inherit;font-size:10.5px;font-weight:800;cursor:pointer}
+html[data-theme=dark] .keypad-toggle{background:#2f2640;border-color:#4e3c68;color:#e2d5f5}
+html[data-theme=dark] .keypad-toggle[aria-expanded=true]{background:#a98ad6;border-color:#a98ad6;color:#221a30}
+html[data-theme=dark] .answer-hint{color:#cbbfdc}
+html[data-theme=dark] .keypad{background:linear-gradient(160deg,#2b2239,#241d31);border-color:#4b3b60;box-shadow:0 14px 28px -22px #000}
+html[data-theme=dark] .keypad-head{color:#cbbfdc}
+html[data-theme=dark] .keypad-head button{color:#d9c9f2}
+html[data-theme=dark] .keypad-grid button{background:#342944;border-color:#55426e;color:#f1e8fb}
+html[data-theme=dark] .keypad-grid button[data-key=sep]{background:#463361;color:#f6edff}
+html[data-theme=dark] .keypad-grid button[data-key=back]{background:#422b2b;color:#f3d3cd}
+html[data-theme=dark] .keypad-clear{color:#cbbfdc;border-color:#55426e}
+@media (max-width:380px){.keypad-toggle{padding:0 8px;font-size:10px}.answer-row{gap:6px}.keypad-grid button{min-height:44px}}

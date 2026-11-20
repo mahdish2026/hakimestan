@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
+(async()=>{const b=await pup.launch({executablePath:await chromium.executablePath(),args:[...chromium.args,'--disable-gpu'],headless:true});try{const p=await b.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.setViewport({width:1280,height:900});await p.goto('http://localhost:8000/games/math-decimals.html',{waitUntil:'networkidle0'});await p.evaluate(()=>localStorage.clear());await p.reload({waitUntil:'networkidle0'});
+await p.click('[data-stage="0"]');await p.click('#lessonNext');await p.click('#lessonNext');await p.click('#lessonNext');await p.click('[data-task="1"]');
+assert(await p.$('#answer'));assert(await p.$('#keypadToggle'));
+const hint=await p.$eval('.answer-hint',e=>e.textContent);assert.match(hint,/«٫»/);assert.match(hint,/نقطه/);assert.match(hint,/«\/»/);
+assert.equal(await p.$eval('#keypad',e=>e.hidden),true);assert.equal(await p.$eval('#keypadToggle',e=>e.getAttribute('aria-expanded')),'false');assert.equal(await p.$eval('#keypadToggle',e=>e.getAttribute('aria-controls')),'keypad');
+await p.click('#keypadToggle');assert.equal(await p.$eval('#keypad',e=>e.hidden),false);assert.equal(await p.$eval('#keypadToggle',e=>e.getAttribute('aria-expanded')),'true');assert.equal(await p.$eval('#answer',e=>e.getAttribute('inputmode')),'none');
+await p.click('[data-key="0"]');await p.click('[data-key="sep"]');await p.click('[data-key="7"]');assert.equal(await p.$eval('#answer',e=>e.value),'۰٫۷');
+await p.click('[data-key="back"]');assert.equal(await p.$eval('#answer',e=>e.value),'۰٫');await p.click('#keypadClear');assert.equal(await p.$eval('#answer',e=>e.value),'');
+await p.click('[data-key="0"]');await p.click('[data-key="sep"]');await p.click('[data-key="7"]');await p.click('#keypadToggle');assert.equal(await p.$eval('#keypad',e=>e.hidden),true);assert.equal(await p.$eval('#answer',e=>e.getAttribute('inputmode')),'decimal');
+await p.click('#check');await p.waitForSelector('.feedback.success');assert.match(await p.$eval('.feedback',e=>e.textContent),/آفرین/);
+await p.click('#next');await p.click('[data-task="3"]');assert.equal(await p.$eval('#answer',e=>e.disabled),false);
+await p.click('#keypadToggle');await p.keyboard.press('Escape');assert.equal(await p.$eval('#keypad',e=>e.hidden),true);await p.type('#answer','۲٫۴۷');assert.equal(await p.$eval('#answer',e=>e.value),'۲٫۴۷');
+await p.setViewport({width:320,height:720});await p.click('#keypadToggle');assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+await p.addScriptTag({content:fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8')});const r=await p.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.equal(r.violations.length,0,JSON.stringify(r.violations.map(v=>({id:v.id,h:v.nodes[0].html.slice(0,120)}))));
+assert.deepEqual(errors,[]);console.log('PASS: persistent separator hint, toggleable keypad inserts «٫», backspace/clear, Escape closes, physical keyboard still works, 320px no overflow, axe 0.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

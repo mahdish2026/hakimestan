@@ -61,6 +61,18 @@
 - اندازهٔ متن و حالت شب مستقل از بازی، با ذخیرهٔ محلی.
 - **دور سوم هنری:** مکعب ایزومتریک با سه نمایش ۰٫۳۷، برج مرتبه‌های سه‌بعدی (یکان/دهم/صدم/هزارم)، چرخش سه‌بعدی کارت با نشانگر، کارت‌های ایستگاه لایه‌ای و کارت پایانی گواهی. جزئیات و اعداد عملکرد: [بازبینی هنر و عمق](memizestan-art3d-review.md).
 
+### ۵.۱. ورود پاسخ اعشاری و صفحه‌کلید
+
+پیش از این، پذیرش «٫» و نقطه فقط در پیام خطای قالب دیده می‌شد؛ دانش‌آموزی که یک بار درست می‌نوشت، هیچ راهنمایی نمی‌دید. اکنون بالای هر پاسخ عددی:
+
+- **راهنمای همیشگی** زیر کادر: «ممیز را با «٫» یا نقطه بنویس؛ هر دو یکی است و هر دو پذیرفته می‌شوند. خط کسری «/» عدد اعشاری نمی‌سازد.»
+- **نمونهٔ نگارشی** در placeholder: «مثلاً ۰٫۳۷».
+- **صفحه‌کلید عددی اختیاری** زیر کادر با دکمهٔ «صفحه‌کلید»: ارقام ۰–۹، دکمهٔ **ممیز** (که «٫» درج می‌کند)، پاک‌کردن آخرین رقم و پاک‌کردن کل پاسخ. با همان دکمه یا Escape بسته می‌شود و `aria-expanded`/`aria-controls` دارد.
+- صفحه‌کلید **جایگزین** صفحه‌کلید فیزیکی نیست: تایپ مستقیم، Enter و آزمون‌های موجود دست‌نخورده کار می‌کنند. هنگام باز بودن، `inputmode="none"` از باز شدن کیبورد سیستمی جلوگیری می‌کند؛ وقتی بسته شود به `decimal` برمی‌گردد.
+- بدون درخواست شبکه؛ دکمه‌ها حداقل ۴۸px، در ۳۲۰px بدون سرریز و در حالت شب هم کنتراست دارند. آزمون `math-decimals-keypad.cjs` درج «٫»، حذف، Escape، تایپ فیزیکی، ۳۲۰px و axe صفر را می‌سنجد.
+
+نکتهٔ صادقانه: این صفحه‌کلید برای دستگاه‌هایی است که کیبورد سیستمی‌شان ممیز مناسب ندارد؛ جایگزین آموزش نوشتن نماد نیست و تست صفحه‌خوان انسانی برای آن انجام نشده است.
+
 ## ۶. پروندهٔ شواهد و راهنمای معلم
 
 - `docs/memizestan-evidence-pack.md`: سؤال‌های ارزشیابی، طرح پایلوت دوکلاسی، آزمون ۲۰ سؤالی هم‌ارز، معیار موفقیت، پورتفولیوی داوری و محدودیت‌های صادقانه.
@@ -81,8 +93,9 @@
 | `math-decimals-teacher.cjs` | فیلتر، CSV/BOM، چاپ، حالت شب، axe |
 | `math-decimals-assessment.cjs` | ۲۰ سؤال، ۲۰ ردیف کلید، چاپ، axe، بدون درخواست خارجی |
 | `math-decimals-art3d.cjs` | مکعب، چرخش، برج سه‌بعدی، کاهش حرکت، ۳۲۰px و axe |
+| `math-decimals-keypad.cjs` | راهنمای ممیز، درج «٫» با صفحه‌کلید، حذف/Escape، کیبورد فیزیکی، ۳۲۰px، axe |
 
-نتیجهٔ اجرای نهایی: **۵۷ از ۵۷ مجموعه‌آزمون موفق، بدون خطا** (حدود ۹ دقیقه)؛ گزارش کامل در `reports/memizestan/final-regression/results.txt`. تصاویر: `reports/memizestan/v3-final-map.png`، `v3-final-dark.png`، `v3-final-lesson.png`، `v3-final-mobile.png`، `art-cert.png`، `certificate.pdf`، `decimals-check.pdf`.
+نتیجهٔ اجرای نهایی: **۵۸ از ۵۸ مجموعه‌آزمون موفق، بدون خطا** (حدود ۹ دقیقه)؛ گزارش کامل در `reports/memizestan/final-regression/results.txt`. تصاویر: `reports/memizestan/v3-final-map.png`، `v3-final-dark.png`، `v3-final-lesson.png`، `v3-final-mobile.png`، `v4-keypad-desktop.png`، `v4-keypad-dark.png`، `v4-keypad-mobile.png`، `art-cert.png`، `certificate.pdf`، `decimals-check.pdf`.
 
 ## ۸. چیزهایی که هنوز نیستند (صادقانه)
 
@@ -95,7 +108,7 @@
 
 ## ۹. فایل‌های تحویلی
 
-- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۲۴۴٬۳۰۰ بایت) و در درایو: [1BDlALAJZg7dVZYlNi8ebxstxPX1zgq47](https://drive.google.com/file/d/1BDlALAJZg7dVZYlNi8ebxstxPX1zgq47/view).
+- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۲۵۰٬۷۷۷ بایت) و در درایو: [1bSGdR0dqjFyFug0plXX6fCa0mHTSHTXe](https://drive.google.com/file/d/1bSGdR0dqjFyFug0plXX6fCa0mHTSHTXe/view).
 - برگهٔ سنجش چاپی: `reports/memizestan/decimals-check.pdf` و در درایو: [1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy](https://drive.google.com/file/d/1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy/view).
 - دفتر معلم: `games/math-decimals-teacher.html` (در خود سایت، آفلاین).
 
