@@ -1,0 +1,3 @@
+const assert=require('node:assert/strict');
+// Real pointer clicks after scrolling content clear of the persistent header.
+module.exports=function installVisibleClicks(page){const click=page.click.bind(page);page.click=async(selector,options)=>{await page.$eval(selector,e=>{if(!e.closest('.topbar'))e.scrollIntoView({block:'center',behavior:'instant'});});const visible=await page.$eval(selector,e=>{const r=e.getBoundingClientRect(),hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return r.width>0&&r.height>0&&Boolean(hit&&(hit===e||e.contains(hit)));});assert(visible,'Pointer target is obscured: '+selector);return click(selector,options);};};

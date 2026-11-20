@@ -97,7 +97,7 @@ assert.ok(schoolBento, 'lobby link to math school missing');
 assert.match(schoolBento.textContent, /شش بازی/);
 
 const sw = read('sw.js');
-assert.match(sw, /const VERSION = 'hakim-v1\.5\.43'/);
+assert.match(sw, /const VERSION = 'hakim-v1\.5\.49'/);
 assert.match(sw, /'\.\/math-learning\.html'/);
 assert.match(sw, /'\.\/judges\.html'/);
 assert.match(sw, /'\.\/games\/math-fasl2\.html'/);
@@ -130,7 +130,7 @@ console.log(JSON.stringify({
   mathSchoolGamesListed: features.length,
   spotlight: true,
   gameCountsFixedTo: 16,
-  cacheVersion: 'hakim-v1.5.43',
+  cacheVersion: 'hakim-v1.5.49',
   schoolPagePrefetched: true,
   docsUpdated: true
 }, null, 2));
