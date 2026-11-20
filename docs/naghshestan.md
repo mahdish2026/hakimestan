@@ -5,7 +5,7 @@
 - صفحهٔ سایت: `games/math-geometry.html`
 - دادهٔ آموزشی، موتور بازی و سبک‌ها: `games/math-geometry/`
 - ساخت نسخهٔ مستقل: `node tools/build-naghshestan.cjs`
-- خروجی: `exports/naghshestan.html` (پوشهٔ خروجی در Git ثبت نمی‌شود).
+- خروجی: `exports/naghshestan.html` (۲٬۴۲۹٬۳۵۴ بایت؛ پوشهٔ خروجی در Git ثبت نمی‌شود) و در درایو: [1qusuaMr8bTk-rOZq9ljN1Qr8SEGY5LKg](https://drive.google.com/file/d/1qusuaMr8bTk-rOZq9ljN1Qr8SEGY5LKg/view).
 - نسخهٔ مستقل، فونت محلی Vazirmatn، هستهٔ واقعی حکیم، ابزارهای دسترس‌پذیری، CSS و همهٔ فعالیت‌ها را در یک فایل دارد. با دانلود و باز کردن فایل در مرورگر اجرا می‌شود؛ پیش‌نمایش Drive محیط اجرای JavaScript نیست.
 - فونت مطابق مجوز SIL OFL پروژه استفاده شده است؛ تصویر حکیم از `hakim-core.js` می‌آید، نه یک کپیِ تصویری مستقل.
 

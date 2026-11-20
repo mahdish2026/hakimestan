@@ -96,7 +96,7 @@
 | `math-decimals-art3d.cjs` | مکعب، چرخش، برج سه‌بعدی، کاهش حرکت، ۳۲۰px و axe |
 | `math-decimals-keypad.cjs` | راهنمای ممیز، درج «٫» با صفحه‌کلید، حذف/Escape، کیبورد فیزیکی، ۳۲۰px، axe |
 
-نتیجهٔ اجرای نهایی: **۵۸ از ۵۸ مجموعه‌آزمون موفق، بدون خطا** (حدود ۹ دقیقه)؛ گزارش کامل در `reports/memizestan/final-regression/results.txt`. تصاویر: `reports/memizestan/v3-final-map.png`، `v3-final-dark.png`، `v3-final-lesson.png`، `v3-final-mobile.png`، `v4-keypad-desktop.png`، `v4-keypad-dark.png`، `v4-keypad-mobile.png`، `final5-map-desktop.png`، `final5-progress.png`، `final5-success.png`، `final5-finish.png`، `art-cert.png`، `certificate.pdf`، `decimals-check.pdf`.
+نتیجهٔ اجرای نهایی: **۵۹ از ۵۹ مجموعه‌آزمون موفق، بدون خطا** (حدود ۹ دقیقه)؛ گزارش کامل در `reports/memizestan/final-regression/results.txt`. تصاویر: `reports/memizestan/v3-final-map.png`، `v3-final-dark.png`، `v3-final-lesson.png`، `v3-final-mobile.png`، `v4-keypad-desktop.png`، `v4-keypad-dark.png`، `v4-keypad-mobile.png`، `final5-map-desktop.png`، `final5-progress.png`، `final5-success.png`، `final5-finish.png`، `art-cert.png`، `certificate.pdf`، `decimals-check.pdf`.
 
 ## ۸. چیزهایی که هنوز نیستند (صادقانه)
 
@@ -109,7 +109,7 @@
 
 ## ۹. فایل‌های تحویلی
 
-- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۳۰۱٬۳۹۶ بایت). لینک درایو نسخهٔ پیشین است و در این دور به‌روز نشد.
+- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۳۰۱٬۳۹۶ بایت) و در درایو: [1tKPyFNw4k-jOp6Opxgw79EDu_Jz5g2mT](https://drive.google.com/file/d/1tKPyFNw4k-jOp6Opxgw79EDu_Jz5g2mT/view).
 - برگهٔ سنجش چاپی: `reports/memizestan/decimals-check.pdf` و در درایو: [1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy](https://drive.google.com/file/d/1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy/view).
 - دفتر معلم: `games/math-decimals-teacher.html` (در خود سایت، آفلاین).
 
