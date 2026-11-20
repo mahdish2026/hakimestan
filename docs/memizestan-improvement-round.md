@@ -59,6 +59,7 @@
 - مهر گوشهٔ نقشه به بالا-چپ منتقل شد تا روی «۰٫۳۷» نیفتد.
 - `:focus-visible`، `prefers-contrast:more`، `forced-colors:active`، هدف لمسی و احترام به کاهش حرکت.
 - اندازهٔ متن و حالت شب مستقل از بازی، با ذخیرهٔ محلی.
+- **دور سوم هنری:** مکعب ایزومتریک با سه نمایش ۰٫۳۷، برج مرتبه‌های سه‌بعدی (یکان/دهم/صدم/هزارم)، چرخش سه‌بعدی کارت با نشانگر، کارت‌های ایستگاه لایه‌ای و کارت پایانی گواهی. جزئیات و اعداد عملکرد: [بازبینی هنر و عمق](memizestan-art3d-review.md).
 
 ## ۶. پروندهٔ شواهد و راهنمای معلم
 
@@ -79,8 +80,9 @@
 | `math-decimals-diagnosis.cjs` | ۹ قاعده، ۱۴ گزینه، تمرین خرد، دفتر، گواهی، axe |
 | `math-decimals-teacher.cjs` | فیلتر، CSV/BOM، چاپ، حالت شب، axe |
 | `math-decimals-assessment.cjs` | ۲۰ سؤال، ۲۰ ردیف کلید، چاپ، axe، بدون درخواست خارجی |
+| `math-decimals-art3d.cjs` | مکعب، چرخش، برج سه‌بعدی، کاهش حرکت، ۳۲۰px و axe |
 
-نتیجهٔ اجرای نهایی: **۵۶ از ۵۶ مجموعه‌آزمون موفق، بدون خطا** (حدود ۸٫۵ دقیقه)؛ گزارش کامل در `reports/memizestan/final-regression/results.txt`. تصاویر: `reports/memizestan/art-map.png`، `art-cert.png`، `certificate.pdf`، `assessment-print.png`، `decimals-check.pdf`.
+نتیجهٔ اجرای نهایی: **۵۷ از ۵۷ مجموعه‌آزمون موفق، بدون خطا** (حدود ۹ دقیقه)؛ گزارش کامل در `reports/memizestan/final-regression/results.txt`. تصاویر: `reports/memizestan/v3-final-map.png`، `v3-final-dark.png`، `v3-final-lesson.png`، `v3-final-mobile.png`، `art-cert.png`، `certificate.pdf`، `decimals-check.pdf`.
 
 ## ۸. چیزهایی که هنوز نیستند (صادقانه)
 
@@ -93,7 +95,7 @@
 
 ## ۹. فایل‌های تحویلی
 
-- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۲۲۲٬۲۶۵ بایت) و در درایو: [1OLz6HwarMXTD3oiX3ir_lial51L1XoML](https://drive.google.com/file/d/1OLz6HwarMXTD3oiX3ir_lial51L1XoML/view).
+- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۲۴۴٬۳۰۰ بایت) و در درایو: [1BDlALAJZg7dVZYlNi8ebxstxPX1zgq47](https://drive.google.com/file/d/1BDlALAJZg7dVZYlNi8ebxstxPX1zgq47/view).
 - برگهٔ سنجش چاپی: `reports/memizestan/decimals-check.pdf` و در درایو: [1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy](https://drive.google.com/file/d/1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy/view).
 - دفتر معلم: `games/math-decimals-teacher.html` (در خود سایت، آفلاین).
 
