@@ -158,4 +158,4 @@ node tests/math-decimals-assessment.cjs
 node tests/math-decimals-art3d.cjs
 ```
 
-دامنهٔ کتاب و محدودیت آزمون‌ها: [گزارش ممیزستان](docs/memizestan-chapter-review.md). روایت کسرها، اندازهٔ متن، حالت شب و حرکت: [بازبینی نمایش](docs/memizestan-display-review.md). داوری کشوری و پاسخ این دور: [داوری و به‌روزرسانی](docs/memizestan-national-judging.md)؛ راهنمای درس ۴۵ دقیقه‌ای: [راهنمای معلم](docs/memizestan-teacher-guide.md)؛ طرح پایلوت و سنجش: [پروندهٔ شواهد](docs/memizestan-evidence-pack.md)؛ خلاصهٔ فنی این دور: [گزارش بهبود](docs/memizestan-improvement-round.md).
+دامنهٔ کتاب و محدودیت آزمون‌ها: [گزارش ممیزستان](docs/memizestan-chapter-review.md). روایت کسرها، اندازهٔ متن، حالت شب و حرکت: [بازبینی نمایش](docs/memizestan-display-review.md). داوری کشوری و پاسخ این دور: [داوری و به‌روزرسانی](docs/memizestan-national-judging.md)؛ راهنمای درس ۴۵ دقیقه‌ای: [راهنمای معلم](docs/memizestan-teacher-guide.md)؛ طرح پایلوت و سنجش: [پروندهٔ شواهد](docs/memizestan-evidence-pack.md)؛ خلاصهٔ فنی این دور: [گزارش بهبود](docs/memizestan-improvement-round.md)؛ بازبینی کامل بازی و پاس دوم کیفیت: [بازبینی بازی](docs/memizestan-play-review.md).

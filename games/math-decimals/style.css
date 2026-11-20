@@ -922,3 +922,19 @@ html[data-theme=dark] .text-input:disabled{background:#241e36;color:#a99bbb;bord
 @media(max-width:600px){
   .display-bar .text-size-button,.display-bar .display-toggle,.display-bar .display-reset{min-height:44px}
 }
+/* Round 5 contrast fix: the cream breadcrumb pill needs a dark surface. */
+html[data-theme=dark] .breadcrumb{background:#241d38;border-color:#4a3e63;color:#e6dcf6;box-shadow:none}
+
+/* Keep the three method labels on one line even at 320px with the largest type. */
+.method-strip b{white-space:nowrap}
+/* Kid-friendly targets on small phones: 24px paint cells and 44px text buttons. */
+@media(max-width:600px){
+  header nav button,.task-navigation button,.paint-controls button,#clearPaint,.side .small,footer button,.file-button{min-height:44px}
+}
+@media(max-width:360px){
+  main{padding-left:10px;padding-right:10px}
+  .paper{padding:16px 12px}
+  .workbench{padding:12px 8px}
+  .hundred{gap:2px}
+}
+@media(max-width:600px){.profile button,.profile .file-button{min-height:44px}}

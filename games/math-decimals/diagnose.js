@@ -39,7 +39,7 @@ function analyze(task,raw){
   if(got===expected)return null;
   if(Array.isArray(task.common))for(const item of task.common)if(item&&parse(item.v)===got)return result('common',item.msg);
   const tags=kinds(task),multiply=tags.includes('multiply')||task.op==='×',unit=tags.includes('unit');
-  if(unit&&powers.some(k=>expected*k===got))return result('unit_factor');
+  if(unit&&powers.some(k=>expected*k===got||got*k===expected))return result('unit_factor');
   if(multiply&&powers.some(k=>expected*k===got||got*k===expected))return result('decimal_places');
   if(!unit&&powers.some(k=>expected*k===got||got*k===expected||expected===got*k))return result('place_shift');
   if(task.op==='+'&&[SCALE/10,SCALE].some(d=>Math.abs(got-expected)===d))return result('carry');

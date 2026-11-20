@@ -8,6 +8,8 @@ const cases=[
  [{kind:'number',answer:'0.7'},'0.07','place_shift'],
  [{kind:'number',answer:'0.7'},'','format'],
  [{kind:'number',answer:'1.46',tags:['unit']},'146','unit_factor'],
+ [{kind:'number',answer:'3500',tags:['unit']},'3.5','unit_factor'],
+ [{kind:'number',answer:'1.46',tags:['unit']},'0.146','unit_factor'],
  [{kind:'number',answer:'0.08',tags:['multiply']},'8','decimal_places'],
  [{kind:'number',answer:'0.6',op:'+',b:'0.2'},'6','place_shift'],
  [{kind:'number',answer:'3.75',op:'+',b:'1.7'},'3.65','carry'],

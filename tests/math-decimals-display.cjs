@@ -4,7 +4,10 @@ const html=P.rich('کسر ⟦۷|۱۰⟧ برابر ۰٫۷ است.');
 assert.match(html,/class="fraction"/);assert.match(html,/aria-label="۷ روی ۱۰"/);assert.match(html,/fraction-top">۷</);assert.match(html,/fraction-bottom">۱۰</);
 assert(!html.includes('۷/۱۰'));assert.equal(P.plain('کسر ⟦۷|۱۰⟧'),'کسر ۷ روی ۱۰');
 assert.equal(P.rich('<img src=x>'),'&lt;img src=x&gt;');
-assert.equal(P.rich('۳/۱۰'),'۳/۱۰');
+const slash=P.rich('۳/۱۰');assert.equal(slash.replace(/<[^>]+>/g,''),'۳/۱۰');assert.equal(slash.includes('fraction'),false,'a slash must not become a stacked fraction');
+assert.match(P.rich('کدام عدد با ۰٫۶ برابر است؟'),/<bdi dir="ltr" class="math-expression">۰٫۶<\/bdi>/,'a bare decimal needs LTR isolation');
+assert.equal((P.rich('۰٫۸۲۰ − ۰٫۴۵۶').match(/math-expression/g)||[]).length,1,'one expression, one isolation box');
+assert.equal(/math-expression/.test(P.rich('⟦۷|۱۰⟧')),false,'fraction digits stay inside the stacked token');
 // 2) No lesson prose still hides a fraction behind a slash.
 const texts=D.stages.flatMap(s=>[s.intro,s.example,...s.steps,...s.tasks.flatMap(t=>[t.prompt,t.why,t.teach,...(t.options||[])])].filter(Boolean)).join('\n');
 assert.equal(/[۰-۹0-9]+\s*\/\s*[۰-۹0-9]+/.test(texts),false,'raw slash fraction found');
@@ -50,5 +53,5 @@ r=await audit();assert.equal(r.violations.length,0,JSON.stringify(r.violations.m
 // the controls remain reachable with a real pointer below the sticky header
 await p.evaluate(()=>scrollTo(0,document.body.scrollHeight));await p.click('#themeToggle');assert.equal(await p.$eval('html',e=>e.dataset.theme),'light');
 // portable build carries both new scripts and the fraction styling
-const out=fs.readFileSync('exports/memizestan.html','utf8');assert.match(out,/DecimalPresentation/);assert.match(out,/hakim\.decimals\.display\.v1/);assert.match(out,/class="display-bar"/);assert.match(out,/fraction-top/);assert.match(out,/id="themeToggle"/);assert.equal(out.includes('focusView'),false);assert.match(fs.readFileSync('sw.js','utf8'),/hakim-v1\.5\.58/);assert.match(fs.readFileSync('sw.js','utf8'),/presentation\.js/);
+const out=fs.readFileSync('exports/memizestan.html','utf8');assert.match(out,/DecimalPresentation/);assert.match(out,/hakim\.decimals\.display\.v1/);assert.match(out,/class="display-bar"/);assert.match(out,/fraction-top/);assert.match(out,/id="themeToggle"/);assert.equal(out.includes('focusView'),false);assert.match(fs.readFileSync('sw.js','utf8'),/hakim-v1\.5\.59/);assert.match(fs.readFileSync('sw.js','utf8'),/presentation\.js/);
 console.log('PASS: stacked fractions in prose and lesson visuals, no slash fractions in data, four text sizes persisted, dark theme persisted, motion preference, reset, axe light/dark/mobile, no overflow at 390px and portable build wiring.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
