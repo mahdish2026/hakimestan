@@ -570,14 +570,42 @@ body[data-theme="kashi"] .tag.educational{
 /* A chalk underline and subject stamps, like sketches in a maths notebook. */
 .board-title-ink { display:inline-block; position:relative; padding-bottom:.12em; }
 .board-title-ink::after { content:""; position:absolute; inset:auto 3% 0 1%; height:4px; border-radius:75% 30%; background:#f4cb79; transform:rotate(-2deg); }
-.lesson-stamp { position:absolute; left:0; top:-16px; padding:4px 8px 3px; border:1px dashed currentColor; border-top:0; border-radius:0 0 7px 7px; color:var(--lesson-ink); font:600 .75rem/1.4 'Vazirmatn',sans-serif; direction:ltr; pointer-events:none; }
+/* Each lesson opens like a colour-coded graph-paper exercise book. */
+.game-card { --card-pad:clamp(18px,4vw,26px); }
 .game-card .card-top { position:relative; }
+.lesson-cover {
+  grid-column:1/-1; display:flex; align-items:center; justify-content:flex-start;
+  height:64px; margin:calc(-1 * var(--card-pad)) calc(-1 * var(--card-pad)) 3px;
+  padding-inline:var(--card-pad); color:var(--lesson-ink);
+  background-color:color-mix(in srgb,var(--pastel) 23%,var(--surface));
+  background-image:linear-gradient(90deg,transparent 95%,color-mix(in srgb,currentColor 12%,transparent) 95%),linear-gradient(transparent 95%,color-mix(in srgb,currentColor 12%,transparent) 95%);
+  background-size:16px 16px; border-bottom:1px solid color-mix(in srgb,currentColor 18%,transparent);
+}
+/* The perforated tear line and folded tab belong to the paper, not the link. */
+.lesson-cover { position:relative; }
+.lesson-cover::after { content:""; position:absolute; inset:auto 0 0; height:3px; background:repeating-linear-gradient(90deg,transparent 0 7px,currentColor 7px 10px); opacity:.18; pointer-events:none; }
+.lesson-stamp::before { content:""; position:absolute; top:-4px; left:50%; width:18px; height:7px; transform:translateX(-50%) rotate(6deg); background:color-mix(in srgb,var(--pastel) 70%,var(--surface)); border-inline:1px dashed var(--lesson-ink); }
+.game-card .card-cta { border-top-style:dashed; }
+.game-card .card-cta .arrow { background:var(--lesson-ink); color:var(--surface); }
+.lesson-cover svg { width:80px; height:46px; }
+.lesson-stamp { position:absolute; top:calc(17px - var(--card-pad)); left:0; padding:2px 10px; color:var(--lesson-ink); background:var(--surface); border:1px dashed currentColor; border-radius:4px; transform:rotate(-4deg); font-weight:700; direction:ltr; }
+.game-card::before { z-index:1; pointer-events:none; }
+@media (prefers-reduced-motion:no-preference) {
+  .lesson-cover svg { transition:transform .22s ease-out; }
+  .game-card:focus-visible .lesson-cover svg { transform:rotate(-4deg) scale(1.06); }
+  @media (hover:hover) { .game-card:hover .lesson-cover svg { transform:rotate(-4deg) scale(1.06); } }
+}
 .school-drawing { overflow:visible; }
 @media (min-width:601px) { .school-drawing { width:min(100%,400px); } }
 @media (max-width:600px) { .school-drawing { width:min(100%,240px); } }
 @media (prefers-reduced-motion:no-preference) {
-  .flight-line { animation:chalk-flight 1.4s ease-out both; }
-  .paper-plane { animation:plane-arrival 1.4s ease-out both; }
+  .paper-book, .paper-school { transform-box:fill-box; transform-origin:center bottom; }
+  .paper-book { animation:open-spread .55s ease-out both; }
+  .paper-school { animation:unfold-school .85s .25s cubic-bezier(.2,.8,.25,1) both; }
+  @keyframes open-spread { from { transform:scale(.83,.65); opacity:.3; } }
+  @keyframes unfold-school { from { transform:skewX(-8deg) scaleY(.08); } 75% { transform:skewX(1deg) scaleY(1.03); } to { transform:none; } }
+  .flight-line { animation:chalk-flight 1.4s .8s ease-out both; }
+  .paper-plane { animation:plane-arrival 1.4s .8s ease-out both; }
   .yard-pupil { animation:yard-hop .55s 1.2s ease-out 2; }
   @keyframes chalk-flight { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
   @keyframes plane-arrival { from { transform:translate(-74px,17px) rotate(-4deg); opacity:0; } 35% { opacity:1; } to { transform:none; } }
@@ -634,13 +662,29 @@ body[data-theme="kashi"] .tag.educational{
           <path d="M13 14q16-21 32 0m0 0q16-21 32 0m0 0q16-21 32 0" stroke="#ffda84" stroke-dasharray="3 2"/><circle cx="109" cy="17" r="3" fill="#ffda84"/>
         </svg>
       </div>
-      <svg class="school-drawing" viewBox="0 0 360 178" fill="none" aria-hidden="true" focusable="false">
+      <svg class="school-drawing" viewBox="0 -4 360 198" fill="none" aria-hidden="true" focusable="false">
+        <!-- The school is a paper model unfolding from a graph-paper book. -->
+        <defs>
+          <linearGradient id="paper-fold"><stop stop-color="#f7dfac"/><stop offset=".47" stop-color="#fff4d5"/><stop offset=".50" stop-color="#cda980"/><stop offset=".55" stop-color="#f0d9ab"/><stop offset="1" stop-color="#ffedc5"/></linearGradient>
+          <pattern id="page-squares" width="12" height="9" patternUnits="userSpaceOnUse" patternTransform="skewX(-15)"><path d="M12 0H0V9" stroke="#517e79" opacity=".27"/></pattern>
+          <path id="spread" d="M42 119q72-13 138 5 59-18 133-6l29 49q-90-10-162 13-68-23-162-13z"/>
+        </defs>
+        <g class="paper-book" stroke-linejoin="round">
+          <path d="m38 124 142 11 137-12 29 48v5q-96-9-166 14-76-24-167-13v-6z" fill="#d07858" stroke="#f5ab7e" stroke-width="2"/>
+          <use href="#spread" transform="translate(0 5)" fill="#bb9973"/><use href="#spread" transform="translate(0 2.5)" fill="#fff2cc"/>
+          <use href="#spread" fill="url(#paper-fold)"/><use href="#spread" fill="url(#page-squares)"/>
+          <path d="m260 167 9 13 3-7 7 2-9-10" fill="#328d89"/>
+        </g>
         <!-- A paper plane traces a chalk arc above the classroom. -->
         <path class="flight-line" pathLength="1" stroke-dasharray="1" d="M222 30q22-24 39-10c12 9-2 17-7 8s16-21 41-18" stroke="#96d9cb" stroke-width="1.5"/>
         <g class="paper-plane" stroke="#fff1c2" stroke-width="1.4" stroke-linejoin="round"><path d="m292 9 28-8-13 18-5-7-10-3Z" fill="#e9bc73"/><path d="m302 12 18-11-14 13-2 5z" fill="#ffe6b0"/></g>
         <!-- Bunting across the yard and warm light behind the chalk windows. -->
         <path d="M8 11Q78 44 148 12" stroke="#eef0c6" stroke-width="1.5"/>
         <path d="m26 19 6 13 8-9" fill="#f6bc92"/><path d="m53 26 7 12 8-11" fill="#99daca"/><path d="m82 27 8 11 6-13" fill="#ffdb80"/><path d="m110 24 9 8 4-12" fill="#eaaec4"/>
+        <g class="paper-school">
+          <path d="M82 80h196v45H82z" fill="#568e80"/><path d="m75 80 15-19h180l15 19z" fill="#c98167"/>
+          <path d="m138 68 42-37 42 37v57h-84z" fill="#46786e"/><path d="m130 69 50-46 51 46-9 2-42-36-42 36z" fill="#eca783"/>
+          <path d="M168 125V98a12 12 0 0 1 24 0v27" fill="#244e50"/>
         <path d="M94 91h14v17H94zm23 0h13v17h-13zm114 0h13v17h-13zm23 0h13v17h-13z" fill="#ffda84" opacity=".58"/>
         <!-- A school drawn from the shapes of a geometry lesson. -->
         <g stroke="#ecf4db" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
@@ -649,13 +693,14 @@ body[data-theme="kashi"] .tag.educational{
           <path d="M168 125V98a12 12 0 0 1 24 0v27m-12-37v37M94 91h14v17H94zm23 0h13v17h-13zm114 0h13v17h-13zm23 0h13v17h-13z"/>
           <circle cx="180" cy="63" r="11"/><path d="M180 56v7l6 3M180 23V5l22 5-22 5" stroke="#ffda84"/>
         </g>
+        </g>
         <g stroke="#9ddac8" stroke-width="1.8" stroke-linejoin="round"><path d="m19 97 29-38 18 36zM44 66l7 6"/><circle cx="309" cy="42" r="17"/><path d="m296 53 26-22m-12-3v29" stroke-dasharray="3 4"/></g>
         <g stroke="#ffda84" stroke-width="2"><path d="M79 38h13m-6-7v14m206 56 8 8m0-8-8 8M48 136h45m175 0h35"/></g>
         <!-- Two pupils and a perspective hopscotch path made of polygons. -->
         <g stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4">
-          <g class="yard-pupil" stroke="#ffd395"><circle cx="98" cy="132" r="4"/><path d="m98 137-1 10-5 7m5-7 6 6m-6-14-7-4m7 5 8-4"/></g>
-          <g stroke="#abcfe8"><circle cx="260" cy="131" r="4"/><path d="m260 136 1 10 6 6m-6-6-6 8m5-15-7-6m7 7 8-3"/></g>
-          <g stroke="#cfdfc8" stroke-width="1.3"><path d="m174 130-3 8h18l-3-8zm-12 8-4 9h44l-4-9zm18 0v9m-12 0-5 11h34l-5-11zm-17 11-6 11h70l-6-11zm29 0v11"/></g>
+          <g class="yard-pupil" stroke="#80502f"><circle cx="98" cy="132" r="4"/><path d="m98 137-1 10-5 7m5-7 6 6m-6-14-7-4m7 5 8-4"/></g>
+          <g stroke="#425e78"><circle cx="260" cy="131" r="4"/><path d="m260 136 1 10 6 6m-6-6-6 8m5-15-7-6m7 7 8-3"/></g>
+          <g stroke="#718a77" stroke-width="1.3"><path d="m174 130-3 8h18l-3-8zm-12 8-4 9h44l-4-9zm18 0v9m-12 0-5 11h34l-5-11zm-17 11-6 11h70l-6-11zm29 0v11"/></g>
         </g>
       </svg>
     </header>
@@ -665,7 +710,7 @@ body[data-theme="kashi"] .tag.educational{
     <main class="games-grid" aria-labelledby="lessonList">
       <!-- Game 1: تقسیم چکشی -->
       <a href="games/math-learning-1.html" class="game-card division-card">
-        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۸ ÷ ۲</span>
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24h25m9 0h25" stroke-dasharray="3 4"/><g fill="currentColor" stroke="none"><circle cx="15" cy="16" r="2.5"/><circle cx="15" cy="30" r="2.5"/><circle cx="26" cy="16" r="2.5"/><circle cx="26" cy="30" r="2.5"/><circle cx="49" cy="16" r="2.5"/><circle cx="49" cy="30" r="2.5"/><circle cx="60" cy="16" r="2.5"/><circle cx="60" cy="30" r="2.5"/></g><rect x="7" y="8" width="27" height="30" rx="5"/><rect x="41" y="8" width="27" height="30" rx="5"/></svg></div><span class="lesson-stamp" aria-hidden="true">۸ ÷ ۲</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <path d="m11 11 9-7 14 14-8 9L11 11Z"/>
@@ -687,7 +732,7 @@ body[data-theme="kashi"] .tag.educational{
 
       <!-- Game 2: مأموریت زمان -->
       <a href="games/math-time-mission.html" class="game-card time-card">
-        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۱۲:۳۰</span>
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="40" cy="23" r="18"/><path d="M40 8v3m15 12h-3m-12 15v-3m-15-12h3M40 23l2-9m-2 9v12"/><circle cx="40" cy="23" r="2" fill="currentColor"/></svg></div><span class="lesson-stamp" aria-hidden="true">۱۲:۳۰</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <circle cx="24" cy="26" r="16"/>
@@ -709,7 +754,7 @@ body[data-theme="kashi"] .tag.educational{
 
       <!-- Game 3: الگوستان -->
       <a href="games/math-olgoha.html" class="game-card pattern-card">
-        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۲، ۴، ۶</span>
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 34 10-18 10 18zm25 0 10-18 10 18zm0-15L39 2l10 17zm24 15 10-18 10 18z"/><path d="M52 10h22" stroke-dasharray="2 4"/></svg></div><span class="lesson-stamp" aria-hidden="true">۲، ۴، ۶</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <path d="m24 4 18 20-18 20L6 24 24 4Z"/>
@@ -731,7 +776,7 @@ body[data-theme="kashi"] .tag.educational{
 
       <!-- Game 4: کسرستان — کارت با هویت رنگی کسرستان -->
       <a href="games/math-fasl2.html" class="game-card kasrestan-card" data-game="math-fasl2" aria-label="ورود به کسرستان؛ کسر‌ها و چهار عمل در شش جزیره و ۵۸ فعالیت">
-        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">¾</span>
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="40" cy="23" r="18"/><path d="M40 5a18 18 0 1 0 18 18H40Z" fill="currentColor" opacity=".3"/><path d="M22 23h36M40 5v36"/></svg></div><span class="lesson-stamp" aria-hidden="true">¾</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <circle cx="24" cy="24" r="17"/>
@@ -754,7 +799,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
       <!-- Game 5: نسبتستان — کارت اختصاصی نسبت، تناسب و درصد -->
       <a href="games/math-nesbat.html" class="game-card nesbat-card" data-game="math-nesbat" aria-label="ورود به نسبتستان؛ نسبت، تناسب و درصد در پنج سرزمین">
-        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۲۵٪</span>
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="15" width="68" height="16" rx="3"/><path d="M7 17h15v12H7z" fill="currentColor" opacity=".5"/><path d="M22 15v16m17-16v16m17-16v16"/></svg></div><span class="lesson-stamp" aria-hidden="true">۲۵٪</span>
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
               <circle cx="24" cy="24" r="17"/>
@@ -777,7 +822,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
       <!-- Game 6: نقشستان -->
       <a href="games/math-geometry.html" class="game-card geometry-card" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
-        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۹۰°</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m24 5 6 13 13 6-13 6-6 13-6-13-13-6 13-6Z"/><path d="M24 5v38M5 24h38"/></svg></div>
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m14 35 26-28 26 28z"/><path d="M40 3v39" stroke-dasharray="3 3"/><path d="M40 29h6v6"/></svg></div><span class="lesson-stamp" aria-hidden="true">۹۰°</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m24 5 6 13 13 6-13 6-6 13-6-13-13-6 13-6Z"/><path d="M24 5v38M5 24h38"/></svg></div>
           <div class="card-info"><h2 class="card-name">نقشستان</h2><p class="card-desc">تقارن، زاویه و چندضلعی‌ها را با ساختن یاد بگیر؛ نقطه‌ها را قرینه کن، نیمساز بساز و راز قطرها را کشف کن. همراه حکیم، تمرین‌ها را انجام بده و گواهیِ فهرست‌دار پیشرفتت را بگیر.</p></div>
         </div>
         <div class="card-tags">
@@ -786,7 +831,7 @@ body[data-theme="kashi"] .tag.educational{
         <span class="card-cta">ورود به نقشستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
       <a href="games/math-decimals.html" class="game-card decimals-card" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
-        <div class="card-top"><span class="lesson-stamp" aria-hidden="true">۰٫۷</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="32" rx="6"/><path d="M18 8v32M30 8v32M6 24h36"/></svg></div><div class="card-info"><h2 class="card-name">ممیزستان</h2><p class="card-desc">بین صفر و یک چه عددهایی پنهان شده‌اند؟ با دهم‌ها و صدم‌ها عدد بساز، جایش را روی محور پیدا کن و با شکل‌ها نشان بده وقتی دو عدد اعشاری را جمع می‌کنی چه اتفاقی می‌افتد.</p></div></div>
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 28h70m-4-4 4 4-4 4M7 22v12m6-9v6m6-6v6m6-6v6m6-6v6m6-6v6m6-6v6m6-6v6m6-6v6m6-6v6m6-9v12"/><circle cx="49" cy="28" r="4" fill="currentColor"/><path d="M49 11v9"/></svg></div><span class="lesson-stamp" aria-hidden="true">۰٫۷</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="32" rx="6"/><path d="M18 8v32M30 8v32M6 24h36"/></svg></div><div class="card-info"><h2 class="card-name">ممیزستان</h2><p class="card-desc">بین صفر و یک چه عددهایی پنهان شده‌اند؟ با دهم‌ها و صدم‌ها عدد بساز، جایش را روی محور پیدا کن و با شکل‌ها نشان بده وقتی دو عدد اعشاری را جمع می‌کنی چه اتفاقی می‌افتد.</p></div></div>
         <div class="card-tags">
           <div class="topic-row"><span class="topic">اعشار</span><span class="topic">محور اعداد</span></div>
           <span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
