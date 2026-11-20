@@ -993,3 +993,16 @@ html[data-theme=dark] .area-formula{color:#e3d0ff}
 .product-placeholder .product-ghost .decimal-chip{display:inline-grid;place-items:center;min-width:0;height:auto;padding:0;border:0;background:transparent;color:#a46000;font-size:.82em;font-style:normal;letter-spacing:0}
 [data-theme="dark"] .product-placeholder .product-ghost{background:#3a2a08;border-color:#c79020;color:#ffe7a6}
 [data-theme="dark"] .product-placeholder .product-ghost .decimal-chip{color:#ffd479;background:transparent}
+
+/* ── ۱۱ ایستگاه: ردیف آخر وسط‌چین شود، بدون خانهٔ خالی ───────────── */
+.route{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch}
+.route .station{flex:0 1 calc((100% - 34px)/3);min-width:0;max-width:none}
+.route .finale{flex:1 0 100%;grid-column:1/-1;width:100%}
+@media(max-width:900px){.route .station{flex-basis:calc((100% - 17px)/2)}}
+@media(max-width:600px){.route .station{flex-basis:100%}}
+
+/* ── فهرست ۱۱ ایستگاه در گواهی: ردیف آخر وسط‌چین ─────────────────── */
+.cert-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.cert-list li{flex:0 1 calc(50% - 5px);min-width:0}
+@media(max-width:600px){.cert-list li{flex-basis:100%}}
+@media print{.cert-list{display:flex;flex-wrap:wrap;justify-content:center}.cert-list li{flex:0 1 calc(50% - 5px)}}
