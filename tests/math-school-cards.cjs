@@ -50,11 +50,15 @@ assert.ok(tags.some(t => t.includes('پنل معلم')), 'teacher-panel tag miss
 assert.ok(ks.textContent.includes('پرسش'), 'card copy does not describe the questions');
 assert.ok(ks.textContent.includes('گواهی'), 'card copy does not mention the certificate');
 assert.ok(!ks.textContent.includes('گذرنامه'), 'old passport wording leaked into the card');
+for (const card of cards) {
+  const palette = [...card.classList].find(c => c !== 'game-card' && c.endsWith('-card'));
+  assert.ok(palette && schoolSource.includes(`.${palette} { --chalk:`), 'missing lesson palette');
+}
 // The dedicated look must be real CSS, not just a class name.
-assert.match(schoolSource, /\.kasrestan-card::before\s*\{/);
+assert.match(schoolSource, /\.game-card::before\s*\{/);
 assert.doesNotMatch(schoolSource, /(?:kasrestan|nesbat)-(?:ribbon|note)/);
-assert.match(schoolSource, /\.kasrestan-card \.card-icon\s*\{/);
-assert.match(schoolSource, /body\[data-theme="night"\] \.kasrestan-card/, 'dark themes not covered');
+assert.match(schoolSource, /\.game-card \.card-icon\s*\{/);
+assert.match(schoolSource, /body:is\(\[data-theme="night"\].*?\) \.game-card/, 'dark themes not covered');
 assert.match(schoolSource, /هفت بازی/, 'subtitle/meta do not mention five games');
 
 // ---- 2) detailed description page ---------------------------------------

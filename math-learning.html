@@ -161,77 +161,34 @@ body {
 }
 
 
-/* ── کارت اختصاصی «کسرستان» ──────────────────────────────────────
-   همان ساختار و ریتم کارت‌های دیگر، با هویت رنگی و نشان ویژهٔ خودش */
-.kasrestan-card{
-  position:relative;
-  overflow:hidden;
-  border-color:rgba(237,143,82,.42);
-  background:
-    radial-gradient(circle at 8% 2%, rgba(246,189,66,.16), transparent 15rem),
-    linear-gradient(160deg, rgba(237,143,82,.08), var(--surface) 55%);
+/* One lesson-card design; each subject supplies its chalk colours. */
+.division-card { --chalk:#6856ac; --pastel:#d6c7ff; }
+.time-card { --chalk:#326590; --pastel:#a8d6ff; }
+.pattern-card { --chalk:#8c4675; --pastel:#ffc0e2; }
+.kasrestan-card { --chalk:#985116; --pastel:#ffd485; }
+.nesbat-card { --chalk:#106e65; --pastel:#89dfd0; }
+.geometry-card { --chalk:#335d94; --pastel:#a9c6ff; }
+.decimals-card { --chalk:#536b2e; --pastel:#d0e998; }
+.game-card {
+  position:relative; overflow:hidden; --lesson-ink:var(--chalk);
+  background:radial-gradient(ellipse at 5% 0%,color-mix(in srgb,var(--pastel) 23%,transparent),transparent 65%),var(--surface);
+  border-color:color-mix(in srgb,var(--chalk) 32%,var(--surface));
 }
-.kasrestan-card::before{
-  content:"";
-  position:absolute;top:0;right:0;left:0;height:4px;
-  background:linear-gradient(90deg,#f6bd42,#ed8f52 55%,var(--purple));
+.game-card::before {
+  content:""; position:absolute; inset:0 0 auto; height:4px;
+  background:linear-gradient(90deg,var(--pastel),var(--chalk));
 }
-.kasrestan-card:hover{
-  border-color:#ed8f52;
-  box-shadow:0 20px 48px rgba(237,143,82,.22);
+.game-card:hover { border-color:var(--lesson-ink); }
+.game-card .card-icon {
+  background:linear-gradient(140deg,color-mix(in srgb,var(--chalk) 78%,white),var(--chalk));
+  box-shadow:0 5px 12px color-mix(in srgb,var(--chalk) 22%,transparent);
 }
-.kasrestan-card .card-icon{
-  background:linear-gradient(135deg,#f6bd42,#ed8f52);
-  box-shadow:0 8px 20px rgba(237,143,82,.32);
+.game-card .card-cta { color:var(--lesson-ink); }
+.game-card .tag {
+  color:var(--lesson-ink); background:color-mix(in srgb,var(--pastel) 18%,var(--surface));
+  border-color:color-mix(in srgb,var(--chalk) 28%,var(--surface));
 }
-.kasrestan-card .card-cta{ color:#a8531b; }
-.kasrestan-card .tag.ks{
-  background:#fff4dd;color:#8a4a0d;border-color:#f0d39c;
-}
-body[data-theme="night"] .kasrestan-card,
-body[data-theme="ocean"] .kasrestan-card,
-body[data-theme="forest"] .kasrestan-card{
-  background:radial-gradient(circle at 8% 2%,rgba(246,189,66,.12),transparent 15rem),var(--surface);
-  border-color:rgba(246,189,66,.45);
-}
-body[data-theme="night"] .kasrestan-card .tag.ks,
-body[data-theme="ocean"] .kasrestan-card .tag.ks,
-body[data-theme="forest"] .kasrestan-card .tag.ks{
-  background:rgba(246,189,66,.14);color:#ffd98a;border-color:rgba(246,189,66,.32);
-}
-body[data-theme="night"] .kasrestan-card .card-cta,
-body[data-theme="ocean"] .kasrestan-card .card-cta,
-body[data-theme="forest"] .kasrestan-card .card-cta{ color:#ffc76a; }
-@media (prefers-reduced-motion: reduce){
-  .kasrestan-card{ transition:none; }
-}
-
-
-/* ── کارت اختصاصی «نسبتستان» ── */
-.nesbat-card{
-  position:relative;overflow:hidden;
-  border-color:rgba(20,184,166,.42);
-  background:
-    radial-gradient(circle at 8% 2%, rgba(245,158,11,.16), transparent 15rem),
-    linear-gradient(160deg, rgba(20,184,166,.09), var(--surface) 55%);
-}
-.nesbat-card::before{
-  content:"";position:absolute;top:0;right:0;left:0;height:4px;
-  background:linear-gradient(90deg,#14b8a6,#f59e0b 55%,#fb7185);
-}
-.nesbat-card:hover{border-color:#14b8a6;box-shadow:0 20px 48px rgba(20,184,166,.22)}
-.nesbat-card .card-icon{background:linear-gradient(135deg,#14b8a6,#0f766e);box-shadow:0 8px 20px rgba(20,184,166,.32)}
-.nesbat-card .card-cta{color:#0f766e}
-.nesbat-card .tag.ns{background:#f0fdfa;color:#115e59;border-color:#99f6e4}
-body[data-theme="night"] .nesbat-card,body[data-theme="ocean"] .nesbat-card,body[data-theme="forest"] .nesbat-card{
-  background:radial-gradient(circle at 8% 2%,rgba(245,158,11,.12),transparent 15rem),var(--surface);
-  border-color:rgba(20,184,166,.45);
-}
-body[data-theme="night"] .nesbat-card .tag.ns,body[data-theme="ocean"] .nesbat-card .tag.ns,body[data-theme="forest"] .nesbat-card .tag.ns{
-  background:rgba(20,184,166,.14);color:#5eead4;border-color:rgba(20,184,166,.32);
-}
-body[data-theme="night"] .nesbat-card .card-cta,body[data-theme="ocean"] .nesbat-card .card-cta,body[data-theme="forest"] .nesbat-card .card-cta{color:#5eead4}
-@media (prefers-reduced-motion: reduce){.nesbat-card{transition:none}}
+body:is([data-theme="night"],[data-theme="ocean"],[data-theme="forest"]) .game-card { --lesson-ink:var(--pastel); }
 
 .card-top {
   display: flex;
@@ -552,18 +509,22 @@ body[data-theme="kashi"] .tag.educational{
 
 
 .theme-btn svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.8; color: var(--purple); }
-/* A notebook heading, shared by all seven subjects. */
+/* Classroom chalkboard with a wooden chalk ledge. */
 .page-header {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr minmax(0, .25fr) 1fr;
   align-items: center;
   gap: 10px;
   padding: clamp(18px, 3vw, 32px);
   border: 1px solid var(--surface-line);
   border-radius: 20px;
-  background-color: var(--surface);
-  background-image: radial-gradient(var(--surface-line) 1px, transparent 1px);
-  background-size: 12px 12px;
+  color: #fffaf0;
+  border: 5px solid #a78054;
+  border-bottom: 9px solid #936d46;
+  background-color: #194b43;
+  background-image: linear-gradient(#ffffff09 1px, transparent 1px), linear-gradient(90deg,#ffffff09 1px,transparent 1px);
+  background-size: 24px 24px;
+  box-shadow: inset 0 0 0 2px #123e36, 0 5px 14px #34291a1a;
   z-index: 2;
 }
 .page-header .theme-btn, .page-header .back-link {
@@ -571,8 +532,17 @@ body[data-theme="kashi"] .tag.educational{
 }
 .theme-btn { grid-column: 1; justify-self: start; }
 .back-link { grid-column: 3; justify-self: end; }
-.page-title { grid-column: 2; grid-row: 1; }
-.page-subtitle { grid-column: 1 / -1; margin: 0; }
+.board-copy { grid-row:2; grid-column:1 / 3; text-align:start; padding-block:8px 14px; }
+.board-label { display:inline-block; color:#ffe2a1; font-weight:700; font-size:.85rem; border-bottom:1px dashed #d1bc86; padding-bottom:4px; }
+.board-copy .page-title { justify-content:start; font-size:clamp(2.1rem,5vw,3.7rem); line-height:1.45; margin-block:5px; }
+.school-drawing { grid-row:2; grid-column:3; width:min(100%,360px); height:auto; justify-self:center; }
+.lesson-heading { display:flex; align-items:center; gap:12px; margin-top:28px; color:var(--ink); font-size:1.08rem; font-weight:800; }
+.lesson-heading::after { content:""; flex:1; height:8px; border-bottom:1px solid var(--surface-line); background:repeating-linear-gradient(90deg,var(--surface-line) 0 1px,transparent 1px 10px); }
+.lesson-heading + .games-grid { margin-top:14px; }
+.page-header::after { content:""; position:absolute; bottom:0; left:12%; width:32px; height:5px; background:#fff3cb; border-radius:3px; box-shadow:38px 0 #edb6ae; }
+.page-header .page-title-icon { color:#f6d591; }
+.page-header .theme-panel { color:var(--ink); }
+.page-subtitle { color:#e0efe8; grid-column: 1 / -1; margin: 0; }
 .theme-panel { top: 4.6rem; right: 1rem; }
 .card-top { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; }
 .card-info { display: contents; }
@@ -584,7 +554,9 @@ body[data-theme="kashi"] .tag.educational{
 @media (max-width: 600px) {
   .page-header { grid-template-columns: 1fr 1fr; }
   .back-link { grid-column: 2; }
-  .page-title { grid-column: 1 / -1; grid-row: 2; }
+  .board-copy { grid-column:1 / -1; text-align:center; padding-bottom:0; }
+  .board-copy .page-title { justify-content:center; }
+  .school-drawing { grid-column:1 / -1; grid-row:3; width:180px; }
   .card-icon { width: 46px; height: 46px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -624,20 +596,29 @@ body[data-theme="kashi"] .tag.educational{
         <span>←</span>
         <span>بازگشت به لابی</span>
       </a>
-      <h1 class="page-title">
-        <svg class="page-title-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
-          <path d="M8 40h32M12 36h24M15 36V26c0-7 4-12 9-15 5 3 9 8 9 15v10" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M24 12V5m0 0-2.5 3M24 5l2.5 3M19 36v-7a5 5 0 0 1 10 0v7M24 21v15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>مدرسه ریاضی</span>
-      </h1>
-      <p class="page-subtitle">هفت بازی آموزشی برای ریاضی پنجم؛ از کدام بازی شروع می‌کنی؟</p>
+      <div class="board-copy">
+        <span class="board-label">دفتر کلاس · پایهٔ پنجم</span>
+        <h1 class="page-title">مدرسه ریاضی</h1>
+        <p class="page-subtitle">زنگ ریاضی است! از میان هفت بازی، درس امروزت را انتخاب کن.</p>
+      </div>
+      <svg class="school-drawing" viewBox="0 0 360 150" fill="none" aria-hidden="true" focusable="false">
+        <!-- A school drawn from the shapes of a geometry lesson. -->
+        <g stroke="#ecf4db" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M35 128h291m-244-4V80h56m84 0h56v44M75 80l15-19h49m83 0h48l15 19"/>
+          <path d="M138 125V68l42-37 42 37v57m-92-56 50-45 51 45"/>
+          <path d="M168 125V98a12 12 0 0 1 24 0v27m-12-37v37M94 91h14v17H94zm23 0h13v17h-13zm114 0h13v17h-13zm23 0h13v17h-13z"/>
+          <circle cx="180" cy="63" r="11"/><path d="M180 56v7l6 3M180 23V5l22 5-22 5" stroke="#ffda84"/>
+        </g>
+        <g stroke="#9ddac8" stroke-width="1.8" stroke-linejoin="round"><path d="m19 97 29-38 18 36zM44 66l7 6"/><circle cx="309" cy="42" r="17"/><path d="m296 53 26-22m-12-3v29" stroke-dasharray="3 4"/></g>
+        <g stroke="#ffda84" stroke-width="2"><path d="M79 38h13m-6-7v14m206 56 8 8m0-8-8 8M48 136h45m175 0h35"/></g>
+      </svg>
     </header>
 
     <!-- Games Grid -->
-    <main class="games-grid">
+    <div class="lesson-heading" id="lessonList">فهرست درس‌های بازی‌محور</div>
+    <main class="games-grid" aria-labelledby="lessonList">
       <!-- Game 1: تقسیم چکشی -->
-      <a href="games/math-learning-1.html" class="game-card">
+      <a href="games/math-learning-1.html" class="game-card division-card">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -660,7 +641,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 2: مأموریت زمان -->
-      <a href="games/math-time-mission.html" class="game-card">
+      <a href="games/math-time-mission.html" class="game-card time-card">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -683,7 +664,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 3: الگوستان -->
-      <a href="games/math-olgoha.html" class="game-card">
+      <a href="games/math-olgoha.html" class="game-card pattern-card">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -754,14 +735,14 @@ body[data-theme="kashi"] .tag.educational{
         </span>
       </a>
       <!-- Game 6: نقشستان -->
-      <a href="games/math-geometry.html" class="game-card" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
+      <a href="games/math-geometry.html" class="game-card geometry-card" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
         <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m24 5 6 13 13 6-13 6-6 13-6-13-13-6 13-6Z"/><path d="M24 5v38M5 24h38"/></svg></div>
           <div class="card-info"><h2 class="card-name">نقشستان</h2><p class="card-desc">تقارن، زاویه و چندضلعی‌ها را با ساختن یاد بگیر؛ نقطه‌ها را قرینه کن، نیمساز بساز و راز قطرها را کشف کن. همراه حکیم، تمرین‌ها را انجام بده و گواهیِ فهرست‌دار پیشرفتت را بگیر.</p></div>
         </div>
         <div class="card-tags"><span class="tag">✨ ۱۲ ایستگاه · ۴۸ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به نقشستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
-      <a href="games/math-decimals.html" class="game-card" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
+      <a href="games/math-decimals.html" class="game-card decimals-card" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
         <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="32" rx="6"/><path d="M18 8v32M30 8v32M6 24h36"/></svg></div><div class="card-info"><h2 class="card-name">ممیزستان</h2><p class="card-desc">بین صفر و یک چه عددهایی پنهان شده‌اند؟ با دهم‌ها و صدم‌ها عدد بساز، جایش را روی محور پیدا کن و با شکل‌ها نشان بده وقتی دو عدد اعشاری را جمع می‌کنی چه اتفاقی می‌افتد.</p></div></div>
         <div class="card-tags"><span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به ممیزستان <span class="arrow" aria-hidden="true">←</span></span>
