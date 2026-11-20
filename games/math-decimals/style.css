@@ -954,3 +954,42 @@ html[data-theme=dark] .decimal-chip{background:#2b2140;border-color:#5b4a75;colo
 html[data-theme=dark] .area-readout{background:#241d36;border-color:#4a4160;color:#ded4ef}
 html[data-theme=dark] .area-formula{color:#e3d0ff}
 @media(max-width:600px){.column{grid-template-columns:repeat(4,minmax(0,1fr)) 30px;gap:4px;max-width:100%}.column span{font-size:calc(18px*var(--fs,1));padding:7px 2px}.column .column-point{font-size:calc(21px*var(--fs,1));padding:0}.column small{font-size:calc(9px*var(--fs,1))}.column-point-head{font-size:calc(8px*var(--fs,1))}.column-legend{font-size:calc(11px*var(--fs,1));gap:5px}.area-readout{gap:4px 8px;padding:7px 9px;font-size:calc(11px*var(--fs,1))}}
+
+/* ── ایستگاه ضرب ستونی: کارت عمودی + راهنمای سه‌گامی ───────────────── */
+.product-model{display:grid;grid-template-columns:minmax(150px,210px) minmax(0,1fr);gap:clamp(14px,3vw,28px);align-items:center;max-width:680px;margin:6px auto 2px;padding:clamp(12px,2vw,20px);border:1px solid #d9cffb;border-radius:22px;background:linear-gradient(145deg,#fffdf8,#f3edff);box-shadow:0 10px 28px #38205c12}
+.product-card{position:relative;direction:ltr;width:100%;max-width:210px;margin:auto;padding:16px 18px;border:2px solid #7c5cff;border-radius:16px;background:#fff;box-shadow:0 5px 0 #d7c9ff,0 12px 24px #3f2b6b1c}
+.product-row{display:flex;align-items:baseline;justify-content:flex-end;gap:10px;font-size:clamp(25px,4.6vw,36px);font-weight:900;line-height:1.25;letter-spacing:.02em;color:#2d1f52;font-variant-numeric:tabular-nums}
+.product-row .product-op{font-size:.72em;color:#7c5cff}
+.product-rule{display:block;border-top:3px solid #625084;margin:7px 2px 8px}
+.product-placeholder{justify-content:center;color:#8a5a00}
+.product-placeholder span{display:grid;place-items:center;min-width:2.1em;min-height:1.45em;padding:0 .25em;border-radius:9px;background:#fff0c2;border:1px dashed #d99b18;font-size:.9em}
+.product-guide{padding:2px 0;color:#493b62}
+.product-guide p{margin:.35em 0;line-height:1.85;font-size:clamp(13px,1.35vw,15px)}
+.product-guide b{color:#5b2fa8}
+.product-guide .math-expression{display:inline-block;margin:0 .15em;padding:.04em .38em;border-radius:7px;background:#eee6ff;color:#3d2470;font-weight:800;white-space:nowrap}
+.product-card-result{border-color:#2a8a67;box-shadow:0 5px 0 #bfe8d7,0 12px 24px #1f5d481c}
+.product-card-result .product-answer{color:#16634a;justify-content:center;background:#e8faf2;border-radius:10px;padding:4px 10px}
+.product-count{display:grid;gap:10px;justify-items:center;margin:6px auto;padding:14px;border:1px dashed #8f78cf;border-radius:16px;background:#fbf8ff;color:#39275c;font-weight:800;line-height:1.8;text-align:center}
+.product-count span{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;padding:4px 10px;border-radius:9px;background:#fff;border:1px solid #e0d6fa}
+.product-count b{padding:2px 8px;border-radius:7px;background:#5b2fa8;color:#fff;font-size:.9em}
+.lesson-product{display:grid;gap:10px;justify-items:center}
+.lesson-product .product-card{max-width:190px}
+.lesson-product .product-note{margin:0;color:#53456b;font-size:.9rem;text-align:center;line-height:1.8}
+@media(max-width:720px){.product-model{grid-template-columns:1fr;max-width:420px}.product-card{max-width:190px}.product-guide{padding:0 4px 4px}}
+@media(max-width:360px){.product-model{padding:10px}.product-card{padding:12px 14px}.product-guide p{font-size:12.5px}}
+[data-theme="dark"] .product-model{background:linear-gradient(145deg,#211d2c,#2b2340);border-color:#4f4373}
+[data-theme="dark"] .product-card{background:#17131f;border-color:#a98cff;color:#f4eeff;box-shadow:0 5px 0 #3b2d63,0 12px 24px #0008}
+[data-theme="dark"] .product-row{color:#f4eeff}
+[data-theme="dark"] .product-placeholder span{background:#3a2a08;border-color:#c79020;color:#ffe7a6}
+[data-theme="dark"] .product-guide{color:#d8cdea}
+[data-theme="dark"] .product-guide b{color:#c9b0ff}
+[data-theme="dark"] .product-guide .math-expression{background:#332457;color:#f0e7ff}
+[data-theme="dark"] .product-count{background:#211a33;border-color:#5f4a92;color:#eee6ff}
+[data-theme="dark"] .product-count span{background:#17131f;border-color:#4f4373}
+[data-theme="dark"] .product-card-result{border-color:#54c9a1;box-shadow:0 5px 0 #285443,0 12px 24px #0008}
+[data-theme="dark"] .product-card-result .product-answer{background:#133b2e;color:#bdf5df}
+@media(prefers-reduced-motion:reduce){.product-card,.product-model{transition:none;animation:none}}
+.product-placeholder .product-ghost{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:0;padding:2px 14px;border-radius:10px;background:#fff0c2;border:1px dashed #d99b18;font-size:1em;letter-spacing:.06em}
+.product-placeholder .product-ghost .decimal-chip{display:inline-grid;place-items:center;min-width:0;height:auto;padding:0;border:0;background:transparent;color:#a46000;font-size:.82em;font-style:normal;letter-spacing:0}
+[data-theme="dark"] .product-placeholder .product-ghost{background:#3a2a08;border-color:#c79020;color:#ffe7a6}
+[data-theme="dark"] .product-placeholder .product-ghost .decimal-chip{color:#ffd479;background:transparent}
