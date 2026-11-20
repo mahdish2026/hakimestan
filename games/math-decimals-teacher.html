@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#282544">
+<title>دفتر معلم ممیزستان | گزارش کلاس روی همین دستگاه</title>
+<style>
+@font-face{font-family:Vazirmatn;src:url('../assets/fonts/vazirmatn-100-900.woff2') format('woff2');font-display:swap;font-weight:100 900}
+:root{--bg:#f5f3ee;--surface:#fff;--soft:#f0ebf6;--line:#e1d9e8;--ink:#292639;--muted:#665d72;--purple:#625084;--green:#2f7557;--amber:#9a5b13;--radius:18px;--shadow:0 10px 30px #2a203514}
+html[data-theme=dark]{--bg:#141220;--surface:#211d30;--soft:#2a2440;--line:#403956;--ink:#f2eefa;--muted:#bdb4cd;--purple:#a88adf;--green:#78c5a5;--amber:#e3b26a;--shadow:0 10px 30px #0008;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,Arial,sans-serif;line-height:1.9}
+a{color:inherit}
+.skip{position:fixed;top:-80px;right:16px;z-index:50;padding:10px 18px;border-radius:0 0 12px 12px;background:#12234d;color:#ffe9a8}
+.skip:focus{top:0}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:12px clamp(14px,3vw,30px);background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand i{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--purple);color:#fff;font-style:normal;font-size:22px}
+.brand b{display:block;font-size:17px;line-height:1.4}
+.brand small{color:var(--muted);font-size:11px}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+button,.link{min-height:44px;padding:9px 15px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;font-size:12px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+button:hover,.link:hover{border-color:var(--purple)}
+button.primary{background:var(--purple);border-color:var(--purple);color:#fff}
+html[data-theme=dark] button.primary{background:#a88adf;border-color:#a88adf;color:#171226}
+html[data-theme=dark] .brand i{color:#171226}
+main{max-width:1180px;margin:auto;padding:clamp(18px,4vw,34px) clamp(14px,3vw,28px) 60px}
+.hero h1{margin:6px 0 8px;font-size:clamp(26px,4.4vw,40px);line-height:1.4}
+.eyebrow{color:var(--purple);font-size:12px;font-weight:800;letter-spacing:.2px}
+.hero p{margin:0;max-width:70ch;color:var(--muted);font-size:14px}
+.privacy{margin:18px 0;padding:14px 18px;border:1px solid #bfe0cf;border-radius:14px;background:#eef8f2;color:#245b40;font-size:13px}
+html[data-theme=dark] .privacy{background:#1c342b;border-color:#31694f;color:#b9f2d0}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0 26px}
+.card{padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.card b{display:block;font-size:28px;line-height:1.3}
+.card span{color:var(--muted);font-size:12px}
+.section{margin:26px 0}
+.section h2{margin:0 0 4px;font-size:22px}
+.section>p{margin:0 0 14px;color:var(--muted);font-size:13px}
+.stage-bars{display:grid;gap:9px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.stage-bar{display:grid;grid-template-columns:150px minmax(0,1fr) 54px;align-items:center;gap:12px;font-size:12px}
+.stage-bar .track{height:10px;border-radius:99px;background:var(--soft);overflow:hidden}
+.stage-bar .track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--purple),#4f9d86)}
+.stage-bar b{font-variant-numeric:tabular-nums;text-align:left}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+table{width:100%;border-collapse:collapse;min-width:760px}
+caption{text-align:right;padding:14px 16px;color:var(--muted);font-size:12px}
+th,td{padding:11px 12px;border-bottom:1px solid var(--line);font-size:12px;text-align:right;vertical-align:middle}
+th{background:var(--soft);font-size:11px;color:var(--muted);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.name{font-weight:800}
+.mini{display:flex;align-items:center;gap:8px;min-width:130px}
+.mini .track{flex:1;height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
+.mini .track i{display:block;height:100%;background:var(--purple)}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--muted);font-size:11px;font-weight:700}
+.mis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mis article{padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.mis h3{margin:0 0 4px;font-size:14px}
+.mis p{margin:0;color:var(--muted);font-size:12px;line-height:1.95}
+.mis b{float:left;color:var(--purple);font-size:15px}
+.empty{padding:34px 20px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius);background:var(--surface);color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px}
+footer{color:var(--muted);font-size:11px;text-align:center;padding:20px}
+@media(max-width:860px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.mis{grid-template-columns:1fr}.stage-bar{grid-template-columns:112px minmax(0,1fr) 44px}}
+@media(max-width:520px){.cards{grid-template-columns:1fr 1fr}.card b{font-size:23px}.brand small{display:none}nav button{font-size:10px;padding:7px 10px}}
+@media print{header,footer,.no-print,.skip{display:none!important}body{background:#fff;color:#111}main{padding:0;max-width:none}.card,.table-wrap,.stage-bars,.mis article{box-shadow:none;break-inside:avoid}table{min-width:0;font-size:10px}th,td{padding:6px}}
+</style></head>
+<body>
+<a class="skip" href="#main">رفتن به گزارش</a>
+<header><a class="brand" href="../math-learning.html"><i>٫</i><span><b>دفتر معلم ممیزستان</b><small>گزارش ذخیره‌شده روی همین دستگاه</small></span></a><nav class="no-print" aria-label="کنترل گزارش"><a class="link" href="math-decimals.html">بازگشت به بازی</a><button id="refresh">تازه‌سازی</button><button id="csv">دریافت CSV</button><button id="print" class="primary">چاپ گزارش</button><button id="theme" aria-pressed="false">حالت شب</button></nav></header>
+<main id="main" tabindex="-1">
+<div class="hero"><div class="eyebrow">حکیمستان · ریاضی پنجم · فصل عددهای اعشاری</div><h1>کلاس من در یک نگاه</h1><p>پیشرفت هر دانش‌آموز، مهارت‌های کامل‌شده و اشتباه‌های رایجی که بازی تشخیص داده است. این گزارش فقط از دادهٔ همین مرورگر ساخته می‌شود.</p></div>
+<p class="privacy" id="privacy">این صفحه هیچ اطلاعاتی ارسال نمی‌کند و فقط پروفایل‌های ذخیره‌شده در همین مرورگر را می‌خواند. برای گزارش سرور، از پنل معلم استفاده کنید. اگر دستگاه مشترک است، پس از بررسی، داده‌های بازی را از مرورگر پاک کنید.</p>
+<div class="cards" id="summary" aria-live="polite"></div>
+<div id="view"></div>
+<footer>طراحی و توسعه: مهدی شریفیان · حکیمستان — گزارش محلی، بدون ارسال داده</footer>
+</main>
+<script src="math-decimals/data.js"></script>
+<script src="math-decimals/diagnose.js"></script>
+<script>
+(function(){'use strict';
+const KEY='hakim.decimals.v1.',D=DecimalData,X=DecimalDiagnose,fa=v=>String(v).replace(/\d/g,n=>'۰۱۲۳۴۵۶۷۸۹'[n]).replace(/\./g,'٫');
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const totalTasks=D.stages.flatMap(s=>s.tasks).length;
+function readProfiles(){const out=[];for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(!key||!key.startsWith(KEY+'player.'))continue;try{const p=JSON.parse(localStorage.getItem(key));if(!p||typeof p.name!=='string'||!p.name.trim()||!p.done||typeof p.done!=='object'||!p.drafts||typeof p.drafts!=='object')continue;const done=p.done&&typeof p.done==='object'?p.done:{},drafts=p.drafts&&typeof p.drafts==='object'?p.drafts:{},mis=p.misconceptions&&typeof p.misconceptions==='object'?p.misconceptions:{};const valid=new Set(D.stages.flatMap(s=>s.tasks.map(t=>t.id)));const doneCount=Object.keys(done).filter(id=>valid.has(id)&&done[id]?.correct===true).length;let attempts=0,guided=0,remedied=0,last='';for(const [id,d] of Object.entries(drafts)){if(!valid.has(id))continue;attempts+=Number.isInteger(d?.attempts)?d.attempts:0;if(d?.guided===true)guided++;if(d?.remedied===true)remedied++;if(done[id]?.date&&done[id].date>last)last=done[id].date;}const misc={};for(const c of X.codes){const n=mis[c];if(Number.isInteger(n)&&n>0)misc[c]=n;}out.push({name:p.name.replace(/\s+/g,' ').trim().slice(0,40),done,drafts,misc,doneCount,attempts,guided,remedied,last});}catch{}}return out;}
+function stageDone(p,s){return s.tasks.filter(t=>p.done[t.id]?.correct===true).length;}
+function summary(ps){const per=ps.map(p=>p.doneCount/totalTasks*100);const avg=per.length?per.reduce((a,b)=>a+b,0)/per.length:0;const mastered=ps.filter(p=>p.doneCount===totalTasks).length;const misc={};ps.forEach(p=>Object.entries(p.misc).forEach(([c,n])=>misc[c]=(misc[c]||0)+n));const top=Object.entries(misc).sort((a,b)=>b[1]-a[1])[0];return {students:ps.length,avg,mastered,misc,top,attempts:ps.reduce((n,p)=>n+p.attempts,0),remedied:ps.reduce((n,p)=>n+p.remedied,0),guided:ps.reduce((n,p)=>n+p.guided,0)};}
+function cards(s){return s.students?[['دانش‌آموز',fa(s.students)],['میانگین پیشرفت',fa(Math.round(s.avg))+'٪'],['تکمیل کامل',fa(s.mastered)+' نفر'],['خطاهای تشخیص‌شده',fa(Object.values(s.misc).reduce((a,b)=>a+b,0))]].map(([l,v])=>`<div class="card"><b>${v}</b><span>${l}</span></div>`).join(''):'';}
+function stageBars(ps){return `<section class="section"><h2>پیشرفت ایستگاه‌ها</h2><p>درصد میانگین تمرین‌های کامل‌شدهٔ کلاس در هر ایستگاه.</p><div class="stage-bars">${D.stages.map(s=>{const pct=ps.length?Math.round(ps.reduce((a,p)=>a+stageDone(p,s),0)/(ps.length*s.tasks.length)*100):0;return `<div class="stage-bar"><span>${esc(s.title)}</span><span class="track"><i style="width:${pct}%"></i></span><b>${fa(pct)}٪</b></div>`;}).join('')}</div></section>`;}
+function table(ps){return `<section class="section"><h2>دانش‌آموزان</h2><p>هر ردیف، یک نام ذخیره‌شده در این مرورگر است.</p><div class="table-wrap"><table><caption>پیشرفت ${fa(totalTasks)} تمرین، تلاش‌ها و نشانه‌های یادگیری</caption><thead><tr><th scope="col">نام</th><th scope="col">پیشرفت</th><th scope="col">ایستگاه کامل</th><th scope="col">تلاش</th><th scope="col">با راهنما</th><th scope="col">جبران خطا</th><th scope="col">آخرین فعالیت</th></tr></thead><tbody>${ps.map(p=>{const pct=Math.round(p.doneCount/totalTasks*100),st=D.stages.filter(s=>stageDone(p,s)===s.tasks.length).length,date=p.last?new Date(p.last).toLocaleDateString('fa-IR'):'—';return `<tr><td class="name">${esc(p.name)}</td><td><span class="mini"><span class="track"><i style="width:${pct}%"></i></span>${fa(p.doneCount)}/${fa(totalTasks)}</span></td><td>${fa(st)} از ${fa(D.stages.length)}</td><td>${fa(p.attempts)}</td><td>${fa(p.guided)}</td><td>${p.remedied?`<span class="tag">${fa(p.remedied)}</span>`:'—'}</td><td>${esc(date)}</td></tr>`;}).join('')}</tbody></table></div></section>`;}
+function misconceptions(s){const rows=Object.entries(s.misc).sort((a,b)=>b[1]-a[1]);if(!rows.length)return '';return `<section class="section"><h2>اشتباه‌های رایج کلاس</h2><p>این‌ها از پاسخ‌های غلط تشخیص داده شده‌اند؛ پیشنهاد هر مورد را می‌توان در درس بعدی به کار برد.</p><div class="mis">${rows.slice(0,6).map(([c,n])=>{const item=X.catalog[c]||{};return `<article><h3>${esc(item.title||c)} <b>${fa(n)}</b></h3><p>${esc(String(item.body||'').replace(/[۰-۹]/g,m=>m))}</p></article>`;}).join('')}</div></section>`;}
+function render(){const ps=readProfiles().sort((a,b)=>b.doneCount-a.doneCount||a.name.localeCompare(b.name,'fa'));const s=summary(ps);document.getElementById('summary').innerHTML=cards(s);document.getElementById('view').innerHTML=ps.length?stageBars(ps)+table(ps)+misconceptions(s):`<div class="empty"><b>هنوز دانش‌آموزی در این مرورگر ذخیره نشده است.</b>در دستگاه معلم، بازی را با نام دانش‌آموز باز کنید؛ سپس این صفحه را تازه کنید.<div style="margin-top:14px"><a class="link" href="math-decimals.html">بازکردن بازی</a></div></div>`;document.getElementById('privacy').textContent=ps.length?`${fa(ps.length)} پروفایل ذخیره‌شده در این مرورگر پیدا شد. این صفحه هیچ داده‌ای ارسال نمی‌کند.`:'این صفحه هیچ اطلاعاتی ارسال نمی‌کند و فقط پروفایل‌های ذخیره‌شده در همین مرورگر را می‌خواند.';}
+document.getElementById('refresh').onclick=render;
+document.getElementById('csv').onclick=()=>{const ps=readProfiles().sort((a,b)=>b.doneCount-a.doneCount);const rows=[['name','completed','total','stages_complete','attempts','guided_questions','remedied','last_activity','misconceptions'].join(',')];for(const p of ps){const st=D.stages.filter(s=>stageDone(p,s)===s.tasks.length).length;rows.push([p.name,p.doneCount,totalTasks,st,p.attempts,p.guided,p.remedied,p.last,JSON.stringify(p.misc)].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));}const blob=new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='memizestan-class.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+document.getElementById('print').onclick=()=>window.print();
+const theme=document.getElementById('theme');const setTheme=d=>{document.documentElement.dataset.theme=d?'dark':'light';theme.setAttribute('aria-pressed',String(d));theme.textContent=d?'حالت روشن':'حالت شب';try{localStorage.setItem('hakim.decimals.teacher.theme',d?'dark':'light');}catch{}};let dark=false;try{dark=localStorage.getItem('hakim.decimals.teacher.theme')==='dark';}catch{}setTheme(dark);theme.onclick=()=>{dark=!dark;setTheme(dark);};
+render();
+})();
+</script>
+</body></html>

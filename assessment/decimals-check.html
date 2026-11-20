@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>برگهٔ سنجش عددهای اعشاری — ممیزستان</title>
+<style>
+@font-face{font-family:Vazirmatn;src:url('../assets/fonts/vazirmatn-100-900.woff2') format('woff2');font-display:swap;font-weight:100 900}
+:root{--ink:#211d2c;--muted:#5e5668;--line:#cfc6da;--soft:#f4f1f8;--accent:#5b4477}
+*{box-sizing:border-box}
+body{margin:0;background:#eeeae4;color:var(--ink);font-family:Vazirmatn,Tahoma,Arial,sans-serif;line-height:1.9;font-size:12pt}
+.sheet{width:210mm;min-height:297mm;margin:16px auto;padding:16mm 16mm 14mm;background:#fff;box-shadow:0 12px 30px #0002}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:2px solid var(--accent);padding-bottom:8px}
+h1{margin:0;font-size:19pt;line-height:1.5}
+.sub{color:var(--muted);font-size:9.5pt;margin:2px 0 0}
+.badge{display:inline-block;padding:3px 10px;border:1px solid var(--line);border-radius:99px;font-size:8.5pt;color:var(--accent);white-space:nowrap}
+.id{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 6px;font-size:9.5pt}
+.id label{display:flex;gap:6px;align-items:center}
+.id span{flex:1;border-bottom:1px dotted var(--line);height:22px}
+.instructions{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:9.5pt;margin:8px 0 12px}
+.instructions b{color:var(--accent)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px}
+.q{border:1px solid var(--line);border-radius:10px;padding:7px 10px;break-inside:avoid}
+.q h2{margin:0 0 2px;font-size:10pt;font-weight:800;display:flex;gap:6px}
+.q h2 i{font-style:normal;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:8.5pt;flex:0 0 auto}
+.q p{margin:0;font-size:9.7pt;line-height:1.85}
+.answer{height:24px;margin-top:3px;border-bottom:1px dotted #ab9fbc}
+.options{display:flex;gap:10px;flex-wrap:wrap;font-size:9.5pt;margin-top:2px}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block;font-variant-numeric:tabular-nums}
+.work{border:1px dashed var(--line);border-radius:8px;height:44px;margin-top:3px}
+footer{margin-top:12px;padding-top:6px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--muted);font-size:8.5pt}
+.key{page-break-before:always;break-before:page}
+.key h1{font-size:16pt}
+.key table{width:100%;border-collapse:collapse;font-size:9.3pt;margin-top:6px}
+.key th,.key td{border:1px solid var(--line);padding:4px 6px;text-align:right;vertical-align:top}
+.key th{background:var(--soft);font-size:9pt}
+.key .score{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0;font-size:9.5pt}
+.key .score div{border:1px solid var(--line);border-radius:8px;padding:6px 8px;text-align:center}
+.key .note{border-right:4px solid var(--accent);background:var(--soft);padding:8px 12px;font-size:9.5pt;border-radius:8px}
+.print-btn{position:fixed;top:12px;left:12px;padding:10px 16px;border:0;border-radius:12px;background:var(--accent);color:#fff;font:inherit;font-size:11pt;cursor:pointer;box-shadow:0 6px 16px #0003}
+@media(max-width:760px){body{background:#fff}.sheet{width:auto;min-height:0;margin:0;padding:14px;box-shadow:none}.grid{grid-template-columns:1fr}.id{grid-template-columns:1fr}.print-btn{position:static;margin:10px auto;display:block;width:calc(100% - 28px)}}
+@media print{body{background:#fff;font-size:9.6pt}.sheet{width:auto;min-height:0;margin:0;padding:6mm 9mm;box-shadow:none;display:flow-root}.print-btn{display:none}.q,.key tr{break-inside:avoid}@page{size:A4;margin:7mm}h1{font-size:15pt}.sub{font-size:8pt}.badge{font-size:7.5pt}.id{margin:6px 0 4px;font-size:8pt}.id span{height:17px}.instructions{font-size:8pt;padding:5px 8px;margin:6px 0 8px}.grid{display:block}.q{width:48.8%;float:right;margin:0 0 2px;padding:3px 6px}.q:nth-child(even){float:left}.grid::after{content:"";display:block;clear:both}.q{padding:4px 7px}.q h2{font-size:8.6pt}.q h2 i{width:16px;height:16px;font-size:7pt}.q p{font-size:8pt;line-height:1.6}.answer{height:14px}.work{height:22px}.options{font-size:8pt}footer{margin-top:6px;font-size:7pt}.key table{font-size:7.8pt}.key th,.key td{padding:1.5px 4px}.key .score{font-size:7.8pt;gap:5px;margin:6px 0}.key .score div{padding:3px 5px}.key .note{font-size:8pt;padding:5px 9px}.key h1{font-size:14pt}footer{display:none}}
+</style></head>
+<body>
+<button class="print-btn" onclick="window.print()">چاپ برگه و کلید</button>
+<section class="sheet">
+<header><div><h1>عددهای اعشاری — برگهٔ سنجش پایانی</h1><p class="sub">ریاضی پایهٔ پنجم · فصل پنجم · ممیزستان حکیمستان</p></div><span class="badge">۲۰ سؤال · ۲۰ نمره · ۲۵ دقیقه</span></header>
+<div class="id"><label>نام: <span></span></label><label>کلاس: <span></span></label><label>تاریخ: <span></span></label></div>
+<p class="instructions"><b>راهنما:</b> پاسخ‌ها را با واحد و ممیز بنویس. برای سؤال‌های توضیحی، یک یا دو جمله کافی است. ماشین‌حساب لازم نیست؛ اگر جایی برآورد می‌کنی، روش را کنار پاسخ بنویس. ممیز فارسی «٫» یا نقطه پذیرفته می‌شود.</p>
+<div class="grid">
+<article class="q"><h2><i>۱</i> ارزش رقم</h2><p>در عدد <span class="ltr">۵٫۰۴۸</span> ارزش رقم ۴ چند است؟</p><div class="answer"></div></article>
+<article class="q"><h2><i>۲</i> نوشتن عدد</h2><p>«سی و هفت هزارم» را با رقم بنویس.</p><div class="answer"></div></article>
+<article class="q"><h2><i>۳</i> مقایسه</h2><p>علامت مناسب را بگذار: <span class="ltr">۳٫۰۶</span> ⬜ <span class="ltr">۳٫۰۵۶</span></p><div class="options">□ &gt; &nbsp;&nbsp; □ = &nbsp;&nbsp; □ &lt;</div></article>
+<article class="q"><h2><i>۴</i> ترتیب</h2><p>این سه عدد را از کوچک به بزرگ مرتب کن: <span class="ltr">۳٫۶۱</span> ، <span class="ltr">۰٫۳۶</span> ، <span class="ltr">۰٫۰۳۶</span></p><div class="answer"></div></article>
+<article class="q"><h2><i>۵</i> عدد برابر</h2><p>کدام عدد با <span class="ltr">۰٫۶</span> برابر است؟ <span class="ltr">۰٫۰۶</span> / <span class="ltr">۰٫۶۰۰</span> / <span class="ltr">۶٫۰۰</span></p><div class="answer"></div></article>
+<article class="q"><h2><i>۶</i> محور</h2><p>عدد <span class="ltr">۸٫۱۳۳</span> روی محور هزارم بین کدام دو خط است؟</p><div class="answer"></div></article>
+<article class="q"><h2><i>۷</i> جمع</h2><p><span class="ltr">۲٫۱۸۷ + ۵٫۹ + ۱٫۶۴۳</span> را حساب کن.</p><div class="work"></div></article>
+<article class="q"><h2><i>۸</i> تفریق</h2><p><span class="ltr">۰٫۸۲ − ۰٫۴۵۶</span> را حساب کن.</p><div class="work"></div></article>
+<article class="q"><h2><i>۹</i> برآورد</h2><p>حاصل <span class="ltr">۷٫۱ + ۵٫۱۲۷ + ۲٫۰۶</span> تقریباً چقدر است؟ روش برآورد را بنویس.</p><div class="answer"></div></article>
+<article class="q"><h2><i>۱۰</i> خطایابی</h2><p>دانش‌آموزی نوشته <span class="ltr">۹٫۳۲ + ۴٫۶ = ۹٫۷۸</span>. اشکال کار چیست؟ پاسخ درست را بنویس.</p><div class="work"></div></article>
+<article class="q"><h2><i>۱۱</i> ضرب</h2><p><span class="ltr">۰٫۶ × ۰٫۳۵</span> را حساب کن.</p><div class="answer"></div></article>
+<article class="q"><h2><i>۱۲</i> مدل مساحت</h2><p>مستطیلی با طول <span class="ltr">۰٫۲</span> و عرض <span class="ltr">۰٫۴</span> واحد. مساحت آن چند واحد مربع است؟</p><div class="answer"></div></article>
+<article class="q"><h2><i>۱۳</i> ضرب هزارم</h2><p><span class="ltr">۰٫۳ × ۰٫۰۷</span> را حساب کن.</p><div class="answer"></div></article>
+<article class="q"><h2><i>۱۴</i> عامل کمتر از یک</h2><p>اگر عددی مثبت را در <span class="ltr">۰٫۸</span> ضرب کنیم، حاصل کوچک‌تر می‌شود یا بزرگ‌تر؟ یک مثال بزن.</p><div class="work"></div></article>
+<article class="q"><h2><i>۱۵</i> توان ده</h2><p><span class="ltr">۰٫۰۴۲۷ × ۱۰۰۰</span> را حساب کن.</p><div class="answer"></div></article>
+<article class="q"><h2><i>۱۶</i> واحد جرم</h2><p><span class="ltr">۳٫۵</span> کیلوگرم چند گرم است؟</p><div class="answer"></div></article>
+<article class="q"><h2><i>۱۷</i> واحد طول</h2><p>قد مریم <span class="ltr">۱۴۶</span> سانتی‌متر است. چند متر است؟</p><div class="answer"></div></article>
+<article class="q"><h2><i>۱۸</i> مسئلهٔ چندمرحله‌ای</h2><p>شش بطری هر کدام <span class="ltr">۰٫۷۵</span> لیتر آب دارند. در مجموع چند لیتر است؟</p><div class="work"></div></article>
+<article class="q"><h2><i>۱۹</i> کاربرد خرید</h2><p><span class="ltr">۲٫۵</span> کیلوگرم میوه با قیمت هر کیلو <span class="ltr">۳۲۰۰</span> تومان. چند تومان باید پرداخت شود؟</p><div class="work"></div></article>
+<article class="q"><h2><i>۲۰</i> گردکردن و حذف</h2><p><span class="ltr">۳٫۱۵۹</span> را به نزدیک‌ترین دهم گرد کن. سپس با حذف رقم‌های بعد از صدم مقایسه کن. چرا یکی نیستند؟</p><div class="work"></div></article>
+</div>
+<footer><span>ممیزستان · حکیمستان — مدرسهٔ ریاضی</span><span>صفحهٔ ۱ از ۲ · برگهٔ دانش‌آموز</span></footer>
+</section>
+
+<section class="sheet key">
+<header><div><h1>کلید پاسخ و راهنمای نمره‌گذاری</h1><p class="sub">برگهٔ سنجش عددهای اعشاری · نسخهٔ معلم</p></div><span class="badge">۲۰ نمره · تسلط پایه ۱۶</span></header>
+<div class="score"><div>ارزش مکانی و شکل عدد: ۴ نمره</div><div>مقایسه و محور: ۳ نمره</div><div>جمع، تفریق، ضرب: ۷ نمره</div><div>واحد و کاربرد: ۶ نمره</div></div>
+<table><thead><tr><th>سؤال</th><th>پاسخ</th><th>راهنمای پذیرش و بازخورد</th></tr></thead><tbody>
+<tr><td>۱</td><td><span class="ltr">۰٫۰۴</span></td><td>۴ در مرتبهٔ صدم است؛ نوشتن «۴» بدون ارزش، نمره ندارد.</td></tr>
+<tr><td>۲</td><td><span class="ltr">۰٫۰۳۷</span></td><td>سه رقم اعشار لازم است؛ حذف صفر میانی خطاست.</td></tr>
+<tr><td>۳</td><td><span class="ltr">&gt;</span></td><td>۳٫۰۶۰ در برابر ۳٫۰۵۶؛ مقایسهٔ صدم‌ها.</td></tr>
+<tr><td>۴</td><td><span class="ltr">۰٫۰۳۶ &lt; ۰٫۳۶ &lt; ۳٫۶۱</span></td><td>ترتیب کامل لازم است.</td></tr>
+<tr><td>۵</td><td><span class="ltr">۰٫۶۰۰</span></td><td>صفر انتهایی مقدار را عوض نمی‌کند.</td></tr>
+<tr><td>۶</td><td>بین <span class="ltr">۸٫۱۳</span> و <span class="ltr">۸٫۱۴</span></td><td>پاسخ «بین ۸٫۱ و ۸٫۲» فقط با توضیح هزارم پذیرفته می‌شود.</td></tr>
+<tr><td>۷</td><td><span class="ltr">۹٫۷۳</span></td><td>هم‌ترازی و انتقال؛ ۲٫۱۸۷ + ۱٫۶۴۳ = ۳٫۸۳ و + ۵٫۹.</td></tr>
+<tr><td>۸</td><td><span class="ltr">۰٫۳۶۴</span></td><td>قرض از دهم؛ کنترل با جمع ۰٫۳۶۴ + ۰٫۴۵۶.</td></tr>
+<tr><td>۹</td><td>حدود <span class="ltr">۱۴</span></td><td>گردکردن هر سه به عدد صحیح: ۷ + ۵ + ۲.</td></tr>
+<tr><td>۱۰</td><td>هم‌ترازی؛ پاسخ <span class="ltr">۱۳٫۹۲</span></td><td>اشتباه ۴٫۶ با ۰٫۴۶؛ صفر کمکی لازم است.</td></tr>
+<tr><td>۱۱</td><td><span class="ltr">۰٫۲۱</span></td><td>دو رقم اعشار؛ ۰٫۶ × ۰٫۳۵ = ۰٫۲۱۰.</td></tr>
+<tr><td>۱۲</td><td><span class="ltr">۰٫۰۸</span></td><td>مدل مساحت: ۲ × ۴ = ۸ خانه از ۱۰۰.</td></tr>
+<tr><td>۱۳</td><td><span class="ltr">۰٫۰۲۱</span></td><td>دهم × صدم = هزارم؛ سه رقم اعشار.</td></tr>
+<tr><td>۱۴</td><td>کوچک‌تر؛ مثال معتبر</td><td>مثال مثل ۱۰ × ۰٫۸ = ۸. توضیح «۰٫۸ کمتر از ۱ است» لازم است.</td></tr>
+<tr><td>۱۵</td><td><span class="ltr">۴۲٫۷</span></td><td>سه مرتبه جابه‌جایی ممیز به راست.</td></tr>
+<tr><td>۱۶</td><td><span class="ltr">۳۵۰۰</span> گرم</td><td>۱ کیلوگرم = ۱۰۰۰ گرم.</td></tr>
+<tr><td>۱۷</td><td><span class="ltr">۱٫۴۶</span> متر</td><td>تقسیم بر ۱۰۰ یا ضرب در ۰٫۰۱.</td></tr>
+<tr><td>۱۸</td><td><span class="ltr">۴٫۵</span> لیتر</td><td>۶ × ۰٫۷۵؛ برآورد کمتر از ۶.</td></tr>
+<tr><td>۱۹</td><td><span class="ltr">۸۰۰۰</span> تومان</td><td>۲ × ۳۲۰۰ + ۰٫۵ × ۳۲۰۰.</td></tr>
+<tr><td>۲۰</td><td>گرد: <span class="ltr">۳٫۲</span>؛ حذف: <span class="ltr">۳٫۱۵</span></td><td>گردکردن رقم بعد را می‌بیند؛ حذف فقط رقم‌ها را کنار می‌گذارد.</td></tr>
+</tbody></table>
+<div class="score" style="margin-top:10px"><div>۱۶–۲۰: تسلط</div><div>۱۲–۱۵: نیاز به تمرین هدفمند</div><div>۸–۱۱: بازآموزی ایستگاه‌های ۱–۶</div><div>کمتر از ۸: مداخلهٔ فردی</div></div>
+<p class="note">برای پایلوت، همین برگه را پیش و پس از بازی به کار ببرید و نسخهٔ هم‌ارز دوم را با همان جدول بسازید. یک سؤال انتقالی (۱۹ و ۲۰) را جدا گزارش کنید. برگه با بازی هم‌ارز است اما جای آزمون کلاسی را نمی‌گیرد.</p>
+<footer><span>ممیزستان · حکیمستان</span><span>صفحهٔ ۲ از ۲ · کلید معلم</span></footer>
+</section>
+</body></html>
