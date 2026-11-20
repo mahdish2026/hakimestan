@@ -14,7 +14,7 @@ const parse = html => new JSDOM(html, { url: 'https://hakimistan.ir/' }).window.
 const schoolSource = read('math-learning.html');
 const school = parse(schoolSource);
 const cards = [...school.querySelectorAll('main.games-grid > a.game-card')];
-assert.equal(cards.length, 6, 'school page must show exactly six game cards');
+assert.equal(cards.length, 7, 'school page must show exactly seven game cards');
 const hrefs = cards.map(card => card.getAttribute('href'));
 assert.deepEqual(hrefs, [
   'games/math-learning-1.html',
@@ -22,7 +22,8 @@ assert.deepEqual(hrefs, [
   'games/math-olgoha.html',
   'games/math-fasl2.html',
   'games/math-nesbat.html',
-  'games/math-geometry.html'
+  'games/math-geometry.html',
+  'games/math-decimals.html'
 ], 'card order/links changed');
 for (const href of hrefs) {
   assert.ok(fs.existsSync(path.join(root, href)), `broken card link: ${href}`);
@@ -54,7 +55,7 @@ assert.match(schoolSource, /\.kasrestan-card::before\s*\{/);
 assert.doesNotMatch(schoolSource, /(?:kasrestan|nesbat)-(?:ribbon|note)/);
 assert.match(schoolSource, /\.kasrestan-card \.card-icon\s*\{/);
 assert.match(schoolSource, /body\[data-theme="night"\] \.kasrestan-card/, 'dark themes not covered');
-assert.match(schoolSource, /شش بازی/, 'subtitle/meta do not mention five games');
+assert.match(schoolSource, /هفت بازی/, 'subtitle/meta do not mention five games');
 
 // ---- 2) detailed description page ---------------------------------------
 const judgesSource = read('judges.html');
@@ -74,7 +75,7 @@ const schoolSection = [...judges.querySelectorAll('section')]
   .find(sec => sec.textContent.includes('🧮 مدرسه ریاضی'));
 assert.ok(schoolSection, 'math-school section is missing');
 const features = [...schoolSection.querySelectorAll('.feature-list > li')];
-assert.equal(features.length, 6, 'math-school section must list six games');
+assert.equal(features.length, 7, 'math-school section must list seven games');
 assert.ok(features.some(li => li.textContent.includes('کسرستان')));
 assert.ok(schoolSection.querySelector('.ks-spotlight'), 'dedicated spotlight block missing');
 assert.ok(schoolSection.querySelector('.ks-chips'), 'feature chips missing');
@@ -83,9 +84,9 @@ assert.ok(schoolSection.querySelector('a[href="games/math-fasl2.html"]'), 'link 
 assert.match(judgesSource, /\.ks-spotlight\s*\{/);
 
 // Stale, contradictory counts used to say ۱۳ / ۱۲ / ۱۳.
-assert.match(judgesSource, /<strong>۱۶ بازی آموزشی<\/strong>/);
-assert.match(judgesSource, /پلتفرمی کامل با ۱۶ بازی آموزشی/);
-assert.match(judgesSource, /<span class="num">۱۶<\/span><span class="label">بازی تعاملی/);
+assert.match(judgesSource, /<strong>۱۷ بازی آموزشی<\/strong>/);
+assert.match(judgesSource, /پلتفرمی کامل با ۱۷ بازی آموزشی/);
+assert.match(judgesSource, /<span class="num">۱۷<\/span><span class="label">بازی تعاملی/);
 assert.ok(!/۱۴ بازی آموزشی|۱۳ بازی آموزشی|۱۲ بازی آموزشی|<span class="num">۱۴<\/span>/.test(judgesSource),
   'stale game counts remain');
 
@@ -94,10 +95,10 @@ const lobby = parse(read('index.html'));
 const schoolBento = [...lobby.querySelectorAll('a.bento-card')]
   .find(a => a.getAttribute('href') === 'math-learning.html');
 assert.ok(schoolBento, 'lobby link to math school missing');
-assert.match(schoolBento.textContent, /شش بازی/);
+assert.match(schoolBento.textContent, /هفت بازی/);
 
 const sw = read('sw.js');
-assert.match(sw, /const VERSION = 'hakim-v1\.5\.49'/);
+assert.match(sw, /const VERSION = 'hakim-v1\.5\.55'/);
 assert.match(sw, /'\.\/math-learning\.html'/);
 assert.match(sw, /'\.\/judges\.html'/);
 assert.match(sw, /'\.\/games\/math-fasl2\.html'/);
@@ -129,8 +130,8 @@ console.log(JSON.stringify({
   descriptionRowsForKasrestan: kasrestanRows.length,
   mathSchoolGamesListed: features.length,
   spotlight: true,
-  gameCountsFixedTo: 16,
-  cacheVersion: 'hakim-v1.5.49',
+  gameCountsFixedTo: 17,
+  cacheVersion: 'hakim-v1.5.55',
   schoolPagePrefetched: true,
   docsUpdated: true
 }, null, 2));

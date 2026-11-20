@@ -73,6 +73,8 @@ node tools/inject-csp.mjs [--dry]
 | `hqf-converter.html` | مبدل آزمون به قالب HQF |
 | `payamresan.html` | پیام‌رسان کلاسی |
 | `panels/teacher.html` | پنل مدیریت معلم |
+| `games/math-decimals-teacher.html` | دفتر معلم ممیزستان: کارت‌های کلاس، جدول دانش‌آموز، بدفهمی‌ها، CSV و چاپ (آفلاین، بدون شبکه) |
+| `assessment/decimals-check.html` | برگهٔ سنجش ۲۰ سؤالی ممیزستان + کلید و نمره‌گذاری، آمادهٔ چاپ A4 |
 
 ### محتوا
 
@@ -140,3 +142,19 @@ node tools/check-contrast.mjs     # بازرسی کنتراست رنگ طبق WC
 ## پیش‌نمایش
 
 ساختهٔ مهدی شریفیان · ۱۴۰۵
+
+### ممیزستان — عددهای اعشاری ریاضی پنجم
+
+بازی `games/math-decimals.html` از مدرسهٔ ریاضی در دسترس است: ۱۰ ایستگاه، ۶۰ تمرین، ابزار صدم‌ها و ارزش مکانی، محور بزرگ‌شونده، پرش و مساحت ضرب؛ ذخیرهٔ پیشرفت و گواهی. ۱۰ راهنمای صوتی آماده با صدای مرد فارسی ایران و متن همراه دارد؛ چهار تمرین جمع و تفریق شامل کارگاه عملیِ مرتبه‌به‌مرتبه‌اند. بازخورد اکنون **تشخیصی** است: ۹ قاعدهٔ خطا (جابه‌جایی ممیز، هم‌ترازی، برابری صفرها، واحد، گردکردن، حذف رقم و…)، تمرین خرد جبرانی و دفتر بدفهمی؛ هر ۱۴ تمرین گزینه‌ای برای تک‌تک گزینه‌ها دلیل خطای جدا دارد. دفتر معلم `games/math-decimals-teacher.html` همین داده‌های محلی را به کارت‌های کلاس، جدول دانش‌آموز، بدفهمی‌ها و CSV/چاپ تبدیل می‌کند. برای سنجش کلاسی، `assessment/decimals-check.html` با کلید ۲۰ سؤالی آماده است.
+
+```bash
+node tools/build-memizestan.cjs    # exports/memizestan.html، خروجی مستقل
+node tests/math-decimals.cjs
+# با سرور محلی روی 8000 و Chromium آماده:
+node tests/math-decimals-browser.cjs
+node tests/math-decimals-diagnosis.cjs
+node tests/math-decimals-teacher.cjs
+node tests/math-decimals-assessment.cjs
+```
+
+دامنهٔ کتاب و محدودیت آزمون‌ها: [گزارش ممیزستان](docs/memizestan-chapter-review.md). روایت کسرها، اندازهٔ متن، حالت شب و حرکت: [بازبینی نمایش](docs/memizestan-display-review.md). داوری کشوری و پاسخ این دور: [داوری و به‌روزرسانی](docs/memizestan-national-judging.md)؛ راهنمای درس ۴۵ دقیقه‌ای: [راهنمای معلم](docs/memizestan-teacher-guide.md)؛ طرح پایلوت و سنجش: [پروندهٔ شواهد](docs/memizestan-evidence-pack.md)؛ خلاصهٔ فنی این دور: [گزارش بهبود](docs/memizestan-improvement-round.md).

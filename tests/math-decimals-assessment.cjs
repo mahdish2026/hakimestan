@@ -1,0 +1,9 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
+(async()=>{const b=await pup.launch({executablePath:await chromium.executablePath(),args:[...chromium.args,'--disable-gpu'],headless:true});try{const p=await b.newPage();await p.setViewport({width:1000,height:1200});const external=[],errors=[];p.on('pageerror',e=>errors.push(e.message));await p.setRequestInterception(true);p.on('request',r=>{if(r.url().startsWith('http://localhost:8000/')||r.url().startsWith('data:'))return r.continue();external.push(r.url());r.abort();});await p.goto('http://localhost:8000/assessment/decimals-check.html',{waitUntil:'networkidle0'});
+assert.equal(await p.$$eval('.q',e=>e.length),20);assert.equal(await p.$$eval('.key tbody tr',e=>e.length),20);
+assert.match(await p.$eval('.key',e=>e.textContent),/۰٫۳۶۴/);assert.match(await p.$eval('.key',e=>e.textContent),/۱۳٫۹۲/);
+assert.match(await p.$eval('.instructions',e=>e.textContent),/ماشین‌حساب لازم نیست/);
+await p.emulateMediaType('print');assert.equal(await p.$eval('.print-btn',e=>e.getClientRects().length),0);assert.equal(await p.$eval('.q',e=>getComputedStyle(e).float),'right');
+await p.addScriptTag({content:fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8')});const r=await p.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.equal(r.violations.length,0,JSON.stringify(r.violations.map(v=>({id:v.id,h:v.nodes[0].html}))));
+assert.deepEqual(external,[]);assert.deepEqual(errors,[]);
+console.log('PASS: 20-item printable assessment with 20-row answer key, rubric bands, print layout with floats, axe and no external requests.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

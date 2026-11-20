@@ -6,7 +6,7 @@
  *   • پوستهٔ برنامه (HTML/CSS/JS/آیکون) → Precache + Stale-While-Revalidate
  *   • ناوبری صفحه      → Network-First با فالبک آفلاین (offline.html)
  *   • تصاویر          → Cache-First با سقف تعداد
- *   • ویدیو و صدا      → شبکه؛ استثنا: ده صوت کوتاه نقشستان با کش و Range
+ *   • ویدیو و صدا      → شبکه؛ استثنا: صوت‌های آمادهٔ نقشستان و ممیزستان با کش و Range
  *   • منابع بیرونی     → Stale-While-Revalidate با سقف
  *
  * امنیت: درخواست‌های غیر-GET و مبدأهای ناشناس هرگز کش نمی‌شوند.
@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.49';
+const VERSION = 'hakim-v1.5.55';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -75,6 +75,26 @@ const PREFETCH_PAGES = [
   './install-pwa.html',
   './math-learning.html',
   './games/math-geometry.html',
+  './games/math-decimals.html',
+  './games/math-decimals-teacher.html',
+  './games/math-decimals/style.css',
+  './games/math-decimals/data.js',
+  './games/math-decimals/presentation.js',
+  './games/math-decimals/diagnose.js',
+  './games/math-decimals/display.js',
+  './games/math-decimals/app.js',
+  './games/math-decimals/workshop.js',
+  './games/math-decimals/narration.js',
+  './games/math-decimals/audio/tenths.mp3',
+  './games/math-decimals/audio/place.mp3',
+  './games/math-decimals/audio/line.mp3',
+  './games/math-decimals/audio/compare.mp3',
+  './games/math-decimals/audio/add.mp3',
+  './games/math-decimals/audio/subtract.mp3',
+  './games/math-decimals/audio/repeat.mp3',
+  './games/math-decimals/audio/multiply.mp3',
+  './games/math-decimals/audio/scale.mp3',
+  './games/math-decimals/audio/market.mp3',
   './games/math-fasl2.html',
   './games/math-nesbat.html'
 ];
@@ -304,12 +324,16 @@ async function handleExternal(request) {
 /* ══════════════════════════════════════════════════════════
    رویداد fetch
    ══════════════════════════════════════════════════════════ */
-// Only the ten short, bundled geometry clips are served from cache with Range support.
+// Only allowlisted, bundled geometry and decimals clips use cached Range support.
 // Other media retain the site's network-only policy.
 function isGeometryAudio(url) {
   const prefix = new URL('games/math-geometry/audio/', self.registration.scope);
   if (url.origin !== prefix.origin || !url.pathname.startsWith(prefix.pathname)) return false;
   return /^(?:symmetry|angles|quadrilaterals|mirror|center|rotation|tool-[0-6])\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
+}
+function isDecimalAudio(url) {
+  const prefix=new URL('games/math-decimals/audio/',self.registration.scope);
+  return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^(?:tenths|place|line|compare|add|subtract|repeat|multiply|scale|market)\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
 }
 async function handleGeometryAudio(request) {
   const full = await caches.match(request.url, { ignoreSearch: true });
@@ -340,7 +364,7 @@ self.addEventListener('fetch', (event) => {
   // پروتکل‌های غیر http (مثل chrome-extension) نادیده گرفته شوند
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
-  if (isGeometryAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
+  if (isGeometryAudio(url) || isDecimalAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
   // سایر Rangeها بدون تغییر به شبکه می‌روند.
   if (request.headers.get('range')) return;
 

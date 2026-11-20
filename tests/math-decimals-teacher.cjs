@@ -1,0 +1,23 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
+(async()=>{const b=await pup.launch({executablePath:await chromium.executablePath(),args:[...chromium.args,'--disable-gpu'],headless:true});try{const p=await b.newPage();await p.setViewport({width:1200,height:1000});const errors=[],external=[];p.on('pageerror',e=>errors.push(e.message));await p.setRequestInterception(true);p.on('request',r=>{if(r.url().startsWith('http://localhost:8000/')||r.url().startsWith('data:'))return r.continue();external.push(r.url());r.abort();});
+await p.goto('http://localhost:8000/games/math-decimals-teacher.html',{waitUntil:'networkidle0'});
+assert(await p.$('.empty'),'empty state missing');
+assert.match(await p.$eval('#privacy',e=>e.textContent),/هیچ اطلاعاتی ارسال نمی‌کند/);
+await p.evaluate(()=>{const D=window.DecimalData;const mk=(name,n,misc,guided)=>{const done={},drafts={};D.stages.flatMap(s=>s.tasks).slice(0,n).forEach((t,i)=>{done[t.id]={correct:true,date:'2026-10-01T10:00:00.000Z'};drafts[t.id]={attempts:2,guided:guided&&i<3,remedied:i<2};});return {name,done,drafts,misconceptions:misc};};localStorage.setItem('hakim.decimals.v1.player.سارا',JSON.stringify(mk('سارا',60,{place_shift:3,decimal_places:1},false)));localStorage.setItem('hakim.decimals.v1.player.علی',JSON.stringify(mk('علی',30,{place_shift:2,carry:1},true)));localStorage.setItem('hakim.decimals.v1.player.خراب',JSON.stringify({name:'x',done:'bad',drafts:'bad'}));localStorage.setItem('hakim.decimals.v1.player.بی‌نام',JSON.stringify({name:'  ',done:{},drafts:{}}));});
+await p.click('#refresh');
+assert.equal(await p.$$eval('tbody tr',es=>es.length),2,'corrupt and empty names must be ignored');
+const cards=await p.$$eval('.card b',es=>es.map(e=>e.textContent));assert.deepEqual(cards,['۲','۷۵٪','۱ نفر','۷']);
+const bars=await p.$$eval('.stage-bar b',es=>es.map(e=>e.textContent));assert.deepEqual(bars,['۱۰۰٪','۱۰۰٪','۱۰۰٪','۱۰۰٪','۱۰۰٪','۵۰٪','۵۰٪','۵۰٪','۵۰٪','۵۰٪']);
+const first=await p.$eval('tbody tr',e=>e.innerText);assert.match(first,/سارا/);assert.match(first,/۶۰\/۶۰/);assert.match(first,/۶۰/);
+assert.equal(await p.$$eval('.mis article',es=>es.length),3);
+assert.match(await p.$eval('.mis',e=>e.textContent),/ارزش مکانی/);
+// CSV is BOM-prefixed and contains both students, not corrupt records
+const csvFile=await p.evaluate(()=>new Promise(res=>{const orig=URL.createObjectURL;URL.createObjectURL=blob=>{blob.arrayBuffer().then(buf=>{URL.createObjectURL=orig;const bytes=new Uint8Array(buf);res({head:[...bytes.slice(0,3)],text:new TextDecoder().decode(bytes)});});return 'blob:test';};document.getElementById('csv').click();}));
+assert.deepEqual(csvFile.head,[0xEF,0xBB,0xBF]);const csv=csvFile.text;const lines=csv.trim().split('\n');assert.equal(lines.length,3);assert.match(lines[0],/name,completed,total/);assert.match(csv,/سارا/);assert.match(csv,/علی/);assert(!csv.includes('خراب'));
+await p.addScriptTag({content:fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8')});const audit=async()=>p.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));let r=await audit();assert.equal(r.violations.length,0,JSON.stringify(r.violations.map(v=>({id:v.id,h:v.nodes[0].html}))));
+await p.click('#theme');assert.equal(await p.$eval('html',e=>e.dataset.theme),'dark');r=await audit();assert.equal(r.violations.length,0,JSON.stringify(r.violations.map(v=>({id:v.id,h:v.nodes[0].html}))));
+await p.reload({waitUntil:'networkidle0'});assert.equal(await p.$eval('html',e=>e.dataset.theme),'dark','teacher theme persists');
+await p.setViewport({width:390,height:844});assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile overflow');
+await p.emulateMediaType('print');assert.equal(await p.$eval('header',e=>getComputedStyle(e).display),'none');assert.equal(await p.$eval('#csv',e=>e.getClientRects().length),0);assert.equal(await p.$eval('.table-wrap',e=>getComputedStyle(e).overflowX),'auto');
+assert.deepEqual(external,[]);assert.deepEqual(errors,[]);
+console.log('PASS: teacher report filters invalid profiles, aggregates 2 students, stage bars 100/50, misconception ranking, BOM CSV, dark persistence, axe in both themes, mobile with no overflow, print controls hidden and zero external requests.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
