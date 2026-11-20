@@ -3,12 +3,12 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),pup=require('pu
 await p.goto('http://localhost:8000/games/math-decimals-teacher.html',{waitUntil:'networkidle0'});
 assert(await p.$('.empty'),'empty state missing');
 assert.match(await p.$eval('#privacy',e=>e.textContent),/هیچ اطلاعاتی ارسال نمی‌کند/);
-await p.evaluate(()=>{const D=window.DecimalData;const mk=(name,n,misc,guided)=>{const done={},drafts={};D.stages.flatMap(s=>s.tasks).slice(0,n).forEach((t,i)=>{done[t.id]={correct:true,date:'2026-10-01T10:00:00.000Z'};drafts[t.id]={attempts:2,guided:guided&&i<3,remedied:i<2};});return {name,done,drafts,misconceptions:misc};};localStorage.setItem('hakim.decimals.v1.player.سارا',JSON.stringify(mk('سارا',74,{place_shift:3,decimal_places:1},false)));localStorage.setItem('hakim.decimals.v1.player.علی',JSON.stringify(mk('علی',30,{place_shift:2,carry:1},true)));localStorage.setItem('hakim.decimals.v1.player.خراب',JSON.stringify({name:'x',done:'bad',drafts:'bad'}));localStorage.setItem('hakim.decimals.v1.player.بی‌نام',JSON.stringify({name:'  ',done:{},drafts:{}}));});
+await p.evaluate(()=>{const D=window.DecimalData;const mk=(name,n,misc,guided)=>{const done={},drafts={};D.stages.flatMap(s=>s.tasks).slice(0,n).forEach((t,i)=>{done[t.id]={correct:true,date:'2026-10-01T10:00:00.000Z'};drafts[t.id]={attempts:2,guided:guided&&i<3,remedied:i<2};});return {name,done,drafts,misconceptions:misc};};localStorage.setItem('hakim.decimals.v1.player.سارا',JSON.stringify(mk('سارا',76,{place_shift:3,decimal_places:1},false)));localStorage.setItem('hakim.decimals.v1.player.علی',JSON.stringify(mk('علی',30,{place_shift:2,carry:1},true)));localStorage.setItem('hakim.decimals.v1.player.خراب',JSON.stringify({name:'x',done:'bad',drafts:'bad'}));localStorage.setItem('hakim.decimals.v1.player.بی‌نام',JSON.stringify({name:'  ',done:{},drafts:{}}));});
 await p.click('#refresh');
 assert.equal(await p.$$eval('tbody tr',es=>es.length),2,'corrupt and empty names must be ignored');
 const cards=await p.$$eval('.card b',es=>es.map(e=>e.textContent));assert.deepEqual(cards,['۲','۷۰٪','۱ نفر','۷']);
 const bars=await p.$$eval('.stage-bar b',es=>es.map(e=>e.textContent));assert.deepEqual(bars,['۱۰۰٪','۱۰۰٪','۱۰۰٪','۱۰۰٪','۱۰۰٪','۵۰٪','۵۰٪','۵۰٪','۵۰٪','۵۰٪','۵۰٪']);
-const first=await p.$eval('tbody tr',e=>e.innerText);assert.match(first,/سارا/);assert.match(first,/۷۴\/۷۴/);assert.match(first,/۷۴/);
+const first=await p.$eval('tbody tr',e=>e.innerText);assert.match(first,/سارا/);assert.match(first,/۷۶\/۷۶/);assert.match(first,/۷۶/);
 assert.equal(await p.$$eval('.mis article',es=>es.length),3);
 assert.match(await p.$eval('.mis',e=>e.textContent),/ارزش مکانی/);
 // CSV is BOM-prefixed and contains both students, not corrupt records

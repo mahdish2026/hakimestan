@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),D=require('../games/math-decimals/data.js'),X=require('../games/math-decimals/diagnose.js'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 const all=D.stages.flatMap(s=>s.tasks);
-assert.equal(all.length,74);assert.equal(all.filter(t=>t.teach).length,41);
+assert.equal(all.length,76);assert.equal(all.filter(t=>t.teach).length,43);
 assert.equal(all.filter(t=>t.kind==='choice').every(t=>Array.isArray(t.whyWrong)&&t.whyWrong.length===t.options.length&&!t.whyWrong[t.answer]),true,'every distractor needs an explanation');
 assert.equal(D.parse('7/10'),null,'a slash must not be accepted as a decimal mark');
 assert.equal(D.parse('۰٫۷'),700000);
