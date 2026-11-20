@@ -138,7 +138,8 @@ body {
 }
 
 .game-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   color: inherit;
   background: var(--surface);
@@ -285,17 +286,17 @@ body[data-theme="night"] .nesbat-card .card-cta,body[data-theme="ocean"] .nesbat
 }
 
 .card-desc {
-  font-size: .85rem;
+  font-size: .94rem;
   color: var(--muted);
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.85;
 }
 
 .card-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 14px;
+  margin-top: auto;
 }
 
 .tag {
@@ -364,44 +365,12 @@ body[data-theme="night"] .nesbat-card .card-cta,body[data-theme="ocean"] .nesbat
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .card-top {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .card-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
-  }
-  
-  .card-name {
-    justify-content: center;
-  }
-  
-  .card-cta {
-    justify-content: center;
-  }
-}
-
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.reveal {
-  animation: fadeIn .4s ease forwards;
-  opacity: 0;
-}
-
-.reveal.d1 { animation-delay: .05s; }
-.reveal.d2 { animation-delay: .1s; }
-.reveal.d3 { animation-delay: .15s; }
-.reveal.d4 { animation-delay: .2s; }
 
 /* ══════════════════════════════════════════════════
    انتخاب‌گر تم — دکمه و پنل
@@ -583,9 +552,45 @@ body[data-theme="kashi"] .tag.educational{
 
 
 .theme-btn svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.8; color: var(--purple); }
+/* A notebook heading, shared by all seven subjects. */
+.page-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(18px, 3vw, 32px);
+  border: 1px solid var(--surface-line);
+  border-radius: 20px;
+  background-color: var(--surface);
+  background-image: radial-gradient(var(--surface-line) 1px, transparent 1px);
+  background-size: 12px 12px;
+  z-index: 2;
+}
+.page-header .theme-btn, .page-header .back-link {
+  position: relative; inset: auto; transform: none; margin: 0; grid-row: 1;
+}
+.theme-btn { grid-column: 1; justify-self: start; }
+.back-link { grid-column: 3; justify-self: end; }
+.page-title { grid-column: 2; grid-row: 1; }
+.page-subtitle { grid-column: 1 / -1; margin: 0; }
+.theme-panel { top: 4.6rem; right: 1rem; }
+.card-top { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; }
+.card-info { display: contents; }
+.card-name { margin: 0; }
+.card-desc { grid-column: 1 / -1; }
+.card-cta { padding-top: 12px; border-top: 1px solid var(--surface-line); justify-content: space-between; }
+.game-card { transition: transform .16s ease, border-color .16s ease; }
+.game-card:focus-visible, .page-header :focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; }
 @media (max-width: 600px) {
-  .page-header { padding-top: 64px; }
-  .page-header .back-link, .page-header .theme-btn { top: 24px; }
+  .page-header { grid-template-columns: 1fr 1fr; }
+  .back-link { grid-column: 2; }
+  .page-title { grid-column: 1 / -1; grid-row: 2; }
+  .card-icon { width: 46px; height: 46px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .game-card, .card-cta .arrow, .page-header * { transition: none; animation: none; }
+  .game-card:hover, .game-card:hover .arrow { transform: none; }
 }
 </style>
 
@@ -615,24 +620,24 @@ body[data-theme="kashi"] .tag.educational{
   <div class="theme-group">✨ حالت ویژه</div>
   <button type="button" class="theme-opt" data-theme="modern"><span class="theme-dot" style="--sw:linear-gradient(135deg,#ff7d3b,#3ba7ff)"></span><span class="theme-name">مدرن</span><span class="theme-check">✓</span></button>
 </div>
-      <a href="index.html" class="back-link reveal d1">
+      <a href="index.html" class="back-link">
         <span>←</span>
         <span>بازگشت به لابی</span>
       </a>
-      <h1 class="page-title reveal d2">
+      <h1 class="page-title">
         <svg class="page-title-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
           <path d="M8 40h32M12 36h24M15 36V26c0-7 4-12 9-15 5 3 9 8 9 15v10" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M24 12V5m0 0-2.5 3M24 5l2.5 3M19 36v-7a5 5 0 0 1 10 0v7M24 21v15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>مدرسه ریاضی</span>
       </h1>
-      <p class="page-subtitle reveal d3">هفت بازی آموزشی برای ریاضی پنجم؛ از کدام بازی شروع می‌کنی؟</p>
+      <p class="page-subtitle">هفت بازی آموزشی برای ریاضی پنجم؛ از کدام بازی شروع می‌کنی؟</p>
     </header>
 
     <!-- Games Grid -->
     <main class="games-grid">
       <!-- Game 1: تقسیم چکشی -->
-      <a href="games/math-learning-1.html" class="game-card reveal d1">
+      <a href="games/math-learning-1.html" class="game-card">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -646,10 +651,6 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
-          <span class="tag math">🧮 ریاضی</span>
-          <span class="tag educational">📚 آموزشی</span>
-          <span class="tag">پایه پنجم</span>
-          <span class="tag">🧙 همراهِ حکیم</span>
           <span class="tag">✨ ۵ مرحله</span>
         </div>
         <span class="card-cta">
@@ -659,7 +660,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 2: مأموریت زمان -->
-      <a href="games/math-time-mission.html" class="game-card reveal d2">
+      <a href="games/math-time-mission.html" class="game-card">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -673,10 +674,6 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
-          <span class="tag math">🧮 ریاضی</span>
-          <span class="tag educational">📚 آموزشی</span>
-          <span class="tag">پایه پنجم</span>
-          <span class="tag">🧙 همراهِ حکیم</span>
           <span class="tag">⏱️ ۸ مرحله</span>
         </div>
         <span class="card-cta">
@@ -686,7 +683,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 3: الگوستان -->
-      <a href="games/math-olgoha.html" class="game-card reveal d3">
+      <a href="games/math-olgoha.html" class="game-card">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -700,10 +697,6 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
-          <span class="tag math">🧮 ریاضی</span>
-          <span class="tag educational">📚 آموزشی</span>
-          <span class="tag">پایه پنجم</span>
-          <span class="tag">🧙 همراهِ حکیم</span>
           <span class="tag">✨ ۵ سرزمین</span>
         </div>
         <span class="card-cta">
@@ -713,7 +706,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 4: کسرستان — کارت با هویت رنگی کسرستان -->
-      <a href="games/math-fasl2.html" class="game-card kasrestan-card reveal d4" data-game="math-fasl2" aria-label="ورود به کسرستان؛ کسر‌ها و چهار عمل در شش جزیره و ۵۸ فعالیت">
+      <a href="games/math-fasl2.html" class="game-card kasrestan-card" data-game="math-fasl2" aria-label="ورود به کسرستان؛ کسر‌ها و چهار عمل در شش جزیره و ۵۸ فعالیت">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -728,10 +721,6 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
-          <span class="tag math">🧮 ریاضی</span>
-          <span class="tag educational">📚 آموزشی</span>
-          <span class="tag">پایه پنجم</span>
-          <span class="tag">🧙 همراهِ حکیم</span>
           <span class="tag ks">✨ ۶ جزیره · ۵۸ فعالیت</span>
           <span class="tag ks">🔗 پنل معلم</span>
         </div>
@@ -741,7 +730,7 @@ body[data-theme="kashi"] .tag.educational{
         </span>
       </a>
       <!-- Game 5: نسبتستان — کارت اختصاصی نسبت، تناسب و درصد -->
-      <a href="games/math-nesbat.html" class="game-card nesbat-card reveal d4" data-game="math-nesbat" aria-label="ورود به نسبتستان؛ نسبت، تناسب و درصد در پنج سرزمین">
+      <a href="games/math-nesbat.html" class="game-card nesbat-card" data-game="math-nesbat" aria-label="ورود به نسبتستان؛ نسبت، تناسب و درصد در پنج سرزمین">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -756,10 +745,6 @@ body[data-theme="kashi"] .tag.educational{
           </div>
         </div>
         <div class="card-tags">
-          <span class="tag math">🧮 ریاضی</span>
-          <span class="tag educational">📚 آموزشی</span>
-          <span class="tag">پایه پنجم</span>
-          <span class="tag">🧙 همراهِ حکیم</span>
           <span class="tag ns">✨ ۵ سرزمین · ۶۷ فعالیت</span>
           <span class="tag ns">🔗 پنل معلم</span>
         </div>
@@ -769,22 +754,22 @@ body[data-theme="kashi"] .tag.educational{
         </span>
       </a>
       <!-- Game 6: نقشستان -->
-      <a href="games/math-geometry.html" class="game-card reveal d4" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
+      <a href="games/math-geometry.html" class="game-card" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
         <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m24 5 6 13 13 6-13 6-6 13-6-13-13-6 13-6Z"/><path d="M24 5v38M5 24h38"/></svg></div>
           <div class="card-info"><h2 class="card-name">نقشستان</h2><p class="card-desc">تقارن، زاویه و چندضلعی‌ها را با ساختن یاد بگیر؛ نقطه‌ها را قرینه کن، نیمساز بساز و راز قطرها را کشف کن. همراه حکیم، تمرین‌ها را انجام بده و گواهیِ فهرست‌دار پیشرفتت را بگیر.</p></div>
         </div>
-        <div class="card-tags"><span class="tag math">🧮 ریاضی</span><span class="tag educational">📚 آموزشی</span><span class="tag">پایه پنجم</span><span class="tag">🧙 همراهِ حکیم</span><span class="tag">✨ ۱۲ ایستگاه · ۴۸ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
+        <div class="card-tags"><span class="tag">✨ ۱۲ ایستگاه · ۴۸ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به نقشستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
-      <a href="games/math-decimals.html" class="game-card reveal d4" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
+      <a href="games/math-decimals.html" class="game-card" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
         <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="32" rx="6"/><path d="M18 8v32M30 8v32M6 24h36"/></svg></div><div class="card-info"><h2 class="card-name">ممیزستان</h2><p class="card-desc">بین صفر و یک چه عددهایی پنهان شده‌اند؟ با دهم‌ها و صدم‌ها عدد بساز، جایش را روی محور پیدا کن و با شکل‌ها نشان بده وقتی دو عدد اعشاری را جمع می‌کنی چه اتفاقی می‌افتد.</p></div></div>
-        <div class="card-tags"><span class="tag math">🧮 ریاضی</span><span class="tag educational">📚 آموزشی</span><span class="tag">پایه پنجم</span><span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
+        <div class="card-tags"><span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به ممیزستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
     </main>
 
     <!-- Footer -->
-    <footer class="page-footer reveal d4">
+    <footer class="page-footer">
       <p>طراح و توسعه‌دهنده: <strong>مهدی شریفیان</strong></p>
       <p><a href="index.html">حکیمستان</a> | بازی‌های آموزشی هوشمند</p>
     </footer>
