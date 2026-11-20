@@ -720,6 +720,7 @@ const SECTIONS = [
   },
   {
     id: 'sec-concepts',
+    upcoming: true, // Override with upcoming:false on each video when its media is published.
     title: 'فیلم‌های علوم پنجم دبستان',
     icon: '🔬',
     videos: [
@@ -783,7 +784,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 /* ── BUILD CARD ───────────────────────────────────────────── */
 const videoStatus = {};   // id → 'ready' | 'soon'
 
-function buildCard(video) {
+function buildCard(video, upcoming) {
   const card = document.createElement('article');
   card.className = 'video-card reveal';
 
@@ -792,30 +793,32 @@ function buildCard(video) {
   thumb.className = 'card-thumb';
   thumb.setAttribute('aria-label', 'پیش‌نمایش: ' + video.title);
 
-  /* تصویر با پشتیبانی WebP و اندازه‌های واکنش‌گرا
-     نسخه‌های WebP از tools/optimize-images.mjs ساخته می‌شوند و
-     اگر موجود نباشند، مرورگر خودکار به JPEG برمی‌گردد. */
-  const base = 'videos/' + video.id;
-  const webpBase = 'videos/optimized/' + video.id;   // نسخه‌های WebP همیشه در videos/optimized/ هستند
-  const picture = document.createElement('picture');
-  const source = document.createElement('source');
-  source.type = 'image/webp';
-  source.srcset = `${webpBase}-480.webp 480w, ${webpBase}-960.webp 960w, ${webpBase}.webp 1280w`;
-  source.sizes = '(max-width: 560px) 92vw, (max-width: 1000px) 46vw, 380px';
+  if (!upcoming) {
+    /* تصویر با پشتیبانی WebP و اندازه‌های واکنش‌گرا
+       نسخه‌های WebP از tools/optimize-images.mjs ساخته می‌شوند و
+       اگر موجود نباشند، مرورگر خودکار به JPEG برمی‌گردد. */
+    const base = 'videos/' + video.id;
+    const webpBase = 'videos/optimized/' + video.id;   // نسخه‌های WebP همیشه در videos/optimized/ هستند
+    const picture = document.createElement('picture');
+    const source = document.createElement('source');
+    source.type = 'image/webp';
+    source.srcset = `${webpBase}-480.webp 480w, ${webpBase}-960.webp 960w, ${webpBase}.webp 1280w`;
+    source.sizes = '(max-width: 560px) 92vw, (max-width: 1000px) 46vw, 380px';
 
-  const img = document.createElement('img');
-  img.alt = 'پیش‌نمایش ویدیوی ' + video.title;
-  img.width = 1280;
-  img.height = 720;
-  img.loading = 'lazy';
-  img.decoding = 'async';
-  img.onload  = () => { img.classList.add('loaded'); thumb.classList.add('has-image'); };
-  img.onerror = () => { img.classList.remove('loaded'); thumb.classList.remove('has-image'); };
-  img.src = base + '.jpg';
+    const img = document.createElement('img');
+    img.alt = 'پیش‌نمایش ویدیوی ' + video.title;
+    img.width = 1280;
+    img.height = 720;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.onload  = () => { img.classList.add('loaded'); thumb.classList.add('has-image'); };
+    img.onerror = () => { img.classList.remove('loaded'); thumb.classList.remove('has-image'); };
+    img.src = base + '.jpg';
 
-  picture.appendChild(source);
-  picture.appendChild(img);
-  thumb.appendChild(picture);
+    picture.appendChild(source);
+    picture.appendChild(img);
+    thumb.appendChild(picture);
+  }
 
   const ph = document.createElement('div');
   ph.className = 'thumb-ph';
@@ -904,6 +907,11 @@ function buildCard(video) {
       .catch(markSoon);
   }
 
+  if (upcoming) {
+    markSoon();
+    return card;
+  }
+
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       for (var i = 0; i < entries.length; i++) {
@@ -944,7 +952,7 @@ function renderSections() {
 
     const grid = document.createElement('div');
     grid.className = 'video-grid';
-    sec.videos.forEach(v => grid.appendChild(buildCard(v)));
+    sec.videos.forEach(v => grid.appendChild(buildCard(v, v.upcoming ?? sec.upcoming)));
     section.appendChild(grid);
 
     main.appendChild(section);
