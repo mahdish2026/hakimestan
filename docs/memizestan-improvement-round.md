@@ -1,5 +1,8 @@
 # دور بهبود ممیزستان — از داوری ۷۲ به آمادگی اجرای پایلوت
 
+> **به‌روزرسانی دور ششم (۲۸ آبان ۱۴۰۵):** اکنون **۱۱ ایستگاه و ۷۶ تمرین** است و ایستگاه **«ستونِ ضرب»** روش صفحهٔ ۱۴۹ کتاب (ضرب زیر هم، بدون ممیز، سپس گذاشتن ممیز) را جداگانه می‌آموزد. عددهای ۱۰/۶۰ در این سند، رکورد همان دور تاریخی‌اند؛ نقشهٔ کامل انطباق در [memizestan-book-alignment.md](memizestan-book-alignment.md) است.
+
+
 > این گزارشِ کارهای انجام‌شده در پاسخ به داوری کشوری است. عددها از آزمون‌های همین مخزن می‌آیند؛ ادعای اثر یادگیری نیست، چون دادهٔ کلاسی هنوز جمع نشده است.
 
 ## ۱. مسئله‌ای که داوری نشان داد
@@ -109,7 +112,7 @@
 
 ## ۹. فایل‌های تحویلی
 
-- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۳۰۱٬۳۹۶ بایت) و در درایو: [1tKPyFNw4k-jOp6Opxgw79EDu_Jz5g2mT](https://drive.google.com/file/d/1tKPyFNw4k-jOp6Opxgw79EDu_Jz5g2mT/view).
+- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۳۰۵٬۲۶۵ بایت) و در درایو: [1dOmydgekt2ooKgn9U4eCn9h47rQx_A0w](https://drive.google.com/file/d/1dOmydgekt2ooKgn9U4eCn9h47rQx_A0w/view).
 - برگهٔ سنجش چاپی: `reports/memizestan/decimals-check.pdf` و در درایو: [1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy](https://drive.google.com/file/d/1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy/view).
 - دفتر معلم: `games/math-decimals-teacher.html` (در خود سایت، آفلاین).
 

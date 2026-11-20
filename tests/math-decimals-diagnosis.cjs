@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),D=require('../games/math-decimals/data.js'),X=require('../games/math-decimals/diagnose.js'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 const all=D.stages.flatMap(s=>s.tasks);
-assert.equal(all.length,60);assert.equal(all.filter(t=>t.teach).length,30);
+assert.equal(all.length,76);assert.equal(all.filter(t=>t.teach).length,43);
 assert.equal(all.filter(t=>t.kind==='choice').every(t=>Array.isArray(t.whyWrong)&&t.whyWrong.length===t.options.length&&!t.whyWrong[t.answer]),true,'every distractor needs an explanation');
 assert.equal(D.parse('7/10'),null,'a slash must not be accepted as a decimal mark');
 assert.equal(D.parse('۰٫۷'),700000);
@@ -43,4 +43,4 @@ await p.click('#mapBtn');assert(await p.$('.error-diary'));assert.match(await p.
 assert.deepEqual(errors,[]);
 await p.addScriptTag({content:fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8')});const r=await p.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.equal(r.violations.length,0,JSON.stringify(r.violations.map(v=>({id:v.id,h:v.nodes[0].html}))));
 const out=fs.readFileSync('exports/memizestan.html','utf8');assert.match(out,/DecimalDiagnose/);assert.match(fs.readFileSync('sw.js','utf8'),/diagnose\.js/);
-console.log('PASS: 9 diagnosis rules, 14 choice distractors explained, rejected slash input, misconception persistence/reporting, remediation micro-task, recovery message, error diary, certificate counts and axe.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
+console.log('PASS: 9 diagnosis rules, 15 choice distractors explained, rejected slash input, misconception persistence/reporting, remediation micro-task, recovery message, error diary, certificate counts and axe.');}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

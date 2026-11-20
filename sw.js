@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.61';
+const VERSION = 'hakim-v1.5.68';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -93,6 +93,7 @@ const PREFETCH_PAGES = [
   './games/math-decimals/audio/subtract.mp3',
   './games/math-decimals/audio/repeat.mp3',
   './games/math-decimals/audio/multiply.mp3',
+  './games/math-decimals/audio/product-column.mp3',
   './games/math-decimals/audio/scale.mp3',
   './games/math-decimals/audio/market.mp3',
   './games/math-fasl2.html',
@@ -333,7 +334,7 @@ function isGeometryAudio(url) {
 }
 function isDecimalAudio(url) {
   const prefix=new URL('games/math-decimals/audio/',self.registration.scope);
-  return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^(?:tenths|place|line|compare|add|subtract|repeat|multiply|scale|market)\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
+  return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^(?:tenths|place|line|compare|add|subtract|repeat|multiply|product-column|scale|market)\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
 }
 async function handleGeometryAudio(request) {
   const full = await caches.match(request.url, { ignoreSearch: true });

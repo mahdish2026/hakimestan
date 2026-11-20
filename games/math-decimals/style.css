@@ -438,7 +438,7 @@ html[data-theme=dark] .keypad-clear{color:#cbbfdc;border-color:#55426e}
    Functional markup stays the same; this block is presentation only.
    ══════════════════════════════════════════════════════════════ */
 :root{--g-ink:#241a3e;--g-ink-2:#493b69;--g-cream:#fffaf0;--g-paper:#fffdf8;--g-line:#e7dccd;--g-violet:#7c5cff;--g-teal:#18b6a4;--g-gold:#ffc93c;--g-coral:#ff6b86;--g-sky:#39a9ff;--g-night:#171032;--g-night-2:#2a1d56}
-body{background:radial-gradient(1100px 520px at 88% -8%,#dfd4ff 0,transparent 60%),radial-gradient(900px 480px at 4% 4%,#c9f4ec 0,transparent 55%),linear-gradient(180deg,#f7f1e5,#f3ecdf);background-attachment:fixed}
+body{background:radial-gradient(1100px 520px at 88% -8%,#dfd4ff 0,transparent 60%),radial-gradient(900px 480px at 4% 4%,#c9f4ec 0,transparent 55%),linear-gradient(180deg,#f7f1e5,#f3ecdf);background-attachment:scroll}
 header{border-bottom:1px solid #e7dccd;box-shadow:0 8px 30px #2b21400a}
 header:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#7c5cff,#18b6a4,#ffc93c,#ff6b86,#7c5cff);background-size:200% 100%}
 .brand-icon{background:conic-gradient(from 210deg,#7c5cff,#18b6a4,#ffc93c,#ff6b86,#7c5cff);box-shadow:0 8px 20px #7c5cff4d;border-radius:16px;font-weight:900;text-shadow:0 1px 0 #ffffff8c}
@@ -931,4 +931,128 @@ html[data-theme=dark] .breadcrumb{background:#241d38;border-color:#4a3e63;color:
   .paper{padding:16px 12px}
   .workbench{padding:12px 8px}
   .hundred{gap:2px}
+}
+
+/* Column arithmetic: show the decimal point as a real column, not only in a note. */
+.column{grid-template-columns:repeat(4,minmax(0,1fr)) 38px;max-width:430px;gap:5px;align-items:stretch}
+.column small{display:grid;place-items:center;min-height:24px}
+.column-point-head{font-size:calc(9px*var(--fs,1));font-weight:800;color:#5d3d7a;background:#f2e8fb;border:1px dashed #cbb2e2;border-radius:8px}
+.column .column-point{display:grid;place-items:center;background:transparent;padding:0;color:#6d3fa2;font-size:calc(25px*var(--fs,1));font-weight:900;line-height:1;border-left:1px dashed #d6c4e8;border-right:1px dashed #d6c4e8}
+.column .column-point-result{color:#2b6b52}
+.column-legend{display:flex;align-items:center;justify-content:center;gap:7px;max-width:430px;margin:9px auto 0;color:#5f526b;font-size:calc(12px*var(--fs,1));line-height:1.8;text-align:center}
+.decimal-chip{display:grid;place-items:center;min-width:22px;height:22px;padding:0 3px;border-radius:50%;background:#efe4fb;border:1px solid #d6c4e8;color:#6d3fa2;font-weight:900;line-height:1}
+.area-model{display:grid;justify-items:center;gap:10px;margin:6px 0}
+.area-model .area-grid{width:min(100%,300px)}
+.area-readout{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;padding:8px 13px;border:1px solid #ded4e8;border-radius:11px;background:#fff;color:#5d526b;font-size:calc(12px*var(--fs,1));line-height:1.6}
+.area-formula{direction:ltr;unicode-bidi:isolate;font-weight:850;color:#4b366d;font-variant-numeric:tabular-nums}
+.area-readout span:not(.area-formula){white-space:nowrap}
+html[data-theme=dark] .column-point-head{color:#e2c9ff;background:#2b2140;border-color:#5b4a75}
+html[data-theme=dark] .column .column-point{color:#d8b4fe;border-color:#5b4a75}
+html[data-theme=dark] .column .column-point-result{color:#9fe3c1}
+html[data-theme=dark] .column-legend{color:#d8cdeb}
+html[data-theme=dark] .decimal-chip{background:#2b2140;border-color:#5b4a75;color:#d8b4fe}
+html[data-theme=dark] .area-readout{background:#241d36;border-color:#4a4160;color:#ded4ef}
+html[data-theme=dark] .area-formula{color:#e3d0ff}
+@media(max-width:600px){.column{grid-template-columns:repeat(4,minmax(0,1fr)) 30px;gap:4px;max-width:100%}.column span{font-size:calc(18px*var(--fs,1));padding:7px 2px}.column .column-point{font-size:calc(21px*var(--fs,1));padding:0}.column small{font-size:calc(9px*var(--fs,1))}.column-point-head{font-size:calc(8px*var(--fs,1))}.column-legend{font-size:calc(11px*var(--fs,1));gap:5px}.area-readout{gap:4px 8px;padding:7px 9px;font-size:calc(11px*var(--fs,1))}}
+
+/* ── ایستگاه ضرب ستونی: کارت عمودی + راهنمای سه‌گامی ───────────────── */
+.product-model{display:grid;grid-template-columns:minmax(150px,210px) minmax(0,1fr);gap:clamp(14px,3vw,28px);align-items:center;max-width:680px;margin:6px auto 2px;padding:clamp(12px,2vw,20px);border:1px solid #d9cffb;border-radius:22px;background:linear-gradient(145deg,#fffdf8,#f3edff);box-shadow:0 10px 28px #38205c12}
+.product-card{position:relative;direction:ltr;width:100%;max-width:210px;margin:auto;padding:16px 18px;border:2px solid #7c5cff;border-radius:16px;background:#fff;box-shadow:0 5px 0 #d7c9ff,0 12px 24px #3f2b6b1c}
+.product-row{display:flex;align-items:baseline;justify-content:flex-end;gap:10px;font-size:clamp(25px,4.6vw,36px);font-weight:900;line-height:1.25;letter-spacing:.02em;color:#2d1f52;font-variant-numeric:tabular-nums}
+.product-row .product-op{font-size:.72em;color:#7c5cff}
+.product-rule{display:block;border-top:3px solid #625084;margin:7px 2px 8px}
+.product-placeholder{justify-content:center;color:#8a5a00}
+.product-placeholder span{display:grid;place-items:center;min-width:2.1em;min-height:1.45em;padding:0 .25em;border-radius:9px;background:#fff0c2;border:1px dashed #d99b18;font-size:.9em}
+.product-guide{padding:2px 0;color:#493b62}
+.product-guide p{margin:.35em 0;line-height:1.85;font-size:clamp(13px,1.35vw,15px)}
+.product-guide b{color:#5b2fa8}
+.product-guide .math-expression{display:inline-block;margin:0 .15em;padding:.04em .38em;border-radius:7px;background:#eee6ff;color:#3d2470;font-weight:800;white-space:nowrap}
+.product-card-result{border-color:#2a8a67;box-shadow:0 5px 0 #bfe8d7,0 12px 24px #1f5d481c}
+.product-card-result .product-answer{color:#16634a;justify-content:center;background:#e8faf2;border-radius:10px;padding:4px 10px}
+.product-count{display:grid;gap:10px;justify-items:center;margin:6px auto;padding:14px;border:1px dashed #8f78cf;border-radius:16px;background:#fbf8ff;color:#39275c;font-weight:800;line-height:1.8;text-align:center}
+.product-count span{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;padding:4px 10px;border-radius:9px;background:#fff;border:1px solid #e0d6fa}
+.product-count b{padding:2px 8px;border-radius:7px;background:#5b2fa8;color:#fff;font-size:.9em}
+.lesson-product{display:grid;gap:10px;justify-items:center}
+.lesson-product .product-card{max-width:190px}
+.lesson-product .product-note{margin:0;color:#53456b;font-size:.9rem;text-align:center;line-height:1.8}
+@media(max-width:720px){.product-model{grid-template-columns:1fr;max-width:420px}.product-card{max-width:190px}.product-guide{padding:0 4px 4px}}
+@media(max-width:360px){.product-model{padding:10px}.product-card{padding:12px 14px}.product-guide p{font-size:12.5px}}
+[data-theme="dark"] .product-model{background:linear-gradient(145deg,#211d2c,#2b2340);border-color:#4f4373}
+[data-theme="dark"] .product-card{background:#17131f;border-color:#a98cff;color:#f4eeff;box-shadow:0 5px 0 #3b2d63,0 12px 24px #0008}
+[data-theme="dark"] .product-row{color:#f4eeff}
+[data-theme="dark"] .product-placeholder span{background:#3a2a08;border-color:#c79020;color:#ffe7a6}
+[data-theme="dark"] .product-guide{color:#d8cdea}
+[data-theme="dark"] .product-guide b{color:#c9b0ff}
+[data-theme="dark"] .product-guide .math-expression{background:#332457;color:#f0e7ff}
+[data-theme="dark"] .product-count{background:#211a33;border-color:#5f4a92;color:#eee6ff}
+[data-theme="dark"] .product-count span{background:#17131f;border-color:#4f4373}
+[data-theme="dark"] .product-card-result{border-color:#54c9a1;box-shadow:0 5px 0 #285443,0 12px 24px #0008}
+[data-theme="dark"] .product-card-result .product-answer{background:#133b2e;color:#bdf5df}
+@media(prefers-reduced-motion:reduce){.product-card,.product-model{transition:none;animation:none}}
+.product-placeholder .product-ghost{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:0;padding:2px 14px;border-radius:10px;background:#fff0c2;border:1px dashed #d99b18;font-size:1em;letter-spacing:.06em}
+.product-placeholder .product-ghost .decimal-chip{display:inline-grid;place-items:center;min-width:0;height:auto;padding:0;border:0;background:transparent;color:#a46000;font-size:.82em;font-style:normal;letter-spacing:0}
+[data-theme="dark"] .product-placeholder .product-ghost{background:#3a2a08;border-color:#c79020;color:#ffe7a6}
+[data-theme="dark"] .product-placeholder .product-ghost .decimal-chip{color:#ffd479;background:transparent}
+
+/* ── ۱۱ ایستگاه: ردیف آخر وسط‌چین شود، بدون خانهٔ خالی ───────────── */
+.route{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch}
+.route .station{flex:0 1 calc((100% - 34px)/3);min-width:0;max-width:none}
+.route .finale{flex:1 0 100%;grid-column:1/-1;width:100%}
+@media(max-width:900px){.route .station{flex-basis:calc((100% - 17px)/2)}}
+@media(max-width:600px){.route .station{flex-basis:100%}}
+
+/* ── فهرست ۱۱ ایستگاه در گواهی: ردیف آخر وسط‌چین ─────────────────── */
+.cert-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.cert-list li{flex:0 1 calc(50% - 5px);min-width:0}
+@media(max-width:600px){.cert-list li{flex-basis:100%}}
+@media print{.cert-list{display:flex;flex-wrap:wrap;justify-content:center}.cert-list li{flex:0 1 calc(50% - 5px)}}
+
+/* ══════════════════════════════════════════════════════════════════
+   دور روان‌سازی — حذف لایه‌های پرهزینه‌ای که هنگام پیمایش، پردازش
+   گرافیکی را روی دستگاه‌های ضعیف و صفحه‌های بزرگ کند می‌کردند.
+   ظاهر ثابت می‌ماند؛ فقط بلورِ متحرک، سایه‌های بی‌پایان و
+   شیشه‌ای‌شدن هدر جای خود را به گرادیان‌های سبک می‌دهند.
+   ══════════════════════════════════════════════════════════════════ */
+header{
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  background:#faf9f5f7;
+}
+html[data-theme=dark] header{background:#1b1828f7}
+
+.hero-aurora,
+.route-aurora{
+  filter:none;
+  animation:none;
+  background:radial-gradient(circle at 42% 38%,
+    #7c5cff4d 0,
+    #18b6a43d 34%,
+    #ffc93c24 58%,
+    transparent 74%);
+  opacity:.55;
+}
+.route-aurora{
+  background:radial-gradient(circle at 50% 50%,
+    #18b6a447 0,
+    #39a9ff33 38%,
+    #7c5cff2e 62%,
+    transparent 76%);
+}
+
+html[data-motion=on] .hero-cube{animation:none}
+html[data-motion=on] .tower{animation:none}
+html[data-motion=on] .hero-spark,
+html[data-motion=on] .station-stars i.on,
+html[data-motion=on] .gem.on i{animation:none}
+html[data-motion=on] .station.next{animation:none}
+
+/* نگه‌داشتن درخشش ایستگاه بعدی، بدون انیمیشنِ سایه در هر فریم */
+.station.next{
+  box-shadow:0 0 0 6px #ffffff10,0 0 26px -10px var(--a);
+}
+
+@media (max-width:720px){
+  .hero-aurora,.route-aurora{opacity:.4}
+  .hero-cube{filter:drop-shadow(0 10px 12px #00000033)}
+  .station{box-shadow:0 10px 24px -20px #00000066,inset 0 1px 0 #fff}
 }
