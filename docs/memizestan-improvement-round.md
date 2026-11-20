@@ -109,7 +109,7 @@
 
 ## ۹. فایل‌های تحویلی
 
-- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۳۰۱٬۷۴۱ بایت) و در درایو: [1wWzTGucnhvFOxcB04YZkGRBWDWOHC0Zf](https://drive.google.com/file/d/1wWzTGucnhvFOxcB04YZkGRBWDWOHC0Zf/view).
+- نسخهٔ تک‌فایل: `exports/memizestan.html` (۲٬۳۰۵٬۲۶۵ بایت) و در درایو: [1dOmydgekt2ooKgn9U4eCn9h47rQx_A0w](https://drive.google.com/file/d/1dOmydgekt2ooKgn9U4eCn9h47rQx_A0w/view).
 - برگهٔ سنجش چاپی: `reports/memizestan/decimals-check.pdf` و در درایو: [1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy](https://drive.google.com/file/d/1NUCcwEjln-mhQdCZZWuYbtaLZT0NC_Jy/view).
 - دفتر معلم: `games/math-decimals-teacher.html` (در خود سایت، آفلاین).
 

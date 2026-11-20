@@ -932,3 +932,25 @@ html[data-theme=dark] .breadcrumb{background:#241d38;border-color:#4a3e63;color:
   .workbench{padding:12px 8px}
   .hundred{gap:2px}
 }
+
+/* Column arithmetic: show the decimal point as a real column, not only in a note. */
+.column{grid-template-columns:repeat(4,minmax(0,1fr)) 38px;max-width:430px;gap:5px;align-items:stretch}
+.column small{display:grid;place-items:center;min-height:24px}
+.column-point-head{font-size:calc(9px*var(--fs,1));font-weight:800;color:#5d3d7a;background:#f2e8fb;border:1px dashed #cbb2e2;border-radius:8px}
+.column .column-point{display:grid;place-items:center;background:transparent;padding:0;color:#6d3fa2;font-size:calc(25px*var(--fs,1));font-weight:900;line-height:1;border-left:1px dashed #d6c4e8;border-right:1px dashed #d6c4e8}
+.column .column-point-result{color:#2b6b52}
+.column-legend{display:flex;align-items:center;justify-content:center;gap:7px;max-width:430px;margin:9px auto 0;color:#5f526b;font-size:calc(12px*var(--fs,1));line-height:1.8;text-align:center}
+.decimal-chip{display:grid;place-items:center;min-width:22px;height:22px;padding:0 3px;border-radius:50%;background:#efe4fb;border:1px solid #d6c4e8;color:#6d3fa2;font-weight:900;line-height:1}
+.area-model{display:grid;justify-items:center;gap:10px;margin:6px 0}
+.area-model .area-grid{width:min(100%,300px)}
+.area-readout{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;padding:8px 13px;border:1px solid #ded4e8;border-radius:11px;background:#fff;color:#5d526b;font-size:calc(12px*var(--fs,1));line-height:1.6}
+.area-formula{direction:ltr;unicode-bidi:isolate;font-weight:850;color:#4b366d;font-variant-numeric:tabular-nums}
+.area-readout span:not(.area-formula){white-space:nowrap}
+html[data-theme=dark] .column-point-head{color:#e2c9ff;background:#2b2140;border-color:#5b4a75}
+html[data-theme=dark] .column .column-point{color:#d8b4fe;border-color:#5b4a75}
+html[data-theme=dark] .column .column-point-result{color:#9fe3c1}
+html[data-theme=dark] .column-legend{color:#d8cdeb}
+html[data-theme=dark] .decimal-chip{background:#2b2140;border-color:#5b4a75;color:#d8b4fe}
+html[data-theme=dark] .area-readout{background:#241d36;border-color:#4a4160;color:#ded4ef}
+html[data-theme=dark] .area-formula{color:#e3d0ff}
+@media(max-width:600px){.column{grid-template-columns:repeat(4,minmax(0,1fr)) 30px;gap:4px;max-width:100%}.column span{font-size:calc(18px*var(--fs,1));padding:7px 2px}.column .column-point{font-size:calc(21px*var(--fs,1));padding:0}.column small{font-size:calc(9px*var(--fs,1))}.column-point-head{font-size:calc(8px*var(--fs,1))}.column-legend{font-size:calc(11px*var(--fs,1));gap:5px}.area-readout{gap:4px 8px;padding:7px 9px;font-size:calc(11px*var(--fs,1))}}
