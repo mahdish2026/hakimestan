@@ -438,7 +438,7 @@ html[data-theme=dark] .keypad-clear{color:#cbbfdc;border-color:#55426e}
    Functional markup stays the same; this block is presentation only.
    ══════════════════════════════════════════════════════════════ */
 :root{--g-ink:#241a3e;--g-ink-2:#493b69;--g-cream:#fffaf0;--g-paper:#fffdf8;--g-line:#e7dccd;--g-violet:#7c5cff;--g-teal:#18b6a4;--g-gold:#ffc93c;--g-coral:#ff6b86;--g-sky:#39a9ff;--g-night:#171032;--g-night-2:#2a1d56}
-body{background:radial-gradient(1100px 520px at 88% -8%,#dfd4ff 0,transparent 60%),radial-gradient(900px 480px at 4% 4%,#c9f4ec 0,transparent 55%),linear-gradient(180deg,#f7f1e5,#f3ecdf);background-attachment:fixed}
+body{background:radial-gradient(1100px 520px at 88% -8%,#dfd4ff 0,transparent 60%),radial-gradient(900px 480px at 4% 4%,#c9f4ec 0,transparent 55%),linear-gradient(180deg,#f7f1e5,#f3ecdf);background-attachment:scroll}
 header{border-bottom:1px solid #e7dccd;box-shadow:0 8px 30px #2b21400a}
 header:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#7c5cff,#18b6a4,#ffc93c,#ff6b86,#7c5cff);background-size:200% 100%}
 .brand-icon{background:conic-gradient(from 210deg,#7c5cff,#18b6a4,#ffc93c,#ff6b86,#7c5cff);box-shadow:0 8px 20px #7c5cff4d;border-radius:16px;font-weight:900;text-shadow:0 1px 0 #ffffff8c}
@@ -1006,3 +1006,53 @@ html[data-theme=dark] .area-formula{color:#e3d0ff}
 .cert-list li{flex:0 1 calc(50% - 5px);min-width:0}
 @media(max-width:600px){.cert-list li{flex-basis:100%}}
 @media print{.cert-list{display:flex;flex-wrap:wrap;justify-content:center}.cert-list li{flex:0 1 calc(50% - 5px)}}
+
+/* ══════════════════════════════════════════════════════════════════
+   دور روان‌سازی — حذف لایه‌های پرهزینه‌ای که هنگام پیمایش، پردازش
+   گرافیکی را روی دستگاه‌های ضعیف و صفحه‌های بزرگ کند می‌کردند.
+   ظاهر ثابت می‌ماند؛ فقط بلورِ متحرک، سایه‌های بی‌پایان و
+   شیشه‌ای‌شدن هدر جای خود را به گرادیان‌های سبک می‌دهند.
+   ══════════════════════════════════════════════════════════════════ */
+header{
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  background:#faf9f5f7;
+}
+html[data-theme=dark] header{background:#1b1828f7}
+
+.hero-aurora,
+.route-aurora{
+  filter:none;
+  animation:none;
+  background:radial-gradient(circle at 42% 38%,
+    #7c5cff4d 0,
+    #18b6a43d 34%,
+    #ffc93c24 58%,
+    transparent 74%);
+  opacity:.55;
+}
+.route-aurora{
+  background:radial-gradient(circle at 50% 50%,
+    #18b6a447 0,
+    #39a9ff33 38%,
+    #7c5cff2e 62%,
+    transparent 76%);
+}
+
+html[data-motion=on] .hero-cube{animation:none}
+html[data-motion=on] .tower{animation:none}
+html[data-motion=on] .hero-spark,
+html[data-motion=on] .station-stars i.on,
+html[data-motion=on] .gem.on i{animation:none}
+html[data-motion=on] .station.next{animation:none}
+
+/* نگه‌داشتن درخشش ایستگاه بعدی، بدون انیمیشنِ سایه در هر فریم */
+.station.next{
+  box-shadow:0 0 0 6px #ffffff10,0 0 26px -10px var(--a);
+}
+
+@media (max-width:720px){
+  .hero-aurora,.route-aurora{opacity:.4}
+  .hero-cube{filter:drop-shadow(0 10px 12px #00000033)}
+  .station{box-shadow:0 10px 24px -20px #00000066,inset 0 1px 0 #fff}
+}

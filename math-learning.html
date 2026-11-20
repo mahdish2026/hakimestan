@@ -580,6 +580,290 @@ body[data-theme="kashi"] .tag.educational{
 
 /* مدرن = پالت پیش‌فرض صفحه (:root) — نیازی به بازنویسی نیست */
 
+
+/* ══════════════════════════════════════════════════
+   دور دوازدهم — بازطراحی مدرسهٔ ریاضی و کارت‌ها
+   سرصفحهٔ روشن و دعوت‌کننده، کارت‌های هم‌ارتفاع با هویت
+   رنگی مستقل، و کارت ویژهٔ ممیزستان در انتهای شبکه.
+   ══════════════════════════════════════════════════ */
+.app-shell{width:min(1200px,100%)}
+
+.page-header{
+  position:relative;
+  z-index:40;
+  isolation:isolate;
+  padding:clamp(30px,5vw,46px) clamp(74px,10vw,112px) clamp(26px,4vw,38px);
+  margin:clamp(6px,2vw,16px) 0 clamp(22px,3vw,30px);
+  border:1px solid var(--surface-line);
+  border-radius:clamp(24px,4vw,34px);
+  background:
+    radial-gradient(circle at 12% 8%,rgba(102,84,232,.13),transparent 18rem),
+    radial-gradient(circle at 90% 92%,rgba(24,169,157,.13),transparent 20rem),
+    linear-gradient(145deg,var(--surface),var(--surface-soft));
+  box-shadow:0 20px 55px rgba(26,42,58,.09);
+  overflow:visible;
+}
+.page-header::before{
+  content:"";
+  position:absolute;inset:0;z-index:0;border-radius:inherit;pointer-events:none;
+  background:
+    radial-gradient(circle at 96% 12%,rgba(212,175,55,.18),transparent 9rem),
+    radial-gradient(circle at 4% 96%,rgba(0,128,128,.12),transparent 11rem);
+}
+.page-header::after{
+  content:"۰٫۳۷";
+  position:absolute;z-index:0;pointer-events:none;
+  left:clamp(18px,4vw,54px);bottom:clamp(10px,3vw,24px);
+  color:var(--teal);opacity:.07;direction:ltr;
+  font-size:clamp(4rem,9vw,8rem);font-weight:900;letter-spacing:-.08em;line-height:1;
+}
+.page-header > *{position:relative;z-index:1}
+
+.page-header .back-link{
+  position:absolute;top:clamp(16px,3vw,26px);left:clamp(16px,3vw,26px);
+  transform:none;border-radius:999px;padding:8px 13px;font-size:.8rem;
+  background:var(--surface);box-shadow:0 6px 16px rgba(26,42,58,.06);
+  z-index:40;
+}
+.page-header .back-link:hover{transform:translateX(-3px)}
+.page-header .theme-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;color:var(--purple)}
+.page-header .theme-btn{
+  position:absolute;top:clamp(16px,3vw,26px);right:clamp(16px,3vw,26px);
+  transform:none;z-index:45;
+}
+.page-header .theme-btn:hover{transform:scale(1.06)}
+.page-header .theme-btn:active{transform:scale(.95)}
+.page-header .theme-panel{
+  position:absolute;top:clamp(62px,8vw,78px);right:clamp(16px,3vw,26px);z-index:60;
+  max-height:calc(100vh - 92px);overflow-y:auto;
+}
+
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:999px;
+  color:var(--purple);background:var(--soft-purple);
+  border:1px solid color-mix(in srgb,var(--purple) 22%,transparent);
+  font-size:.76rem;font-weight:800;letter-spacing:.2px;
+}
+.page-title{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:auto;margin:14px auto 0;padding:0;
+  background:none;border:0;border-radius:0;cursor:default;
+  font-size:clamp(2.1rem,5vw,3.35rem);font-weight:900;line-height:1.45;
+  letter-spacing:-.5px;
+}
+.page-title:hover{transform:none}
+.page-title-icon{
+  width:clamp(42px,5.5vw,58px);height:clamp(42px,5.5vw,58px);
+  color:var(--teal);filter:drop-shadow(0 5px 10px rgba(0,128,128,.14));
+}
+.page-subtitle{
+  max-width:760px;margin:10px auto 0;
+  color:var(--muted);font-size:clamp(.9rem,1.5vw,1.02rem);line-height:1.95;
+}
+.hero-stats{
+  display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+  margin-top:18px;
+}
+.hero-stat{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:999px;
+  color:var(--muted);background:var(--surface);
+  border:1px solid var(--surface-line);font-size:.78rem;font-weight:650;
+}
+.hero-stat b{
+  color:var(--ink);font-size:1rem;font-weight:900;
+  font-variant-numeric:tabular-nums;
+}
+.hero-stat-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 16%,transparent);
+}
+
+.games-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(15px,2.2vw,22px);
+  margin-top:clamp(20px,3vw,28px);
+  counter-reset:mlcard;
+}
+.game-card{
+  counter-increment:mlcard;
+  --accent:#6654e8;--accent-2:#8b7bff;--accent-soft:#f1f0ff;
+  position:relative;isolation:isolate;
+  display:flex;flex-direction:column;
+  padding:clamp(19px,2.5vw,24px) clamp(19px,2.5vw,24px) 20px;
+  border:1px solid var(--surface-line);border-radius:24px;
+  background:linear-gradient(180deg,var(--surface) 0%,var(--surface-soft) 170%);
+  box-shadow:0 8px 24px rgba(26,42,58,.06);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  overflow:hidden;
+}
+.game-card::before{
+  content:"";position:absolute;z-index:2;top:0;right:0;left:0;height:4px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  opacity:.9;
+}
+.game-card::after{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  width:150px;height:150px;left:-58px;bottom:-76px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent),transparent 68%);
+  opacity:.08;
+}
+.game-card > *{position:relative;z-index:1}
+.game-card:hover{
+  transform:translateY(-5px);border-color:var(--accent);
+  box-shadow:0 22px 50px rgba(26,42,58,.14);
+}
+.game-card:active{transform:translateY(-1px)}
+.game-card:focus-visible{
+  outline:3px solid var(--accent);outline-offset:4px;
+}
+.game-card--divide{--accent:#5b4bd6;--accent-2:#9485ff}
+.game-card--time{--accent:#0f9b8e;--accent-2:#37c9b8}
+.game-card--pattern{--accent:#c18118;--accent-2:#f2bd54}
+.game-card--fraction{--accent:#e07a2b;--accent-2:#f5bd62}
+.game-card--ratio{--accent:#0e9f93;--accent-2:#2dd4bf}
+.game-card--geometry{--accent:#c24b76;--accent-2:#ef8caf}
+.game-card--decimals{--accent:#0e7c70;--accent-2:#18b6a4}
+
+.card-top{align-items:center;margin-bottom:12px;gap:13px}
+.card-icon{
+  width:56px;height:56px;border-radius:18px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  box-shadow:0 10px 22px rgba(26,42,58,.16);
+  font-size:1.7rem;
+}
+.card-icon svg{width:30px;height:30px}
+.card-name{
+  margin:0 0 5px;font-size:clamp(1.1rem,1.7vw,1.24rem);font-weight:900;
+  line-height:1.5;
+}
+.card-desc{
+  font-size:.845rem;line-height:1.8;color:var(--muted);
+}
+.card-tags{
+  margin-top:auto;padding-top:14px;gap:6px;
+}
+.tag{
+  border-radius:999px;padding:3px 9px;font-size:.72rem;
+  background:var(--surface);border-color:var(--surface-line);
+}
+.card-cta{
+  display:inline-flex;align-items:center;justify-content:flex-start;gap:9px;
+  align-self:flex-start;margin-top:15px;padding:7px 2px 0 0;
+  color:var(--ink);font-size:.86rem;font-weight:850;
+}
+.card-cta .arrow{
+  display:grid;place-items:center;width:28px;height:28px;
+  border:1px solid currentColor;border-radius:50%;
+  color:var(--accent);font-size:.9rem;line-height:1;flex:0 0 auto;
+}
+.game-card:hover .card-cta .arrow{transform:translateX(-4px)}
+
+/* کارت ویژهٔ ممیزستان: نوار عریض با نشانهٔ اعشاری، بدون رهاماندن یک کارت تنها */
+.game-card--featured{
+  grid-column:1/-1;
+  padding:26px clamp(24px,4vw,38px) 26px clamp(190px,27vw,320px);
+  min-height:210px;
+  border-color:color-mix(in srgb,var(--accent) 34%,var(--surface-line));
+  background:
+    radial-gradient(circle at 12% 50%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 15rem),
+    linear-gradient(110deg,var(--surface),var(--surface-soft));
+  box-shadow:0 14px 38px rgba(14,124,112,.10);
+}
+.game-card--featured::after{
+  content:"۰٫۳۷";
+  width:auto;height:auto;left:clamp(22px,5vw,62px);bottom:auto;top:50%;
+  transform:translateY(-50%);
+  background:none;opacity:.16;border-radius:0;
+  color:var(--accent);direction:ltr;
+  font-size:clamp(3.8rem,8vw,6.8rem);font-weight:900;letter-spacing:-.09em;line-height:1;
+  text-shadow:0 10px 30px color-mix(in srgb,var(--accent) 18%,transparent);
+}
+.game-card--featured .card-top{max-width:76ch}
+.game-card--featured .card-icon{width:64px;height:64px;border-radius:20px}
+.game-card--featured .card-name{font-size:clamp(1.3rem,2vw,1.55rem);display:flex;align-items:center;gap:9px}
+.game-card--featured .card-name::after{
+  content:"تازه";display:inline-flex;align-items:center;justify-content:center;
+  padding:2px 8px;border-radius:999px;
+  font-size:.66rem;font-weight:850;letter-spacing:0;
+  color:var(--ink);background:color-mix(in srgb,var(--accent) 10%,var(--surface));
+  border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+}
+.game-card--featured .card-tags{margin-top:2px}
+.game-card--featured .card-cta{margin-top:16px}
+
+
+/* برچسب‌های روشن در تم‌های تیره، هم‌خوان با سطح کارت */
+body[data-theme="night"] .tag.math,
+body[data-theme="ocean"] .tag.math,
+body[data-theme="forest"] .tag.math{
+  background:rgba(39,166,110,.16);color:#8ce6bd;border-color:rgba(80,200,150,.34);
+}
+body[data-theme="night"] .tag.educational,
+body[data-theme="ocean"] .tag.educational,
+body[data-theme="forest"] .tag.educational{
+  background:rgba(124,104,245,.18);color:#cfc6ff;border-color:rgba(160,145,255,.34);
+}
+body[data-theme="night"] .tag.new,
+body[data-theme="ocean"] .tag.new,
+body[data-theme="forest"] .tag.new{
+  background:rgba(245,158,11,.16);color:#ffd58a;border-color:rgba(245,158,11,.34);
+}
+
+/* پانوشت کمی جمع‌وجورتر */
+.page-footer{
+  margin-top:clamp(16px,3vw,26px);padding-top:clamp(20px,4vw,32px);
+  border-top:1px solid var(--surface-line);
+  line-height:1.9;
+}
+.page-footer p{margin:2px 0}
+
+@media (max-width:1020px){
+  .games-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .game-card--featured{grid-column:1/-1}
+}
+@media (max-width:680px){
+  .page-header{
+    padding:66px 16px 24px;
+    border-radius:26px;
+  }
+  .page-header::after{font-size:4rem;left:14px;bottom:8px;opacity:.06}
+  .page-header .back-link{
+    position:absolute;top:14px;right:14px;left:auto;margin:0;
+    padding:7px 11px;font-size:.76rem;
+  }
+  .page-header .theme-btn{top:14px;left:14px;right:auto;width:40px;height:40px}
+  .page-header .theme-panel{top:60px;left:14px;right:auto}
+  .page-title{gap:8px;font-size:clamp(1.85rem,8vw,2.4rem);margin-top:12px}
+  .page-title-icon{width:40px;height:40px}
+  .page-subtitle{font-size:.88rem;line-height:1.85}
+  .hero-stats{gap:6px;margin-top:14px}
+  .hero-stat{font-size:.72rem;padding:5px 9px}
+  .hero-stat b{font-size:.92rem}
+  .games-grid{grid-template-columns:1fr;gap:15px}
+  .game-card{padding:18px 18px 17px;border-radius:21px}
+  .card-top{flex-direction:row;align-items:center;text-align:right}
+  .card-icon{width:50px;height:50px;border-radius:16px}
+  .card-name{font-size:1.12rem}
+  .card-desc{font-size:.83rem}
+  .card-cta{align-self:flex-start;justify-content:flex-start}
+  .game-card--featured{
+    grid-column:auto;min-height:0;
+    padding:18px 18px 17px;
+  }
+  .game-card--featured::after{display:none}
+  .game-card--featured .card-icon{width:54px;height:54px}
+  .game-card--featured .card-name{font-size:1.18rem;justify-content:flex-start}
+}
+@media (max-width:380px){
+  .page-header{padding-left:12px;padding-right:12px}
+  .hero-stat:nth-child(2){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .game-card,.card-cta .arrow{transition:none}
+  .game-card:hover{transform:none}
+}
 </style>
 
   <!-- Hakim Character -->
@@ -590,7 +874,7 @@ body[data-theme="kashi"] .tag.educational{
   <div class="app-shell">
     <!-- Header -->
     <header class="page-header">
-      <button type="button" class="theme-btn" id="themeBtn" aria-label="انتخاب تم صفحه" title="تم صفحه" aria-expanded="false" aria-haspopup="true">🎨</button>
+      <button type="button" class="theme-btn" id="themeBtn" aria-label="انتخاب تم صفحه" title="تم صفحه" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 0 0 18h1.4a1.8 1.8 0 0 0 1.1-3.2 1.8 1.8 0 0 1 1.1-3.2H18a3 3 0 0 0 3-3A8.6 8.6 0 0 0 12 3Z"/><circle cx="7.6" cy="10" r="1.1"/><circle cx="10.4" cy="6.9" r="1.1"/><circle cx="15" cy="7.2" r="1.1"/></svg></button>
 <div class="theme-panel" id="themePanel" role="dialog" aria-label="انتخاب تم صفحه">
   <div class="theme-title">🎨 تم صفحه رو انتخاب کن</div>
   <div class="theme-group">✨ تم اصلی حکیمستان</div>
@@ -612,6 +896,7 @@ body[data-theme="kashi"] .tag.educational{
         <span>←</span>
         <span>بازگشت به لابی</span>
       </a>
+      <span class="hero-kicker reveal d1"><span aria-hidden="true">✦</span> مجموعهٔ ریاضی پایهٔ پنجم</span>
       <h1 class="page-title reveal d2">
         <svg class="page-title-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
           <path d="M8 40h32M12 36h24M15 36V26c0-7 4-12 9-15 5 3 9 8 9 15v10" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -620,12 +905,17 @@ body[data-theme="kashi"] .tag.educational{
         <span>مدرسه ریاضی</span>
       </h1>
       <p class="page-subtitle reveal d3">هفت بازی آموزشی ریاضی پایهٔ پنجم — تقسیم، ساعت، الگو، کسر‌ها و نسبت و درصد، تقارن و چندضلعی‌ها و عددهای اعشاری؛ بازی کن، تمرین کن، ستاره بگیر</p>
+      <div class="hero-stats reveal d4" aria-label="ویژگی‌های مدرسهٔ ریاضی">
+        <span class="hero-stat"><b>۷</b> بازی آموزشی</span>
+        <span class="hero-stat">پایهٔ پنجم</span>
+        <span class="hero-stat"><span class="hero-stat-dot" aria-hidden="true"></span> همراهِ حکیم</span>
+      </div>
     </header>
 
     <!-- Games Grid -->
     <main class="games-grid">
       <!-- Game 1: تقسیم چکشی -->
-      <a href="games/math-learning-1.html" class="game-card reveal d1">
+      <a href="games/math-learning-1.html" class="game-card game-card--divide reveal d1">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -652,7 +942,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 2: مأموریت زمان -->
-      <a href="games/math-time-mission.html" class="game-card reveal d2">
+      <a href="games/math-time-mission.html" class="game-card game-card--time reveal d2">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -679,7 +969,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 3: الگوستان -->
-      <a href="games/math-olgoha.html" class="game-card reveal d3">
+      <a href="games/math-olgoha.html" class="game-card game-card--pattern reveal d3">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -706,7 +996,7 @@ body[data-theme="kashi"] .tag.educational{
       </a>
 
       <!-- Game 4: کسرستان — کارت با هویت رنگی کسرستان -->
-      <a href="games/math-fasl2.html" class="game-card kasrestan-card reveal d4" data-game="math-fasl2" aria-label="ورود به کسرستان؛ کسر‌ها و چهار عمل در شش جزیره و ۵۸ فعالیت">
+      <a href="games/math-fasl2.html" class="game-card kasrestan-card game-card--fraction reveal d4" data-game="math-fasl2" aria-label="ورود به کسرستان؛ کسر‌ها و چهار عمل در شش جزیره و ۵۸ فعالیت">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -734,7 +1024,7 @@ body[data-theme="kashi"] .tag.educational{
         </span>
       </a>
       <!-- Game 5: نسبتستان — کارت اختصاصی نسبت، تناسب و درصد -->
-      <a href="games/math-nesbat.html" class="game-card nesbat-card reveal d4" data-game="math-nesbat" aria-label="ورود به نسبتستان؛ نسبت، تناسب و درصد در پنج سرزمین">
+      <a href="games/math-nesbat.html" class="game-card nesbat-card game-card--ratio reveal d4" data-game="math-nesbat" aria-label="ورود به نسبتستان؛ نسبت، تناسب و درصد در پنج سرزمین">
         <div class="card-top">
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -762,14 +1052,14 @@ body[data-theme="kashi"] .tag.educational{
         </span>
       </a>
       <!-- Game 6: نقشستان -->
-      <a href="games/math-geometry.html" class="game-card reveal d4" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
+      <a href="games/math-geometry.html" class="game-card game-card--geometry reveal d4" data-game="math-geometry" aria-label="ورود به نقشستان؛ تقارن و چندضلعی‌ها در دوازده ایستگاه">
         <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m24 5 6 13 13 6-13 6-6 13-6-13-13-6 13-6Z"/><path d="M24 5v38M5 24h38"/></svg></div>
           <div class="card-info"><h2 class="card-name">نقشستان</h2><p class="card-desc">تقارن، زاویه و چندضلعی‌ها را با ساختن یاد بگیر؛ نقطه‌ها را قرینه کن، نیمساز بساز و راز قطرها را کشف کن. همراه حکیم، تمرین‌ها را انجام بده و گواهیِ فهرست‌دار پیشرفتت را بگیر.</p></div>
         </div>
         <div class="card-tags"><span class="tag math">🧮 ریاضی</span><span class="tag educational">📚 آموزشی</span><span class="tag">پایه پنجم</span><span class="tag">🧙 همراهِ حکیم</span><span class="tag">✨ ۱۲ ایستگاه · ۴۸ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به نقشستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
-      <a href="games/math-decimals.html" class="game-card reveal d4" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
+      <a href="games/math-decimals.html" class="game-card game-card--decimals game-card--featured reveal d4" data-game="math-decimals" aria-label="ورود به ممیزستان؛ عددهای اعشاری ریاضی پنجم">
         <div class="card-top"><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="6" y="8" width="36" height="32" rx="6"/><path d="M18 8v32M30 8v32M6 24h36"/></svg></div><div class="card-info"><h2 class="card-name">ممیزستان</h2><p class="card-desc">عددهای اعشاری را بساز، روی محور پیدا کن و با مدل‌های تصویری جمع، تفریق و ضرب را یاد بگیر؛ کسرها را با خط کسری ببین، اندازهٔ متن و حالت شب را انتخاب کن و گواهی بگیر.</p></div></div>
         <div class="card-tags"><span class="tag math">🧮 ریاضی</span><span class="tag educational">📚 آموزشی</span><span class="tag">پایه پنجم</span><span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به ممیزستان <span class="arrow" aria-hidden="true">←</span></span>
