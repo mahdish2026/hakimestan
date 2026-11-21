@@ -1364,19 +1364,17 @@ body[data-theme="kashi"] textarea{color-scheme:light !important}
 .route-art svg{width:49px;height:46px}.atlas-routes strong,.atlas-routes small{grid-column:1;padding-inline-start:12px}.atlas-routes strong{margin-top:10px;font-size:1rem}.atlas-routes small{padding-block:2px 12px;font-size:.78rem;color:var(--muted)}.route-arrow{grid-column:2;grid-row:2/4;align-self:center;padding-inline:3px 10px;color:var(--ink)}
 .atlas-routes a:is(:hover,:focus-visible){border-color:var(--teal)}.atlas-routes a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 .teacher-entry{color:var(--muted);font-size:.88rem;line-height:2}.teacher-entry a{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:4px;margin-inline-start:4px}
-@media(min-width:861px){.hero-grid{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr);min-height:clamp(360px,54vh,510px)}.journey-stage{max-width:365px;justify-self:end}}
+@media(min-width:861px){.hero-grid{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr);min-height:clamp(360px,54vh,510px)}}
 @media(max-width:550px){.atlas-routes{grid-template-columns:1fr;gap:8px}.atlas-routes a{grid-template-columns:66px 1fr auto;align-content:center}.route-art{grid-column:1;grid-row:1/3;height:66px}.route-art svg{width:39px}.atlas-routes strong,.atlas-routes small{grid-column:2}.route-arrow{grid-column:3;grid-row:1/3}}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){html:not(.hk-reduce-motion) .route-art svg{transition:transform .2s ease}html:not(.hk-reduce-motion) .atlas-routes a:hover svg{transform:translateY(-2px) rotate(-4deg)}}
 .section-head{padding-block-end:15px;border-bottom:1px solid var(--brd-strong)}
 .section-head h2{text-wrap:balance}
 @media(max-width:860px){.hero-grid{grid-template-areas:'lead' 'rest' 'stage'} .hero-rest{width:min(100%,600px);margin-inline:auto}.atlas-routes{text-align:start}}
 
-/* A miniature illustrated atlas; the destinations remain visible without scripts. */
-.journey-stage{grid-area:stage;min-width:0;width:100%;margin:0;align-self:center;border:1px solid #51877b;border-radius:28px 8px;background:linear-gradient(140deg,#194e50,#10363d);color:#fff3d7;box-shadow:0 18px 48px -30px #122f35;overflow:hidden}
-.journey-heading{padding:20px 24px 0;display:grid;gap:4px}.journey-heading span{font-size:.76rem;color:#ffdb8e}.journey-heading b{font-size:clamp(1.2rem,2vw,1.6rem)}
-.journey-map{width:100%;height:auto}.journey-guide{padding:14px 18px;display:flex;align-items:center;gap:10px;background:#10333a;border-top:1px solid #53877b}.journey-guide small{display:block;color:#c3ded4}.journey-guide a{margin-inline-start:auto;padding:8px 12px;background:#ffe1a3;color:#173a40;font-weight:700;border-radius:12px;font-size:.85rem}.journey-guide a:focus-visible{outline:3px solid white;outline-offset:2px}#journeyFace{width:44px;flex:none;color:#ffdf96}#journeyFace svg{width:100%;height:auto}
-.hero h1,.hero-tagline,.brand-text b,.card-title,.section-head h2,.chat-head h2{letter-spacing:normal}.hero-sub,.hero-tagline,.card-desc,.section-note,.journey-guide{word-spacing:.06em}
-@media(max-width:860px){.journey-stage{width:min(100%,365px);margin:20px auto 0}}
-@media(max-width:380px){.journey-guide{padding:12px 10px;gap:6px}#journeyFace{width:32px}}
-@media(prefers-reduced-motion:no-preference){html:not(.hk-reduce-motion) .journey-trail{animation:trace-journey 1.6s ease-out both}html:not(.hk-reduce-motion) .map-stop{transform-box:fill-box;transform-origin:center bottom;animation:arrive-atlas .4s ease-out both} .map-stop.stop-two{animation-delay:.6s!important}.map-stop.stop-three{animation-delay:1.2s!important}}
-@keyframes trace-journey{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes arrive-atlas{from{opacity:.25;transform:translateY(5px) scale(.92)}to{opacity:1;transform:none}}
+/* The guide is an illustration on the cover, not a second menu. */
+.storybook{grid-area:stage;width:min(100%,390px);margin:0;justify-self:center;align-self:center;background:#f8ecd2;border:1px solid #cbb68d;border-radius:22px 6px 18px 6px;padding:7px;box-shadow:0 4px 0 -1px #dbc8a5,0 7px 0 -2px #397571,0 18px 32px -24px #173f40}
+.storybook-art{display:block;width:100%;height:auto}.storybook figcaption{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 12px;color:#4a5145;border-top:1px solid #d4c19d;font-size:.87rem}.storybook a{color:#155956;font-weight:800;padding:8px 0}.storybook a:focus-visible{outline:2px solid #155956;outline-offset:2px}
+.hero h1,.hero-tagline,.brand-text b,.card-title,.section-head h2,.chat-head h2{letter-spacing:normal}.hero-sub,.hero-tagline,.card-desc,.section-note{word-spacing:.06em}
+@media(max-width:860px){.storybook{width:min(100%,330px);margin-top:20px}}
+@media(prefers-reduced-motion:no-preference){html:not(.hk-reduce-motion) .page-curl{transform-box:fill-box;transform-origin:right bottom;animation:turn-corner 1.2s ease-in-out .15s 1}}
+@keyframes turn-corner{45%{transform:skewY(-12deg) scaleY(1.35)}}
