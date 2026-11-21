@@ -94,17 +94,17 @@
   <p class="tp-title">تم صفحه</p>
   <button type="button" class="theme-opt" data-theme="kashi">
     <span class="theme-dot" style="--sw:linear-gradient(135deg,#fbf8f1,#008080 55%,#d4af37)"></span>
-    <span class="theme-name">کاشی<small>گنبد فیروزه‌ای — روشن</small></span>
+    <span class="theme-name">کاشی <small>گنبد فیروزه‌ای — روشن</small></span>
     <span class="theme-check" aria-hidden="true">✓</span>
   </button>
   <button type="button" class="theme-opt" data-theme="ocean">
     <span class="theme-dot" style="--sw:linear-gradient(135deg,#030a18,#2563eb 60%,#67e8f9)"></span>
-    <span class="theme-name">لاجورد نیمه‌شب<small>آبی عمیق و فیروزه</small></span>
+    <span class="theme-name">لاجورد نیمه‌شب <small>آبی عمیق و فیروزه</small></span>
     <span class="theme-check" aria-hidden="true">✓</span>
   </button>
   <button type="button" class="theme-opt" data-theme="sunny">
     <span class="theme-dot" style="--sw:linear-gradient(135deg,#ffffff,#bae6fd 55%,#f4cd84)"></span>
-    <span class="theme-name">صبح فیروزه<small>روشن و آرام</small></span>
+    <span class="theme-name">صبح فیروزه <small>روشن و آرام</small></span>
     <span class="theme-check" aria-hidden="true">✓</span>
   </button>
 </div>
@@ -119,30 +119,33 @@
       <div class="hero-lead">
         <p class="eyebrow hk-folio" data-anim style="--i:0"><span class="pulse" aria-hidden="true"></span> دیار حکیم · سرزمین یادگیری</p>
         <h1 id="hero-title" data-anim style="--i:1">حکیمستان</h1>
-        <p class="hero-tagline" data-anim style="--i:2">هر درس، یک <em>ماجرا</em>؛ هر بازی، یک <em>گنج</em>.</p>
+        <p class="hero-tagline" data-anim style="--i:2">با بازی <em>کشف کن</em>، با تمرین <em>یاد بگیر</em>.</p>
       </div>
 
-      <div class="hero-stage" aria-label="حکیم، راهنمای تو">
-        <svg class="atlas-gate" viewBox="0 0 480 460" fill="none" aria-hidden="true" focusable="false">
+      <figure class="journey-stage" aria-labelledby="journey-title">
+        <div class="journey-heading"><span>اطلس حکیمستان</span><b id="journey-title">نقشهٔ سرزمین یادگیری</b></div>
+        <svg class="journey-map" viewBox="0 0 400 225" fill="none" aria-hidden="true" focusable="false">
           <defs>
-            <linearGradient id="gate-wash" x2=".75" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="var(--teal)" stop-opacity=".22"/><stop offset="1" stop-color="var(--gold)" stop-opacity=".07"/></linearGradient>
-            <pattern id="gate-tile" width="36" height="36" patternUnits="userSpaceOnUse"><path d="m18 1 5 11 12 6-12 6-5 11-5-11-12-6 12-6z" stroke="currentColor" stroke-opacity=".18"/></pattern>
-            <path id="gate-cut" d="M37 404V215C37 135 123 117 173 86c30-18 50-40 67-65 17 25 37 47 67 65 50 31 136 49 136 129v189Z"/>
+            <pattern id="map-grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M18 0H0v18" stroke="#b8e2cf" opacity=".13"/></pattern>
+            <linearGradient id="land" x2="1" y2="1"><stop stop-color="#397f75"/><stop offset="1" stop-color="#225954"/></linearGradient>
           </defs>
-          <use href="#gate-cut" fill="url(#gate-wash)"/><use href="#gate-cut" fill="url(#gate-tile)" stroke="currentColor" stroke-width="2"/>
-          <path d="M49 402V215c0-68 71-88 130-122 25-15 46-34 61-54 15 20 36 39 61 54 59 34 130 54 130 122v187" stroke="currentColor" stroke-dasharray="2 5"/>
-          <g stroke="currentColor"><path d="M17 407h446m-428 7h410m-387 7h328"/><path d="m227 12 13-10 13 10-13 9z" fill="var(--gold)"/></g>
+          <rect width="400" height="225" fill="url(#map-grid)"/>
+          <path d="M14 135Q22 93 75 95T146 61Q175 20 219 34T286 57Q353 38 373 84T355 145Q328 155 316 185T242 190Q220 163 173 183T91 179Q56 194 26 170Z" fill="url(#land)" stroke="#85ba9e"/>
+          <path d="M26 146q15-37 53-36t78-39m69-23q36 27 68 23t65 22M97 168q36 12 70-1t65-2" stroke="#93baa0" opacity=".45"/>
+          <path class="journey-trail" pathLength="1" stroke-dasharray="1" d="M81 151c-2-28 75-6 70-38s38-36 57-27c39 20 61 13 89-13" stroke="#ffdb8e" stroke-width="3" stroke-linecap="round"/>
+          <g stroke="#ffe7af" stroke-width="2" stroke-linejoin="round">
+            <g class="map-stop stop-one"><path d="M61 149v-24l11-5 10 6 12-6 9 5v23q-11-6-21 1-10-7-21 0Z" fill="#b87958"/><path d="M82 126v22m-17-19 10-2m12 3 10-3"/></g>
+            <g class="map-stop stop-two"><path d="M177 84V62l22-19 22 19v22Z" fill="#376e75"/><path d="m171 64 28-25 28 25m-34 20V72q6-9 12 0v12"/><circle cx="199" cy="58" r="4"/></g>
+            <g class="map-stop stop-three"><rect x="283" y="54" width="31" height="20" rx="3" fill="#91655a"/><circle cx="290" cy="47" r="7"/><circle cx="306" cy="47" r="7"/><path d="m314 61 9-4v14l-9-4z"/></g>
+          </g>
+          <g stroke="#acd7ca"><path d="m43 65 10-16 11 16zm13-9 9-14 15 23H64m211 95 8-14 9 14zm12-8 8-11 12 19h-15"/></g>
+          <g transform="translate(350 181)"><circle r="16" stroke="#e3c58a"/><path d="m-6 9 4-13 9-7-4 13z" fill="#ffdb8e"/><circle r="2" fill="#214d50"/></g>
         </svg>
-        <div class="stage-glow" aria-hidden="true"></div>
-        <svg class="stage-star s1" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2z" fill="currentColor"/></svg>
-        <svg class="stage-star s2" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2z" fill="currentColor"/></svg>
-        <div class="hakim-mount" id="hakimPanelMount"></div>
-        <div class="stage-chip a"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 18.5 8.6 8l3.9 6.2L15 10.4l6 8.1z" fill="currentColor" opacity=".9"/><circle cx="17.4" cy="6.4" r="2.2" fill="currentColor" opacity=".55"/></svg> پنج وادی دانش</div>
-        <div class="stage-chip b"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4h8v3.6A4 4 0 0 1 12 12a4 4 0 0 1-4-4.4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 5.4H5.6a2.6 2.6 0 0 0 2.6 4.2M16 5.4h2.4a2.6 2.6 0 0 1-2.6 4.2M12 12v3.6M8.6 19.4h6.8l-.8-3.4H9.4z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> رقابت کلاسی</div>
-      </div>
+        <figcaption class="journey-guide"><span id="journeyFace" aria-hidden="true">✦</span><div><b>از کجا شروع کنم؟</b> <small>حکیم راهنمای توست.</small></div><a href="#sec-chat">از حکیم بپرس <span aria-hidden="true">←</span></a></figcaption>
+      </figure>
 
       <div class="hero-rest">
-        <p class="hero-sub" data-anim style="--i:3">پلتفرم آموزشی تعاملی پایه پنجم؛ دانش‌آموز بازی می‌کند و یاد می‌گیرد، معلم در چند دقیقه آزمون و طرح درس می‌سازد. رایگان، آفلاین و بدون نصب.</p>
+        <p class="hero-sub" data-anim style="--i:3">اینجا برای پایهٔ پنجم بازی و تمرین پیدا می‌کنی. اگر آموزگاری، برای کلاست آزمون و طرح درس بساز.</p>
         <div class="hero-actions" data-anim style="--i:4">
           <a class="btn btn-primary" href="games/kohan-diyar.html">
             شروع سریع
@@ -154,9 +157,9 @@
           </a>
         </div>
         <nav class="atlas-routes" aria-label="مسیرهای یادگیری">
-          <a href="#sec-games"><span class="route-no" aria-hidden="true">۰۱</span><strong>بازی‌خانه</strong><small>انتخاب بازی</small></a>
-          <a href="math-learning.html"><span class="route-no" aria-hidden="true">۰۲</span><strong>مدرسهٔ ریاضی</strong><small>تمرین با بازی</small></a>
-          <a href="videos.html"><span class="route-no" aria-hidden="true">۰۳</span><strong>فیلم‌خانه</strong><small>تماشای آموزش</small></a>
+          <a href="#sec-games"><span class="route-no" aria-hidden="true">۰۱</span> <strong>بازی‌خانه</strong> <small>انتخاب بازی</small></a>
+          <a href="math-learning.html"><span class="route-no" aria-hidden="true">۰۲</span> <strong>مدرسهٔ ریاضی</strong> <small>تمرین با بازی</small></a>
+          <a href="videos.html"><span class="route-no" aria-hidden="true">۰۳</span> <strong>فیلم‌خانه</strong> <small>تماشای آموزش</small></a>
         </nav>
       </div>
     </div>
@@ -208,7 +211,7 @@
             <h3 class="card-title">فتح کهن دیار ایران</h3>
             <p class="card-desc">سفری در تاریخ ایران؛ شهر به شهر پیش برو، سردارانت را برگزین و تاریخ را زنده کن.</p>
             <div class="card-tags">
-              <span>مطالعات اجتماعی</span><span>دروس ۱۸ تا ۲۱</span><span>آماده و ثابت</span>
+              <span>مطالعات اجتماعی</span> <span>دروس ۱۸ تا ۲۱</span> <span>آماده و ثابت</span>
             </div>
             <span class="btn btn-primary">آماده‌ی فتح هستی؟
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -224,7 +227,7 @@
           </div>
           <h3 class="card-title">ماجرای حکیم</h3>
           <p class="card-desc">سفری در پنج وادی دانش؛ همراه حکیم، گنج دانایی را کشف کن.</p>
-          <div class="card-tags"><span>ادبیات فارسی</span><span>۵ وادی</span><span>قابل شخصی‌سازی</span></div>
+          <div class="card-tags"><span>ادبیات فارسی</span> <span>۵ وادی</span> <span>قابل شخصی‌سازی</span></div>
         </a>
 
         <!-- مار و پله دانش -->
@@ -235,7 +238,7 @@
           </div>
           <h3 class="card-title">مار و پله‌ی دانش</h3>
           <p class="card-desc">جواب بده، تاس بینداز و اول از همه به خانه‌ی ۱۰۰ برس.</p>
-          <div class="card-tags"><span>علوم</span><span>دو نفره</span><span>قابل شخصی‌سازی</span></div>
+          <div class="card-tags"><span>علوم</span> <span>دو نفره</span> <span>قابل شخصی‌سازی</span></div>
         </a>
 
         <!-- کارت‌های حکیم -->
@@ -246,7 +249,7 @@
           </div>
           <h3 class="card-title">کارت‌های حکیم</h3>
           <p class="card-desc">کارت‌ها را برگردان و جفت‌های سؤال و پاسخ را پیدا کن.</p>
-          <div class="card-tags"><span>حافظه</span><span>چند درس</span><span>سرعتی</span></div>
+          <div class="card-tags"><span>حافظه</span> <span>چند درس</span> <span>سرعتی</span></div>
         </a>
 
         <!-- جدول حکمت -->
@@ -257,7 +260,7 @@
           </div>
           <h3 class="card-title">جدول حکمت</h3>
           <p class="card-desc">جدول کلمات متقاطع آموزشی؛ آرام، فکری و لذت‌بخش.</p>
-          <div class="card-tags"><span>هدیه و علوم</span><span>فکری</span><span>کلمات</span></div>
+          <div class="card-tags"><span>هدیه و علوم</span> <span>فکری</span> <span>کلمات</span></div>
         </a>
 
         <!-- راز گنج -->
@@ -268,7 +271,7 @@
           </div>
           <h3 class="card-title">راز گنج حکیم</h3>
           <p class="card-desc">ماجراجویی داستانی؛ انتخاب کن، یاد بگیر و گنج واقعی را کشف کن.</p>
-          <div class="card-tags"><span>داستانی</span><span>۷ مرحله</span><span>اخلاق و ریاضی</span></div>
+          <div class="card-tags"><span>داستانی</span> <span>۷ مرحله</span> <span>اخلاق و ریاضی</span></div>
         </a>
 
         <!-- آزمایشگاه ‌۲بعدی -->
@@ -279,7 +282,7 @@
           </div>
           <h3 class="card-title">آزمایشگاه ۲بعدی</h3>
           <p class="card-desc">۹ آزمایش تعاملی علوم پنجم — فسیل، اهرم، آب، چشم، بازو، فرسایش و…</p>
-          <div class="card-tags"><span>علوم پنجم</span><span>۹ آزمایش</span><span>آماده و ثابت</span></div>
+          <div class="card-tags"><span>علوم پنجم</span> <span>۹ آزمایش</span> <span>آماده و ثابت</span></div>
         </a>
 
         <!-- منچ آنلاین -->
@@ -290,7 +293,7 @@
           </div>
           <h3 class="card-title">منچِ دانش آنلاین</h3>
           <p class="card-desc">منچ کلاسیک با سؤال درسی؛ ۲ تا ۴ نفره، هر کس با گوشی خودش.</p>
-          <div class="card-tags"><span>آنلاین</span><span>۴ نفره</span><span>سؤال درسی</span></div>
+          <div class="card-tags"><span>آنلاین</span> <span>۴ نفره</span> <span>سؤال درسی</span></div>
         </a>
 
         <!-- مار و پله آنلاین -->
@@ -301,7 +304,7 @@
           </div>
           <h3 class="card-title">مار و پله آنلاین</h3>
           <p class="card-desc">بازی کلاسیک با سؤال درسی؛ ۲ تا ۴ نفره و همیشه در دسترس.</p>
-          <div class="card-tags"><span>آنلاین</span><span>۴ نفره</span><span>۱۰۰ خانه</span></div>
+          <div class="card-tags"><span>آنلاین</span> <span>۴ نفره</span> <span>۱۰۰ خانه</span></div>
         </a>
 
         <!-- مدرسه ریاضی -->
@@ -312,7 +315,7 @@
           </div>
           <h3 class="card-title">مدرسه ریاضی</h3>
           <p class="card-desc">هفت بازی مرحله‌ای: تقسیم، ساعت، الگو، کسر، نسبت، اعشار و هندسه؛ با تمرین‌های تعاملی، راهنمایی حکیم و گواهی‌نامهٔ پیشرفت.</p>
-          <div class="card-tags"><span>ریاضی</span><span>تعاملی</span><span>پایه پنجم</span></div>
+          <div class="card-tags"><span>ریاضی</span> <span>تعاملی</span> <span>پایه پنجم</span></div>
         </a>
 
         <!-- واژه‌ستان فارسی -->
@@ -323,7 +326,7 @@
           </div>
           <h3 class="card-title">واژه‌ستان فارسی پنجم</h3>
           <p class="card-desc">مرور، فلش‌کارت و ۸ بازی هوشمند واژگان؛ تمام ۱۷ درس.</p>
-          <div class="card-tags"><span>فارسی</span><span>۱۷ درس</span><span>۸ بازی</span></div>
+          <div class="card-tags"><span>فارسی</span> <span>۱۷ درس</span> <span>۸ بازی</span></div>
         </a>
 
       </div>
@@ -363,7 +366,7 @@
           <div class="feature-body">
             <h3 class="card-title">آزمون‌ساز حکیمستان</h3>
             <p class="card-desc">آزمون، برگه‌ی چاپی و آزمون آنلاین بساز — ساده، سریع و آفلاین.</p>
-            <div class="card-tags"><span>۸ نوع سؤال</span><span>Word و PDF</span><span>آزمون آنلاین</span></div>
+            <div class="card-tags"><span>۸ نوع سؤال</span> <span>Word و PDF</span> <span>آزمون آنلاین</span></div>
             <span class="btn btn-primary">آزمون بساز
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
@@ -378,7 +381,7 @@
           </div>
           <h3 class="card-title">دفتر معلم حکیمستان</h3>
           <p class="card-desc">حضور و غیاب، نمرات، کارنامه و گزارش — یک دفتر آفلاین و امن.</p>
-          <div class="card-tags"><span>حضور و غیاب</span><span>کارنامه</span><span>Excel و Word</span></div>
+          <div class="card-tags"><span>حضور و غیاب</span> <span>کارنامه</span> <span>Excel و Word</span></div>
         </a>
 
         <!-- کارگاه طرح درس -->
@@ -389,7 +392,7 @@
           </div>
           <h3 class="card-title">کارگاه طرح درس</h3>
           <p class="card-desc">بانک نمونه‌های آماده، ویرایشگر آزاد، کتاب‌سازی و خروجی Word.</p>
-          <div class="card-tags"><span>بانک نمونه</span><span>کتاب‌سازی</span><span>خروجی حرفه‌ای</span></div>
+          <div class="card-tags"><span>بانک نمونه</span> <span>کتاب‌سازی</span> <span>خروجی حرفه‌ای</span></div>
         </a>
 
         <!-- مبدل سؤال -->
@@ -400,7 +403,7 @@
           </div>
           <h3 class="card-title">مبدل سؤال</h3>
           <p class="card-desc">آزمون‌ساز را به بازی‌ها وصل کن و خروجی HQF بگیر.</p>
-          <div class="card-tags"><span>خروجی HQF</span><span>سازگار با بازی‌ها</span><span>ویژه معلم</span></div>
+          <div class="card-tags"><span>خروجی HQF</span> <span>سازگار با بازی‌ها</span> <span>ویژه معلم</span></div>
         </a>
 
         <!-- پیام‌رسان -->
@@ -411,7 +414,7 @@
           </div>
           <h3 class="card-title">پیام‌رسان حکیمستان</h3>
           <p class="card-desc">ارتباط امن و ساده؛ چت گروهی و خصوصی با پنل مدیریت معلم.</p>
-          <div class="card-tags"><span>چت گروهی</span><span>پنل معلم</span><span>۴ تم رنگی</span></div>
+          <div class="card-tags"><span>چت گروهی</span> <span>پنل معلم</span> <span>۴ تم رنگی</span></div>
         </a>
 
         <!-- پنل معلم -->
@@ -422,7 +425,7 @@
           </div>
           <h3 class="card-title">پنل معلم</h3>
           <p class="card-desc">مدیریت سؤال‌های بازی‌ها، دیدن نتایج و مدیریت کاربران.</p>
-          <div class="card-tags"><span>مدیریت سؤال</span><span>نتایج</span><span>رمزدار</span></div>
+          <div class="card-tags"><span>مدیریت سؤال</span> <span>نتایج</span> <span>رمزدار</span></div>
         </a>
 
         <!-- درسگاه -->
@@ -433,7 +436,7 @@
           </div>
           <h3 class="card-title">درسگاه حکیمستان</h3>
           <p class="card-desc">تدریس روی کتاب PDF و وب‌کم را ضبط کن؛ بدون ضبط صفحه.</p>
-          <div class="card-tags"><span>ضبط تدریس</span><span>۹ کتاب</span><span>ابزار نقاشی</span></div>
+          <div class="card-tags"><span>ضبط تدریس</span> <span>۹ کتاب</span> <span>ابزار نقاشی</span></div>
         </a>
 
       </div>
@@ -806,30 +809,7 @@
   }
 
   /* ---------- ۵) حکیم زنده ---------- */
-  if (window.Hakim){
-    Hakim.init({ container:'#hakimPanelMount', name:'دوست من', autoHideMs:6000, font:false });
-    var nameEl = document.querySelector('#hakimPanelMount .hakim-name');
-    if (nameEl) nameEl.innerHTML = '<span class="hakim-dot" aria-hidden="true"></span> حکیم، راهنمای تو';
-
-    var msgs = [
-      { text:'سلام! من حکیمم، راهنمای تو در سرزمین یادگیری.', mood:'happy' },
-      { text:'کدام بازی را امروز آغاز می‌کنی؟', mood:'thinking' },
-      { text:'دانش، بهترین گنج جهان است.', mood:'wise' },
-      { text:'هر پرسش، یک گام به پیش است.', mood:'normal' },
-      { text:'معلم عزیز، آزمون‌ساز در خدمت شماست!', mood:'excited' },
-      { text:'حکیمستان، خانه‌ی همه‌ی دانش‌آموزان کوشا.', mood:'wink' }
-    ];
-    var mi = 0;
-    function say(msg){ try { Hakim.say(msg.text, { mood:msg.mood, autoHide:false }); } catch(e){} }
-    say(msgs[0]);
-    setInterval(function(){
-      var chatBox = document.getElementById('hakimChat');
-      if (chatBox && chatBox.classList.contains('open')) return;
-      if (document.hidden) return;
-      mi = (mi + 1) % msgs.length;
-      say(msgs[mi]);
-    }, 7000);
-  }
+  if (window.Hakim) Hakim.renderFace('happy', document.getElementById('journeyFace'));
 
   /* ---------- ۶) آسمان ستاره‌دار ---------- */
   /* رندر سبک: اسپرایت‌های آماده به‌جای گرادیانِ هر فریم
@@ -1411,8 +1391,9 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
     if (location.hash === '#sec-chat' && !box.classList.contains('open')) setOpen(true, false);
   }
   window.addEventListener('hashchange', openFromHash);
-  var navLink = document.querySelector('.quicknav a[href="#sec-chat"]');
-  if (navLink) navLink.addEventListener('click', function(){ setOpen(true, false); });
+  document.querySelectorAll('a[href="#sec-chat"]').forEach(function(link){
+    link.addEventListener('click', function(){ setOpen(true, false); });
+  });
 
   /* ---------- رویدادها ---------- */
   elForm.addEventListener('submit', function(e){ e.preventDefault(); send(elInput.value); });
