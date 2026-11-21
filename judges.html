@@ -418,6 +418,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
 <meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
 <!-- hakim-meta:end -->
 <link rel="stylesheet" href="css/folio.css">
+<link rel="stylesheet" href="css/project-story.css">
 </head>
 <body data-theme="kashi">
 
@@ -492,15 +493,16 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
 <main id="main">
 
   <!-- ================= قهرمان فشرده ================= -->
-  <section class="page-hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> برای داوران جشنواره</p>
-      <div class="hero-logo" aria-hidden="true">ح</div>
-      <p class="hk-folio">شناسنامهٔ حکیمستان</p>
-      <h1 id="hero-title">معرفی پروژه حکیمستان</h1>
-      <p class="hero-tagline">حکیمستان — <em>دیار حکیم</em>، سرزمین یادگیری</p>
+  <section class="story-cover" aria-labelledby="hero-title">
+    <div class="cover-copy">
+      <p class="cover-kicker">پروندهٔ آموزشی · پایهٔ پنجم دبستان</p>
+      <h1 id="hero-title">معرفی تفصیلی <span>حکیمستان</span></h1>
+      <p>از یک سؤال در کلاس تا یک سرزمین بازی؛ ببینید دانش‌آموز کجا تمرین می‌کند و معلم چطور مسیر یادگیری را دنبال می‌کند.</p>
+      <a class="cover-action" href="#tour">دیدن محیط‌های یادگیری ←</a>
     </div>
+    <figure class="cover-screen"><img src="screenshots/lobby.webp" width="1280" height="720" alt="نمای فعلی لابی حکیمستان با راهنمای حکیم" fetchpriority="high"><figcaption>نمای ۰۱ <span>لابی · نقطهٔ شروع دانش‌آموز</span></figcaption></figure>
   </section>
+  <nav class="story-index" aria-label="فهرست معرفی تفصیلی"><b>در این معرفی</b><a href="#origin">داستان شکل‌گیری</a><a href="#tour">تور تصویری</a><a href="#lessons">درس‌ها و بازی‌ها</a><a href="#school">مدرسهٔ ریاضی</a><a href="#technology">مشخصات فنی</a></nav>
 
   <div class="wrap-sections">
 
@@ -515,26 +517,60 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
 
   <!-- ۲. این پروژه چیه؟ -->
   <section class="hk-card reveal">
-    <h2 class="section-title">📖 این پروژه چیه؟</h2>
-    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل <strong>۱۷ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و درسگاه) و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۸۰ سؤال آماده</strong> و <strong>۲۷ فیلم معرفی</strong>.</p>
+    <h2 class="section-title">حکیمستان در یک نگاه</h2>
+    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل <strong>۱۷ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و درسگاه) و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۸۰ سؤال آماده</strong> و <strong>۱۶ فیلم منتشرشده</strong>.</p>
     <p>این سامانه برای پایه پنجم ابتدایی طراحی شده و هدفش این است که مفاهیم درسی از طریق بازی، یادگیری فعال و بازخورد فوری به دانش‌آموز منتقل شود.</p>
     <p>تمام محتوا با HTML، CSS و JavaScript خالص ساخته شده و به‌صورت PWA روی هر مرورگر و هر دستگاهی (موبایل، تبلت، رایانه) بدون نیاز به نصب اجرا می‌شود.</p>
     <p>همهٔ صفحه‌های اصلی — لابی، فیلم‌ها و همین صفحهٔ معرفی — روی یک <strong>هویت بصری واحد</strong> به نام «کاشی» (کرم روشن، فیروزه و طلا، با نقش اسلیمی) ساخته شده‌اند و تم انتخابی کاربر (<strong>کاشی، اقیانوس یا صبح فیروزه</strong>) به‌صورت مشترک در همهٔ صفحه‌ها باقی می‌ماند.</p>
 
-    <!-- اسکرین‌شات لابی -->
-    <figure class="shot">
-      <picture>
-        <source srcset="screenshots/lobby.webp" type="image/webp">
-        <img src="screenshots/lobby.jpg" alt="نمای لابی حکیمستان در تم کاشی — حکیم در قهرمان صفحه و کارت‌های بازی‌ها"
-             width="1280" height="720" loading="lazy" decoding="async"
-             onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
-      </picture>
-      <figcaption>لابی حکیمستان — صفحه‌ی اصلی سامانه</figcaption>
-    </figure>
+  </section>
+
+  <section id="tour" class="hk-card reveal">
+    <h2 class="section-title">تور تصویری حکیمستان</h2>
+    <p>از تماشای یک معرفی کوتاه شروع کنید یا مستقیم وارد یکی از محیط‌های یادگیری شوید.</p>
+    <div class="gallery">
+      <figure class="shot cinema-shot">
+        <picture>
+          <source srcset="screenshots/videos-page.webp" type="image/webp">
+          <img src="screenshots/videos-page.jpg" alt="سرصفحهٔ خانهٔ فیلم حکیمستان و مسیرهای تماشای فیلم"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+        </picture>
+        <figcaption><a href="videos.html">خانهٔ فیلم ←</a> · ۹ معرفی بازی و ۷ معرفی ابزار</figcaption>
+      </figure>
+      <figure class="shot school-shot"><img src="screenshots/school.webp" alt="صفحهٔ ورودی مدرسهٔ ریاضی پایهٔ پنجم" width="1280" height="720" loading="lazy" decoding="async"><figcaption><a href="math-learning.html">مدرسهٔ ریاضی ←</a> · هفت بازی پایهٔ پنجم</figcaption></figure>
+      <figure class="shot">
+        <picture>
+          <source srcset="screenshots/mancheh.webp" type="image/webp">
+          <img src="screenshots/mancheh.jpg" alt="نمای بازی منچِ دانش آنلاین روی صفحهٔ بازی"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+        </picture>
+        <figcaption>منچِ دانش آنلاین</figcaption>
+      </figure>
+      <figure class="shot">
+        <picture>
+          <source srcset="screenshots/lab.webp" type="image/webp">
+          <img src="screenshots/lab.jpg" alt="نمای آزمایشگاه دو‌بعدی علوم با ابزارهای آزمایش"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+        </picture>
+        <figcaption>آزمایشگاه ۲بعدی</figcaption>
+      </figure>
+      <figure class="shot">
+        <picture>
+          <source srcset="screenshots/teacher-panel.webp" type="image/webp">
+          <img src="screenshots/teacher-panel.jpg" alt="نمای پنل معلم با آمار کلاس و فهرست دانش‌آموزان"
+               width="1280" height="720" loading="lazy" decoding="async"
+               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+        </picture>
+        <figcaption>پنل معلم</figcaption>
+      </figure>
+    </div>
   </section>
 
   <!-- ۳. مسیر شکل‌گیری -->
-  <section class="hk-card reveal">
+  <section id="origin" class="hk-card reveal">
     <h2 class="section-title">📜 مسیر شکل‌گیری</h2>
     <div class="timeline">
       <div class="tl-item">
@@ -551,8 +587,8 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   </section>
 
   <!-- ۴. برای کدوم درس‌ها؟ -->
-  <section class="hk-card reveal">
-    <h2 class="section-title">📚 برای کدوم درس‌ها؟</h2>
+  <section id="lessons" class="hk-card reveal">
+    <h2 class="section-title">📚 راهنمای درس‌ها و بازی‌ها</h2>
 
     <h3 class="sub-heading">بازی‌ها</h3>
     <div class="table-wrap" tabindex="0">
@@ -715,7 +751,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   </section>
 
   <!-- ۴ب. مدرسه ریاضی -->
-  <section class="hk-card reveal">
+  <section id="school" class="hk-card reveal">
     <h2 class="section-title">🧮 مدرسه ریاضی</h2>
     <p>«<a href="math-learning.html">مدرسه ریاضی</a>» بخش ویژه‌ی ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم. اکنون <strong>هفت بازی</strong> دارد: از تقسیم و ساعت تا الگوهای هندسی و عددی، کسر‌ها با چهار عمل، نسبت و درصد، تقارن و چندضلعی، و عددهای اعشاری. هر بازی یک کارت اختصاصی در صفحهٔ مدرسه دارد.</p>
     <p><strong>هفت بازی فعلی:</strong></p>
@@ -766,48 +802,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   </section>
 
   <!-- ۶ب. نماها -->
-  <section class="hk-card reveal">
-    <h2 class="section-title">🖼️ نماها</h2>
-    <p>نمایی از محیط حکیمستان:</p>
-    <div class="gallery">
-      <figure class="shot">
-        <picture>
-          <source srcset="screenshots/videos-page.webp" type="image/webp">
-          <img src="screenshots/videos-page.jpg" alt="نمای صفحهٔ فیلم‌های حکیمستان با کارت‌های ویدیویی شیشه‌ای در تم کاشی"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
-        </picture>
-        <figcaption>صفحهٔ فیلم‌ها — ۲۷ ویدیوی معرفی بازی‌ها و ابزارها</figcaption>
-      </figure>
-      <figure class="shot">
-        <picture>
-          <source srcset="screenshots/mancheh.webp" type="image/webp">
-          <img src="screenshots/mancheh.jpg" alt="نمای بازی منچِ دانش آنلاین روی صفحهٔ بازی"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
-        </picture>
-        <figcaption>منچِ دانش آنلاین</figcaption>
-      </figure>
-      <figure class="shot">
-        <picture>
-          <source srcset="screenshots/lab.webp" type="image/webp">
-          <img src="screenshots/lab.jpg" alt="نمای آزمایشگاه دو‌بعدی علوم با ابزارهای آزمایش"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
-        </picture>
-        <figcaption>آزمایشگاه ۲بعدی</figcaption>
-      </figure>
-      <figure class="shot">
-        <picture>
-          <source srcset="screenshots/teacher-panel.webp" type="image/webp">
-          <img src="screenshots/teacher-panel.jpg" alt="نمای پنل معلم با آمار کلاس و فهرست دانش‌آموزان"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
-        </picture>
-        <figcaption>پنل معلم</figcaption>
-      </figure>
-    </div>
-  </section>
+
 
   <!-- ۷. پیام‌رسان کلاسی حکیمستان -->
   <section class="hk-card reveal">
@@ -850,19 +845,19 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   </section>
 
   <!-- ۱۰. ویژگی‌های فنی -->
-  <section class="hk-card reveal">
+  <section id="technology" class="hk-card reveal">
     <h2 class="section-title">🛠️ ویژگی‌های فنی</h2>
     <div class="tech-grid">
       <div class="tech-item"><span class="num">۱۷</span><span class="label">بازی تعاملی</span></div>
       <div class="tech-item"><span class="num">۷</span><span class="label">ابزار معلم و دانش‌آموز</span></div>
       <div class="tech-item"><span class="num">۳</span><span class="label">تم رنگی هماهنگ در همهٔ صفحه‌ها</span></div>
       <div class="tech-item"><span class="num">۸۰+</span><span class="label">سؤال آماده</span></div>
-      <div class="tech-item"><span class="num">۲۷</span><span class="label">فیلم معرفی بازی‌ها و ابزارها</span></div>
+      <div class="tech-item"><span class="num">۱۶</span><span class="label">فیلم منتشرشده · ۱۱ عنوان علوم در برنامه</span></div>
       <div class="tech-item"><span class="num">PWA</span><span class="label">قابل نصب بدون فروشگاه</span></div>
       <div class="tech-item"><span class="num">AI</span><span class="label">گفت‌وگو با حکیم</span></div>
       <div class="tech-item"><span class="num">🎨</span><span class="label">هویت بصری یکپارچه — کاشی</span></div>
       <div class="tech-item"><span class="num">HTML</span><span class="label">پایه‌ی فنی — بدون فریم‌ورک</span></div>
-      <div class="tech-item"><span class="num">a11y</span><span class="label">دسترس‌پذیری WCAG 2.2 AA</span></div>
+      <div class="tech-item"><span class="num">a11y</span><span class="label">تنظیمات دسترس‌پذیری</span></div>
       <div class="tech-item"><span class="num">📱</span><span class="label">موبایل‌پسند و واکنش‌گرا</span></div>
       <div class="tech-item"><span class="num">👨‍🏫</span><span class="label">طراحی‌شده توسط معلم پایه پنجم</span></div>
     </div>
