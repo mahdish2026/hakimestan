@@ -13,3 +13,6 @@
 }
 .hk-folio::after { width:.32em; height:.32em; background:currentColor; }
 @media print { .hk-folio { display:none; } }
+
+/* An eight-point tile, shared by the chapter markers throughout the site. */
+.hk-folio::before{width:.85em;height:.85em;border:0;background:currentColor;transform:none;clip-path:polygon(50% 0,65% 15%,85% 15%,85% 35%,100% 50%,85% 65%,85% 85%,65% 85%,50% 100%,35% 85%,15% 85%,15% 65%,0 50%,15% 35%,15% 15%,35% 15%)}
