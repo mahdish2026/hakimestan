@@ -22,7 +22,6 @@
 <link rel="preload" href="assets/fonts/vazirmatn-100-900.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/lobby.css?v=1405-07-kashi-light">
-<link rel="stylesheet" href="css/folio.css">
 </head>
 <body data-theme="kashi">
 
@@ -117,36 +116,39 @@
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero-grid">
       <div class="hero-lead">
-        <p class="eyebrow hk-folio" data-anim style="--i:0"><span class="pulse" aria-hidden="true"></span> سرزمین یادگیری · پایهٔ پنجم</p>
+        <p class="eyebrow" data-anim style="--i:0"><span class="pulse" aria-hidden="true"></span> دیار حکیم · سرزمین یادگیری</p>
         <h1 id="hero-title" data-anim style="--i:1">حکیمستان</h1>
-        <p class="hero-tagline" data-anim style="--i:2">امروز چه چیزی <em>کشف می‌کنی؟</em></p>
+        <p class="hero-tagline" data-anim style="--i:2">هر درس، یک <em>ماجرا</em>؛ هر بازی، یک <em>گنج</em>.</p>
+      </div>
+
+      <div class="hero-stage" aria-label="حکیم، راهنمای تو">
+        <div class="stage-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="stage-glow" aria-hidden="true"></div>
+        <svg class="stage-star s1" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2z" fill="currentColor"/></svg>
+        <svg class="stage-star s2" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2z" fill="currentColor"/></svg>
+        <div class="hakim-mount" id="hakimPanelMount"></div>
+        <div class="stage-chip a"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 18.5 8.6 8l3.9 6.2L15 10.4l6 8.1z" fill="currentColor" opacity=".9"/><circle cx="17.4" cy="6.4" r="2.2" fill="currentColor" opacity=".55"/></svg> پنج وادی دانش</div>
+        <div class="stage-chip b"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4h8v3.6A4 4 0 0 1 12 12a4 4 0 0 1-4-4.4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 5.4H5.6a2.6 2.6 0 0 0 2.6 4.2M16 5.4h2.4a2.6 2.6 0 0 1-2.6 4.2M12 12v3.6M8.6 19.4h6.8l-.8-3.4H9.4z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> رقابت کلاسی</div>
       </div>
 
       <div class="hero-rest">
-        <nav class="atlas-routes" aria-label="مسیرهای یادگیری">
-          <a href="#sec-games"><span class="route-art" aria-hidden="true"><svg viewBox="0 0 50 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 27q0-8 8-8h17q7 0 9 8l2 10q0 6-5 4l-8-6H19l-7 6q-6 2-5-4z"/><path d="M17 23v9m-4-5h8"/><circle cx="32" cy="24" r="1.3"/><circle cx="36" cy="29" r="1.3"/></svg></span><strong>بازی کن</strong><small>فصل اول · بازی‌خانه</small><span class="route-arrow" aria-hidden="true">←</span></a>
-          <a href="math-learning.html"><span class="route-art" aria-hidden="true"><svg viewBox="0 0 50 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h37L7 7zm8-8h11L14 21zM21 40v-4m7 4v-4"/><circle cx="35" cy="12" r="6"/></svg></span><strong>ریاضی تمرین کن</strong><small>فصل دوم · مدرسهٔ ریاضی</small><span class="route-arrow" aria-hidden="true">←</span></a>
-          <a href="videos.html"><span class="route-art" aria-hidden="true"><svg viewBox="0 0 50 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="21" width="29" height="18" rx="4"/><circle cx="14" cy="14" r="6"/><circle cx="29" cy="14" r="6"/><path d="m36 27 8-4v14l-8-4z"/></svg></span><strong>فیلم ببین</strong><small>فصل سوم · فیلم‌خانه</small><span class="route-arrow" aria-hidden="true">←</span></a>
-        </nav>
-        <p class="teacher-entry">برای کلاس درس برنامه می‌چینی؟ <a href="#sec-tools">ابزارهای آموزگار ←</a></p>
+        <p class="hero-sub" data-anim style="--i:3">بازی و تمرین برای دانش‌آموزان پایهٔ پنجم؛ آزمون و طرح درس برای آموزگاران.</p>
+        <div class="hero-actions" data-anim style="--i:4">
+          <a class="btn btn-primary" href="games/kohan-diyar.html">
+            شروع سریع
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#sec-tools">
+            ابزارهای معلم
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14m0 0-5-5m5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <ul class="hero-stats" data-anim style="--i:5">
+          <li><b>۱۱</b> <span>بازی تعاملی</span></li>
+          <li><b>۷</b> <span>ابزار معلم</span></li>
+          <li><b>۱۰۰٪</b> <span>رایگان و آفلاین</span></li>
+        </ul>
       </div>
-      <figure class="storybook">
-        <svg class="storybook-art" viewBox="0 0 380 255" role="img" aria-label="حکیم با عمامهٔ فیروزه‌ای پشت کتابی باز نشسته است.">
-          <defs><pattern id="cloth" width="18" height="18" patternUnits="userSpaceOnUse"><path d="m9 1 8 8-8 8-8-8Z" fill="none" stroke="#aadac6" opacity=".27"/></pattern></defs>
-          <rect width="380" height="255" rx="18" fill="#f8ecd2"/><circle cx="193" cy="108" r="86" fill="#efdbb2"/>
-          <g fill="none" stroke="#b99f69" stroke-width="1.4"><path d="m44 70 4-11 4 11 11 4-11 4-4 11-4-11-11-4zM298 54l3-8 3 8 8 3-8 3-3 8-3-8-8-3z"/><path d="M19 213h45m240 0h57"/></g>
-          <ellipse cx="189" cy="220" rx="133" ry="13" fill="#d8c59e"/>
-          <!-- Robe, shoulders and the folds of the sage's turban. -->
-          <path d="M102 192q5-61 65-73h48q52 15 63 73l-24 21H121z" fill="#236863"/><path d="M102 192q5-61 65-73h48q52 15 63 73l-24 21H121z" fill="url(#cloth)"/>
-          <path d="m165 121 26 48 25-48" fill="#dfb771"/><path d="M153 78q-3 57 36 61 42-1 43-58" fill="#d0996b"/>
-          <path d="M151 78q-8-30 18-43 25-14 50 0 23 12 18 41l-15 6q-31-12-63 3z" fill="#27756f"/><path d="M151 69q38 2 66-32m-55 44q43-5 70-31" fill="none" stroke="#78b1a2" stroke-width="4"/>
-          <path d="M154 99q10 9 18 5 10-4 19 3 11-8 20-4 10 5 19-7-1 37-39 60-37-18-37-57z" fill="#fff7e2"/><path d="M163 91q7-6 14 0m23 0q7-6 14 0m-30 23q7 5 14-1" fill="none" stroke="#553e36" stroke-width="3" stroke-linecap="round"/>
-          <!-- Open book with a single lifting paper corner. -->
-          <path d="m68 169 117 11 116-13-14 48-103 16-101-17z" fill="#216560"/><path d="M74 162q61-8 111 17 55-24 109-17l-12 44q-54-1-98 17-47-18-98-16z" fill="#fff8e5" stroke="#ba9864" stroke-width="2"/><path d="m185 180-1 41m-83-46q38 0 67 14m-61-4q38 3 59 13m34-10q28-13 65-15m-62 25q27-11 58-14" fill="none" stroke="#c6ab7a" stroke-width="2"/>
-          <path class="page-curl" d="m261 162 33 0-7 21q-6-14-26-21Z" fill="#ead7af" stroke="#bd9e6e"/><path d="m222 212 12-3-3 18-5-4-6 6z" fill="#b56446"/>
-        </svg>
-        <figcaption><span>همراهت هستم.</span> <a href="#sec-chat">از حکیم بپرس ←</a></figcaption>
-      </figure>
     </div>
   </section>
 
@@ -794,7 +796,30 @@
   }
 
   /* ---------- ۵) حکیم زنده ---------- */
+  if (window.Hakim){
+    Hakim.init({ container:'#hakimPanelMount', name:'دوست من', autoHideMs:6000, font:false });
+    var nameEl = document.querySelector('#hakimPanelMount .hakim-name');
+    if (nameEl) nameEl.innerHTML = '<span class="hakim-dot" aria-hidden="true"></span> حکیم، راهنمای تو';
 
+    var msgs = [
+      { text:'سلام! من حکیمم، راهنمای تو در سرزمین یادگیری.', mood:'happy' },
+      { text:'کدام بازی را امروز آغاز می‌کنی؟', mood:'thinking' },
+      { text:'دانش، بهترین گنج جهان است.', mood:'wise' },
+      { text:'هر پرسش، یک گام به پیش است.', mood:'normal' },
+      { text:'معلم عزیز، آزمون‌ساز در خدمت شماست!', mood:'excited' },
+      { text:'حکیمستان، خانه‌ی همه‌ی دانش‌آموزان کوشا.', mood:'wink' }
+    ];
+    var mi = 0;
+    function say(msg){ try { Hakim.say(msg.text, { mood:msg.mood, autoHide:false }); } catch(e){} }
+    say(msgs[0]);
+    setInterval(function(){
+      var chatBox = document.getElementById('hakimChat');
+      if (chatBox && chatBox.classList.contains('open')) return;
+      if (document.hidden) return;
+      mi = (mi + 1) % msgs.length;
+      say(msgs[mi]);
+    }, 14000);
+  }
 
   /* ---------- ۶) آسمان ستاره‌دار ---------- */
   /* رندر سبک: اسپرایت‌های آماده به‌جای گرادیانِ هر فریم
@@ -1376,9 +1401,8 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
     if (location.hash === '#sec-chat' && !box.classList.contains('open')) setOpen(true, false);
   }
   window.addEventListener('hashchange', openFromHash);
-  document.querySelectorAll('a[href="#sec-chat"]').forEach(function(link){
-    link.addEventListener('click', function(){ setOpen(true, false); });
-  });
+  var navLink = document.querySelector('.quicknav a[href="#sec-chat"]');
+  if (navLink) navLink.addEventListener('click', function(){ setOpen(true, false); });
 
   /* ---------- رویدادها ---------- */
   elForm.addEventListener('submit', function(e){ e.preventDefault(); send(elInput.value); });
