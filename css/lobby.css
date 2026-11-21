@@ -95,7 +95,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 img,svg{display:block;max-width:100%}
 ::selection{background:rgba(94,234,212,.28);color:#fff}
 :target{scroll-margin-top:104px}
-h1,h2,h3{line-height:1.4;font-weight:800;letter-spacing:-.2px}
+h1,h2,h3{line-height:1.4;font-weight:800;letter-spacing:normal}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* ── ۲. لایه‌های پس‌زمینه ──────────────────────────────────────────────── */
@@ -188,7 +188,7 @@ body.is-scrolled .header-inner{
 }
 .brand-mark svg{width:24px;height:24px}
 .brand-text{display:flex;flex-direction:column;line-height:1.15}
-.brand-text b{font-size:1.02rem;font-weight:800;letter-spacing:-.2px}
+.brand-text b{font-size:1.02rem;font-weight:800;letter-spacing:normal}
 .brand-text small{font-size:.62rem;color:var(--muted);font-weight:500;letter-spacing:.2px}
 .nav{display:flex;align-items:center;gap:2px;margin-inline:auto}
 .nav a{
@@ -276,7 +276,7 @@ main{position:relative;z-index:2}
 .hero h1{
   margin:18px 0 0;
   font-size:clamp(3rem,6vw,4.7rem);
-  font-weight:800;line-height:1.12;letter-spacing:-1.5px;
+  font-weight:800;line-height:1.12;letter-spacing:normal;
   background:linear-gradient(180deg,#ffffff 8%,#e8f1ff 52%,#a9c6ef 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(0 10px 34px rgba(120,180,255,.18));
@@ -284,7 +284,7 @@ main{position:relative;z-index:2}
 body[data-theme="sunny"] .hero h1{background:linear-gradient(180deg,#10233f 10%,#24456f 90%);-webkit-background-clip:text;background-clip:text}
 .hero-tagline{
   margin-top:14px;font-size:clamp(1.1rem,2.3vw,1.42rem);
-  font-weight:700;color:var(--ink);letter-spacing:-.3px;
+  font-weight:700;color:var(--ink);letter-spacing:normal;
 }
 .hero-tagline em{
   font-style:normal;
@@ -297,7 +297,7 @@ body[data-theme="sunny"] .hero h1{background:linear-gradient(180deg,#10233f 10%,
 .hero-actions .btn-ghost{height:58px;padding:0 22px;border-radius:16px}
 .hero-stats{display:flex;gap:30px;margin-top:30px;padding-top:24px;border-top:1px solid var(--hairline)}
 .hero-stats li{list-style:none;display:flex;flex-direction:column;gap:2px}
-.hero-stats b{font-size:1.62rem;font-weight:800;color:var(--gold);letter-spacing:-.5px;line-height:1.2}
+.hero-stats b{font-size:1.62rem;font-weight:800;color:var(--gold);letter-spacing:normal;line-height:1.2}
 .hero-stats span{font-size:.76rem;color:var(--muted);font-weight:500}
 
 /* صحنه‌ی حکیم */
@@ -408,7 +408,7 @@ body[data-theme="sunny"] .hero h1{background:linear-gradient(180deg,#10233f 10%,
   color:var(--gold);margin-bottom:10px;
 }
 .kicker::before{content:"";width:18px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
-.section-head h2{font-size:clamp(1.55rem,3.2vw,2.25rem);letter-spacing:-.6px}
+.section-head h2{font-size:clamp(1.55rem,3.2vw,2.25rem);letter-spacing:normal}
 .section-note{max-width:44ch;font-size:.86rem;color:var(--muted);line-height:1.9;padding-bottom:4px}
 .count-num{font-variant-numeric:tabular-nums}
 
@@ -471,7 +471,7 @@ body[data-theme="sunny"] .bento-card{box-shadow:0 20px 50px -34px rgba(16,42,80,
 .card-cta svg{width:14px;height:14px;transition:transform .3s var(--ease)}
 .bento-card:hover .card-cta{color:var(--a,var(--gold))}
 .bento-card:hover .card-cta svg{transform:translateX(-4px)}
-.card-title{margin-top:13px;font-size:1.03rem;font-weight:700;color:var(--ink);letter-spacing:-.2px;line-height:1.45}
+.card-title{margin-top:13px;font-size:1.03rem;font-weight:700;color:var(--ink);letter-spacing:normal;line-height:1.45}
 .card-desc{margin-top:5px;font-size:.79rem;line-height:1.75;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
 .card-tags span{
@@ -629,7 +629,7 @@ body[data-theme="sunny"] .card-tags span{background:rgba(15,40,80,.04)}
 /* ── ۸. گفت‌وگو با حکیم ──────────────────────────────────────────────── */
 .chat-section{padding:64px 0 12px}
 .chat-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px}
-.chat-head h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.5px}
+.chat-head h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:normal}
 .chat-head p{color:var(--muted);font-size:.86rem;margin-top:6px;max-width:52ch}
 .chat-head .btn{height:44px;font-size:.82rem;border-radius:999px}
 .chat-head .chev{transition:transform .35s var(--ease)}
@@ -846,7 +846,7 @@ body.ready .hero [data-anim]{
   .hero{padding:106px 0 22px}
   .eyebrow{font-size:.7rem;padding:6px 12px 6px 10px}
   .hero h1{margin-top:14px}
-  .hero-stage{min-height:390px;margin:2px 0 4px}
+  .hero-stage{min-height:0;padding-block:30px;margin:6px 0 4px}
   .stage-rings i:nth-child(1){width:58%}
   .stage-rings i:nth-child(2){width:78%}
   #hakimPanelMount{width:min(360px,100%)}
@@ -859,15 +859,15 @@ body.ready .hero [data-anim]{
   .stage-chip svg{width:13px;height:13px}
   .stage-chip.a{top:2%}
   .stage-chip.b{bottom:2%}
-  .hero h1{letter-spacing:-1.2px}
+  .hero h1{letter-spacing:normal}
   .hero-tagline{font-size:1.15rem}
   .hero-sub{font-size:.9rem}
-  .hero-actions{display:grid;grid-template-columns:1fr;gap:10px}
+  .hero-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:10px;margin-top:16px}
+  .hero-actions .btn{padding-inline:10px}
   .hero-actions .btn{width:100%}
   .hero-stats{gap:0;justify-content:space-between;margin-top:22px;padding-top:18px}
   .hero-stats b{font-size:1.35rem}
   .hero-stats span{font-size:.7rem}
-  .hero-stage{min-height:430px}
   .stage-glow{width:72%}
   #hakimPanelMount .hakim-panel{padding:20px 16px}
   #hakimPanelMount .hakim-avatar{width:104px;height:104px}
@@ -875,7 +875,6 @@ body.ready .hero [data-anim]{
   .stage-chip{font-size:.66rem;padding:6px 10px}
   .stage-chip.a{top:0}
   .stage-chip.b{bottom:0}
-  .hero-stage{min-height:400px}
   .stage-star{display:none}
   .section{padding:46px 0 8px}
   .section-head{margin-bottom:18px;gap:8px}
@@ -1355,26 +1354,10 @@ body[data-theme="kashi"] input,
 body[data-theme="kashi"] select,
 body[data-theme="kashi"] textarea{color-scheme:light !important}
 
-
-/* Illustrated chapter tabs: the three destinations are the primary action. */
-.atlas-routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-block:22px 14px;text-align:start}
-.atlas-routes a{--cover:#216b65;--paper:#d6f3db;display:grid;grid-template-columns:1fr auto;align-content:start;position:relative;overflow:hidden;color:var(--ink);background:var(--card);border:1px solid var(--brd-strong);border-radius:16px 5px 16px 5px;text-decoration:none;box-shadow:0 9px 22px -16px #103b45}
-.atlas-routes a:nth-child(2){--cover:#415993;--paper:#e1e6ff}.atlas-routes a:nth-child(3){--cover:#934c45;--paper:#ffdfbc}
-.route-art{display:grid;place-items:center;grid-column:1/-1;height:68px;color:var(--paper);background-color:var(--cover);background-image:repeating-linear-gradient(45deg,transparent 0 15px,#ffffff12 15px 16px),repeating-linear-gradient(-45deg,transparent 0 15px,#ffffff12 15px 16px)}
-.route-art svg{width:49px;height:46px}.atlas-routes strong,.atlas-routes small{grid-column:1;padding-inline-start:12px}.atlas-routes strong{margin-top:10px;font-size:1rem}.atlas-routes small{padding-block:2px 12px;font-size:.78rem;color:var(--muted)}.route-arrow{grid-column:2;grid-row:2/4;align-self:center;padding-inline:3px 10px;color:var(--ink)}
-.atlas-routes a:is(:hover,:focus-visible){border-color:var(--teal)}.atlas-routes a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
-.teacher-entry{color:var(--muted);font-size:.88rem;line-height:2}.teacher-entry a{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:4px;margin-inline-start:4px}
-@media(min-width:861px){.hero-grid{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr);min-height:clamp(360px,54vh,510px)}}
-@media(max-width:550px){.atlas-routes{grid-template-columns:1fr;gap:8px}.atlas-routes a{grid-template-columns:66px 1fr auto;align-content:center}.route-art{grid-column:1;grid-row:1/3;height:66px}.route-art svg{width:39px}.atlas-routes strong,.atlas-routes small{grid-column:2}.route-arrow{grid-column:3;grid-row:1/3}}
-@media(hover:hover) and (prefers-reduced-motion:no-preference){html:not(.hk-reduce-motion) .route-art svg{transition:transform .2s ease}html:not(.hk-reduce-motion) .atlas-routes a:hover svg{transform:translateY(-2px) rotate(-4deg)}}
-.section-head{padding-block-end:15px;border-bottom:1px solid var(--brd-strong)}
-.section-head h2{text-wrap:balance}
-@media(max-width:860px){.hero-grid{grid-template-areas:'lead' 'rest' 'stage'} .hero-rest{width:min(100%,600px);margin-inline:auto}.atlas-routes{text-align:start}}
-
-/* The guide is an illustration on the cover, not a second menu. */
-.storybook{grid-area:stage;width:min(100%,390px);margin:0;justify-self:center;align-self:center;background:#f8ecd2;border:1px solid #cbb68d;border-radius:22px 6px 18px 6px;padding:7px;box-shadow:0 4px 0 -1px #dbc8a5,0 7px 0 -2px #397571,0 18px 32px -24px #173f40}
-.storybook-art{display:block;width:100%;height:auto}.storybook figcaption{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 12px;color:#4a5145;border-top:1px solid #d4c19d;font-size:.87rem}.storybook a{color:#155956;font-weight:800;padding:8px 0}.storybook a:focus-visible{outline:2px solid #155956;outline-offset:2px}
-.hero h1,.hero-tagline,.brand-text b,.card-title,.section-head h2,.chat-head h2{letter-spacing:normal}.hero-sub,.hero-tagline,.card-desc,.section-note{word-spacing:.06em}
-@media(max-width:860px){.storybook{width:min(100%,330px);margin-top:20px}}
-@media(prefers-reduced-motion:no-preference){html:not(.hk-reduce-motion) .page-curl{transform-box:fill-box;transform-origin:right bottom;animation:turn-corner 1.2s ease-in-out .15s 1}}
-@keyframes turn-corner{45%{transform:skewY(-12deg) scaleY(1.35)}}
+/* Keep the guide, rather than the scenery, in motion. */
+.hero-sub,.hero-tagline,.card-desc,.section-note,#hakimPanelMount .hakim-text{word-spacing:.06em}
+.hero-stage .stage-rings i,.hero-stage .stage-chip,.hero-stage .stage-star,.hero-stage .stage-glow{animation:none}
+@media(prefers-reduced-motion:no-preference){
+  html:not(.hk-reduce-motion) .hero-stage .stage-star.s1{animation:welcome-spark 1.4s ease-out .2s 1}
+}
+@keyframes welcome-spark{0%,100%{transform:none}45%{transform:scale(1.18) rotate(12deg)}}
