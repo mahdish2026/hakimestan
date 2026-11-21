@@ -41,7 +41,10 @@ async function run() {
         for (const width of [320,390,1280]) {
           await p.setViewport({width,height:844});
           const overflow = await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
-          if(overflow>1) errors.push(`${f}: overflow ${overflow}px at ${width}px`);
+          if(overflow>1) {
+            const outside = await p.evaluate(()=>[...document.body.querySelectorAll('*')].filter(el=>el.getBoundingClientRect().left < -1).slice(0,8).map(el=>el.tagName+'.'+el.className).join(', '));
+            errors.push(`${f}: overflow ${overflow}px at ${width}px (${outside})`);
+          }
         }
       } finally { await p.close(); }
     }
