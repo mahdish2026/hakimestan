@@ -1,0 +1,15 @@
+/* Chapter signatures: print-inspired wayfinding for the public and classroom pages. */
+.hk-folio {
+  display:flex; align-items:center; justify-content:center; gap:.65em;
+  width:fit-content; max-width:100%; margin:0 auto .65rem; padding:.25em .85em;
+  font:700 .79rem/1.7 Vazirmatn,Tahoma,sans-serif; letter-spacing:normal;
+  color:inherit; border-radius:2px 12px 2px 12px;
+  background:linear-gradient(110deg,transparent,color-mix(in srgb,currentColor 7%,transparent));
+  border-block:1px solid color-mix(in srgb,currentColor 26%,transparent);
+}
+.hk-folio::before,.hk-folio::after {
+  content:""; width:.52em; height:.52em; flex:none; transform:rotate(45deg);
+  border:1px solid currentColor; box-shadow:inset 0 0 0 1px transparent;
+}
+.hk-folio::after { width:.32em; height:.32em; background:currentColor; }
+@media print { .hk-folio { display:none; } }

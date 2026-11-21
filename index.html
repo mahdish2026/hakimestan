@@ -22,6 +22,7 @@
 <link rel="preload" href="assets/fonts/vazirmatn-100-900.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/lobby.css?v=1405-07-kashi-light">
+<link rel="stylesheet" href="css/folio.css">
 </head>
 <body data-theme="kashi">
 
@@ -116,7 +117,7 @@
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero-grid">
       <div class="hero-lead">
-        <p class="eyebrow" data-anim style="--i:0"><span class="pulse" aria-hidden="true"></span> دیار حکیم · سرزمین یادگیری</p>
+        <p class="eyebrow hk-folio" data-anim style="--i:0"><span class="pulse" aria-hidden="true"></span> دیار حکیم · سرزمین یادگیری</p>
         <h1 id="hero-title" data-anim style="--i:1">حکیمستان</h1>
         <p class="hero-tagline" data-anim style="--i:2">هر درس، یک <em>ماجرا</em>؛ هر بازی، یک <em>گنج</em>.</p>
       </div>
@@ -872,7 +873,7 @@
       canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       seed();
-      if (reduceMotion) drawStatic();
+      if (reduceMotion || W < 760) drawStatic();
     }
     function drawStatic(){
       ctx.clearRect(0, 0, W, H);
@@ -916,13 +917,13 @@
       ctx.globalAlpha = 1;
       rafId = requestAnimationFrame(loop);
     }
-    function start(){ if (running || reduceMotion) return; running = true; rafId = requestAnimationFrame(loop); }
+    function start(){ if (running || reduceMotion || W < 760 || document.hidden) return; running = true; rafId = requestAnimationFrame(loop); }
     function stop(){ running = false; cancelAnimationFrame(rafId); }
     buildSprites();
-    window.__rebuildStars = function(){ buildSprites(); };
+    window.__rebuildStars = function(){ buildSprites(); if (reduceMotion || W < 760) drawStatic(); };
     resize();
     start();
-    window.addEventListener('resize', function(){ buildSprites(); resize(); }, { passive:true });
+    window.addEventListener('resize', function(){ resize(); if (W < 760) stop(); else start(); }, { passive:true });
     document.addEventListener('visibilitychange', function(){ if (document.hidden) stop(); else start(); });
   }
 
@@ -948,6 +949,10 @@
     document.addEventListener('mouseleave', function(){ glowVisible = false; });
 
     var cards = document.querySelectorAll('.bento-card');
+    var resetActiveTilt = null;
+    function clearTilt(){ if (resetActiveTilt) resetActiveTilt(); }
+    window.addEventListener('scroll', clearTilt, { passive:true });
+    window.addEventListener('resize', clearTilt, { passive:true });
     for (var ci = 0; ci < cards.length; ci++){
       (function(card){
         var frame = 0, rect = null, px = 0, py = 0;
@@ -966,20 +971,20 @@
           card.classList.add('is-tilting');
         }
         card.addEventListener('mousemove', function(e){
+          if (resetActiveTilt !== reset) { clearTilt(); resetActiveTilt = reset; }
           if (!rect) rect = card.getBoundingClientRect();
           px = e.clientX; py = e.clientY;
           if (!frame) frame = requestAnimationFrame(paint);
         }, { passive:true });
         function reset(){
           if (frame){ cancelAnimationFrame(frame); frame = 0; }
+          if (resetActiveTilt === reset) resetActiveTilt = null;
           rect = null;
           card.style.removeProperty('transform');
           card.classList.remove('is-tilting');
         }
         card.addEventListener('mouseleave', reset);
         card.addEventListener('blur', reset, true);
-        window.addEventListener('scroll', reset, { passive:true });
-        window.addEventListener('resize', reset, { passive:true });
       })(cards[ci]);
     }
   }

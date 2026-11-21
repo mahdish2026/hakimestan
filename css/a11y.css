@@ -333,13 +333,16 @@ html.hk-reduce-motion #a11y-toolbar {
   padding: 0;
 }
 
-@supports (backdrop-filter: blur(4px)) {
-  #a11y-fab,
-  #a11y-tools {
-    background-color: rgba(14, 10, 34, 0.88);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
+/* A solid enamel tile stays legible over games without sampling the moving scene. */
+#a11y-fab {
+  background:linear-gradient(145deg,#205c60,#103b46 65%,#182d42);
+  border-color:#bda671;
+  box-shadow:inset 0 0 0 3px #ffffff16,0 4px 14px #082d383d;
+}
+#a11y-fab svg { width:24px; height:24px; pointer-events:none; }
+:where(h1,h2) { text-wrap:balance; }
+@media screen {
+  :where(html:not(.hk-high-contrast)) ::selection { background:#b6e7dc; color:#163a42; }
 }
 
 /* گروه ابزارها — فقط با بازکردن دکمهٔ اصلی دیده می‌شود.
@@ -356,8 +359,8 @@ html.hk-reduce-motion #a11y-toolbar {
   padding: 5px;
   border-radius: 999px;
   background-color: #0e0a22;
-  background-color: rgba(14, 10, 34, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background-color: #102f39;
+  border: 1px solid #bda671;
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
 }
 
