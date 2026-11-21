@@ -1,0 +1,33 @@
+name: Site quality
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  public-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Install QA dependencies (no production assets)
+        run: npm install --no-save --package-lock=false --ignore-scripts jsdom@26.1.0 puppeteer-core@24.43.1 axe-core@4.14.1
+      - name: Check offline policies, accessibility settings and install metadata
+        run: |
+          node tests/sw-cache-policy.cjs
+          node tests/offline-page.cjs
+          node tests/pwa-a11y.cjs
+          node tests/site-metadata.cjs
+          node tests/math-school-cards.cjs
+      - name: Check public pages on Chromium
+        env:
+          SITE_AXE: '1'
+        run: |
+          node tools/build-naghshestan.cjs
+          node tools/build-memizestan.cjs
+          export CHROME_PATH="$(command -v google-chrome)"
+          python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/hakim-server.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
+          node tests/site-pages-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)

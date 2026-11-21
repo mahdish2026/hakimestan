@@ -16,7 +16,7 @@ assert(!D.correct(D.stages[9].tasks[1],['1,1','6,1','6,5','1,5']),'slanted task 
 assert(!D.correct(D.stages[9].tasks[3],['1,1','6,1','6,5','1,5']),'trapezoid accepts two parallel pairs');
 assert(!D.geometry(['Infinity,2','2,2','3,3']));
 const puppeteer=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
-(async()=>{const browser=await puppeteer.launch({executablePath:await chromium.executablePath(),args:chromium.args,headless:true});try{
+(async()=>{const browser=await puppeteer.launch({executablePath:await chromium.executablePath(),args:[...chromium.args,'--disable-gpu'],headless:true});try{
 const p=await browser.newPage();await p.setViewport({width:1440,height:1000});const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.setRequestInterception(true);p.on('request',r=>{if(r.url().startsWith('http://localhost:8000/'))return r.continue();if(r.url().startsWith('https://script.google'))return r.respond({status:200,headers:{'Access-Control-Allow-Origin':'*','Content-Type':'application/json'},body:'{"ok":true}'});if(/^(data:|blob:)/.test(r.url()))return r.continue();return r.abort();});
 await p.goto('http://localhost:8000/games/math-geometry.html',{waitUntil:'networkidle0'});
 await p.click('#discoveryBtn');assert(await p.$eval('#instrumentRange',e=>e.disabled));

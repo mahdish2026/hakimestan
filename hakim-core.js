@@ -287,7 +287,7 @@
     const goldGrad  = 'hkGold' + id;
 
     return [
-      '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">',
+      '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="چهرهٔ حکیم">',
       '<defs>',
         '<radialGradient id="' + skinGrad + '" cx="40%" cy="35%" r="70%">',
           '<stop offset="0%" stop-color="' + C.skinHi + '"/>',

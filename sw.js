@@ -7,23 +7,21 @@
  *   • ناوبری صفحه      → Network-First با فالبک آفلاین (offline.html)
  *   • تصاویر          → Cache-First با سقف تعداد
  *   • ویدیو و صدا      → شبکه؛ استثنا: صوت‌های آمادهٔ نقشستان و ممیزستان با کش و Range
- *   • منابع بیرونی     → Stale-While-Revalidate با سقف
+ *   • منابع بیرونی     → مستقیم از شبکه، بدون کش برنامه
  *
  * امنیت: درخواست‌های غیر-GET و مبدأهای ناشناس هرگز کش نمی‌شوند.
  */
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.68';
+const VERSION = 'hakim-v1.5.69';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
 const IMAGES_CACHE = `${VERSION}-images`;
-const EXTERNAL_CACHE = `${VERSION}-external`;
-const KEEP_CACHES = [SHELL_CACHE, PAGES_CACHE, ASSETS_CACHE, IMAGES_CACHE, EXTERNAL_CACHE];
+const KEEP_CACHES = [SHELL_CACHE, PAGES_CACHE, ASSETS_CACHE, IMAGES_CACHE];
 
 const MAX_IMAGES = 60;
-const MAX_EXTERNAL = 30;
 
 /* ── پوستهٔ اصلی: حتماً باید در نصب کش شود ─────────────────── */
 const SHELL_ASSETS = [
@@ -121,7 +119,7 @@ function prefetchLabApps() {
       const cache = await caches.open(ASSETS_CACHE);
       for (const url of LAB_APPS) {
         try {
-          const hit = await caches.match(url);
+          const hit = await matchSafe(url);
           if (hit) continue;
           await cache.add(new Request(url, { cache: 'reload' }));
         } catch (err) { /* اختیاری: در فرصت بعدی */ }
@@ -185,8 +183,9 @@ self.addEventListener('activate', (event) => {
 /* ══════════════════════════════════════════════════════════
    ابزارهای کمکی
    ══════════════════════════════════════════════════════════ */
-function isSameOrigin(url) {
-  try { return new URL(url).origin === self.location.origin; } catch (e) { return false; }
+// Storage can be unavailable even when the network is healthy.
+async function matchSafe(key, options) {
+  try { return await caches.match(key, options); } catch { return undefined; }
 }
 
 function isMedia(url) {
@@ -223,13 +222,12 @@ async function trimCache(cacheName, maxEntries) {
 }
 
 async function putSafe(cacheName, request, response) {
-  // فقط پاسخ‌های موفق و same-origin (یا opaque برای منابع بیرونی) کش می‌شوند
-  if (!response) return;
-  if (response.status !== 200 && response.type !== 'opaque') return;
-  if (response.headers.get('cache-control')?.includes('no-store')) return;
+  if (!response || response.status !== 200 || response.redirected ||
+      /(?:^|,)\s*(?:no-store|private)\b/i.test(response.headers.get('cache-control') || '')) return false;
   try {
     const cache = await caches.open(cacheName);
     await cache.put(request, response.clone());
+    return true;
   } catch (e) {
     console.warn('[sw] کش‌کردن ناموفق:', e.message);
   }
@@ -247,17 +245,20 @@ async function handleNavigation(event) {
       ? await event.preloadResponse
       : undefined;
     const response = preload || await fetch(request);
-    await putSafe(PAGES_CACHE, request, response);
+    if (!new URL(request.url).search) await putSafe(PAGES_CACHE, request, response);
     return response;
   } catch (err) {
-    const cached = await caches.match(request, { ignoreSearch: true });
+    const cached = await matchSafe(request);
     if (cached) return cached;
+    // A query may contain a class or invitation ID. Use only the plain public HTML as fallback.
+    const page = new URL(request.url);
+    if (page.search && /\.html?$/i.test(page.pathname)) {
+      page.search = '';
+      const base = await matchSafe(page.href);
+      if (base) return base;
+    }
 
-    // اگر همین صفحه قبلاً کش شده، همان را بده
-    const byUrl = await caches.match(request.url, { ignoreSearch: true });
-    if (byUrl) return byUrl;
-
-    const offline = await caches.match('./offline.html');
+    const offline = await matchSafe('./offline.html');
     if (offline) return offline;
 
     return new Response(
@@ -271,13 +272,15 @@ async function handleNavigation(event) {
 }
 
 /** Cache-First برای دارایی‌های ایستا */
-async function handleAsset(request) {
+async function handleAsset(event) {
+  const request = event.request;
   // ignoreSearch عمداً حذف شده: لینک‌های نسخه‌دار (مثل lobby.css?v=...)
   // باید نسخهٔ تازه را بیاورند، نه نسخهٔ کهنهٔ کش‌شده را.
-  const cached = await caches.match(request);
+  // A refreshed runtime entry takes precedence over the original install-time copy.
+  const cached = await matchSafe(request, { cacheName: ASSETS_CACHE }) || await matchSafe(request);
   if (cached) {
     // به‌روزرسانی در پس‌زمینه
-    fetch(request).then((res) => putSafe(ASSETS_CACHE, request, res)).catch(() => {});
+    event.waitUntil(fetch(request).then((res) => putSafe(ASSETS_CACHE, request, res)).catch(() => {}));
     return cached;
   }
   try {
@@ -294,7 +297,7 @@ async function handleAsset(request) {
 
 /** Cache-First با سقف برای تصاویر */
 async function handleImage(request) {
-  const cached = await caches.match(request, { ignoreSearch: true });
+  const cached = await matchSafe(request);
   if (cached) return cached;
   try {
     const response = await fetch(request);
@@ -306,21 +309,6 @@ async function handleImage(request) {
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"></svg>';
     return new Response(svg, { headers: { 'Content-Type': 'image/svg+xml' }, status: 200 });
   }
-}
-
-/** Stale-While-Revalidate برای منابع بیرونی */
-async function handleExternal(request) {
-  const cached = await caches.match(request, { ignoreSearch: true });
-  const network = fetch(request).then((res) => {
-    putSafe(EXTERNAL_CACHE, request, res);
-    trimCache(EXTERNAL_CACHE, MAX_EXTERNAL);
-    return res;
-  }).catch(() => null);
-
-  if (cached) return cached;
-  const res = await network;
-  if (res) return res;
-  return new Response('', { status: 504 });
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -338,7 +326,7 @@ function isDecimalAudio(url) {
   return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^(?:tenths|place|line|compare|add|subtract|repeat|multiply|product-column|scale|market)\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
 }
 async function handleGeometryAudio(request) {
-  const full = await caches.match(request.url, { ignoreSearch: true });
+  const full = await matchSafe(request.url);
   if (!full || full.status !== 200) return fetch(request);
   const range = request.headers.get('range');
   if (!range) return full;
@@ -366,6 +354,9 @@ self.addEventListener('fetch', (event) => {
   // پروتکل‌های غیر http (مثل chrome-extension) نادیده گرفته شوند
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
+  // External APIs and explicitly private requests must never use app storage.
+  if (url.origin !== new URL(self.registration.scope).origin || request.cache === 'no-store' || request.headers.has('authorization')) return;
+
   if (isGeometryAudio(url) || isDecimalAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
   // سایر Rangeها بدون تغییر به شبکه می‌روند.
   if (request.headers.get('range')) return;
@@ -375,9 +366,6 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith((async () => {
     try {
-      if (!isSameOrigin(request.url)) {
-        return await handleExternal(request);
-      }
       if (isNavigationRequest(request, url)) {
         return await handleNavigation(event);
       }
@@ -385,14 +373,14 @@ self.addEventListener('fetch', (event) => {
         return await handleImage(request);
       }
       if (isStaticAsset(request, url)) {
-        return await handleAsset(request);
+        return await handleAsset(event);
       }
       // بقیه: شبکه با فالبک کش
       try {
         const res = await fetch(request);
         return res;
       } catch (err) {
-        const cached = await caches.match(request, { ignoreSearch: true });
+        const cached = await matchSafe(request);
         if (cached) return cached;
         throw err;
       }
@@ -429,8 +417,14 @@ self.addEventListener('message', (event) => {
     case 'CACHE_PAGE':
       event.waitUntil((async () => {
         try {
-          const cache = await caches.open(PAGES_CACHE);
-          await cache.add(new Request(data.url, { cache: 'reload' }));
+          if (typeof data.url !== 'string') throw new Error('Invalid page');
+          const scope = new URL(self.registration.scope);
+          const url = new URL(data.url, scope);
+          if (url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname) ||
+              url.search || (url.pathname !== scope.pathname && !/\.html?$/i.test(url.pathname))) throw new Error('Invalid page');
+          const req = new Request(url.href, { cache: 'reload', redirect: 'error' });
+          const response = await fetch(req);
+          if (!await putSafe(PAGES_CACHE, req, response)) throw new Error('Page not cacheable');
           event.ports[0]?.postMessage({ ok: true });
         } catch (e) {
           event.ports[0]?.postMessage({ ok: false, error: e.message });
