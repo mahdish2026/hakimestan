@@ -1356,15 +1356,17 @@ body[data-theme="kashi"] select,
 body[data-theme="kashi"] textarea{color-scheme:light !important}
 
 
-/* The lobby as a Persian atlas: a tiled portal and three direct destinations. */
-.atlas-gate{position:absolute;inset:0;width:100%;height:100%;color:var(--teal);pointer-events:none;z-index:0}
-.atlas-routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-block-start:24px}
-.atlas-routes a{position:relative;display:grid;align-content:start;gap:3px;min-width:0;padding:12px clamp(8px,1vw,16px);color:var(--ink);text-decoration:none;background:var(--card);border:1px solid var(--brd-strong);border-radius:4px 16px 4px 16px}
-.atlas-routes a::after{content:'';position:absolute;inset-inline-end:12px;top:17px;width:7px;height:7px;border:1px solid currentColor;transform:rotate(45deg);color:var(--teal)}
-.atlas-routes a:is(:hover,:focus-visible){border-color:var(--teal);background:var(--card-2)}
-.route-no{font-size:.74rem;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
-.atlas-routes strong{font-size:clamp(.84rem,1.35vw,1rem)}
-.atlas-routes small{font-size:.74rem;color:var(--muted)}
+/* Illustrated chapter tabs: the three destinations are the primary action. */
+.atlas-routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-block:22px 14px;text-align:start}
+.atlas-routes a{--cover:#216b65;--paper:#d6f3db;display:grid;grid-template-columns:1fr auto;align-content:start;position:relative;overflow:hidden;color:var(--ink);background:var(--card);border:1px solid var(--brd-strong);border-radius:16px 5px 16px 5px;text-decoration:none;box-shadow:0 9px 22px -16px #103b45}
+.atlas-routes a:nth-child(2){--cover:#415993;--paper:#e1e6ff}.atlas-routes a:nth-child(3){--cover:#934c45;--paper:#ffdfbc}
+.route-art{display:grid;place-items:center;grid-column:1/-1;height:68px;color:var(--paper);background-color:var(--cover);background-image:repeating-linear-gradient(45deg,transparent 0 15px,#ffffff12 15px 16px),repeating-linear-gradient(-45deg,transparent 0 15px,#ffffff12 15px 16px)}
+.route-art svg{width:49px;height:46px}.atlas-routes strong,.atlas-routes small{grid-column:1;padding-inline-start:12px}.atlas-routes strong{margin-top:10px;font-size:1rem}.atlas-routes small{padding-block:2px 12px;font-size:.78rem;color:var(--muted)}.route-arrow{grid-column:2;grid-row:2/4;align-self:center;padding-inline:3px 10px;color:var(--ink)}
+.atlas-routes a:is(:hover,:focus-visible){border-color:var(--teal)}.atlas-routes a:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.teacher-entry{color:var(--muted);font-size:.88rem;line-height:2}.teacher-entry a{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:4px;margin-inline-start:4px}
+@media(min-width:861px){.hero-grid{grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr);min-height:clamp(360px,54vh,510px)}.journey-stage{max-width:365px;justify-self:end}}
+@media(max-width:550px){.atlas-routes{grid-template-columns:1fr;gap:8px}.atlas-routes a{grid-template-columns:66px 1fr auto;align-content:center}.route-art{grid-column:1;grid-row:1/3;height:66px}.route-art svg{width:39px}.atlas-routes strong,.atlas-routes small{grid-column:2}.route-arrow{grid-column:3;grid-row:1/3}}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){html:not(.hk-reduce-motion) .route-art svg{transition:transform .2s ease}html:not(.hk-reduce-motion) .atlas-routes a:hover svg{transform:translateY(-2px) rotate(-4deg)}}
 .section-head{padding-block-end:15px;border-bottom:1px solid var(--brd-strong)}
 .section-head h2{text-wrap:balance}
 @media(max-width:860px){.hero-grid{grid-template-areas:'lead' 'rest' 'stage'} .hero-rest{width:min(100%,600px);margin-inline:auto}.atlas-routes{text-align:start}}
@@ -1374,7 +1376,7 @@ body[data-theme="kashi"] textarea{color-scheme:light !important}
 .journey-heading{padding:20px 24px 0;display:grid;gap:4px}.journey-heading span{font-size:.76rem;color:#ffdb8e}.journey-heading b{font-size:clamp(1.2rem,2vw,1.6rem)}
 .journey-map{width:100%;height:auto}.journey-guide{padding:14px 18px;display:flex;align-items:center;gap:10px;background:#10333a;border-top:1px solid #53877b}.journey-guide small{display:block;color:#c3ded4}.journey-guide a{margin-inline-start:auto;padding:8px 12px;background:#ffe1a3;color:#173a40;font-weight:700;border-radius:12px;font-size:.85rem}.journey-guide a:focus-visible{outline:3px solid white;outline-offset:2px}#journeyFace{width:44px;flex:none;color:#ffdf96}#journeyFace svg{width:100%;height:auto}
 .hero h1,.hero-tagline,.brand-text b,.card-title,.section-head h2,.chat-head h2{letter-spacing:normal}.hero-sub,.hero-tagline,.card-desc,.section-note,.journey-guide{word-spacing:.06em}
-@media(max-width:860px){.journey-stage{width:min(100%,520px);margin:18px auto 0}}
+@media(max-width:860px){.journey-stage{width:min(100%,365px);margin:20px auto 0}}
 @media(max-width:380px){.journey-guide{padding:12px 10px;gap:6px}#journeyFace{width:32px}}
 @media(prefers-reduced-motion:no-preference){html:not(.hk-reduce-motion) .journey-trail{animation:trace-journey 1.6s ease-out both}html:not(.hk-reduce-motion) .map-stop{transform-box:fill-box;transform-origin:center bottom;animation:arrive-atlas .4s ease-out both} .map-stop.stop-two{animation-delay:.6s!important}.map-stop.stop-three{animation-delay:1.2s!important}}
 @keyframes trace-journey{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes arrive-atlas{from{opacity:.25;transform:translateY(5px) scale(.92)}to{opacity:1;transform:none}}
