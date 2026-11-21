@@ -75,26 +75,26 @@
     +   'gap:9px !important;'
     +   'padding:12px 24px !important;'
     +   'margin:10px 0 !important;'
-    +   'background:linear-gradient(145deg,#2a1a4a 0%,#1a0f33 100%) !important;'
+    +   'background:linear-gradient(145deg,#245f61,#103946) !important;'
     +   'color:#ffd98a !important;'
     +   'font-size:.9rem !important;'
     +   'font-weight:800 !important;'
     +   'font-family:Vazirmatn,Tahoma,sans-serif !important;'
     +   'text-decoration:none !important;'
     +   'border-radius:14px !important;'
-    +   'border:2px solid #a78bfa !important;'
-    +   'box-shadow:0 6px 20px rgba(109,40,217,.45) !important;'
+    +   'border:2px solid #a68e5c !important;'
+    +   'box-shadow:0 6px 20px rgba(19,65,69,.25) !important;'
     +   'cursor:pointer !important;'
     +   'direction:rtl !important;'
     +   'opacity:1 !important;'
     +   'visibility:visible !important;'
-    +   'transition:all .3s cubic-bezier(.175,.885,.32,1.275) !important;'
+    +   'transition:transform .18s ease-out !important;'
     +   'white-space:nowrap !important;'
     + '}'
     + '.btl-lobby-btn:hover{'
     +   'transform:translateY(-3px) !important;'
     +   'border-color:#ffd98a !important;'
-    +   'box-shadow:0 12px 32px rgba(109,40,217,.6) !important;'
+    +   'box-shadow:0 12px 32px rgba(19,65,69,.32) !important;'
     + '}'
     + '.btl-lobby-btn:active{transform:translateY(0) scale(.97) !important}'
 
@@ -195,6 +195,8 @@
     return false;
   }
 
+  TARGET_BUTTONS = TARGET_BUTTONS.map(normalizeText);
+
   function findTargetButtons() {
     var all = document.querySelectorAll('button, a, [role="button"], input[type="button"], input[type="submit"], .btn');
     var found = [];
@@ -208,7 +210,7 @@
       var text = normalizeText(el.textContent || el.value || '');
       if (!text) continue;
       for (var j = 0; j < TARGET_BUTTONS.length; j++) {
-        var target = normalizeText(TARGET_BUTTONS[j]);
+        var target = TARGET_BUTTONS[j];
         if (text === target || text.indexOf(target) !== -1) {
           found.push(el);
           break;
@@ -224,7 +226,7 @@
     btn.className = 'btl-lobby-btn';
     btn.setAttribute('aria-label', 'بازگشت به لابی حکیمستان');
     btn.setAttribute('title', 'بازگشت به لابی');
-    btn.innerHTML = '<span class="btl-icon">🏠</span><span class="btl-text">بازگشت به لابی</span>';
+    btn.innerHTML = '<svg class="btl-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 11 10-8 10 8M5 10v10h14V10M10 20v-5a2 2 0 0 1 4 0v5"/></svg><span class="btl-text">بازگشت به لابی</span>';
     return btn;
   }
 

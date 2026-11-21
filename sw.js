@@ -59,6 +59,7 @@ const SHELL_ASSETS = [
   './icon.svg',
   './hakim-core.js',
   './css/a11y.css',
+  './css/folio.css',
   './css/lobby.css?v=1405-07-kashi-light',
   './css/hakim-ui.css?v=1405-08-kashi-light',
   './js/hakim-a11y.js',

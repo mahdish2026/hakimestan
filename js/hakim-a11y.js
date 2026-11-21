@@ -894,7 +894,7 @@
     var fab = document.createElement('button');
     fab.type = 'button';
     fab.id = 'a11y-fab';
-    fab.textContent = '♿';
+    fab.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="m4 9 8 2 8-2m-8 2v4m0 0-4 6m4-6 4 6"/></svg>';
     fab.setAttribute('aria-label', 'ابزارهای دسترس‌پذیری');
     fab.setAttribute('aria-expanded', 'false');
     fab.setAttribute('aria-controls', 'a11y-tools');
