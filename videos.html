@@ -468,6 +468,27 @@ body[data-theme="kashi"] .thumb-ph {
     animation: none !important;
   }
 }
+/* Film-house identity: a projection booth, perforated edges and numbered reels. */
+.cinema-marquee { position:relative; display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); align-items:center; gap:16px; padding:clamp(22px,4vw,48px); border-radius:24px; color:#fff4dd; text-align:start; background:radial-gradient(ellipse at 15% 60%,#276462,transparent 58%),#12393f; overflow:hidden; }
+.cinema-marquee::before,.cinema-marquee::after { content:""; position:absolute; inset-inline:16px; height:4px; background:repeating-linear-gradient(90deg,#dbca9d80 0 9px,transparent 9px 18px); }
+.cinema-marquee::before { top:8px; } .cinema-marquee::after { bottom:8px; }
+.cinema-copy .hk-folio { margin-inline:0 auto; color:#ffdfa3; }
+body[data-theme] .page-hero .cinema-copy h1 { background:none; color:#fff7e6; -webkit-text-fill-color:currentColor; font-size:clamp(2rem,4.8vw,3.8rem); margin:8px 0; }
+.cinema-copy > p:last-child { color:#e0eee7; line-height:1.9; }
+.projector { width:min(100%,360px); justify-self:center; }
+.main-content { padding-inline:0; }
+.video-grid { counter-reset:frame; }
+.video-card { counter-increment:frame; backdrop-filter:none; -webkit-backdrop-filter:none; }
+.card-thumb::after { content:counter(frame,decimal-leading-zero); position:absolute; left:10px; top:10px; direction:ltr; font:700 .75rem/1 monospace; letter-spacing:.08em; padding:5px 7px; border:1px solid #ffffff65; border-radius:4px; color:#fff; background:#122b34e6; pointer-events:none; }
+.card-title { margin:0; }
+/* Unpublished science films read as a compact programme, not empty players. */
+.video-card.upcoming { flex-direction:row; align-items:stretch; }
+.upcoming .card-thumb { width:65px; aspect-ratio:auto; cursor:default; background:#24585b; }
+.upcoming .card-thumb::after { left:50%; transform:translateX(-50%); }
+.upcoming .soon-overlay { background:transparent; backdrop-filter:none; justify-content:flex-end; padding-bottom:10px; }
+.upcoming .soon-pill { color:white; background:#173d40; font-size:.68rem; padding:.15rem .4rem; }
+.upcoming .thumb-ph,.upcoming .soon-icon,.upcoming .card-actions { display:none; }
+@media(max-width:650px){.cinema-marquee {grid-template-columns:1fr;text-align:center;gap:4px}.cinema-copy .hk-folio{margin-inline:auto}.projector{width:165px}.quicknav a{padding-inline:10px}.video-grid{gap:14px}}
 </style>
 <!-- hakim-meta:start -->
 <meta name="description" content="فیلم‌های آموزشی حکیمستان — مجموعهٔ ویدیوهای درس و کارگاه برای معلمان و دانش‌آموزان، با پخش روان روی موبایل.">
@@ -566,45 +587,19 @@ body[data-theme="kashi"] .thumb-ph {
 
   <!-- ================= قهرمان فشرده ================= -->
   <section class="page-hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> دیار حکیم · سرزمین یادگیری</p>
-      <div class="hero-emblem" aria-hidden="true">
-        <!-- چراغ دانایی — هم‌رنگ تم کاشی -->
-        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" fill="none">
-          <defs>
-            <radialGradient id="gldFlame" cx="50%" cy="30%" r="55%">
-              <stop offset="0%" stop-color="#fff7c0"/>
-              <stop offset="60%" stop-color="#f4cd84"/>
-              <stop offset="100%" stop-color="#c98f2e"/>
-            </radialGradient>
-            <radialGradient id="gldBody" cx="50%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#ffe4a8"/>
-              <stop offset="100%" stop-color="#d9a552"/>
-            </radialGradient>
-          </defs>
-          <!-- پایه -->
-          <ellipse cx="30" cy="52" rx="12" ry="3.5" fill="#5eead4" opacity=".22"/>
-          <!-- بدنه چراغ -->
-          <path d="M22 42 Q18 34 20 26 Q22 18 30 18 Q38 18 40 26 Q42 34 38 42 Z"
-                fill="url(#gldBody)" opacity=".95"/>
-          <!-- دسته -->
-          <path d="M38 36 Q46 34 46 40 Q46 46 38 44" stroke="#b8862f" stroke-width="2"
-                fill="none" stroke-linecap="round"/>
-          <!-- قاعده -->
-          <rect x="24" y="42" width="12" height="4" rx="2" fill="#b8862f"/>
-          <rect x="26" y="46" width="8" height="3" rx="1.5" fill="#96691f"/>
-          <rect x="27.5" y="49" width="5" height="4" rx="1" fill="#7a5518"/>
-          <!-- شعله -->
-          <ellipse cx="30" cy="18" rx="5" ry="7" fill="url(#gldFlame)" opacity=".9"/>
-          <ellipse cx="30" cy="16" rx="2.5" ry="4" fill="#fff7c0" opacity=".6"/>
-          <!-- بازتاب -->
-          <ellipse cx="25.5" cy="30" rx="1.8" ry="5" fill="#fff" opacity=".18" transform="rotate(-12,25.5,30)"/>
-        </svg>
+    <div class="wrap"><div class="cinema-marquee">
+      <div class="cinema-copy"><p class="hk-folio">فیلم‌خانه · راهنمای دیداری</p>
+        <h1 id="hero-title">فیلم‌های حکیمستان</h1>
+        <p>پیش از ورود به بازی یا ابزار، چند دقیقه آن را در عمل ببین.</p>
       </div>
-      <p class="hk-folio">کتابخانهٔ دیداری · تماشا</p>
-      <h1 id="hero-title">فیلم‌های حکیمستان</h1>
-      <p class="hero-tagline">معرفی <em>بازی‌ها</em> و <em>ابزارها</em> با ویدیو</p>
-    </div>
+      <svg class="projector" viewBox="0 0 330 148" fill="none" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="projection"><stop stop-color="#ffe0a0" stop-opacity=".7"/><stop offset="1" stop-color="#ffe0a0" stop-opacity=".07"/></linearGradient><g id="film-reel" stroke="#ffdfa3" stroke-width="2"><circle r="22" fill="#286866"/><circle r="4"/><circle cy="-12" r="4"/><circle cx="11" cy="5" r="4"/><circle cx="-10" cy="6" r="4"/></g></defs>
+        <path d="m146 80 155-59v106L146 91z" fill="url(#projection)"/><path d="m183 65 98-34m-67 80 70 12" stroke="#e1cb93" opacity=".45"/>
+        <g stroke="#a4e1d2" stroke-width="2"><rect x="43" y="61" width="85" height="47" rx="9" fill="#225d5e"/><path d="m128 77 18-7v26l-18-7z" fill="#edbb75"/><path d="m74 109-13 24m36-24 14 24M48 136h82M53 93h31m-31 5h20"/></g>
+        <use href="#film-reel" transform="translate(68 42)"/><use href="#film-reel" transform="translate(111 43) scale(.87)"/>
+        <path d="m219 61 18 12-18 12z" fill="#ffdfa3"/><path d="M175 21h8m-4-4v8m82 63h6m-3-3v6" stroke="#e7d095"/>
+      </svg>
+    </div></div>
   </section>
 
   <div class="wrap">
@@ -788,7 +783,7 @@ const videoStatus = {};   // id → 'ready' | 'soon'
 
 function buildCard(video, upcoming) {
   const card = document.createElement('article');
-  card.className = 'video-card reveal';
+  card.className = upcoming ? 'video-card upcoming reveal' : 'video-card reveal';
 
   /* — thumbnail — */
   const thumb = document.createElement('div');
@@ -843,7 +838,7 @@ function buildCard(video, upcoming) {
   const body  = document.createElement('div');
   body.className = 'card-body';
 
-  const title = document.createElement('div');
+  const title = document.createElement('h3');
   title.className = 'card-title';
   title.textContent = video.title;
 
@@ -948,7 +943,7 @@ function renderSections() {
     titleEl.innerHTML =
       `<span class="sec-icon" aria-hidden="true">${sec.icon}</span>` +
       `<span class="sec-label">${sec.title}</span>` +
-      `<span class="sec-count">${sec.videos.length} فیلم</span>` +
+      `<span class="sec-count">${sec.videos.length.toLocaleString('fa-IR')} فیلم</span>` +
       `<span class="sec-line" aria-hidden="true"></span>`;
     section.appendChild(titleEl);
 

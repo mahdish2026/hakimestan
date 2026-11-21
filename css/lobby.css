@@ -1355,3 +1355,16 @@ body[data-theme="kashi"] input,
 body[data-theme="kashi"] select,
 body[data-theme="kashi"] textarea{color-scheme:light !important}
 
+
+/* The lobby as a Persian atlas: a tiled portal and three direct destinations. */
+.atlas-gate{position:absolute;inset:0;width:100%;height:100%;color:var(--teal);pointer-events:none;z-index:0}
+.atlas-routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-block-start:24px}
+.atlas-routes a{position:relative;display:grid;align-content:start;gap:3px;min-width:0;padding:12px clamp(8px,1vw,16px);color:var(--ink);text-decoration:none;background:var(--card);border:1px solid var(--brd-strong);border-radius:4px 16px 4px 16px}
+.atlas-routes a::after{content:'';position:absolute;inset-inline-end:12px;top:17px;width:7px;height:7px;border:1px solid currentColor;transform:rotate(45deg);color:var(--teal)}
+.atlas-routes a:is(:hover,:focus-visible){border-color:var(--teal);background:var(--card-2)}
+.route-no{font-size:.74rem;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+.atlas-routes strong{font-size:clamp(.84rem,1.35vw,1rem)}
+.atlas-routes small{font-size:.74rem;color:var(--muted)}
+.section-head{padding-block-end:15px;border-bottom:1px solid var(--brd-strong)}
+.section-head h2{text-wrap:balance}
+@media(max-width:860px){.hero-grid{grid-template-areas:'lead' 'rest' 'stage'} .hero-rest{width:min(100%,600px);margin-inline:auto}.atlas-routes{text-align:start}}

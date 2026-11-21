@@ -123,7 +123,16 @@
       </div>
 
       <div class="hero-stage" aria-label="حکیم، راهنمای تو">
-        <div class="stage-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+        <svg class="atlas-gate" viewBox="0 0 480 460" fill="none" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="gate-wash" x2=".75" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="var(--teal)" stop-opacity=".22"/><stop offset="1" stop-color="var(--gold)" stop-opacity=".07"/></linearGradient>
+            <pattern id="gate-tile" width="36" height="36" patternUnits="userSpaceOnUse"><path d="m18 1 5 11 12 6-12 6-5 11-5-11-12-6 12-6z" stroke="currentColor" stroke-opacity=".18"/></pattern>
+            <path id="gate-cut" d="M37 404V215C37 135 123 117 173 86c30-18 50-40 67-65 17 25 37 47 67 65 50 31 136 49 136 129v189Z"/>
+          </defs>
+          <use href="#gate-cut" fill="url(#gate-wash)"/><use href="#gate-cut" fill="url(#gate-tile)" stroke="currentColor" stroke-width="2"/>
+          <path d="M49 402V215c0-68 71-88 130-122 25-15 46-34 61-54 15 20 36 39 61 54 59 34 130 54 130 122v187" stroke="currentColor" stroke-dasharray="2 5"/>
+          <g stroke="currentColor"><path d="M17 407h446m-428 7h410m-387 7h328"/><path d="m227 12 13-10 13 10-13 9z" fill="var(--gold)"/></g>
+        </svg>
         <div class="stage-glow" aria-hidden="true"></div>
         <svg class="stage-star s1" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2z" fill="currentColor"/></svg>
         <svg class="stage-star s2" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2z" fill="currentColor"/></svg>
@@ -144,11 +153,11 @@
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14m0 0-5-5m5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
-        <ul class="hero-stats" data-anim style="--i:5">
-          <li><b>۱۱</b><span>بازی تعاملی</span></li>
-          <li><b>۷</b><span>ابزار معلم</span></li>
-          <li><b>۱۰۰٪</b><span>رایگان و آفلاین</span></li>
-        </ul>
+        <nav class="atlas-routes" aria-label="مسیرهای یادگیری">
+          <a href="#sec-games"><span class="route-no" aria-hidden="true">۰۱</span><strong>بازی‌خانه</strong><small>انتخاب بازی</small></a>
+          <a href="math-learning.html"><span class="route-no" aria-hidden="true">۰۲</span><strong>مدرسهٔ ریاضی</strong><small>تمرین با بازی</small></a>
+          <a href="videos.html"><span class="route-no" aria-hidden="true">۰۳</span><strong>فیلم‌خانه</strong><small>تماشای آموزش</small></a>
+        </nav>
       </div>
     </div>
   </section>
