@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Install QA dependencies (no production assets)
@@ -24,6 +24,8 @@ jobs:
         env:
           SITE_AXE: '1'
         run: |
+          node tools/build-naghshestan.cjs
+          node tools/build-memizestan.cjs
           export CHROME_PATH="$(command -v google-chrome)"
           python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/hakim-server.log 2>&1 &
           trap 'kill $!' EXIT
