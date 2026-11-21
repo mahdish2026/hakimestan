@@ -105,8 +105,16 @@ console.log('\n۱) مدرسهٔ ریاضی، تم «مدرن» (روشن) + کن
   await clickContrast(page); await nextFrame(page);
   const s = await state(page);
   ok('hk-hc-light نشست و متن بدنه #10131c است', s.hc && s.light && s.color === DARK_TEXT, show(s));
-  const title = await page.evaluate(() => getComputedStyle(document.querySelector('.page-title')).color);
-  ok('تیتر صفحه (ارث از body) هم #10131c است', title === DARK_TEXT, title);
+  // The school now has an opaque dark chalkboard, even in a light page theme.
+  const ratio = await page.evaluate(() => {
+    const luminance = color => color.match(/\d+/g).slice(0,3).map(Number)
+      .map(v => v / 255).map(v => v <= .04045 ? v / 12.92 : ((v+.055)/1.055) ** 2.4)
+      .reduce((n,v,i) => n + v * [.2126,.7152,.0722][i],0);
+    const text = luminance(getComputedStyle(document.querySelector('.page-title')).color);
+    const board = luminance(getComputedStyle(document.querySelector('.page-header')).backgroundColor);
+    return (Math.max(text,board)+.05)/(Math.min(text,board)+.05);
+  });
+  ok('تیتر روی زمینهٔ واقعی تخته خواناست', ratio >= 4.5, String(ratio));
   await ctx.close();
 }
 

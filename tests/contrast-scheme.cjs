@@ -49,7 +49,7 @@ const colorOf = (body) => {
   const m = body.match(/(?:^|[;\s])color\s*:\s*([^;]+)/);
   return m ? m[1].trim().toLowerCase() : null;
 };
-const contrastRules = all.filter((r) => r.selectors.some((s) => s.includes('hk-high-contrast')));
+const contrastRules = all.filter((r) => r.selectors.some((s) => s.replaceAll(':not(.hk-high-contrast)', '').includes('hk-high-contrast')));
 
 const white = contrastRules.filter((r) => colorOf(r.body) === '#ffffff !important');
 const dark = contrastRules.filter((r) => colorOf(r.body) === '#10131c !important');

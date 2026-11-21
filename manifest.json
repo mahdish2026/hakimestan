@@ -134,6 +134,19 @@
   ],
   "shortcuts": [
     {
+      "name": "مدرسهٔ ریاضی",
+      "short_name": "ریاضی",
+      "description": "انتخاب بازی ریاضی پایهٔ پنجم",
+      "url": "./math-learning.html?source=shortcut-math",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
       "name": "لابی و بازی‌ها",
       "short_name": "لابی",
       "description": "ورود به لابی حکیمستان و انتخاب بازی",
