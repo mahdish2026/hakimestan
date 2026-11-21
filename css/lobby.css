@@ -1361,3 +1361,29 @@ body[data-theme="kashi"] textarea{color-scheme:light !important}
   html:not(.hk-reduce-motion) .hero-stage .stage-star.s1{animation:welcome-spark 1.4s ease-out .2s 1}
 }
 @keyframes welcome-spark{0%,100%{transform:none}45%{transform:scale(1.18) rotate(12deg)}}
+
+/* A single frontispiece: introduction and actions, guide, then an index strip. */
+.hero{padding-bottom:12px}
+.hero-grid{
+  position:relative;isolation:isolate;width:min(calc(100% - 40px),var(--max));
+  grid-template-areas:"lead stage" "rest stage" "facts facts";
+  grid-template-rows:1fr 1fr auto;min-height:0;
+  padding:clamp(24px,3vw,42px) clamp(24px,4vw,56px) 0;
+  border:1px solid var(--brd-strong);border-radius:30px 10px 30px 10px;
+  background:radial-gradient(ellipse at 15% 18%,color-mix(in srgb,var(--teal) 12%,transparent),transparent 55%),linear-gradient(145deg,var(--card-2),var(--bg));
+  box-shadow:0 20px 48px -36px rgba(21,53,65,.45)
+}
+.hero-grid::before{content:"";position:absolute;inset-inline-start:clamp(24px,4vw,56px);top:-1px;width:82px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--teal))}
+.hero-lead .eyebrow{backdrop-filter:none;-webkit-backdrop-filter:none}
+.hero-stage{min-height:355px;padding-block:32px}
+.hero-stats{grid-area:facts;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:20px 0 0;padding:15px 0}
+.hero-stats li{flex-direction:row;align-items:center;justify-content:center;gap:9px}
+.hero-stats li+li{border-inline-start:1px solid var(--brd-strong)}
+.section-head{border-block-end:1px solid var(--brd-strong);padding-block-end:16px}
+.section-head .kicker::before{height:8px;width:8px;transform:rotate(45deg);background:var(--teal);border:2px solid var(--bg);outline:1px solid var(--teal)}
+@media(max-width:860px){
+  .hero-grid{width:min(calc(100% - 24px),640px);grid-template-areas:"lead" "rest" "stage" "facts";grid-template-rows:auto;row-gap:6px;padding:22px 16px 0}
+  .hero-stage{min-height:0;padding-block:28px;margin:8px 0 0}
+  .hero-rest{padding-bottom:0}.hero-stats{margin-top:6px}
+}
+@media(max-width:550px){.hero-stats li{flex-direction:column;gap:2px}.hero-actions .btn{height:auto;min-height:46px;padding:9px 10px}.hero-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-actions svg{flex-shrink:0}}
