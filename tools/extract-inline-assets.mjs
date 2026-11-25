@@ -17,6 +17,7 @@
  * اجرا: node tools/extract-inline-assets.mjs [--dry]
  */
 import { readFile, writeFile, mkdir, readdir, stat } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join, dirname, relative, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -26,6 +27,7 @@ const DRY = process.argv.includes('--dry');
 
 const FONT_DIR = join(ROOT, 'assets', 'fonts');
 const IMG_DIR = join(ROOT, 'assets', 'img');
+const AUDIO_DIR = join(ROOT, 'assets', 'audio');
 
 /* نگاشت نام‌خوانا برای فونت‌های شناخته‌شده */
 const FONT_NAME_MAP = {
@@ -66,6 +68,7 @@ const kb = (n) => (n / 1024).toFixed(0) + ' KB';
 async function main() {
   await mkdir(FONT_DIR, { recursive: true });
   await mkdir(IMG_DIR, { recursive: true });
+  await mkdir(AUDIO_DIR, { recursive: true });
 
   const files = await htmlFiles();
   let totalSaved = 0;
@@ -87,33 +90,38 @@ async function main() {
     while ((m = fontFaceRe.exec(html))) faces.push({ full: m[0], body: m[1], index: m.index });
 
     for (const face of faces) {
-      const urlMatch = face.body.match(/url\(\s*data:font\/(\w+)(?:;[^,]*)?;base64,([A-Za-z0-9+/=]+)\s*\)/);
+      const urlMatch = face.body.match(/url\(\s*(['"]?)data:font\/(\w+)(?:;[^,]*)?;base64,([A-Za-z0-9+/=]+)\1\s*\)/);
       if (!urlMatch) continue;
 
-      const fmt = urlMatch[1];                 // woff2
-      const data = urlMatch[2];
+      const fmt = urlMatch[2];                 // woff2
+      const data = urlMatch[3];
       const family = (face.body.match(/font-family\s*:\s*['"]?([^;'"]+)/) || [, 'font'])[1].trim();
-      const weight = (face.body.match(/font-weight\s*:\s*([^;]+)/) || [, '400'])[1].trim().replace(/\s+/g, '-');
-      const style = (face.body.match(/font-style\s*:\s*([^;]+)/) || [, 'normal'])[1].trim();
+      const rawWeight = (face.body.match(/font-weight\s*:\s*([^;!}]+)/) || [, '400'])[1].trim();
+      const weight = rawWeight.replace(/\s+/g, '-');
+      const style = (face.body.match(/font-style\s*:\s*([^;!}]+)/) || [, 'normal'])[1].trim();
 
       const slug = FONT_NAME_MAP[family.toLowerCase().replace(/\s+/g, '-')] ||
                    family.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'font';
       let name = `${slug}-${weight}`;
       if (style !== 'normal') name += `-${style}`;
+      if (slug === 'vazirmatn' && !rawWeight.includes(' ') && existsSync(join(FONT_DIR, 'vazirmatn-100-900.woff2'))) {
+        name = 'vazirmatn-100-900';
+      }
       let fileName = `${name}.${fmt}`;
-      if (written.has(fileName) || usedNames.has(fileName)) {
-        // همان فایل قبلاً نوشته شده — از همان استفاده می‌کنیم
+      const outFontPath = join(FONT_DIR, fileName);
+      if (existsSync(outFontPath) || written.has(fileName) || usedNames.has(fileName)) {
+        // همان فایل قبلاً در مخزن یا در این اجرا وجود دارد — بازنویسی نمی‌شود
       } else {
         const buf = Buffer.from(data, 'base64');
-        if (!DRY) await writeFile(join(FONT_DIR, fileName), buf);
+        if (!DRY) await writeFile(outFontPath, buf);
         written.add(fileName);
         report.push({ kind: 'فونت', file: fileName, size: buf.length, from: relative(ROOT, file) });
       }
       usedNames.add(fileName);
 
       const newBody = face.body.replace(
-        /url\(\s*data:font\/[^)]+\)/,
-        `url('${prefix}assets/fonts/${fileName}') format('${fmt}')`
+        /src\s*:\s*url\([^)]+\)(?:\s*format\([^)]+\))?(?:\s*,\s*url\([^)]+\)(?:\s*format\([^)]+\))?)*/,
+        `src: url('${prefix}assets/fonts/${fileName}') format('${fmt}')`
       );
       html = html.replace(face.full, `@font-face {${newBody}}`);
       changed = true;
@@ -174,6 +182,30 @@ async function main() {
       totalSaved += (data.length - Math.round(data.length * 0.75)) * uses.length;
     }
 
+    /* ── ۳) فایل‌های صوتی درون‌خطی (MP3/WAV/OGG بالای ۴ کیلوبایت) ── */
+    const audioRe = /(['"])data:audio\/(mpeg|mp3|wav|ogg);base64,([A-Za-z0-9+/=]{5000,})\1/g;
+    const audioMatches = [];
+    let am;
+    while ((am = audioRe.exec(html))) {
+      audioMatches.push({ quote: am[1], fmt: am[2] === 'mpeg' ? 'mp3' : am[2], data: am[3], raw: am[0] });
+    }
+    if (audioMatches.length) {
+      const stem = relative(ROOT, file).replace(/\.html$/, '').replace(/[\\/]/g, '-');
+      let audIdx = 1;
+      for (const item of audioMatches) {
+        const fileName = `${stem}-voice-${audIdx++}.${item.fmt}`;
+        const buf = Buffer.from(item.data, 'base64');
+        if (!DRY) {
+          await writeFile(join(AUDIO_DIR, fileName), buf);
+          written.add('audio/' + fileName);
+        }
+        report.push({ kind: 'صدا', file: fileName, size: buf.length, from: relative(ROOT, file) });
+        html = html.replace(item.raw, `${item.quote}${prefix}assets/audio/${fileName}${item.quote}`);
+        changed = true;
+        totalSaved += item.data.length - buf.length;
+      }
+    }
+
     if (changed && !DRY) {
       await writeFile(file, html, 'utf8');
       const after = Buffer.byteLength(html);
@@ -186,6 +218,7 @@ async function main() {
 
   const fonts = report.filter((r) => r.kind === 'فونت');
   const imgs = report.filter((r) => r.kind === 'تصویر');
+  const audios = report.filter((r) => r.kind === 'صدا');
   const pages = report.filter((r) => r.kind === 'صفحه');
 
   if (fonts.length) {
@@ -195,6 +228,10 @@ async function main() {
   if (imgs.length) {
     console.log('\n  تصاویر:');
     for (const i of imgs) console.log(`    img/${i.file.padEnd(36)} ${kb(i.size).padStart(9)}${i.uses > 1 ? `  (${i.uses} بار استفاده)` : ''}`);
+  }
+  if (audios.length) {
+    console.log('\n  فایل‌های صوتی:');
+    for (const a of audios) console.log(`    audio/${a.file.padEnd(34)} ${kb(a.size).padStart(9)}`);
   }
   if (pages.length) {
     console.log('\n  کاهش حجم صفحات:');

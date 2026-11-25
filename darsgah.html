@@ -18,7 +18,7 @@
 <meta name="description" content="درسگاه حکیمستان؛ ضبط تدریس از PDF، صدای معلم و وب‌کم روی موبایل و لپ‌تاپ؛ بدون ضبط صفحه.">
 <title>درسگاه حکیمستان | استودیوی تدریس شما</title>
 <style>
-@font-face {font-family:Vazirmatn;font-style:normal;font-weight:100 900;font-display:swap;src:url('assets/fonts/vazirmatn-100-900.woff2') format('woff2') format('woff2');}
+@font-face {font-family:Vazirmatn;font-style:normal;font-weight:100 900;font-display:swap;src:url('assets/fonts/vazirmatn-100-900.woff2') format('woff2');}
 :root{
   --theme-hue:#ff7d3b;
   --theme-hue-dark:#c84e12;
@@ -216,6 +216,17 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   .mobile-top-tools{flex-wrap:wrap;min-width:0}
   .mobile-top-tools .btn{min-width:0;max-width:100%}
   .mobile-top-tools .btn-primary{flex:1 1 100%}
+  #darsgahPrintSheet{display:none}
+  @page{size:A4 portrait;margin:12mm}
+  @media print{
+    html,body{background:#fff!important;color:#000!important;padding:0!important;margin:0!important;overflow:visible!important}
+    .topbar,.app,dialog,.toasts,#focusOverlay,.hk-a11y-fab,.hk-a11y-panel,.btl-lobby-btn{display:none!important}
+    #darsgahPrintSheet{display:block!important;padding:0;font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111}
+    #darsgahPrintSheet .dp-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #222;padding-bottom:8px;margin-bottom:12px;font-size:11pt}
+    #darsgahPrintSheet .dp-head strong{font-size:13pt}
+    #darsgahPrintSheet img{display:block;max-width:100%;max-height:245mm;width:auto;height:auto;margin:0 auto;border:1px solid #ccc;border-radius:4px}
+    #darsgahPrintSheet .dp-foot{margin-top:10px;text-align:center;font-size:9pt;color:#555}
+  }
 
 </style>
 <script>
@@ -311,7 +322,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   </aside>
   <section class="workspace" aria-label="میز تدریس">
    <div class="card book-card" id="bookCard">
-    <div class="book-toolbar"><div class="book-toolbar-title"><svg class="icon"><use href="#i-book"/></svg><div><div class="book-name" id="bookName">میز تدریس شما</div><div class="book-meta" id="bookMeta">هنوز کتابی انتخاب نشده</div></div></div><div class="toolbar-actions"><button id="changeBook" class="btn btn-small btn-quiet" title="انتخاب فایل PDF"><svg class="icon"><use href="#i-upload"/></svg><span class="button-text">انتخاب PDF</span></button><button class="btn btn-icon btn-quiet" id="focusBtn" aria-label="باز کردن حالت تمرکز" title="حالت تمرکز"><svg class="icon"><use href="#i-expand"/></svg></button><button class="btn btn-small focus-exit" id="exitFocus">خروج از تمرکز</button><a id="externalPdf" class="btn btn-icon btn-quiet" target="_blank" rel="noopener" title="باز کردن PDF در برگه جدا" aria-label="باز کردن PDF در برگه جدا" hidden><svg class="icon"><use href="#i-external"/></svg></a></div></div>
+    <div class="book-toolbar"><div class="book-toolbar-title"><svg class="icon"><use href="#i-book"/></svg><div><div class="book-name" id="bookName">میز تدریس شما</div><div class="book-meta" id="bookMeta">هنوز کتابی انتخاب نشده</div></div></div><div class="toolbar-actions"><button id="changeBook" class="btn btn-small btn-quiet" title="انتخاب فایل PDF"><svg class="icon"><use href="#i-upload"/></svg><span class="button-text">انتخاب PDF</span></button><button id="exportNotesBtn" class="btn btn-small btn-quiet" title="پشتیبان‌گیری JSON از یادداشت‌های روی کتاب" hidden>💾 <span class="button-text">ذخیرهٔ نوشته‌ها</span></button><button id="importNotesBtn" class="btn btn-small btn-quiet" title="بازیابی یادداشت‌های روی کتاب از فایل JSON" hidden>📂 <span class="button-text">بازیابی نوشته‌ها</span></button><button id="printPageBtn" class="btn btn-small btn-quiet" title="چاپ صفحهٔ فعلی به همراه نوشته‌ها (A4)" hidden>🖨️ <span class="button-text">چاپ A4</span></button><button class="btn btn-icon btn-quiet" id="focusBtn" aria-label="باز کردن حالت تمرکز" title="حالت تمرکز"><svg class="icon"><use href="#i-expand"/></svg></button><button class="btn btn-small focus-exit" id="exitFocus">خروج از تمرکز</button><a id="externalPdf" class="btn btn-icon btn-quiet" target="_blank" rel="noopener" title="باز کردن PDF در برگه جدا" aria-label="باز کردن PDF در برگه جدا" hidden><svg class="icon"><use href="#i-external"/></svg></a></div></div>
     <div id="emptyState" class="canvas-area"><div class="upload-sheet"><span class="sheet-label"><svg class="icon"><use href="#i-leaf"/></svg>هر صفحه، یک فرصت تازه</span>
      <svg class="book-art" viewBox="0 0 180 145" fill="none" aria-hidden="true"><ellipse cx="91" cy="125" rx="60" ry="9" fill="#e7e9dd"/><path d="m22 41 60 11 70-14 8 77-72 14-63-11-3-77Z" fill="#d9dfcb"/><path d="m30 29 56 14 60-15 7 82-65 15-58-14V29Z" fill="#f9f6e8" stroke="#809470" stroke-width="1.7" stroke-linejoin="round"/><path d="M86 43v81M35 33c18-2 34 3 51 12 18-11 35-16 55-16v77c-20 1-38 6-55 16-16-8-33-12-51-13V33Z" fill="#fffdf2" stroke="#849876" stroke-width="1.7"/><path d="m48 53 23 6m-23 8 23 6m-23 8 16 4m38-29 24-7m-24 21 24-7m-24 21 17-5" stroke="#d5dcc5" stroke-width="3" stroke-linecap="round"/><path d="m122 30 10-3v32l-5-3-5 6V30Z" fill="#ff985b"/><path d="M157 21v-9m-4 4h9M21 67h-9m5-5v10" stroke="#ffb98d" stroke-width="2.5" stroke-linecap="round"/><circle cx="53" cy="16" r="3" fill="#c2d3ac"/><path d="m150 86 15 4-18 17-5-4 8-17Z" fill="#ff985b" stroke="#c78251"/><path d="m142 103-3 9 8-5" fill="#ead8bb" stroke="#c78251"/></svg>
      <h2>امروز، کدام کتاب را درس می‌دهیم؟</h2><p>فایل کتاب را اینجا بکشید یا از گوشی و رایانه انتخاب کنید.<br>بقیه‌اش، صدای گرم شماست.</p><button id="uploadMain" class="btn btn-primary"><svg class="icon"><use href="#i-upload"/></svg>انتخاب PDF از کامپیوتر / گوشی</button><span class="upload-sub">فایل روی دستگاه شما می‌ماند؛ آپلود نمی‌شود.</span><div class="upload-alt"><button data-open="libraryDialog">کتابخانهٔ پایه پنجم</button><span>·</span><button data-open="urlDialog">باز کردن از لینک</button></div>
@@ -339,15 +350,17 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
 </div>
    <div class="record-help"><svg class="icon"><use href="#i-help"/></svg><p id="recordHelp">با زدن شروع، فقط مجوز میکروفون را بدهید. کتاب و تصویر اختیاری شما مستقیماً به فیلم تبدیل می‌شوند.</p></div>
    <div id="resultCard" class="card result-card" hidden><div><h3>درس شما آمادهٔ دیدن است!</h3><p id="resultSummary">قبل از اشتراک‌گذاری، یک‌بار فیلم را ببینید.</p></div><button class="btn btn-soft" id="openResult"><svg class="icon"><use href="#i-play"/></svg>پیش‌نمایش و دانلود</button></div>
-   <div class="library-strip"><span>روی میز کتابخانه:</span><button class="book-pill" data-book="riazi-5">🔢 ریاضی پنجم</button><button class="book-pill" data-book="oloom-5">🔬 علوم تجربی پنجم</button><button class="book-pill" data-book="farsi-5">📖 فارسی پنجم</button><button class="book-pill" data-book="negaresh-5">✍️ نگارش فارسی پنجم</button><button class="book-pill" data-book="motaleat-5">🗺️ مطالعات اجتماعی پنجم</button><button class="book-pill" data-book="hediyeh-5">🕌 هدیه‌های آسمان پنجم</button><button class="book-pill" data-book="quran-5">📿 آموزش قرآن پنجم</button><button class="book-pill" data-book="khat-tahriri-5">🖋️ کار آموزش خط تحریری</button><button class="book-pill" data-book="defa-iran-5">🛡️ از ایرانمان دفاع می‌کنیم</button><button class="btn btn-small btn-quiet" data-open="libraryDialog">همهٔ کتاب‌ها <svg class="icon" style="width:13px"><use href="#i-arrow"/></svg></button></div>
+   <div class="library-strip"><span>روی میز کتابخانه:</span><button class="book-pill" data-book="riazi-5">🔢 ریاضی پنجم</button><button class="book-pill" data-book="oloom-5">🔬 علوم تجربی پنجم</button><button class="book-pill" data-book="farsi-5">📖 فارسی پنجم</button><button class="book-pill" data-book="negaresh-5">✍️ نگارش فارسی پنجم</button><button class="book-pill" data-book="motaleat-5">🗺️ مطالعات اجتماعی پنجم</button><button class="book-pill" data-book="hediyeh-5">🕌 هدیه‌های آسمان پنجم</button><button class="book-pill" data-book="quran-5">📿 آموزش قرآن پنجم</button><button class="book-pill" data-book="khat-tahriri-5">🖋️ کار آموزش خط تحریری</button><button class="btn btn-small btn-quiet" data-open="libraryDialog">همهٔ کتاب‌ها <svg class="icon" style="width:13px"><use href="#i-arrow"/></svg></button></div>
   </section>
  </div>
  <footer class="privacy-footer"><span class="footer-mark"><svg class="icon"><use href="#i-heart"/></svg>با دلِ معلمی، برای روزهای روشن یادگیری.</span><span class="footer-designer">طراحی و توسعه: <strong>مهدی شریفیان</strong></span></footer>
 </main>
 <input type="file" id="fileInput" accept="application/pdf,.pdf" hidden>
+<input type="file" id="notesFileInput" accept="application/json,.json" hidden>
+<div id="darsgahPrintSheet" aria-hidden="true"></div>
 <div class="toasts" id="toasts" role="status" aria-live="polite" aria-atomic="false"></div>
-<dialog id="helpDialog" aria-labelledby="helpTitle"><div class="dialog-head"><h2 id="helpTitle">از کتاب تا فیلم، در سه قدم</h2><button class="btn btn-icon btn-quiet" data-close aria-label="بستن راهنما"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><ol class="guide-list"><li><div><h3>کتاب را روی میز بگذارید.</h3><p>PDF را از گوشی یا رایانه انتخاب کنید. کتاب با PDF.js داخل همین صفحه باز می‌شود. دکمه‌های قبلی و بعدی ورق می‌زنند؛ شمارهٔ صفحه هم قابل تغییر است. بزرگنمایی و جابه‌جایی کتاب در فیلم نهایی دیده می‌شود.</p></div></li><li><div><h3>صدا و تصویرتان را آماده کنید.</h3><p>میکروفون را آزمایش کنید و در صورت تمایل وب‌کم را روشن کنید. تصویر دایره‌ای شما روی کتاب دیده می‌شود. با شروع ضبط، فقط کتاب و وب‌کم اختیاری به فیلم تبدیل می‌شوند؛ هیچ مجوز ضبط صفحه‌ای درخواست نمی‌شود. فقط صدای میکروفون ضبط می‌شود، نه صدای دستگاه.</p></div></li><li><div><h3>درس بدهید، فیلم را دانلود کنید.</h3><p>ورق بزنید، بزرگنمایی کنید و توضیح بدهید. می‌توانید ضبط را موقتاً متوقف کنید. پس از پایان، فیلم را ببینید و پیش از بستن برگه دانلود کنید. برای حفظ صدای معلم، WebM در اولویت است؛ اگر مرورگر آن را پشتیبانی نکند، MP4 انتخاب می‌شود.</p></div></li><li><div><h3>نوشتن و اشاره روی کتاب</h3><p>در پایین صفحه، نوار ابزار نقاشی هست. ابزارها:<br>• ✋ جابجایی: برای ورق زدن و بزرگنمایی کتاب.<br>• 🖊️ قلم دائمی: خط‌ها روی صفحه می‌مانند و با ورق زدن از بین نمی‌روند.<br>• ✏️ قلم موقت: خط‌ها بعد از سه ثانیه خودشان محو می‌شوند — مناسب اشاره سریع.<br>• 🖍️ هایلایتر: برای رنگ‌آمیزی متن.<br>• 🔷 اشکال: هشت شکل هندسی (مربع، مستطیل، دایره، ذوزنقه، متوازی‌الاضلاع، پنج‌ضلعی، شش‌ضلعی، هشت‌ضلعی). روی کتاب بکشید و رها کنید — شکل به همان اندازه‌ای که کشیدید رسم می‌شود.<br>• 🅰️ متن: روی صفحه کلیک کنید، تایپ کنید، با Enter تأیید کنید. Shift+Enter برای خط جدید، Esc برای لغو. برای جابجایی کادر قبل از تأیید، دستگیرهٔ بالا را بکشید.<br>• ⭐ استیکر: ده استیکر آماده (ستاره، قلب، تیک، ضربدر، هشدار، سؤال، اشاره، هدف، آفرین، ایده).<br>• 🧽 پاک‌کن: پاک کردن خط‌های کشیده‌شده.<br>• 🗑️ پاک کردن صفحه: همهٔ نوشته‌های همین صفحه پاک شوند.<br>رنگ قلم از پالت پایین نوار، و ضخامت از منوی «ضخامت» انتخاب می‌شود.</p></div></li><li><div><h3>حالت تمرکز</h3><p>دکمهٔ حالت تمرکز (⛶) در نوار بالای میز تدریس. وقتی می‌زنید، PDF تمام صفحه می‌شود، تا تمرکز کامل روی درس باشد. برای نوشتن روی PDF، دکمهٔ 🎨 پایین صفحه را بزنید تا نوار ابزار ظاهر شود؛ دوباره بزنید، نوار بسته می‌شود. برای خروج، دکمهٔ «خروج از تمرکز» بالا یا کلید Esc.</p></div></li><li><div><h3>ویرایش انتهای ضبط</h3><p>وقتی ضبط را موقتاً متوقف می‌کنید، دکمهٔ «✂️ ویرایش انتها» ظاهر می‌شود. با آن می‌توانید تا ۳۰ ثانیه از آخر فیلم را حذف کنید و بعد ضبط را ادامه دهید. دو حالت دارد:<br>• حالت دقیق: بازضبط کامل با حفظ صدا و زمان‌بندی. کند است (به اندازهٔ خود فیلم طول می‌کشد)، ولی نتیجه بی‌نقص.<br>• حالت سریع: حذف فوری و بدون بازضبط. سریع است، ولی ممکن است کمی ناهماهنگی صدا و تصویر داشته باشد.<br>⚠️ این قابلیت فقط با خروجی WebM فعال است (کروم/فایرفاکس دسکتاپ یا کروم اندروید).</p></div></li><li><div><h3>تصویر وب‌کم و چرخش دوربین</h3><p>می‌توانید وب‌کم را اختیاری روشن کنید. تصویر شما روی کتاب دیده می‌شود و همراه با کتاب ضبط می‌شود.<br>• شکل تصویر: دایره، مربع، یا مستطیل (۱۶:۹).<br>• گوشهٔ تصویر: یکی از چهار گوشه (بالا/پایین، راست/چپ).<br>• اندازهٔ تصویر: کوچک، متوسط، بزرگ.<br>• چرخش دوربین: اگر گوشی شما دو دوربین دارد، دکمهٔ «🔄 چرخش دوربین» ظاهر می‌شود و می‌توانید بین دوربین جلو و عقب سوییچ کنید.</p></div></li><li><div><h3>کتابخانه و کتاب‌های پایه پنجم</h3><p>در پایین میز تدریس، ۹ کتاب پایه پنجم آماده‌ست: ریاضی، علوم تجربی، فارسی، نگارش، مطالعات اجتماعی، هدیه‌های آسمان، آموزش قرآن، کار آموزش خط تحریری، و از ایرانمان دفاع می‌کنیم. با کلیک روی هر کتاب، PDF همان کتاب باز می‌شود. اگر کتابی روی سایت نبود، پیام خطا نشان داده می‌شود و می‌توانید فایل PDF را از گوشی یا رایانه انتخاب کنید.</p></div></li><li><div><h3>کیفیت و نسبت ابعاد فیلم</h3><p>پنج کیفیت موجود است: ۳۶۰p (کم‌حجم)، ۴۸۰p، ۵۴۰p (متعادل)، ۷۲۰p (خوب، پیش‌فرض)، ۱۰۸۰p (بالا).<br>نسبت ابعاد: خودکار (بر اساس PDF)، ۱۶:۹ افقی، ۹:۱۶ عمودی، ۱:۱ مربع، ۴:۳ کلاسیک. حالت خودکار، از صفحهٔ اول کتاب تشخیص می‌دهد.</p></div></li></ol><div class="about-box"><h3>دربارهٔ درسگاه</h3><p>درسگاه حکیمستان یک ابزار آموزشی برای ضبط درس از روی کتاب‌های PDF است. طراحی و توسعه توسط <strong>مهدی شریفیان</strong>، معلم پایه پنجم ابتدایی، انجام شده است.</p></div><div class="help-note">روی گوشی: «عرض صفحه» متن کتاب را بزرگ‌تر می‌کند؛ با کشیدن روی کتاب، قسمت‌های دیگر را نشان بدهید. حالت افقی گوشی فضای بیشتری می‌دهد. هنگام ضبط این برگه را باز نگه دارید. اگر به برنامهٔ دیگری بروید، ضبط برای جلوگیری از فیلم ناقص موقتاً متوقف می‌شود؛ پس از برگشت «ادامهٔ ضبط» را بزنید.</div><div class="help-note">تازه‌های درسگاه: نسبت فیلم به‌صورت خودکار از صفحهٔ اول کتاب تشخیص داده می‌شود و دستی هم قابل انتخاب است. نقاشی هر صفحه جدا می‌ماند؛ قلم موقت بعد از سه ثانیه محو می‌شود. خط‌ها، شکل‌ها، متن‌ها و استیکرها به قاب فیلم متصل‌اند، نه به زوم کتاب. ابزار متن با Enter تأیید، با Shift+Enter چندخطی و با Esc لغو می‌شود؛ قبل از تأیید، کادر را از دستگیرهٔ بالایش جابه‌جا کنید. حافظهٔ نقاشی محدود به ۲۰ صفحه است؛ با ویرایش صفحهٔ بیست‌ویکم، نقاشیِ قدیمی‌ترین صفحهٔ ویرایش‌شده حذف می‌شود. در حالت تمرکز با دکمهٔ 🎨 ابزارها را باز کنید. شکل وب‌کم را می‌توانید دایره، مربع یا مستطیل انتخاب کنید و بین دوربین جلو و عقب جابجا شوید.</div><p class="field-note">ویرایش انتها: هنگام توقف موقت، با ✂️ تا ۳۰ ثانیه از پایان حذف کنید. این قابلیت فقط برای WebM فعال است. دو حالت دارد: «دقیق» برش را همان لحظه با بازضبط انجام می‌دهد؛ «سریع» نقطهٔ برش را فوراً ثبت می‌کند و برش واقعی را به خروجی نهایی می‌سپارد. در هر دو حالت، یکپارچه‌سازی ممکن است به اندازهٔ فیلم زمان ببرد. هیچ فایلی به سرور ارسال نمی‌شود. پس از حذف، «ادامهٔ ضبط» را بزنید. دقت نهایی در حد فریم و زمان‌بندی مرورگر است.</p><p class="field-note">برای میکروفون و وب‌کم، سایت باید HTTPS باشد. مرورگر باید Canvas Capture و MediaRecorder داشته باشد؛ مرورگر به‌روز گوشی یا لپ‌تاپ را امتحان کنید. سازگاری همهٔ مدل‌های گوشی تضمین‌شده نیست. برای بارگیری اولیهٔ PDF.js و Worker به اینترنت نیاز است.</p><p class="field-note">حریم خصوصی: فایل محلی PDF، صدا، تصویر و فیلم به سرور ارسال نمی‌شوند. PDF.js از CDN و کتاب لینک‌دار از نشانی انتخابی دریافت می‌شوند. فیلم داخل حافظهٔ دستگاه نگه داشته می‌شود؛ درس‌های طولانی را به چند بخش کوتاه تقسیم کنید.</p></div><div class="dialog-footer"><button class="btn btn-primary" data-close>آماده‌ام، بریم سراغ درس!</button></div></dialog>
-<dialog id="libraryDialog" aria-labelledby="libraryTitle"><div class="dialog-head"><h2 id="libraryTitle">کتابخانهٔ پایه پنجم</h2><button class="btn btn-icon btn-quiet" data-close aria-label="بستن کتابخانه"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><p>کتاب درس امروز را انتخاب کنید.</p><div class="library-grid"><button class="library-book" data-book="riazi-5"><div class="book-cover"><span style="font-size:28px">🔢</span><span>ریاضی</span></div><span>ریاضی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="oloom-5"><div class="book-cover orange"><span style="font-size:28px">🔬</span><span>علوم تجربی</span></div><span>علوم پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="farsi-5"><div class="book-cover blue"><span style="font-size:28px">📖</span><span>فارسی</span></div><span>فارسی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="negaresh-5"><div class="book-cover"><span style="font-size:28px">✍️</span><span>نگارش</span></div><span>نگارش فارسی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="motaleat-5"><div class="book-cover orange"><span style="font-size:28px">🗺️</span><span>مطالعات</span></div><span>مطالعات اجتماعی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="hediyeh-5"><div class="book-cover blue"><span style="font-size:28px">🕌</span><span>هدیه‌ها</span></div><span>هدیه‌های آسمان پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="quran-5"><div class="book-cover"><span style="font-size:28px">📿</span><span>قرآن</span></div><span>آموزش قرآن پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="khat-tahriri-5"><div class="book-cover orange"><span style="font-size:28px">🖋️</span><span>خط تحریری</span></div><span>کار آموزش خط تحریری</span><small>فایل PDF</small></button><button class="library-book" data-book="defa-iran-5"><div class="book-cover blue"><span style="font-size:28px">🛡️</span><span>دفاع</span></div><span>از ایرانمان دفاع می‌کنیم</span><small>فایل PDF</small></button></div><p class="field-note" style="margin-top:19px">کتاب‌های آماده باید توسط مدیر سایت در پوشهٔ <bdi>books/</bdi> قرار بگیرند. خود کتاب‌ها در این فایل HTML نیستند. اگر کتابی در دسترس نبود، PDF را از رایانه انتخاب کنید.</p></div></dialog>
+<dialog id="helpDialog" aria-labelledby="helpTitle"><div class="dialog-head"><h2 id="helpTitle">از کتاب تا فیلم، در سه قدم</h2><button class="btn btn-icon btn-quiet" data-close aria-label="بستن راهنما"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><ol class="guide-list"><li><div><h3>کتاب را روی میز بگذارید.</h3><p>PDF را از گوشی یا رایانه انتخاب کنید. کتاب با PDF.js داخل همین صفحه باز می‌شود. دکمه‌های قبلی و بعدی ورق می‌زنند؛ شمارهٔ صفحه هم قابل تغییر است. بزرگنمایی و جابه‌جایی کتاب در فیلم نهایی دیده می‌شود.</p></div></li><li><div><h3>صدا و تصویرتان را آماده کنید.</h3><p>میکروفون را آزمایش کنید و در صورت تمایل وب‌کم را روشن کنید. تصویر دایره‌ای شما روی کتاب دیده می‌شود. با شروع ضبط، فقط کتاب و وب‌کم اختیاری به فیلم تبدیل می‌شوند؛ هیچ مجوز ضبط صفحه‌ای درخواست نمی‌شود. فقط صدای میکروفون ضبط می‌شود، نه صدای دستگاه.</p></div></li><li><div><h3>درس بدهید، فیلم را دانلود کنید.</h3><p>ورق بزنید، بزرگنمایی کنید و توضیح بدهید. می‌توانید ضبط را موقتاً متوقف کنید. پس از پایان، فیلم را ببینید و پیش از بستن برگه دانلود کنید. برای حفظ صدای معلم، WebM در اولویت است؛ اگر مرورگر آن را پشتیبانی نکند، MP4 انتخاب می‌شود.</p></div></li><li><div><h3>نوشتن و اشاره روی کتاب</h3><p>در پایین صفحه، نوار ابزار نقاشی هست. ابزارها:<br>• ✋ جابجایی: برای ورق زدن و بزرگنمایی کتاب.<br>• 🖊️ قلم دائمی: خط‌ها روی صفحه می‌مانند و با ورق زدن از بین نمی‌روند.<br>• ✏️ قلم موقت: خط‌ها بعد از سه ثانیه خودشان محو می‌شوند — مناسب اشاره سریع.<br>• 🖍️ هایلایتر: برای رنگ‌آمیزی متن.<br>• 🔷 اشکال: هشت شکل هندسی (مربع، مستطیل، دایره، ذوزنقه، متوازی‌الاضلاع، پنج‌ضلعی، شش‌ضلعی، هشت‌ضلعی). روی کتاب بکشید و رها کنید — شکل به همان اندازه‌ای که کشیدید رسم می‌شود.<br>• 🅰️ متن: روی صفحه کلیک کنید، تایپ کنید، با Enter تأیید کنید. Shift+Enter برای خط جدید، Esc برای لغو. برای جابجایی کادر قبل از تأیید، دستگیرهٔ بالا را بکشید.<br>• ⭐ استیکر: ده استیکر آماده (ستاره، قلب، تیک، ضربدر، هشدار، سؤال، اشاره، هدف، آفرین، ایده).<br>• 🧽 پاک‌کن: پاک کردن خط‌های کشیده‌شده.<br>• 🗑️ پاک کردن صفحه: همهٔ نوشته‌های همین صفحه پاک شوند.<br>رنگ قلم از پالت پایین نوار، و ضخامت از منوی «ضخامت» انتخاب می‌شود.</p></div></li><li><div><h3>حالت تمرکز</h3><p>دکمهٔ حالت تمرکز (⛶) در نوار بالای میز تدریس. وقتی می‌زنید، PDF تمام صفحه می‌شود، تا تمرکز کامل روی درس باشد. برای نوشتن روی PDF، دکمهٔ 🎨 پایین صفحه را بزنید تا نوار ابزار ظاهر شود؛ دوباره بزنید، نوار بسته می‌شود. برای خروج، دکمهٔ «خروج از تمرکز» بالا یا کلید Esc.</p></div></li><li><div><h3>ویرایش انتهای ضبط</h3><p>وقتی ضبط را موقتاً متوقف می‌کنید، دکمهٔ «✂️ ویرایش انتها» ظاهر می‌شود. با آن می‌توانید تا ۳۰ ثانیه از آخر فیلم را حذف کنید و بعد ضبط را ادامه دهید. دو حالت دارد:<br>• حالت دقیق: بازضبط کامل با حفظ صدا و زمان‌بندی. کند است (به اندازهٔ خود فیلم طول می‌کشد)، ولی نتیجه بی‌نقص.<br>• حالت سریع: حذف فوری و بدون بازضبط. سریع است، ولی ممکن است کمی ناهماهنگی صدا و تصویر داشته باشد.<br>⚠️ این قابلیت فقط با خروجی WebM فعال است (کروم/فایرفاکس دسکتاپ یا کروم اندروید).</p></div></li><li><div><h3>تصویر وب‌کم و چرخش دوربین</h3><p>می‌توانید وب‌کم را اختیاری روشن کنید. تصویر شما روی کتاب دیده می‌شود و همراه با کتاب ضبط می‌شود.<br>• شکل تصویر: دایره، مربع، یا مستطیل (۱۶:۹).<br>• گوشهٔ تصویر: یکی از چهار گوشه (بالا/پایین، راست/چپ).<br>• اندازهٔ تصویر: کوچک، متوسط، بزرگ.<br>• چرخش دوربین: اگر گوشی شما دو دوربین دارد، دکمهٔ «🔄 چرخش دوربین» ظاهر می‌شود و می‌توانید بین دوربین جلو و عقب سوییچ کنید.</p></div></li><li><div><h3>کتابخانه و کتاب‌های پایه پنجم</h3><p>در پایین میز تدریس، ۸ کتاب درسی پایه پنجم آمادهٔ استفاده هستند: ریاضی، علوم تجربی، فارسی، نگارش، مطالعات اجتماعی، هدیه‌های آسمان، آموزش قرآن و کار آموزش خط تحریری. با کلیک روی هر کتاب، PDF همان کتاب مستقیماً باز می‌شود؛ همچنین می‌توانید هر فایل PDF دیگری را از گوشی یا رایانه انتخاب کنید.</p></div></li><li><div><h3>کیفیت و نسبت ابعاد فیلم</h3><p>پنج کیفیت موجود است: ۳۶۰p (کم‌حجم)، ۴۸۰p، ۵۴۰p (متعادل)، ۷۲۰p (خوب، پیش‌فرض)، ۱۰۸۰p (بالا).<br>نسبت ابعاد: خودکار (بر اساس PDF)، ۱۶:۹ افقی، ۹:۱۶ عمودی، ۱:۱ مربع، ۴:۳ کلاسیک. حالت خودکار، از صفحهٔ اول کتاب تشخیص می‌دهد.</p></div></li></ol><div class="about-box"><h3>دربارهٔ درسگاه</h3><p>درسگاه حکیمستان یک ابزار آموزشی برای ضبط درس از روی کتاب‌های PDF است. طراحی و توسعه توسط <strong>مهدی شریفیان</strong>، معلم پایه پنجم ابتدایی، انجام شده است.</p></div><div class="help-note">روی گوشی: «عرض صفحه» متن کتاب را بزرگ‌تر می‌کند؛ با کشیدن روی کتاب، قسمت‌های دیگر را نشان بدهید. حالت افقی گوشی فضای بیشتری می‌دهد. هنگام ضبط این برگه را باز نگه دارید. اگر به برنامهٔ دیگری بروید، ضبط برای جلوگیری از فیلم ناقص موقتاً متوقف می‌شود؛ پس از برگشت «ادامهٔ ضبط» را بزنید.</div><div class="help-note">تازه‌های درسگاه: نسبت فیلم به‌صورت خودکار از صفحهٔ اول کتاب تشخیص داده می‌شود و دستی هم قابل انتخاب است. نقاشی هر صفحه جدا می‌ماند؛ قلم موقت بعد از سه ثانیه محو می‌شود. خط‌ها، شکل‌ها، متن‌ها و استیکرها به قاب فیلم متصل‌اند، نه به زوم کتاب. ابزار متن با Enter تأیید، با Shift+Enter چندخطی و با Esc لغو می‌شود؛ قبل از تأیید، کادر را از دستگیرهٔ بالایش جابه‌جا کنید. حافظهٔ نقاشی محدود به ۲۰ صفحه است؛ با ویرایش صفحهٔ بیست‌ویکم، نقاشیِ قدیمی‌ترین صفحهٔ ویرایش‌شده حذف می‌شود. در حالت تمرکز با دکمهٔ 🎨 ابزارها را باز کنید. شکل وب‌کم را می‌توانید دایره، مربع یا مستطیل انتخاب کنید و بین دوربین جلو و عقب جابجا شوید.</div><p class="field-note">ویرایش انتها: هنگام توقف موقت، با ✂️ تا ۳۰ ثانیه از پایان حذف کنید. این قابلیت فقط برای WebM فعال است. دو حالت دارد: «دقیق» برش را همان لحظه با بازضبط انجام می‌دهد؛ «سریع» نقطهٔ برش را فوراً ثبت می‌کند و برش واقعی را به خروجی نهایی می‌سپارد. در هر دو حالت، یکپارچه‌سازی ممکن است به اندازهٔ فیلم زمان ببرد. هیچ فایلی به سرور ارسال نمی‌شود. پس از حذف، «ادامهٔ ضبط» را بزنید. دقت نهایی در حد فریم و زمان‌بندی مرورگر است.</p><p class="field-note">برای میکروفون و وب‌کم، سایت باید HTTPS باشد. مرورگر باید Canvas Capture و MediaRecorder داشته باشد؛ مرورگر به‌روز گوشی یا لپ‌تاپ را امتحان کنید. سازگاری همهٔ مدل‌های گوشی تضمین‌شده نیست. نمایشگر PDF.js به‌صورت محلی همراه برنامه ذخیره شده و آفلاین کار می‌کند.</p><p class="field-note">حریم خصوصی: فایل محلی PDF، یادداشت‌ها، صدا، تصویر و فیلم به سرور ارسال نمی‌شوند. نوشته‌های روی صفحات به‌صورت خودکار در حافظهٔ مرورگر (IndexedDB) ذخیره می‌شوند تا با رفرش صفحه از بین نروند و قابل پشتیبان‌گیری JSON و چاپ A4 هستند.</p></div><div class="dialog-footer"><button class="btn btn-primary" data-close>آماده‌ام، بریم سراغ درس!</button></div></dialog>
+<dialog id="libraryDialog" aria-labelledby="libraryTitle"><div class="dialog-head"><h2 id="libraryTitle">کتابخانهٔ پایه پنجم</h2><button class="btn btn-icon btn-quiet" data-close aria-label="بستن کتابخانه"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><p>کتاب درس امروز را انتخاب کنید.</p><div class="library-grid"><button class="library-book" data-book="riazi-5"><div class="book-cover"><span style="font-size:28px">🔢</span><span>ریاضی</span></div><span>ریاضی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="oloom-5"><div class="book-cover orange"><span style="font-size:28px">🔬</span><span>علوم تجربی</span></div><span>علوم پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="farsi-5"><div class="book-cover blue"><span style="font-size:28px">📖</span><span>فارسی</span></div><span>فارسی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="negaresh-5"><div class="book-cover"><span style="font-size:28px">✍️</span><span>نگارش</span></div><span>نگارش فارسی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="motaleat-5"><div class="book-cover orange"><span style="font-size:28px">🗺️</span><span>مطالعات</span></div><span>مطالعات اجتماعی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="hediyeh-5"><div class="book-cover blue"><span style="font-size:28px">🕌</span><span>هدیه‌ها</span></div><span>هدیه‌های آسمان پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="quran-5"><div class="book-cover"><span style="font-size:28px">📿</span><span>قرآن</span></div><span>آموزش قرآن پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="khat-tahriri-5"><div class="book-cover orange"><span style="font-size:28px">🖋️</span><span>خط تحریری</span></div><span>کار آموزش خط تحریری</span><small>فایل PDF</small></button></div><p class="field-note" style="margin-top:19px">هر ۸ کتاب درسی پایه پنجم در پوشهٔ <bdi>books/</bdi> همراه سایت قرار دارند. برای سایر جزوه‌ها یا کتاب‌ها، فایل PDF را از رایانه یا گوشی انتخاب کنید.</p></div></dialog>
 <dialog id="urlDialog" aria-labelledby="urlTitle"><form id="urlForm"><div class="dialog-head"><h2 id="urlTitle">کتاب را از لینک باز کنید</h2><button type="button" class="btn btn-icon btn-quiet" data-close aria-label="بستن"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><label for="pdfUrl" class="form-label">نشانی مستقیم فایل PDF</label><input class="text-input" id="pdfUrl" type="url" placeholder="https://example.com/books/book.pdf" dir="ltr" required><p class="field-note">لینک باید مستقیم و قابل دریافت باشد. اگر سایت مبدأ اجازهٔ دریافت فایل (CORS) ندهد، فایل را دانلود و از گوشی یا رایانه انتخاب کنید. فقط لینک‌های HTTPS و HTTP پذیرفته می‌شوند.</p><p id="urlError" role="alert" style="color:var(--orange-dark);font-size:12px;margin-top:12px" hidden></p></div><div class="dialog-footer"><button type="button" class="btn" data-close>انصراف</button><button type="submit" class="btn btn-primary" id="loadUrlBtn"><svg class="icon"><use href="#i-link"/></svg>باز کردن کتاب</button></div></form></dialog>
 <dialog id="outputDialog" class="output-dialog" aria-labelledby="outputTitle"><div class="dialog-head"><div><div class="eyebrow">خسته نباشید، معلم عزیز</div><h2 id="outputTitle">یک درس تازه، آمادهٔ یادگیری.</h2></div><button class="btn btn-icon btn-quiet" data-close aria-label="بستن پیش‌نمایش"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><video id="outputVideo" class="output-video" controls playsinline preload="metadata"></video><div id="outputMeta" class="output-meta"></div><p class="field-note">فیلم را قبل از اشتراک‌گذاری بررسی کنید و پیش از بستن صفحه دانلود کنید. دانلود شروع می‌شود؛ پایان دانلود را در مرورگر بررسی کنید.</p><p class="webm-note" id="webmNote" hidden>خروجی این درس با فرمت WebM ذخیره شد. این فرمت در مرورگرها و پخش‌کننده‌های مدرنِ پشتیبان WebM باز می‌شود.</p><p class="field-note" id="playbackError" hidden>مرورگر نتوانست این خروجی را پخش کند. فایل را دانلود و با پخش‌کننده‌ای مثل VLC بررسی کنید.</p><label class="form-label" for="downloadName" style="margin-top:15px">نام فیلم</label><input class="text-input" id="downloadName" maxlength="100" value="درس من"></div><div class="dialog-footer"><button class="btn" data-close>بازگشت به میز تدریس</button><a class="btn btn-primary" id="downloadBtn" download><svg class="icon"><use href="#i-download"/></svg><span id="downloadLabel">دانلود فیلم</span></a></div></dialog>
 <dialog id="passwordDialog" aria-labelledby="passwordTitle"><form id="passwordForm"><div class="dialog-head"><h2 id="passwordTitle">این کتاب رمز دارد</h2><button class="btn btn-icon btn-quiet" type="button" data-close aria-label="انصراف"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><p id="passwordHint">برای باز کردن کتاب، رمز فایل PDF را وارد کنید.</p><label class="form-label" for="pdfPassword">رمز فایل</label><input id="pdfPassword" class="text-input" type="password" autocomplete="off" required></div><div class="dialog-footer"><button type="button" class="btn" data-close>انصراف</button><button class="btn btn-primary" type="submit">باز کردن کتاب</button></div></form></dialog>
@@ -372,7 +385,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  const actualAspect=()=>prefs.aspect==='auto'?autoAspect:prefs.aspect;
  const aspectLabel=()=>actualAspect().split(':').map(fa).join(':');
  const outputDimensions=()=>{const [width,height]=dimensions[actualAspect()][prefs.quality];return{width,height};};
- let prefs={position:'bl',size:.15,border:true,quality:'720',aspect:'auto',mic:true,micId:'',tool:'none',color:'#e53935',strokeWidth:3,shape:'square',textSize:24,textBg:'none',sticker:'⭐',camShape:'circle',facing:'user'};
+ let prefs={position:'bl',size:.15,border:true,quality:'720',aspect:'auto',mic:true,micId:'',tool:'none',color:'#e53935',strokeWidth:3,shape:'square',textSize:24,textBg:'none',sticker:'⭐',camShape:'circle',facing:'user',downloadName:'درس من',lastPdfUrl:'',lastPages:{}};
  try{const p=JSON.parse(localStorage.getItem(prefsKey)||'null');if(p){
   if(['tr','tl','br','bl'].includes(p.position))prefs.position=p.position;
   if([.1,.15,.2].includes(p.size))prefs.size=p.size;
@@ -391,8 +404,88 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   if(['user','environment'].includes(p.facing))prefs.facing=p.facing;
   if(typeof p.mic==='boolean')prefs.mic=p.mic;
   if(typeof p.micId==='string')prefs.micId=p.micId;
+  if(typeof p.downloadName==='string'&&p.downloadName.trim())prefs.downloadName=p.downloadName.slice(0,100);
+  if(typeof p.lastPdfUrl==='string')prefs.lastPdfUrl=p.lastPdfUrl.slice(0,500);
+  if(p.lastPages&&typeof p.lastPages==='object')prefs.lastPages=p.lastPages;
  }}catch(_){}
  const savePrefs=()=>{try{localStorage.setItem(prefsKey,JSON.stringify(prefs));}catch(_){}};
+ if(prefs.downloadName&&$('downloadName'))$('downloadName').value=prefs.downloadName;
+ if(prefs.lastPdfUrl&&$('pdfUrl'))$('pdfUrl').value=prefs.lastPdfUrl;
+ $('pdfUrl')?.addEventListener('input',()=>{prefs.lastPdfUrl=$('pdfUrl').value.slice(0,500);savePrefs();});
+
+ const DARSGAH_IDB='hakimestan_darsgah_notes_v1';
+ let notesDbPromise=null;
+ function openNotesDb(){
+  if(notesDbPromise)return notesDbPromise;
+  if(typeof indexedDB==='undefined')return Promise.resolve(null);
+  notesDbPromise=new Promise(res=>{
+   try{
+    const req=indexedDB.open(DARSGAH_IDB,1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('books'))req.result.createObjectStore('books');};
+    req.onsuccess=()=>res(req.result);
+    req.onerror=()=>res(null);
+   }catch(_){res(null);}
+  });
+  return notesDbPromise;
+ }
+ function imageDataToPng(imgData){
+  const c=document.createElement('canvas');c.width=imgData.width;c.height=imgData.height;
+  c.getContext('2d').putImageData(imgData,0,0);
+  const url=c.toDataURL('image/png');c.width=1;c.height=1;return url;
+ }
+ function pngToImageData(url,targetW,targetH){
+  return new Promise(res=>{
+   if(typeof url!=='string'||!url.startsWith('data:image/png;base64,'))return res(null);
+   const img=new Image();
+   img.onload=()=>{
+    const w=targetW||img.naturalWidth||1280,h=targetH||img.naturalHeight||720;
+    const c=document.createElement('canvas');c.width=w;c.height=h;
+    const g=c.getContext('2d');g.drawImage(img,0,0,w,h);
+    const d=g.getImageData(0,0,w,h);c.width=1;c.height=1;res(d);
+   };
+   img.onerror=()=>res(null);
+   img.src=url;
+  });
+ }
+ function serializeCurrentNotes(){
+  const pages={};
+  for(const [p,img] of pageDrawings.entries()){try{pages[String(p)]=imageDataToPng(img);}catch(_){}}
+  return{app:'hakimestan-darsgah-notes',version:1,bookTitle:bookTitle||'درس',pageCount:pageCount||0,lastPage:pageNumber||1,savedAt:new Date().toISOString(),pages};
+ }
+ let notesSaveTimer=0;
+ function persistNotesToIdbNow(){
+  if(!bookTitle)return;
+  clearTimeout(notesSaveTimer);
+  const key=bookTitle.slice(0,120);
+  const payload=serializeCurrentNotes();
+  openNotesDb().then(db=>{
+   if(!db)return;
+   try{const tx=db.transaction('books','readwrite');tx.objectStore('books').put(payload,key);}catch(_){}
+  });
+ }
+ function scheduleNotesSave(){
+  clearTimeout(notesSaveTimer);
+  notesSaveTimer=setTimeout(persistNotesToIdbNow,350);
+ }
+ async function restoreNotesPayload(payload){
+  if(!payload||typeof payload!=='object'||!payload.pages||typeof payload.pages!=='object')return 0;
+  let count=0;
+  for(const [k,url] of Object.entries(payload.pages)){
+   const p=parseInt(k,10);
+   if(!Number.isFinite(p)||p<1||(pageCount&&p>pageCount))continue;
+   const img=await pngToImageData(url,drawing.width||1280,drawing.height||720);
+   if(img){pageDrawings.set(p,img);count++;if(pageDrawings.size>=20)break;}
+  }
+  if(pdfDoc){restoreDrawingPage(pageNumber);drawFrame();}
+  return count;
+ }
+ async function loadNotesFromIdb(title){
+  const db=await openNotesDb();if(!db||!title)return;
+  const payload=await new Promise(res=>{
+   try{const req=db.transaction('books','readonly').objectStore('books').get(title.slice(0,120));req.onsuccess=()=>res(req.result||null);req.onerror=()=>res(null);}catch(_){res(null);}
+  });
+  if(payload)await restoreNotesPayload(payload);
+ }
  const stopTracks=s=>s?.getTracks().forEach(t=>t.stop());
  const videoAlive=s=>!!s?.getVideoTracks().some(t=>t.readyState==='live');
  const audioAlive=s=>!!s?.getAudioTracks().some(t=>t.readyState==='live');
@@ -501,6 +594,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    if(seq!==renderSequence||doc!==pdfDoc){scratch.width=1;return;}
    const pageChanged=pageNumber!==target;if(pageChanged)stashDrawingPage();
    commitRaster(scratch);pageNumber=target;if(pageChanged){restoreDrawingPage(target);clearTemporaryInk();}
+   if(bookTitle){prefs.lastPages=prefs.lastPages||{};prefs.lastPages[bookTitle.slice(0,80)]=pageNumber;savePrefs();}
    if(resetView){zoom=1;panX=0;panY=0;}
    if(state==='recording')recordingPages.add(target);
    updateZoomUI();drawFrame();
@@ -523,15 +617,18 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   try{
    doc=await task.promise;if(seq!==documentSequence){await destroyTask(task);return false;}
    renderTask?.cancel();renderSequence++;
-   const scratch=await renderRaster(doc,1);
+   const savedStartPage=Math.max(1,Math.min(doc.numPages,parseInt(prefs.lastPages?.[title.slice(0,80)],10)||1));
+   const scratch=await renderRaster(doc,savedStartPage);
    if(seq!==documentSequence){scratch.width=1;await destroyTask(task);return false;}
+   if(pdfDoc&&bookTitle){stashDrawingPage();persistNotesToIdbNow();}
    const previousDoc=pdfDoc,previousUrl=pdfUrl;
-   pdfDoc=doc;pageCount=doc.numPages;pageNumber=requestedPage=1;bookTitle=title;zoom=1;panX=panY=0;
+   pdfDoc=doc;pageCount=doc.numPages;pageNumber=requestedPage=savedStartPage;bookTitle=title;zoom=1;panX=panY=0;
    autoAspect=Math.abs(scratch.width/scratch.height-1)<=.05?'1:1':scratch.width>scratch.height?'16:9':'9:16';
    cancelText();pageDrawings.clear();drawingDirty=false;clearTemporaryInk();drawingCtx.clearRect(0,0,drawing.width,drawing.height);
    commitRaster(scratch);setOutputSize(false);pdfUrl=URL.createObjectURL(new Blob([blob],{type:'application/pdf'}));
-   $('externalPdf').href=pdfUrl;$('externalPdf').hidden=false;$('bookName').textContent=title;$('bookName').title=title;
+   $('externalPdf').href=pdfUrl;$('externalPdf').hidden=false;$('exportNotesBtn').hidden=false;$('importNotesBtn').hidden=false;$('printPageBtn').hidden=false;$('bookName').textContent=title;$('bookName').title=title;
    $('emptyState').hidden=true;$('pdfWrap').hidden=false;
+   await loadNotesFromIdb(title);
    updateOutputLabel();
    $('step1').classList.remove('current');$('step2').classList.add('current');$('step3').classList.remove('current');
    updateZoomUI();resizePreview();drawFrame();
@@ -621,6 +718,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  function stashDrawingPage(){if(!pdfDoc||!drawingDirty)return;
   pageDrawings.delete(pageNumber);pageDrawings.set(pageNumber,drawingCtx.getImageData(0,0,drawing.width,drawing.height));drawingDirty=false;
   if(pageDrawings.size>20){const oldest=pageDrawings.keys().next().value;pageDrawings.delete(oldest);toast('برای آزاد شدن حافظه، نقاشی صفحهٔ '+fa(oldest)+' حذف شد. خودِ PDF تغییری نکرد؛ حداکثر ۲۰ صفحهٔ نقاشی نگه داشته می‌شود.','warning',11000);}
+  scheduleNotesSave();
  }
  function restoreDrawingPage(page){drawingCtx.clearRect(0,0,drawing.width,drawing.height);const saved=pageDrawings.get(page);if(saved){const c=document.createElement('canvas');c.width=saved.width;c.height=saved.height;c.getContext('2d').putImageData(saved,0,0);drawingCtx.drawImage(c,0,0,drawing.width,drawing.height);c.width=1;c.height=1;}drawingDirty=false;}
  function clearTemporaryInk(){hideStickerCursor();tempStrokes=[];currentStroke=null;inkPointer=null;tempCtx.clearRect(0,0,tempDrawing.width,tempDrawing.height);}
@@ -679,7 +777,54 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  $$('[data-close-picker]').forEach(b=>b.onclick=closePickers);
  $$('[data-color]').forEach(b=>b.onclick=()=>{prefs.color=b.dataset.color;updateDrawingUI();});$('strokeWidth').onchange=()=>{prefs.strokeWidth=+$('strokeWidth').value;updateDrawingUI();};
  $('textSize').onchange=()=>{prefs.textSize=+$('textSize').value;updateDrawingUI();};$('textBg').onchange=()=>{prefs.textBg=$('textBg').value;updateDrawingUI();};
- $('clearPageInk').onclick=()=>{if(!pdfDoc)return;if(!confirm('همهٔ خط‌ها، شکل‌ها، متن‌ها و استیکرهای همین صفحه پاک شوند؟'))return;cancelText();pageDrawings.delete(pageNumber);drawingCtx.clearRect(0,0,drawing.width,drawing.height);drawingDirty=false;clearTemporaryInk();drawFrame();};
+ $('clearPageInk').onclick=()=>{if(!pdfDoc)return;if(!confirm('همهٔ خط‌ها، شکل‌ها، متن‌ها و استیکرهای همین صفحه پاک شوند؟'))return;cancelText();pageDrawings.delete(pageNumber);drawingCtx.clearRect(0,0,drawing.width,drawing.height);drawingDirty=false;clearTemporaryInk();scheduleNotesSave();drawFrame();};
+ $('exportNotesBtn').onclick=()=>{
+  if(!pdfDoc)return;
+  commitText();stashDrawingPage();
+  const payload=serializeCurrentNotes();
+  const count=Object.keys(payload.pages).length;
+  if(!count){toast('هنوز یادداشتی روی صفحات این کتاب ننوشته‌اید.','warning');return;}
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  const safe=(bookTitle||'درس').replace(/[<>:"/\\|?*\x00-\x1f]/g,'-').slice(0,60);
+  a.download=`darsgah-notes-${safe}.json`;document.body.append(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  toast(`فایل پشتیبان یادداشت‌ها (${fa(count)} صفحه) دانلود شد.`);
+ };
+ $('importNotesBtn').onclick=()=>{if(!pdfDoc){toast('ابتدا فایل PDF کتاب را باز کنید.','warning');return;}$('notesFileInput').click();};
+ $('notesFileInput').onchange=async e=>{
+  const f=e.target.files[0];e.target.value='';if(!f||!pdfDoc)return;
+  try{
+   const parsed=JSON.parse(await f.text());
+   if(!parsed||typeof parsed!=='object'||!parsed.pages||typeof parsed.pages!=='object')throw new Error('ساختار فایل پشتیبان یادداشت‌ها معتبر نیست.');
+   const count=await restoreNotesPayload(parsed);
+   persistNotesToIdbNow();
+   toast(count?`یادداشت‌های ${fa(count)} صفحه با موفقیت بازیابی شد.`:'یادداشت معتبری در این فایل یافت نشد.',count?'info':'warning');
+  }catch(err){toast('خواندن فایل JSON ممکن نشد: '+(err.message||'فرمت نامعتبر'),'error');}
+ };
+ function preparePrintSheet(){
+  const sheet=$('darsgahPrintSheet');if(!sheet)return;
+  sheet.replaceChildren();
+  if(!pdfDoc||pdfCanvas.width<=1){
+   const p=document.createElement('p');p.textContent='برای چاپ، ابتدا یک کتاب PDF را در درسگاه باز کنید.';sheet.append(p);return;
+  }
+  commitText();stashDrawingPage();drawFrame();
+  const c=document.createElement('canvas');c.width=mix.width;c.height=mix.height;
+  const g=c.getContext('2d');g.fillStyle='#ffffff';g.fillRect(0,0,c.width,c.height);
+  const geom=geometry(),x=(c.width-geom.w)/2+panX*c.width,y=(c.height-geom.h)/2+panY*c.height;
+  g.drawImage(pdfCanvas,x,y,geom.w,geom.h);
+  g.drawImage(drawing,0,0,c.width,c.height);
+  const head=document.createElement('div');head.className='dp-head';
+  const hTitle=document.createElement('strong');hTitle.textContent='درسگاه حکیمستان — '+(bookTitle||'کتاب درس');
+  const hMeta=document.createElement('span');hMeta.textContent='صفحهٔ '+fa(pageNumber)+' از '+fa(pageCount)+' · '+new Date().toLocaleDateString('fa-IR');
+  head.append(hTitle,hMeta);
+  const img=document.createElement('img');img.src=c.toDataURL('image/png');img.alt='صفحهٔ چاپ‌شدهٔ درسگاه';
+  const foot=document.createElement('div');foot.className='dp-foot';foot.textContent='چاپ‌شده از میز تدریس درسگاه حکیمستان (صفحهٔ کتاب به همراه یادداشت‌های معلم)';
+  sheet.append(head,img,foot);c.width=1;c.height=1;
+ }
+ $('printPageBtn').onclick=()=>{if(!pdfDoc){toast('ابتدا کتاب را باز کنید.','warning');return;}preparePrintSheet();window.print();};
+ window.addEventListener('beforeprint',preparePrintSheet);
+ window.addEventListener('afterprint',()=>{$('darsgahPrintSheet')?.replaceChildren();});
  document.addEventListener('pointerdown',e=>{
   if(openPicker&&!$(openPicker).contains(e.target)&&!$('shapeTool').contains(e.target)&&!$('stickerTool').contains(e.target))closePickers();
   if(textEdit&&!textEdit.element.contains(e.target)&&!$('drawingToolbar').contains(e.target)&&e.target!==preview)commitText();
@@ -936,7 +1081,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    const type=blob.type||mime;if(!/^video\/(mp4|webm)/i.test(type))throw new Error('مرورگر فیلم قابل پخش تولید نکرد.');
    releaseRecordingDevices();$('outputVideo').pause();$('outputVideo').removeAttribute('src');$('outputVideo').load();if(resultUrl)URL.revokeObjectURL(resultUrl);
    resultBlob=blob;resultUrl=URL.createObjectURL(blob);resultExt=type.toLowerCase().includes('mp4')?'mp4':'webm';resultDownloaded=false;
-   $('outputVideo').src=resultUrl;$('playbackError').hidden=true;$('webmNote').hidden=resultExt!=='webm';$('downloadName').value='درس من';$('outputVideo').style.aspectRatio=mix.width+'/'+mix.height;
+   $('outputVideo').src=resultUrl;$('playbackError').hidden=true;$('webmNote').hidden=resultExt!=='webm';$('downloadName').value=prefs.downloadName||recordingTitle||'درس من';$('outputVideo').style.aspectRatio=mix.width+'/'+mix.height;
    $('outputMeta').replaceChildren();
    [resultExt.toUpperCase(),mix.width+' × '+mix.height,aspectLabel(),formatTime(elapsed),formatBytes(blob.size),recordedWithMic?'با صدای میکروفون':'بدون صدای میکروفون',fa(recordingPages.size)+' صفحهٔ مرورشده'].forEach(text=>{const el=document.createElement('span');el.textContent=text;$('outputMeta').append(el);});
    savedSegments=[];segmentBase=0;updateDownload();$('resultSummary').textContent=recordingTitle+' · '+formatTime(elapsed)+' · '+formatBytes(blob.size);$('resultCard').hidden=false;$('step2').classList.remove('current');$('step3').classList.add('current');state='idle';refreshUI();$('timer').textContent=formatTime(elapsed);openDialog('outputDialog');
@@ -1047,7 +1192,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   }catch(e){toast((e.name==='AbortError'?'حذف لغو شد.':e.message)+' فیلم اصلی تغییری نکرد.','warning',12000);}
   finally{trimBusy=false;refreshUI();tick();$('applyTrim').disabled=+$('trimSeconds').value<=0;}
  };
- function updateDownload(){const name=($('downloadName').value.trim()||'درس من').replace(/[<>:"/\\|?*\x00-\x1f]/g,'-').replace(/[. ]+$/,'').slice(0,100)||'درس من';const d=new Date(),date=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');$('downloadBtn').href=resultUrl;$('downloadBtn').download=name+' - '+date+'.'+resultExt;$('downloadLabel').textContent='دانلود فیلم '+resultExt.toUpperCase();}
+ function updateDownload(){const raw=$('downloadName').value;if(raw.trim()){prefs.downloadName=raw.trim().slice(0,100);savePrefs();}const name=(raw.trim()||'درس من').replace(/[<>:"/\\|?*\x00-\x1f]/g,'-').replace(/[. ]+$/,'').slice(0,100)||'درس من';const d=new Date(),date=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');$('downloadBtn').href=resultUrl;$('downloadBtn').download=name+' - '+date+'.'+resultExt;$('downloadLabel').textContent='دانلود فیلم '+resultExt.toUpperCase();}
  $('downloadName').oninput=updateDownload;$('downloadBtn').onclick=()=>{resultDownloaded=true;toast('درخواست دانلود ارسال شد. در گوشی ممکن است گزینهٔ ذخیره در Files یا اشتراک‌گذاری نمایش داده شود؛ ذخیره شدن فایل را بررسی کنید.','info',11000);};
  $('outputVideo').onerror=()=>{if(resultUrl)$('playbackError').hidden=false;};$('openResult').onclick=()=>openDialog('outputDialog');$('startBtn').onclick=startRecording;$('pauseBtn').onclick=()=>pauseRecording();$('stopBtn').onclick=stopRecording;
  function showEnvironment(){let message='';
@@ -1059,7 +1204,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  }
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='recording')pauseRecording(true);else if(!document.hidden){resizePreview();if(autoPaused&&state==='paused')toast('هنگام رفتن به برنامهٔ دیگر، ضبط موقتاً متوقف شد. برای ادامه، دکمهٔ «ادامهٔ ضبط» را بزنید.','warning',11000);if(state==='recording')requestWakeLock();}});
  window.addEventListener('beforeunload',e=>{if(active()||(resultBlob&&!resultDownloaded)){e.preventDefault();e.returnValue='';}});
- window.addEventListener('pagehide',()=>{pauseTrimPreview();cancelText();recordSession++;fetchController?.abort();if(recorder&&recorder.state!=='inactive'){recorder.onstop=null;try{recorder.stop();}catch(_){}}recorder=null;state='idle';processingController?.abort();releaseRecordingDevices();cancelAnimationFrame(idleRAF);});
+ window.addEventListener('pagehide',()=>{try{commitText();stashDrawingPage();persistNotesToIdbNow();}catch(_){}pauseTrimPreview();cancelText();recordSession++;fetchController?.abort();if(recorder&&recorder.state!=='inactive'){recorder.onstop=null;try{recorder.stop();}catch(_){}}recorder=null;state='idle';processingController?.abort();releaseRecordingDevices();cancelAnimationFrame(idleRAF);});
  window.addEventListener('pageshow',e=>{if(e.persisted){idleRAF=requestAnimationFrame(idleLoop);refreshUI();resizePreview();}});
  setOutputSize(false);updateDrawingUI();updateCameraAppearance();updateCameraUI();updateSwitchCameraUI();updateZoomUI();updatePageUI();showEnvironment();refreshUI();updateDockHeight();ensurePdfJs().catch(()=>{});checkCameraCount().then(c=>{if(c>=2){$('switchCamera').hidden=false;$('mobileSwitchCamera').hidden=false;}}).catch(()=>{});
 })();
@@ -1227,7 +1372,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
       else ref = 'سایر';
     }
-    fetch(API, {
+    if (navigator.onLine !== false) fetch(API, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
@@ -1248,7 +1393,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 (function(){
   'use strict';
   var THEME_KEY = 'hakimestan.darsgah.theme';
-  var current = localStorage.getItem(THEME_KEY) || 'orange';
+  var current = 'orange';
+  try { current = localStorage.getItem(THEME_KEY) || 'orange'; } catch(e){}
 
   function applyTheme(name){
     if (name === 'orange') {
@@ -1259,7 +1405,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     document.querySelectorAll('[data-set-theme]').forEach(function(btn){
       btn.setAttribute('aria-pressed', String(btn.dataset.setTheme === name));
     });
-    localStorage.setItem(THEME_KEY, name);
+    try { localStorage.setItem(THEME_KEY, name); } catch(e){}
     current = name;
   }
 

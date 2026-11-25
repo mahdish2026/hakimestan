@@ -628,6 +628,7 @@ body[data-theme="kashi"] .tag.educational{
 
 </head>
 <body data-theme="kashi">
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
   <div class="app-shell">
     <!-- Header -->
     <header class="page-header">
@@ -707,7 +708,7 @@ body[data-theme="kashi"] .tag.educational{
 
     <!-- Games Grid -->
     <div class="lesson-heading" id="lessonList"><span class="class-register" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 6Q7 3 2 5v14q5-2 10 1 5-3 10-1V5q-5-2-10 1v14"/><path d="m5 8 4 1m6 0 4-1m-14 4 4 1m6 0 4-1"/></svg></span>کلاس امروزت را انتخاب کن</div>
-    <main class="games-grid" aria-labelledby="lessonList">
+    <main class="games-grid" id="main" aria-labelledby="lessonList">
       <!-- Game 1: تقسیم چکشی -->
       <a href="games/math-learning-1.html" class="game-card division-card">
         <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24h25m9 0h25" stroke-dasharray="3 4"/><g fill="currentColor" stroke="none"><circle cx="15" cy="16" r="2.5"/><circle cx="15" cy="30" r="2.5"/><circle cx="26" cy="16" r="2.5"/><circle cx="26" cy="30" r="2.5"/><circle cx="49" cy="16" r="2.5"/><circle cx="49" cy="30" r="2.5"/><circle cx="60" cy="16" r="2.5"/><circle cx="60" cy="30" r="2.5"/></g><rect x="7" y="8" width="27" height="30" rx="5"/><rect x="41" y="8" width="27" height="30" rx="5"/></svg></div><span class="lesson-stamp" aria-hidden="true">۸ ÷ ۲</span>
@@ -948,7 +949,7 @@ body[data-theme="kashi"] .tag.educational{
       else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
       else ref = 'سایر';
     }
-    fetch(API, {
+    if (navigator.onLine !== false) fetch(API, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },

@@ -504,6 +504,58 @@
     }
   }
 
+  @page {
+    size: A4 portrait;
+    margin: 14mm;
+  }
+
+  @media print {
+    html, body {
+      background: #ffffff !important;
+      color: #111827 !important;
+      font-size: 11pt !important;
+      line-height: 1.75 !important;
+    }
+    #hakimMount, #sectionUpload, #sectionSelect, .btn-row, .btn-hint, #jsonPanel, #toast, footer, .btl-lobby-btn, .hk-a11y-fab, .hk-a11y-panel {
+      display: none !important;
+    }
+    .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+    header {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border-bottom: 2px solid #111827 !important;
+      padding: 0 0 10px !important;
+      margin-bottom: 12px !important;
+    }
+    header h1, header p, .hk-folio { color: #111827 !important; }
+    header .badge-ver { border-color: #64748b !important; color: #334155 !important; background: #f8fafc !important; }
+    #sectionResult {
+      display: block !important;
+      background: #ffffff !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+    #sectionResult h2 { color: #111827 !important; margin-bottom: 8px !important; }
+    #sectionResult .desc, #issueList { display: none !important; }
+    .stats { margin-bottom: 12px !important; }
+    .stat { background: #f8fafc !important; color: #111827 !important; border: 1px solid #cbd5e1 !important; }
+    .q-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+    .q-card {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border: 1px solid #cbd5e1 !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .q-num { background: #1e293b !important; color: #ffffff !important; }
+    .q-type, .q-section { background: #f1f5f9 !important; color: #1e293b !important; border: 1px solid #cbd5e1 !important; }
+    .q-score { color: #334155 !important; }
+    .q-card .q-ans, .q-card .q-ans b { color: #14532d !important; border-top-color: #cbd5e1 !important; }
+  }
+
 </style>
 <!-- hakim-meta:start -->
 <meta name="description" content="مبدل آزمون‌ساز به HQF — فایل آزمون خود را به قالب استاندارد حکیمستان تبدیل کنید و در بازی‌ها و آزمون‌ها به کار ببرید.">
@@ -629,6 +681,7 @@
       <button class="btn btn-outline" id="btnDownloadCsv" type="button">📊 دانلود CSV</button>
       <button class="btn btn-outline" id="btnDownloadTxt" type="button">📄 دانلود متن ساده</button>
       <button class="btn btn-outline" id="btnCopyTxt" type="button">📋 کپی متن ساده</button>
+      <button class="btn btn-outline" id="btnPrintHqf" type="button">🖨️ چاپ A4</button>
       <button class="btn btn-ghost" id="btnReset" type="button">🔄 فایل جدید</button>
     </div>
     <p class="btn-hint hidden" id="downloadAllHint">📦 در حالت «دانلود جداگانه» برای هر آزمون یک فایل ساخته می‌شود. مرورگر ممکن است اجازه‌ی دانلود چند فایل پشت‌سرهم بخواهد — آن را بپذیرید.</p>
@@ -1002,6 +1055,7 @@
     if (!selected.length) return;
     state.result = buildHqf(selected, getOptions());
     renderResults();
+    scheduleSaveDraft();
     if (window.Hakim && state.result) {
       var ok = state.result.hqf.questions.length;
       if (ok > 0) Hakim.say('آفرین! ' + ok + ' سؤال تبدیل شد.', { mood:'wise' });
@@ -1392,6 +1446,7 @@
     $('#btnDownloadCsv').disabled = fatal;
     $('#btnDownloadTxt').disabled = fatal;
     $('#btnCopyTxt').disabled = fatal;
+    $('#btnPrintHqf').disabled = fatal;
 
     // دانلود جداگانه تنها با بیش از یک آزمون معنی دارد
     var multi = state.exams.length > 1;
@@ -1527,7 +1582,8 @@
 
   function escapeHtml(s) {
     return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
   function toFaNum(n) {
     return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[+d]; });
@@ -1666,6 +1722,121 @@
   $('#btnCopyTxt').addEventListener('click', function () {
     navigator.clipboard.writeText(simpleText()).then(function () { toast('📋 متن ساده کپی شد'); }, function () { toast('کپی متن ممکن نشد'); });
   });
+  $('#btnPrintHqf').addEventListener('click', function () {
+    if (!state.result || !state.result.hqf.questions.length) return;
+    window.print();
+  });
+
+  /* ─── ذخیرهٔ خودکار پیش‌نویس در localStorage و IndexedDB ─── */
+  var DRAFT_KEY = 'hakimestan_hqf_converter_v1';
+  var DRAFT_IDB = 'hakimestan_hqf_idb_v1';
+  var draftTimer = null;
+  var idbConn = null;
+
+  function openDraftIdb() {
+    if (idbConn) return idbConn;
+    if (typeof indexedDB === 'undefined') return Promise.resolve(null);
+    idbConn = new Promise(function (resolve) {
+      try {
+        var req = indexedDB.open(DRAFT_IDB, 1);
+        req.onupgradeneeded = function () {
+          if (!req.result.objectStoreNames.contains('draft')) req.result.createObjectStore('draft');
+        };
+        req.onsuccess = function () { resolve(req.result); };
+        req.onerror = function () { resolve(null); };
+      } catch (e) { resolve(null); }
+    });
+    return idbConn;
+  }
+
+  function buildDraftPayload() {
+    return {
+      v: 1,
+      savedAt: Date.now(),
+      exams: state.exams,
+      selectedId: state.selectedId,
+      loadedSigs: state.loadedSigs,
+      settings: {
+        chkMerge: chkMerge.checked,
+        chkSubs: chkSubs.checked,
+        chkEssay: chkEssay.checked,
+        chkNormalize: chkNormalize.checked,
+        chkNoEmptySection: chkNoEmptySection.checked
+      }
+    };
+  }
+
+  function flushDraftNow() {
+    clearTimeout(draftTimer);
+    if (!state.exams.length) return;
+    var payload = buildDraftPayload();
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(payload)); } catch (e) {}
+    openDraftIdb().then(function (db) {
+      if (!db) return;
+      try { db.transaction('draft', 'readwrite').objectStore('draft').put(payload, 'current'); } catch (e) {}
+    });
+  }
+
+  function scheduleSaveDraft() {
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(flushDraftNow, 250);
+  }
+
+  function clearDraftStorage() {
+    clearTimeout(draftTimer);
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    openDraftIdb().then(function (db) {
+      if (!db) return;
+      try { db.transaction('draft', 'readwrite').objectStore('draft').delete('current'); } catch (e) {}
+    });
+  }
+
+  function applyDraftPayload(d) {
+    if (!d || !Array.isArray(d.exams) || !d.exams.length || state.exams.length) return false;
+    var valid = d.exams.filter(function (it) { return it && typeof it === 'object' && it.data && Array.isArray(it.data.questions); });
+    if (!valid.length) return false;
+    state.exams = valid;
+    state.selectedId = d.selectedId || valid[0].uid;
+    state.loadedSigs = (d.loadedSigs && typeof d.loadedSigs === 'object') ? d.loadedSigs : {};
+    if (d.settings && typeof d.settings === 'object') {
+      if (typeof d.settings.chkMerge === 'boolean') chkMerge.checked = d.settings.chkMerge;
+      if (typeof d.settings.chkSubs === 'boolean') chkSubs.checked = d.settings.chkSubs;
+      if (typeof d.settings.chkEssay === 'boolean') chkEssay.checked = d.settings.chkEssay;
+      if (typeof d.settings.chkNormalize === 'boolean') chkNormalize.checked = d.settings.chkNormalize;
+      if (typeof d.settings.chkNoEmptySection === 'boolean') chkNoEmptySection.checked = d.settings.chkNoEmptySection;
+    }
+    renderExamList();
+    sectionSelect.classList.remove('hidden');
+    fileChips.innerHTML = '<span class="file-chip">💾 ' + toFaNum(state.exams.length) + ' آزمون از حافظهٔ مرورگر بازیابی شد</span>';
+    var selected = getSelectedExams();
+    if (selected.length) {
+      state.result = buildHqf(selected, getOptions());
+      renderResults();
+    }
+    return true;
+  }
+
+  function restoreDraftOnBoot() {
+    var restored = false;
+    try {
+      var raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) restored = applyDraftPayload(JSON.parse(raw));
+    } catch (e) {}
+    if (!restored) {
+      openDraftIdb().then(function (db) {
+        if (!db || state.exams.length) return;
+        try {
+          var req = db.transaction('draft', 'readonly').objectStore('draft').get('current');
+          req.onsuccess = function () { if (req.result) applyDraftPayload(req.result); };
+        } catch (e) {}
+      });
+    }
+  }
+
+  window.addEventListener('pagehide', flushDraftNow);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') flushDraftNow();
+  });
 
   /* ─── دانلود جداگانه‌ی هر آزمون ───
      برای هر آزمون بارگذاری‌شده یک فایل HQF مستقل ساخته می‌شود، با همان
@@ -1694,6 +1865,7 @@
   // بارگذاری فایل جدید (شروع دوباره): وضعیت و همه‌ی تنظیمات به حالت اولیه برمی‌گردند
   $('#btnReset').addEventListener('click', function () {
     if (window.Hakim) Hakim.say('شروع تازه! فایل جدید بده.', { mood:'normal' });
+    clearDraftStorage();
     state.exams = [];
     state.selectedId = null;
     state.result = null;
@@ -1853,8 +2025,12 @@
       sectionSelect.classList.remove('hidden');
       convertAll();
       return state.result;
-    }
+    },
+    flushDraftNow: flushDraftNow,
+    clearDraftStorage: clearDraftStorage
   };
+
+  restoreDraftOnBoot();
 
 })();
 </script>
@@ -1900,7 +2076,7 @@
       else ref = 'سایر';
     }
 
-    fetch(API, {
+    if (navigator.onLine !== false) fetch(API, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },

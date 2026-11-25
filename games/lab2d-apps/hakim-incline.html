@@ -4,20 +4,16 @@
 <!-- hakim-csp:start -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
 <!-- hakim-csp:end -->
-
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="../../css/a11y.css">
 <!-- hakim-core:end -->
-
-<!-- حلقهٔ تمرکز و ترجیحات دسترس‌پذیری —
-     هم در حالت iframe (نسبت به صفحهٔ والد) و هم در بازکردن مستقیم فایل درست کار می‌کند -->
-<link rel="stylesheet" href="../../css/a11y.css">
 <script>
 window.AUTO_START_LAB = "incline";
-window.STUDENT_NAME = "";
+window.STUDENT_NAME = (function(){ try { return (window.parent && window.parent.HAKIM_STUDENT_NAME) || ""; } catch (_) { return ""; } })();
 </script>
 
 <meta charset="utf-8">
+<meta name="theme-color" content="#87ceeb">
 <link rel="manifest" href="../../manifest.json">
 <link rel="icon" type="image/svg+xml" href="../../icon.svg">
 <link rel="stylesheet" href="../../css/fonts.css">
@@ -56,7 +52,7 @@ input{font-family:inherit}
 @keyframes bounceIn{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
 @keyframes floaty{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(4deg)}}
 
-/* ---------- صفحه‌ی شروع ---------- */
+/* ---------- صفحهٔ شروع ---------- */
 #scr-splash{background:linear-gradient(180deg,#6ec6ff 0%,#a8e0ff 55%,#d1f0d9 100%);align-items:center;justify-content:center}
 .floaters{position:absolute;inset:0;pointer-events:none;z-index:1}
 .floater{position:absolute;opacity:.9;animation:floaty 4.2s ease-in-out infinite}
@@ -82,7 +78,7 @@ input{font-family:inherit}
 /* ---------- نقشه (هاب) ---------- */
 #scr-hub{background:linear-gradient(180deg,#7cc9ff,#e6f6ff 70%,#d8f3dd);align-items:center;overflow:auto}
 .hub-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:.9em 1.2em;flex-wrap:wrap;gap:.5em}
-.hub-head h1{color:#fff;font-size:clamp(1.2em,4.5vw,1.8em);font-weight:900;text-shadow:0 .1em 0 #1b7fb8}
+.hub-head h1,.hub-head h2{color:#fff;font-size:clamp(1.2em,4.5vw,1.8em);font-weight:900;text-shadow:0 .1em 0 #1b7fb8;margin:0}
 .hub-tools{display:flex;gap:.5em;flex-wrap:wrap}
 .hub-sub{font-weight:900;color:#2a5a7a;margin:.1em 0 .8em;font-size:1.02em;text-align:center;padding:0 1em}
 .hub-cards{display:flex;gap:1.4em;flex-wrap:wrap;justify-content:center;padding:0 1em}
@@ -107,7 +103,7 @@ input{font-family:inherit}
   border-inline-end-color:#ffd23f;border-inline-start:0}
 @media (max-width:760px){#hub-char{display:none}}
 
-/* ---------- صفحه‌ی بازی ---------- */
+/* ---------- صفحهٔ بازی ---------- */
 #topbar{display:flex;align-items:center;gap:.7em;padding:.45em .8em;flex:0 0 auto;
   background:linear-gradient(180deg,#ffffffee,#ffffffcc);border-bottom:.14em solid #d7e5ef;z-index:50}
 .tb-btn{width:2.5em;height:2.5em;border-radius:.9em;background:#eef4f9;border:.13em solid #cfdde8;font-size:1.15em;
@@ -463,12 +459,42 @@ body {
 }
 
 .tb-btn.hk-read-aloud{width:auto;height:auto;min-height:2.5em;max-width:8em;flex:0 1 auto;font-size:.68em;padding:.25em .5em;white-space:normal;line-height:1.15}.tb-btn.hk-read-aloud[hidden]{display:none}.tb-btn.hk-read-aloud:focus-visible{outline:3px solid #4338ca;outline-offset:2px}
+body[data-theme="dark"]{background-color:#0d1628!important;color:#eef4ff!important}
+body[data-theme="dark"] #scr-splash,
+body[data-theme="dark"] #scr-hub,
+body[data-theme="dark"] #stage-wrap,
+body[data-theme="dark"] .quiz-wrap,
+body[data-theme="dark"] .final-wrap{background:linear-gradient(180deg,#0f1c34,#162744)!important}
+body[data-theme="dark"] #topbar{background:rgba(15,25,45,.94)!important;border-bottom-color:rgba(255,255,255,.14)!important}
+body[data-theme="dark"] #lab-title,
+body[data-theme="dark"] #quiz-q,
+body[data-theme="dark"] #final-name,
+body[data-theme="dark"] .hub-head h2{color:#eef4ff!important}
+body[data-theme="dark"] .quiz-card,
+body[data-theme="dark"] .lab-card,
+body[data-theme="dark"] .cert,
+body[data-theme="dark"] .modal-card,
+body[data-theme="dark"] #force-panel,
+body[data-theme="dark"] #data-panel{background:rgba(20,33,58,.95)!important;color:#eef4ff!important;border-color:rgba(255,255,255,.18)!important}
+body[data-theme="dark"] .q-opt{background:#12203a!important;color:#eef4ff!important;border-color:rgba(255,255,255,.2)!important}
+body[data-theme="dark"] #btn-home,
+body[data-theme="dark"] #btn-sound,
+body[data-theme="dark"] #btn-theme{background:#182949!important;color:#eef4ff!important;border-color:rgba(255,255,255,.22)!important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+@media (max-width:380px){
+  #topbar{gap:.25rem!important;padding:.25rem .4rem!important;flex-wrap:wrap}
+  #lab-title{font-size:.95rem!important}
+  #btn-home{padding:.25rem .55rem!important;font-size:.74rem!important}
+  .hub-head{flex-wrap:wrap;gap:.4rem}
+}
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ═══════ صفحه‌ی شروع ═══════ -->
+  <!-- ═══════ صفحهٔ شروع ═══════ -->
   <section id="scr-splash" class="screen active">
     <div class="floaters">
       <span class="floater" style="top:12%;right:7%;animation-delay:-1s">
@@ -497,14 +523,15 @@ body {
     <div class="credit">طراحی سناریو: مهدی شریفیان</div>
   </section>
 
-  <!-- ═══════ نقشه‌ی ماجراها ═══════ -->
+  <!-- ═══════ نقشهٔ ماجراها ═══════ -->
   <section id="scr-hub" class="screen">
     <header class="hub-head">
-      <h1>🗺️ نقشه‌ی ماجراها</h1>
+      <h2>🗺️ نقشهٔ ماجراها</h2>
       <div class="hub-tools">
-        <button id="btn-report" class="btn btn-small">📊 گزارش</button>
-        <button id="btn-sound2" class="btn btn-small">🔊</button>
-        <button id="btn-reset" class="btn btn-small btn-danger">🗑 از اول</button>
+        <button id="btn-theme2" class="btn btn-small" type="button" aria-label="تغییر حالت روز و شب">🌙</button>
+        <button id="btn-report" class="btn btn-small" type="button">📊 گزارش</button>
+        <button id="btn-sound2" class="btn btn-small" type="button" aria-label="قطع یا وصل صدا">🔊</button>
+        <button id="btn-reset" class="btn btn-small btn-danger" type="button">🗑 از اول</button>
       </div>
     </header>
     <div class="hub-sub" id="hub-sub">یه آزمایشگاه رو انتخاب کن! هر آزمایشگاه ۳ ستاره + جایزه داره!</div>
@@ -554,14 +581,15 @@ body {
     <div id="hub-char"></div>
   </section>
 
-  <!-- ═══════ صفحه‌ی بازی ═══════ -->
+  <!-- ═══════ صفحهٔ بازی ═══════ -->
   <section id="scr-game" class="screen">
     <header id="topbar">
-      <button class="tb-btn" id="btn-home" title="بازگشت به لابی">⟵ لابی</button>
+      <button class="tb-btn" id="btn-home" type="button" title="بازگشت به لابی">⟵ لابی</button>
       <span id="lab-title">آزمایشگاه</span>
       <span id="level-chip">مرحله ۱</span>
       <div id="star-tray"></div>
-      <button class="tb-btn" id="btn-sound" title="صدا">🔊</button>
+      <button class="tb-btn" id="btn-theme" type="button" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب">🌙</button>
+      <button class="tb-btn" id="btn-sound" type="button" title="قطع یا وصل صدا" aria-label="قطع یا وصل صدا">🔊</button>
       <button class="tb-btn hk-read-aloud" data-hk-read-aloud="#bubble-text" data-hk-read-aloud-label="شنیدن پیام" aria-controls="bubble-text" aria-pressed="false" aria-label="شنیدن پیام حکیم با صدای مرد فارسی دستگاه" hidden>🔊 شنیدن پیام حکیم</button>
     </header>
     <div id="stage-wrap">
@@ -647,6 +675,7 @@ body {
   </div>
 
 </div>
+<script src="../../hakim-core.js"></script>
 <script>
 
 'use strict';
@@ -1156,10 +1185,10 @@ function levelP1(){
         btn:'یه راه بهتر پیدا کنیم 🤔',onOk:levelP2});});}
   if(!save.logs.some(l=>l.id==='P1')){
     showMsg({icon:'📦',title:'ماموریت: جعبه رو ببر بالای برج!',
-      body:'چراغک یه جعبه‌ی ۱۰ کیلویی داره که باید ببره بالای برج.<br>تنهایی نمی‌تونه! بهش کمک کن!',
+      body:'چراغک یه جعبهٔ ۱۰ کیلویی داره که باید ببره بالای برج.<br>تنهایی نمی‌تونه! بهش کمک کن!',
       btn:'بزن بریم 💪'});}}
 
-/* ---------- مرحله ۲: قرقره‌ی ثابت ---------- */
+/* ---------- مرحله ۲: قرقرهٔ ثابت ---------- */
 function levelP2(){
   enterLevel('P2','مرحله ۲ از ۳');
   buildPulleyBase();
@@ -1227,15 +1256,15 @@ function levelP2(){
           earn('pulley','s1');log('P2');
           showMsg({icon:'🎉',stars:1,title:'آفرین! جعبه رفت بالای برج!',
             body:'قرقره <b>جهت نیرو</b> رو عوض کرد!<br>حالا برای بالا بردن جعبه، نخ رو به <b>پایین</b> می‌کشی، نه بالا!',
-            btn:'مرحله‌ی بعد ◀',onOk:levelP3});});});}}
+            btn:'مرحلهٔ بعد ◀',onOk:levelP3});});});}}
 
-/* ---------- مرحله ۳: مقایسه‌ی قرقره‌ی ثابت و متحرک ---------- */
+/* ---------- مرحله ۳: مقایسهٔ قرقرهٔ ثابت و متحرک ---------- */
 function levelP3(){
   enterLevel('P3','مرحله ۳ از ۳');
   buildPulleyBase();
   char=makeCherraghak(scene,150,545,1);
   const crate=makeCrate(662,475);
-  /* رگ قرقره ثابت (گوشه‌ی برج) */
+  /* رگ قرقره ثابت (گوشهٔ برج) */
   const rigF=E('g',{},scene);
   E('rect',{x:626,y:143,width:100,height:14,rx:4,fill:'#8a97a5',stroke:'#6d7a87','stroke-width':2},rigF);
   const wheelF=makeWheel(rigF,640,150,22);
@@ -1249,7 +1278,7 @@ function levelP3(){
   const wheelM=makeWheel(rigM,603,76,22);
   E('rect',{x:663,y:60,width:12,height:10,rx:2,fill:'#8a97a5'},rigM);
   E('path',{d:'M669 70 q7 6 0 11 q-6 -4 0 -11',fill:'none',stroke:'#5d7385','stroke-width':4},rigM);
-  /* قرقره‌ی متحرکِ روی جعبه */
+  /* قرقرهٔ متحرکِ روی جعبه */
   const gMob=E('g',{class:'hidden'},scene);
   const wheelMob=makeWheel(gMob,647,425,22);
   const mobBar=E('path',{stroke:'#5d7385','stroke-width':6,fill:'none'},gMob);
@@ -1258,12 +1287,12 @@ function levelP3(){
   const rope=makeRopePair();
   const hd=makeHandle(618,330,'pull',36);
   const coil=E('g',{},scene);
-  const cfg={fixed:{need:300,force:100,cx:662,hx:618,label:'قرقره‌ی ثابت'},
-             movable:{need:600,force:50,cx:647,hx:581,label:'قرقره‌ی متحرک'}};
+  const cfg={fixed:{need:300,force:100,cx:662,hx:618,label:'قرقرهٔ ثابت'},
+             movable:{need:600,force:50,cx:647,hx:581,label:'قرقرهٔ متحرک'}};
   const ms={fixed:{pulled:0,done:false},movable:{pulled:0,done:false}};
   let mode='fixed',base=0,stroke=0,strokeVis=0,rise=0,dragging=false,wheelA=0,busy=false;
   let lastSwish=0,lastRise=0;
-  showForce(100,'کوشش کشیدن نخ','قرقره‌ی ثابت: نیرو همون ۱۰۰ نیوتنه — ولی به پایین می‌کشی!');
+  showForce(100,'کوشش کشیدن نخ','قرقرهٔ ثابت: نیرو همون ۱۰۰ نیوتنه — ولی به پایین می‌کشی!');
   setForce(100,0,'mid');
   function renderTable(){showData('جدول مقایسه',['نوع قرقره','نیرو','مسافت نخ'],[
     {cells:['ثابت ⚙️',ms.fixed.done?'۱۰۰ نیوتن ✓':'؟',ms.fixed.done?'۳ متر ✓':'؟'],done:ms.fixed.done},
@@ -1271,8 +1300,8 @@ function levelP3(){
   renderTable();
   /* دکمه‌های تغییر حالت */
   const bc=$('#bottom-controls');bc.innerHTML='';bc.classList.remove('hidden');
-  const bF=h('button','mode-btn active','⚙️ قرقره‌ی ثابت');
-  const bM=h('button','mode-btn','⚙️⚙️ قرقره‌ی متحرک');
+  const bF=h('button','mode-btn active','⚙️ قرقرهٔ ثابت');
+  const bM=h('button','mode-btn','⚙️⚙️ قرقرهٔ متحرک');
   bc.appendChild(bF);bc.appendChild(bM);
   bF.addEventListener('click',()=>{if(!busy&&mode!=='fixed')setMode('fixed');});
   bM.addEventListener('click',()=>{if(!busy&&mode!=='movable')setMode('movable');});
@@ -1286,11 +1315,11 @@ function levelP3(){
     base=0;stroke=0;
     const r0=rise;
     tween(400,e=>{rise=r0*(1-e);},()=>{});
-    showForce(100,'کوشش کشیدن نخ',m==='fixed'?'قرقره‌ی ثابت: نیرو همون ۱۰۰ نیوتنه — ولی به پایین می‌کشی!':'قرقره‌ی متحرک: نیرو نصف می‌شه... ولی نخ رو دو برابر می‌کشی!');
+    showForce(100,'کوشش کشیدن نخ',m==='fixed'?'قرقرهٔ ثابت: نیرو همون ۱۰۰ نیوتنه — ولی به پایین می‌کشی!':'قرقرهٔ متحرک: نیرو نصف می‌شه... ولی نخ رو دو برابر می‌کشی!');
     setForce(cfg[m].force,ms[m].pulled/cfg[m].need*100,m==='fixed'?'mid':'');
     showHint(cfg[m].hx,410,'down');
-    if(m==='fixed')say('اول با «قرقره‌ی ثابت» جعبه رو بالا ببر!','happy');
-    else say('حالا با «قرقره‌ی متحرک»! حس کن چقدر راحت‌تره... ولی چقدر بیشتر باید بکشی!','excited');}
+    if(m==='fixed')say('اول با «قرقرهٔ ثابت» جعبه رو بالا ببر!','happy');
+    else say('حالا با «قرقرهٔ متحرک»! حس کن چقدر راحت‌تره... ولی چقدر بیشتر باید بکشی!','excited');}
   reg('pull',{
     start(){if(busy||ms[mode].done)return;dragging=true;Game.attempts++;hideHint();
       char.setPose('pull');AudioFX.click();},
@@ -1354,7 +1383,7 @@ function levelP3(){
       AudioFX.thud();puff(760,160);renderTable();
       after(320,function(){
         AudioFX.ding();Confetti.burst(110);
-        toast(m==='fixed'?'قرقره‌ی ثابت: ۱۰۰ نیوتن و ۳ متر نخ!':'قرقره‌ی متحرک: ۵۰ نیوتن و ۶ متر نخ!');
+        toast(m==='fixed'?'قرقرهٔ ثابت: ۱۰۰ نیوتن و ۳ متر نخ!':'قرقرهٔ متحرک: ۵۰ نیوتن و ۶ متر نخ!');
         if(ms.fixed.done&&ms.movable.done){
           finishP3();
         }else{
@@ -1375,7 +1404,7 @@ function levelP3(){
     log('P3');
     after(900,function(){
       showMsg({icon:'🏆',stars:2,title:'مهندس قرقره‌ها!',
-        body:'قرقره‌ی متحرک نیرو رو <b>نصف</b> می‌کنه (۱۰۰ ← ۵۰ نیوتن)،<br>ولی باید نخ رو <b>دو برابر</b> بکشی (۳ متر ← ۶ متر)!<br>قرقره‌ی ثابت فقط جهت نیرو رو عوض می‌کنه.',
+        body:'قرقرهٔ متحرک نیرو رو <b>نصف</b> می‌کنه (۱۰۰ ← ۵۰ نیوتن)،<br>ولی باید نخ رو <b>دو برابر</b> بکشی (۳ متر ← ۶ متر)!<br>قرقرهٔ ثابت فقط جهت نیرو رو عوض می‌کنه.',
         btn:'سؤال پایانی ◀',onOk:function(){runQuiz('pulley');}});
     });
   }}
@@ -1440,7 +1469,7 @@ function levelI1(){
     Game.raf=requestAnimationFrame(loop);}
   Game.raf=requestAnimationFrame(loop);
   showHint(620,470,'up');
-  say('بشکه‌ی ۲۰ کیلویی رو بگیر و مستقیم بالا بکش تا بره روی کامیون!','happy');
+  say('بشکهٔ ۲۰ کیلویی رو بگیر و مستقیم بالا بکش تا بره روی کامیون!','happy');
   function complete(){
     done=true;dragging=false;disableHandles();hideHint();
     barrel.tremble(false);
@@ -1454,7 +1483,7 @@ function levelI1(){
             btn:'چه فکری بزنیم؟ 🤔',onOk:levelI2});});});}
   if(!save.logs.some(l=>l.id==='I1')){
     showMsg({icon:'🛢️',title:'ماموریت: بشکه رو ببر روی کامیون!',
-      body:'چراغک باید بشکه‌ی سنگین ۲۰ کیلویی رو ببره بالای کامیون.<br>اول امتحان کن مستقیم بلندش کنی!',
+      body:'چراغک باید بشکهٔ سنگین ۲۰ کیلویی رو ببره بالای کامیون.<br>اول امتحان کن مستقیم بلندش کنی!',
       btn:'بزن بریم 💪'});}}
 
 /* ---------- مرحله ۲: اضافه کردن تخته (سطح شیب‌دار) ---------- */
@@ -1509,7 +1538,7 @@ function levelI2(){
         setForce(80,40);
         showPanel('<h4>📏 اندازه‌گیری تخته</h4><table class="dp">'+
           '<tr><td class="lbl">طول تخته</td><td class="num">'+fa((L/100).toFixed(1))+' متر</td></tr>'+
-          '<tr><td class="lbl">زاویه‌ی شیب</td><td class="num">'+fa(Math.round(deg))+'°</td></tr>'+
+          '<tr><td class="lbl">زاویهٔ شیب</td><td class="num">'+fa(Math.round(deg))+'°</td></tr>'+
           '<tr><td class="lbl">نیرو</td><td class="num" style="color:#1d9e5a">'+fa(80)+' نیوتن</td></tr>'+
           '</table>',true);
         setMetric('مسافت روی تخته: '+fa((tCur*L/100).toFixed(1))+' متر از '+fa((L/100).toFixed(1))+' متر');
@@ -1537,7 +1566,7 @@ function levelI2(){
           earn('incline','s1');log('I2');
           showMsg({icon:'🎉',stars:1,title:'سطح شیب‌دار نیرو رو کم کرد!',
             body:'با تخته فقط <b>۸۰ نیوتن</b> لازم داشتیم؛ نه ۲۰۰ نیوتن!<br>حالا با نیروی کمتر می‌تونی جسم سنگین رو بالا ببری.',
-            btn:'مرحله‌ی بعد ◀',onOk:levelI3});});});}}
+            btn:'مرحلهٔ بعد ◀',onOk:levelI3});});});}}
 
 /* ---------- مرحله ۳: تغییر شیب (اسلایدر) ---------- */
 function levelI3(){
@@ -1565,7 +1594,7 @@ function levelI3(){
   function renderTable(){
     showPanel('<h4>📏 اندازه‌گیری تخته</h4><table class="dp">'+
       '<tr><td class="lbl">طول تخته</td><td class="num">'+fa((L/100).toFixed(1))+' متر</td></tr>'+
-      '<tr><td class="lbl">زاویه‌ی شیب</td><td class="num">'+fa(Math.round(deg))+'°</td></tr>'+
+      '<tr><td class="lbl">زاویهٔ شیب</td><td class="num">'+fa(Math.round(deg))+'°</td></tr>'+
       '<tr><td class="lbl">نیرو</td><td class="num" style="color:'+(F<95?'#1d9e5a':F<150?'#c98a12':'#e0566b')+'">'+fa(F)+' نیوتن</td></tr>'+
       '</table>'+
       '<h4>🔑 راز شیب</h4>'+
@@ -1650,7 +1679,7 @@ function levelI3(){
 const BONUS_ITEMS=[
  {id:'slide',title:'سرسره 🛝',
   text:'سطح شیب‌دار برای <b>پایین آمدن</b>! با سرسره راحت و باحال پایین می‌ای. اگه سرسره عمودی بود، مثل سقوط آزاد بود! شیب، پایین اومدن رو نرم و امن می‌کنه.'},
- {id:'road',title:'جاده‌ی کوهستانی 🏔️',
+ {id:'road',title:'جادهٔ کوهستانی 🏔️',
   text:'<b>پیچ‌های جاده، شیب رو کم می‌کنن!</b> جاده به‌جای اینکه مستقیم از کوه بالا بره، دورتادور می‌چرخه تا شیب کم بشه و ماشین راحت بالا بره.'},
  {id:'ladder',title:'نردبان 🪜',
   text:'نردبان یه <b>سطح شیب‌دار خیلی تند</b> هست! چون شیبش زیاده، مسافتش کمه ولی نیروی بیشتری لازمه. اگه شیب نردبان کمتر بود، راحت‌تر بالا می‌رفتی ولی نردبین بلندتر لازم بود!'},
@@ -1693,7 +1722,7 @@ function levelI4(){
       earn('incline','gold');
       Confetti.rain();Confetti.burst(160);AudioFX.win();
       log('I4',{attempts:4});
-      after(800,()=>showMsg({icon:'🌟',gold:true,title:'ستاره‌ی طلایی گرفتی!',
+      after(800,()=>showMsg({icon:'🌟',gold:true,title:'ستارهٔ طلایی گرفتی!',
         body:'حالا می‌دونی سطح شیب‌دار و قرقره همه‌جا دور و برمون هستن!<br><b>ماشین‌های ساده</b> کار ما رو آسون می‌کنن.',
         btn:'سؤال پایانی ◀',onOk:()=>runQuiz('incline')}));});}}
   $('#bm-ok').onclick=()=>{
@@ -1810,10 +1839,21 @@ function runQuiz(lab){
     next.textContent = (curQIdx === totalQ - 1) ? 'پایان آزمون و ثبت در کارنامه 🏆' : 'پرسش بعدی ◀';
     
     let solved = false;
-    q.opts.forEach(o => {
-      const b = h('button', 'q-opt', '<span class="q-letter">' + o.k + ')</span><span>' + o.t + '</span>');
+    const qStartAt = Date.now();
+    const letters = ['الف','ب','پ','ت'];
+    const correctOpt = q.opts.find(x => x.ok);
+    const shuffled = q.opts.slice();
+    for(let i = shuffled.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = shuffled[i]; shuffled[i] = shuffled[j]; shuffled[j] = tmp;
+    }
+    shuffled.forEach((o, idx) => {
+      const letter = letters[idx] || o.k;
+      const b = h('button', 'q-opt', '<span class="q-letter">' + letter + ')</span><span>' + o.t + '</span>');
+      b.type = 'button';
       b.addEventListener('click', () => {
         if(solved) return;
+        const elapsed = Math.max(1, Math.round((Date.now() - qStartAt) / 1000));
         if(o.ok){
           solved = true;
           b.classList.add('ok');
@@ -1830,10 +1870,23 @@ function runQuiz(lab){
             expId: lab,
             q: q.q,
             chosen: o.t,
-            correct: o.t,
+            correct: correctOpt ? correctOpt.t : o.t,
             isOk: true,
-            t: Math.max(1, Math.round((Date.now() - Game.t0) / 1000))
+            t: elapsed
           });
+          if(window.parent === window && window.Hakim && typeof Hakim.saveAnswer === 'function'){
+            Hakim.saveAnswer({
+              student_name: save.name || window.STUDENT_NAME || 'دانش‌آموز',
+              game_id: 'hakimestan-lab-2d',
+              experiment_id: lab,
+              question_id: lab + '-q' + (curQIdx + 1),
+              question_text: q.q,
+              student_answer: o.t,
+              correct_answer: correctOpt ? correctOpt.t : o.t,
+              is_correct: true,
+              time_taken: elapsed
+            });
+          }
           
           after(600, () => next.classList.remove('hidden'));
         } else {
@@ -1843,6 +1896,27 @@ function runQuiz(lab){
           c.setFace('tired');
           fb.className = 'bad';
           fb.textContent = '❌ ' + o.hint;
+          collectedAnswers.push({
+            expId: lab,
+            q: q.q,
+            chosen: o.t,
+            correct: correctOpt ? correctOpt.t : '',
+            isOk: false,
+            t: elapsed
+          });
+          if(window.parent === window && window.Hakim && typeof Hakim.saveAnswer === 'function'){
+            Hakim.saveAnswer({
+              student_name: save.name || window.STUDENT_NAME || 'دانش‌آموز',
+              game_id: 'hakimestan-lab-2d',
+              experiment_id: lab,
+              question_id: lab + '-q' + (curQIdx + 1),
+              question_text: q.q,
+              student_answer: o.t,
+              correct_answer: correctOpt ? correctOpt.t : '',
+              is_correct: false,
+              time_taken: elapsed
+            });
+          }
           setTimeout(() => b.classList.remove('bad'), 650);
         }
       });
@@ -1859,13 +1933,25 @@ function runQuiz(lab){
       earn(lab, 'badge');
       log(Game.levelId, { attempts: Game.attempts + 1 });
       try {
-        window.parent.postMessage({
-          type: 'hakim-gosh-complete',
-          game: lab,
-          score: 100,
-          stars: 3,
-          answers: collectedAnswers
-        }, '*');
+        if(window.parent && window.parent !== window){
+          window.parent.postMessage({
+            type: 'hakim-gosh-complete',
+            game: lab,
+            score: 100,
+            stars: 3,
+            answers: collectedAnswers
+          }, '*');
+        } else if(window.Hakim && typeof Hakim.saveSession === 'function'){
+          Hakim.saveSession({
+            student_name: save.name || window.STUDENT_NAME || 'دانش‌آموز',
+            game_id: 'hakimestan-lab-2d',
+            experiment_id: lab,
+            duration: Math.max(1, Math.round((Date.now() - Game.t0) / 1000)),
+            score: 100,
+            stars: 3,
+            completed: true
+          });
+        }
       } catch(e) {}
       
       AudioFX.win();
@@ -1893,7 +1979,7 @@ function runQuiz(lab){
 }
 
 /* ═══════════════════════════════════════════════════════
-   نقشه‌ی ماجراها (هاب)
+   نقشهٔ ماجراها (هاب)
    ═══════════════════════════════════════════════════════ */
 function starsHtml(lab){
   return traySpec(lab).map(p=>'<span class="st '+(save[lab][p[0]]?'earned':'')+'">'+p[1]+'</span>').join('');}
@@ -1904,8 +1990,8 @@ function renderHub(msg){
   const iN=(save.incline.s1?1:0)+(save.incline.s2?1:0)+(save.incline.s3?1:0);
   $('#prog-pulley').textContent=pN===0?'هنوز شروع نکردی — ۳ ستاره منتظرته!':
     fa(pN)+' ستاره از ۳'+(save.pulley.badge?' + نشان دانش 🎖️':'');
-  $('#prog-incline').textContent=iN===0?'هنوز شروع نکردی — ۳ ستاره + ستاره‌ی طلایی!':
-    fa(iN)+' ستاره از ۳'+(save.incline.gold?' + ستاره‌ی طلایی 🌟':'')+(save.incline.badge?' + نشان دانش 🎖️':'');
+  $('#prog-incline').textContent=iN===0?'هنوز شروع نکردی — ۳ ستاره + ستارهٔ طلایی!':
+    fa(iN)+' ستاره از ۳'+(save.incline.gold?' + ستارهٔ طلایی 🌟':'')+(save.incline.badge?' + نشان دانش 🎖️':'');
   $('#go-pulley').textContent=pN>0||save.pulley.badge?'دوباره بازی کن 🔁':'شروع';
   $('#go-incline').textContent=iN>0||save.incline.badge?'دوباره بازی کن 🔁':'شروع';
   $('#go-final').classList.toggle('hidden',!(save.pulley.badge&&save.incline.badge));
@@ -1931,10 +2017,10 @@ function openFinal(){
   $('#final-stars').textContent=stars;
   $('#final-laws').innerHTML=[
    '<div class="law">🛞 قرقره <b>جهت نیرو</b> رو عوض می‌کنه — برای بالا بردن، به پایین می‌کشی!</div>',
-   '<div class="law">⚙️ قرقره‌ی ثابت فقط جهت رو عوض می‌کنه؛ قرقره‌ی متحرک نیرو رو <b>نصف</b> می‌کنه (ولی نخ رو دو برابر می‌کشی!)</div>',
+   '<div class="law">⚙️ قرقرهٔ ثابت فقط جهت رو عوض می‌کنه؛ قرقرهٔ متحرک نیرو رو <b>نصف</b> می‌کنه (ولی نخ رو دو برابر می‌کشی!)</div>',
    '<div class="law">📐 سطح شیب‌دار <b>نیروی لازم</b> رو کم می‌کنه — با ۸۰ نیوتن به‌جای ۲۰۰ نیوتن!</div>',
    '<div class="law">⛰️ هر چی شیب کمتر → نیروی کمتر، ولی مسافت بیشتر!</div>',
-   '<div class="law">🌍 این دو تا <b>ماشین ساده</b> هستن: در جرثقیل، چاه، آسانسور، سرسره، نردبان، رمپ و جاده‌ی کوهستانی!</div>'
+   '<div class="law">🌍 این دو تا <b>ماشین ساده</b> هستن: در جرثقیل، چاه، آسانسور، سرسره، نردبان، رمپ و جادهٔ کوهستانی!</div>'
   ].join('');
   const secs=save.logs.reduce((a,l)=>a+(l.secs||0),0);
   const atts=save.logs.reduce((a,l)=>a+(l.attempts||0),0);
@@ -1953,7 +2039,7 @@ function openFinal(){
 /* ═══════════════════════════════════════════════════════
    گزارش (دیتابیس محلی)
    ═══════════════════════════════════════════════════════ */
-const LNAME={P1:'قرقره ۱ — بدون قرقره',P2:'قرقره ۲ — قرقره‌ی ثابت',P3:'قرقره ۳ — مقایسه‌ی قرقره‌ها',
+const LNAME={P1:'قرقره ۱ — بدون قرقره',P2:'قرقره ۲ — قرقرهٔ ثابت',P3:'قرقره ۳ — مقایسهٔ قرقره‌ها',
   QP:'آزمون قرقره',I1:'شیب ۱ — بلند کردن مستقیم',I2:'شیب ۲ — با تخته',I3:'شیب ۳ — تغییر شیب',
   I4:'شیب ۴ — بونوس زندگی واقعی',QI:'آزمون سطح شیب‌دار'};
 function openReport(){
@@ -1985,7 +2071,7 @@ function openReport(){
   const tips=['می‌دونستی قرقره توی چاه، پرچم و آسانسور هم استفاده می‌شه؟',
     'هر چی شیب کمتر باشه، راحت‌تر بالا می‌ری!',
     'نردبان هم یه سطح شیب‌دار خیلی تنده!',
-    'قرقره‌ی متحرک نیرو رو نصف می‌کنه!',
+    'قرقرهٔ متحرک نیرو رو نصف می‌کنه!',
     'رمپ ویلچر هم یه سطح شیب‌داره!'];
   let ti=0;
   $('#hub-char').insertAdjacentHTML('beforeend','<div id="hub-tip">'+tips[0]+'</div>');
@@ -2010,11 +2096,31 @@ function openReport(){
   });
   $('#btn-sound').addEventListener('click',()=>setSound(!save.sound));
   $('#btn-sound2').addEventListener('click',()=>setSound(!save.sound));
+  function applyMachineTheme(th){
+    const dark = th === 'dark';
+    document.body.dataset.theme = dark ? 'dark' : 'light';
+    ['#btn-theme','#btn-theme2'].forEach(sel=>{
+      const el = $(sel);
+      if(el){ el.textContent = dark ? '☀️' : '🌙'; el.setAttribute('aria-pressed', dark ? 'true' : 'false'); }
+    });
+  }
+  let curTheme = 'light';
+  try{ curTheme = localStorage.getItem('hakim_machines_theme') || 'light'; }catch(e){}
+  applyMachineTheme(curTheme);
+  ['#btn-theme','#btn-theme2'].forEach(sel=>{
+    const el = $(sel);
+    if(el) el.addEventListener('click',()=>{
+      AudioFX.click();
+      const nxt = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+      try{ localStorage.setItem('hakim_machines_theme', nxt); }catch(e){}
+      applyMachineTheme(nxt);
+    });
+  });
   $('#btn-report').addEventListener('click',()=>{AudioFX.click();openReport();});
   $('#btn-close-report').addEventListener('click',()=>$('#modal-report').classList.add('hidden'));
   $('#btn-copy-report').addEventListener('click',()=>{
     const txt='گزارش بازی ماشین‌های ساده\n'+
-      save.logs.map(l=>(LNAME[l.id]||l.id)+' | زمان: '+l.secs+' ثانیه | تلاش: '+l.attempts).join('\n');
+      save.logs.map(l=>(LNAME[l.id]||l.id)+' | زمان: '+fa(l.secs)+' ثانیه | تلاش: '+fa(l.attempts)).join('\n');
     try{navigator.clipboard.writeText(txt).then(()=>toast('گزارش کپی شد! 📋'),()=>toast('کپی نشد — دستی یادداشت کن!'));}
     catch(e){toast('کپی نشد — دستی یادداشت کن!');}});
   let resetArmed=false,resetTimer=null;

@@ -14,14 +14,14 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.69';
+const VERSION = 'hakim-v1.5.73';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
 const IMAGES_CACHE = `${VERSION}-images`;
 const KEEP_CACHES = [SHELL_CACHE, PAGES_CACHE, ASSETS_CACHE, IMAGES_CACHE];
 
-const MAX_IMAGES = 60;
+const MAX_IMAGES = 100;
 
 /* ── پوستهٔ اصلی: حتماً باید در نصب کش شود ─────────────────── */
 const SHELL_ASSETS = [
@@ -53,9 +53,15 @@ const SHELL_ASSETS = [
   './games/math-geometry/data.js',
   './games/math-geometry/app.js',
   './assets/fonts/vazirmatn-100-900.woff2',
+  './assets/fonts/lalezar-400.woff2',
+  './assets/fonts/amiri-400.woff2',
+  './assets/fonts/amiri-700.woff2',
   './manifest.json',
   './icon.svg',
   './hakim-core.js',
+  './back-to-lobby.js',
+  './css/fonts.css',
+  './css/azmoon-fonts.css',
   './css/a11y.css',
   './css/folio.css',
   './css/lobby.css?v=1405-07-kashi-light',
@@ -96,19 +102,90 @@ const PREFETCH_PAGES = [
   './games/math-decimals/audio/scale.mp3',
   './games/math-decimals/audio/market.mp3',
   './games/math-fasl2.html',
-  './games/math-nesbat.html'
+  './games/math-nesbat.html',
+  './games/math-olgoha.html',
+  './games/math-learning-1.html',
+  './games/math-time-mission.html',
+  './games/kohan-diyar.html',
+  './games/hakim-quest.html',
+  './games/hakim-cards.html',
+  './games/hakim-treasure.html',
+  './games/jadval-hekmat.html',
+  './games/snake-ladder.html',
+  './games/snake-ladder-online.html',
+  './games/mancheh-online.html',
+  './games/lab2d.html',
+  './games/farsi5-vocab.html',
+  './azmoon-saz.html',
+  './daftar.html',
+  './tarh-dars.html',
+  './darsgah.html',
+  './hqf-converter.html',
+  './payamresan.html',
+  './panels/teacher.html',
+  './404.html',
+  './assessment/decimals-check.html'
 ];
 
-/* ── آزمایشگاه‌های تعاملی بازی lab2d ──────────────────────────
-   این فایل‌ها سنگین‌اند (~۱۲۰ کیلوبایت هر یک) و برای نصب PWA
-   پیش‌بارگذاری نمی‌شوند تا نصب روی اینترنت ضعیف کند نشود.
-   در عوض: وقتی کاربر آنلاین است و مرورگر بی‌کار می‌شود، در
-   پس‌زمینه کش می‌شوند تا آفلاین هم کار کنند. */
+/* ── آزمایشگاه‌های تعاملی بازی lab2d و دارایی‌های پس‌زمینه ─────
+   این فایل‌ها سنگین‌اند و برای نصب اولیهٔ PWA مسدودکننده نیستند
+   تا نصب روی اینترنت ضعیف کند نشود؛ وقتی مرورگر بی‌کار می‌شود
+   در پس‌زمینه کش می‌شوند تا آفلاین هم کار کنند. */
 const LAB_APPS = [
   './games/lab2d-apps/hakim-gosh.html',
   './games/lab2d-apps/hakim-goosh.html',
   './games/lab2d-apps/hakim-pulley.html',
-  './games/lab2d-apps/hakim-incline.html'
+  './games/lab2d-apps/hakim-incline.html',
+  './games/audio/mission-time-stage-1.mp3',
+  './games/audio/mission-time-stage-2.mp3',
+  './games/audio/mission-time-stage-3.mp3',
+  './games/audio/mission-time-stage-4.mp3',
+  './games/audio/mission-time-stage-5.mp3',
+  './games/audio/mission-time-stage-6.mp3',
+  './games/audio/mission-time-stage-7.mp3',
+  './games/audio/mission-time-stage-8.mp3',
+  './assets/audio/games-lab2d-voice-1.mp3',
+  './assets/audio/games-lab2d-voice-2.mp3',
+  './assets/audio/games-lab2d-voice-3.mp3',
+  './assets/audio/games-lab2d-voice-4.mp3',
+  './assets/audio/games-lab2d-voice-5.mp3',
+  './assets/fonts/estedad-400.woff2',
+  './assets/fonts/estedad-700.woff2',
+  './assets/fonts/gandom-400.woff2',
+  './assets/fonts/harmattan-400.woff2',
+  './assets/fonts/harmattan-700.woff2',
+  './assets/fonts/katibeh-400.woff2',
+  './assets/fonts/markazi-text-400.woff2',
+  './assets/fonts/markazi-text-700.woff2',
+  './assets/fonts/mirza-400.woff2',
+  './assets/fonts/mirza-700.woff2',
+  './assets/fonts/noto-naskh-arabic-400.woff2',
+  './assets/fonts/noto-naskh-arabic-700.woff2',
+  './assets/fonts/parastoo-400.woff2',
+  './assets/fonts/parastoo-700.woff2',
+  './assets/fonts/sahel-vf.woff2',
+  './assets/fonts/samim-400.woff2',
+  './assets/fonts/samim-700.woff2',
+  './assets/fonts/scheherazade-new-400.woff2',
+  './assets/fonts/scheherazade-new-700.woff2',
+  './assets/fonts/shabnam-400.woff2',
+  './assets/fonts/shabnam-700.woff2',
+  './assets/vendor/html2canvas.min.js',
+  './assets/vendor/pdf.min.js',
+  './assets/vendor/pdf.worker.min.js'
+];
+
+const EXTRACTED_IMAGES = [
+  './assets/img/games-hakim-quest-art.png',
+  './assets/img/games-hakim-quest-art-2.png',
+  './assets/img/games-kohan-diyar-art.png',
+  './assets/img/games-kohan-diyar-art-2.png',
+  './assets/img/games-kohan-diyar-art-3.png',
+  './assets/img/games-kohan-diyar-art-4.png',
+  './assets/img/games-math-time-mission-art.jpeg',
+  './assets/img/mission-time-history-sundial.jpg',
+  './assets/img/mission-time-history-waterclock.jpg',
+  './assets/img/mission-time-history-maragha.jpg'
 ];
 
 /** پیش‌بارگذاری آرام در زمان بی‌کاری مرورگر */
@@ -123,6 +200,14 @@ function prefetchLabApps() {
           if (hit) continue;
           await cache.add(new Request(url, { cache: 'reload' }));
         } catch (err) { /* اختیاری: در فرصت بعدی */ }
+      }
+      const imgCache = await caches.open(IMAGES_CACHE);
+      for (const url of EXTRACTED_IMAGES) {
+        try {
+          const hit = await matchSafe(url);
+          if (hit) continue;
+          await imgCache.add(new Request(url, { cache: 'reload' }));
+        } catch (err) { /* اختیاری */ }
       }
     })();
   };
@@ -325,9 +410,26 @@ function isDecimalAudio(url) {
   const prefix=new URL('games/math-decimals/audio/',self.registration.scope);
   return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^(?:tenths|place|line|compare|add|subtract|repeat|multiply|product-column|scale|market)\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
 }
+function isTimeMissionAudio(url) {
+  const prefix=new URL('games/audio/',self.registration.scope);
+  return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^mission-time-stage-[1-8]\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
+}
+function isExtractedAudio(url) {
+  const prefix=new URL('assets/audio/',self.registration.scope);
+  return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^games-lab2d-voice-[1-5]\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
+}
 async function handleGeometryAudio(request) {
-  const full = await matchSafe(request.url);
-  if (!full || full.status !== 200) return fetch(request);
+  let full = await matchSafe(request.url);
+  if (!full || full.status !== 200) {
+    const plainReq = new Request(request.url);
+    const net = await fetch(plainReq);
+    if (net && net.status === 200) {
+      await putSafe(ASSETS_CACHE, plainReq, net);
+      full = net;
+    } else {
+      return fetch(request);
+    }
+  }
   const range = request.headers.get('range');
   if (!range) return full;
   const bytes = await full.arrayBuffer(), size = bytes.byteLength;
@@ -357,7 +459,7 @@ self.addEventListener('fetch', (event) => {
   // External APIs and explicitly private requests must never use app storage.
   if (url.origin !== new URL(self.registration.scope).origin || request.cache === 'no-store' || request.headers.has('authorization')) return;
 
-  if (isGeometryAudio(url) || isDecimalAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
+  if (isGeometryAudio(url) || isDecimalAudio(url) || isTimeMissionAudio(url) || isExtractedAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
   // سایر Rangeها بدون تغییر به شبکه می‌روند.
   if (request.headers.get('range')) return;
 

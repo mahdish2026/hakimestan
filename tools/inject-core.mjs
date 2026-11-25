@@ -18,12 +18,18 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
-const CHECK_ONLY = process.argv.includes('--check');
+const CHECK_ONLY = process.argv.includes('--check') || process.argv.includes('--dry');
 
 const MARKER_START = '<!-- hakim-core:start -->';
 const MARKER_END = '<!-- hakim-core:end -->';
 
-const SKIP = new Set(['offline.html']); // این صفحه دستی ساخته شده است
+const SKIP = new Set([
+  'offline.html',
+  'assessment/decimals-check.html',
+  'games/math-decimals.html',
+  'games/math-decimals-teacher.html',
+  'games/math-geometry.html'
+]); // صفحاتی که دستی مدیریت می‌شوند
 
 async function htmlFiles(dir = ROOT, acc = []) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -49,9 +55,10 @@ function buildBlock(prefix) {
 ${MARKER_END}`;
 }
 
-function buildScripts(prefix) {
+function buildScripts(prefix, withReadAloud = false) {
+  const extra = withReadAloud ? `<script src="${prefix}js/hakim-read-aloud.js" defer></script>\n` : '';
   return `${MARKER_START}
-<script src="${prefix}js/hakim-security.js" defer></script>
+${extra}<script src="${prefix}js/hakim-security.js" defer></script>
 <script src="${prefix}js/hakim-a11y.js" defer></script>
 <script src="${prefix}js/hakim-sw-register.js" defer></script>
 ${MARKER_END}`;
@@ -87,13 +94,30 @@ async function main() {
     const original = html;
     const prefix = prefixFor(file);
     const block = buildBlock(prefix);
-    const scripts = buildScripts(prefix);
+    const blockRe = new RegExp(`\\s*${escapeRe(MARKER_START)}[\\s\\S]*?${escapeRe(MARKER_END)}\\s*`, 'g');
+    const hadReadAloudInMarker = (html.match(blockRe) || []).some((m) => m.includes('hakim-read-aloud.js'));
+    const scripts = buildScripts(prefix, hadReadAloudInMarker);
+
+    // اگر بلوک‌های هسته از قبل با مسیر درست و پس از CSP حضور دارند، دست‌نخورده بمانند
+    const existingCspEnd = html.indexOf('<!-- hakim-csp:end -->');
+    const existingCoreStart = html.indexOf(block);
+    if (
+      existingCoreStart !== -1 &&
+      html.includes(scripts) &&
+      (existingCspEnd === -1 || existingCoreStart > existingCspEnd)
+    ) {
+      continue;
+    }
 
     // حذف نسخه‌های قبلی (اگر با همان نشانگر تزریق شده بودند)
     // حذف کامل بلوک قبلی همراه با فاصله‌های اطرافش تا خط خالی تکرار نشود
-    html = html.replace(
-      new RegExp(`\\s*${escapeRe(MARKER_START)}[\\s\\S]*?${escapeRe(MARKER_END)}\\s*`, 'g'), '\n');
+    html = html.replace(blockRe, '\n');
     html = html.replace(/\n{3,}/g, '\n\n');
+
+    // اگر صفحه خودش بیرون از نشانگرها اسکریپت‌های هسته را بارگذاری کرده، تکراری نساز
+    if (html.includes('hakim-security.js') && html.includes('hakim-a11y.js')) {
+      continue;
+    }
 
     if (!/<head[\s>]/i.test(html)) {
       report.push(['بدون <head>', rel]);
@@ -111,9 +135,13 @@ async function main() {
       continue;
     }
 
-    // CSS دسترس‌پذیری بلافاصله بعد از باز شدن <head> می‌آید تا با
-    // بلوک متادیتا (که پیش از </head> تزریق می‌شود) هیچ‌وقت جابه‌جا نشود.
-    let withHead = inject(html, block, '<head>', { first: true, after: true });
+    // CSS دسترس‌پذیری بعد از متای CSP (اگر هست) یا بلافاصله بعد از <head> می‌آید
+    // تا متای CSP همیشه نخستین عنصر داخل <head> بماند و همهٔ منابع را پوشش دهد.
+    const cspEnd = '<!-- hakim-csp:end -->';
+    const cspEndAt = html.indexOf(cspEnd);
+    let withHead = (cspEndAt !== -1 && cspEndAt < headAt)
+      ? inject(html, '\n' + block, cspEnd, { first: true, after: true })
+      : inject(html, '\n' + block, '<head>', { first: true, after: true });
     if (withHead === null) withHead = inject(html, block, '</head>', { first: true });
     // اسکریپت‌ها پیش از لایهٔ کنتراست بیایند تا آن لایه همیشه آخرین چیز در سند بماند
     const contrastMarker = '<!-- hakim-contrast:start -->';

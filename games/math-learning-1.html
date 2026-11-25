@@ -11,17 +11,18 @@
 
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/fonts.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>بازی تقسیم چکشی 🧮</title>
-<meta name="description" content="بازی تقسیم چکشی — تمرین تعاملی و سرگرم‌کننده تقسیم ریاضی پایه پنجم دبستان در مدرسه ریاضی حکیمستان.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>بازی تقسیم چکشی | مدرسهٔ ریاضی حکیمستان 🧮</title>
+<meta name="description" content="بازی تقسیم چکشی — تمرین تعاملی و گام‌به‌گام تقسیم ریاضی پایهٔ پنجم دبستان با تشخیص خطا و گواهی‌نامه در مدرسهٔ ریاضی حکیمستان.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
 <style>
 :root{ --cell: clamp(30px, 8.5vw, 54px); }
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html,body{ margin:0; padding:0; }
+html,body{ margin:0; padding:0; overflow-x:clip; max-width:100%; }
 body{
   font-family: Vazirmatn, 'Segoe UI', Tahoma, sans-serif;
   min-height:100vh; color:#0f172a;
+  background-color:#ede9fe;
   background: linear-gradient(180deg,#c9c2ff 0%, #e8e4ff 34%, #f4f0ff 55%, #fefce8 100%) fixed;
 }
 body::before{
@@ -74,7 +75,7 @@ a.btn{ display:inline-flex; align-items:center; justify-content:center; text-dec
 .name-row:focus-within{ border-color:#8b7cf7; box-shadow:0 0 0 4px rgba(102,84,232,.22); }
 .name-row .name-ic{ font-size:1.2rem; }
 .name-row input{ flex:1; min-width:0; border:none; outline:none; background:transparent; font:inherit; font-weight:800; font-size:1rem; color:#4c3cc7; }
-.name-row input::placeholder{ color:#7dd3fc; font-weight:600; }
+.name-row input::placeholder{ color:#6b5ca5; font-weight:600; }
 .name-row.err{ border-color:#fca5a5; background:#fef2f2; }
 .name-err{ display:none; color:#dc2626; font-size:.85rem; font-weight:800; margin:-6px 0 12px; }
 .name-err.show{ display:block; }
@@ -216,25 +217,118 @@ a.btn{ display:inline-flex; align-items:center; justify-content:center; text-dec
 .cert-date{ font-weight:800; color:#4c3cc7; margin-bottom:4px; }
 
 /* ---------- print certificate ---------- */
-@page{ margin:12mm; }
+@page{ size:A4 portrait; margin:10mm; }
 @media print{
-  html, body{ background:#fff !important; }
-  body::before{ display:none !important; }
-  #menu, #game, #help{ display:none !important; }
-  #app{ display:block !important; max-width:none !important; padding:0 !important; }
+  html, body{ background:#fff !important; color:#0f172a !important; color-scheme:light !important; overflow:visible !important; }
+  body::before, #menu, #game, #help, #hakimPanelMount, .hk-a11y-fab, .hk-a11y-panel, .attempt-report{ display:none !important; }
+  #app{ display:block !important; max-width:none !important; padding:0 !important; margin:0 !important; }
   #overlay{ position:static !important; background:none !important; display:block !important;
-    padding:24px; z-index:1; backdrop-filter:none; }
-  #ovCard{ box-shadow:none; animation:none; max-height:none; overflow:visible; background:transparent;
-    max-width:660px; margin:0 auto; padding:0; }
+    padding:0 !important; z-index:1; backdrop-filter:none; }
+  #ovCard{ box-shadow:none !important; animation:none !important; max-height:none !important; overflow:visible !important; background:transparent !important;
+    max-width:none !important; margin:0 auto !important; padding:0 !important; }
   #ovCard .actions{ display:none !important; }
-  .cert{ box-shadow:inset 0 0 0 3px #fffef8, inset 0 0 0 5px rgba(212,175,55,.4); font-size:1.05em; }
-  .cert-list li{ animation:none !important; opacity:1 !important; }
-  .cert-seal{ box-shadow:none; opacity:1; }
+  .cert{
+    background:#fffdf6 !important; color:#0f172a !important;
+    border:5px double #b45309 !important; box-shadow:none !important;
+    padding:10mm 9mm !important; page-break-inside:avoid; break-inside:avoid;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .cert-list li{ animation:none !important; opacity:1 !important; color:#1e293b !important; break-inside:avoid; }
+  .cert-seal{ box-shadow:none !important; opacity:1 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 }
 .help-card{ text-align:right; max-height:86vh; overflow:auto; }
 .help-card h2{ text-align:center; }
 .help-card ol{ line-height:2.2; font-weight:600; padding-right:22px; margin:10px 0; }
 .help-card .tip{ background:#fffbeb; border:2px solid #fde68a; border-radius:14px; padding:10px 14px; font-size:.92rem; line-height:1.9; font-weight:600; color:#78350f; }
+
+.cell-dividend{ color:#1e293b; }
+.diag-box{
+  margin-top:6px; padding:8px 11px; border-radius:14px;
+  background:#fff1f2; border:1.5px solid #fda4af; color:#881337;
+  font-size:.94rem; font-weight:800; line-height:1.85; text-align:right;
+}
+.diag-badge{
+  display:inline-block; background:#be123c; color:#fff; border-radius:8px;
+  padding:1px 8px; font-size:.76rem; font-weight:900; margin-inline-end:6px;
+}
+
+/* ---------- حالت روز و شب (Day / Night Theme) ---------- */
+body[data-theme="light"]{
+  color-scheme:light;
+  background-color:#ede9fe;
+}
+body[data-theme="dark"]{
+  color-scheme:dark;
+  background-color:#0b1224;
+  background:linear-gradient(180deg,#0b1224 0%,#111b34 55%,#0f172a 100%) fixed;
+  color:#eef2ff;
+}
+body[data-theme="dark"]::before{ opacity:.12; }
+body[data-theme="dark"] .menu-card,
+body[data-theme="dark"] .stage-card,
+body[data-theme="dark"] .bubble-card,
+body[data-theme="dark"] .hud,
+body[data-theme="dark"] .ov-card{
+  background:#15203b; color:#f1f5f9; border:1.5px solid #2e4068;
+  box-shadow:0 16px 36px rgba(0,0,0,.45);
+}
+body[data-theme="dark"] .menu-card h1,
+body[data-theme="dark"] .lv-title,
+body[data-theme="dark"] .hud-title,
+body[data-theme="dark"] .ov-card h2{ color:#c7d2fe; }
+body[data-theme="dark"] .menu-card .sub,
+body[data-theme="dark"] .hud-title small,
+body[data-theme="dark"] .prob-count,
+body[data-theme="dark"] .ov-card p,
+body[data-theme="dark"] .credit{ color:#cbd5e1; border-color:#334155; }
+body[data-theme="dark"] .credit b{ color:#fde68a; }
+body[data-theme="dark"] .name-row{ background:#0f172a; border-color:#3b4c7a; }
+body[data-theme="dark"] .name-row input{ color:#f8fafc; }
+body[data-theme="dark"] .name-row input::placeholder{ color:#94a3b8; }
+body[data-theme="dark"] .lv-card{ background:#1b2a4a; border-color:#334155; }
+body[data-theme="dark"] .lv-card:hover{ background:#22355c; border-color:#38bdf8; }
+body[data-theme="dark"] .lv-card .nm{ color:#f8fafc; }
+body[data-theme="dark"] .lv-card .ds{ color:#cbd5e1; }
+body[data-theme="dark"] .lv-card .st{ color:#fde68a; }
+body[data-theme="dark"] .btn.ghost,
+body[data-theme="dark"] .btn.icon{ background:#1e293b; color:#e2e8f0; box-shadow:0 3px 0 #0f172a; }
+body[data-theme="dark"] .hud-stars{ background:#2d2310; border-color:#b45309; color:#fde68a; }
+body[data-theme="dark"] .dot{ background:#1e293b; border-color:#475569; }
+body[data-theme="dark"] .vline,
+body[data-theme="dark"] .hline{ background:#94a3b8; }
+body[data-theme="dark"] .divisor-box,
+body[data-theme="dark"] .cell-dividend{ color:#f8fafc !important; }
+body[data-theme="dark"] .quotient span{ color:#a5b4fc; }
+body[data-theme="dark"] .cell.active{ background:#422006; box-shadow:inset 0 0 0 2px #f59e0b; color:#fef3c7 !important; }
+body[data-theme="dark"] #bubbleText .num{ background:#312e81; color:#e0e7ff; }
+body[data-theme="dark"] .bigans{ color:#451a03; }
+body[data-theme="dark"] .bubble-read-aloud{ background:#1e293b; border-color:#6366f1; color:#c7d2fe; }
+body[data-theme="dark"] .hakim-voice-guide,
+body[data-theme="dark"] .attempt-report{ background:#1b2a4a; border-color:#475569; color:#e2e8f0; }
+body[data-theme="dark"] .help-card .tip{ background:#2d2310; border-color:#b45309; color:#fde68a; }
+body[data-theme="dark"] .opt{ background:#1e2d52; border-color:#4f46e5; color:#e0e7ff; box-shadow:0 5px 0 #0f172a; }
+body[data-theme="dark"] .opt.correct{ background:#064e3b; border-color:#10b981; color:#d1fae5; }
+body[data-theme="dark"] .opt.wrong{ background:#4c0519; border-color:#fb7185; color:#ffe4e6; }
+body[data-theme="dark"] .diag-box{ background:#4c0519; border-color:#fb7185; color:#ffe4e6; }
+
+/* ---------- ریسپانسیو دقیق ۳۲۰px و ۳۹۰px بدون سرریز افقی ---------- */
+@media (max-width:420px){
+  .app{ padding:10px 8px 36px; }
+  .menu-card{ padding:18px 12px; border-radius:22px; }
+  .level-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .menu-foot{ gap:6px; }
+  .menu-foot .btn{ padding:9px 11px; font-size:.86rem; }
+  .hud{ gap:4px; padding:6px 7px; flex-wrap:nowrap; }
+  .hud-title{ font-size:.88rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hud-stars{ font-size:.8rem; padding:3px 6px; }
+  .hud .btn.icon{ padding:5px 7px; font-size:1rem; min-height:38px; }
+  .bubble-card{ flex-direction:column; align-items:center; padding:11px 10px; gap:8px; }
+  .mascot{ width:64px; height:64px; min-width:64px; }
+  #bubbleText{ font-size:.96rem; line-height:1.9; min-height:58px; }
+  .opts{ gap:8px; }
+  .opt{ min-width:58px; min-height:58px; font-size:1.35rem; border-radius:16px; }
+  .ov-card{ padding:18px 12px; border-radius:22px; }
+}
 
 /* ---------- confetti ---------- */
 .confetti{ position:fixed; top:-24px; z-index:99; pointer-events:none; animation:fall linear forwards; }
@@ -261,27 +355,28 @@ a.btn{ display:inline-flex; align-items:center; justify-content:center; text-dec
     <div class="menu-card">
       <div class="mascot-big" id="mascotBig"></div>
       <h1>بازی تقسیم چکشی</h1>
-      <p class="sub">مرحله به مرحله، قدم‌به‌قدم یاد بگیر<br>و قهرمانِ تقسیم شو! 🏆</p>
+      <p class="sub">مرحله‌به‌مرحله و قدم‌به‌قدم یاد بگیر<br>و قهرمان تقسیم شو! 🏆</p>
       <div class="name-row" id="nameRow">
         <span class="name-ic">✏️</span>
-        <input id="nameInput" type="text" maxlength="20" placeholder="اسمت را بنویس تا روی گواهی بیاید!" aria-label="نام دانش‌آموز برای گواهی" autocomplete="off">
+        <input id="nameInput" type="text" maxlength="20" placeholder="اسمت را بنویس تا روی گواهی‌نامه بیاید!" aria-label="نام دانش‌آموز برای گواهی‌نامه" autocomplete="off">
       </div>
-      <div class="name-err" id="nameErr">اول اسمت را بنویس تا گواهی‌ات کامل باشد! 😊</div>
+      <div class="name-err" id="nameErr">اول اسمت را بنویس تا گواهی‌نامه‌ات به نام خودت صادر شود! 😊</div>
       <button id="btnPlay" class="btn primary big">🎮 شروع بازی</button>
       <button id="btnLearn" class="btn secondary big">📖 آموزش: یک مثال کامل</button>
-      <button id="btnCert" class="btn ghost big">🔒 گواهی من</button>
+      <button id="btnCert" class="btn ghost big">🔒 گواهی‌نامهٔ من</button>
       <div class="lv-title">مرحله‌ها:</div>
       <div id="levelGrid" class="level-grid"></div>
       <div class="menu-foot">
         <button id="btnHelp" class="btn ghost">❓ راهنما</button>
         <button id="btnSound" class="btn ghost">🔊 صدا</button>
+        <button id="btnTheme" class="btn ghost" type="button" aria-label="تغییر حالت روز و شب">🌙 حالت شب</button>
         <button id="btnStepMenu" class="btn ghost">⚡ نمایش خودکار</button>
         <button id="btnReset" class="btn ghost">↻ شروع مجدد</button>
-        <a href="../math-learning.html" class="btn ghost school-link">🏫 مدرسه ریاضی</a>
+        <a href="../math-learning.html" class="btn ghost school-link">🏫 مدرسهٔ ریاضی</a>
       </div>
       <div class="credit">
         <div>طراح و توسعه‌دهنده: <b>مهدی شریفیان</b></div>
-        <div>آموزگار پایه‌ی پنجم</div>
+        <div>آموزگار پایهٔ پنجم</div>
       </div>
     </div>
   </section>
@@ -293,7 +388,8 @@ a.btn{ display:inline-flex; align-items:center; justify-content:center; text-dec
       <a href="../math-learning.html" class="btn icon school-link" title="بازگشت به مدرسهٔ ریاضی" aria-label="بازگشت به مدرسهٔ ریاضی">🏫</a>
       <div class="hud-title"><span id="lvName"></span><small id="lvSub"></small></div>
       <div class="hud-stars">⭐ <span id="starCount">۰</span>/۱۵</div>
-      <button id="btnStep" class="btn icon" title="نحوه‌ی نمایش مراحل">⚡</button>
+      <button id="btnStep" class="btn icon" title="نحوهٔ نمایش مراحل" aria-label="تغییر نحوهٔ نمایش مراحل">⚡</button>
+      <button id="btnTheme2" class="btn icon" type="button" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب">🌙</button>
       <button id="btnSound2" class="btn icon">🔊</button>
     </header>
     <div id="dots" class="dots"></div>
@@ -333,13 +429,13 @@ a.btn{ display:inline-flex; align-items:center; justify-content:center; text-dec
       <h2>چطور بازی کنیم؟ 🤓</h2>
       <div class="hakim-voice-guide" lang="fa-IR"><p>🔊 راهنمای صوتی حکیم با گویندهٔ مرد؛ برای شنیدن، پخش را بزن.</p><audio id="hakimGuideAudio" controls preload="none" aria-label="راهنمای صوتی تقسیم چکشی با صدای مرد"></audio><details><summary>خواندن متن راهنمای صوتی</summary><p lang="fa-IR">سلام، من حکیمم و در بازی تقسیم چکشی همراهت هستم. اول عدد بزرگ‌تر را، یعنی مقسوم، زیر خط می‌نویسیم و عددی را که بر آن تقسیم می‌کنیم، یعنی مقسوم‌علیه، کنار آن می‌گذاریم. از سمت چپ شروع کن و بپرس: مقسوم‌علیه چند بار در این بخش از عدد جا می‌شود؟ رقم جواب را بالای خط بنویس. بعد ضرب کن، حاصل را زیر عدد بنویس و کم کن. اگر رقمی باقی مانده، رقم بعدی را پایین بیاور و همین گام‌ها را تکرار کن. باقی‌مانده باید از مقسوم‌علیه کوچک‌تر باشد. اگر پاسخ اشتباه شد، نگران نباش؛ دوباره امتحان کن و از راهنمایی خودکار کمک بگیر. در پایان، جواب را با این رابطه وارسی کن: خارج‌قسمت ضرب‌در مقسوم‌علیه، به‌علاوهٔ باقی‌مانده، برابر مقسوم است. می‌توانی مسئله‌هایی را که سخت بودند دوباره مرور کنی؛ مرور، رکوردت را تغییر نمی‌دهد.</p></details></div>
       <ol>
-        <li>عدد بزرگ <b>(مقسوم)</b> زیر خط و عدد کوچیک <b>(مقسوم‌علیه)</b> کنارش نوشته شده. جواب <b>(پاسخ)</b> بالای خط می‌نویسیم.</li>
-        <li>از <b>سمت چپ</b> شروع می‌کنیم: کوچک‌ترین تیکه‌ای که مقسوم‌علیه توش جا می‌شود را می‌خوانیم.</li>
-        <li>می‌فهمیم مقسوم‌علیه <b>چند بار</b> توش جا می‌شود و همان رقم را <b>بالای خط</b> می‌نویسیم ✍️</li>
-        <li>ضربِ آن رقم در مقسوم‌علیه را <b>زیرش</b> می‌نویسیم و <b>تفریق</b> می‌کنیم ➖</li>
-        <li><b>رقم بعدی</b> را از مقسوم پایین می‌آوریم ⬇️ و دوباره تکرار می‌کنیم تا به آخر برسیم.</li>
+        <li>عدد بزرگ <b>(مقسوم)</b> زیر خط و عدد کوچک‌تر <b>(مقسوم‌علیه)</b> کنار آن نوشته شده است. رقم‌های <b>خارج‌قسمت</b> را بالای خط می‌نویسیم.</li>
+        <li>از <b>سمت چپ</b> شروع می‌کنیم و کوچک‌ترین بخشی را که مقسوم‌علیه در آن جا می‌شود می‌خوانیم.</li>
+        <li>پیدا می‌کنیم مقسوم‌علیه <b>چند بار</b> در آن بخش جا می‌شود و همان رقم را <b>بالای خط</b> می‌نویسیم ✍️</li>
+        <li>حاصل ضربِ آن رقم در مقسوم‌علیه را <b>زیر عدد جاری</b> می‌نویسیم و <b>تفریق</b> می‌کنیم ➖</li>
+        <li><b>رقم بعدی</b> را از مقسوم پایین می‌آوریم ⬇️ و همین چرخه را تا آخرین رقم تکرار می‌کنیم.</li>
       </ol>
-      <div class="tip">💡 هرچه کمتر اشتباه کنی، <b>ستاره‌ی بیشتری</b> می‌گیری! ⭐ اگر عددی از مقسوم‌علیه کوچیک‌تر بود، حتی یک بار هم جا نمی‌شود — برایش <b>صفر</b> می‌نویسیم!</div>
+      <div class="tip">💡 هرچه کمتر اشتباه کنی، <b>ستارهٔ بیشتری</b> می‌گیری! ⭐ اگر عدد جاری پس از پایین‌آوردن رقم از مقسوم‌علیه کوچک‌تر بود، حتی یک بار هم جا نمی‌شود — پس در خارج‌قسمت <b>صفر</b> می‌گذاریم!</div>
       <div class="actions"><button id="btnHelpClose" class="btn primary">باشه، آماده‌ام! ✅</button></div>
     </div>
   </div>
@@ -397,10 +493,10 @@ function optionsFor(q){
 
 const LEVELS = [
   { name:'شروع ماجرا',    icon:'🌱', desc:'دورقمی بر یک‌رقمی، بدون باقی‌مانده' },
-  { name:'با باقی‌مانده',  icon:'🎯', desc:'یه باقی‌مانده هم باقی می‌مونه!' },
-  { name:'رمزِ صفر',       icon:'🌀', desc:'وقتی صفر وسط جواب می‌آید' },
-  { name:'مقسوم‌علیه بزرگ',icon:'🚀', desc:'تقسیم بر عدد دورقمی' },
-  { name:'استاد تقسیم',   icon:'🏆', desc:'چند رقمی بر چند رقمی؛ ویژه‌ی قهرمان‌ها!' },
+  { name:'با باقی‌مانده',  icon:'🎯', desc:'تقسیم با باقی‌ماندهٔ غیرصفر' },
+  { name:'رمزِ صفر',       icon:'🌀', desc:'وقتی صفر وسط خارج‌قسمت می‌آید' },
+  { name:'مقسوم‌علیه بزرگ',icon:'🚀', desc:'تقسیم چهاررقمی بر عدد دورقمی' },
+  { name:'استاد تقسیم',   icon:'🏆', desc:'چندرقمی بر چندرقمی؛ ویژهٔ قهرمان‌ها!' },
 ];
 
 function genLevelProblems(lv){
@@ -462,15 +558,14 @@ const $ = s => document.querySelector(s);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const N = x => `<b class="num">${toFa(x)}</b>`;
 
-const PRAISE = ['آفرین! 👏','درسته! 🌟','عالی بود! 🎯','دمت گرم! 🧡','ایول! 🎉','به‌به! 😍'];
-const WRONGS = ['نه‌خیر! دوباره فکر کن 🤔','اشکال نداره، دوباره! 💪','یه کم بیشتر فکر کن… 🧐','تو می‌تونی، دوباره! 🌈'];
+const PRAISE = ['آفرین! 👏','درست گفتی! 🌟','عالی بود! 🎯','دقیق حساب کردی! 🧡','بارک‌الله! 🎉','به‌به! 😍'];
 
 const G = {
   sound: true, mode: 'game', stepMode: 'auto', levelIdx: 0, probs: [], pi: 0,
   S: null, mistakes: 0, levelMistakes: 0, levelStarsEarned: 0, levelHints: 0, problemStats: [],
   token: 0, lastText: '',
 };
-let saved = { next: 1, stars: [0,0,0,0,0], sound: true, name: '', perfect: [false,false,false,false,false], stepMode: 'auto' };
+let saved = { next: 1, stars: [0,0,0,0,0], sound: true, darkMode: false, name: '', perfect: [false,false,false,false,false], stepMode: 'auto' };
 try{
   const raw = localStorage.getItem('tagsim-game-v1');
   if(raw) saved = Object.assign(saved, JSON.parse(raw));
@@ -479,6 +574,19 @@ if(!Array.isArray(saved.stars) || saved.stars.length !== 5) saved.stars = [0,0,0
 if(!Array.isArray(saved.perfect) || saved.perfect.length !== 5) saved.perfect = [false,false,false,false,false];
 if(typeof saved.name !== 'string') saved.name = '';
 function persist(){ try{ localStorage.setItem('tagsim-game-v1', JSON.stringify(saved)); }catch(e){} }
+function applyTheme(){
+  const dark = !!saved.darkMode;
+  document.body.dataset.theme = dark ? 'dark' : 'light';
+  const b1 = $('#btnTheme'), b2 = $('#btnTheme2');
+  if(b1){
+    b1.textContent = dark ? '☀️ حالت روز' : '🌙 حالت شب';
+    b1.setAttribute('aria-label', dark ? 'فعال کردن حالت روز' : 'فعال کردن حالت شب');
+  }
+  if(b2){
+    b2.textContent = dark ? '☀️' : '🌙';
+    b2.setAttribute('aria-label', dark ? 'فعال کردن حالت روز' : 'فعال کردن حالت شب');
+  }
+}
 function playerName(){
   const n = (saved.name || '').trim();
   return n.replace(/</g, '&lt;').replace(/>/g, '&gt;') || 'دانش‌آموزِ گرامی';
@@ -551,7 +659,7 @@ function showScreen(name){
 /* ---------- HUD ---------- */
 function updateHud(){
   const L = LEVELS[G.levelIdx];
-  $('#lvName').textContent = `${L.icon} مرحله‌ی ${toFa(G.levelIdx+1)}: ${L.name}`;
+  $('#lvName').textContent = `${L.icon} مرحلهٔ ${toFa(G.levelIdx+1)}: ${L.name}`;
   $('#lvSub').textContent = L.desc;
   $('#starCount').textContent = toFa(G.levelStarsEarned);
 }
@@ -563,7 +671,7 @@ function updateDots(){
     d.appendChild(s);
   }
   const pc = $('#probCount');
-  if(pc) pc.textContent = G.pi < G.probs.length ? `مسئله‌ی ${toFa(G.pi + 1)} از ${toFa(G.probs.length)}${G.mode==='review'?' · مرور':''}` : 'همه‌ی مسائل تمام شد! 🎉';
+  if(pc) pc.textContent = G.pi < G.probs.length ? `مسئلهٔ ${toFa(G.pi + 1)} از ${toFa(G.probs.length)}${G.mode==='review'?' · مرور':''}` : 'همهٔ مسئله‌ها تمام شد! 🎉';
 }
 /* چهرهٔ حکیم — از hakim-core.js فراخوانی می‌شود؛ اگر نبود، ایموجی */
 const HAKIM_MOOD = { '👨‍🏫':'normal', '🤩':'happy', '🥺':'sad', '🥳':'excited', '🤔':'thinking' };
@@ -597,11 +705,16 @@ function popStars(){
   const hs = $('.hud-stars');
   hs.classList.remove('pop'); void hs.offsetWidth; hs.classList.add('pop');
 }
-function setBubbleText(t){ G.lastText = t; $('#bubbleText').innerHTML = t; }
+function setBubbleText(t){
+  G.lastText = t;
+  $('#bubbleText').innerHTML = t;
+  if(window.HakimReadAloud) window.HakimReadAloud.refresh();
+}
 
 function showBubble(html, spec = []){
   G.lastText = html;
   $('#bubbleText').innerHTML = html;
+  if(window.HakimReadAloud) window.HakimReadAloud.refresh();
   const opts = $('#opts'), acts = $('#actions');
   opts.innerHTML = ''; acts.innerHTML = '';
   spec.forEach(s => {
@@ -699,10 +812,10 @@ function renderLadder(){
     } else {
       row.cells.forEach(c => {
         const el = document.createElement('div');
-        el.className = 'cell';
+        el.className = 'cell' + (row.type === 'dividend' ? ' cell-dividend' : '');
         el.style.gridRow = r + 1;
         el.style.gridColumn = c.col + 1;
-        el.style.color = row.color;
+        if(row.type !== 'dividend') el.style.color = row.color;
         if(c.arr){ el.innerHTML = `<span class="arr">↓</span><span>${c.text}</span>`; }
         else { el.textContent = c.text; }
         ladder.appendChild(el);
@@ -760,10 +873,10 @@ function doRem(st){ revealRow(st._rows.rem); }
 function askText(st){
   const S = G.S, D = S.divi;
   if(st.m0 > 1){
-    return `شروع از سمت چپ! 👈 ${N(S.divStr[0])} از ${N(D)} کوچیک‌تره؛ حتی یک بار هم توش جا نمی‌شه 😅<br>پس با رقم بعدی می‌خونیم: <b>${N(st.working)}</b>!<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
+    return `شروع از سمت چپ! 👈 ${N(S.divStr[0])} از ${N(D)} کوچک‌تر است و حتی یک بار هم در آن جا نمی‌شود؛<br>پس با رقم بعدی یک‌جا می‌خوانیم: <b>${N(st.working)}</b>!<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
   }
   if(st.working < D){
-    return `اوپس! ${N(st.working)} از ${N(D)} کوچیک‌تره! 🙈<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
+    return `دقت کن! عدد جاری (${N(st.working)}) از مقسوم‌علیه (${N(D)}) کوچک‌تر است!<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
   }
   if(st.m0 === 1 && S.steps.indexOf(st) === 0){
     return `شروع از سمت چپ! 👈<br>🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
@@ -771,55 +884,107 @@ function askText(st){
   return `🤔 ${N(D)} چند بار در ${N(st.working)} جا می‌شود؟`;
 }
 function writeQMsg(st){
-  return `چون <span class="m">${N(G.S.divi)} × ${N(st.q)} = ${N(st.prod)}</span> → پس <b>${N(st.q)}</b> تا جا می‌شود!<br>✍️ ${N(st.q)} را بالای خط می‌نویسیم.`;
+  return `چون <span class="m" dir="ltr">${N(G.S.divi)} × ${N(st.q)} = ${N(st.prod)}</span> → پس <b>${N(st.q)}</b> بار جا می‌شود!<br>✍️ ${N(st.q)} را بالای خط در خارج‌قسمت می‌نویسیم.`;
 }
-function prodMsg(st){ return `✏️ <span class="m">${N(st.q)} × ${N(G.S.divi)} = ${N(st.prod)}</span> را زیرش می‌نویسیم.`; }
-function resMsg(st){ return `➖ تفریق: <span class="m">${N(st.working)} − ${N(st.prod)} = ${N(st.rem)}</span>`; }
+function prodMsg(st){ return `✏️ <span class="m" dir="ltr">${N(st.q)} × ${N(G.S.divi)} = ${N(st.prod)}</span> را زیر آن می‌نویسیم.`; }
+function resMsg(st){ return `➖ تفریق: <span class="m" dir="ltr">${N(st.working)} − ${N(st.prod)} = ${N(st.rem)}</span>`; }
 function bringMsg(st){
   const S = G.S;
   const ni = S.steps.indexOf(st) + 1;
   const nd = S.steps[ni] ? S.steps[ni].brought : st.brought;
-  return `⬇️ رقم بعدی (${N(nd)}) را از مقسوم پایین می‌آوریم و کنارش می‌نویسیم: <b>${toFa(String(st.rem) + String(nd))}</b>`;
+  return `⬇️ رقم بعدی (${N(nd)}) را از مقسوم پایین می‌آوریم و کنار باقی‌مانده می‌نویسیم: <b class="m" dir="ltr">${toFa(String(st.rem) + String(nd))}</b>`;
 }
 function finalMsg(S, stars){
   let t;
   if(S.remainder === 0){
-    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span><br>باقی‌مانده ${N(0)} — تقسیم «بر جا» شد! ⭐`;
+    t = `🎉 تمام شد! <span class="bigans" dir="ltr">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span><br>باقی‌مانده ${N(0)} — تقسیم بخش‌پذیر بود! ⭐`;
   } else {
-    t = `🎉 تموم شد! <span class="bigans">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span> و باقی‌مانده ${N(S.remainder)} 🌟`;
+    t = `🎉 تمام شد! <span class="bigans" dir="ltr">${N(S.divStr)} ÷ ${N(S.divi)} = ${N(S.quotient)}</span> و باقی‌مانده ${N(S.remainder)} 🌟`;
   }
   if(G.mode === 'game'){
-    t += `<br><span class="check">✅ بررسی: <span class="m">${N(S.quotient)} × ${N(S.divi)} + ${N(S.remainder)} = ${N(S.divStr)}</span></span>`;
+    t += `<br><span class="check">✅ وارسی تقسیم: <span class="m" dir="ltr">${N(S.quotient)} × ${N(S.divi)} + ${N(S.remainder)} = ${N(S.divStr)}</span></span>`;
     t += `<br>⭐ ستاره‌های این مسئله: ${'⭐'.repeat(stars)}${'☆'.repeat(3 - stars)}`;
   }
   return t;
 }
 
+function diagnoseDivisionStep(st, divisor, chosen){
+  const w = st.working, D = divisor, v = Number(chosen);
+  if(w < D && v > 0){
+    return `عدد جاری (${N(w)}) از مقسوم‌علیه (${N(D)}) کوچک‌تر است و حتی ۱ بار هم در آن جا نمی‌شود! وقتی مقسوم‌علیه پس از پایین‌آوردن رقم جا نشود، کدام رقم را در خارج‌قسمت می‌گذاریم؟`;
+  }
+  if(v === 0 && w >= D){
+    return `صفر را انتخاب کردی، اما ${N(w)} بزرگ‌تر یا مساوی ${N(D)} است؛ یعنی مقسوم‌علیه دست‌کم ۱ بار در آن جا می‌شود!`;
+  }
+  const prod = v * D;
+  if(prod > w){
+    return `اگر ${N(v)} بنویسیم، حاصل ضرب <span class="m" dir="ltr">${N(v)} × ${N(D)} = ${N(prod)}</span> از ${N(w)} بزرگ‌تر می‌شود و نمی‌توانیم از ${N(w)} کم کنیم! رقم کوچک‌تری انتخاب کن.`;
+  }
+  const rem = w - prod;
+  if(rem >= D){
+    return `اگر ${N(v)} بنویسیم، حاصل ضرب <span class="m" dir="ltr">${N(v)} × ${N(D)} = ${N(prod)}</span> می‌شود و باقی‌مانده (<span class="m" dir="ltr">${N(rem)}</span>) از مقسوم‌علیه (${N(D)}) بزرگ‌تر یا مساوی می‌ماند! یعنی باز هم جا می‌شود؛ رقم بزرگ‌تری انتخاب کن.`;
+  }
+  return `حاصل ضرب رقم انتخابی در ${N(D)} را با ${N(w)} مقایسه کن؛ باقی‌مانده باید کوچک‌تر از ${N(D)} باشد.`;
+}
+window.diagnoseDivisionStep = diagnoseDivisionStep;
+
+function sendAnswerToPanel(st, chosen, ok, attemptNo, hintUsed, diagHtml){
+  try{
+    if(!(window.Hakim && typeof Hakim.saveAnswer === 'function') || G.mode === 'tutorial') return;
+    const S = G.S, stepIdx = S.steps.indexOf(st) + 1;
+    Hakim.saveAnswer({
+      student_name: playerName(),
+      game_id: 'math-learning-1',
+      stage: LEVELS[G.levelIdx] ? LEVELS[G.levelIdx].name : ('مرحلهٔ ' + (G.levelIdx + 1)),
+      question_num: G.pi * 10 + stepIdx,
+      question_text: `${S.divStr} ÷ ${S.divi} (گام ${stepIdx}: ${S.divi} در ${st.working})`,
+      correct_answer: String(st.q),
+      student_answer: String(chosen),
+      is_correct: !!ok,
+      attempts: attemptNo,
+      hint_used: !!hintUsed,
+      diagnostic: ok ? '' : String(diagHtml || '').replace(/<[^>]+>/g, '')
+    });
+  }catch(e){}
+}
+
 /* ---------- asking ---------- */
 function askQuestion(st){
   return new Promise(resolve => {
-    let wrongs = 0, done = false;
+    let wrongs = 0, done = false, lastWrong = null;
+    const wrongSet = new Set();
+    const optsList = optionsFor(st.q);
     const draw = () => {
       let extra = '';
-      if(wrongs === 1) extra = `<div class="warn">${pick(WRONGS)}</div>`;
-      if(wrongs >= 2) extra = `<div class="warn">💡 راهنمایی: <span class="m">${N(G.S.divi)} × ${N(st.q)} = ${N(st.prod)}</span> → پس جواب ${N(st.q)} است!</div>`;
-      showBubble(askText(st) + extra, optionsFor(st.q).map(v => ({
-        label: toFa(v), cls: 'opt', zone: 'opt',
+      if(wrongs === 1 && lastWrong !== null){
+        const diag = diagnoseDivisionStep(st, G.S.divi, lastWrong);
+        extra = `<div class="diag-box"><span class="diag-badge">تشخیص خطا</span>${diag}</div>`;
+      } else if(wrongs >= 2){
+        extra = `<div class="diag-box"><span class="diag-badge">راهنمای گام‌به‌گام</span>💡 چون <span class="m" dir="ltr">${N(G.S.divi)} × ${N(st.q)} = ${N(st.prod)}</span> و باقی‌مانده کوچک‌تر از ${N(G.S.divi)} می‌ماند، رقم درست ${N(st.q)} است!</div>`;
+      }
+      showBubble(askText(st) + extra, optsList.map(v => ({
+        label: toFa(v), cls: 'opt' + (wrongSet.has(v) ? ' wrong' : ''), zone: 'opt',
         on: b => {
-          if(done) return;
+          if(done || wrongSet.has(v)) return;
+          const attemptNo = wrongs + 1;
           if(v === st.q){
             done = true;
+            sendAnswerToPanel(st, v, true, attemptNo, wrongs >= 2, '');
             b.classList.add('correct');
             SFX.correct(); setMascot('🤩');
             setTimeout(() => { $('#opts').innerHTML = ''; resolve(); }, 380);
           } else {
-            wrongs++; G.mistakes++; G.levelMistakes++; if(wrongs===2) G.levelHints++;
+            wrongs++; lastWrong = v; wrongSet.add(v);
+            G.mistakes++; G.levelMistakes++; if(wrongs === 2) G.levelHints++;
+            const diag = diagnoseDivisionStep(st, G.S.divi, v);
+            sendAnswerToPanel(st, v, false, attemptNo, wrongs >= 2, diag);
             SFX.wrong(); setMascot('🥺');
             b.classList.add('wrong');
             setTimeout(() => { if(!done) draw(); }, 380);
           }
         }
       })));
+      document.querySelectorAll('#opts .opt.wrong').forEach(btn => { btn.disabled = true; });
     };
     draw();
   });
@@ -868,7 +1033,7 @@ async function tutStep(st, tok){
 /* حالت دستی: دانش‌آموز خودش با دکمه هر مرحله را پیش می‌برد */
 async function manualStep(st, tok){
   const S = G.S, k = S.steps.indexOf(st);
-  setBubbleText('حالا با هم می‌نویسیم! روی هر دکمه بزن تا مرحله‌ی بعدی نوشته شود ✋');
+  setBubbleText('حالا با هم می‌نویسیم! روی هر دکمه بزن تا مرحلهٔ بعدی نوشته شود ✋');
   await waitAction('✍️ نوشتنِ رقمِ جواب', null, 'secondary'); if(tok !== G.token) return;
   setBubbleText(writeQMsg(st)); doWriteQ(st); SFX.write();
   await waitAction('✏️ نوشتنِ ضرب', null, 'secondary'); if(tok !== G.token) return;
@@ -928,7 +1093,7 @@ async function finishProblem(){
   }
   G.pi++;
   const last = G.pi >= G.probs.length;
-  await waitAction(last ? 'تقدیر! 🏆' : 'مسئله‌ی بعدی ➜', () => {
+  await waitAction(last ? 'تقدیر! 🏆' : 'مسئلهٔ بعدی ➜', () => {
     setMascot('👨‍🏫');
     if(G.pi >= G.probs.length){if(G.mode==='review')reviewComplete();else levelComplete();}
     else playProblem();
@@ -946,8 +1111,8 @@ function startGame(li, mode = 'game'){
   const tok = ++G.token;
   setMascot('👨‍🏫');
   const intro = mode === 'tutorial'
-    ? `سلام! من حکیم هستم! امروز با هم تقسیم چکشی یاد می‌گیریم!<br>عدد بزرگ (مقسوم) زیر خط، عدد کوچیک (مقسوم‌علیه) کنارش، و جواب بالای خط می‌نویسیم.<br>حالا مرحله به مرحله <span class="m">${N(204)} ÷ ${N(4)}</span> را انجام می‌دیم. آماده‌ای؟`
-    : `سلام <b>${playerName()}</b>! ${LEVELS[li].icon} <b>مرحله‌ی ${toFa(li+1)}: ${LEVELS[li].name}</b><br>${LEVELS[li].desc}<br>۵ مسئله داریم. تو بگو مقسوم‌علیه چند بار جا می‌شود، ما با هم می‌نویسیمش! بزن بریم! 🚀`;
+    ? `سلام! من حکیم هستم! امروز با هم تقسیم چکشی یاد می‌گیریم!<br>عدد بزرگ (مقسوم) زیر خط، عدد کوچک‌تر (مقسوم‌علیه) کنار آن، و خارج‌قسمت را بالای خط می‌نویسیم.<br>حالا مرحله‌به‌مرحله <span class="m" dir="ltr">${N(204)} ÷ ${N(4)}</span> را انجام می‌دهیم. آماده‌ای؟`
+    : `سلام <b>${playerName()}</b>! ${LEVELS[li].icon} <b>مرحلهٔ ${toFa(li+1)}: ${LEVELS[li].name}</b><br>${LEVELS[li].desc}<br>۵ مسئله داریم. تو بگو مقسوم‌علیه چند بار جا می‌شود، ما با هم می‌نویسیمش! بزن بریم! 🚀`;
   setBubbleText(intro);
   waitAction(mode === 'tutorial' ? 'بزن بریم! 🚀' : 'شروع! 🚀', () => { if(tok === G.token) playProblem(); });
 }
@@ -971,24 +1136,24 @@ function buildCertHTML(){
       res = 'هنوز بازی نشده';
       li = `<li class="c-pending" style="--i:${i}">`;
     }
-    return `${li}<span class="c-ic">${L.icon}</span><span class="c-nm">مرحله‌ی ${toFa(i+1)}: ${L.name}</span>${mark}<span class="c-res">${res}</span></li>`;
+    return `${li}<span class="c-ic">${L.icon}</span><span class="c-nm">مرحلهٔ ${toFa(i+1)}: ${L.name}</span>${mark}<span class="c-res">${res}</span></li>`;
   }).join('');
   return `
     <div class="cert" id="certCard">
       <div class="cert-orn">✦ ✦ ✦</div>
       <div class="ov-emoji">${champion ? '🏆' : '🎖️'}</div>
-      <h2 class="cert-title">${champion ? 'گواهیِ قهرمانی' : 'گواهیِ تلاش'}</h2>
-      <div class="cert-sub">بازیِ تقسیم چکشی • پایه‌ی پنجم</div>
-      <p class="cert-to">${champion ? 'تو استادِ تقسیم شدی!' : 'تلاشِ قشنگت را ستایش می‌کنیم!'}<br>این گواهی با افتخار اهدا می‌شود به:</p>
+      <h2 class="cert-title">${champion ? 'گواهی‌نامهٔ قهرمانی' : 'گواهی‌نامهٔ تلاش'}</h2>
+      <div class="cert-sub">بازی تقسیم چکشی • پایهٔ پنجم</div>
+      <p class="cert-to">${champion ? 'تو استاد تقسیم چکشی شدی!' : 'پشتکار ارزشمندت را تحسین می‌کنیم!'}<br>این گواهی‌نامه با افتخار تقدیم می‌شود به:</p>
       <span class="cert-name">${playerName()}</span>
-      <p class="cert-note">به پاسِ پشت‌کار و دقتِ او در آموختنِ «تقسیم چکشی»،<br>مرحله به مرحله 💚</p>
+      <p class="cert-note">به پاس پشتکار و دقت او در آموختن گام‌به‌گام «تقسیم چکشی» 💚</p>
       <ul class="cert-list">${rows}</ul>
-      <div class="cert-legend">✅ = بدونِ هیچ اشتباهی • ✏️ = با کمی تلاش و تمرین • 🔒 = هنوز بازی نشده</div>
-      <div class="cert-total">مجموع امتیاز‌ها: <b>${toFa(total)} از ۷۵</b> ⭐${champion ? '' : ' — ادامه بده تا قهرمان شوی! 🚀'}</div>
-      <div class="cert-seal"><span class="seal-ic" data-hakim-seal></span><span class="seal-tx">گواهیِ رسمی<br>تقسیم چکشی</span></div>
+      <div class="cert-legend">✅ = بدون هیچ اشتباهی • ✏️ = با تلاش و تمرین • 🔒 = هنوز بازی نشده</div>
+      <div class="cert-total">مجموع امتیازها: <b>${toFa(total)} از ۷۵</b> ⭐${champion ? '' : ' — ادامه بده تا قهرمان شوی! 🚀'}</div>
+      <div class="cert-seal"><span class="seal-ic" data-hakim-seal></span><span class="seal-tx">گواهی‌نامهٔ رسمی<br>تقسیم چکشی</span></div>
       <div class="cert-foot">
         ${certDate ? `<div class="cert-date">📅 ${certDate}</div>` : ''}
-        <div>طراحی و توسعه: <b>مهدی شریفیان</b><br>آموزگار پایه‌ی پنجم</div>
+        <div>طراحی و توسعه: <b>مهدی شریفیان</b><br>آموزگار پایهٔ پنجم</div>
       </div>
     </div>`;
 }
@@ -996,7 +1161,7 @@ function showCertificate(){
   const ov = $('#ovCard');
   ov.innerHTML = buildCertHTML() + `
     <div class="actions">
-      <button class="btn primary" id="ovPrint">🖨️ چاپِ گواهی</button>
+      <button class="btn primary" id="ovPrint">🖨️ چاپ گواهی‌نامه</button>
       <button class="btn ghost" id="ovCloseCert">بستن ✖️</button>
     </div>`;
   hakimPaint(ov);
@@ -1005,20 +1170,17 @@ function showCertificate(){
   $('#overlay').classList.remove('hidden');
 }
 
-// ارسال نتایج به پنل معلم — همان قالب استاندارد «session» که بقیهٔ بازی‌ها
-// می‌فرستند (action + فیلد‌های Sessions) تا بدون تغییر در Apps Script ثبت شود.
+// ارسال نتایج به پنل معلم — با پشتیبانی آفلاین از Hakim.saveSession
 function sendResultsToPanel(gameId, score, stars, level, duration, details = {}) {
   try {
     const ua = navigator.userAgent;
     const payload = {
-      action: 'session',
       student_name: playerName(),
       student_class: '',
       student_school: '',
       game_id: gameId,
       experiment_id: '',
       duration: Math.round(duration || 0),
-      device: /mobile|android|iphone/i.test(ua) ? 'موبایل' : (/ipad|tablet/i.test(ua) ? 'تبلت' : 'دسکتاپ'),
       score: Math.round(score || 0),
       stars: Math.round(stars || 0),
       completed: true,
@@ -1027,6 +1189,12 @@ function sendResultsToPanel(gameId, score, stars, level, duration, details = {})
       finished_at: new Date().toISOString(),
       details: JSON.stringify(Object.assign({ level: level }, details))
     };
+    if (window.Hakim && typeof Hakim.saveSession === 'function') {
+      Hakim.saveSession(payload);
+      return;
+    }
+    payload.action = 'session';
+    payload.device = /mobile|android|iphone/i.test(ua) ? 'موبایل' : (/ipad|tablet/i.test(ua) ? 'تبلت' : 'دسکتاپ');
     fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
       method: 'POST',
       body: JSON.stringify(payload),
@@ -1046,13 +1214,29 @@ function levelComplete(){
   // ارسال نتایج به پنل معلم
   const endTime = Date.now();
   const levelDuration = (endTime - (G.levelStartTime || endTime)) / 1000;
+  const firstTryCount = G.problemStats.filter(p => p.mistakes === 0).length;
+  const acc = G.problemStats.length ? Math.round(100 * firstTryCount / G.problemStats.length) : 0;
   sendResultsToPanel(
     'math-learning-1',
     G.levelStarsEarned,
     G.levelStarsEarned,
     idx + 1,
     Math.round(levelDuration),
-    { levelName: LEVELS[idx].name, mistakes: G.levelMistakes, retries: G.levelMistakes, hintsUsed: G.levelHints, firstTryCorrect: G.problemStats.filter(p=>p.mistakes===0).length, perfect: G.levelMistakes === 0, totalQuestions: G.problemStats.length }
+    {
+      level: idx + 1,
+      stageName: LEVELS[idx].name,
+      levelName: LEVELS[idx].name,
+      correct: G.problemStats.length,
+      wrong: G.levelMistakes,
+      mistakes: G.levelMistakes,
+      retries: G.levelMistakes,
+      hintsUsed: G.levelHints,
+      firstTryCorrect: firstTryCount,
+      accuracy: acc,
+      firstTryAccuracy: acc,
+      perfect: G.levelMistakes === 0,
+      totalQuestions: G.problemStats.length
+    }
   );
   
   const total = saved.stars.reduce((a, b) => a + b, 0);
@@ -1060,12 +1244,12 @@ function levelComplete(){
   const justUnlocked = saved.stars.filter(s => s > 0).length === 1;
   const firstTryCorrect=G.problemStats.filter(p=>p.mistakes===0).length;
   const attemptSummary=`<section class="attempt-report" aria-labelledby="attemptReportTitle"><h3 id="attemptReportTitle">📊 گزارش این تلاش</h3><p><b>${toFa(firstTryCorrect)} از ${toFa(G.problemStats.length)}</b> مسئله بدون اشتباه در انتخاب‌های نخست حل شد؛ <b>${toFa(G.levelMistakes)}</b> پاسخ نادرست و <b>${toFa(G.levelHints)}</b> راهنمای خودکار استفاده شد.</p><p>${firstTryCorrect<=2?'پیشنهاد: مثال آموزشی و مرحله‌های حل را دوباره مرور کن؛ بعد مسئله‌های دشوار را از دکمهٔ مرور حل کن.':'اگر خواستی، مسئله‌هایی را که این بار اشتباه داشتی دوباره تمرین کن.'}</p></section>`;
-  const reviewButton=G.problemStats.some(p=>p.mistakes>0)?'<button class="btn purple" id="ovReviewMissed">🧠 مرور مسئله‌های نیازمند تمرین</button>':'';
+  const reviewButton=G.problemStats.some(p=>p.mistakes>0)?'<button class="btn secondary" id="ovReviewMissed">🧠 مرور مسئله‌های نیازمند تمرین</button>':'';
   const ov = $('#ovCard');
   if(idx === 4){
     ov.innerHTML = buildCertHTML() + attemptSummary + `
       <div class="actions">${reviewButton}
-        <button class="btn primary" id="ovPrint">🖨️ چاپِ گواهی</button>
+        <button class="btn primary" id="ovPrint">🖨️ چاپ گواهی‌نامه</button>
         <button class="btn ghost" id="ovNext">از اول دوباره 🔄</button>
         <button class="btn ghost" id="ovMenu">منو 🏠</button>
       </div>`;
@@ -1077,13 +1261,13 @@ function levelComplete(){
   } else {
     ov.innerHTML = `
       <div class="ov-emoji hakim-ov" data-hakim-ov></div>
-      <h2>آفرین! مرحله‌ی ${toFa(idx+1)} تموم شد!</h2>
+      <h2>آفرین! مرحلهٔ ${toFa(idx+1)} تمام شد!</h2>
       <div class="ov-stars">${'⭐'.repeat(k)}${'☆'.repeat(3-k)}</div>
       <p>ستاره‌های این مرحله: ${toFa(G.levelStarsEarned)} از ۱۵</p>
       <p>کل ستاره‌ها: ${toFa(total)} از ۷۵</p>${attemptSummary}
-      ${justUnlocked ? '<p class="unlock-hint">🏅 آفرین! با این برد، <b>گواهی‌ات</b> از منو باز شد 📜</p>' : ''}
+      ${justUnlocked ? '<p class="unlock-hint">🏅 آفرین! با این پیروزی، <b>گواهی‌نامه‌ات</b> در منو باز شد 📜</p>' : ''}
       <div class="actions">${reviewButton}
-        <button class="btn primary" id="ovNext">مرحله‌ی بعد ➜</button>
+        <button class="btn primary" id="ovNext">مرحلهٔ بعد ➜</button>
         <button class="btn ghost" id="ovRetry">دوباره 🔄</button>
         <button class="btn ghost" id="ovMenu">منو 🏠</button>
       </div>`;
@@ -1105,7 +1289,7 @@ function startMissedReview(){
 }
 function reviewComplete(){
   const correctFirst=G.problemStats.filter(item=>item.mistakes===0).length,end=Date.now(),duration=Math.round((end-(G.levelStartTime||end))/1000);
-  sendResultsToPanel('math-learning-1',G.levelStarsEarned,G.levelStarsEarned,'review',duration,{type:'review',levelName:LEVELS[G.levelIdx].name,totalQuestions:G.problemStats.length,firstTryCorrect:correctFirst,retries:G.levelMistakes,hintsUsed:G.levelHints,recordChanged:false});
+  sendResultsToPanel('math-learning-1',G.levelStarsEarned,G.levelStarsEarned,'review',duration,{type:'review',stageName:LEVELS[G.levelIdx].name,levelName:LEVELS[G.levelIdx].name,totalQuestions:G.problemStats.length,firstTryCorrect:correctFirst,retries:G.levelMistakes,hintsUsed:G.levelHints,recordChanged:false});
   $('#ovCard').innerHTML=`<div class="ov-emoji hakim-ov" data-hakim-ov></div><h2>مرور تمام شد 🧠</h2><p>${toFa(correctFirst)} از ${toFa(G.problemStats.length)} مسئلهٔ مرور را این بار بدون اشتباه در انتخاب‌های نخست حل کردی.</p><p>رکورد و ستاره‌های مرحله تغییر نکردند؛ می‌توانی به منو برگردی و هر وقت خواستی دوباره تمرین کنی.</p><div class="actions"><button class="btn primary" id="reviewMenu">بازگشت به منو 🏠</button></div>`;
   hakimPaint($('#ovCard'));$('#reviewMenu').onclick=()=>{hideOverlay();goMenu();};$('#overlay').classList.remove('hidden');
 }
@@ -1114,15 +1298,15 @@ function goMenu(){ G.token++; showScreen('menu'); renderMenu(); }
 
 /* ---------- menu ---------- */
 function renderMenu(){
-  $('#btnPlay').innerHTML = `🎮 شروع بازی${saved.next > 1 ? ' (مرحله‌ی ' + toFa(saved.next) + ')' : ''}`;
+  $('#btnPlay').innerHTML = `🎮 شروع بازی${saved.next > 1 ? ' (مرحلهٔ ' + toFa(saved.next) + ')' : ''}`;
   const doneCount = saved.stars.filter(s => s > 0).length;
   const bc = $('#btnCert');
   if(doneCount === 0){
-    bc.innerHTML = '🔒 گواهی من';
+    bc.innerHTML = '🔒 گواهی‌نامهٔ من';
     bc.disabled = true;
-    bc.title = 'با تکمیلِ موفقِ یک مرحله باز می‌شود';
+    bc.title = 'با تکمیل موفق یک مرحله باز می‌شود';
   } else {
-    bc.innerHTML = doneCount === 5 ? '🏆 گواهیِ قهرمانی' : '🏅 گواهی من';
+    bc.innerHTML = doneCount === 5 ? '🏆 گواهی‌نامهٔ قهرمانی' : '🏅 گواهی‌نامهٔ من';
     bc.disabled = false;
     bc.title = '';
   }
@@ -1133,7 +1317,7 @@ function renderMenu(){
     card.className = 'lv-card';
     card.innerHTML = `
       <div class="ic">${L.icon}</div>
-      <div class="nm">مرحله‌ی ${toFa(i+1)}</div>
+      <div class="nm">مرحلهٔ ${toFa(i+1)}</div>
       <div class="ds">${L.desc}</div>
       <div class="st">${st > 0 ? '⭐'.repeat(Math.max(1, Math.min(3, Math.round(st/5)))) + ' ' + toFa(st) + '/۱۵' : 'هنوز بازی نشده'}</div>`;
     card.onclick = () => { if(requireName()) startGame(i); };
@@ -1153,6 +1337,12 @@ function toggleSound(){
   G.sound = !G.sound; saved.sound = G.sound; persist();
   updateSoundBtns();
   if(G.sound) beep(660, .08);
+}
+function toggleTheme(){
+  saved.darkMode = !saved.darkMode;
+  applyTheme();
+  persist();
+  if(G.sound) beep(580, .07);
 }
 function updateStepBtn(){
   const auto = G.stepMode === 'auto';
@@ -1175,8 +1365,11 @@ function toggleStepMode(){
 function init(){
   G.sound = saved.sound !== false;
   G.stepMode = saved.stepMode === 'manual' ? 'manual' : 'auto';
+  applyTheme();
   $('#btnStep').onclick = toggleStepMode;
   $('#btnStepMenu').onclick = toggleStepMode;
+  if($('#btnTheme')) $('#btnTheme').onclick = toggleTheme;
+  if($('#btnTheme2')) $('#btnTheme2').onclick = toggleTheme;
   updateStepBtn();
   const ni = $('#nameInput');
   ni.value = saved.name;
@@ -1200,7 +1393,7 @@ function init(){
   $('#btnHelp').onclick = () => $('#help').classList.remove('hidden');
   $('#btnReset').onclick = () => {
     if(!window.confirm('همهٔ ستاره‌ها و پیشرفت این بازی پاک شود و از نو شروع کنی؟')) return;
-    saved = { next: 1, stars: [0,0,0,0,0], sound: saved.sound, name: saved.name,
+    saved = { next: 1, stars: [0,0,0,0,0], sound: saved.sound, darkMode: !!saved.darkMode, name: saved.name,
               perfect: [false,false,false,false,false], stepMode: saved.stepMode };
     persist();
     renderMenu();

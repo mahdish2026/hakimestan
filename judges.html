@@ -398,6 +398,14 @@ body[data-theme="kashi"] .ready-card{
 body[data-theme="kashi"] .ready-card .section-title{ color:#00706f; }
 body[data-theme="kashi"] .shot img{ border-color:rgba(0,128,128,.20); }
 body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
+
+@page{ size:A4 portrait; margin:14mm; }
+@media print{
+  html,body{ background:#fff!important; color:#111!important; }
+  .bg,.cursor-glow,.site-header,#themePanel,.story-index,.to-top,.btl-lobby-btn,.hk-a11y-fab,.hk-a11y-panel{ display:none!important; }
+  .hk-card,.story-cover,.tech-item,.ks-spotlight{ background:#fff!important; color:#111!important; border:1px solid #cbd5e1!important; box-shadow:none!important; break-inside:avoid; page-break-inside:avoid; }
+  .reveal{ opacity:1!important; transform:none!important; }
+}
 </style>
 <!-- hakim-meta:start -->
 <meta name="description" content="معرفی پروژهٔ حکیمستان برای داوران جشنواره — معماری، فناوری‌های به‌کاررفته، دسترس‌پذیری، امنیت و امکانات آفلاین.">
@@ -518,8 +526,8 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   <!-- ۲. این پروژه چیه؟ -->
   <section class="hk-card reveal">
     <h2 class="section-title">حکیمستان در یک نگاه</h2>
-    <p>«حکیمستان» یک سامانه‌ی آموزشی تعاملی بر پایه‌ی HTML است که شامل <strong>۱۷ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و درسگاه) و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۸۰ سؤال آماده</strong> و <strong>۱۶ فیلم منتشرشده</strong>.</p>
-    <p>این سامانه برای پایه پنجم ابتدایی طراحی شده و هدفش این است که مفاهیم درسی از طریق بازی، یادگیری فعال و بازخورد فوری به دانش‌آموز منتقل شود.</p>
+    <p>«حکیمستان» یک سامانهٔ آموزشی تعاملی بر پایهٔ HTML است که شامل <strong>۱۷ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و درسگاه) و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۳۰۰ سؤال و فعالیت تعاملی آماده</strong> و <strong>۱۶ فیلم منتشرشده</strong>.</p>
+    <p>این سامانه برای پایهٔ پنجم ابتدایی طراحی شده و هدفش این است که مفاهیم درسی از طریق بازی، یادگیری فعال و بازخورد فوری به دانش‌آموز منتقل شود.</p>
     <p>تمام محتوا با HTML، CSS و JavaScript خالص ساخته شده و به‌صورت PWA روی هر مرورگر و هر دستگاهی (موبایل، تبلت، رایانه) بدون نیاز به نصب اجرا می‌شود.</p>
     <p>همهٔ صفحه‌های اصلی — لابی، فیلم‌ها و همین صفحهٔ معرفی — روی یک <strong>هویت بصری واحد</strong> به نام «کاشی» (کرم روشن، فیروزه و طلا، با نقش اسلیمی) ساخته شده‌اند و تم انتخابی کاربر (<strong>کاشی، اقیانوس یا صبح فیروزه</strong>) به‌صورت مشترک در همهٔ صفحه‌ها باقی می‌ماند.</p>
 
@@ -533,8 +541,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
         <picture>
           <source srcset="screenshots/film-catalog.webp" type="image/webp">
           <img src="screenshots/film-catalog.jpg" alt="کارت‌های فیلم «فتح کهن دیار ایران»، «ماجرای حکیم» و «مار و پلهٔ دانش» با تصویر و دکمهٔ پخش"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+               width="1280" height="720" loading="lazy" decoding="async">
         </picture>
         <figcaption><a href="videos.html">خانهٔ فیلم ←</a> · ۹ معرفی بازی و ۷ معرفی ابزار</figcaption>
       </figure>
@@ -543,8 +550,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
         <picture>
           <source srcset="screenshots/mancheh.webp" type="image/webp">
           <img src="screenshots/mancheh.jpg" alt="نمای بازی منچِ دانش آنلاین روی صفحهٔ بازی"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+               width="1280" height="720" loading="lazy" decoding="async">
         </picture>
         <figcaption>منچِ دانش آنلاین</figcaption>
       </figure>
@@ -552,8 +558,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
         <picture>
           <source srcset="screenshots/lab.webp" type="image/webp">
           <img src="screenshots/lab.jpg" alt="نمای آزمایشگاه دو‌بعدی علوم با ابزارهای آزمایش"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+               width="1280" height="720" loading="lazy" decoding="async">
         </picture>
         <figcaption>آزمایشگاه ۲بعدی</figcaption>
       </figure>
@@ -561,8 +566,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
         <picture>
           <source srcset="screenshots/teacher-panel.webp" type="image/webp">
           <img src="screenshots/teacher-panel.jpg" alt="نمای پنل معلم با آمار کلاس و فهرست دانش‌آموزان"
-               width="1280" height="720" loading="lazy" decoding="async"
-               onerror="var f=this.closest('figure');if(f)f.classList.add('shot-empty');this.remove();">
+               width="1280" height="720" loading="lazy" decoding="async">
         </picture>
         <figcaption>پنل معلم</figcaption>
       </figure>
@@ -615,7 +619,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
             <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
           </tr>
           <tr>
-            <td>مار و پله‌ی دانش</td>
+            <td>مار و پلهٔ دانش</td>
             <td>علوم</td>
             <td>پنجم</td>
             <td><span class="tag tag-custom">قابل شخصی‌سازی</span></td>
@@ -640,7 +644,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
           </tr>
           <tr>
             <td>آزمایشگاه ۲بعدی</td>
-            <td>علوم (۹ آزمایش تعاملی)</td>
+            <td>علوم (۹ آزمایش + ۴ شبیه‌ساز تخصصی)</td>
             <td>پنجم</td>
             <td><span class="tag tag-fixed">محتوای ثابت</span></td>
           </tr>
@@ -686,7 +690,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
             <td>پنجم</td>
             <td><span class="tag tag-fixed">محتوای ثابت</span></td>
           </tr>
-          <tr><td>ممیزستان (مدرسه ریاضی)</td><td>ریاضی؛ عددهای اعشاری، ۱۰ ایستگاه و ۶۰ تمرین</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td></tr>
+          <tr><td>ممیزستان (مدرسه ریاضی)</td><td>ریاضی؛ عددهای اعشاری، ۱۱ ایستگاه و ۷۶ تمرین (+ سنجش تشخیصی)</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td></tr>
           <tr>
             <td>نقشستان (مدرسه ریاضی)</td><td>ریاضی (تقارن و چندضلعی‌ها، ۱۲ ایستگاه و ۴۸ تمرین)</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td>
           </tr><tr>
@@ -712,39 +716,39 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
         <tbody>
           <tr>
             <td>آزمون‌ساز</td>
-            <td>ساخت آزمون + تصحیح خودکار</td>
+            <td>ساخت آزمون چندبخشی، چاپ استاندارد A4 و ذخیرهٔ دوگانه (مرورگر + IndexedDB)</td>
             <td>همه</td>
           </tr>
           <tr>
             <td>دفتر معلم</td>
-            <td>حضور غیاب + نمرات</td>
+            <td>حضوروغیاب، نمرات، کارنامهٔ چاپی A4، پشتیبان JSON/CSV و کار آفلاین</td>
             <td>همه</td>
           </tr>
           <tr>
             <td>کارگاه طرح درس</td>
-            <td>بانک نمونه + ویرایشگر</td>
+            <td>بانک نمونه، ویرایشگر گام‌به‌گام، پیش‌نویس خودکار و برگهٔ چاپی A4</td>
             <td>همه</td>
           </tr>
           <tr>
             <td>مبدل سؤال</td>
-            <td>اتصال به بازی‌ها</td>
+            <td>تبدیل JSON/CSV آزمون‌ساز به قالب HQF بازی‌ها با پیش‌نمایش و چاپ A4</td>
             <td>همه</td>
           </tr>
           <tr>
             <td>پیام‌رسان کلاسی</td>
-            <td>چت امن</td>
+            <td>چت امن گروهی و خصوصی، صف ارسال آفلاین، پیوست فایل و پشتیبان‌گیری</td>
             <td>همه</td>
           </tr>
           <tr>
             <td>پنل معلم</td>
-            <td>مدیریت کامل</td>
+            <td>مدیریت بانک سؤال بازی‌ها، گزارش نتایج، خروجی CSV/JSON و تحلیل بازدید</td>
             <td>همه</td>
           </tr>
           <tr>
-  <td>درسگاه</td>
-  <td>استودیوی ضبط تدریس از روی کتاب + وب‌کم</td>
-  <td>همه</td>
-</tr>
+            <td>درسگاه</td>
+            <td>استودیوی ضبط تدریس از PDF (با ۸ کتاب درسی پایهٔ پنجم)، قلم روی صفحه و وب‌کم</td>
+            <td>همه</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -753,16 +757,16 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   <!-- ۴ب. مدرسه ریاضی -->
   <section id="school" class="hk-card reveal">
     <h2 class="section-title">🧮 مدرسه ریاضی</h2>
-    <p>«<a href="math-learning.html">مدرسه ریاضی</a>» بخش ویژه‌ی ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم. اکنون <strong>هفت بازی</strong> دارد: از تقسیم و ساعت تا الگوهای هندسی و عددی، کسر‌ها با چهار عمل، نسبت و درصد، تقارن و چندضلعی، و عددهای اعشاری. هر بازی یک کارت اختصاصی در صفحهٔ مدرسه دارد.</p>
+    <p>«<a href="math-learning.html">مدرسه ریاضی</a>» بخش ویژهٔ ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم. اکنون <strong>هفت بازی</strong> دارد: از تقسیم و ساعت تا الگوهای هندسی و عددی، کسر‌ها با چهار عمل، نسبت و درصد، تقارن و چندضلعی، و عددهای اعشاری. هر بازی یک کارت اختصاصی در صفحهٔ مدرسه دارد.</p>
     <p><strong>هفت بازی فعلی:</strong></p>
     <ul class="feature-list">
       <li>🔨 <strong>تقسیم چکشی</strong> — یادگیری تقسیم، قدم‌به‌قدم و مرحله‌به‌مرحله با راهنمایی حکیم؛ ۵ مرحله، ۱۵ ستاره و گواهی‌نامه در پایان</li>
-      <li>⏰ <strong>ماموریت زمان</strong> — خواندن ساعت، جمع و تفریق زمان و تبدیل واحدها در ۸ مرحله‌ی ماجراجویی، به‌همراه چالش ترکیبی، نشان‌ها و گواهی‌نامه</li>
-      <li>🧩 <strong>الگوستان</strong> — کشف الگوهای هندسی و عددی؛ جدول الگو، شکل بعدی، قانون الگو و گواهی‌نامهٔ پایان</li>
+      <li>⏰ <strong>ماموریت زمان</strong> — خواندن ساعت، جمع و تفریق زمان و تبدیل واحدها در ۸ مرحلهٔ ماجراجویی، به‌همراه چالش ترکیبی، نشان‌ها و گواهی‌نامه</li>
+      <li>🧩 <strong>الگوستان</strong> — کشف الگوهای هندسی و عددی در ۵ سرزمین؛ جدول الگو، شکل بعدی، قانون الگو و گواهی‌نامهٔ پایان</li>
       <li>🥧 <strong>کسرستان</strong> — کسر‌ها، عدد‌های مخلوط و چهار عمل در ۶ جزیره و ۵۸ فعالیت؛ سه نگاه همزمان به یک کسر (نوار، مساحت، محور)، آزمایشگاه رسم و محور، مرور درهم، حدس اندازه، خطایابی با دلیل، پرسش‌های کاملاً مشخص و گواهی‌نامهٔ پیشرفت</li>
       <li>🍋 <strong>نسبتستان</strong> — نسبت، تناسب و درصد در ۵ سرزمین و ۶۷ فعالیت؛ جدول تناسب دوسویه، فعالیت‌های دست‌ورزی، کمبوی پاسخ‌های پیاپی با رکورد در گواهی و گواهی‌نامهٔ قهرمانی</li>
-      <li>٫ <strong>ممیزستان</strong> — عددهای اعشاری تا هزارم، محور، جمع، تفریق و ضرب؛ ۱۰ ایستگاه و ۶۰ تمرین. <a href="games/math-decimals.html">ورود به کارگاه</a></li>
-      <li>✧ <strong>نقشستان</strong> — تقارن محوری و مرکزی، نیمساز و چندضلعی‌ها؛ ۱۲ ایستگاه با آموزش، رسم و گواهیِ فهرست‌دار. <a href="games/math-geometry.html">ورود به کارگاه</a></li>
+      <li>٫ <strong>ممیزستان</strong> — عددهای اعشاری تا هزارم، محور، جمع، تفریق و ضرب؛ ۱۱ ایستگاه و ۷۶ تمرین همراه با سنجش تشخیصی ۱۲سؤالی و گزارش محلی معلم. <a href="games/math-decimals.html">ورود به کارگاه</a></li>
+      <li>✧ <strong>نقشستان</strong> — تقارن محوری و مرکزی، نیمساز و چندضلعی‌ها؛ ۱۲ ایستگاه و ۴۸ تمرین با کارگاه آزاد رسم و گواهیِ فهرست‌دار. <a href="games/math-geometry.html">ورود به کارگاه</a></li>
     </ul>
     <div class="ks-spotlight">
       <h3>🥧 کارت اختصاصی «کسرستان» — یکی از بازی‌های شاخص این بخش</h3>
@@ -778,20 +782,20 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
       </div>
       <p>دسترسی: <a href="math-learning.html">صفحهٔ مدرسه ریاضی</a> · <a href="games/math-fasl2.html">بازی کسرستان</a>. نسخهٔ تکفایل آفلاین با فونت توکار و بدون منبع خارجی هم برای کلاس‌های بدون اینترنت فراهم است.</p>
     </div>
-    <p style="margin-top:14px;">بازی‌های این بخش کاملاً آفلاین و واکنش‌گرا هستند، بازخورد فوری و راهنمایی گام‌به‌گام دارند و پیشرفت دانش‌آموز (ستاره‌ها و گواهی‌نامه) روی همان دستگاه ذخیره می‌شود؛ کسرستان همچنین نتیجهٔ فعالیت‌ها را برای پنل معلم ارسال می‌کند.</p>
+    <p style="margin-top:14px;">بازی‌های این بخش کاملاً آفلاین و واکنش‌گرا هستند، بازخورد فوری و راهنمایی گام‌به‌گام دارند و پیشرفت دانش‌آموز (ستاره‌ها و گواهی‌نامه) روی همان دستگاه ذخیره می‌شود؛ نتایج فعالیت‌ها نیز با صف ارسال آفلاین در اولین اتصال به پنل معلم ارسال می‌گردد.</p>
   </section>
 
   <!-- ۵. قابلیت شخصی‌سازی -->
   <section class="hk-card reveal">
     <h2 class="section-title">⚙️ قابلیت شخصی‌سازی</h2>
-    <p>همه‌ی بازی‌های سؤالی به جز «فتح کهن دیار ایران»، «آزمایشگاه ۲بعدی»، بازی‌های «مدرسه ریاضی» و «واژه‌ستان فارسی پنجم»، به صورت یک قالب آموزشی طراحی شده‌اند. یعنی معلم می‌تواند بدون دانش برنامه‌نویسی، سوال‌های هر بازی را مطابق درس خودش بسازد و تغییر دهد.</p>
+    <p>همهٔ بازی‌های سؤالی به جز «فتح کهن دیار ایران»، «آزمایشگاه ۲بعدی»، بازی‌های «مدرسه ریاضی» و «واژه‌ستان فارسی پنجم»، به صورت یک قالب آموزشی طراحی شده‌اند. یعنی معلم می‌تواند بدون دانش برنامه‌نویسی، سوال‌های هر بازی را مطابق درس خودش بسازد و تغییر دهد.</p>
     <p><strong>این ویژگی باعث می‌شود:</strong></p>
     <ul class="checklist">
-      <li><span class="tick">✓</span><span>یک بازی، برای همه‌ی درس‌ها قابل استفاده باشد</span></li>
+      <li><span class="tick">✓</span><span>یک بازی، برای همهٔ درس‌ها قابل استفاده باشد</span></li>
       <li><span class="tick">✓</span><span>معلم بتواند هر سال محتوای جدید بسازد</span></li>
       <li><span class="tick">✓</span><span>دانش‌آموزان هر پایه‌ای از آن استفاده کنند</span></li>
     </ul>
-    <p style="margin-top:14px;"><strong>استثناها:</strong> بازی «فتح کهن دیار ایران» به دلیل محتوای اختصاصی تاریخی، «آزمایشگاه ۲بعدی» به دلیل شبیه‌سازهای آماده‌ی علوم، بازی‌های «مدرسه ریاضی» به دلیل ماهیت گام‌به‌گام و مهارت‌محور ریاضی و «واژه‌ستان فارسی پنجم» به دلیل وابستگی به واژگان کتاب فارسی، با محتوای ثابت ارائه می‌شوند.</p>
+    <p style="margin-top:14px;"><strong>استثناها:</strong> بازی «فتح کهن دیار ایران» به دلیل محتوای اختصاصی تاریخی، «آزمایشگاه ۲بعدی» به دلیل شبیه‌سازهای آمادهٔ علوم، بازی‌های «مدرسه ریاضی» به دلیل ماهیت گام‌به‌گام و مهارت‌محور ریاضی و «واژه‌ستان فارسی پنجم» به دلیل وابستگی به واژگان کتاب فارسی، با محتوای ثابت ارائه می‌شوند.</p>
   </section>
 
   <!-- ۶. وضعیت فعلی — آمادهٔ تست میدانی -->
@@ -827,8 +831,8 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   <!-- ۸. گفت‌وگو با حکیم (هوش مصنوعی) -->
   <section class="hk-card reveal">
     <h2 class="section-title">🧙 گفت‌وگو با حکیم (هوش مصنوعی)</h2>
-    <p>«حکیم» یک شخصیت هوشمند مبتنی بر هوش مصنوعی است که در لابی حکیمستان حضور دارد. دانش‌آموزان می‌توانند با او گفت‌وگو کنند و درباره‌ی درس‌ها، تاریخ ایران، ریاضی و موضوعات دیگر بپرسند.</p>
-    <p>حکیم با چهره‌ی متحرک، حالت‌های احساسی مختلف (شاد، متفکر، دانا و...) و پاسخ‌های آموزشی، محیطی گرم و دوستانه برای دانش‌آموزان ایجاد می‌کند.</p>
+    <p>«حکیم» یک شخصیت هوشمند مبتنی بر هوش مصنوعی است که در لابی حکیمستان حضور دارد. دانش‌آموزان می‌توانند با او گفت‌وگو کنند و دربارهٔ درس‌ها، تاریخ ایران، ریاضی و موضوعات دیگر بپرسند.</p>
+    <p>حکیم با چهرهٔ متحرک، حالت‌های احساسی مختلف (شاد، متفکر، دانا و...) و پاسخ‌های آموزشی، محیطی گرم و دوستانه برای دانش‌آموزان ایجاد می‌کند.</p>
   </section>
 
   <!-- ۹. چطور یادگیری فعال ایجاد می‌کند؟ -->
@@ -851,12 +855,12 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
       <div class="tech-item"><span class="num">۱۷</span><span class="label">بازی تعاملی</span></div>
       <div class="tech-item"><span class="num">۷</span><span class="label">ابزار معلم و دانش‌آموز</span></div>
       <div class="tech-item"><span class="num">۳</span><span class="label">تم رنگی هماهنگ در همهٔ صفحه‌ها</span></div>
-      <div class="tech-item"><span class="num">۸۰+</span><span class="label">سؤال آماده</span></div>
+      <div class="tech-item"><span class="num">۳۰۰+</span><span class="label">سؤال و فعالیت تعاملی آماده</span></div>
       <div class="tech-item"><span class="num">۱۶</span><span class="label">فیلم منتشرشده · ۱۱ عنوان علوم در برنامه</span></div>
       <div class="tech-item"><span class="num">PWA</span><span class="label">قابل نصب بدون فروشگاه</span></div>
       <div class="tech-item"><span class="num">AI</span><span class="label">گفت‌وگو با حکیم</span></div>
       <div class="tech-item"><span class="num">🎨</span><span class="label">هویت بصری یکپارچه — کاشی</span></div>
-      <div class="tech-item"><span class="num">HTML</span><span class="label">پایه‌ی فنی — بدون فریم‌ورک</span></div>
+      <div class="tech-item"><span class="num">HTML</span><span class="label">پایهٔ فنی — بدون فریم‌ورک</span></div>
       <div class="tech-item"><span class="num">a11y</span><span class="label">تنظیمات دسترس‌پذیری</span></div>
       <div class="tech-item"><span class="num">📱</span><span class="label">موبایل‌پسند و واکنش‌گرا</span></div>
       <div class="tech-item"><span class="num">👨‍🏫</span><span class="label">طراحی‌شده توسط معلم پایه پنجم</span></div>
@@ -933,6 +937,13 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
 <!-- 📊 ردیاب بازدید حکیمستان -->
 <script>
 (function(){
+  document.querySelectorAll('#tour img').forEach(function(img){
+    img.addEventListener('error', function(){
+      var f = img.closest('figure');
+      if (f) f.classList.add('shot-empty');
+      img.remove();
+    });
+  });
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     var userId = localStorage.getItem('hk_uid');
@@ -965,7 +976,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
       else if (document.referrer.indexOf('shad') > -1) ref = 'شاد';
       else ref = 'سایر';
     }
-    fetch(API, {
+    if (navigator.onLine !== false) fetch(API, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },

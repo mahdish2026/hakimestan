@@ -36,9 +36,10 @@
     --radius:14px;
   }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html,body{ margin:0; padding:0; }
+  html,body{ margin:0; padding:0; overflow-x:clip; }
   body{
     font-family:'Vazirmatn', system-ui, sans-serif;
+    background-color:#eef5fd;
     background:
       radial-gradient(1200px 600px at 85% -10%, #dbe9fb 0%, transparent 60%),
       radial-gradient(900px 500px at -10% 110%, #e3edfb 0%, transparent 55%),
@@ -49,6 +50,44 @@
     padding: calc(env(safe-area-inset-top,0px) + 12px) calc(env(safe-area-inset-right,0px) + 12px) calc(env(safe-area-inset-bottom,0px) + 16px) calc(env(safe-area-inset-left,0px) + 12px);
     -webkit-text-size-adjust:100%;
     user-select:none; -webkit-user-select:none;
+    overflow-x:hidden;
+  }
+  body[data-theme="dark"]{
+    --bg1:#12182b; --bg2:#1b2440;
+    --ink:#f1f5f9; --ink-soft:#cbd5e1;
+    --indigo:#7b93ff; --indigo-dark:#a5b4fc; --indigo-deep:#c7d2fe;
+    --block:#0b1020;
+    --paper:#1e293b;
+    --sel:#423612; --sel-bd:#eab308;
+    --good:#4ade80; --good-bg:#143828;
+    --bad:#f87171; --bad-bg:#451a1a;
+    --gold:#fbbf24; --gold-soft:#3b2f12;
+    background-color:#12182b;
+    background:linear-gradient(160deg, #12182b, #1b2440);
+  }
+  body[data-theme="dark"] .start-card,
+  body[data-theme="dark"] .clue-box,
+  body[data-theme="dark"] .kb-bar,
+  body[data-theme="dark"] .modal,
+  body[data-theme="dark"] .hud-chip,
+  body[data-theme="dark"] .icon-btn,
+  body[data-theme="dark"] .grid-hakim-slot .hakim-panel{
+    background:#1e293b; border-color:rgba(148,163,184,.25); color:#f1f5f9;
+  }
+  body[data-theme="dark"] .field input,
+  body[data-theme="dark"] .level-btn,
+  body[data-theme="dark"] .rules,
+  body[data-theme="dark"] .key{
+    background:#0f172a; border-color:rgba(148,163,184,.28); color:#f1f5f9;
+  }
+  body[data-theme="dark"] .meta-chip{ background:#283558; color:#e0e7ff; }
+  body[data-theme="dark"] .title{ text-shadow:none; }
+  @media(max-width:380px){
+    body{ padding-inline:8px; }
+    .start-card{ padding:18px 12px 16px; }
+    .levels{ grid-template-columns:1fr; }
+    .hud{ flex-wrap:wrap; gap:6px; }
+    .controls{ flex-wrap:wrap; }
   }
   .hidden{ display:none !important; }
   button{ font-family:inherit; touch-action:manipulation; }
@@ -57,7 +96,7 @@
   .wrap{ max-width:920px; margin:0 auto; }
 
   /* ------------------------------------------------------------------ */
-  /* ۲) صفحه‌ی شروع                                                      */
+  /* ۲) صفحهٔ شروع                                                      */
   /* ------------------------------------------------------------------ */
   .start-card{
     background:linear-gradient(180deg,#ffffff, #f5f9ff);
@@ -126,7 +165,7 @@
   .reset-link{ margin-top:10px; font-size:12.5px; color:var(--indigo); text-decoration:underline; cursor:pointer; background:none; border:none; }
 
   /* ------------------------------------------------------------------ */
-  /* ۳) صفحه‌ی بازی                                                     */
+  /* ۳) صفحهٔ بازی                                                     */
   /* ------------------------------------------------------------------ */
   .hud{
     display:flex; align-items:center; gap:8px; flex-wrap:wrap;
@@ -303,8 +342,11 @@
 <body>
 <div class="wrap">
 
-  <!-- ═══════════════ صفحه‌ی شروع ═══════════════ -->
+  <!-- ═══════════════ صفحهٔ شروع ═══════════════ -->
   <section id="screenStart" class="start-card">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:4px">
+      <button type="button" class="icon-btn" id="btnThemeStart" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب" aria-pressed="false">🌙</button>
+    </div>
     <h1 class="title"><span class="puz">🧩</span> جدول حکمت</h1>
     <p class="subtitle">جدول کلمات متقاطع آموزشی — آرام، فکری و بدون عجله</p>
     <span class="meta-chip" id="metaTitle">جدول حکمت</span>
@@ -316,37 +358,38 @@
     </div>
 
     <div class="levels" id="levels">
-      <button class="level-btn sel" data-lv="6"><span class="lv-ic">🟢</span><span class="lv-name">آسان</span><span class="lv-desc">۶ کلمه — جدول کوچک</span></button>
-      <button class="level-btn" data-lv="10"><span class="lv-ic">🟡</span><span class="lv-name">متوسط</span><span class="lv-desc">۱۰ کلمه — جدول متوسط</span></button>
-      <button class="level-btn" data-lv="15"><span class="lv-ic">🔴</span><span class="lv-name">سخت</span><span class="lv-desc">۱۵ کلمه — جدول بزرگ</span></button>
+      <button type="button" class="level-btn sel" data-lv="6"><span class="lv-ic">🟢</span><span class="lv-name">آسان</span><span class="lv-desc">۶ کلمه — جدول کوچک</span></button>
+      <button type="button" class="level-btn" data-lv="10"><span class="lv-ic">🟡</span><span class="lv-name">متوسط</span><span class="lv-desc">۱۰ کلمه — جدول متوسط</span></button>
+      <button type="button" class="level-btn" data-lv="15"><span class="lv-ic">🔴</span><span class="lv-name">سخت</span><span class="lv-desc">۱۵ کلمه — جدول بزرگ</span></button>
     </div>
 
     <div class="start-actions">
-      <button class="btn" id="startBtn">🧩 شروع جدول</button>
-      <button class="btn ghost" id="loadBtn">📂 بارگذاری سؤال‌ها</button>
+      <button type="button" class="btn" id="startBtn">🧩 شروع جدول</button>
+      <button type="button" class="btn ghost" id="loadBtn">📂 بارگذاری سؤال‌ها</button>
     </div>
 
     <div class="rules">
       <b>قوانین بازی:</b><br>
-      • روی هر خانه بزن تا کلمه‌ی آن انتخاب شود (زرد می‌شود)<br>
-      • با خواندن سرنخ‌ها کلمه را حدس بزن و حروفش را پر کن — حرف بعد از تایپ خودکار به خانه‌ی بعد می‌رود<br>
+      • روی هر خانه بزن تا کلمهٔ آن انتخاب شود (زرد می‌شود)<br>
+      • با خواندن سرنخ‌ها کلمه را حدس بزن و حروفش را پر کن — حرف بعد از تایپ خودکار به خانهٔ بعد می‌رود<br>
       • 🔍 بررسی: حرف‌های درست سبز و غلط قرمز می‌شوند<br>
       • 💡 راهنما یک حرف را فاش می‌کند (هر راهنما ۱۰ امتیاز کم می‌کند)<br>
-      • وقتی همه‌ی کلمات درست پر شوند، جدول کامل می‌شود و جشن می‌گیریم 🎉
+      • وقتی همهٔ کلمات درست پر شوند، جدول کامل می‌شود و جشن می‌گیریم 🎉
     </div>
     <p class="word-count" id="wordCount"></p>
     <button class="reset-link hidden" id="resetDefault">↩ بازگشت به سؤال‌های پیش‌فرض</button>
   </section>
 
-  <!-- ═══════════════ صفحه‌ی بازی ═══════════════ -->
+  <!-- ═══════════════ صفحهٔ بازی ═══════════════ -->
   <section id="screenGame" class="hidden">
     <div class="hud">
       <span class="hud-chip"><span class="ic">⏱</span><span id="hudTime">۰۰:۰۰</span></span>
       <span class="hud-chip"><span class="ic">🧩</span><span id="hudWords">۰ / ۰</span></span>
       <span class="hud-spacer"></span>
-      <button class="icon-btn" id="btnHintTop" title="راهنما" aria-label="راهنما">💡</button>
-      <button class="icon-btn" id="btnMusic" title="موسیقی" aria-label="موسیقی">🎵</button>
-      <button class="icon-btn" id="btnHome" title="خانه" aria-label="خانه">🏠</button>
+      <button type="button" class="icon-btn" id="btnTheme" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب" aria-pressed="false">🌙</button>
+      <button type="button" class="icon-btn" id="btnHintTop" title="راهنما" aria-label="راهنما">💡</button>
+      <button type="button" class="icon-btn" id="btnMusic" title="موسیقی" aria-label="موسیقی">🎵</button>
+      <button type="button" class="icon-btn" id="btnHome" title="خانه" aria-label="خانه">🏠</button>
     </div>
 
     <div class="grid-hakim-slot" id="hakimGame"></div>
@@ -414,7 +457,7 @@
 <script src="../hakim-core.js"></script>
 <script>
 /* ================================================================== */
-/* ۰) داده‌ی پیش‌فرض (هدیه‌های آسمان + علوم — پنجم دبستان)            */
+/* ۰) دادهٔ پیش‌فرض (هدیه‌های آسمان + علوم — پنجم دبستان)            */
 /* ================================================================== */
 const DEFAULT_HQF = {
   "hqf": "1.0",
@@ -424,7 +467,7 @@ const DEFAULT_HQF = {
     "grade": "پنجم دبستان"
   },
   "words": [
-    { "word": "بقره", "clue": "بلندترین سوره‌ی قرآن" },
+    { "word": "بقره", "clue": "بلندترین سورهٔ قرآن" },
     { "word": "انجیل", "clue": "کتاب آسمانی حضرت عیسی (ع)" },
     { "word": "عیسی", "clue": "پیامبری که مادرش حضرت مریم (س) بود" },
     { "word": "جمعه", "clue": "بهترین روز هفته" },
@@ -436,8 +479,8 @@ const DEFAULT_HQF = {
     { "word": "فیزیکی", "clue": "نوع تغییری مثل بریدن چوب" },
     { "word": "نخاع", "clue": "در فضای لوله‌ای ستون مهره‌ها قرار دارد" },
     { "word": "عنبیه", "clue": "بخش رنگی چشم" },
-    { "word": "تلسکوپ", "clue": "وسیله‌ی دیدن اجسام دور مثل ستاره‌ها" },
-    { "word": "ذره‌بین", "clue": "وسیله‌ی درشت‌تر دیدن نوشته‌ها" },
+    { "word": "تلسکوپ", "clue": "وسیلهٔ دیدن اجسام دور مثل ستاره‌ها" },
+    { "word": "ذره‌بین", "clue": "وسیلهٔ درشت‌تر دیدن نوشته‌ها" },
     { "word": "رنگین‌کمان", "clue": "پس از باران در آسمان آفتابی دیده می‌شود" }
   ]
 };
@@ -447,7 +490,7 @@ const DEFAULT_HQF = {
 /* ================================================================== */
 const LETTERS = ['ا','ب','پ','ت','ث','ج','چ','ح','خ','د','ذ','ر','ز','ژ','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ک','گ','ل','م','ن','و','ه','ی'];
 const PRAISE = [
-  'آفرین! یه کلمه‌ی دیگه پیدا شد 🧠',
+  'آفرین! یه کلمهٔ دیگه پیدا شد 🧠',
   'داری خوب پیش می‌ری! ✨',
   'نزدیکه، ادامه بده! 💪',
   'حکیم بهت افتخار می‌کنه! 🌟',
@@ -592,7 +635,7 @@ function normalizeCh(ch){
          .replace(/[\u200c\u200e\u200f\u200b]/g,'');
   return ch.length === 1 ? ch : '';
 }
-/* تبدیل کلمه به آرایه‌ی حروف مجاز فارسی */
+/* تبدیل کلمه به آرایهٔ حروف مجاز فارسی */
 function toLetters(w){
   return String(w==null?'':w)
     .replace(/[\u200c\u200e\u200f\u200b]/g,'')
@@ -640,7 +683,9 @@ try{ musicOn = localStorage.getItem(MUSIC_KEY) !== 'off'; }catch(e){}
 let musicAvailable = true, musicPending = false;
 music.volume = 0.35;
 function updateMusicBtn(){
+  if(typeof document === 'undefined' || !document.getElementById) return;
   const btn = document.getElementById('btnMusic');
+  if(!btn) return;
   btn.textContent = musicOn && musicAvailable ? '🎵' : '🔇';
   btn.setAttribute('aria-pressed', String(musicOn));
   btn.setAttribute('aria-label', musicOn ? 'خاموش کردن موسیقی' : 'روشن کردن موسیقی');
@@ -679,11 +724,11 @@ updateMusicBtn();
 /* ۵) جشن کاغذرنگی                                                    */
 /* ================================================================== */
 const confettiCanvas = document.getElementById('confetti');
-const cctx = confettiCanvas.getContext('2d');
+const cctx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
 let parts = [], confettiOn = false;
 const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function confetti(){
-  if(reduceMotion){ return; }
+  if(!cctx || reduceMotion || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)){ return; }
   const w = confettiCanvas.width = window.innerWidth;
   const h = confettiCanvas.height = window.innerHeight;
   const colors = ['#4a5fd0','#f6c445','#34d399','#f87171','#a78bfa','#38bdf8','#fbbf24'];
@@ -789,7 +834,7 @@ function buildPuzzle(words){
         if(ex.dir === dir) return false;       /* هم‌جهت نباید روی هم بیفتند */
         cross++;
       }
-      /* همسایه‌های عمود باید خالی باشند مگر در نقطه‌ی تقاطع */
+      /* همسایه‌های عمود باید خالی باشند مگر در نقطهٔ تقاطع */
       if(dir==='h'){
         if(!ex && (getCell(r-1,c) || getCell(r+1,c))) return false;
       } else {
@@ -808,12 +853,12 @@ function buildPuzzle(words){
     return true;
   };
 
-  /* کلمه‌ی اول: افقی در مبدأ */
+  /* کلمهٔ اول: افقی در مبدأ */
   const first = sorted[0];
   first.letters.forEach(function(ch,i){ setCell(0, i, ch, 'h'); });
   placed.push({ letters:first.letters, clue:first.clue, row:0, col:0, dir:'h', idx:0 });
 
-  /* بقیه‌ی کلمات */
+  /* بقیهٔ کلمات */
   for(let wi=1; wi<sorted.length; wi++){
     const w = sorted[wi];
     let best = null, bestScore = Infinity;
@@ -855,7 +900,7 @@ function buildPuzzle(words){
     }
   }
 
-  /* نرمال‌سازی مختصات به بازه‌ی صفر */
+  /* نرمال‌سازی مختصات به بازهٔ صفر */
   const rows = bounds.maxR - bounds.minR + 1;
   const cols = bounds.maxC - bounds.minC + 1;
   const grid2 = Array.from({length:rows}, function(){ return Array(cols).fill(null); });
@@ -868,7 +913,7 @@ function buildPuzzle(words){
     const r = Number(parts2[0]) - bounds.minR, c = Number(parts2[1]) - bounds.minC;
     grid2[r][c] = { ch: grid[k].ch };
   });
-  /* شماره‌ی شروع کلمات */
+  /* شمارهٔ شروع کلمات */
   const starts = {};
   placed.forEach(function(p){
     const k = p.row + ',' + p.col;
@@ -1080,7 +1125,7 @@ function nextWord(step){
 /* تایپ حرف */
 function typeLetter(ch){
   const w = currentWord(); if(!w || state.done) return;
-  if(state.solved[w.idx]) return;   /* کلمه‌ی حل‌شده قابل ویرایش نیست */
+  if(state.solved[w.idx]) return;   /* کلمهٔ حل‌شده قابل ویرایش نیست */
   const n = normalizeCh(ch);
   if(!n || LETTERS.indexOf(n) < 0) return;
   const key = cellKey(w, state.current.pos);
@@ -1094,7 +1139,7 @@ function typeLetter(ch){
 }
 function backspace(){
   const w = currentWord(); if(!w || state.done) return;
-  if(state.solved[w.idx]) return;   /* کلمه‌ی حل‌شده قابل ویرایش نیست */
+  if(state.solved[w.idx]) return;   /* کلمهٔ حل‌شده قابل ویرایش نیست */
   let pos = state.current.pos;
   let key = cellKey(w, pos);
   if(getEntry(key)){
@@ -1162,7 +1207,7 @@ function checkAnswers(){
   }
   newly.forEach(function(w){ celebrateWord(w); });
   if(!wrong && allSolved()){ winGame(); }
-  /* اگه کلمه‌ی فعلی حل شده بود، برو به کلمه‌ی حل‌نشده‌ی بعدی */
+  /* اگه کلمهٔ فعلی حل شده بود، برو به کلمهٔ حل‌نشدهٔ بعدی */
   else if(state.solved[state.current.wordIdx]){
     const unsolved = state.placed.findIndex(function(w){ return !state.solved[w.idx]; });
     if(unsolved >= 0) selectWord(unsolved, 0);
@@ -1201,8 +1246,21 @@ function maybeAutoWin(){
 
 function celebrateWord(w){
   sfxWord();
+  if(window.Hakim && typeof Hakim.saveAnswer === 'function' && w){
+    Hakim.saveAnswer({
+      student_name: state.name || 'بازیکن',
+      game_id: 'jadval-hekmat',
+      experiment_id: 'level-' + state.level,
+      question_id: 'word-' + (w.idx + 1),
+      question_text: w.clue || '',
+      student_answer: w.word || '',
+      correct_answer: w.word || '',
+      is_correct: true,
+      time_taken: Math.max(1, state.seconds || 1)
+    });
+  }
   const el = cellEls[cellKey(w,0)];
-  if(el) floatPlus10(el);
+  if(el && !(reduceMotion || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches))) floatPlus10(el);
   state.solvedCount++;
   if(state.solvedCount % 2 === 0){
     const msg = PRAISE[Math.floor(state.solvedCount/2 - 1) % PRAISE.length];
@@ -1240,20 +1298,27 @@ function winGame(){
   /* 📤 ارسال نتیجه به پنل معلم */
 function sendResultsToPanel(){
   try {
-    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     const total = state.placed.length;
     const totalLetters = state.placed.reduce(function(s,w){ return s + w.letters.length; }, 0);
     const revealed = state.revealedCount;
     const accuracy = totalLetters ? Math.round((totalLetters - revealed) / totalLetters * 100) : 100;
     const stars = computeStars(total, state.hints, state.seconds);
     const score = Math.max(0, 10 * total - 10 * state.hints);
+    try {
+      const prev = JSON.parse(localStorage.getItem('hakim_jadval_best_v1') || '{}');
+      localStorage.setItem('hakim_jadval_best_v1', JSON.stringify({
+        bestScore: Math.max(prev.bestScore || 0, score),
+        bestStars: Math.max(prev.bestStars || 0, stars),
+        lastLevel: state.level
+      }));
+    } catch(e){}
     const payload = {
       action: 'session',
       student_name: state.name || 'بازیکن',
       student_class: '',
       student_school: '',
       game_id: 'jadval-hekmat',
-      experiment_id: '',
+      experiment_id: 'level-' + state.level,
       duration: state.seconds,
       device: /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : 'دسکتاپ',
       score: score,
@@ -1271,12 +1336,18 @@ function sendResultsToPanel(){
         level: state.level
       })
     };
+    if(window.Hakim && typeof Hakim.saveSession === 'function'){
+      Hakim.saveSession(payload);
+      return;
+    }
+    if(navigator.onLine === false) return;
+    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-    }).catch(function(e){ console.log('send result failed:', e); });
-  } catch(e) { console.log('sendResultsToPanel error:', e); }
+    }).catch(function(){});
+  } catch(e) {}
 }
 
 function showResult(){
@@ -1393,7 +1464,7 @@ function loadCustomFile(file){
     if(!data || typeof data !== 'object'){ showError('ساختار فایل ناشناخته است.'); return; }
     const words = extractWords(data);
     if(words.length < 3){
-      showError('هیچ کلمه‌ی معتبری در فایل پیدا نشد.\n\nکلمات باید بین ۳ تا ۱۰ حرف فارسی باشند و سرنخ داشته باشند.');
+      showError('هیچ کلمهٔ معتبری در فایل پیدا نشد.\n\nکلمات باید بین ۳ تا ۱۰ حرف فارسی باشند و سرنخ داشته باشند.');
       return;
     }
     state.words = words;
@@ -1408,10 +1479,14 @@ function loadCustomFile(file){
 }
 
 function renderStart(){
+  const mt = document.getElementById('metaTitle');
+  const wc = document.getElementById('wordCount');
+  const rd = document.getElementById('resetDefault');
+  if(!mt || !wc || !rd) return;
   const meta = state.meta || {};
-  document.getElementById('metaTitle').textContent = (meta.title || 'جدول حکمت') + ' — ' + (meta.grade || '');
-  document.getElementById('wordCount').textContent = '✨ ' + toFa(state.words.length) + ' کلمه‌ی آماده (آسان ۶، متوسط ۱۰، سخت ۱۵)';
-  document.getElementById('resetDefault').classList.toggle('hidden', !state.customLoaded);
+  mt.textContent = (meta.title || 'جدول حکمت') + ' — ' + (meta.grade || '');
+  wc.textContent = '✨ ' + toFa(state.words.length) + ' کلمهٔ آماده (آسان ۶، متوسط ۱۰، سخت ۱۵)';
+  rd.classList.toggle('hidden', !state.customLoaded);
 }
 
 /* ================================================================== */
@@ -1450,7 +1525,7 @@ function jumpToCrossing(){
   if(target){ selectWord(target.idx, posOf(target, cell.r, cell.c)); }
 }
 
-/* دکمه‌های صفحه‌ی شروع */
+/* دکمه‌های صفحهٔ شروع */
 document.getElementById('startBtn').addEventListener('click', function(){ ensureAudio(); startGame(selectedLevel); });
 document.getElementById('loadBtn').addEventListener('click', function(){ document.getElementById('fileInput').click(); });
 document.getElementById('fileInput').addEventListener('change', function(e){
@@ -1504,6 +1579,10 @@ window.addEventListener('resize', function(){ if(state.started) recalcCellSize()
 
   /* 📥 لود کلمات از پنل معلم */
 function loadServerQuestions(callback){
+  if(navigator.onLine === false){
+    if(callback) callback();
+    return;
+  }
   const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
   fetch(API_URL, {
     method: 'POST',
@@ -1518,18 +1597,35 @@ function loadServerQuestions(callback){
           state.words = words;
           state.customLoaded = true;
           state.meta = { title: 'جدول حکمت (از پنل معلم)', subject: 'عمومی', grade: '' };
-          console.log('✅ ' + words.length + ' کلمه از پنل معلم لود شد');
-        } else {
-          console.log('⚠️ فقط ' + (words ? words.length : 0) + ' کلمه معتبر پیدا شد (حداقل ۳ لازم است)');
         }
       }
-      if(callback) callback();
+      if(callback && document.getElementById('metaTitle')) callback();
     })
-    .catch(function(e){
-      console.warn('loadServerQuestions failed:', e);
-      if(callback) callback();
+    .catch(function(){
+      if(callback && document.getElementById('metaTitle')) callback();
     });
 }
+
+(function initJadvalTheme(){
+  const btns = [document.getElementById('btnThemeStart'), document.getElementById('btnTheme')].filter(Boolean);
+  const apply = (th) => {
+    const dark = th === 'dark';
+    document.body.dataset.theme = dark ? 'dark' : 'light';
+    btns.forEach((b) => {
+      b.textContent = dark ? '☀️' : '🌙';
+      b.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    });
+  };
+  let saved = 'light';
+  try{ saved = localStorage.getItem('hakim_jadval_theme') || 'light'; }catch(e){}
+  apply(saved);
+  btns.forEach((b) => b.addEventListener('click', function(){
+    ensureAudio();
+    const nxt = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+    try{ localStorage.setItem('hakim_jadval_theme', nxt); }catch(e){}
+    apply(nxt);
+  }));
+})();
 
 /* ================================================================== */
 /* ۱۳) شروع اولیه                                                     */
@@ -1586,6 +1682,7 @@ loadServerQuestions(function(){
       else ref = 'سایر';
     }
 
+    if (navigator.onLine === false) return;
     fetch(API, {
       method: 'POST',
       mode: 'no-cors',

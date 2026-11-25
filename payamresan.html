@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head><!-- hakim-core:start -->
+<head>
+<!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
 <!-- hakim-core:end -->
 
@@ -17,7 +18,7 @@
 <meta name="author" content="مهدی شریفیان">
 <meta name="referrer" content="no-referrer">
 <!-- سیاست امنیتی محتوا (جلوگیری از XSS و اسکریپت بیرونی ناشناس) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: blob:; font-src 'self' data:; manifest-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: blob:; font-src 'self' data:; manifest-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'">
 <title>پیامرسان حکیمستان</title>
 <!-- مانیفست PWA (در زمان اجرا با مانیفست ساخته‌شده جایگزین می‌شود) -->
 <link rel="manifest" href="manifest.json">
@@ -135,7 +136,7 @@ body[data-mode="dark"]{
   display:flex;align-items:center;gap:12px;
   position:sticky;top:0;z-index:30;
 }
-.topbar h1{font-size:1.25rem;font-weight:900}
+.topbar h1,.topbar h2{font-size:1.25rem;font-weight:900;margin:0}
 .topbar .sub{font-size:.82rem;opacity:.92}
 .topbar .grow{flex:1;min-width:0}
 .icon-btn{
@@ -437,7 +438,7 @@ textarea.code{direction:ltr;text-align:left}
     width:34px!important;height:34px!important;
     border-radius:11px!important;font-size:.85rem!important;
   }
-  .topbar h1{font-size:.92rem!important;line-height:1.2!important}
+  .topbar h1,.topbar h2{font-size:.92rem!important;line-height:1.2!important}
   .topbar .sub{font-size:.62rem!important;line-height:1.2!important}
   .topbar .conn{font-size:.62rem!important;padding:2px 8px!important}
   .topbar .conn i{width:7px!important;height:7px!important}
@@ -1354,6 +1355,16 @@ body[data-bgimg="on"] #page-chat .main::before{
   background-image:var(--wall,none);background-size:22px 22px
 }
 
+@page{size:A4 portrait;margin:14mm}
+@media print{
+  html,body{background:#fff!important;color:#111!important;height:auto!important;overflow:visible!important}
+  .side,.composer,#inchatSearchBox,#replyBar,#editBar,#mentionBox,#stickerPanel,#attachMenu,#reactBar,#btnScrollDown,.chat-head .hstack button,.topbar button,#drawer,#drawerOv,#modalOv,#sheetOv,#lightbox,#toastBox,.btl-lobby-btn,.hk-a11y-fab,.hk-a11y-panel{display:none!important}
+  #app,#page-chat,#chatShell,.main,#msgs{display:block!important;position:static!important;width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important;background:#fff!important;box-shadow:none!important;border:0!important}
+  .chat-head{border-bottom:2px solid #222!important;padding:0 0 8px!important;margin-bottom:12px!important;background:#fff!important}
+  .bubble{break-inside:avoid;page-break-inside:avoid;border:1px solid #ccc!important;background:#fafafa!important;color:#111!important;box-shadow:none!important;margin-bottom:8px!important;max-width:100%!important}
+  .bubble .acts,.quick-react{display:none!important}
+}
+
 </style>
 <!-- hakim-meta:start -->
 <link rel="canonical" href="https://hakimistan.ir/payamresan.html">
@@ -1379,7 +1390,7 @@ body[data-bgimg="on"] #page-chat .main::before{
    علت اصلی: قانون عمومی ‎.row>*{flex:1}‎ به متن وضعیت و نشان اتصال هم
    می‌رسید و هر دو را نصف‌عرض می‌کرد؛ متن می‌پیچید و روی آیکن‌ها می‌افتاد. */
 #page-chat .topbar .grow{min-width:0}
-#page-chat .topbar h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#page-chat .topbar h1,#page-chat .topbar h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #page-chat .topbar .sub.row{flex-wrap:nowrap;min-width:0;align-items:center}
 #page-chat .topbar .sub.row>*{flex:none}
 #chatStatus{flex:1 1 auto!important;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1555,7 +1566,7 @@ body[data-bgimg="on"] #page-chat .main::before{
     <div class="wrap">
       <div class="center">
         <div class="hero-art"><svg style="width:96px;height:96px"><use href="#mascot"/></svg></div>
-        <h1 class="hero-title" style="font-size:1.5rem">ساخت حساب جدید</h1>
+        <h2 class="hero-title" style="font-size:1.5rem">ساخت حساب جدید</h2>
         <p class="hero-desc">یه اسم قشنگ انتخاب کن و بیا تو کلاس!</p>
       </div>
       <div class="card">
@@ -1591,7 +1602,7 @@ body[data-bgimg="on"] #page-chat .main::before{
     <div class="wrap">
       <div class="center">
         <div class="hero-art"><svg style="width:96px;height:96px"><use href="#mascot"/></svg></div>
-        <h1 class="hero-title" style="font-size:1.5rem">خوش برگشتی!</h1>
+        <h2 class="hero-title" style="font-size:1.5rem">خوش برگشتی!</h2>
         <p class="hero-desc">اسمت رو بزن و برو سر کلاس</p>
       </div>
       <div class="card">
@@ -1621,7 +1632,7 @@ body[data-bgimg="on"] #page-chat .main::before{
       <button class="icon-btn back-fab" id="btnBackToList" title="برگشت به لیست"><svg class="ic"><use href="#i-back"/></svg></button>
       <div class="avatar sm" id="chatAvatar">ک<span class="on"></span></div>
       <div class="grow">
-        <h1 id="chatTitle">کلاس</h1>
+        <h2 id="chatTitle">کلاس</h2>
         <div class="sub row" style="gap:8px">
           <span id="chatStatus">در حال اتصال…</span>
           <span class="conn" id="connBadge"><i></i><span id="connTxt">متصل</span></span>
@@ -1722,7 +1733,7 @@ body[data-bgimg="on"] #page-chat .main::before{
     <div class="topbar">
       <button class="icon-btn" id="btnTeacherBack" title="برگشت"><svg class="ic"><use href="#i-back"/></svg></button>
       <div class="avatar sm">👩‍🏫</div>
-      <div class="grow"><h1>پنل معلم</h1><div class="sub">مدیریت کامل کلاس</div></div>
+      <div class="grow"><h2>پنل معلم</h2><div class="sub">مدیریت کامل کلاس</div></div>
       <button class="icon-btn" id="btnTeacherHome" title="چت"><svg class="ic"><use href="#i-chat"/></svg></button>
       <button class="icon-btn" id="btnMenu2" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
@@ -1748,7 +1759,7 @@ body[data-bgimg="on"] #page-chat .main::before{
   <section id="page-settings" class="page">
     <div class="topbar">
       <button class="icon-btn" id="btnSettingsBack" title="برگشت"><svg class="ic"><use href="#i-back"/></svg></button>
-      <div class="grow"><h1>تنظیمات</h1><div class="sub" id="settingsUser">کاربر</div></div>
+      <div class="grow"><h2>تنظیمات</h2><div class="sub" id="settingsUser">کاربر</div></div>
       <button class="icon-btn" id="btnMenu3" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="set-list" style="flex:1">
@@ -1924,7 +1935,7 @@ body[data-bgimg="on"] #page-chat .main::before{
     <div class="topbar">
       <button class="icon-btn" id="btnProfileBack" title="برگشت"><svg class="ic"><use href="#i-back"/></svg></button>
       <div class="avatar sm" id="profileTopAvatar">؟</div>
-      <div class="grow"><h1>پروفایل من</h1><div class="sub">عکس، نام نمایشی و بیوگرافی</div></div>
+      <div class="grow"><h2>پروفایل من</h2><div class="sub">عکس، نام نمایشی و بیوگرافی</div></div>
       <button class="icon-btn" id="btnMenu5" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="set-list" style="flex:1" id="profileBody"></div>
@@ -1936,7 +1947,7 @@ body[data-bgimg="on"] #page-chat .main::before{
     <div class="topbar">
       <button class="icon-btn" id="btnSearchBack" title="برگشت"><svg class="ic"><use href="#i-back"/></svg></button>
       <div class="avatar sm" style="background:linear-gradient(135deg,#3d8bff,#8e54ff)"><svg class="ic"><use href="#i-search"/></svg></div>
-      <div class="grow"><h1>جستجوی پیشرفته</h1><div class="sub">در همه چت‌ها با فیلتر</div></div>
+      <div class="grow"><h2>جستجوی پیشرفته</h2><div class="sub">در همه چت‌ها با فیلتر</div></div>
       <button class="icon-btn" id="btnMenu6" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
     <div class="set-list" style="flex:1" id="searchBody"></div>
@@ -2136,6 +2147,12 @@ var U = (function(){
   function safeUrl(u){
     u = String(u||'').trim();
     if(/^(https?:|mailto:|tel:)/i.test(u)) return u;
+    return '';
+  }
+  function safeImgSrc(u){
+    u = String(u||'').trim();
+    if(/^https?:\/\/[^\s"'<>]+$/i.test(u) || /^blob:/i.test(u)) return u;
+    if(/^data:image\/(?:png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=\s]+$/i.test(u)) return u;
     return '';
   }
   function copyText(t){
@@ -2381,7 +2398,7 @@ var U = (function(){
   return {
     $:$, $all:$all, fa:fa, toEn:toEn, esc:esc, normName:normName, same:same, uid:uid, hashStr:hashStr,
     hue:hue, clamp:clamp, bool:bool, bytes:bytes, debounce:debounce, throttle:throttle, on:on, isOnline:isOnline,
-    isVisible:isVisible, sleep:sleep, safeUrl:safeUrl, copyText:copyText, blobToDataURL:blobToDataURL,
+    isVisible:isVisible, sleep:sleep, safeUrl:safeUrl, safeImgSrc:safeImgSrc, copyText:copyText, blobToDataURL:blobToDataURL,
     dataURLtoBlob:dataURLtoBlob, b64enc:b64enc, b64dec:b64dec, el:el, parseDate:parseDate, faTime:faTime,
     faDate:faDate, faDateShort:faDateShort, faWeekday:faWeekday, dayKey:dayKey, dayDiff:dayDiff,
     dayLabel:dayLabel, ago:ago, mmss:mmss, faDigitsInHtml:faDigitsInHtml, initials:initials,
@@ -3423,6 +3440,35 @@ var Data = (function(){
     var csv = '\uFEFF'+rows.map(function(r){ return r.map(function(c){ return '"'+String(c==null?'':c)+'"'; }).join(','); }).join('\n');
     download('hakimestan-messages-'+U.toEn(U.dayKey(new Date().toISOString()))+'.csv', csv, 'text/csv');
   }
+  function importJSON(rawText){
+    try{
+      var parsed = typeof rawText==='string'? JSON.parse(rawText) : rawText;
+      if(!parsed || typeof parsed!=='object' || !Array.isArray(parsed.messages)) throw new Error('ساختار فایل پشتیبان معتبر نیست.');
+      if(Array.isArray(parsed.groups)){
+        parsed.groups.forEach(function(g){
+          var ng = Norm.group(g);
+          if(ng && S.groups.indexOf(ng)<0) S.groups.push(ng);
+        });
+        DB.set('groups', S.groups);
+      }
+      if(Array.isArray(parsed.users)){
+        parsed.users.forEach(function(u){
+          var nu = Norm.user(u);
+          if(nu && nu.username && !S.users.some(function(x){ return U.same(x.username, nu.username); })) S.users.push(nu);
+        });
+        DB.set('users', S.users);
+      }
+      var cleanMsgs = parsed.messages.map(Norm.msg).filter(Boolean);
+      merge(cleanMsgs);
+      DB.set('cache', S.messages.slice(-CFG.MAX_CACHE));
+      App.renderAll('all');
+      toast(fa(cleanMsgs.length)+' پیام از فایل پشتیبان بازیابی شد ✅','ok');
+      return cleanMsgs.length;
+    }catch(e){
+      toast('بازیابی فایل پشتیبان انجام نشد: '+(e.message||'فرمت نامعتبر'),'err');
+      return -1;
+    }
+  }
   function download(name, content, mime){
     try{
       var b = new Blob([content], {type:mime||'text/plain'});
@@ -3435,7 +3481,7 @@ var Data = (function(){
   return {
     detectCaps:detectCaps, fetchMessages:fetchMessages, merge:merge, fetchUsers:fetchUsers,
     fetchGroups:fetchGroups, createGroup:createGroup, fetchWords:fetchWords, fetchReads:fetchReads,
-    sendRead:sendRead, exportJSON:exportJSON, exportCSV:exportCSV, download:download,
+    sendRead:sendRead, exportJSON:exportJSON, exportCSV:exportCSV, importJSON:importJSON, download:download,
     lastMsgTime:function(){ return lastMsgTime; },
     serverSnapshot:function(){ return lastServerSnapshot; },
     resetSince:function(){ lastMsgTime=0; }
@@ -3965,9 +4011,9 @@ var App = (function(){
     return p.display || name;
   }
   function avatarOf(name){
-    if(U.same(name, S.me) && S.profile && S.profile.avatar) return S.profile.avatar;
+    if(U.same(name, S.me) && S.profile && S.profile.avatar) return U.safeImgSrc(S.profile.avatar);
     var p = S.profiles[name] || {};
-    return p.avatar || '';
+    return U.safeImgSrc(p.avatar || '');
   }
   function avatarHTML(name, cls, extra){
     var av = avatarOf(name);
@@ -4535,10 +4581,12 @@ var App = (function(){
 
   /* ── باز کردن چت ── */
   function openChat(type, id){
+    if(S.chat && Compose.saveDraftNow) Compose.saveDraftNow();
     S.chat = {type:type, id:id};
     S.chatQ=''; var si=$('#inchatSearch'); if(si) si.value='';
     $('#inchatSearchBox').classList.remove('show');
     Compose.clear();
+    if(Compose.restoreDraft) Compose.restoreDraft();
     markSeen();
     renderAll('all');
     $('#chatShell').classList.add('in-chat');
@@ -4852,6 +4900,7 @@ var Compose = (function(){
     await deliver({ text:text, meta:meta, kind:'text' });
 
     input.value=''; autoGrow();
+    clearDraftForCurrent();
     clear();
     Typing.stop();
     Guard.markSent(text);
@@ -4931,10 +4980,50 @@ var Compose = (function(){
     Guard.markSent(text);
   }
 
+  var draftSaveTimer = null;
+  function currentDraftKey(){
+    if(!S.chat || !S.chat.id || S.chat.type==='saved' || S.chat.type==='starred') return '';
+    return S.chat.type + ':' + S.chat.id;
+  }
+  function saveDraftNow(){
+    clearTimeout(draftSaveTimer);
+    if(S.editing) return;
+    var k = currentDraftKey(), inp = $('#msgInput');
+    if(!k || !inp) return;
+    var drafts = DB.get('drafts', {}) || {};
+    var v = String(inp.value||'');
+    if(v.trim()) drafts[k] = v.slice(0, CFG.MAX_LEN);
+    else delete drafts[k];
+    DB.set('drafts', drafts);
+  }
+  function clearDraftForCurrent(){
+    clearTimeout(draftSaveTimer);
+    var k = currentDraftKey();
+    if(!k) return;
+    var drafts = DB.get('drafts', {}) || {};
+    if(Object.prototype.hasOwnProperty.call(drafts, k)){
+      delete drafts[k];
+      DB.set('drafts', drafts);
+    }
+  }
+  function restoreDraft(){
+    if(S.editing) return;
+    var k = currentDraftKey(), inp = $('#msgInput');
+    if(!inp) return;
+    var drafts = DB.get('drafts', {}) || {};
+    inp.value = (k && drafts[k]) ? String(drafts[k]) : '';
+    autoGrow();
+  }
+
   function init(){
     var inp=$('#msgInput');
-    U.on(inp,'input', function(){ autoGrow(); Typing.ping(); Mention.check(); });
-    U.on(inp,'blur', function(){ Typing.stop(); setTimeout(Mention.hide, 150); });
+    U.on(inp,'input', function(){
+      autoGrow(); Typing.ping(); Mention.check();
+      if(!S.editing){ clearTimeout(draftSaveTimer); draftSaveTimer = setTimeout(saveDraftNow, 200); }
+    });
+    U.on(window,'pagehide', saveDraftNow);
+    U.on(document,'visibilitychange', function(){ if(document.visibilityState==='hidden') saveDraftNow(); });
+    U.on(inp,'blur', function(){ saveDraftNow(); Typing.stop(); setTimeout(Mention.hide, 150); });
     U.on(inp,'keydown', function(e){
       if(Mention.isOpen() && (e.key==='ArrowDown'||e.key==='ArrowUp'||e.key==='Enter'||e.key==='Tab')){
         if(Mention.key(e)) return;
@@ -4951,9 +5040,10 @@ var Compose = (function(){
     U.on($('#btnSend'),'click', send);
     U.on($('#replyCancel'),'click', clear);
     U.on($('#editCancel'),'click', clear);
+    restoreDraft();
     autoGrow();
   }
-  return { init:init, send:send, deliver:deliver, reply:reply, edit:edit, forward:forward, clear:clear, autoGrow:autoGrow, saveEdit:saveEdit };
+  return { init:init, send:send, deliver:deliver, reply:reply, edit:edit, forward:forward, clear:clear, autoGrow:autoGrow, saveEdit:saveEdit, saveDraftNow:saveDraftNow, restoreDraft:restoreDraft };
 })();
 var Cancel = { compose:function(){ Compose.clear(); }, edit:true };
 
@@ -5106,9 +5196,15 @@ var Attach = (function(){
   }
   function srcOf(att){
     if(!att || !att.u) return '';
-    var u = String(att.u);
-    if(/^(data:|https?:|blob:)/i.test(u)) return u;
-    return 'data:'+(att.m||'application/octet-stream')+';base64,'+u;
+    var u = String(att.u).trim();
+    if(/^(https?:|blob:)/i.test(u)) return u;
+    if(/^data:/i.test(u)){
+      if(/^data:(text\/html|image\/svg\+xml|application\/xhtml)/i.test(u)) return '';
+      return u;
+    }
+    var safeMime = String(att.m||'application/octet-stream').replace(/[^a-z0-9.+\-\/]/gi,'');
+    if(/^(text\/html|image\/svg\+xml|application\/xhtml)/i.test(safeMime)) safeMime = 'application/octet-stream';
+    return 'data:'+safeMime+';base64,'+u;
   }
 
   /* ── آپلود به سرویس بیرونی ── */
@@ -5583,9 +5679,10 @@ var Profile = (function(){
   function load(username){
     if(U.same(username, S.me)){
       var mine = DB.get('me', null) || {};
-      return { display: mine.display||'', bio: mine.bio||'', avatar: mine.avatar||'' };
+      return { display: mine.display||'', bio: mine.bio||'', avatar: U.safeImgSrc(mine.avatar||'') };
     }
-    return S.profiles[username] || { display:'', bio:'', avatar:'' };
+    var rec = S.profiles[username] || { display:'', bio:'', avatar:'' };
+    return { display: rec.display||'', bio: rec.bio||'', avatar: U.safeImgSrc(rec.avatar||'') };
   }
   function saveLocal(username, p){
     if(U.same(username, S.me)){
@@ -6218,9 +6315,12 @@ var Teacher = (function(){
   /* ── ابزارها: پشتیبان‌گیری، پاک‌سازی، عیب‌یابی ── */
 function renderTools(b){
   b.innerHTML =
-    '<div class="card"><b>پشتیبان‌گیری</b><div class="hint">همه پیام‌های موجود در حافظه را ذخیره کن.</div>'+
-    '<div class="row" style="margin-top:10px"><button class="btn btn-primary btn-sm" id="tExportJson">خروجی JSON</button>'+
-    '<button class="btn btn-primary btn-sm" id="tExportCsv">خروجی CSV</button></div></div>'+
+    '<div class="card"><b>پشتیبان‌گیری و بازیابی</b><div class="hint">همه پیام‌های موجود در حافظه را ذخیره یا از فایل JSON بازیابی کن.</div>'+
+    '<div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="btn btn-primary btn-sm" id="tExportJson">خروجی JSON</button>'+
+    '<button class="btn btn-primary btn-sm" id="tExportCsv">خروجی CSV</button>'+
+    '<button class="btn btn-accent btn-sm" id="tImportJson">بازیابی JSON</button>'+
+    '<button class="btn btn-ghost btn-sm" id="tPrintChat">🖨️ چاپ گفتگو A4</button>'+
+    '<input type="file" id="tImportJsonFile" accept="application/json,.json" class="sr-only"></div></div>'+
     '<div class="card"><b>وضعیت سیستم</b><div id="tDiag" class="vstack" style="margin-top:8px"></div>'+
     '<button class="btn btn-ghost btn-sm" id="tDiagBtn" style="margin-top:10px">به‌روزرسانی وضعیت</button></div>'+
     '<div class="card"><b>پاک‌سازی</b><div class="hint">حافظه محلی پیام‌ها، صف ارسال و نشانگرها پاک می‌شود (نشست و تنظیمات می‌ماند).</div>'+
@@ -6252,6 +6352,19 @@ function renderTools(b){
     }
     $('#tExportJson').addEventListener('click', Data.exportJSON);
     $('#tExportCsv').addEventListener('click', Data.exportCSV);
+    $('#tImportJson').addEventListener('click', function(){ $('#tImportJsonFile').click(); });
+    $('#tImportJsonFile').addEventListener('change', function(e){
+      var f = e.target.files && e.target.files[0]; e.target.value='';
+      if(!f) return;
+      var reader = new FileReader();
+      reader.onload = function(){ Data.importJSON(reader.result); diag(); };
+      reader.onerror = function(){ toast('خواندن فایل JSON ناموفق بود','err'); };
+      reader.readAsText(f, 'UTF-8');
+    });
+    $('#tPrintChat').addEventListener('click', function(){
+      App.showPage('chat');
+      setTimeout(function(){ window.print(); }, 80);
+    });
     $('#tDiagBtn').addEventListener('click', diag);
     $('#tWipe').addEventListener('click', async function(){
       var ok = await Ui.confirmDlg('پاک کردن حافظه','حافظه محلی پاک بشه؟ پیام‌های ذخیره‌شده روی سرور دست‌نخورده می‌مانند.','پاک کن',true);
@@ -7444,7 +7557,7 @@ var V3 = (function(){
       else ref = 'سایر';
     }
 
-    fetch(API, {
+    if (navigator.onLine !== false) fetch(API, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
@@ -7469,7 +7582,6 @@ var V3 = (function(){
   } catch(e){}
 })();
 </script>
-
 <!-- hakim-core:start -->
 <script src="js/hakim-security.js" defer></script>
 <script src="js/hakim-a11y.js" defer></script>

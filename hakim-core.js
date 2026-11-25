@@ -918,6 +918,9 @@
   // ============================================================
   function burstConfetti(panelEl) {
     if (!panelEl) return;
+    try {
+      if (global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    } catch (_) {}
     let layer = panelEl.querySelector('.hakim-confetti');
     if (!layer) {
       layer = document.createElement('div');
@@ -1030,7 +1033,7 @@
     track, react, onCityConquered, onLowHearts,
     buildReport, createProfile,
     celebrate, burstConfetti,
-    saveSession, saveAnswer,
+    saveSession, saveAnswer, flushTelemetry, getLocalProgress,
     FACES: HAKIM_FACES,
     PHRASES: HAKIM_PHRASES,
     EMOJI_TO_MOOD,
@@ -1042,10 +1045,12 @@
 
   global.Hakim = api;
 
-    // ═══════════════════════════════════════════════════════════
-  //  📊 ثبت نتیجه بازی در Google Sheets (پنل معلم)
+  // ═══════════════════════════════════════════════════════════
+  //  📊 ثبت نتیجه بازی در Google Sheets (پنل معلم) + صف آفلاین
   // ═══════════════════════════════════════════════════════════
   var HAKIM_API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+  var OUTBOX_KEY = 'hakim_telemetry_outbox_v1';
+  var LOCAL_PROGRESS_KEY = 'hakim_local_progress_v1';
 
   function detectDevice(){
     var ua = navigator.userAgent || '';
@@ -1054,8 +1059,90 @@
     return 'دسکتاپ';
   }
 
+  function readStorageJson(key){
+    try {
+      var raw = localStorage.getItem(key);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (_) { return []; }
+  }
+
+  function writeStorageJson(key, list, maxItems){
+    try {
+      var trimmed = list.length > maxItems ? list.slice(list.length - maxItems) : list;
+      localStorage.setItem(key, JSON.stringify(trimmed));
+    } catch (_) {}
+  }
+
+  function enqueueTelemetry(payload){
+    var queue = readStorageJson(OUTBOX_KEY);
+    queue.push(payload);
+    writeStorageJson(OUTBOX_KEY, queue, 150);
+  }
+
+  function recordLocalSession(payload){
+    var list = readStorageJson(LOCAL_PROGRESS_KEY);
+    list.push({
+      game_id: payload.game_id,
+      experiment_id: payload.experiment_id || '',
+      student_name: payload.student_name,
+      score: payload.score,
+      stars: payload.stars,
+      completed: payload.completed,
+      duration: payload.duration,
+      finished_at: payload.finished_at
+    });
+    writeStorageJson(LOCAL_PROGRESS_KEY, list, 100);
+  }
+
+  function getLocalProgress(gameId){
+    var list = readStorageJson(LOCAL_PROGRESS_KEY);
+    return gameId ? list.filter(function(item){ return item && item.game_id === gameId; }) : list;
+  }
+
+  function sendTelemetryPayload(payload){
+    if (typeof fetch !== 'function' || (typeof navigator !== 'undefined' && navigator.onLine === false)) {
+      enqueueTelemetry(payload);
+      return Promise.resolve({ ok: false, queued: true });
+    }
+    return fetch(HAKIM_API_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).then(function(r){
+      return r && typeof r.json === 'function' ? r.json().catch(function(){ return { ok: true }; }) : { ok: true };
+    }).catch(function(){
+      enqueueTelemetry(payload);
+      return { ok: false, queued: true };
+    });
+  }
+
+  function flushTelemetry(){
+    var queue = readStorageJson(OUTBOX_KEY);
+    if (!queue.length || typeof fetch !== 'function' || (typeof navigator !== 'undefined' && navigator.onLine === false)) return Promise.resolve({ flushed: 0 });
+    writeStorageJson(OUTBOX_KEY, [], 150);
+    var sent = 0;
+    return queue.reduce(function(chain, item){
+      return chain.then(function(){
+        return fetch(HAKIM_API_URL, {
+          method: 'POST',
+          body: JSON.stringify(item),
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        }).then(function(){ sent++; }).catch(function(){ enqueueTelemetry(item); });
+      });
+    }, Promise.resolve()).then(function(){ return { flushed: sent }; });
+  }
+
+  if (global && typeof global.addEventListener === 'function') {
+    global.addEventListener('online', function(){ flushTelemetry(); });
+  }
+
   function saveSession(data){
     data = data || {};
+    var detailsVal = data.details;
+    if (detailsVal && typeof detailsVal === 'object') {
+      try { detailsVal = JSON.stringify(detailsVal); } catch (_) { detailsVal = ''; }
+    }
     var payload = {
       action: 'session',
       student_name: data.student_name || state.name || 'دانش‌آموز',
@@ -1069,16 +1156,12 @@
       stars: Math.round(data.stars || 0),
       completed: !!data.completed,
       attempts: data.attempts || 1,
-      details: data.details || '',
+      details: detailsVal || '',
       started_at: data.started_at || new Date().toISOString(),
       finished_at: new Date().toISOString()
     };
-    return fetch(HAKIM_API_URL, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-    }).then(function(r){ return r.json(); })
-      .catch(function(e){ console.warn('saveSession failed:', e); return { ok:false }; });
+    recordLocalSession(payload);
+    return sendTelemetryPayload(payload);
   }
 
   function saveAnswer(data){
@@ -1088,19 +1171,17 @@
       student_name: data.student_name || state.name || 'دانش‌آموز',
       game_id: data.game_id || 'unknown',
       experiment_id: data.experiment_id || '',
-      question_id: data.question_id || '',
+      question_id: data.question_id || (data.question_num != null ? String(data.question_num) : ''),
       question_text: data.question_text || '',
-      student_answer: data.student_answer || '',
-      correct_answer: data.correct_answer || '',
+      student_answer: data.student_answer != null ? String(data.student_answer) : '',
+      correct_answer: data.correct_answer != null ? String(data.correct_answer) : '',
       is_correct: !!data.is_correct,
       time_taken: Math.round(data.time_taken || 0)
     };
-    return fetch(HAKIM_API_URL, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-    }).then(function(r){ return r.json(); })
-      .catch(function(e){ console.warn('saveAnswer failed:', e); return { ok:false }; });
+    if (data.stage) payload.stage = String(data.stage);
+    if (data.attempts != null) payload.attempts = Number(data.attempts) || 1;
+    if (data.diagnostic) payload.diagnostic = String(data.diagnostic);
+    return sendTelemetryPayload(payload);
   }
 
 })(typeof window !== 'undefined' ? window : this);

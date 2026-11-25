@@ -23,10 +23,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>📖 راز گنج حکیم — حکیمستان</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
-<!-- اختیاری: اگر حکیم‌کور کنار همین فایل باشد استفاده می‌شود، وگرنه آواتار داخلی جایگزین می‌شود -->
-<!-- آواتار و گفتار حکیم کاملاً داخل همین فایل است؛ به هیچ فایل بیرونی نیاز نیست.
-     اگر «hakim-core.js» خودت را داری، خط زیر را از حالت توضیح بیرون بیاور تا به آن هم متصل شود:
-     <script src="hakim-core.js"></script> -->
+<!-- اتصال به هستهٔ مرکزی حکیمستان برای تله‌متری آفلاین و دسترس‌پذیری -->
+<script src="../hakim-core.js"></script>
 <style>
 /* ================================================================== */
 /* ۱) پایه، توکن‌ها و متغیرها                                          */
@@ -58,23 +56,36 @@
   --font-math:'Amiri', 'Vazirmatn', serif;
 }
 /* حالت شب — متن روشن روی آسمان تیره */
-body.night{
+body.night, body[data-theme="dark"]{
   --ink:#fdf6e8;
-  --ink-soft:#d9cbb8;
-  --ink-faint:rgba(253,246,232,.78);
+  --ink-soft:#e2d5c3;
+  --ink-faint:rgba(253,246,232,.84);
   --gold-ink:#ffd98a;
-  --card:rgba(22,20,46,.55);
-  --card-2:rgba(30,27,60,.72);
-  --card-brd:rgba(255,255,255,.2);
+  --card:rgba(22,20,46,.78);
+  --card-2:rgba(30,27,60,.88);
+  --card-brd:rgba(255,255,255,.24);
   --shadow:0 24px 60px rgba(0,0,0,.45);
+  background-color:#16142e;
+}
+@media (max-width:380px){
+  body{
+    padding-right:calc(env(safe-area-inset-right,0px) + 8px);
+    padding-left:calc(env(safe-area-inset-left,0px) + 8px);
+  }
+  .topctrl{ flex-wrap:wrap; gap:6px; padding:8px 10px; }
+  .tc-brand span{ font-size:.86rem; }
+  .ibtn{ width:34px; height:34px; font-size:15px; }
+  .start-card,.stage-card{ padding:16px 12px 18px; }
+  .records{ grid-template-columns:1fr; }
 }
 
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html,body{ margin:0; padding:0; }
+html,body{ margin:0; padding:0; overflow-x:clip; }
 html{ font-size:calc(16px * var(--fs)); }
 body{
   font-family:var(--font-body);
   color:var(--ink);
+  background-color:#ffe8d6;
   min-height:100dvh;
   padding: calc(env(safe-area-inset-top,0px) + 14px)
            calc(env(safe-area-inset-right,0px) + 14px)
@@ -362,10 +373,10 @@ body.night .q-tag.math-tag{ background:linear-gradient(90deg,#3a4a8a,#4a5aa8); c
 .opt:active:not(:disabled){ transform:scale(.98); }
 .opt:disabled{ cursor:default; }
 .opt .key{
-  flex:0 0 auto; min-width:24px; text-align:center; background:rgba(233,180,76,.3); color:var(--gold-ink);
+  flex:0 0 auto; min-width:24px; text-align:center; background:#fae1a4; color:#5c3408;
   border-radius:7px; font-size:.76rem; font-weight:800; padding:2px 5px;
 }
-body.night .opt .key{ background:rgba(233,180,76,.22); }
+body.night .opt .key, body[data-theme="dark"] .opt .key{ background:#3b2d1c; color:#ffe29a; }
 .opt .txt{ flex:1; }
 .opt.chosen{ background:rgba(233,180,76,.3); border-color:var(--gold-deep); }
 .opt.dim{ opacity:.4; }
@@ -534,9 +545,10 @@ body.calm *, body.calm *::before, body.calm *::after{
       <span class="chip" id="hudTime" title="زمان سفر">⏱ ۰۰:۰۰</span>
     </div>
     <div class="tc-audio">
-      <button class="ibtn fab" id="fabMusic" aria-label="موسیقی" title="موسیقی">🎵</button>
-      <button class="ibtn fab" id="fabSfx" aria-label="جلوه‌های صوتی" title="جلوه‌های صوتی">🔊</button>
-      <button class="ibtn fab" id="fabHelp" aria-label="راهنما" title="راهنما">❓</button>
+      <button class="ibtn fab" id="fabTheme" type="button" aria-label="تغییر حالت روز و شب" aria-pressed="false" title="تغییر حالت روز و شب">🌙</button>
+      <button class="ibtn fab" id="fabMusic" type="button" aria-label="موسیقی" title="موسیقی">🎵</button>
+      <button class="ibtn fab" id="fabSfx" type="button" aria-label="جلوه‌های صوتی" title="جلوه‌های صوتی">🔊</button>
+      <button class="ibtn fab" id="fabHelp" type="button" aria-label="راهنما" title="راهنما">❓</button>
     </div>
   </header>
 
@@ -982,15 +994,18 @@ var Fx = {
   night:false, running:false, dpr:1, w:0, h:0, confLoop:false,
 
   init:function(){
-    this.cv = $('fx'); this.cx = this.cv.getContext('2d');
-    this.cc = $('confetti'); this.cctx = this.cc.getContext('2d');
+    this.cv = $('fx'); this.cx = this.cv ? this.cv.getContext('2d') : null;
+    this.cc = $('confetti'); this.cctx = this.cc ? this.cc.getContext('2d') : null;
+    if(!this.cx || !this.cctx) return;
     this.resize();
     var self = this;
     window.addEventListener('resize', function(){ self.resize(); }, { passive:true });
     window.addEventListener('orientationchange', function(){ setTimeout(function(){ self.resize(); }, 250); });
     this.build();
     this.running = true;
-    requestAnimationFrame(function(){ self.loop(); });
+    if(!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)){
+      requestAnimationFrame(function(){ self.loop(); });
+    }
   },
   resize:function(){
     this.dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -1012,6 +1027,12 @@ var Fx = {
   },
   setNight:function(on){ this.night = !!on; },
   loop:function(){
+    if(!this.cx || !this.cctx) return;
+    if(document.body.classList.contains('calm') || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)){
+      this.cx.clearRect(0,0,this.w,this.h);
+      this.cctx.clearRect(0,0,this.w,this.h);
+      return;
+    }
     var self = this;
     if(!document.hidden){
       this.drawAmbient();
@@ -1256,7 +1277,7 @@ var STAGES_CLASSIC = [
       ]
     },
     maths:[
-      { type:'mcq', text:'توی باغ ۲۴ درخت سیب هست. اگه ۵/۸ میوه‌هاشون رسیده باشه، چند درخت میوه‌ی رسیده دارن؟', options:['۱۲','۱۵','۱۸','۲۱'], answer:1, explanation:'۲۴ ÷ ۸ = ۳ و ۳ × ۵ = ۱۵ درخت.' },
+      { type:'mcq', text:'توی باغ ۲۴ درخت سیب هست. اگه ۵/۸ میوه‌هاشون رسیده باشه، چند درخت میوهٔ رسیده دارن؟', options:['۱۲','۱۵','۱۸','۲۱'], answer:1, explanation:'۲۴ ÷ ۸ = ۳ و ۳ × ۵ = ۱۵ درخت.' },
       { type:'mcq', text:'در باغ ۴۰ گل هست و ۳/۵ آن‌ها لاله‌اند. چند تا لاله داریم؟', options:['۱۵','۲۰','۲۴','۳۰'], answer:2, explanation:'۴۰ ÷ ۵ = ۸ و ۸ × ۳ = ۲۴ لاله.' },
       { type:'mcq', text:'۵ ردیف درخت داریم و هر ردیف ۹ درخت. اگه ۱۲ درخت خشک شده باشه، چند درخت سبز مونده؟', options:['۳۱','۳۳','۳۵','۴۵'], answer:1, explanation:'۵ × ۹ = ۴۵ درخت و ۴۵ − ۱۲ = ۳۳ درخت سبز.' }
     ]
@@ -1334,9 +1355,9 @@ var STAGES_CLASSIC = [
     ]
   },
   {
-    id:'s7', title:'🏰 قلعه‌ی حکیم',
+    id:'s7', title:'🏰 قلعهٔ حکیم',
     sky:{ a:'#ffd98a', b:'#ff9a7a', c:'#ffc4a8' },
-    narrative:'به قلعه می‌رسی. حکیم صندوقی بزرگ نشونت می‌ده و می‌گه:\n«بازش کن… ولی این گنج، طلا نیست.»\nصندوق رو باز می‌کنی — توش یه آینه‌ست!\nحکیم می‌گه: «گنجی که دنبالش بودی، خودِ تو بودی. مهربونی و داناییات، ارزشمندترین گنجه.»',
+    narrative:'به قلعه می‌رسی. حکیم صندوقی بزرگ نشونت می‌ده و می‌گه:\n«بازش کن… ولی این گنج، طلا نیست.»\nصندوق رو باز می‌کنی — توش یه آینه‌ست!\nحکیم می‌گه: «گنجی که دنبالش بودی، خودِ تو بودی. مهربونی و دانایی‌ات، ارزشمندترین گنجه.»',
     choice:{
       question:'حالا که راز گنج رو فهمیدی، چیکار می‌کنی؟',
       options:[
@@ -1361,7 +1382,7 @@ var STAGES_EXTRA = [
     choice:{
       question:'فقط یه قمقمه آب داری. چیکار می‌کنی؟',
       options:[
-        { text:'🥤 همه‌ی آبم رو بهشون می‌دم', score:3, feedback:'بخشندگی در سخت‌ترین لحظه! 🌟' },
+        { text:'🥤 همهٔ آبم رو بهشون می‌دم', score:3, feedback:'بخشندگی در سخت‌ترین لحظه! 🌟' },
         { text:'🫗 نصفش رو باهاشون تقسیم می‌کنم', score:2, feedback:'انصاف و مهربانی با هم 💛' },
         { text:'🚰 آبم رو برای خودم نگه می‌دارم', score:-1, feedback:'شاید کسی تشنه بمونه… 😕' }
       ]
@@ -1389,7 +1410,7 @@ var STAGES_EXTRA = [
     ]
   },
   {
-    id:'x3', title:'🌙 چشمه‌ی ستاره‌ها', after:'s6',
+    id:'x3', title:'🌙 چشمهٔ ستاره‌ها', after:'s6',
     sky:{ a:'#2b2460', b:'#4b3d8a', c:'#232046', night:true },
     narrative:'به چشمه‌ای می‌رسی که ستاره‌ها توش می‌درخشن. خیلی خسته‌ای و دلت می‌خواد برگردی. حکیم آروم می‌گه: «قلعه نزدیکه؛ فقط یه قدم دیگه…»',
     choice:{
@@ -1441,7 +1462,7 @@ var OOPS = ['نزدیک بود! یه بار دیگه فکر کن 💪', 'اشک�
 var ENDINGS = [
   { min:0.90, icon:'🏆', title:'رازگشای بزرگ', text:'تو راز گنج رو نه‌تنها فهمیدی، بلکه زندگی کردی. مهربونی‌ات مثل خورشید به همه‌جا می‌تابه. حکیم به تو افتخار می‌کنه!' },
   { min:0.75, icon:'🌟', title:'گنج‌یاب دانا', text:'دل مهربون و ذهن دانای تو، گنج رو پیدا کرد. راهت روشنه، ای سالک!' },
-  { min:0.55, icon:'✨', title:'جوینده‌ی راز', text:'تو در مسیر درستی. هر قدمت، ذره‌ای از گنج رو روشن‌تر می‌کنه. ادامه بده!' },
+  { min:0.55, icon:'✨', title:'جویندهٔ راز', text:'تو در مسیر درستی. هر قدمت، ذره‌ای از گنج رو روشن‌تر می‌کنه. ادامه بده!' },
   { min:0.30, icon:'🎯', title:'مسافر کوشا', text:'سفر سختی بود و تو ادامه دادی. هر مسافر بزرگی یه روز از همین‌جا شروع کرده.' },
   { min:-9,   icon:'📖', title:'آغازگر راه', text:'آغاز هر حکیم، یه سفر کوچیکه. داستان تو تازه شروع شده و صفحاتش منتظر مهربونی توئه.' }
 ];
@@ -1566,13 +1587,15 @@ function applySky(st, index){
     var seq = ['#ff9a56','#ff6f91','#8fb6ff'];
     pal = { a:seq[0], b:seq[1], c:seq[2] };
   }
-  sky.style.setProperty('--sky-a', pal.a);
-  sky.style.setProperty('--sky-b', pal.b);
-  sky.style.setProperty('--sky-c', pal.c);
-  var night = !!pal.night;
+  var forceNight = !!SETTINGS.night;
+  var night = !!(pal.night || forceNight);
+  sky.style.setProperty('--sky-a', forceNight && !pal.night ? '#221c44' : pal.a);
+  sky.style.setProperty('--sky-b', forceNight && !pal.night ? '#33285c' : pal.b);
+  sky.style.setProperty('--sky-c', forceNight && !pal.night ? '#14132b' : pal.c);
   document.body.classList.toggle('night', night);
+  document.body.dataset.theme = night ? 'dark' : 'light';
   Fx.setNight(night);
-  if(night) S.sawNight = true;
+  if(pal.night) S.sawNight = true;
 }
 function renderScene(st, index){
   var box = $('scene');
@@ -1759,7 +1782,22 @@ function showMath(){
   var st = cur();
   var raw = pickMath(st);
   if(!raw){ advance(); return; }
-  var m = (S.diff === 'hard') ? toTextMath(raw) : raw;
+  var m = (S.diff === 'hard') ? toTextMath(raw) : (function(src){
+    if(!src || src.type === 'text' || !Array.isArray(src.options)) return src;
+    var indexed = src.options.map(function(txt, idx){ return { txt: txt, orig: idx }; });
+    for(var k = indexed.length - 1; k > 0; k--){
+      var r = Math.floor(Math.random() * (k + 1));
+      var tmp = indexed[k]; indexed[k] = indexed[r]; indexed[r] = tmp;
+    }
+    var newAns = indexed.findIndex(function(x){ return x.orig === Number(src.answer); });
+    return {
+      type: src.type || 'mcq',
+      text: src.text,
+      options: indexed.map(function(x){ return x.txt; }),
+      answer: newAns >= 0 ? newAns : 0,
+      explanation: src.explanation || ''
+    };
+  })(raw);
   S.math = m;
   S.phase = 'math';
   S.lock = false;
@@ -1890,7 +1928,22 @@ function answerMath(i){
   var m = S.math;
   S.lock = true;
   var cards = $$('#mathOpts .opt');
-  if(i === Number(m.answer)){
+  var isOk = (i === Number(m.answer));
+  if(window.Hakim && typeof window.Hakim.saveAnswer === 'function'){
+    var stg = cur() || {};
+    window.Hakim.saveAnswer({
+      student_name: S.name || 'سالک',
+      game_id: 'hakim-treasure',
+      experiment_id: stg.id || ('stage-' + (S.i + 1)),
+      question_id: (stg.id || ('stage-' + (S.i + 1))) + '-math',
+      question_text: m.text || '',
+      student_answer: m.options && m.options[i] != null ? String(m.options[i]) : String(i),
+      correct_answer: m.options && m.options[m.answer] != null ? String(m.options[m.answer]) : String(m.answer),
+      is_correct: isOk,
+      time_taken: Math.max(1, Math.round((Date.now() - (S.stageT0 || Date.now())) / 1000))
+    });
+  }
+  if(isOk){
     cards.forEach(function(c, j){ c.classList.remove('bad'); if(j === i) c.classList.add('good'); });
     showExplain(pick(CHEER));
     mathSolved();
@@ -1909,7 +1962,22 @@ function confirmTextAnswer(){
   var val = $('mathInput').value;
   if(!String(val).trim()){ $('mathInput').focus(); return; }
   S.lock = true;
-  if(ansEqual(val, m.answer)){
+  var isOk = ansEqual(val, m.answer);
+  if(window.Hakim && typeof window.Hakim.saveAnswer === 'function'){
+    var stg = cur() || {};
+    window.Hakim.saveAnswer({
+      student_name: S.name || 'سالک',
+      game_id: 'hakim-treasure',
+      experiment_id: stg.id || ('stage-' + (S.i + 1)),
+      question_id: (stg.id || ('stage-' + (S.i + 1))) + '-math-text',
+      question_text: m.text || '',
+      student_answer: String(val).trim(),
+      correct_answer: String(m.answer),
+      is_correct: isOk,
+      time_taken: Math.max(1, Math.round((Date.now() - (S.stageT0 || Date.now())) / 1000))
+    });
+  }
+  if(isOk){
     showExplain(pick(CHEER));
     mathSolved();
   } else {
@@ -1971,7 +2039,6 @@ function finish(){
      /* 📤 ارسال نتیجه به پنل معلم */
 function sendResultsToPanel(){
   try {
-    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     const totalScore = S.score + S.bonus;
     const accuracy = S.stages.length ? Math.round(((S.stages.length - Math.min(S.stages.length, S.errors)) / S.stages.length) * 100) : 0;
     const payload = {
@@ -1980,7 +2047,7 @@ function sendResultsToPanel(){
       student_class: '',
       student_school: '',
       game_id: 'hakim-treasure',
-      experiment_id: '',
+      experiment_id: S.journey || 'classic',
       duration: S.seconds,
       device: /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : 'دسکتاپ',
       score: totalScore,
@@ -2004,12 +2071,18 @@ function sendResultsToPanel(){
         sawNight: S.sawNight
       })
     };
+    if(window.Hakim && typeof window.Hakim.saveSession === 'function'){
+      window.Hakim.saveSession(payload);
+      return;
+    }
+    if(navigator.onLine === false) return;
+    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-    }).catch(function(e){ console.log('send result failed:', e); });
-  } catch(e) { console.log('sendResultsToPanel error:', e); }
+    }).catch(function(){});
+  } catch(e) {}
 }
 
 function endingFor(ratio){
@@ -2404,6 +2477,11 @@ function applySettings(){
   $('fabMusic').classList.toggle('on', !!SETTINGS.music);
   $('fabSfx').classList.toggle('off', !SETTINGS.sfx);
   $('fabSfx').classList.toggle('on', !!SETTINGS.sfx);
+  if($('fabTheme')){
+    $('fabTheme').textContent = SETTINGS.night ? '☀️' : '🌙';
+    $('fabTheme').setAttribute('aria-pressed', SETTINGS.night ? 'true' : 'false');
+    $('fabTheme').classList.toggle('on', !!SETTINGS.night);
+  }
   S.diff = SETTINGS.diff;
   $$('#diffSeg button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-diff') === SETTINGS.diff ? 'true' : 'false'); });
   if(SETTINGS.name && !$('nameInput').value) $('nameInput').value = SETTINGS.name;
@@ -2442,6 +2520,13 @@ $('btnHome2').addEventListener('click', function(){ Modal.close('modalResult'); 
 $('errClose').addEventListener('click', function(){ Modal.close('modalError'); });
 $('helpClose').addEventListener('click', function(){ Audio_.click(); Modal.close('modalHelp'); });
 $('fabHelp').addEventListener('click', function(){ Audio_.click(); Modal.open('modalHelp'); });
+if($('fabTheme')) $('fabTheme').addEventListener('click', function(){
+  Audio_.click();
+  SETTINGS.night = !SETTINGS.night; saveSettings();
+  applySettings();
+  applySky(S.started && cur() ? cur() : { sky:{ a:'#ff9a56', b:'#ff6f91', c:'#8fb6ff' } }, S.i || 0);
+  toast(SETTINGS.night ? '🌙 حالت شب فعال شد' : '☀️ حالت روز فعال شد', 1500);
+});
 $('fabMusic').addEventListener('click', function(){
   SETTINGS.music = !SETTINGS.music; saveSettings();
   Audio_.setMusic(SETTINGS.music); applySettings();
@@ -2557,6 +2642,10 @@ window.addEventListener('pagehide', function(){ if(S.started && !S.done) saveRes
 
      /* 📥 لود سؤالات از پنل معلم */
 function loadServerQuestions(callback){
+  if(navigator.onLine === false){
+    if(callback) callback();
+    return;
+  }
   const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
   fetch(API_URL, {
     method: 'POST',
@@ -2572,15 +2661,13 @@ function loadServerQuestions(callback){
           customMeta = { title: 'گنج حکیم (از پنل معلم)' };
           S.customTitle = customMeta.title;
           S.journey = 'custom';
-          renderStartMeta();
-          console.log('✅ ' + stages.length + ' مرحله از پنل معلم لود شد');
+          if($('startBtn')) renderStartMeta();
         }
       }
-      if(callback) callback();
+      if(callback && $('startBtn')) callback();
     })
-    .catch(function(e){
-      console.warn('loadServerQuestions failed:', e);
-      if(callback) callback();
+    .catch(function(){
+      if(callback && $('startBtn')) callback();
     });
 }
 
@@ -2654,6 +2741,7 @@ window.HakimTreasure = {
       else ref = 'سایر';
     }
 
+    if (navigator.onLine === false) return;
     fetch(API, {
       method: 'POST',
       mode: 'no-cors',

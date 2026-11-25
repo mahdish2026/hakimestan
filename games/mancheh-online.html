@@ -52,15 +52,68 @@
   --p0:#e8543f; --p1:#2f9e44; --p2:#f0b429; --p3:#3f7fd6;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;}
+html,body{height:100%;overflow-x:clip;}
 body{
   font-family:var(--font);
   color:var(--cream);
+  background-color:#08192b;
   min-height:100vh;min-height:100dvh;
   overflow-x:hidden;
   line-height:1.8;
   -webkit-font-smoothing:antialiased;
   background:var(--night);
+}
+body[data-theme="light"]{
+  --night:#f4efe4;
+  --cream:#10283c;
+  --cream-2:#1d3b54;
+  --muted:#47637a;
+  --glass:rgba(255,255,255,.92);
+  --line:rgba(16,40,60,.22);
+  --gold:#9a6708;
+  --gold-lite:#7a4f04;
+  background-color:#f4efe4;
+  color:#10283c;
+}
+body[data-theme="light"] .bg{
+  background:
+    radial-gradient(1100px 620px at 82% -12%, rgba(30,167,160,.16), transparent 62%),
+    radial-gradient(900px 640px at 8% 108%, rgba(224,172,63,.16), transparent 60%),
+    linear-gradient(170deg,#f9f5eb 0%,#efe6d3 50%,#e6dac2 100%);
+}
+body[data-theme="light"] .card,
+body[data-theme="light"] .hud,
+body[data-theme="light"] .modal-card,
+body[data-theme="light"] .hakim-slot .hakim-panel,
+body[data-theme="light"] .music-btn,
+body[data-theme="light"] .theme-btn{
+  background:#ffffff;color:#10283c;border-color:rgba(16,40,60,.2);box-shadow:0 10px 28px rgba(16,40,60,.1);
+}
+body[data-theme="light"] .inp,
+body[data-theme="light"] .seg button,
+body[data-theme="light"] .opt{
+  background:#f8f5ee;color:#10283c;border-color:rgba(16,40,60,.24);
+}
+body[data-theme="light"] .subtitle,
+body[data-theme="light"] .lab,
+body[data-theme="light"] .help-list{color:#2c4a63;}
+.theme-btn{
+  position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:calc(68px + env(safe-area-inset-left,0px));
+  z-index:1000;width:46px;height:46px;border-radius:50%;
+  background:var(--glass);border:1.5px solid var(--line);
+  box-shadow:0 8px 24px -8px rgba(0,0,0,.6);
+  font-size:1.15rem;display:flex;align-items:center;justify-content:center;
+}
+.offline-banner{
+  margin:12px 0;padding:12px 14px;border-radius:16px;
+  background:#2b1d0e;border:1.5px solid #f59e0b;color:#fde68a;
+  font-size:.9rem;text-align:right;line-height:1.8;
+}
+body[data-theme="light"] .offline-banner{background:#fff7ed;color:#7c2d12;}
+.offline-banner a{display:inline-block;margin-top:6px;padding:6px 12px;border-radius:10px;background:#1ea7a0;color:#fff;font-weight:700;}
+@media(max-width:380px){
+  #app{padding-inline:10px;}
+  .card{padding:14px 12px;}
 }
 button{font-family:inherit;touch-action:manipulation;cursor:pointer;border:none;background:none;color:inherit;}
 a{text-decoration:none;color:inherit;}
@@ -410,7 +463,7 @@ input,select{font-family:inherit;}
 #toast{
   position:fixed;left:50%;bottom:78px;transform:translate(-50%,24px);z-index:1400;
   padding:12px 20px;border-radius:99px;font-weight:900;font-size:.9rem;
-  background:rgba(12,40,64,.96);border:1.5px solid rgba(224,172,63,.5);color:var(--cream);
+  background:#0c2840;border:1.5px solid rgba(224,172,63,.5);color:#fbf3e0;
   box-shadow:0 14px 30px -12px rgba(0,0,0,.9);backdrop-filter:blur(8px);
   opacity:0;pointer-events:none;transition:.32s cubic-bezier(.22,1,.36,1);max-width:90vw;text-align:center;
 }
@@ -462,8 +515,9 @@ details.help[open] summary::before{transform:rotate(90deg);}
   <div class="stars" id="stars"></div>
 </div>
 
-<button class="music-btn" id="musicBtn" aria-label="موسیقی"><span class="m-ic" id="musicIcon">🔇</span></button>
-<div class="conn" id="connDot">🟢 متصل</div>
+<button type="button" class="music-btn" id="musicBtn" aria-label="موسیقی"><span class="m-ic" id="musicIcon">🔇</span></button>
+<button type="button" class="theme-btn" id="themeBtn" aria-label="تغییر حالت روز و شب" aria-pressed="false" title="تغییر حالت روز و شب">☀️</button>
+<div class="conn" id="connDot" role="status" aria-live="polite">🟢 متصل</div>
 <audio id="music" loop preload="none"></audio>
 
 <div id="app">
@@ -494,6 +548,10 @@ details.help[open] summary::before{transform:rotate(90deg);}
       <h1 class="game-title">منچِ دانش</h1>
       <p class="subtitle">جواب درست بده، تاس بینداز، مهره‌هایت را به خانه برسان!</p>
       <div class="rule-line">۲ تا ۴ نفر • هر کس با گوشی خودش</div>
+      <div class="offline-banner" id="offlineNotice" role="status" aria-live="polite" hidden>
+        📡 دستگاه شما آفلاین است. ساخت یا ورود به اتاق آنلاین به اینترنت نیاز دارد، اما همین الان می‌توانی نسخهٔ آفلاین چندنفرهٔ مار و پلهٔ دانش را بازی کنی:<br>
+        <a href="snake-ladder.html">🎮 ورود به مار و پلهٔ آفلاین</a>
+      </div>
       <div class="hakim-slot" id="hakimHome"></div>
     </div>
 
@@ -536,7 +594,8 @@ details.help[open] summary::before{transform:rotate(90deg);}
     <div class="card">
       <div class="card-t">🔑 با کد اتاق وارد شو</div>
       <div class="field">
-        <input class="inp code" id="codeInp" inputmode="numeric" maxlength="4" placeholder="۰۰۰۰">
+        <label class="lab" for="codeInp">کد ۴ رقمی اتاق</label>
+        <input class="inp code" id="codeInp" inputmode="numeric" maxlength="4" placeholder="۰۰۰۰" aria-label="کد ۴ رقمی اتاق">
       </div>
       <button class="btn teal" id="joinBtn">🚪 ورود به اتاق</button>
     </div>
@@ -700,8 +759,8 @@ const DEFAULT_HQF = {
     { "id":"q6","type":"blank","section":"فصل ۶: اسکلت بدن",
       "text":"در محل مفصل، در سر استخوان‌ها __ وجود دارد.","answer":["غضروف"],"score":1 },
     { "id":"q7","type":"mcq","section":"فصل ۵: اندام‌های حسی",
-      "text":"شبکیه در کدام لایه‌ی کره‌ی چشم قرار دارد؟",
-      "options":["داخلی‌ترین","خارجی‌ترین","میانی","همه‌ی لایه‌ها"],"answer":0,"score":1 },
+      "text":"شبکیه در کدام لایهٔ کرهٔ چشم قرار دارد؟",
+      "options":["داخلی‌ترین","خارجی‌ترین","میانی","همهٔ لایه‌ها"],"answer":0,"score":1 },
     { "id":"q8","type":"short","section":"فصل ۵: اندام‌های حسی",
       "text":"چشم، اندام حس .......... است.","answer":["بینایی","بینایی است"],"score":1 },
     { "id":"q9","type":"mcq","section":"فصل ۶: اسکلت بدن",
@@ -1569,6 +1628,7 @@ async function syncTokens(ev){
 }
 
 function burst(x, y, color){
+  if(REDUCED || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   /* جرقه روی مختصات SVG → تبدیل به صفحه */
   try{
     const r = boardEl.getBoundingClientRect();
@@ -1893,7 +1953,7 @@ function renderQuestion(q){
 
   if(q.type === 'mcq' || q.type === 'dropdown'){
     const wrap = document.createElement('div'); wrap.className = 'opts';
-    (q.options || []).forEach((o,i) => {
+    shuffle(q.options || []).forEach((o,i) => {
       const b = document.createElement('button');
       b.className = 'opt'; b.type = 'button';
       b.innerHTML = '<span class="k">' + (LETTERS[i] || (i+1)) + '</span><span>' + esc(o) + '</span>';
@@ -1972,6 +2032,20 @@ async function submitAnswer(given, btnEl){
   stopQTimer();
   const q = currentQ;
   const ok = checkLocal(q, given);
+  if(window.Hakim && typeof Hakim.saveAnswer === 'function' && q){
+    const sentAns = (Array.isArray(given) ? given.join(' | ') : String(given));
+    Hakim.saveAnswer({
+      student_name: room.myName || 'بازیکن',
+      game_id: GAME_ID,
+      experiment_id: room.code || 'online',
+      question_id: String(q.id || 'q'),
+      question_text: String(q.text || ''),
+      student_answer: sentAns === TIMEOUT_ANSWER ? '(وقت تمام شد)' : sentAns,
+      correct_answer: correctAnswerText(q),
+      is_correct: !!ok,
+      time_taken: 5
+    });
+  }
 
   /* بازخورد بصری */
   const opts = Array.from($('qBody').querySelectorAll('.opt'));
@@ -2168,11 +2242,20 @@ function sendMyResult(wIdx, wName){
         standings: room.players.map(p => p.name + ': ' + homeCount(p) + ' مهره در خانه').join(' • ')
       })
     };
-    console.log('📤 ارسال نتیجه به پنل معلم:', payload.student_name, '— امتیاز', payload.score);
-    fetch(API_URL, {
-      method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload), keepalive:true
-    }).then(()=>console.log('✅ نتیجه ثبت شد')).catch(e=>console.warn('⚠️ ثبت نتیجه ناموفق:', e && e.message));
+    const sessionObj = Object.assign({}, payload, {
+      action: 'session',
+      duration: Math.round(dur),
+      device: /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : 'دسکتاپ'
+    });
+    if(window.Hakim && typeof Hakim.saveSession === 'function'){
+      Hakim.saveSession(sessionObj);
+    }
+    if(navigator.onLine !== false){
+      fetch(API_URL, {
+        method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload), keepalive:true
+      }).catch(() => {});
+    }
   }catch(e){ console.warn('sendMyResult:', e); }
 }
 
@@ -2285,9 +2368,11 @@ function showError(msg){
   $('errModal').classList.remove('hidden');
 }
 function celebrate(){
+  if(REDUCED || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   const layer = $('fx');
+  if(!layer) return;
   const colors = ['#e0ac3f','#39d0c4','#e8543f','#2f9e44','#3f7fd6','#f6d488'];
-  const n = REDUCED ? 18 : 80;
+  const n = 80;
   for(let i=0;i<n;i++){
     const c = document.createElement('span');
     c.className = 'confetti';
@@ -2325,6 +2410,10 @@ $('maxRow').addEventListener('click', e => {
 });
 
 $('createBtn').addEventListener('click', async () => {
+  if(navigator.onLine === false){
+    showError('دستگاه شما به اینترنت متصل نیست.<br>برای بازی بدون اینترنت می‌توانی وارد <a href="snake-ladder.html" style="text-decoration:underline;font-weight:700">نسخهٔ آفلاین مار و پلهٔ دانش</a> شوی.');
+    return;
+  }
   const btn = $('createBtn');
   if(btn.disabled) return;
   btn.disabled = true; btn.textContent = '⏳ در حال ساخت اتاق…';
@@ -2345,6 +2434,10 @@ $('createBtn').addEventListener('click', async () => {
 });
 
 $('joinBtn').addEventListener('click', async () => {
+  if(navigator.onLine === false){
+    showError('دستگاه شما به اینترنت متصل نیست.<br>برای بازی بدون اینترنت می‌توانی وارد <a href="snake-ladder.html" style="text-decoration:underline;font-weight:700">نسخهٔ آفلاین مار و پلهٔ دانش</a> شوی.');
+    return;
+  }
   const btn = $('joinBtn');
   const code = faToEn($('codeInp').value).replace(/\D/g,'').slice(0,4);
   if(code.length !== 4){ toast('کد اتاق باید ۴ رقم باشد'); $('codeInp').focus(); return; }
@@ -2469,6 +2562,34 @@ try{
 hakimReact('welcome');
 console.log('%c🎲 منچِ دانش آنلاین — حکیمستان', 'font-size:15px;font-weight:bold;color:#e0ac3f');
 console.log('سرور:', API_URL);
+(function initManchehThemeAndOffline(){
+  const tb = $('themeBtn');
+  const apply = (th) => {
+    const light = th === 'light';
+    document.body.dataset.theme = light ? 'light' : 'dark';
+    if(tb){
+      tb.textContent = light ? '🌙' : '☀️';
+      tb.setAttribute('aria-pressed', light ? 'true' : 'false');
+    }
+  };
+  let saved = 'dark';
+  try{ saved = localStorage.getItem('hakim_mancheh_theme') || 'dark'; }catch(e){}
+  apply(saved);
+  if(tb) tb.addEventListener('click', () => {
+    const nxt = document.body.dataset.theme === 'light' ? 'dark' : 'light';
+    try{ localStorage.setItem('hakim_mancheh_theme', nxt); }catch(e){}
+    apply(nxt);
+  });
+  const syncOfflineUI = () => {
+    const off = navigator.onLine === false;
+    const ban = $('offlineNotice');
+    if(ban) ban.hidden = !off;
+    setConn(!off);
+  };
+  syncOfflineUI();
+  window.addEventListener('online', syncOfflineUI);
+  window.addEventListener('offline', syncOfflineUI);
+})();
 </script>
 
 <script src="../back-to-lobby.js"></script>
@@ -2513,6 +2634,7 @@ console.log('سرور:', API_URL);
       else ref = 'سایر';
     }
 
+    if (navigator.onLine === false) return;
     fetch(API, {
       method: 'POST',
       mode: 'no-cors',

@@ -17,7 +17,7 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="css/a11y.css">
+<link rel="stylesheet" href="css/fonts.css">
 <style>
 :root{
   --bg:#0d0a1f; --bg2:#171033; --violet:#8b5cf6; --violet-deep:#6d28d9;
@@ -140,7 +140,7 @@ footer a{color:var(--gold)}
       <section class="card" aria-labelledby="h-android">
         <h2 id="h-android"><span aria-hidden="true">🤖</span> اندروید (Chrome، Edge، Samsung)</h2>
         <ol>
-          <li>مرورگر را باز کنید و به <b>hakimestan</b> بروید.</li>
+          <li>مرورگر را باز کنید و به <b>hakimistan.ir</b> بروید.</li>
           <li>منوی سه‌نقطهٔ بالا را بزنید.</li>
           <li>گزینهٔ <b>«افزودن به صفحهٔ اصلی»</b> یا <b>«نصب برنامه»</b> را انتخاب کنید.</li>
           <li>روی <b>«نصب»</b> بزنید. آیکون حکیمستان روی صفحهٔ اصلی ظاهر می‌شود.</li>
@@ -170,18 +170,18 @@ footer a{color:var(--gold)}
       <section class="card" aria-labelledby="h-faq">
         <h2 id="h-faq"><span aria-hidden="true">❓</span> پرسش‌های رایج</h2>
         <ul>
-          <li><b>حجم دانلود چقدر است؟</b> فقط چند صد کیلوبایت؛ بازی‌ها و ابزارها به‌صورت تدریجی کش می‌شوند.</li>
+          <li><b>حجم دانلود چقدر است؟</b> فقط چند صد کیلوبایت برای هستهٔ اصلی؛ بازی‌ها و ابزارها به‌صورت تدریجی کش می‌شوند.</li>
           <li><b>چطور حذف کنم؟</b> آیکون را نگه دارید و «حذف» را بزنید — مثل هر برنامهٔ دیگر.</li>
-          <li><b>آفلاین کار می‌کند؟</b> بله. لابی، بازی‌های آفلاین و آزمون‌ساز بدون اینترنت کار می‌کنند.</li>
-          <li><b>اطلاعات من کجاست؟</b> همهٔ داده‌ها روی دستگاه خودتان ذخیره می‌شود (localStorage).</li>
+          <li><b>آفلاین کار می‌کند؟</b> بله. لابی، بازی‌های تک‌نفره، مدرسهٔ ریاضی و هر ۷ ابزار معلم بدون اینترنت در دسترس‌اند.</li>
+          <li><b>اطلاعات من کجاست؟</b> پیش‌نویس‌ها، نمرات و یادداشت‌های معلم روی دستگاه خودتان (localStorage و IndexedDB) ذخیره می‌شود.</li>
         </ul>
       </section>
     </div>
 
     <div class="feature-list">
       <div class="feature"><strong>⚡ راه‌اندازی سریع</strong><small>بارگذاری فوری پس از نصب، حتی با اینترنت ضعیف.</small></div>
-      <div class="feature"><strong>📴 کارکرد آفلاین</strong><small>بازی‌ها و آزمون‌ساز بدون اینترنت هم در دسترس‌اند.</small></div>
-      <div class="feature"><strong>🔒 بدون دنبال‌کردن</strong><small>بدون تبلیغ، بدون ردیاب و بدون ارسال داده به بیرون.</small></div>
+      <div class="feature"><strong>📴 کارکرد آفلاین</strong><small>بازی‌ها، مدرسهٔ ریاضی و هر ۷ ابزار معلم بدون اینترنت هم کار می‌کنند.</small></div>
+      <div class="feature"><strong>🔒 بدون تبلیغ تجاری</strong><small>محیط آموزشی امن و بدون تبلیغات مزاحم، با قابلیت پشتیبان‌گیری محلی.</small></div>
       <div class="feature"><strong>♿ دسترس‌پذیری</strong><small>پشتیبانی از صفحه‌خوان، کنتراست بالا و کاهش انیمیشن.</small></div>
     </div>
 
@@ -200,46 +200,64 @@ footer a{color:var(--gold)}
   'use strict';
   var btn = document.getElementById('installBtn');
   var status = document.getElementById('pwaStatus');
+  var currentIcon = '⏳';
+  var currentMsg = '';
 
-  function setStatus(html) { status.innerHTML = html; }
+  function setStatus(icon, msg, extra) {
+    currentIcon = icon;
+    currentMsg = msg;
+    while (status.firstChild) status.removeChild(status.firstChild);
+    var ic = document.createElement('span');
+    ic.setAttribute('aria-hidden', 'true');
+    ic.textContent = icon;
+    status.appendChild(ic);
+    status.appendChild(document.createTextNode(' ' + msg));
+    if (extra) {
+      status.appendChild(document.createElement('br'));
+      var sm = document.createElement('small');
+      sm.style.opacity = '.75';
+      sm.textContent = extra;
+      status.appendChild(sm);
+    }
+  }
 
   var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 
   if (standalone) {
     btn.hidden = true;
-    setStatus('<span aria-hidden="true">✅</span> حکیمستان همین حالا نصب است و در حالت برنامه اجرا می‌شود.');
+    setStatus('✅', 'حکیمستان همین حالا نصب است و در حالت برنامه اجرا می‌شود.');
   } else if (window.HakimPWA && window.HakimPWA.installable) {
-    setStatus('<span aria-hidden="true">🎉</span> دستگاه شما از نصب پشتیبانی می‌کند — دکمهٔ «نصب روی این دستگاه» را بزنید.');
+    setStatus('🎉', 'دستگاه شما از نصب پشتیبانی می‌کند — دکمهٔ «نصب روی این دستگاه» را بزنید.');
   } else {
-    setStatus('<span aria-hidden="true">ℹ️</span> مرورگر شما دکمهٔ نصب خودکار را نشان نمی‌دهد؛ از راهنمای بالا استفاده کنید.');
+    setStatus('\u2139\uFE0F', 'مرورگر شما دکمهٔ نصب خودکار را نشان نمی‌دهد؛ از راهنمای بالا استفاده کنید.');
   }
 
   btn.addEventListener('click', function () {
     if (window.HakimPWA && window.HakimPWA.installable) {
       window.HakimPWA.promptInstall();
     } else {
-      setStatus('<span aria-hidden="true">ℹ️</span> نصب خودکار در دسترس نیست. راهنمای مرورگر خود را در بالا ببینید.');
+      setStatus('\u2139\uFE0F', 'نصب خودکار در دسترس نیست. راهنمای مرورگر خود را در بالا ببینید.');
       if (window.HakimA11y) window.HakimA11y.announce('نصب خودکار در دسترس نیست؛ راهنمای بالا را بخوانید.');
     }
   });
 
   window.addEventListener('beforeinstallprompt', function () {
     btn.hidden = false;
-    setStatus('<span aria-hidden="true">🎉</span> دستگاه شما از نصب پشتیبانی می‌کند — دکمهٔ «نصب روی این دستگاه» را بزنید.');
+    setStatus('🎉', 'دستگاه شما از نصب پشتیبانی می‌کند — دکمهٔ «نصب روی این دستگاه» را بزنید.');
   });
 
   window.addEventListener('appinstalled', function () {
     btn.hidden = true;
-    setStatus('<span aria-hidden="true">✅</span> آفرین! حکیمستان با موفقیت نصب شد.');
+    setStatus('✅', 'آفرین! حکیمستان با موفقیت نصب شد.');
   });
 
   // آمار کش برای کنجکاوها
   if (window.HakimPWA && window.HakimPWA.getCacheStats) {
     window.HakimPWA.getCacheStats().then(function (stats) {
       if (!stats) return;
-      var total = Object.keys(stats).reduce(function (a, k) { return a + stats[k]; }, 0);
+      var total = Object.keys(stats).reduce(function (a, k) { return a + (Number(stats[k]) || 0); }, 0);
       if (total > 0) {
-        setStatus(status.innerHTML + ' <br><small style="opacity:.75">' + total + ' فایل برای استفادهٔ آفلاین ذخیره شده است.</small>');
+        setStatus(currentIcon, currentMsg, total.toLocaleString('fa-IR') + ' فایل برای استفادهٔ آفلاین ذخیره شده است.');
       }
     });
   }
