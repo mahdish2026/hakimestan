@@ -4,7 +4,6 @@
 <!-- hakim-csp:start -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
 <!-- hakim-csp:end -->
-
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
 <!-- hakim-core:end -->
@@ -16,20 +15,9 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <meta name="description" content="آزمون‌ساز حکیمستان — ابزار حرفه‌ای طراحی، چاپ و برگزاری آزمون برای معلمان">
 <title>آزمون‌ساز حکیمستان</title>
-<!-- فونت رابط کاربری — محلی و بدون تأخیر شبکه -->
+<!-- فونت‌های رابط کاربری و استودیوی طراحی آزمون — ۱۰۰٪ محلی، بدون وابستگی به شبکه -->
 <link rel="stylesheet" href="css/fonts.css">
-<!-- فونت‌های اختیاری برگهٔ آزمون (انتخاب معلم) — غیرمسدودکننده،
-     تا اولین رنگ‌آمیزی صفحه منتظر دامنهٔ بیرونی نماند -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" media="print" onload="this.media='all'"
-      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Estedad:wght@300;400;500;700;900&family=Harmattan:wght@400;700&family=Katibeh&family=Lalezar&family=Markazi+Text:wght@400;600;700&family=Mirza:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Estedad:wght@300;400;500;700;900&family=Harmattan:wght@400;700&family=Katibeh&family=Lalezar&family=Markazi+Text:wght@400;600;700&family=Mirza:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"></noscript>
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/samim-font@v4.0.5/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/parastoo-font@v2.0.1/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/gandom-font@v0.6/dist/font-face.css" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="css/azmoon-fonts.css">
 <script src="assets/vendor/html2canvas.min.js" defer></script>
 <style>
 /* ============ فونت‌های محلی (اگر روی دستگاه نصب باشند) ============ */
@@ -150,6 +138,7 @@ a{color:var(--accent)}
 .top{position:sticky;top:0;z-index:40;background:var(--top);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--border)}
 .topin{max-width:1320px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.15rem;color:var(--accent);white-space:nowrap}
+.brand h1{font:inherit;color:inherit;margin:0;line-height:1.25}
 .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);display:grid;place-items:center;box-shadow:var(--shadow-sm);flex:none}
 .logo .ic{width:22px;height:22px;stroke-width:2.2}
 .brand small{display:block;font-size:.68rem;font-weight:600;color:var(--muted);line-height:1.2}
@@ -164,6 +153,8 @@ a{color:var(--accent)}
 .iconbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;transition:all .2s var(--ease);flex:none}
 .iconbtn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
 .iconbtn .ic{width:20px;height:20px}
+.lobby-link{height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-size:.8rem;font-weight:800;white-space:nowrap;transition:all .2s var(--ease);flex:none}
+.lobby-link:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
 .menu{position:absolute;top:calc(100% + 8px);left:0;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:8px;min-width:220px;box-shadow:var(--shadow);z-index:60;display:grid;gap:3px;animation:pop .18s var(--ease)}
 @keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
 .menu-title{font-size:.72rem;color:var(--muted);font-weight:800;padding:4px 8px 8px;border-bottom:1px dashed var(--border);margin-bottom:3px}
@@ -332,21 +323,20 @@ details.acc>.acc-body{padding:4px 16px 16px;border-top:1px dashed var(--border)}
 .toast.ok .ic{color:var(--success)}.toast.info .ic{color:var(--info)}
 .toast button{border:0;background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:4px 10px;font-weight:800;font-size:.8rem}
 @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.hakim{position:fixed;left:14px;bottom:14px;z-index:30;display:flex;align-items:flex-end;gap:8px;direction:ltr;transition:opacity .35s,transform .35s;max-width:min(320px,80vw)}
-.hakim.off{opacity:0;transform:translateY(10px);pointer-events:none}
+.hakim{position:fixed;inset-inline-start:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:flex-end;gap:8px;direction:rtl;width:min(352px,calc(100vw - 84px));max-width:min(352px,calc(100vw - 84px));opacity:1;transform:translate3d(0,0,0);will-change:opacity,transform;transition:opacity .3s var(--ease),transform .3s var(--ease);contain:layout style;cursor:pointer;pointer-events:auto}
+.hakim.off{opacity:0;transform:translate3d(0,10px,0);pointer-events:none}
 .hakim .av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);border:2px solid var(--card);box-shadow:var(--shadow-sm);flex:none}
-.hakim{cursor:pointer}.hakim .bub{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:14px 14px 14px 4px;padding:9px 12px;font-size:.8rem;box-shadow:var(--shadow);direction:rtl;line-height:1.6}
-#hakim{max-width:min(380px,88vw)}
-#hakim .hakim-panel{margin:0;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;overflow:visible;gap:8px;align-items:flex-end;direction:ltr}
+.hakim .bub{flex:1;min-width:0;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:14px 14px 4px 14px;padding:9px 12px;font-size:.8rem;box-shadow:var(--shadow);direction:rtl;line-height:1.6}
+#hakim .hakim-panel{display:flex!important;width:100%;margin:0;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;overflow:visible;gap:8px;align-items:flex-end;direction:rtl;animation:none!important}
 #hakim .hakim-panel::before{display:none}
-#hakim .hakim-avatar{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 28%,#ffe9b0 0%,#e9b44c 42%,#8a5a1a 100%);box-shadow:0 0 16px rgba(233,180,76,.4),inset 0 -3px 8px rgba(0,0,0,.35);flex:none}
+#hakim .hakim-avatar{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 30% 28%,#ffe9b0 0%,#e9b44c 42%,#8a5a1a 100%);box-shadow:0 0 16px rgba(233,180,76,.4),inset 0 -3px 8px rgba(0,0,0,.35);flex:none}
 #hakim .hakim-face{background:radial-gradient(circle at 42% 30%,#2c2040 0%,#120a1e 100%);box-shadow:inset 0 0 8px rgba(0,0,0,.7)}
 #hakim .hakim-glow{inset:-5px}
-#hakim .hakim-bubble{flex:1;min-width:0;background:var(--card);border:1px solid var(--border);border-radius:14px 14px 14px 4px;padding:8px 12px;box-shadow:var(--shadow);direction:rtl;text-align:right}
+#hakim .hakim-bubble{flex:1;min-width:0;background:var(--card);border:1px solid var(--border);border-radius:14px 14px 4px 14px;padding:8px 12px;box-shadow:var(--shadow);direction:rtl;text-align:right}
 #hakim .hakim-bubble::after{display:none}
 #hakim .hakim-name{display:none}
-#hakim .hakim-text{font-size:.8rem;color:var(--text);line-height:1.6;font-weight:500}
-@media(max-width:700px){#hakim .hakim-avatar{width:52px;height:52px}#hakim .hakim-text{font-size:.75rem}}
+#hakim .hakim-text{font-size:.8rem;color:var(--text);line-height:1.6;font-weight:500;min-height:1.6em}
+@media(max-width:700px){#hakim{inset-inline-start:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(310px,calc(100vw - 76px));max-width:min(310px,calc(100vw - 76px))}#hakim .hakim-avatar{width:48px;height:48px}#hakim .hakim-text{font-size:.75rem}}
 
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;animation:fade .2s}
 .modal{background:var(--card);border:1px solid var(--border-2);border-radius:18px;padding:20px;width:min(640px,100%);max-height:90dvh;overflow:auto;box-shadow:var(--shadow)}
@@ -359,17 +349,27 @@ iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px 
   body{font-size:14px}.wrap{padding:12px 10px 90px}.card{padding:14px;border-radius:14px}
   .topin{padding:8px 10px;gap:8px}.brand{font-size:1rem}.brand small{display:none}.logo{width:34px;height:34px}
   .tabs{order:3;width:100%;flex:none}.tab{padding:7px 11px;font-size:.82rem;min-height:36px}
-  .hdr-actions{margin-inline-start:auto}.savebadge span{display:none}
+  .hdr-actions{margin-inline-start:auto}.savebadge span{display:none}.lobby-link{width:40px;padding:0}.lobby-link .lobby-txt{display:none}
   .g2,.g3,.g4,.auto{grid-template-columns:1fr}
   .card-head{flex-direction:column;align-items:stretch}.card-head .btnrow{width:100%}.card-head .btnrow .btn{flex:1}
   .pair{grid-template-columns:1fr auto;grid-auto-rows:auto}.pair .arrow{display:none}
   .exports{grid-template-columns:repeat(2,1fr)}.exp{min-height:110px;padding:14px 8px}
   .tpl-grid{grid-template-columns:repeat(3,1fr)}.fontgrid{grid-template-columns:repeat(2,1fr)}
-  .hakim{left:10px;bottom:10px}.hakim{cursor:pointer}.hakim .bub{font-size:.75rem}
+  .hakim .bub{font-size:.75rem}
   iframe.online-frame{height:70dvh}
 }
 @media(max-width:420px){.tpl-grid{grid-template-columns:repeat(2,1fr)}.tab .tl{display:none}.tab{padding:8px 10px}.tab.active .tl{display:inline}}
-@media print{body{background:#fff}.top,.footer,.hakim,.toast-wrap,.no-print{display:none!important}.wrap{padding:0;max-width:none}.card{border:0;box-shadow:none;padding:0}}
+#azmoonPrintArea{display:none}
+@page{size:A4 portrait;margin:8mm}
+@media print{
+  html,body{background:#fff!important;color:#000!important;margin:0!important;padding:0!important}
+  .top,.footer,.hakim,.toast-wrap,.no-print,#a11y-toolbar,#hakimBackBtn,#hk-install-banner,.modal-bg,#app{display:none!important}
+  #azmoonPrintArea{display:block!important;margin:0!important;padding:0!important;background:#fff!important}
+  #azmoonPrintArea .paper{transform:none!important;box-shadow:none!important;margin:0 auto!important;width:auto!important;max-width:100%!important;min-height:0!important}
+  .wrap{padding:0!important;max-width:none!important}
+  .card{border:0!important;box-shadow:none!important;padding:0!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
 </style>
 <!-- hakim-meta:start -->
 <link rel="canonical" href="https://hakimistan.ir/azmoon-saz.html">
@@ -442,7 +442,7 @@ iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px 
 </svg>
 
 <header class="top"><div class="topin">
-  <div class="brand"><span class="logo"><svg class="ic"><use href="#i-cap"/></svg></span><span>آزمون‌ساز حکیمستان<small>طراح و توسعه‌دهنده: مهدی شریفیان</small></span></div>
+  <div class="brand"><span class="logo"><svg class="ic"><use href="#i-cap"/></svg></span><div><h1>آزمون‌ساز حکیمستان</h1><small>طراح و توسعه‌دهنده: مهدی شریفیان</small></div></div>
   <nav class="tabs" id="tabs" aria-label="بخش‌ها"></nav>
   <div class="hdr-actions">
     <div class="savebadge" id="saveBadge"><svg class="ic"><use href="#i-check"/></svg><span>ذخیره شد</span></div>
@@ -450,6 +450,7 @@ iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px 
       <button class="iconbtn" id="themeBtn" title="تغییر تم" aria-label="تغییر تم"><svg class="ic"><use href="#i-palette"/></svg></button>
       <div id="themeMenu" class="menu hide"></div>
     </div>
+    <a class="lobby-link no-print" href="index.html" title="بازگشت به لابی حکیمستان" aria-label="بازگشت به لابی حکیمستان"><span aria-hidden="true">🏠</span><span class="lobby-txt">لابی</span></a>
   </div>
 </div></header>
 
@@ -539,9 +540,9 @@ const FONTS=[
  ['Arial','system',"Arial,Tahoma,sans-serif",'سیستمی'],
  ['Times New Roman','system',"'Times New Roman',serif",'سیستمی'],
 ];
-const GOOGLE_FONTS_URL='https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Estedad:wght@300;400;500;700;900&family=Harmattan:wght@400;700&family=Katibeh&family=Lalezar&family=Markazi+Text:wght@400;600;700&family=Mirza:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap';
-const RASTIKERDAR_CSS=['https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css','https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css','https://cdn.jsdelivr.net/gh/rastikerdar/samim-font@v4.0.5/dist/font-face.css','https://cdn.jsdelivr.net/gh/rastikerdar/parastoo-font@v2.0.1/dist/font-face.css','https://cdn.jsdelivr.net/gh/rastikerdar/gandom-font@v0.6/dist/font-face.css'];
-const LOCAL_FONT_FACES=`@font-face{font-family:'B Nazanin';src:local('B Nazanin'),local('BNazanin');font-display:swap}@font-face{font-family:'B Nazanin';font-weight:bold;src:local('B Nazanin Bold'),local('BNazaninBold');font-display:swap}@font-face{font-family:'B Titr';src:local('B Titr'),local('BTitr'),local('B Titr Bold'),local('BTitrBold');font-display:swap}@font-face{font-family:'B Mitra';src:local('B Mitra'),local('BMitra');font-display:swap}@font-face{font-family:'B Zar';src:local('B Zar'),local('BZar');font-display:swap}@font-face{font-family:'B Yekan';src:local('B Yekan'),local('BYekan');font-display:swap}@font-face{font-family:'B Lotus';src:local('B Lotus'),local('BLotus');font-display:swap}@font-face{font-family:'B Koodak';src:local('B Koodak'),local('BKoodak');font-display:swap}@font-face{font-family:'IRANSans';src:local('IRANSans'),local('IRAN Sans'),local('IRANSansWeb');font-display:swap}`;
+function localAssetHref(rel){try{return new URL(rel,location.href).href}catch(e){return rel}}
+function localFontLinks(includeDesignFonts=true){const list=['css/fonts.css'];if(includeDesignFonts)list.push('css/azmoon-fonts.css');return list.map(p=>`\x3clink href="${escAttr(localAssetHref(p))}" rel="stylesheet">`).join('')}
+const LOCAL_FONT_FACES=`@font-face{font-family:'Vazirmatn';src:local('Vazirmatn'),local('Vazir');font-display:swap}@font-face{font-family:'Lalezar';src:local('Lalezar');font-display:swap}@font-face{font-family:'Amiri';src:local('Amiri');font-display:swap}@font-face{font-family:'Sahel';src:local('Sahel VF'),local('Sahel');font-display:swap}@font-face{font-family:'Shabnam';src:local('Shabnam');font-display:swap}@font-face{font-family:'Samim';src:local('Samim');font-display:swap}@font-face{font-family:'Parastoo';src:local('Parastoo');font-display:swap}@font-face{font-family:'Gandom';src:local('Gandom');font-display:swap}@font-face{font-family:'Estedad';src:local('Estedad');font-display:swap}@font-face{font-family:'Noto Naskh Arabic';src:local('Noto Naskh Arabic');font-display:swap}@font-face{font-family:'Scheherazade New';src:local('Scheherazade New');font-display:swap}@font-face{font-family:'B Nazanin';src:local('B Nazanin'),local('BNazanin');font-display:swap}@font-face{font-family:'B Nazanin';font-weight:bold;src:local('B Nazanin Bold'),local('BNazaninBold');font-display:swap}@font-face{font-family:'B Titr';src:local('B Titr'),local('BTitr'),local('B Titr Bold'),local('BTitrBold');font-display:swap}@font-face{font-family:'B Mitra';src:local('B Mitra'),local('BMitra');font-display:swap}@font-face{font-family:'B Zar';src:local('B Zar'),local('BZar');font-display:swap}@font-face{font-family:'B Yekan';src:local('B Yekan'),local('BYekan');font-display:swap}@font-face{font-family:'B Lotus';src:local('B Lotus'),local('BLotus');font-display:swap}@font-face{font-family:'B Koodak';src:local('B Koodak'),local('BKoodak');font-display:swap}@font-face{font-family:'IRANSans';src:local('IRANSans'),local('IRAN Sans'),local('IRANSansWeb');font-display:swap}`;
 
 const DEF_META_LABELS={subject:'درس',grade:'پایه',major:'رشته',date:'تاریخ آزمون',count:'تعداد سؤال',duration:'مدت آزمون',startTime:'ساعت شروع',teacher:'دبیر',school:'آموزشگاه',studentName:'نام و نام خانوادگی',className:'کلاس',studentNo:'شماره'};
 
@@ -605,9 +606,13 @@ function dl(name,content,type='text/plain;charset=utf-8'){const blob=content ins
 function safeName(s){return String(s||'azmoon').replace(/[\\/:*?"<>|]+/g,'-').trim()||'azmoon'}
 function debounce(fn,ms){let t;return function(...a){clearTimeout(t);t=setTimeout(()=>fn.apply(this,a),ms)}}
 function shuffleSeeded(arr,seed){const a=arr.slice();let s=0;for(const c of String(seed))s=(s*31+c.charCodeAt(0))>>>0;const rnd=()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296};for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function fontStack(name){name=name||style.font||'Vazirmatn';const cf=(style.customFonts||[]).find(f=>f.name===name);if(cf)return `'${name}','Vazirmatn',Tahoma,sans-serif`;const f=FONTS.find(x=>x[0]===name);return f?f[2]:`'${name}','Vazirmatn',Tahoma,sans-serif`}
-function fontInstalled(name){try{return document.fonts.check(`16px "${name}"`)}catch(e){return false}}
-function customFontCSS(){return (style.customFonts||[]).map(f=>`@font-face{font-family:'${f.name.replace(/'/g,'')}';src:url(${f.data});font-display:swap}`).join('')}
+function safeFontName(n){return String(n||'').replace(/[^a-zA-Z0-9\u0600-\u06FF _\-]/g,'').trim().slice(0,60)}
+function safeImgUrl(u){const s=String(u||'').trim();if(!s)return '';if(/^data:image\/(png|jpe?g|gif|webp|bmp|svg\+xml);base64,[A-Za-z0-9+/=\s]+$/i.test(s))return s;if(/^blob:/i.test(s))return s;if(/^https?:\/\/[^\s"'<>]+$/i.test(s))return s;if(/^[a-zA-Z0-9_.\-\/]+\.(png|jpe?g|gif|webp|svg)$/i.test(s)&&!s.includes('..'))return s;return ''}
+function safeCssColor(v,fb){const s=String(v||'').trim();return /^(#[0-9a-fA-F]{3,8}|rgba?\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}(?:\s*,\s*(?:0|1|0?\.\d+))?\s*\)|transparent|white|black)$/i.test(s)?s:fb}
+function safeEnum(v,list,fb){return list.includes(v)?v:fb}
+function fontStack(name){const clean=safeFontName(name||style.font||'Vazirmatn')||'Vazirmatn';const cf=(style.customFonts||[]).find(f=>safeFontName(f.name)===clean);if(cf)return `'${clean}','Vazirmatn',Tahoma,sans-serif`;const f=FONTS.find(x=>x[0]===clean);return f?f[2]:`'${clean}','Vazirmatn',Tahoma,sans-serif`}
+function fontInstalled(name){try{return document.fonts.check(`16px "${safeFontName(name)}"`)}catch(e){return false}}
+function customFontCSS(){return (style.customFonts||[]).map(f=>{const nm=safeFontName(f&&f.name);const dt=String(f&&f.data||'').trim();if(!nm||!/^data:(font\/[a-z0-9.+-]+|application\/(x-font-[a-z0-9.+-]+|font-[a-z0-9.+-]+|octet-stream));base64,[A-Za-z0-9+/=\s]+$/i.test(dt))return '';return `@font-face{font-family:'${nm}';src:url(${dt.replace(/\s+/g,'')});font-display:swap}`}).filter(Boolean).join('')}
 
 /* ---------- توست و مودال ---------- */
 function toast(msg,type='info',opts={}){const w=$('#toasts');const t=document.createElement('div');t.className='toast '+type;const ic=type==='err'?'i-alert':type==='ok'?'i-check-circle':'i-info';t.innerHTML=`${icon(ic)}<span style="flex:1">${esc(msg)}</span>${opts.action?`<button type="button">${esc(opts.action)}</button>`:''}`;if(opts.action)t.querySelector('button').onclick=()=>{opts.onAction&&opts.onAction();t.remove()};w.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),320)},opts.ms||(opts.action?6000:3200));while(w.children.length>4)w.firstChild.remove()}
@@ -633,9 +638,19 @@ function moodOfText(text){
 function hakimSay(msg,ms=5000,mood){
   if(ui.hakimOff)return;
   var h=$('#hakim');if(!h)return;
+  var text=String(msg);
+  clearTimeout(hakimTimer);
   if(window.Hakim&&Hakim.say){
+    var tx=h.querySelector('.hakim-text');
+    if(tx){
+      tx.style.minHeight='0px';
+      tx.textContent=text;
+      var fullH=tx.offsetHeight;
+      if(fullH>0)tx.style.minHeight=fullH+'px';
+    }
+    Hakim.say(text,{mood:mood||moodOfText(text),autoHideMs:0});
     h.classList.remove('off');
-    Hakim.say(String(msg),{mood:mood||moodOfText(msg),autoHideMs:ms});
+    if(ms>0)hakimTimer=setTimeout(()=>{h.classList.add('off');if(window.Hakim&&Hakim.hide)Hakim.hide();},ms);
     return;
   }
   // fallback: اگر hakim-core.js بارگذاری نشده باشد
@@ -646,8 +661,8 @@ function hakimSay(msg,ms=5000,mood){
     h.appendChild(av);
     t=document.createElement('div');t.id='hakimText';t.className='bub';h.appendChild(t);
   }
-  t.textContent=msg;h.classList.remove('off');
-  clearTimeout(hakimTimer);hakimTimer=setTimeout(()=>h.classList.add('off'),ms);
+  t.textContent=text;h.classList.remove('off');
+  if(ms>0)hakimTimer=setTimeout(()=>h.classList.add('off'),ms);
 }
 
 /* ---------- وضعیت و ذخیره‌سازی ---------- */
@@ -674,11 +689,18 @@ function normalizeStyle(){
   if(!Array.isArray(out.studentFields))out.studentFields=['studentName','className','studentNo'];
   ['fontSize','questionSize','basmalaSize','titleSize','headerSize','sectionSize','footerSize','numWidth','scoreWidth','cellPadding','border','outerBorderWidth','paperPadding','innerFrameWidth','watermarkOpacity','watermarkAngle','watermarkSize','lineHeight','questionLineHeight','headerCols','logoSize','parentFeedbackLines','teacherFeedbackLines'].forEach(k=>{if(typeof out[k]!=='number'||isNaN(out[k]))out[k]=DEF_STYLE[k]});
   if(!['A4','A5','Letter'].includes(out.paperSize))out.paperSize='A4';
+  ['paperBg','text','accent','tableBg','headerBg','sectionBg','borderColor','outerBorderColor','innerFrameColor','watermarkColor'].forEach(k=>{out[k]=safeCssColor(out[k],DEF_STYLE[k]||'#111111')});
+  ['borderStyle','outerBorderStyle','innerFrameStyle'].forEach(k=>{out[k]=safeEnum(out[k],['solid','double','dashed','dotted','none'],DEF_STYLE[k]||'solid')});
+  ['questionAlign','headerAlign','sectionAlign','basmalaAlign','titleAlign','footerAlign'].forEach(k=>{out[k]=safeEnum(out[k],['right','center','left','justify'],DEF_STYLE[k]||'right')});
+  ['basmalaWeight','titleWeight'].forEach(k=>{out[k]=safeEnum(String(out[k]),['400','500','600','700','800','900','normal','bold'],String(DEF_STYLE[k]||'800'))});
+  out.logo=safeImgUrl(out.logo);
+  out.watermarkImage=safeImgUrl(out.watermarkImage);
+  out.customFonts=out.customFonts.filter(f=>f&&safeFontName(f.name)&&/^data:(font\/[a-z0-9.+-]+|application\/(x-font-[a-z0-9.+-]+|font-[a-z0-9.+-]+|octet-stream));base64,[A-Za-z0-9+/=\s]+$/i.test(String(f.data||''))).map(f=>({name:safeFontName(f.name),data:String(f.data).replace(/\s+/g,'')}));
   style=out;
 }
 function newQ(type='mcq'){return{id:uid(),type,text:'',image:'',imageWidth:60,options:['','','',''],answer:null,shortAnswers:[],blankAnswers:[],pairs:[['',''],['',''],['','']],dropdownOptions:['',''],dropdownAnswer:'',sampleAnswer:'',explanation:'',score:1,scoreText:'',difficulty:'متوسط',section:'',subQuestions:[],reference:'',pageBreakAfter:false,lines:3}}
 function newExam(title='آزمون جدید'){return{id:uid(),title,subject:'',grade:'',major:'',school:'',teacher:'',date:todayJalali(),startTime:'',duration:60,onlineDuration:30,random:false,shuffleOptions:false,showCorrect:'end',requireName:true,askClass:true,passPercent:50,showReview:true,allowRetry:true,created:Date.now(),questions:[newQ()]}}
-function normalizeQuestion(x){const d=newQ();if(!x||typeof x!=='object')x={};for(const k in d)if(x[k]===undefined||x[k]===null)x[k]=Array.isArray(d[k])?d[k].slice():d[k];if(!TYPES[x.type])x.type='mcq';if(!Array.isArray(x.options)||x.options.length<2)x.options=['','','',''];if(!Array.isArray(x.pairs)||!x.pairs.length)x.pairs=[['','']];x.pairs=x.pairs.map(p=>Array.isArray(p)?[String(p[0]??''),String(p[1]??'')]:['','']);if(!Array.isArray(x.dropdownOptions)||x.dropdownOptions.length<2)x.dropdownOptions=['',''];if(!Array.isArray(x.subQuestions))x.subQuestions=[];if(!Array.isArray(x.shortAnswers))x.shortAnswers=[];if(!Array.isArray(x.blankAnswers))x.blankAnswers=[];if(x.type==='mcq'&&x.answer===0&&!has(x.options[0]))x.answer=x.answer;x.score=+x.score||0;if(x.scoreText===undefined)x.scoreText='';x.lines=clamp(x.lines||3,0,20);x.imageWidth=clamp(x.imageWidth||60,20,100);return x}
+function normalizeQuestion(x){const d=newQ();if(!x||typeof x!=='object')x={};for(const k in d)if(x[k]===undefined||x[k]===null)x[k]=Array.isArray(d[k])?d[k].slice():d[k];if(!TYPES[x.type])x.type='mcq';if(!Array.isArray(x.options)||x.options.length<2)x.options=['','','',''];if(!Array.isArray(x.pairs)||!x.pairs.length)x.pairs=[['','']];x.pairs=x.pairs.map(p=>Array.isArray(p)?[String(p[0]??''),String(p[1]??'')]:['','']);if(!Array.isArray(x.dropdownOptions)||x.dropdownOptions.length<2)x.dropdownOptions=['',''];if(!Array.isArray(x.subQuestions))x.subQuestions=[];if(!Array.isArray(x.shortAnswers))x.shortAnswers=[];if(!Array.isArray(x.blankAnswers))x.blankAnswers=[];if(x.type==='mcq'&&x.answer===0&&!has(x.options[0]))x.answer=x.answer;x.score=+x.score||0;if(x.scoreText===undefined)x.scoreText='';x.lines=clamp(x.lines||3,0,20);x.imageWidth=clamp(x.imageWidth||60,20,100);x.image=safeImgUrl(x.image);return x}
 function normalizeData(){
   if(!data||typeof data!=='object')data={exams:[],currentExamId:null};
   if(!Array.isArray(data.exams))data.exams=[];
@@ -688,11 +710,36 @@ function normalizeData(){
 }
 normalizeStyle();normalizeData();
 
+const AZMOON_IDB='hakimestan_azmoon_idb_v1';
+function idbMirrorSave(snapshot){
+  try{
+    if(typeof indexedDB==='undefined')return;
+    const req=indexedDB.open(AZMOON_IDB,1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('state'))req.result.createObjectStore('state')};
+    req.onsuccess=()=>{try{const db=req.result,tx=db.transaction('state','readwrite');tx.objectStore('state').put(snapshot,'workspace');tx.oncomplete=()=>db.close()}catch(e){}};
+  }catch(e){}
+}
+(function idbMirrorRestoreIfNeeded(){
+  try{
+    if(typeof indexedDB==='undefined')return;
+    const hasLocal=!!localStorage.getItem(KEY);
+    if(hasLocal)return;
+    const req=indexedDB.open(AZMOON_IDB,1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('state'))req.result.createObjectStore('state')};
+    req.onsuccess=()=>{try{const db=req.result,tx=db.transaction('state','readonly'),g=tx.objectStore('state').get('workspace');g.onsuccess=()=>{const snap=g.result;db.close();if(snap&&snap.data&&Array.isArray(snap.data.exams)&&snap.data.exams.length){data=snap.data;if(snap.style)style=snap.style;if(Array.isArray(snap.results))results=snap.results;normalizeStyle();normalizeData();ensurePaperStyle();ensureCustomFontStyle();render()}}}catch(e){}};
+  }catch(e){}
+})();
 let saveTimer=null,dirty=false;
-function persistNow(){try{localStorage.setItem(KEY,JSON.stringify(data));localStorage.setItem(STYLE_KEY,JSON.stringify(style));if(results.length>500&&!persistNow.capWarned){persistNow.capWarned=true;toast('بیش از ۵۰۰ نتیجه دارید؛ فقط ۵۰۰ نتیجه‌ی جدیدتر در مرورگر ذخیره می‌شود. از نتایج پشتیبان JSON بگیرید.','err',{ms:8000})}localStorage.setItem(RESULTS_KEY,JSON.stringify(results.slice(0,500)));localStorage.setItem(UI_KEY,JSON.stringify({tab,active,zoom:ui.zoom,previewAnswers:ui.previewAnswers,designOpen:ui.designOpen}));dirty=false;const b=$('#saveBadge');if(b){b.classList.add('on');b.querySelector('span').textContent='ذخیره شد'}}catch(e){const b=$('#saveBadge');if(b){b.classList.remove('on');b.querySelector('span').textContent='ذخیره نشد!'}persistNow.errs=(persistNow.errs||0)+1;if(persistNow.errs===1||persistNow.errs%5===0){toast('حافظه مرورگر پر است یا ذخیره‌سازی مسدود شده. تصاویر بزرگ را کم کنید و حتماً پشتیبان JSON بگیرید.','err',{ms:7000})}}}
+function persistNow(){
+  const snap={data,style,results:results.slice(0,500),ui:{tab,active,zoom:ui.zoom,previewAnswers:ui.previewAnswers,designOpen:ui.designOpen},savedAt:Date.now()};
+  idbMirrorSave(snap);
+  try{localStorage.setItem(KEY,JSON.stringify(data));localStorage.setItem(STYLE_KEY,JSON.stringify(style));if(results.length>500&&!persistNow.capWarned){persistNow.capWarned=true;toast('بیش از ۵۰۰ نتیجه دارید؛ فقط ۵۰۰ نتیجهٔ جدیدتر در مرورگر ذخیره می‌شود. از نتایج پشتیبان JSON بگیرید.','err',{ms:8000})}localStorage.setItem(RESULTS_KEY,JSON.stringify(results.slice(0,500)));localStorage.setItem(UI_KEY,JSON.stringify(snap.ui));dirty=false;const b=$('#saveBadge');if(b){b.classList.add('on');b.querySelector('span').textContent='ذخیره شد'}}catch(e){dirty=false;const b=$('#saveBadge');if(b){b.classList.add('on');b.querySelector('span').textContent='ذخیره در پایگاه محلی'}persistNow.errs=(persistNow.errs||0)+1;if(persistNow.errs===1||persistNow.errs%5===0){toast('حافظهٔ localStorage پر است؛ اطلاعات در پایگاه محلی مرورگر (IndexedDB) ذخیره شد. پیشنهاد می‌شود پشتیبان JSON بگیرید.','info',{ms:7000})}}}
 function save(){dirty=true;const b=$('#saveBadge');if(b){b.classList.remove('on');b.querySelector('span').textContent='در حال ذخیره…'}clearTimeout(saveTimer);saveTimer=setTimeout(persistNow,350)}
 window.addEventListener('beforeunload',e=>{if(dirty)persistNow();if(dirty){e.preventDefault();e.returnValue=''}});
+window.addEventListener('pagehide',()=>{if(dirty)persistNow()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&dirty)persistNow()});
+window.addEventListener('beforeprint',()=>{try{ensurePaperStyle();ensureCustomFontStyle();let pa=$('#azmoonPrintArea');if(!pa){pa=document.createElement('div');pa.id='azmoonPrintArea';document.body.appendChild(pa)}pa.innerHTML=paper(!!ui.previewAnswers)}catch(e){}});
+window.addEventListener('afterprint',()=>{const pa=$('#azmoonPrintArea');if(pa)pa.innerHTML=''});
 
 function exam(){let e=data.exams.find(x=>x.id===data.currentExamId);if(!e){normalizeData();e=data.exams[0]}return e}
 function q(){const e=exam();if(active>=e.questions.length)active=e.questions.length-1;if(active<0)active=0;return e.questions[active]}
@@ -702,7 +749,7 @@ function totalScore(e=exam()){return e.questions.reduce((s,x)=>s+(+x.score||0),0
 function setTheme(name){if(!THEMES.some(t=>t[0]===name))name='dark';document.body.setAttribute('data-theme',name);try{localStorage.setItem(THEME_KEY,name)}catch(e){}const mc=$('meta[name=theme-color]');if(mc)mc.content=getComputedStyle(document.body).getPropertyValue('--bg').trim()||'#160c05';renderThemeMenu()}
 function renderThemeMenu(){const cur=document.body.getAttribute('data-theme');const m=$('#themeMenu');if(!m)return;m.innerHTML=`<div class="menu-title">انتخاب تم برنامه</div>`+THEMES.map(t=>`<button type="button" class="${cur===t[0]?'active':''}" data-theme-pick="${t[0]}"><span class="swatch" style="background:${t[2]}"></span>${esc(t[1])}</button>`).join('')}
 (function initTheme(){let t='dark';try{t=localStorage.getItem(THEME_KEY)||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')}catch(e){}setTheme(t);try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',ev=>{let saved=null;try{saved=localStorage.getItem(THEME_KEY)}catch(e){}if(!saved)setTheme(ev.matches?'light':'dark')})}catch(e){}})();
-$('#hakim').addEventListener('click',()=>{ if(window.Hakim&&Hakim.hide){Hakim.hide();} else {$('#hakim').classList.add('off');} });
+$('#hakim').addEventListener('click',()=>{ clearTimeout(hakimTimer); $('#hakim').classList.add('off'); if(window.Hakim&&Hakim.hide){Hakim.hide();} });
 (function initHakim(){
   if(window.Hakim&&Hakim.init){
     Hakim.init({container:'#hakim',name:'حکیم',autoHideMs:5000,font:false});
@@ -745,7 +792,7 @@ function viewQuestions(){
   /* اسکرول فهرست سؤال‌ها پس از رندر حفظ می‌شود */
   const e=exam();if(active>=e.questions.length)active=e.questions.length-1;
   const total=totalScore(e);
-  const examOpts=data.exams.map(x=>`<option value="${x.id}" ${x.id===e.id?'selected':''}>${esc(x.title||'بدون عنوان')} (${fa(x.questions.length)} سؤال)</option>`).join('');
+  const examOpts=data.exams.map(x=>`<option value="${escAttr(x.id)}" ${x.id===e.id?'selected':''}>${esc(x.title||'بدون عنوان')} (${fa(x.questions.length)} سؤال)</option>`).join('');
   return `
   <div class="card">
     <div class="card-head"><div><h2>${icon('i-folder')} آزمون‌های من</h2><div class="desc">می‌توانید چند آزمون جداگانه داشته باشید و بین آن‌ها جابه‌جا شوید.</div></div>
@@ -1093,7 +1140,8 @@ function dotted(n){return n>0?`<div class="lines">${'<i></i>'.repeat(n)}</div>`:
 
 function renderQuestionBody(x,ans,e){
   let b='';
-  if(x.image)b+=`<img class="qimg" src="${escAttr(x.image)}" style="width:${clamp(x.imageWidth||60,20,100)}%" alt="">`;
+  const qImg=safeImgUrl(x.image);
+  if(qImg)b+=`<img class="qimg" src="${escAttr(qImg)}" style="width:${clamp(x.imageWidth||60,20,100)}%" alt="">`;
   if(x.type==='blank'){let k=0;const parts=esc(x.text).split(/__+/);b+=`<p class="qtext">${parts.map((p,i)=>i<parts.length-1?p+(ans?`<span class="blank ans">${esc(x.blankAnswers[k++]??'')||'؟'}</span>`:'<span class="blank">&nbsp;</span>'):p).join('')}</p>`}
   else if(has(x.text))b+=`<p class="qtext">${esc(x.text)}</p>`;
   if(x.subQuestions.length)b+=x.subQuestions.map((sq,j)=>`<div class="sub"><span class="m">${ABJAD[j]})</span><span style="flex:1">${esc(sq.text||'')}${ans&&has(sq.answer)?` <span style="color:var(--accent);font-weight:800">← ${esc(sq.answer)}</span>`:''}</span>${style.showSubScores&&has(sq.score)?`<span class="sc">(${faNum(sq.score)})</span>`:''}</div>`).join('');
@@ -1116,9 +1164,10 @@ function paper(showAnswers=false){
   const showScore=s.showScores!==false;const W=clamp(s.numWidth,4,20),SW=showScore?clamp(s.scoreWidth,4,20):0;
   const ml=s.metaLabels;
   /* سربرگ */
-  let head='';const basm=s.showBasmala&&has(s.basmalaText)?`<div class="basmala" style="text-align:${s.basmalaAlign};font-family:${fontStack(s.basmalaFont||s.font)};font-size:${clamp(s.basmalaSize,8,40)}px;font-weight:${s.basmalaWeight}">${esc(s.basmalaText)}</div>`:'';
-  const ttl=s.showTitle&&has(e.title)?`<div class="title" style="text-align:${s.titleAlign};font-family:${fontStack(s.titleFont||s.font)};font-size:${clamp(s.titleSize,8,44)}px;font-weight:${s.titleWeight}">${esc(e.title)}</div>`:'';
-  const logo=s.showLogo&&s.logo?`<div class="logo" style="width:${clamp(s.logoSize,8,50)}mm;height:${clamp(s.logoSize,8,50)}mm"><img src="${escAttr(s.logo)}" alt=""></div>`:'';
+  let head='';const basm=s.showBasmala&&has(s.basmalaText)?`<div class="basmala" style="text-align:${safeEnum(s.basmalaAlign,['right','center','left','justify'],'center')};font-family:${escAttr(fontStack(s.basmalaFont||s.font))};font-size:${clamp(s.basmalaSize,8,40)}px;font-weight:${safeEnum(String(s.basmalaWeight),['400','500','600','700','800','900','normal','bold'],'700')}">${esc(s.basmalaText)}</div>`:'';
+  const ttl=s.showTitle&&has(e.title)?`<div class="title" style="text-align:${safeEnum(s.titleAlign,['right','center','left','justify'],'center')};font-family:${escAttr(fontStack(s.titleFont||s.font))};font-size:${clamp(s.titleSize,8,44)}px;font-weight:${safeEnum(String(s.titleWeight),['400','500','600','700','800','900','normal','bold'],'800')}">${esc(e.title)}</div>`:'';
+  const safeLogo=safeImgUrl(s.logo);
+  const logo=s.showLogo&&safeLogo?`<div class="logo" style="width:${clamp(s.logoSize,8,50)}mm;height:${clamp(s.logoSize,8,50)}mm"><img src="${escAttr(safeLogo)}" alt=""></div>`:'';
   if(basm||ttl||logo)head=`<div class="head" style="flex-direction:${s.logoPosition==='left'?'row-reverse':'row'}">${logo}<div class="titles">${basm}${ttl}</div>${logo?`<div style="width:${clamp(s.logoSize,8,50)}mm;flex:none"></div>`:''}</div>`;
   /* جدول اطلاعات */
   const meta=[];const add=(k,v)=>{if(has(v))meta.push([ml[k]||k,String(v)])};add('subject',e.subject);add('grade',e.grade);add('major',e.major);add('date',e.date);add('count',fa(e.questions.length));if(has(e.duration)&&+e.duration>0)add('duration',fa(e.duration)+' دقیقه');add('startTime',e.startTime);add('teacher',e.teacher);add('school',e.school);
@@ -1143,12 +1192,13 @@ function paper(showAnswers=false){
   if(s.teacherFeedback)tail+=`<div class="fb"><b>${esc(s.teacherFeedbackTitle)}</b>${'<i></i>'.repeat(clamp(s.teacherFeedbackLines,1,10))}</div>`;
   if(s.parentFeedback)tail+=`<div class="fb"><b>${esc(s.parentFeedbackTitle)}</b>${'<i></i>'.repeat(clamp(s.parentFeedbackLines,1,10))}</div>`;
   if(s.showSignatures&&has(s.signatureText))tail+=`<div class="sig">${esc(s.signatureText)}</div>`;
-  if(has(s.footerText))tail+=`<div class="foot" style="text-align:${s.footerAlign}">${esc(s.footerText)}</div>`;
+  if(has(s.footerText))tail+=`<div class="foot" style="text-align:${safeEnum(s.footerAlign,['right','center','left','justify'],'center')}">${esc(s.footerText)}</div>`;
   /* واترمارک */
-  let wm='';if(s.watermarkType==='text'&&has(s.watermarkText))wm=`<div class="wm"><span style="color:${s.watermarkColor};opacity:${clamp(s.watermarkOpacity,.02,.6)};font-size:${clamp(s.watermarkSize,10,200)}px;transform:rotate(${clamp(s.watermarkAngle,-180,180)}deg)">${esc(s.watermarkText)}</span></div>`;else if(s.watermarkType==='image'&&has(s.watermarkImage))wm=`<div class="wm"><img src="${escAttr(s.watermarkImage)}" style="opacity:${clamp(s.watermarkOpacity,.02,.6)};transform:rotate(${clamp(s.watermarkAngle,-180,180)}deg)" alt=""></div>`;
-  return `<article class="paper" style="${paperVars()}">${wm}${s.innerFrame?'<div class="inner-frame"></div>':''}${ans?'<div class="key-badge">کلید پاسخ</div>':''}<div class="content">${head}${metaHtml}${student}${qArea}${tail}</div></article>`;
+  const safeWmImg=safeImgUrl(s.watermarkImage);
+  let wm='';if(s.watermarkType==='text'&&has(s.watermarkText))wm=`<div class="wm"><span style="color:${safeCssColor(s.watermarkColor,'#000000')};opacity:${clamp(s.watermarkOpacity,.02,.6)};font-size:${clamp(s.watermarkSize,10,200)}px;transform:rotate(${clamp(s.watermarkAngle,-180,180)}deg)">${esc(s.watermarkText)}</span></div>`;else if(s.watermarkType==='image'&&safeWmImg)wm=`<div class="wm"><img src="${escAttr(safeWmImg)}" style="opacity:${clamp(s.watermarkOpacity,.02,.6)};transform:rotate(${clamp(s.watermarkAngle,-180,180)}deg)" alt=""></div>`;
+  return `<article class="paper" style="${escAttr(paperVars())}">${wm}${s.innerFrame?'<div class="inner-frame"></div>':''}${ans?'<div class="key-badge">کلید پاسخ</div>':''}<div class="content">${head}${metaHtml}${student}${qArea}${tail}</div></article>`;
 }
-function exportPaperHTML(showAnswers=false){const e=exam();return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(e.title||'آزمون')}${showAnswers?' — کلید پاسخ':''}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\x3clink href="${GOOGLE_FONTS_URL}" rel="stylesheet">${RASTIKERDAR_CSS.map(u=>`\x3clink href="${u}" rel="stylesheet">`).join('')}<style>html,body{margin:0;padding:0;background:#e9e9e9}body{padding:8mm 0}${paperCSS()}</style></head><body>${paper(showAnswers)}</body></html>`}
+function exportPaperHTML(showAnswers=false,{standalone=false}={}){const e=exam();const fontHead=standalone?'':localFontLinks(true);return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(e.title||'آزمون')}${showAnswers?' — کلید پاسخ':''}</title>${fontHead}<style>html,body{margin:0;padding:0;background:#e9e9e9}body{padding:8mm 0}${paperCSS()}</style></head><body>${paper(showAnswers)}</body></html>`}
 function ensurePaperStyle(){let el=$('#paperStyle');if(!el){el=document.createElement('style');el.id='paperStyle';document.head.appendChild(el)}const css=paperCSS().replace(/@media\s+print\s*\{[\s\S]*$/,'');if(el.textContent!==css)el.textContent=css}
 ensurePaperStyle();
 /* بارگذاری فونت‌های سفارشی کاربر در خود برنامه */
@@ -1283,7 +1333,7 @@ function viewExport(){const e=exam();const items=[
 function openWin(html){const w=window.open('','_blank');if(!w){/* جایگزین: iframe مخفی برای چاپ */return null}w.document.open();w.document.write(html);w.document.close();return w}
 function printViaFrame(html){let f=$('#printFrame');if(f)f.remove();f=document.createElement('iframe');f.id='printFrame';f.style.cssText='position:fixed;left:-10000px;top:0;width:210mm;height:297mm;border:0';document.body.appendChild(f);f.srcdoc=html;f.onload=()=>{setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){toast('چاپ ممکن نشد؛ از خروجی HTML استفاده کنید','err')}finally{setTimeout(()=>{try{f.remove()}catch(e){}},8000)}},900)}}
 async function printPaper(ans){if(!(await validateExam()))return;const html=exportPaperHTML(ans);const w=openWin(html);if(w){let done=false;const fire=()=>{if(done)return;done=true;try{w.focus();w.print()}catch(e){}};w.onload=()=>setTimeout(fire,700);setTimeout(()=>{try{if(w.document.readyState==='complete')fire()}catch(e){}},1800)}else{toast('پنجره مسدود شد؛ چاپ از داخل صفحه انجام می‌شود…','info');printViaFrame(html)}}
-async function pngPaper(ans){if(!(await validateExam()))return;if(!window.html2canvas){toast('کتابخانه‌ی ساخت تصویر بارگذاری نشده (نیاز به اینترنت)','err');return}toast('در حال ساخت تصویر…','info');const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-20000px;top:0;background:#fff;padding:10px;z-index:-1';holder.innerHTML=paper(ans);document.body.appendChild(holder);const p=holder.firstElementChild;p.style.boxShadow='none';try{await document.fonts.ready;const c=await html2canvas(p,{scale:2,useCORS:true,backgroundColor:style.paperBg||'#fff',logging:false});c.toBlob(b=>{if(b)dl(safeName(exam().title)+(ans?'-kelid':'')+'.png',b);else toast('ساخت تصویر ناموفق بود','err');holder.remove()},'image/png')}catch(err){holder.remove();toast('ساخت تصویر ناموفق بود: '+(err.message||''),'err')}}
+async function pngPaper(ans){if(!(await validateExam()))return;if(!window.html2canvas){toast('کتابخانه‌ی ساخت تصویر هنوز آماده نشده است؛ لحظه‌ای دیگر دوباره امتحان کنید','err');return}toast('در حال ساخت تصویر…','info');const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-20000px;top:0;background:#fff;padding:10px;z-index:-1';holder.innerHTML=paper(ans);document.body.appendChild(holder);const p=holder.firstElementChild;p.style.boxShadow='none';try{await document.fonts.ready;const c=await html2canvas(p,{scale:2,useCORS:true,backgroundColor:style.paperBg||'#fff',logging:false});c.toBlob(b=>{if(b)dl(safeName(exam().title)+(ans?'-kelid':'')+'.png',b);else toast('ساخت تصویر ناموفق بود','err');holder.remove()},'image/png')}catch(err){holder.remove();toast('ساخت تصویر ناموفق بود: '+(err.message||''),'err')}}
 function resolveCSSVars(css,varStr){const map={};varStr.split(';').forEach(kv=>{const i=kv.indexOf(':');if(i>0)map[kv.slice(0,i).trim()]=kv.slice(i+1).trim()});let out=css;for(let k=0;k<4;k++)out=out.replace(/var\((--[\w-]+)(?:,\s*([^)]+))?\)/g,(m,n,d)=>map[n]!==undefined?map[n]:(d||'0'));const U={px:1,mm:1,pt:1,em:1,rem:1,'%':1};
   const toU=(u1,u2)=>u1||u2||'';
   for(let k=0;k<6;k++){
@@ -1303,7 +1353,7 @@ function resolveCSSVars(css,varStr){const map={};varStr.split(';').forEach(kv=>{
   return out}
 function wordExport(){const e=exam();const vars=paperVars();let body=paper(false).replace(/<article class="paper" style="[^"]*">/,'<article class="paper">');body=body.replace(/<div class="wm">[\s\S]*?<\/div>/,'').replace('<div class="inner-frame"></div>','').replace(/(font-size:\s*)([\d.]+)px/g,(m,a,b)=>a+((+b)*.75).toFixed(1)+'pt');const css=resolveCSSVars(paperCSS().replace(/@media print\{[\s\S]*$/,''),vars).replace(/@font-face\{[^}]*\}/g,'').replace(/(font-size\s*:\s*)([\d.]+)px/g,(m,a,b)=>a+((+b)*.75).toFixed(1)+'pt');const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40" lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(e.title)}</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]--><style>@page{size:${style.paperSize==='Letter'?'8.5in 11in':style.paperSize==='A5'?'148mm 210mm':'210mm 297mm'};margin:12mm;mso-page-orientation:portrait}body{direction:rtl;font-family:${fontStack(style.font)};font-size:${Math.round(style.fontSize*.75*10)/10}pt}${css}.paper{width:auto;min-height:0;box-shadow:none;border:none;padding:0}table{mso-table-layout-alt:fixed;border-collapse:collapse}.paper .opts{display:block}.paper .opt{display:block;margin:2px 0}.paper .match{display:block}.paper .match div{display:block}.paper .lines i{display:block;border-bottom:1px dotted #777;height:18px}.paper .flatmeta{display:block;text-align:center;margin-bottom:2mm}.paper .flatmeta span{display:inline-block;margin:0 2mm}.paper .qflow{display:block}.paper .qsec{display:block}.paper .qrow{display:block;position:relative;padding-right:10mm;margin:2mm 0}.paper .qrow .qnum{position:absolute;right:0;top:0;width:7mm;height:7mm;text-align:center}.paper .qrow .qscore{float:left}.paper .qtotal{display:block;text-align:left}</style></head><body>${body}</body></html>`;dl(safeName(e.title)+'.doc','\ufeff'+html,'application/msword;charset=utf-8');toast('فایل Word دانلود شد (در Word باز کنید)','ok')}
 function answerText(x){switch(x.type){case 'mcq':return Number.isInteger(x.answer)?`گزینه‌ی ${optLabel(x.answer)} — ${x.options[x.answer]||''}`:'';case 'multi':return (x.answer||[]).map(i=>optLabel(i)).join('، ');case 'tf':return x.answer===true?'صحیح':x.answer===false?'غلط':'';case 'short':return x.shortAnswers.join(' / ');case 'blank':return x.blankAnswers.join(' / ');case 'match':return x.pairs.filter(p=>has(p[0])).map(p=>`${p[0]} ← ${p[1]}`).join('؛ ');case 'dropdown':return x.dropdownAnswer;default:return x.sampleAnswer}}
-async function keyTable(){if(!(await validateExam()))return;const e=exam();const rows=e.questions.map((x,i)=>`<tr><td>${fa(i+1)}</td><td>${esc(TYPES[x.type])}</td><td class="a">${esc(answerText(x))||'—'}${x.subQuestions.length?'<br>'+x.subQuestions.map((s,j)=>`${ABJAD[j]}) ${esc(s.answer||'—')}`).join('<br>'):''}</td><td>${has(x.scoreText)?esc(x.scoreText):faNum(x.score)}</td><td>${esc(x.reference||'')}</td></tr>`).join('');const html=`<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>کلید پاسخ — ${esc(e.title)}</title>\x3clink href="${GOOGLE_FONTS_URL}" rel="stylesheet"><style>body{font-family:Vazirmatn,Tahoma,sans-serif;padding:16px;color:#111;direction:rtl}h1{text-align:center;font-size:18px;border-bottom:2px solid #333;padding-bottom:8px}.m{display:flex;gap:20px;justify-content:center;font-size:12px;color:#555;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{border:1px solid #666;padding:6px 8px;text-align:center;vertical-align:top}th{background:#eee}td.a{text-align:right}tr:nth-child(even) td{background:#fafafa}@media print{@page{size:A4;margin:10mm}}</style></head><body><h1>کلید پاسخ — ${esc(e.title)}</h1><div class="m"><span>درس: ${esc(e.subject||'—')}</span><span>پایه: ${esc(e.grade||'—')}</span><span>تاریخ: ${esc(e.date||'—')}</span><span>جمع بارم: ${faNum(totalScore(e))}</span></div><table><thead><tr><th style="width:40px">ردیف</th><th style="width:90px">نوع</th><th>پاسخ</th><th style="width:50px">بارم</th><th style="width:110px">مرجع</th></tr></thead><tbody>${rows}</tbody></table></body></html>`;const w=openWin(html);if(w)setTimeout(()=>{try{w.print()}catch(e){}},900);else printViaFrame(html)}
+async function keyTable(){if(!(await validateExam()))return;const e=exam();const rows=e.questions.map((x,i)=>`<tr><td>${fa(i+1)}</td><td>${esc(TYPES[x.type])}</td><td class="a">${esc(answerText(x))||'—'}${x.subQuestions.length?'<br>'+x.subQuestions.map((s,j)=>`${ABJAD[j]}) ${esc(s.answer||'—')}`).join('<br>'):''}</td><td>${has(x.scoreText)?esc(x.scoreText):faNum(x.score)}</td><td>${esc(x.reference||'')}</td></tr>`).join('');const html=`<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>کلید پاسخ — ${esc(e.title)}</title>${localFontLinks(false)}<style>body{font-family:Vazirmatn,Tahoma,sans-serif;padding:16px;color:#111;direction:rtl}h1{text-align:center;font-size:18px;border-bottom:2px solid #333;padding-bottom:8px}.m{display:flex;gap:20px;justify-content:center;font-size:12px;color:#555;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12.5px}th,td{border:1px solid #666;padding:6px 8px;text-align:center;vertical-align:top}th{background:#eee}td.a{text-align:right}tr:nth-child(even) td{background:#fafafa}@media print{@page{size:A4;margin:10mm}}</style></head><body><h1>کلید پاسخ — ${esc(e.title)}</h1><div class="m"><span>درس: ${esc(e.subject||'—')}</span><span>پایه: ${esc(e.grade||'—')}</span><span>تاریخ: ${esc(e.date||'—')}</span><span>جمع بارم: ${faNum(totalScore(e))}</span></div><table><thead><tr><th style="width:40px">ردیف</th><th style="width:90px">نوع</th><th>پاسخ</th><th style="width:50px">بارم</th><th style="width:110px">مرجع</th></tr></thead><tbody>${rows}</tbody></table></body></html>`;const w=openWin(html);if(w)setTimeout(()=>{try{w.print()}catch(e){}},900);else printViaFrame(html)}
 function csvExport(){const e=exam();const rows=[['ردیف','نوع','بخش','متن سؤال','گزینه‌ها','پاسخ درست','توضیح','بارم','دشواری','مرجع'],...e.questions.map((x,i)=>[i+1,TYPES[x.type],x.section,x.text,(x.type==='mcq'||x.type==='multi')?x.options.join(' | '):x.type==='dropdown'?x.dropdownOptions.join(' | '):'',answerText(x),x.explanation,x.score,x.difficulty,x.reference])];dl(safeName(e.title)+'.csv','\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n'),'text/csv;charset=utf-8')}
 function backupJSON(one=false){persistNow();const payload=one?{hakimestan:2,exams:[exam()],style}:{hakimestan:2,exams:data.exams,currentExamId:data.currentExamId,style,results};dl((one?safeName(exam().title):'hakimestan-backup')+'-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(payload,null,1),'application/json');toast('پشتیبان دانلود شد','ok')}
 function restoreJSON(file){const r=new FileReader();r.onload=async()=>{try{const j=JSON.parse(r.result);let exams=j.exams||(j.exam?[j.exam]:null);if(!exams&&j.questions)exams=[j];if(!Array.isArray(exams)||!exams.length)throw 0;const mode=await new Promise(res=>{modal(`<h3>${icon('i-folder')} بازیابی پشتیبان</h3><p>${fa(exams.length)} آزمون در فایل پیدا شد. چگونه اضافه شود؟</p><div class="btnrow"><button class="btn primary" id="rAdd">افزودن به آزمون‌های فعلی</button><button class="btn danger" id="rRep">جایگزینی همه</button><button class="btn ghost" id="rNo">انصراف</button></div>`);$('#rAdd').onclick=()=>{closeModal();res('add')};$('#rRep').onclick=()=>{closeModal();res('rep')};$('#rNo').onclick=()=>{closeModal();res(null)}});if(!mode)return;exams.forEach(e=>{if(!e.id||data.exams.some(z=>z.id===e.id))e.id=uid()});if(mode==='rep')data.exams=exams;else data.exams.push(...exams);data.currentExamId=exams[0].id;if(j.style&&typeof j.style==='object'){style={...style,...j.style}}if(Array.isArray(j.results)&&mode==='rep')results=j.results;normalizeStyle();normalizeData();ensureCustomFontStyle();active=0;save();render();toast('بازیابی انجام شد','ok')}catch(e){toast('فایل JSON معتبر نیست','err')}};r.readAsText(file);}
@@ -1316,7 +1366,7 @@ async function exportAct(n,b){
     case 'png':pngPaper(false);return true;
     case 'pngKey':pngPaper(true);return true;
     case 'word':if(await validateExam())wordExport();return true;
-    case 'html':if(await validateExam()){dl(safeName(exam().title)+'.html',exportPaperHTML(false),'text/html;charset=utf-8');toast('فایل HTML دانلود شد','ok')}return true;
+    case 'html':if(await validateExam()){dl(safeName(exam().title)+'.html',exportPaperHTML(false,{standalone:true}),'text/html;charset=utf-8');toast('فایل HTML دانلود شد','ok')}return true;
     case 'keyTable':keyTable();return true;
     case 'csv':csvExport();return true;
     case 'backup':backupJSON(false);return true;
@@ -1347,18 +1397,19 @@ function viewOnline(){const e=exam();return `<div class="card"><div class="card-
   </div>
   <div class="card"><div class="card-head"><h3>${icon('i-globe')} محیط اجرای آزمون</h3><span class="muted">همان چیزی که دانش‌آموز می‌بیند</span></div><iframe id="onlineFrame" class="online-frame" title="پیش‌نمایش آزمون آنلاین"></iframe></div>`}
 function onlineInput(el){const k=el.dataset.o;let v=el.value;if(['random','shuffleOptions','requireName','askClass','showReview','allowRetry'].includes(k))v=v==='1';else if(el.type==='number')v=+v;exam()[k]=v;save()}
-async function runOnlineHere(){if(!(await validateExam('online')))return;const f=$('#onlineFrame');if(!f)return;f.srcdoc=onlineHTML();f.scrollIntoView({behavior:'smooth',block:'start'})}
-async function onlineAct(n){switch(n){case 'runHere':runOnlineHere();return true;case 'dlOnline':if(await validateExam('online')){dl('azmoon-online-'+safeName(exam().title)+'.html',onlineHTML(),'text/html;charset=utf-8');toast('فایل آزمون آنلاین دانلود شد؛ آن را برای دانش‌آموزان بفرستید','ok')}return true;case 'openOnline':if(await validateExam('online')){const w=openWin(onlineHTML());if(!w)toast('مرورگر پنجره را مسدود کرد؛ از اجرای درون صفحه استفاده کنید','err')}return true}return false}
+async function runOnlineHere(){if(!(await validateExam('online')))return;const f=$('#onlineFrame');if(!f)return;f.srcdoc=onlineHTML({sameOrigin:true});f.scrollIntoView({behavior:'smooth',block:'start'})}
+async function onlineAct(n){switch(n){case 'runHere':runOnlineHere();return true;case 'dlOnline':if(await validateExam('online')){dl('azmoon-online-'+safeName(exam().title)+'.html',onlineHTML({sameOrigin:false}),'text/html;charset=utf-8');toast('فایل آزمون آنلاین دانلود شد؛ آن را برای دانش‌آموزان بفرستید','ok')}return true;case 'openOnline':if(await validateExam('online')){const w=openWin(onlineHTML({sameOrigin:true}));if(!w)toast('مرورگر پنجره را مسدود کرد؛ از اجرای درون صفحه استفاده کنید','err')}return true}return false}
 window.addEventListener('message',e=>{const fr=$('#onlineFrame');if(!fr||!fr.contentWindow||e.source!==fr.contentWindow)return;const d=e.data;if(d&&d.type==='hakimestan_result'&&d.result){addResults([d.result]);toast(`نتیجه‌ی «${d.result.student||'دانش‌آموز'}» به تب تصحیح اضافه شد`,'ok')}});
 
-function onlineHTML(){
+function onlineHTML({sameOrigin=false}={}){
   const e=JSON.parse(JSON.stringify(exam()));
   const cfg={duration:clamp(e.onlineDuration||30,1,600),random:!!e.random,shuffleOptions:!!e.shuffleOptions,showCorrect:e.showCorrect||'end',requireName:e.requireName!==false,askClass:e.askClass!==false,passPercent:clamp(e.passPercent??50,0,100),showReview:e.showReview!==false,allowRetry:e.allowRetry!==false,labels:style.optionLabels||'abjad',secret:EXAM_SECRET};
   const hideKey=(e.showCorrect||'end')==='never';
   const qs=lockAnswers(e.questions.map(x=>{const o={id:x.id,type:x.type,text:x.text,image:x.image,options:x.options,answer:x.answer,shortAnswers:x.shortAnswers,blankAnswers:x.blankAnswers,pairs:x.pairs.filter(p=>has(p[0])||has(p[1])),distractors:x.distractors||[],dropdownOptions:x.dropdownOptions,dropdownAnswer:x.dropdownAnswer,score:+x.score||0,section:x.section,subQuestions:x.subQuestions,explanation:x.explanation,sampleAnswer:x.sampleAnswer};if(hideKey){o.explanation='';o.sampleAnswer=''}return o}));
   const safe=v=>JSON.stringify(v).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/`/g,'\\u0060').replace(/\$\{/g,'\\u0024\\u007b').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
   const EX=safe({id:e.id,title:e.title||'آزمون',subject:e.subject,grade:e.grade,school:e.school,teacher:e.teacher,date:e.date,questions:qs});
-  return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>${esc(e.title||'آزمون')}</title><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet"><style>
+  return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>${esc(e.title||'آزمون')}</title>${sameOrigin?localFontLinks(false):''}<style>
+@font-face{font-family:'Vazirmatn';src:local('Vazirmatn'),local('Vazir');font-display:swap}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;min-height:100dvh;background:linear-gradient(160deg,#f5efe2,#ece2cc);color:#231709;font-family:Vazirmatn,Tahoma,Arial,sans-serif;direction:rtl;line-height:1.7}
 main{max-width:860px;margin:auto;padding:16px}.box{background:#fff;border:1px solid #e3d8c0;border-radius:18px;padding:20px;box-shadow:0 10px 30px rgba(80,50,10,.08);animation:f .25s}@keyframes f{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
 h1{font-size:1.3rem;text-align:center;color:#7a4400;margin:0 0 6px}.c{text-align:center}.mut{color:#7a6a52;font-size:.85rem}
@@ -1418,6 +1469,7 @@ function unlock(q){
 const ABJAD=['الف','ب','ج','د','ه','و','ز','ح','ط','ی'];
 const fa=v=>String(v).replace(/\\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeImg=u=>{const s=String(u||'').trim();return /^data:image\/(png|jpe?g|gif|webp|bmp|svg\+xml);base64,[A-Za-z0-9+/=\s]+$/i.test(s)||/^https?:\/\/[^\s"'<>]+$/i.test(s)||/^blob:/i.test(s)?s:''};
 const norm=v=>String(v??'').trim().replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\\u200c]/g,'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/\\s+/g,' ').toLowerCase();
 const lbl=j=>CFG.labels==='num'?fa(j+1):CFG.labels==='latin'?String.fromCharCode(65+j):ABJAD[j];
 const SKEY='hk_progress_'+EXAM.id;
@@ -1437,7 +1489,7 @@ const rs=document.getElementById('resume');if(rs)rs.onclick=()=>{qs=resume.qs;an
 function saveA(){const q=qs[idx];if(!q)return;let v=null;switch(q.type){case 'mcq':{const x=root.querySelector('input[name=a]:checked');v=x?+x.value:null;break}case 'multi':v=[...root.querySelectorAll('input[name=a]:checked')].map(x=>+x.value);if(!v.length)v=null;break;case 'tf':{const x=root.querySelector('input[name=a]:checked');v=x?x.value==='1':null;break}case 'blank':v=[...root.querySelectorAll('[data-blank]')].map(x=>x.value.trim());if(!v.some(Boolean))v=null;break;case 'match':v=q.pairs.map((_,k)=>root.querySelector('#m'+k)?.value||'');if(!v.some(Boolean))v=null;break;case 'dropdown':v=root.querySelector('#dd')?.value||null;break;default:v=(root.querySelector('#ans')?.value||'').trim()||null}answers[idx]=v;saveProgress()}
 function fb(q,a){if(CFG.showCorrect!=='after')return '';const r=check(q,a);if(r===null)return '';if(r===true)return '<div class="fb ok">✓ درست است.'+(q.explanation?' '+esc(q.explanation):'')+'</div>';if(r===false)return '<div class="fb bad">✗ نادرست است.'+(q.explanation?' '+esc(q.explanation):'')+'</div>';return '<div class="fb part">بخشی درست است ('+fa(Math.round(r*100))+'٪)</div>'}
 function renderQ(){const q=qs[idx];if(!q){finish();return}const a=answers[idx];let b='';
-if(q.image)b+='<img class="qi" src="'+esc(q.image)+'" alt="">';
+const qi=safeImg(q.image);if(qi)b+='<img class="qi" src="'+esc(qi)+'" alt="">';
 let text=q.text||'';
 if(q.type==='blank'){let k=0;const parts=esc(text).split(/__+/);text=parts.map((p,i)=>i<parts.length-1?p+'<input class="blank" data-blank placeholder="جای خالی '+fa(k+1)+'" value="'+esc(Array.isArray(a)?a[k++]||'':'')+'">':p).join('')}else text=esc(text);
 let sub=(q.subQuestions||[]).length?'<div style="margin:-6px 0 10px;padding-right:10px;border-right:3px solid #e0b640">'+q.subQuestions.map((s,j)=>'<div><b>'+ABJAD[j]+')</b> '+esc(s.text)+(s.score?' <small class="mut">('+fa(s.score)+')</small>':'')+'</div>').join('')+'</div>':'';
@@ -1505,7 +1557,7 @@ function viewGrading(){
     const qrows=Object.values(qstat).sort((a,b)=>a.i-b.i);
     body=`<div class="grid g4 mb"><div class="card stat"><b>${fa(list.length)}</b><span>دانش‌آموز</span></div><div class="card stat"><b>${fa(avg.toFixed(1))}٪</b><span>میانگین</span></div><div class="card stat"><b>${fa(passN)}</b><span>قبول (≥${fa(list[0]&&typeof list[0].passPercent==='number'?list[0].passPercent:(exam().passPercent??50))}٪)</span></div><div class="card stat"><b class="${pend?'bad':''}">${fa(pend)}</b><span>پاسخ در انتظار تصحیح</span></div></div>
     <div class="card"><div class="card-head"><h3>${icon('i-users')} فهرست نتایج</h3><div class="btnrow"><button class="btn sm" data-act="gCSV">${icon('i-table')} Excel</button><button class="btn sm" data-act="gPrint">${icon('i-print')} کارنامه‌ی کلاس</button><button class="btn sm" data-act="gCards">${icon('i-file')} کارنامه‌های فردی</button></div></div>
-    <div style="overflow:auto"><table class="tbl"><thead><tr><th>رتبه</th><th>نام</th><th>کلاس</th><th>نمره</th><th>درصد</th><th>درست</th><th>نادرست</th><th>بی‌پاسخ</th><th>تصحیح دستی</th><th>تاریخ</th><th></th></tr></thead><tbody>${list.map((r,i)=>{const p=finalPercent(r),pc=pendingCount(r);return `<tr><td>${i<3?['🥇','🥈','🥉'][i]:fa(i+1)}</td><td style="text-align:right;font-weight:700">${esc(r.student)}</td><td>${esc(r.klass||'')}</td><td>${faNum(finalScore(r))} / ${faNum(r.max_score)}</td><td class="${p>=80?'good':p>=50?'mid':'bad'}" style="font-weight:800">${fa(p)}٪</td><td>${fa(r.correct_count??'')}</td><td>${fa(r.wrong_count??'')}</td><td>${fa(r.blank_count??'')}</td><td>${pc?`<span class="badge warn">${fa(pc)} مانده</span>`:(r.details||[]).some(d=>d.type==='essay')?`<span class="badge ok">انجام شد</span>`:'—'}</td><td style="white-space:nowrap">${esc(new Date(r.date).toLocaleDateString('fa-IR'))}</td><td style="white-space:nowrap"><button class="btn xs" data-act="gView" data-id="${r._id}" title="جزئیات و تصحیح">${icon('i-eye')}</button> <button class="btn xs danger" data-act="gDel" data-id="${r._id}" title="حذف">${icon('i-trash')}</button></td></tr>`}).join('')}</tbody></table></div></div>
+    <div style="overflow:auto"><table class="tbl"><thead><tr><th>رتبه</th><th>نام</th><th>کلاس</th><th>نمره</th><th>درصد</th><th>درست</th><th>نادرست</th><th>بی‌پاسخ</th><th>تصحیح دستی</th><th>تاریخ</th><th></th></tr></thead><tbody>${list.map((r,i)=>{const p=finalPercent(r),pc=pendingCount(r);return `<tr><td>${i<3?['🥇','🥈','🥉'][i]:fa(i+1)}</td><td style="text-align:right;font-weight:700">${esc(r.student)}</td><td>${esc(r.klass||'')}</td><td>${faNum(finalScore(r))} / ${faNum(r.max_score)}</td><td class="${p>=80?'good':p>=50?'mid':'bad'}" style="font-weight:800">${fa(p)}٪</td><td>${fa(r.correct_count??'')}</td><td>${fa(r.wrong_count??'')}</td><td>${fa(r.blank_count??'')}</td><td>${pc?`<span class="badge warn">${fa(pc)} مانده</span>`:(r.details||[]).some(d=>d.type==='essay')?`<span class="badge ok">انجام شد</span>`:'—'}</td><td style="white-space:nowrap">${esc(new Date(r.date).toLocaleDateString('fa-IR'))}</td><td style="white-space:nowrap"><button class="btn xs" data-act="gView" data-id="${escAttr(r._id)}" title="جزئیات و تصحیح">${icon('i-eye')}</button> <button class="btn xs danger" data-act="gDel" data-id="${escAttr(r._id)}" title="حذف">${icon('i-trash')}</button></td></tr>`}).join('')}</tbody></table></div></div>
     <div class="grid g2"><div class="card"><h3 class="mb">${icon('i-award')} توزیع نمرات</h3>${['۰–۱۹','۲۰–۳۹','۴۰–۵۹','۶۰–۷۹','۸۰–۱۰۰'].map((l,i)=>`<div style="display:grid;grid-template-columns:70px 1fr 40px;gap:8px;align-items:center;margin:6px 0"><span class="muted">${l}٪</span><div class="bar"><i style="width:${list.length?dist[i]/list.length*100:0}%"></i></div><b>${fa(dist[i])}</b></div>`).join('')}</div>
     <div class="card"><h3 class="mb">${icon('i-list')} تحلیل سؤال‌ها <span class="muted">(درصد پاسخ درست)</span></h3><div style="max-height:320px;overflow:auto">${qrows.map((s,i)=>{const p=s.n?Math.round(s.ok/s.n*100):0;return `<div style="display:grid;grid-template-columns:28px 1fr 44px;gap:8px;align-items:center;margin:6px 0" title="${escAttr(s.q)}"><span class="qnum" style="width:26px;height:26px;font-size:.75rem">${fa(i+1)}</span><div><div class="muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.75rem">${esc(s.q)||'—'}</div><div class="bar"><i style="width:${p}%;background:${p<40?'var(--danger)':p<70?'var(--info)':'var(--success)'}"></i></div></div><b class="${p<40?'bad':p<70?'mid':'good'}">${fa(p)}٪</b></div>`}).join('')||'<div class="muted">جزئیات سؤال در نتایج موجود نیست</div>'}</div><div class="tip">سؤال‌های با درصد پایین (قرمز) احتمالاً دشوار یا مبهم بوده‌اند.</div></div></div>`;
   }
@@ -1524,7 +1576,7 @@ function resultDetailModal(r){
   $('#mdCard').onclick=()=>printCards([r]);
   $('#mdClose').onclick=closeModal;
 }
-function reportHTML(list,title){const css=`body{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111;padding:14px}h1{text-align:center;font-size:18px;margin:0 0 4px}h2{font-size:15px;margin:0 0 8px}.m{text-align:center;color:#555;font-size:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #666;padding:5px 7px;text-align:center}th{background:#eee}td.r{text-align:right}.card{border:2px solid #333;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid}.big{font-size:26px;font-weight:900;text-align:center;padding:8px;background:#f3f3f3;border-radius:8px;margin:8px 0}.sig{display:flex;justify-content:space-between;margin-top:14px;font-size:12px}@media print{@page{size:A4;margin:10mm}}`;return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title>\x3clink href="${GOOGLE_FONTS_URL}" rel="stylesheet"><style>${css}</style>
+function reportHTML(list,title){const css=`body{font-family:Vazirmatn,Tahoma,sans-serif;direction:rtl;color:#111;padding:14px}h1{text-align:center;font-size:18px;margin:0 0 4px}h2{font-size:15px;margin:0 0 8px}.m{text-align:center;color:#555;font-size:12px;margin-bottom:12px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{border:1px solid #666;padding:5px 7px;text-align:center}th{background:#eee}td.r{text-align:right}.card{border:2px solid #333;border-radius:8px;padding:12px;margin-bottom:12px;break-inside:avoid;page-break-inside:avoid}.big{font-size:26px;font-weight:900;text-align:center;padding:8px;background:#f3f3f3;border-radius:8px;margin:8px 0}.sig{display:flex;justify-content:space-between;margin-top:14px;font-size:12px}@media print{@page{size:A4;margin:10mm}}`;return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>${esc(title)}</title>${localFontLinks(false)}<style>${css}</style>
 </head><body>`}
 async function gradingAct(n,b){
   const id=b?.dataset.id;const r=results.find(x=>x._id===id);
@@ -1590,6 +1642,7 @@ setTimeout(()=>{if(tab==='questions'&&exam().questions.length===1&&!has(exam().q
       else ref = 'سایر';
     }
 
+    if (navigator.onLine === false) return;
     fetch(API, {
       method: 'POST',
       mode: 'no-cors',

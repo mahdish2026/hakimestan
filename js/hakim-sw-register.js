@@ -219,29 +219,12 @@
     if (isStandalone) return;
     if (document.getElementById('hk-install-btn')) return;
 
-    var b = makeInstallButton();
-    if (!b) return;
-
-    // جایگاه‌های ترجیحی برای قرارگیری دکمه
-    var hosts = [
-      '[data-pwa-install]',
-      '.topbar .toptools',
-      'header .nav',
-      'header .actions',
-      '.hero .row',
-      '.hero-actions',
-      'header',
-      '.topbar'
-    ];
-    var host = null;
-    for (var i = 0; i < hosts.length; i++) {
-      var found = document.querySelector(hosts[i]);
-      if (found && !found.querySelector('#hk-install-btn')) { host = found; break; }
-    }
-
-    injectStyle();
-
-    if (host) {
+    // فقط در جایگاه صریح [data-pwa-install] تزریق می‌شود تا چیدمان هدر صفحه‌ها به هم نریزد
+    var host = document.querySelector('[data-pwa-install]');
+    if (host && !host.querySelector('#hk-install-btn')) {
+      var b = makeInstallButton();
+      if (!b) return;
+      injectStyle();
       host.appendChild(b);
     } else {
       scheduleInstallSuggestion();
@@ -305,7 +288,6 @@
     bar.appendChild(yes);
     bar.appendChild(no);
     document.body.appendChild(bar);
-    setTimeout(function () { bar.classList.add('hk-ib-show'); }, 30);
 
     if (global.HakimA11y) {
       global.HakimA11y.announce('می‌توانید حکیمستان را مثل یک برنامهٔ واقعی روی این دستگاه نصب کنید.');
@@ -330,21 +312,22 @@
       '.hk-install-btn:hover{filter:brightness(1.12)}',
       '.hk-install-btn:focus-visible{outline:3px solid #5eead4;outline-offset:3px}',
       '@media(max-width:600px){.hk-install-btn{padding:8px 12px;font:800 .78rem Vazirmatn,Tahoma,sans-serif}}',
+      '@keyframes hk-ib-in{from{transform:translateY(110%)}to{transform:translateY(0)}}',
       '#hk-install-banner{position:fixed;inset-inline:0;inset-block-end:0;z-index:9998;',
       'display:flex;align-items:center;gap:10px;padding:10px 14px;',
       'padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));',
       'background:#141033;color:#f1ecff;border-top:1px solid rgba(255,255,255,.22);',
       'box-shadow:0 -12px 32px rgba(0,0,0,.4);direction:rtl;',
       'font:600 .85rem/1.6 Vazirmatn,Tahoma,sans-serif;',
-      'transform:translateY(110%);transition:transform .3s ease}',
-      '#hk-install-banner.hk-ib-show{transform:translateY(0)}',
+      'animation:hk-ib-in .32s cubic-bezier(.22,1,.36,1) both}',
+      '@media(prefers-reduced-motion:reduce){#hk-install-banner{animation:none}}',
       '#hk-install-banner .hk-ib-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}',
       '#hk-install-banner .hk-ib-text span{font-size:.75rem;font-weight:500;color:#cfc6f2}',
       '.hk-ib-yes{padding:9px 14px;border-radius:12px;border:0;cursor:pointer;',
       'background:#f5c76a;color:#1b1035;font:800 .82rem Vazirmatn,Tahoma,sans-serif;white-space:nowrap}',
       '.hk-ib-no{padding:8px;border-radius:10px;border:0;background:transparent;',
       'color:inherit;cursor:pointer;font-size:1rem}',
-      '@media print{.hk-install-btn,#hk-install-banner{display:none!important}}'
+      '@media print{#hk-install-banner,.hk-install-btn{display:none!important}}'
     ].join('');
     document.head.appendChild(s);
   }

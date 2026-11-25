@@ -22,16 +22,17 @@ function page(html = '') {
 (async () => {
   assert(!pwa.includes('hk-install-floating'));
   assert(!pwa.includes('.hk-install-text{display:none'));
-  assert(pwa.includes("'header'"));
+  assert(pwa.includes("querySelector('[data-pwa-install]')"));
   assert([...css.matchAll(/text-shadow:([^;]+);/g)].every(m => /^none(?:\s*!important)?$/.test(m[1].trim())));
   assert(css.includes('font-weight: bolder !important'));
   assert(css.includes('text-decoration: underline !important'));
   assert(css.includes('html.hk-high-contrast.hk-hc-light body'));
   assert(css.includes('html.hk-high-contrast:not(.hk-hc-light) body'));
   assert(!/hk-high-contrast body\[data-theme=/.test(css));
-  let dom = page('<header></header>'); let w = dom.window;
+  let dom = page('<header></header><div id="slot" data-pwa-install></div>'); let w = dom.window;
   w.eval(pwa); w.HakimPWA.showInstallButton();
-  assert(w.document.querySelector('header #hk-install-btn').textContent.includes('نصب برنامه'));
+  assert.equal(w.document.querySelector('header #hk-install-btn'), null);
+  assert(w.document.querySelector('#slot #hk-install-btn').textContent.includes('نصب برنامه'));
   w.HakimPWA.showInstallSuggestion();
   assert(!w.document.getElementById('hk-install-banner'));
   await new Promise(resolve => setTimeout(resolve, 10));

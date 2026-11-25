@@ -4,7 +4,6 @@
 <!-- hakim-csp:start -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
 <!-- hakim-csp:end -->
-
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="../css/a11y.css">
 <!-- hakim-core:end -->
@@ -50,7 +49,7 @@ a{color:inherit}
 .nav{display:flex;flex-direction:column;gap:6px}.nav-label{color:var(--muted);font-size:.68rem;font-weight:800;padding:0 11px 3px}.nav-btn{width:100%;display:flex;align-items:center;gap:10px;color:var(--muted);background:transparent;border:1px solid transparent;border-radius:13px;padding:11px 12px;cursor:pointer;text-align:right;font-weight:800;font-size:.82rem;transition:.22s}.nav-btn:hover{color:var(--text);background:var(--input);transform:translateX(-2px)}.nav-btn.on{color:var(--gold);border-color:var(--line);background:rgba(37, 99, 168, 0.12);background:color-mix(in srgb,var(--gold) 12%,transparent);box-shadow:inset -3px 0 var(--gold)}.nav-btn .badge-count{margin-inline-start:auto;font-size:.65rem;color:var(--gold);background:rgba(37, 99, 168, 0.15);background:color-mix(in srgb,var(--gold) 15%,transparent);padding:1px 7px;border-radius:99px}
 .sidebar-footer{margin-top:auto;color:var(--muted);font-size:.67rem;text-align:center;padding-top:12px;border-top:1px solid var(--line)}
 .main{min-width:0;padding:24px clamp(16px,3vw,42px) 70px}.main-inner{max-width:1250px;margin:0 auto}
-.topbar{display:flex;align-items:center;gap:10px;margin-bottom:22px}.topbar-title{flex:1}.topbar-title h1{font-size:1.35rem;margin:0;font-weight:900;letter-spacing:-.02em}.topbar-title p{margin:2px 0 0;color:var(--muted);font-size:.76rem}.top-actions{display:flex;gap:8px;align-items:center}.icon-btn{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;cursor:pointer;color:var(--text);background:var(--input);border:1px solid var(--line);transition:.22s}.icon-btn:hover{color:var(--gold);border-color:var(--gold);transform:translateY(-2px);box-shadow:0 7px 20px rgba(37, 99, 168, 0.14);box-shadow:0 7px 20px color-mix(in srgb,var(--gold) 14%,transparent)}.menu-toggle{display:none}
+.topbar{display:flex;align-items:center;gap:10px;margin-bottom:22px}.topbar-title{flex:1}.topbar-title h1,.topbar-title h2{font-size:1.35rem;margin:0;font-weight:900;letter-spacing:-.02em}.topbar-title p{margin:2px 0 0;color:var(--muted);font-size:.76rem}.top-actions{display:flex;gap:8px;align-items:center}.icon-btn{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;cursor:pointer;color:var(--text);background:var(--input);border:1px solid var(--line);transition:.22s}.icon-btn:hover{color:var(--gold);border-color:var(--gold);transform:translateY(-2px);box-shadow:0 7px 20px rgba(37, 99, 168, 0.14);box-shadow:0 7px 20px color-mix(in srgb,var(--gold) 14%,transparent)}.menu-toggle{display:none}
 .screen{animation:screenIn .38s ease both}@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .card{background:rgba(255, 255, 255, 0.91);background:color-mix(in srgb,var(--card) 91%,transparent);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);-webkit-backdrop-filter:blur(13px);margin-bottom:16px;transition:background .3s,border .3s,box-shadow .3s}.card:hover{box-shadow:0 20px 60px rgba(59, 130, 246, 0.12);box-shadow:0 20px 60px color-mix(in srgb,var(--accent) 12%,transparent)}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}.card-head h2{margin:0;color:var(--gold);font-size:1rem;display:flex;gap:8px;align-items:center}.card-head p{margin:3px 0 0;color:var(--muted);font-size:.72rem}
@@ -95,8 +94,22 @@ a{color:inherit}
 .survey-suggestion{font-size:.78rem;color:var(--text);background:rgba(37, 99, 168, 0.06);background:color-mix(in srgb,var(--gold) 6%,transparent);border:1px dashed var(--line);border-radius:9px;padding:8px 11px;margin-top:6px;line-height:1.9}
 @media(max-width:700px){.survey-head{align-items:flex-start;flex-direction:column;gap:4px}.stat-bar-top{font-size:.72rem}}
 @media(max-width:980px){.app-shell{grid-template-columns:215px 1fr}.dashboard-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){body{background:var(--bg)}.app-shell{display:block}.sidebar{position:fixed;inset:auto 0 0 0;width:100%;height:auto;padding:6px 8px;background:rgba(248, 251, 255, 0.96);background:color-mix(in srgb,var(--sidebar) 96%,transparent);border:0;border-top:1px solid var(--line);z-index:500;-webkit-backdrop-filter:blur(15px)}.brand,.user-mini,.nav-label,.sidebar-footer{display:none}.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}.nav-btn{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:7px 2px;border-radius:10px;text-align:center;font-size:.6rem;min-height:52px}.nav-btn.on{box-shadow:inset 0 -3px var(--gold)}.nav-btn .icon{width:19px;height:19px}.nav-btn .badge-count{position:absolute;display:none}.main{padding:15px 12px 83px}.topbar{margin-bottom:15px}.topbar-title h1{font-size:1.05rem}.topbar-title p{font-size:.65rem}.top-actions{gap:5px}.icon-btn{width:36px;height:36px;border-radius:11px}.menu-toggle{display:none}.stats-grid{gap:8px}.stat-card{padding:13px}.stat-value{font-size:1.45rem}.stat-icon{width:32px;height:32px;margin-bottom:8px}.stat-label{font-size:.65rem}.stat-trend{font-size:.6rem}.card{padding:14px;border-radius:16px}.game-list{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters .filter-wide{grid-column:1/-1}.filters .filter-btn{grid-column:1/-1}.toolbar{align-items:stretch}.toolbar-actions{width:100%}.toolbar-actions .btn{flex:1}.table-wrap{display:none}.result-cards{display:block}.detail-grid{grid-template-columns:1fr}.theme-panel{top:62px;inset-inline-start:12px;width:calc(100vw - 24px)}}
+@media(max-width:700px){body{background:var(--bg)}.app-shell{display:block}.sidebar{position:fixed;inset:auto 0 0 0;width:100%;height:auto;padding:6px 8px;background:rgba(248, 251, 255, 0.96);background:color-mix(in srgb,var(--sidebar) 96%,transparent);border:0;border-top:1px solid var(--line);z-index:500;-webkit-backdrop-filter:blur(15px)}.brand,.user-mini,.nav-label,.sidebar-footer{display:none}.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}.nav-btn{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:7px 2px;border-radius:10px;text-align:center;font-size:.6rem;min-height:52px}.nav-btn.on{box-shadow:inset 0 -3px var(--gold)}.nav-btn .icon{width:19px;height:19px}.nav-btn .badge-count{position:absolute;display:none}.main{padding:15px 12px 83px}.topbar{margin-bottom:15px}.topbar-title h1,.topbar-title h2{font-size:1.05rem}.topbar-title p{font-size:.65rem}.top-actions{gap:5px}.icon-btn{width:36px;height:36px;border-radius:11px}.menu-toggle{display:none}.stats-grid{gap:8px}.stat-card{padding:13px}.stat-value{font-size:1.45rem}.stat-icon{width:32px;height:32px;margin-bottom:8px}.stat-label{font-size:.65rem}.stat-trend{font-size:.6rem}.card{padding:14px;border-radius:16px}.game-list{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters .filter-wide{grid-column:1/-1}.filters .filter-btn{grid-column:1/-1}.toolbar{align-items:stretch}.toolbar-actions{width:100%}.toolbar-actions .btn{flex:1}.table-wrap{display:none}.result-cards{display:block}.detail-grid{grid-template-columns:1fr}.theme-panel{top:62px;inset-inline-start:12px;width:calc(100vw - 24px)}}
 @media(max-width:430px){.filters{grid-template-columns:1fr}.filters .filter-wide,.filters .filter-btn{grid-column:auto}.topbar-title p{display:none}.theme-grid{grid-template-columns:1fr 1fr}.btn-row .btn{min-width:110px}}
+@page{size:A4 portrait;margin:12mm}
+@media print{
+  html,body{background:#fff!important;color:#111!important;font-size:10.5pt!important}
+  .sidebar,.top-actions,#themePanel,#hakimMount,.toolbar-actions,.filters,.tabs,.btn,.icon-btn,.circle-btn,.q-actions,.user-actions,.btl-lobby-btn,.hk-a11y-fab,.hk-a11y-panel{display:none!important}
+  .app-shell{display:block!important}
+  .main{padding:0!important}.main-inner{max-width:100%!important}
+  .card,.stat-card,.rank-row,.q-item,.result-card,.survey-item,.user-row{background:#fff!important;color:#111!important;border:1px solid #cbd5e1!important;box-shadow:none!important;break-inside:avoid;page-break-inside:avoid}
+  .card-head h2,.topbar-title h2,.stat-value,.rank-score,.results-table th{color:#111!important}
+  .muted,.stat-label,.topbar-title p,.card-head p{color:#475569!important}
+  .table-wrap{display:block!important;overflow:visible!important;border-color:#cbd5e1!important}
+  .results-table{min-width:0!important;width:100%!important;color:#111!important}
+  .results-table th,.results-table td{border-color:#cbd5e1!important;background:#fff!important;white-space:normal!important;padding:6px 8px!important}
+  .result-cards{display:none!important}
+}
 </style>
 <!-- hakim-meta:start -->
 <meta name="description" content="پنل معلم حکیمستان — مدیریت کلاس، دانش‌آموزان، تکالیف و گزارش پیشرفت، همه در یک صفحه.">
@@ -171,7 +184,7 @@ a{color:inherit}
     </nav>
 <div class="sidebar-footer"><a href="../games/math-decimals-teacher.html" style="display:block;margin-bottom:6px;color:inherit;text-decoration:underline">گزارش محلی ممیزستان</a>حکیمستان · آموزش با بازی<br><span style="color:var(--gold);font-weight:700">طراحی و توسعه: مهدی شریفیان</span></div>  </aside>
   <main class="main"><div class="main-inner">
-    <header class="topbar"><div class="topbar-title"><h1 id="pageTitle">داشبورد</h1><p id="pageSubtitle">نمای کلی فعالیت‌های آموزشی</p></div><div class="top-actions"><button id="btnTheme" class="icon-btn" title="انتخاب تم" aria-label="انتخاب تم"><svg class="icon"><use href="#i-settings"/></svg></button><button id="btnRefresh" class="icon-btn" title="بازخوانی" aria-label="بازخوانی"><svg class="icon"><use href="#i-refresh"/></svg></button></div></header>
+    <header class="topbar"><div class="topbar-title"><h2 id="pageTitle">داشبورد</h2><p id="pageSubtitle">نمای کلی فعالیت‌های آموزشی</p></div><div class="top-actions"><button id="btnTheme" class="icon-btn" title="انتخاب تم" aria-label="انتخاب تم"><svg class="icon"><use href="#i-settings"/></svg></button><button id="btnRefresh" class="icon-btn" title="بازخوانی" aria-label="بازخوانی"><svg class="icon"><use href="#i-refresh"/></svg></button></div></header>
     <div id="themePanel" class="theme-panel hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>ظاهر پنل</h3><button class="icon-btn" id="btnCloseTheme" style="width:30px;height:30px"><svg class="icon sm"><use href="#i-close"/></svg></button></div><div id="themeGrid" class="theme-grid"></div><p class="muted" style="font-size:.65rem;margin:10px 0 0">انتخاب شما در این دستگاه ذخیره می‌شود.</p></div>
 
     <section id="scDashboard" class="screen">
@@ -187,7 +200,7 @@ a{color:inherit}
       <div id="tabList" class="tab-body"><div id="qList" class="q-list"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><button id="btnRestore" class="btn ghost" style="margin-top:12px"><svg class="icon sm"><use href="#i-refresh"/></svg> بازیابی سؤال‌های پیش‌فرض</button></div>
     </div></section>
 
-    <section id="scResults" class="screen hidden"><div class="card"><div class="toolbar"><div class="card-head" style="margin:0"><div><h2><svg class="icon"><use href="#i-chart"/></svg> نتایج بازی‌ها</h2><p>فیلتر، پشتیبان‌گیری، وارد کردن یا حذف نتایج</p></div></div><div class="toolbar-actions"><button id="btnExport" class="btn small"><svg class="icon sm"><use href="#i-download"/></svg> دانلود پشتیبان</button><button id="btnImport" class="btn info small"><svg class="icon sm"><use href="#i-upload"/></svg> بازگردانی از فایل</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="btnDeleteAll" class="btn danger small"><svg class="icon sm"><use href="#i-trash"/></svg> پاک کردن همه</button></div></div><div class="filters"><div><label for="fGame">بازی</label><select id="fGame"><option value="">همه بازی‌ها</option><option value="snake-ladder">مار و پله</option><option value="snake-ladder-online">مار و پله آنلاین</option><option value="mancheh-online">منچ دانش آنلاین</option><option value="lab2d">آزمایشگاه ۲بعدی</option><option value="jadval-hekmat">جدول حکمت</option><option value="kohan-diyar">فتح کهن دیار ایران</option><option value="hakim-quest">ماجرای حکیم</option><option value="hakim-cards">کارت‌های حکیم</option><option value="hakim-treasure">گنج حکیم</option><option value="farsi5-vocab">واژه‌ستان فارسی پنجم</option><option value="math-learning-1">تقسیم چکشی</option><option value="math-time-mission">ماموریت زمان</option><option value="math-olgoha">الگوستان</option><option value="math-fasl2">کسرستان</option><option value="math-nesbat">نسبتستان</option><option value="math-geometry">نقشستان</option><option value="math-decimals">ممیزستان</option></select></div><div class="filter-wide"><label for="fStudent">دانش‌آموز</label><input id="fStudent" type="search" placeholder="نام دانش‌آموز..."></div><div><label for="fDays">بازه زمانی</label><select id="fDays"><option value="0">همه</option><option value="1">امروز</option><option value="7">این هفته</option><option value="30">این ماه</option></select></div><div class="filter-btn"><button id="btnApplyFilter" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-search"/></svg> فیلتر</button></div></div><div id="resultsAlert" class="alert"></div><div id="resultsInfo" class="results-info"></div><div id="resultsTable"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><div id="resultCards" class="result-cards"></div></div></section>
+    <section id="scResults" class="screen hidden"><div class="card"><div class="toolbar"><div class="card-head" style="margin:0"><div><h2><svg class="icon"><use href="#i-chart"/></svg> نتایج بازی‌ها</h2><p>فیلتر، پشتیبان‌گیری، وارد کردن یا حذف نتایج</p></div></div><div class="toolbar-actions"><button id="btnExport" class="btn small"><svg class="icon sm"><use href="#i-download"/></svg> دانلود پشتیبان JSON</button><button id="btnExportCsv" class="btn ghost small"><svg class="icon sm"><use href="#i-download"/></svg> خروجی CSV</button><button id="btnImport" class="btn info small"><svg class="icon sm"><use href="#i-upload"/></svg> بازگردانی از فایل</button><button id="btnPrintResults" class="btn ghost small">🖨️ چاپ گزارش A4</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="btnDeleteAll" class="btn danger small"><svg class="icon sm"><use href="#i-trash"/></svg> پاک کردن همه</button></div></div><div class="filters"><div><label for="fGame">بازی</label><select id="fGame"><option value="">همه بازی‌ها</option><option value="snake-ladder">مار و پله</option><option value="snake-ladder-online">مار و پله آنلاین</option><option value="mancheh-online">منچ دانش آنلاین</option><option value="hakimestan-lab-2d">آزمایشگاه ۲بعدی</option><option value="jadval-hekmat">جدول حکمت</option><option value="kohan-diyar">فتح کهن دیار ایران</option><option value="hakim-quest">ماجرای حکیم</option><option value="hakim-cards">کارت‌های حکیم</option><option value="hakim-treasure">گنج حکیم</option><option value="farsi5-vocab">واژه‌ستان فارسی پنجم</option><option value="math-learning-1">تقسیم چکشی</option><option value="math-time-mission">ماموریت زمان</option><option value="math-olgoha">الگوستان</option><option value="math-fasl2">کسرستان</option><option value="math-nesbat">نسبتستان</option><option value="math-geometry">نقشستان</option><option value="math-decimals">ممیزستان</option></select></div><div class="filter-wide"><label for="fStudent">دانش‌آموز</label><input id="fStudent" type="search" placeholder="نام دانش‌آموز..."></div><div><label for="fDays">بازه زمانی</label><select id="fDays"><option value="0">همه</option><option value="1">امروز</option><option value="7">این هفته</option><option value="30">این ماه</option></select></div><div class="filter-btn"><button id="btnApplyFilter" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-search"/></svg> فیلتر</button></div></div><div id="resultsAlert" class="alert"></div><div id="resultsInfo" class="results-info"></div><div id="resultsTable"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><div id="resultCards" class="result-cards"></div></div></section>
 
     <section id="scStats" class="screen hidden">
       <div class="stats-grid">
@@ -223,7 +236,7 @@ a{color:inherit}
         <div class="card-head">
           <div>
             <h2><svg class="icon"><use href="#i-grid"/></svg> جدول کامل بازدیدها</h2>
-            <p>همه‌ی اطلاعات ثبت‌شده از بازدیدکنندگان</p>
+            <p>همهٔ اطلاعات ثبت‌شده از بازدیدکنندگان</p>
           </div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
             <button id="btnExportVisits" class="btn ghost small"><svg class="icon sm"><use href="#i-download"/></svg> خروجی CSV</button>
@@ -304,7 +317,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const attr=v=>esc(v).replace(/`/g,'&#96;');
 const fa=v=>String(v??'').replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
 const icon=n=>`<svg class="icon sm"><use href="#i-${n}"></use></svg>`;
-const GAME_NAMES={'kohan-diyar':'فتح کهن دیار ایران','snake-ladder':'مار و پله دانش','snake-ladder-online':'مار و پله آنلاین','hakim-quest':'ماجرای حکیم','hakim-cards':'کارت‌های حکیم','jadval-hekmat':'جدول حکمت','hakim-treasure':'گنج حکیم','lab2d':'آزمایشگاه ۲بعدی','lab2d-pro':'آزمایشگاه پیشرفته','mancheh-online':'منچ دانش آنلاین','farsi5-vocab':'واژه‌ستان فارسی پنجم','math-learning-1':'تقسیم چکشی','math-time-mission':'ماموریت زمان','math-olgoha':'الگوستان','math-fasl2':'کسرستان','math-nesbat':'نسبتستان','math-geometry':'نقشستان','math-decimals':'ممیزستان','math-learning':'مدرسه ریاضی'};
+const GAME_NAMES={'kohan-diyar':'فتح کهن دیار ایران','snake-ladder':'مار و پله دانش','snake-ladder-online':'مار و پله آنلاین','hakim-quest':'ماجرای حکیم','hakim-cards':'کارت‌های حکیم','jadval-hekmat':'جدول حکمت','hakim-treasure':'گنج حکیم','hakimestan-lab-2d':'آزمایشگاه ۲بعدی','lab2d':'آزمایشگاه ۲بعدی','lab2d-pro':'آزمایشگاه پیشرفته','hakim-goosh':'گوش حکیم','hakim-gosh':'چشم حکیم','hakim-eye':'چشم حکیم','hakim-incline':'سطح شیب‌دار','hakim-pulley':'قرقره','incline':'سطح شیب‌دار','pulley':'قرقره','mancheh-online':'منچ دانش آنلاین','farsi5-vocab':'واژه‌ستان فارسی پنجم','math-learning-1':'تقسیم چکشی','math-time-mission':'ماموریت زمان','math-olgoha':'الگوستان','math-fasl2':'کسرستان','math-nesbat':'نسبتستان','math-geometry':'نقشستان','math-decimals':'ممیزستان','math-decimals-teacher':'گزارش محلی ممیزستان','decimals-check':'سنجش ممیزستان','math-learning':'مدرسه ریاضی'};
 const THEMES=[
   {id:'indigo',name:'نیلی ـ طلایی',desc:'تیره و رسمی',bg:'#0d0a1f',accent:'#f5c76a'},
   {id:'purple',name:'شب بنفش',desc:'بنفش و صورتی',bg:'#170b21',accent:'#ff73c8'},
@@ -313,9 +326,9 @@ const THEMES=[
   {id:'pink',name:'صورتی ملایم',desc:'روشن و لطیف',bg:'#fff7fb',accent:'#d9468d'},
   {id:'blue',name:'آبی آرام',desc:'روشن و حرفه‌ای',bg:'#f1f6fb',accent:'#2563a8'}
 ];
-function applyTheme(theme){const id=THEMES.some(t=>t.id===theme)?theme:'indigo';const selected=THEMES.find(t=>t.id===id)||THEMES[0];document.body.dataset.theme=id;localStorage.setItem(THEME_KEY,id);const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=selected.bg;$$('.theme-choice').forEach(x=>x.classList.toggle('selected',x.dataset.theme===id));}
+function applyTheme(theme){const id=THEMES.some(t=>t.id===theme)?theme:'indigo';const selected=THEMES.find(t=>t.id===id)||THEMES[0];document.body.dataset.theme=id;try{localStorage.setItem(THEME_KEY,id)}catch(e){}const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=selected.bg;$$('.theme-choice').forEach(x=>x.classList.toggle('selected',x.dataset.theme===id));}
 function renderThemePicker(){ $('themeGrid').innerHTML=THEMES.map(t=>`<button class="theme-choice${document.body.dataset.theme===t.id?' selected':''}" data-theme="${t.id}"><span class="theme-preview" style="--tbg:${t.bg};--taccent:${t.accent}"><i></i></span><span><b>${t.name}</b><small>${t.desc}</small></span></button>`).join('');$$('.theme-choice').forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));}
-applyTheme(localStorage.getItem(THEME_KEY)||'indigo');
+applyTheme((()=>{try{return localStorage.getItem(THEME_KEY)}catch(e){return null}})()||'indigo');
 function showAlert(el,type,msg,auto=true){if(!el)return;el.className='alert on '+type;el.innerHTML=`${icon(type==='ok'?'check':type==='err'?'close':'file')}<span></span><button class="alert-close" aria-label="بستن">${icon('close')}</button>`;el.querySelector('span').textContent=String(msg??'');el.querySelector('.alert-close').onclick=()=>hideAlert(el);if(auto)setTimeout(()=>hideAlert(el),3500)}
 function hideAlert(el){if(el)el.className='alert'}
 function loading(el){el.innerHTML='<div class="empty"><span class="spinner"></span> در حال بارگذاری...</div>'}
@@ -325,7 +338,7 @@ function setButtonBusy(btn,busy,label){if(!btn)return;if(busy){btn.dataset.oldLa
 /* ورود و ناوبری */
 $('btnLogin').onclick=async function(){const pass=$('passIn').value.trim();if(!pass){showAlert($('loginAlert'),'err','رمز عبور را وارد کنید.');return}setButtonBusy(this,true);try{const res=await api('tpLogin',{password:pass});if(!res.ok){showAlert($('loginAlert'),'err',res.error||'رمز عبور نادرست است.');return}token=res.token;$('userName').textContent=res.username||res.name||'معلم';$('loginView').classList.add('hidden');$('appShell').classList.remove('hidden');showScreen('dashboard')}catch(e){showAlert($('loginAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(this,false,'<svg class="icon sm"><use href="#i-check"></use></svg> ورود به پنل')}};
 $('passIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('btnLogin').click()});
-$('btnLogout').onclick=()=>{token=null;['hakimestan_daftar_v1','hakimestan_daftar_last_sync','hakimestan_daftar_pass','hakimestan_daftar_auth','hakimestan_daftar_last_user'].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});try{sessionStorage.removeItem('hakimestan_daftar_auth')}catch(e){}$('appShell').classList.add('hidden');$('loginView').classList.remove('hidden');$('passIn').value='';$('passIn').focus()};
+$('btnLogout').onclick=()=>{token=null;['hakimestan_daftar_pass','hakimestan_daftar_auth'].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});try{sessionStorage.removeItem('hakimestan_daftar_auth')}catch(e){}$('appShell').classList.add('hidden');$('loginView').classList.remove('hidden');$('passIn').value='';$('passIn').focus()};
 $('btnTheme').onclick=()=>{$('themePanel').classList.toggle('hidden')};$('btnCloseTheme').onclick=()=>$('themePanel').classList.add('hidden');renderThemePicker();
 $('btnRefresh').onclick=()=>{const active=$$('.screen').find(s=>!s.classList.contains('hidden'));if(active)showScreen(active.id.replace('sc','').toLowerCase())};
 const TITLES={
@@ -360,7 +373,14 @@ function collectQuestion(prefix){const type=$(prefix+'Type').value,text=$(prefix
 function validQuestion(q){if(!q.text)return 'متن سؤال را وارد کنید.';if(q.type==='mcq'){if(!q.options||q.options.length<4||q.options.some(x=>!x))return 'هر چهار گزینه را کامل کنید.';if(q.answer===undefined||q.answer===null||isNaN(Number(q.answer)))return 'پاسخ درست را مشخص کنید.'}if(q.type==='tf'&&(q.answer!==true&&q.answer!==false&&String(q.answer)!=='true'&&String(q.answer)!=='false'))return 'پاسخ صحیح یا غلط را مشخص کنید.';if(q.type==='short'||q.type==='blank'){if(!q.answers)q.answers=Array.isArray(q.answer)?q.answer:splitAnswers(q.answer);if(!q.answers.length)return 'حداقل یک پاسخ قابل قبول وارد کنید.'}if(q.type==='multi'){if(!q.options||q.options.length<4||q.options.some(x=>!x))return 'هر چهار گزینه را کامل کنید.';if(!Array.isArray(q.answer)||!q.answer.length)return 'حداقل یک پاسخ درست انتخاب کنید.'}if(q.type==='match'&&(!Array.isArray(q.pairs)||!q.pairs.length||q.pairs.some(p=>!p.a||!p.b)))return 'جفت‌های تطبیقی را کامل کنید.';return ''}
 function fillQuestion(prefix,q){const type=q.type||'mcq';$(prefix+'Type').value=type;setQuestionType(prefix,type);$(prefix+'Text').value=q.text||'';$(prefix+'Expl').value=q.explanation||'';$(prefix+'Section').value=q.section||'';const pairs=Array.isArray(q.pairs)?q.pairs:(Array.isArray(q.answer)?q.answer:[]);[0,1,2,3].forEach(i=>{if($(prefix+'Opt'+i))$(prefix+'Opt'+i).value=(q.options||[])[i]||'';if($(prefix+'MultiOpt'+i))$(prefix+'MultiOpt'+i).value=(q.options||[])[i]||'';if($(prefix+'A'+i)){$(prefix+'A'+i).value=pairs[i]?.a||'';$(prefix+'B'+i).value=pairs[i]?.b||''}});const ans=Array.isArray(q.answer)?q.answer:[];$$(`input[name="${prefix}Correct"]`).forEach(r=>r.checked=Number(r.value)===Number(q.answer));$$(`input[name="${prefix}TF"]`).forEach(r=>r.checked=String(r.value)===String(q.answer));$$(`input[name="${prefix}Multi"]`).forEach(r=>r.checked=ans.map(Number).includes(Number(r.value)));if($(prefix+'Answers'))$(prefix+'Answers').value=Array.isArray(q.answers||q.answer)?(q.answers||q.answer).join('، '):q.answer||'';if($(prefix+'AnswersBlank'))$(prefix+'AnswersBlank').value=Array.isArray(q.answers||q.answer)?(q.answers||q.answer).join('، '):q.answer||''}
 $('btnAddManual').onclick=async function(){const q=collectQuestion('m'),err=validQuestion(q);if(err){showAlert($('qAlert'),'err',err);return}setButtonBusy(this,true);try{const res=await api('tpAddQuestion',{token,gameId:currentGame,question:q});if(!res.ok){showAlert($('qAlert'),'err',res.error||'خطا در ذخیره سؤال');return}showAlert($('qAlert'),'ok','سؤال با موفقیت اضافه شد.');clearManual();loadQuestions()}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(this,false,'<svg class="icon sm"><use href="#i-plus"></use></svg> اضافه کردن سؤال')}};
-function clearManual(){const type=$('mType').value;const keep=type;$('mFields').querySelectorAll('input,textarea').forEach(x=>{if(x.type==='radio'||x.type==='checkbox')x.checked=false;else x.value=''});$('mType').value=keep;setQuestionType('m',keep);const first=$(`input[name="mCorrect"]`);if(first)first.checked=true;const tf=$(`input[name="mTF"]`);if(tf)tf.checked=true}
+function clearManual(){const type=$('mType').value;const keep=type;$('mFields').querySelectorAll('input,textarea').forEach(x=>{if(x.type==='radio'||x.type==='checkbox')x.checked=false;else x.value=''});$('mType').value=keep;setQuestionType('m',keep);const first=$(`input[name="mCorrect"]`);if(first)first.checked=true;const tf=$(`input[name="mTF"]`);if(tf)tf.checked=true;try{localStorage.removeItem('hakimestan_panel_qdraft_v1')}catch(e){}}
+const QDRAFT_KEY='hakimestan_panel_qdraft_v1',FDRAFT_KEY='hakimestan_panel_filters_v1';
+let qDraftTimer=0;
+function saveManualDraftNow(){clearTimeout(qDraftTimer);try{const q=collectQuestion('m');if(q.text||(q.options||[]).some(Boolean)||q.explanation||q.section)localStorage.setItem(QDRAFT_KEY,JSON.stringify(q));else localStorage.removeItem(QDRAFT_KEY);}catch(e){}}
+function restoreManualDraft(){try{const raw=localStorage.getItem(QDRAFT_KEY);if(raw){const q=JSON.parse(raw);if(q&&typeof q==='object'&&q.type)fillQuestion('m',q);}}catch(e){}}
+$('tabManual').addEventListener('input',()=>{clearTimeout(qDraftTimer);qDraftTimer=setTimeout(saveManualDraftNow,220)});
+$('tabManual').addEventListener('change',()=>{clearTimeout(qDraftTimer);qDraftTimer=setTimeout(saveManualDraftNow,220)});
+restoreManualDraft();
 
 /* تب‌ها و فهرست سؤال */
 $$('.tab').forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));function switchTab(name){$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));$$('.tab-body').forEach(x=>x.classList.remove('on'));$('tab'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('on');if(name==='list')loadQuestions()}
@@ -383,6 +403,10 @@ $('btnRestore').onclick=async function(){if(!confirm('هشدار: همهٔ سؤ�
 
 /* نتایج */
 function filterPayload(){return{gameId:$('fGame').value,student:$('fStudent').value.trim(),days:$('fDays').value}}
+function saveFilterDraft(){try{localStorage.setItem(FDRAFT_KEY,JSON.stringify(filterPayload()))}catch(e){}}
+try{const fd=JSON.parse(localStorage.getItem(FDRAFT_KEY)||'null');if(fd){if(typeof fd.gameId==='string')$('fGame').value=fd.gameId;if(typeof fd.student==='string')$('fStudent').value=fd.student;if(typeof fd.days==='string')$('fDays').value=fd.days;}}catch(e){}
+['fGame','fStudent','fDays'].forEach(id=>{$(id).addEventListener('change',saveFilterDraft);$(id).addEventListener('input',saveFilterDraft)});
+window.addEventListener('pagehide',()=>{saveManualDraftNow();saveFilterDraft()});
 $('btnApplyFilter').onclick=loadResults;$('fStudent').addEventListener('keydown',e=>{if(e.key==='Enter')loadResults()});
 async function loadResults(){loading($('resultsTable'));$('resultCards').innerHTML='';try{const res=await api('tpGetResults',{token,...filterPayload()});if(!res.ok){$('resultsTable').innerHTML='<div class="empty">خطا در دریافت نتایج</div>';return}renderResults(res.results||[])}catch(e){$('resultsTable').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
 function resultId(r){return r.id??r.ID??r.resultId??r.rowId??''}
@@ -394,6 +418,8 @@ function bindResultActions(){$$('.detail-result').forEach(b=>b.onclick=()=>showD
 async function deleteResult(id,idx,btn){const r=window.__resultsData?.[idx]||{};if(!id&&!((r.date||r.createdAt||r.student||r.game)||r.score!==undefined))return;if(!confirm('این رکورد حذف شود؟'))return;setButtonBusy(btn,true);try{const res=await api('tpDeleteResult',{token,id,date:r.date||r.createdAt||'',student:r.student||'',game:r.game||'',score:r.score??'',experiment:r.experiment||''});if(res.ok){showAlert($('resultsAlert'),'ok','رکورد حذف شد.');loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false)}}
 $('btnDeleteAll').onclick=async()=>{const promptValue=prompt('برای حذف نتایج مطابق فیلتر فعلی، عبارت «پاک کن» را دقیق وارد کنید:');if(promptValue!=='پاک کن')return;const btn=$('btnDeleteAll');setButtonBusy(btn,true);try{const filters=filterPayload(),res=await api('tpDeleteAllResults',{token,...filters,filters});if(res.ok){showAlert($('resultsAlert'),'ok',`${fa(res.deleted||0)} رکورد حذف شد.`);loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-trash"></use></svg> پاک کردن همه')}};
 $('btnExport').onclick=()=>{try{const data={version:'1.0',exported_at:new Date().toISOString(),count:(window.__resultsData||[]).length,results:window.__resultsData||[]};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),pad=n=>String(n).padStart(2,'0');a.href=url;a.download=`hakimestan-results-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showAlert($('resultsAlert'),'ok','پشتیبان نتایج دانلود شد.')}catch(e){showAlert($('resultsAlert'),'err','دانلود پشتیبان انجام نشد.')}};
+$('btnExportCsv').onclick=()=>{try{const list=window.__resultsData||[];const csvEsc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const rows=[['تاریخ','دانش‌آموز','بازی','آزمایش','امتیاز','وضعیت']];list.forEach(r=>rows.push([resultDate(r),r.student||'',GAME_NAMES[r.game]||r.game||'',r.experiment||'',r.score??0,r.completed?'کامل':'ناقص']));const csv='\uFEFF'+rows.map(r=>r.map(csvEsc).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),pad=n=>String(n).padStart(2,'0');a.href=url;a.download=`hakimestan-results-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showAlert($('resultsAlert'),'ok','خروجی CSV دانلود شد.')}catch(e){showAlert($('resultsAlert'),'err','دانلود CSV انجام نشد.')}};
+$('btnPrintResults').onclick=()=>window.print();
 $('btnImport').onclick=()=>$('importFile').click();$('importFile').onchange=e=>{if(e.target.files[0])readImport(e.target.files[0]);e.target.value=''};
 function readImport(file){const reader=new FileReader();reader.onload=e=>{try{const data=JSON.parse(e.target.result),results=Array.isArray(data)?data:data.results;if(!Array.isArray(results))throw new Error('results');pendingImport=results;const sample=results.slice(0,5).map(r=>`<div class="detail-card"><div class="detail-key">${esc(r.student||'بدون نام')}</div><div class="detail-val">${esc(GAME_NAMES[r.game]||r.game||'بدون بازی')} · ${esc(fa(r.score??0))}</div></div>`).join('');$('importPreview').innerHTML=`<div class="alert on info">${icon('file')}<span>${fa(results.length)} رکورد از فایل پیدا شد. رکوردهای تکراری در سمت سرور رد می‌شوند.</span></div><div class="detail-grid">${sample||'<div class="empty">رکوردی وجود ندارد.</div>'}</div>`;$('importModal').classList.remove('hidden')}catch(err){showAlert($('resultsAlert'),'err','ساختار فایل پشتیبان معتبر نیست.')}};reader.readAsText(file)}
 $('btnConfirmImport').onclick=async()=>{if(!pendingImport?.length)return;const btn=$('btnConfirmImport');setButtonBusy(btn,true);try{const res=await api('tpImportResults',{token,results:pendingImport});if(res.ok){showAlert($('resultsAlert'),'ok',`${fa(res.added??pendingImport.length)} رکورد وارد شد.`);closeImport();loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-check"></use></svg> وارد کردن رکوردها')}};
@@ -595,6 +621,8 @@ const PAGE_NAMES={
   'tarh-dars.html':'کارگاه طرح درس',
   'videos.html':'فیلم‌های آموزشی',
   'panels/teacher.html':'پنل معلم',
+  'assessment/decimals-check.html':'سنجش ممیزستان',
+  'games/math-decimals-teacher.html':'گزارش محلی ممیزستان',
   'games/snake-ladder.html':'مار و پله دانش',
   'games/snake-ladder-online.html':'مار و پله آنلاین',
   'games/mancheh-online.html':'منچ دانش آنلاین',
@@ -642,6 +670,7 @@ function getCleanPageInfo(path){
     file=String(file||raw).replace(/[-_]+/g,' ').trim();
     name=file||raw;
   }
+  cleanPath=String(cleanPath||'index.html').replace(/(\.\.\/|\.\.\\|[:<>"'\\\x00-\x1f])+/g,'').replace(/^\/+/,'')||'index.html';
   var href=('../'+cleanPath).replace(/^(\.\.\/)+/,'../');
   return {name:name,href:href,path:cleanPath,raw:String(path==null?'':path)};
 }
@@ -662,14 +691,26 @@ function renderBars(containerId,list,max){
     return '<div class="stat-bar"><div class="stat-bar-top">'+labelHtml+'<span class="val">'+fa(item.val)+' ('+fa(pct)+'٪)</span></div><div class="stat-bar-track"><div class="stat-bar-fill" style="width:'+pct+'%"></div></div></div>';
   }).join('')+'</div>';
 }
+function formatSurveyGame(raw){
+  var g=String(raw==null?'':raw).trim();
+  if(!g)return '';
+  if(GAME_NAMES[g])return GAME_NAMES[g];
+  var slug=g.replace(/^\/+/,'').replace(/^(hakimestan|hakimistan)\//i,'').split(/[?#]/)[0];
+  if(PAGE_NAMES[slug])return PAGE_NAMES[slug];
+  var base=slug.split('/').pop().replace(/\.html?$/i,'');
+  if(GAME_NAMES[base])return GAME_NAMES[base];
+  if(/[\/]|\.html?$/i.test(g)||/^[a-z0-9_-]+$/i.test(g))return getCleanPageInfo(g).name;
+  return g;
+}
 function renderSurveys(list){
   const el=$('surveysList');
   if(!list.length){el.innerHTML='<div class="empty">هنوز نظری ثبت نشده</div>';return}
   el.innerHTML=list.slice().reverse().map(s=>{
     const isTeacher=s.type==='teacher';
     const stars='⭐'.repeat(parseInt(s.rating)||0);
+    const gameLabel=formatSurveyGame(s.game);
     return '<div class="survey-item"><div class="survey-head"><div><span class="survey-type '+(isTeacher?'teacher':'student')+'">'+(isTeacher?'🧑‍🏫 معلم':'🧒 دانش‌آموز')+'</span> <span class="survey-name">'+esc(s.name||'ناشناس')+'</span></div><span class="survey-time">'+esc(s.time||'')+'</span></div>'+
-      (s.game?'<div class="survey-game">🎮 '+esc(s.game)+'</div>':'')+
+      (gameLabel?'<div class="survey-game">🎮 '+esc(gameLabel)+'</div>':'')+
       (stars?'<div class="survey-rating">'+stars+'</div>':'')+
       (s.suggestion?'<div class="survey-suggestion">💬 '+esc(s.suggestion)+'</div>':'')+
     '</div>';
@@ -839,7 +880,7 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
   }
 })();
 </script>
-  <script src="../hakim-core.js" onerror="console.log('no hakim-core')"></script>
+  <script src="../hakim-core.js"></script>
   <script>
 /* ══════════════════════════════════════════════════════════════════
  * دفتر معلم کامل در پنل معلم
@@ -886,9 +927,19 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
   
   async function loadDB(force) {
     if (cache && !force) return cache;
-    const token = await login();
-    const r = await api('tpClassGetAll', {token});
-    cache = r.data || {version:1, settings:{}, classes:[], students:[], schedule:[], attendance:{}, grades:[], reminders:[]};
+    try {
+      const token = await login();
+      const r = await api('tpClassGetAll', {token});
+      cache = r.data || null;
+      if (cache) try { localStorage.setItem(K_DATA, JSON.stringify(cache)); } catch(e){}
+    } catch(netErr) {
+      const localRaw = ls.get(K_DATA);
+      if (localRaw) {
+        try { cache = JSON.parse(localRaw); } catch(_){ cache = null; }
+      }
+      if (!cache) throw netErr;
+    }
+    if (!cache || typeof cache !== 'object') cache = {version:1, settings:{}, classes:[], students:[], schedule:[], attendance:{}, grades:[], reminders:[]};
     ['classes','students','grades','schedule','reminders'].forEach(k => {
       if (!Array.isArray(cache[k])) cache[k] = [];
     });
@@ -914,12 +965,16 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
       if (!Array.isArray(db.reminders)) db.reminders = [];
       if (!db.attendance || typeof db.attendance !== 'object') db.attendance = {};
 
-      const tkn = await login();
       db.updatedAt = new Date().toISOString();
-      await api('tpClassSaveAll', {token: tkn, data: db});
       cache = db;
-      try { localStorage.setItem(K_LAST, new Date().toISOString()); } catch(e){}
       try { localStorage.setItem(K_DATA, JSON.stringify(db)); } catch(e){}
+      try {
+        const tkn = await login();
+        await api('tpClassSaveAll', {token: tkn, data: db});
+        try { localStorage.setItem(K_LAST, new Date().toISOString()); } catch(e){}
+      } catch(syncErr) {
+        if (navigator.onLine !== false) notify('⚠️ در مرورگر ذخیره شد؛ همگام‌سازی ابری ناموفق بود.', true);
+      }
     } finally { busy = false; }
   }
   
@@ -1163,7 +1218,9 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
         const errEl = document.getElementById('dkCErr');
         try {
           const name = req(v('dkCName'), 'نام کلاس');
-          const obj = {id: c.id, name, grade: v('dkCGrade').trim(), subject: v('dkCSubject').trim(), color: v('dkCColor')};
+          const rawColor = v('dkCColor');
+          const safeCol = /^#[0-9a-f]{6}$/i.test(rawColor) ? rawColor : '#3b82f6';
+          const obj = {id: c.id, name, grade: v('dkCGrade').trim(), subject: v('dkCSubject').trim(), color: safeCol};
           const db = JSON.parse(JSON.stringify(cache));
           if (ui.editingClass === '__new__') {
             db.classes.push(obj);
@@ -1184,6 +1241,9 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     html += `
       <div class="dk-toolbar">
         <button class="dk-btn dk-btn-primary" id="dkCNew">➕ کلاس جدید</button>
+        <button class="dk-btn dk-btn-soft" id="dkBackupJson">💾 پشتیبان JSON</button>
+        <button class="dk-btn dk-btn-soft" id="dkRestoreJson">📂 بازیابی JSON</button>
+        <input type="file" id="dkRestoreFile" accept="application/json,.json" hidden>
         <div class="dk-grow"></div>
         <button class="dk-btn dk-btn-soft" id="dkCRefresh">🔄 دریافت مجدد</button>
       </div>
@@ -1195,8 +1255,9 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
         const roster = (cache.students||[]).filter(s => s.classId === c.id);
         const gs = (cache.grades||[]).filter(g => g.classId === c.id);
         const mean = avg(gs);
+        const safeCol = /^#[0-9a-f]{6}$/i.test(c.color||'') ? c.color : '#3b82f6';
         return `
-          <div class="dk-card" style="--cc:${esc(c.color||'#3b82f6')}">
+          <div class="dk-card" style="--cc:${safeCol}">
             <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start">
               <div style="min-width:0">
                 <div class="dk-card-title">${esc(c.name)}</div>
@@ -1218,6 +1279,32 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     }
     body.innerHTML = html;
     document.getElementById('dkCNew').onclick = () => { ui.editingClass = '__new__'; renderBody(); };
+    document.getElementById('dkBackupJson').onclick = () => {
+      const payload = JSON.stringify(cache || {}, null, 2);
+      const blob = new Blob([payload], {type:'application/json;charset=utf-8'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'daftar-panel-backup.json';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1200);
+      notify('✅ پشتیبان دفتر دانلود شد');
+    };
+    document.getElementById('dkRestoreJson').onclick = () => document.getElementById('dkRestoreFile').click();
+    document.getElementById('dkRestoreFile').onchange = async e => {
+      const f = e.target.files[0]; e.target.value = '';
+      if (!f) return;
+      try {
+        const parsed = JSON.parse(await f.text());
+        if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.classes) || !Array.isArray(parsed.students)) {
+          throw new Error('ساختار فایل پشتیبان دفتر معتبر نیست');
+        }
+        await saveDB(parsed);
+        notify('✅ پشتیبان دفتر بازیابی و ذخیره شد');
+        renderBody();
+      } catch(err) {
+        notify('❌ ' + (err.message || 'خطا در بازیابی'), true);
+      }
+    };
     document.getElementById('dkCRefresh').onclick = async () => { cache = null; cacheToken = null; await loadAndRender(); };
     body.querySelectorAll('[data-act="edit"]').forEach(b => b.onclick = () => { ui.editingClass = b.dataset.id; renderBody(); });
     body.querySelectorAll('[data-act="del"]').forEach(b => b.onclick = async () => {
@@ -1651,7 +1738,7 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
       else ref = 'سایر';
     }
 
-    fetch(API, {
+    if (navigator.onLine !== false) fetch(API, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },

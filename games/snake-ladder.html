@@ -4,27 +4,26 @@
 <!-- hakim-csp:start -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
 <!-- hakim-csp:end -->
-
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="../css/a11y.css">
 <!-- hakim-core:end -->
 
-   <link rel="icon" type="image/svg+xml" href="../icon.svg">
+<link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#bfeee0">
-<meta name="description" content="مار و پله‌ی دانش — بازی آموزشی ۲ تا ۴ نفره از حکیمستان. جواب بده، تاس بنداز، اول از همه به خانه ۱۰۰ برس!">
-<meta property="og:title" content="مار و پله‌ی دانش — حکیمستان">
+<meta name="description" content="مار و پلهٔ دانش — بازی آموزشی ۲ تا ۴ نفره از حکیمستان. جواب بده، تاس بنداز، اول از همه به خانه ۱۰۰ برس!">
+<meta property="og:title" content="مار و پلهٔ دانش — حکیمستان">
 <meta property="og:description" content="بازی آموزشی ۲ تا ۴ نفره: هر جواب درست یک تاس است!">
-<title>🐍 مار و پله‌ی دانش — حکیمستان</title>
+<title>🐍 مار و پلهٔ دانش — حکیمستان</title>
 
 <!-- فونت‌ها: Lalezar (کارتونی) + Vazirmatn (متن) -->
 <style>
 /* ============================================================
-   مار و پله‌ی دانش — استایل‌ها
+   مار و پلهٔ دانش — استایل‌ها
    تم: سبز-زرد شاد و بازیگوش (چمنی/آسمانی)
    ============================================================ */
 :root{
@@ -47,10 +46,11 @@
   --title:'Lalezar','Vazirmatn',Tahoma,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;}
+html,body{height:100%;overflow-x:clip;}
 body{
   font-family:var(--font);
   color:var(--ink);
+  background-color:#c9f0dd;
   min-height:100vh;min-height:100dvh;
   overflow-x:hidden;
   line-height:1.7;
@@ -60,6 +60,38 @@ body{
     radial-gradient(700px 500px at 10% 110%, rgba(52,199,89,.25), transparent 55%),
     linear-gradient(180deg,#a9e7cd 0%,#c9f0dd 45%,#e7f8ee 100%);
   background-attachment:fixed;
+}
+body[data-theme="dark"]{
+  color:#ecfdf5;
+  background-color:#0f1f1a;
+  background:linear-gradient(180deg,#0c1b17 0%,#122822 50%,#17322a 100%);
+}
+body[data-theme="dark"] .game-title{color:#6ee7b7;text-shadow:0 3px 12px rgba(0,0,0,.6);}
+body[data-theme="dark"] .subtitle,body[data-theme="dark"] .player-count-note,body[data-theme="dark"] label,body[data-theme="dark"] .lbl{color:#a7f3d0;}
+body[data-theme="dark"] .btn-ghost{background:#162b24;color:#ecfdf5;border-color:rgba(110,231,183,.35);}
+body[data-theme="dark"] .cell{background:#1a3129;color:#ecfdf5;border-color:#3b6b59;}
+body[data-theme="dark"] .cell.alt{background:#233f35;}
+body[data-theme="dark"] .theme-btn,body[data-theme="dark"] .music-btn{background:#162b24;color:#ecfdf5;}
+body[data-theme="dark"] .sun{background:radial-gradient(circle at 35% 32%,#fef9c3,#fde047 65%,#ca8a04);opacity:.78;}
+body[data-theme="dark"] .cloud{background:rgba(255,255,255,.12);}
+body[data-theme="dark"] .game-title{text-shadow:0 3px 12px rgba(0,0,0,.6);}
+body[data-theme="dark"] .panel,body[data-theme="dark"] .hud,body[data-theme="dark"] .dice-bar,body[data-theme="dark"] .modal-card,body[data-theme="dark"] .result-card,body[data-theme="dark"] .snake-hakim-slot .hakim-panel{
+  background:#162b24;color:#ecfdf5;border-color:rgba(110,231,183,.25);
+}
+body[data-theme="dark"] input,body[data-theme="dark"] select,body[data-theme="dark"] .opt,body[data-theme="dark"] .tf-btn,body[data-theme="dark"] .multi-opt{
+  background:#0f1f1a;color:#ecfdf5;border-color:rgba(110,231,183,.3);
+}
+.theme-btn{
+  position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:calc(68px + env(safe-area-inset-left,0px));
+  z-index:1000;width:46px;height:46px;border-radius:50%;
+  background:var(--card);border:2px solid rgba(52,199,89,.5);
+  box-shadow:0 6px 16px -6px rgba(35,64,58,.4);
+  font-size:1.15rem;display:flex;align-items:center;justify-content:center;
+}
+@media(max-width:380px){
+  #app{padding-inline:10px;}
+  .panel{padding:14px 12px;}
+  .color-row{flex-wrap:wrap;gap:6px;}
 }
 button{font-family:inherit;touch-action:manipulation;cursor:pointer;}
 a{text-decoration:none;color:inherit;}
@@ -94,7 +126,7 @@ a{text-decoration:none;color:inherit;}
 .screen.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 
-/* ---------- دکمه‌ی موسیقی ---------- */
+/* ---------- دکمهٔ موسیقی ---------- */
 .music-btn{
   position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:calc(14px + env(safe-area-inset-left,0px));
   z-index:1000;width:46px;height:46px;border-radius:50%;
@@ -109,7 +141,7 @@ a{text-decoration:none;color:inherit;}
 .m-ic{display:inline-block;}
 @keyframes spinNote{to{transform:rotate(360deg);}}
 
-/* ---------- صفحه‌ی شروع ---------- */
+/* ---------- صفحهٔ شروع ---------- */
 .home-wrap{text-align:center;padding-top:8px;}
 .game-title{
   font-family:var(--title);font-weight:400;
@@ -173,7 +205,7 @@ a{text-decoration:none;color:inherit;}
 .btn-ghost:hover{background:#fff;}
 .btn-small{min-height:44px;padding:10px 16px;font-size:.9rem;border-radius:13px;}
 
-/* ---------- صفحه‌ی بازی ---------- */
+/* ---------- صفحهٔ بازی ---------- */
 .hud{
   display:flex;flex-direction:column;gap:8px;margin-bottom:12px;
   background:var(--card);border:2px solid rgba(224,201,143,.7);
@@ -432,7 +464,7 @@ a{text-decoration:none;color:inherit;}
 .fb-expl{font-size:.8rem;color:var(--muted);background:rgba(0,0,0,.05);border-radius:10px;padding:8px 11px;margin:8px 0 10px;line-height:1.8;text-align:right;}
 .fb .btn{width:100%;margin-top:6px;}
 
-/* ---------- صفحه‌ی پایان ---------- */
+/* ---------- صفحهٔ پایان ---------- */
 .win-wrap{text-align:center;padding-top:10px;}
 .win-title{
   font-family:var(--title);font-weight:400;font-size:clamp(2rem,8vw,2.9rem);
@@ -452,7 +484,7 @@ a{text-decoration:none;color:inherit;}
 .stat .num{font-size:1.15rem;font-weight:900;color:var(--green-deep);}
 .stat .lbl{font-size:.7rem;color:var(--muted);font-weight:700;}
 
-/* ---------- لایه‌ی افکت‌ها ---------- */
+/* ---------- لایهٔ افکت‌ها ---------- */
 #fx{position:fixed;inset:0;z-index:1500;pointer-events:none;overflow:hidden;}
 .confetti{
   position:absolute;top:-20px;width:9px;height:14px;border-radius:2px;opacity:.95;
@@ -556,19 +588,20 @@ a{text-decoration:none;color:inherit;}
 <!-- افکت‌ها -->
 <div id="fx" aria-hidden="true"></div>
 
-<!-- دکمه‌ی موسیقی -->
-<button class="music-btn" id="musicBtn" aria-label="روشن یا خاموش کردن موسیقی" title="موسیقی">
+<!-- دکمهٔ موسیقی و تم -->
+<button type="button" class="music-btn" id="musicBtn" aria-label="روشن یا خاموش کردن موسیقی" title="موسیقی">
   <span class="m-ic" id="musicIcon">🔇</span>
 </button>
+<button type="button" class="theme-btn" id="themeBtn" aria-label="تغییر حالت روز و شب" aria-pressed="false" title="تغییر حالت روز و شب">🌙</button>
 <audio id="music" src="music5.mp3" loop preload="none"></audio>
 
 <div id="app">
 
-  <!-- ================= صفحه‌ی شروع ================= -->
+  <!-- ================= صفحهٔ شروع ================= -->
   <section class="screen active" id="screen-home">
     <div class="home-wrap">
-      <h1 class="game-title">مار و پله‌ی <span class="snake-em">🐍</span> دانش</h1>
-      <p class="subtitle">جواب بده، تاس بنداز، اول از همه برس به خانه‌ی ۱۰۰! 🏆</p>
+      <h1 class="game-title">مار و پلهٔ <span class="snake-em">🐍</span> دانش</h1>
+      <p class="subtitle">جواب بده، تاس بنداز، اول از همه برس به خانهٔ ۱۰۰! 🏆</p>
       <div class="snake-hakim-slot" id="hakimHome"></div>
 
       <div class="panel">
@@ -640,7 +673,7 @@ a{text-decoration:none;color:inherit;}
     </div>
   </section>
 
-  <!-- ================= صفحه‌ی بازی ================= -->
+  <!-- ================= صفحهٔ بازی ================= -->
   <section class="screen" id="screen-game">
     <div class="top-actions">
       <a href="#" class="home-link" id="homeBtn" role="button">🏠 خانه</a>
@@ -670,11 +703,11 @@ a{text-decoration:none;color:inherit;}
     </div>
   </section>
 
-  <!-- ================= صفحه‌ی پایان ================= -->
+  <!-- ================= صفحهٔ پایان ================= -->
   <section class="screen" id="screen-result">
     <div class="win-wrap">
       <div class="trophy" aria-hidden="true">🏆</div>
-      <h1 class="win-title" id="winTitle">برنده!</h1>
+      <h2 class="win-title" id="winTitle">برنده!</h2>
       <p class="win-sub" id="winSub"></p>
       <div class="snake-hakim-slot" id="hakimResult"></div>
 
@@ -732,7 +765,7 @@ a{text-decoration:none;color:inherit;}
 <script>
 'use strict';
 /* =========================================================================
-   مار و پله‌ی دانش — منطق بازی
+   مار و پلهٔ دانش — منطق بازی
    مهدی شریفیان — پلتفرم آموزشی حکیمستان
    ========================================================================= */
 
@@ -741,7 +774,7 @@ a{text-decoration:none;color:inherit;}
 /* ------------------------------------------------------------------ */
 const DEFAULT_HQF = {
   "hqf": "1.0",
-  "meta": { "title": "مار و پله‌ی دانش — علوم پنجم", "subject": "علوم", "grade": "پنجم دبستان" },
+  "meta": { "title": "مار و پلهٔ دانش — علوم پنجم", "subject": "علوم", "grade": "پنجم دبستان" },
   "questions": [
     { "id": "q1", "type": "tf", "section": "فصل ۵: اندام‌های حسی",
       "text": "ورزش باعث نیرومند شدن ماهیچه‌ها می‌شود.", "answer": true, "score": 1 },
@@ -759,8 +792,8 @@ const DEFAULT_HQF = {
       "text": "در محل مفصل، در سر استخوان‌ها __ وجود دارد.",
       "answer": ["غضروف"], "score": 1 },
     { "id": "q7", "type": "mcq", "section": "فصل ۵: اندام‌های حسی",
-      "text": "شبکیه در کدام لایه‌ی کره‌ی چشم قرار دارد؟",
-      "options": ["داخلی‌ترین", "خارجی‌ترین", "میانی", "همه‌ی لایه‌ها"], "answer": 0, "score": 1 },
+      "text": "شبکیه در کدام لایهٔ کرهٔ چشم قرار دارد؟",
+      "options": ["داخلی‌ترین", "خارجی‌ترین", "میانی", "همهٔ لایه‌ها"], "answer": 0, "score": 1 },
     { "id": "q8", "type": "short", "section": "فصل ۵: اندام‌های حسی",
       "text": "چشم، اندام حس .......... است.",
       "answer": ["بینایی", "بینایی است"], "score": 1 },
@@ -1108,7 +1141,7 @@ function buildBoard(){
     boardEl.appendChild(c);
   }
 
-  /* لایه‌ی SVG مارها و پله‌ها */
+  /* لایهٔ SVG مارها و پله‌ها */
   let svg = '<svg class="overlay" viewBox="0 0 100 100" preserveAspectRatio="none">';
   SNAKES.forEach((s, i) => { svg += snakeSVG(s[0], s[1], SNAKE_COLORS[i % SNAKE_COLORS.length]); });
   LADDERS.forEach((l, i) => { svg += ladderSVG(l[0], l[1], LADDER_COLORS[i % LADDER_COLORS.length]); });
@@ -1123,7 +1156,7 @@ function buildBoard(){
     piece.setAttribute('role', 'img');
     piece.setAttribute('aria-label', 'مهرهٔ ' + p.name);
     piece.title = p.name;
-    // حلقه و هاله‌ی مهره هم‌رنگ با رنگ انتخاب‌شده (نه سفید) تا دو مهره کاملاً متمایز باشند
+    // حلقه و هالهٔ مهره هم‌رنگ با رنگ انتخاب‌شده (نه سفید) تا دو مهره کاملاً متمایز باشند
     piece.innerHTML =
       '<div class="dot" style="background:radial-gradient(circle at 35% 30%, ' + lighten(p.color) + ', ' + p.color + ');' +
         'border-color:' + darken(p.color) + ';' +
@@ -1279,15 +1312,16 @@ function renderModalQuestion(q){
 
 /* --- چهارگزینه‌ای --- */
 function renderMcq(q){
-  qmArea.innerHTML = '<div class="opts">' + q.options.map((o, i) =>
-    '<button class="opt" data-key="' + (i + 1) + '" data-i="' + i + '"><span class="letter">' + (LETTERS[i] || (i + 1)) + '</span><span>' + esc(o) + '</span></button>'
+  const ci = resolveIndex(q.answer, q.options);
+  const indexed = shuffle(q.options.map((o, orig) => ({ o, orig })));
+  qmArea.innerHTML = '<div class="opts">' + indexed.map((item, i) =>
+    '<button type="button" class="opt" data-key="' + (i + 1) + '" data-i="' + item.orig + '"><span class="letter">' + (LETTERS[i] || (i + 1)) + '</span><span>' + esc(item.o) + '</span></button>'
   ).join('') + '</div>';
   qmArea.querySelectorAll('.opt').forEach(btn => {
     btn.onclick = () => {
       if(modalLocked) return;
       const i = +btn.dataset.i;
-      submitAnswer(i === resolveIndex(q.answer, q.options), () => {
-        const ci = resolveIndex(q.answer, q.options);
+      submitAnswer(i === ci, () => {
         qmArea.querySelectorAll('.opt').forEach(b => {
           const bi = +b.dataset.i;
           if(bi === ci) b.classList.add('correct');
@@ -1424,7 +1458,7 @@ function renderDropdown(q){
     };
     document.getElementById('dOk').onclick = go;
   } else {
-    qmArea.innerHTML = '<select class="select" id="dSel"><option value="" selected disabled>گزینه‌ی درست را انتخاب کن…</option>' + opts + '</select>' +
+    qmArea.innerHTML = '<select class="select" id="dSel"><option value="" selected disabled>گزینهٔ درست را انتخاب کن…</option>' + opts + '</select>' +
       '<button class="btn btn-primary" id="dOk" style="margin-top:14px;width:100%">تأیید پاسخ</button>';
     const sel = document.getElementById('dSel');
     const go = () => {
@@ -1490,7 +1524,7 @@ function renderMatch(q){
   });
   document.getElementById('mOk').onclick = () => {
     if(modalLocked) return;
-    if(assignment.some(a => a === null)){ toast('همه‌ی جفت‌ها را وصل کن'); return; }
+    if(assignment.some(a => a === null)){ toast('همهٔ جفت‌ها را وصل کن'); return; }
     const ok = pairs.every((p, i) => eq(p[1], right[assignment[i]]));
     submitAnswer(ok, () => {
       left.forEach((_, i) => {
@@ -1510,6 +1544,19 @@ function submitAnswer(isCorrect, highlightFn){
   if(highlightFn) highlightFn();
   const p = state.players[state.current];
   state.answered++;
+  if(window.Hakim && typeof Hakim.saveAnswer === 'function' && currentQ){
+    Hakim.saveAnswer({
+      student_name: p ? p.name : 'بازیکن',
+      game_id: 'snake-ladder',
+      experiment_id: currentQ.section || 'علوم پنجم',
+      question_id: currentQ.id || ('q-' + state.answered),
+      question_text: currentQ.text || '',
+      student_answer: isCorrect ? correctAnswerText(currentQ) : 'پاسخ نادرست',
+      correct_answer: correctAnswerText(currentQ),
+      is_correct: !!isCorrect,
+      time_taken: 5
+    });
+  }
   if(isCorrect){
     p.correct++;
     playCorrect(); vibrate([10, 30, 20]);
@@ -1707,6 +1754,7 @@ function startGame(){
   }));
   state.current = 0; state.gameOver = false; state.busy = false;
   state.rolls = 0; state.answered = 0;
+  state.sessionStartTime = Date.now();
   pool = shuffle(state.questions.slice());
   diceEl.classList.remove('rolling');
   diceResultEl.textContent = '';
@@ -1714,7 +1762,7 @@ function startGame(){
   showScreen('screen-game');
   document.getElementById('gameTag').textContent = state.customLoaded ? '📚 ' + (state.meta.title || 'آزمون سفارشی') : '📚 علوم پنجم — فصل ۵ و ۶';
   updateHUD();
-  toast('نوبت ' + state.players[0].name + ' — با دکمه‌ی تاس شروع کن!');
+  toast('نوبت ' + state.players[0].name + ' — با دکمهٔ تاس شروع کن!');
   hakimReact('start', { names:state.players.map(p => p.name) });
 }
 
@@ -1724,7 +1772,7 @@ function gameWon(i){
   playWin();
   vibrate([20, 40, 20, 40, 80]);
   updateHUD();
-  // تاج روی مهره‌ی برنده
+  // تاج روی مهرهٔ برنده
   const crown = document.getElementById('crown');
   crown.style.display = 'flex';
   crown.style.left = cellLeft(winner.pos) + '%';
@@ -1732,7 +1780,7 @@ function gameWon(i){
   celebrate();
   showScreen('screen-result');
   document.getElementById('winTitle').textContent = 'برنده!';
-  document.getElementById('winSub').textContent = '🏆 ' + esc(winner.name) + ' اول از همه به خانه‌ی ۱۰۰ رسید!';
+  document.getElementById('winSub').textContent = '🏆 ' + esc(winner.name) + ' اول از همه به خانهٔ ۱۰۰ رسید!';
   document.getElementById('winName').innerHTML = '<span class="dot" style="background:' + winner.color + '"></span>' + esc(winner.name) + ' قهرمان شد!';
   let stats = '<div class="stat"><div class="num" id="stQ">' + toFa(state.answered) + '</div><div class="lbl">کل سؤال‌ها</div></div>';
   state.players.forEach((p, index) => {
@@ -1748,12 +1796,12 @@ function gameWon(i){
   hakimReact('win', { name:winner.name });
     sendResultsToPanel();
 }
-/* 📤 ارسال نتایج همه‌ی بازیکن‌ها به پنل معلم */
+/* 📤 ارسال نتایج همهٔ بازیکن‌ها به پنل معلم */
 function sendResultsToPanel(){
   try {
-    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     const winner = state.players.find(p => p.pos === 100);
     const winnerName = winner ? winner.name : '';
+    const durSec = state.sessionStartTime ? Math.max(1, Math.round((Date.now() - state.sessionStartTime) / 1000)) : 0;
     
     state.players.forEach(p => {
       const payload = {
@@ -1763,13 +1811,13 @@ function sendResultsToPanel(){
         student_school: '',
         game_id: 'snake-ladder',
         experiment_id: '',
-        duration: 0,
+        duration: durSec,
         device: /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : 'دسکتاپ',
         score: p.correct,
         stars: p.pos === 100 ? 3 : (p.correct >= 5 ? 2 : (p.correct >= 2 ? 1 : 0)),
         completed: p.pos === 100,
         attempts: 1,
-        started_at: new Date().toISOString(),
+        started_at: new Date(Date.now() - durSec * 1000).toISOString(),
         finished_at: new Date().toISOString(),
         details: JSON.stringify({
           finalPosition: p.pos,
@@ -1782,22 +1830,29 @@ function sendResultsToPanel(){
           winnerName: winnerName
         })
       };
-      fetch(API_URL, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-      }).catch(e => console.log('send result failed:', e));
+      if(window.Hakim && typeof Hakim.saveSession === 'function'){
+        Hakim.saveSession(payload);
+      } else if(navigator.onLine !== false){
+        const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+        fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        }).catch(() => {});
+      }
     });
-  } catch(e) { console.log('sendResultsToPanel error:', e); }
+  } catch(e) {}
 } 
 
 /* ------------------------------------------------------------------ */
 /* ۱۳) افکت‌های جشن و جرقه                                             */
 /* ------------------------------------------------------------------ */
 function celebrate(){
+  if(REDUCED || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   const layer = document.getElementById('fx');
+  if(!layer) return;
   const colors = ['#ffd23f','#34c759','#3b82f6','#ef4444','#ff9f43','#a855f7','#ec4899'];
-  const n = REDUCED ? 20 : 70;
+  const n = 70;
   for(let i = 0; i < n; i++){
     const c = document.createElement('span');
     c.className = 'confetti';
@@ -1811,11 +1866,13 @@ function celebrate(){
   }
 }
 function sparkleAt(n){
+  if(REDUCED || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   const board = document.getElementById('board');
+  const layer = document.getElementById('fx');
+  if(!board || !layer) return;
   const rect = board.getBoundingClientRect();
   const x = rect.left + rect.width * cellLeft(n) / 100;
   const y = rect.top + rect.height * cellTop(n) / 100;
-  const layer = document.getElementById('fx');
   for(let i = 0; i < 8; i++){
     const s = document.createElement('span');
     s.className = 'sparkle';
@@ -1976,7 +2033,7 @@ function loadCustomFile(file){
       state.customLoaded = true;
       state.meta = extractMeta(data) || { title: 'آزمون سفارشی', subject: '', grade: '' };
       if(errors.length) toast('⚠️ ' + toFa(valid.length) + ' سؤال بارگذاری شد؛ ' + toFa(errors.length) + ' سؤال نامعتبر نادیده گرفته شد');
-      else toast('✅ ' + toFa(valid.length) + ' سؤال بارگذاری شد. آماده‌ی بازی!');
+      else toast('✅ ' + toFa(valid.length) + ' سؤال بارگذاری شد. آمادهٔ بازی!');
       renderHome();
       showScreen('screen-home');
     }, 40);
@@ -1985,6 +2042,10 @@ function loadCustomFile(file){
 }
    /* 📥 لود سؤالات از پنل معلم */
 function loadServerQuestions(callback){
+  if(navigator.onLine === false){
+    if(callback) callback();
+    return;
+  }
   const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
   fetch(API_URL, {
     method: 'POST',
@@ -1998,15 +2059,13 @@ function loadServerQuestions(callback){
         if(converted.length > 0){
           state.questions = converted;
           state.customLoaded = true;
-          state.meta = { title: 'مار و پله‌ی دانش (از پنل معلم)', subject: 'علوم', grade: 'پنجم دبستان' };
-          console.log('✅ ' + converted.length + ' سؤال از پنل معلم لود شد');
+          state.meta = { title: 'مار و پلهٔ دانش (از پنل معلم)', subject: 'علوم', grade: 'پنجم دبستان' };
         }
       }
-      if(callback) callback();
+      if(callback && document.getElementById('qCount')) callback();
     })
-    .catch(e => {
-      console.warn('loadServerQuestions failed:', e);
-      if(callback) callback();
+    .catch(() => {
+      if(callback && document.getElementById('qCount')) callback();
     });
 }
 
@@ -2060,9 +2119,32 @@ function resetToDefault(){
   renderHome();
 }
 function renderHome(){
-  document.getElementById('resetBtn').style.display = state.customLoaded ? 'flex' : 'none';
-  document.getElementById('qCount').textContent = '✨ ' + toFa(state.questions.length) + ' سؤال آماده است • ' + toFa(SNAKES.length) + ' مار 🐍 و ' + toFa(LADDERS.length) + ' پله 🪜';
+  const rb = document.getElementById('resetBtn');
+  const qc = document.getElementById('qCount');
+  if(!rb || !qc) return;
+  rb.style.display = state.customLoaded ? 'flex' : 'none';
+  qc.textContent = '✨ ' + toFa(state.questions.length) + ' سؤال آماده است • ' + toFa(SNAKES.length) + ' مار 🐍 و ' + toFa(LADDERS.length) + ' پله 🪜';
 }
+
+(function initSnakeTheme(){
+  const tb = document.getElementById('themeBtn');
+  const apply = (th) => {
+    const dark = th === 'dark';
+    document.body.dataset.theme = dark ? 'dark' : 'light';
+    if(tb){
+      tb.textContent = dark ? '☀️' : '🌙';
+      tb.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    }
+  };
+  let saved = 'light';
+  try{ saved = localStorage.getItem('hakim_snake_theme') || 'light'; }catch(e){}
+  apply(saved);
+  if(tb) tb.addEventListener('click', () => {
+    const nxt = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+    try{ localStorage.setItem('hakim_snake_theme', nxt); }catch(e){}
+    apply(nxt);
+  });
+})();
 
 /* ------------------------------------------------------------------ */
 /* ۱۶) توست و خطا                                                     */
@@ -2194,6 +2276,7 @@ loadServerQuestions(() => {
       else ref = 'سایر';
     }
 
+    if (navigator.onLine === false) return;
     fetch(API, {
       method: 'POST',
       mode: 'no-cors',
@@ -2214,7 +2297,6 @@ loadServerQuestions(() => {
   } catch(e){}
 })();
 </script>
-
 <!-- hakim-core:start -->
 <script src="../js/hakim-security.js" defer></script>
 <script src="../js/hakim-a11y.js" defer></script>

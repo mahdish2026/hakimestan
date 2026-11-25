@@ -1,0 +1,197 @@
+/* ==========================================================================
+   حکیمستان — فونت‌های محلی استودیوی طراحی آزمون‌ساز (کاملاً آفلاین، بدون CDN)
+   همهٔ فونت‌ها دارای مجوز آزاد SIL Open Font License هستند و فقط در صورت
+   استفادهٔ واقعی روی صفحه توسط مرورگر بارگذاری می‌شوند.
+   ========================================================================== */
+
+/* ── Estedad (استعداد) ─────────────────────────────────────────── */
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: local('Estedad'),
+       url('../assets/fonts/estedad-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: local('Estedad Bold'),
+       url('../assets/fonts/estedad-700.woff2') format('woff2');
+}
+
+/* ── Sahel (ساحل — فونت متغیر ۳۰۰ تا ۹۰۰) ──────────────────────── */
+@font-face {
+  font-family: 'Sahel';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: local('Sahel VF'), local('Sahel'),
+       url('../assets/fonts/sahel-vf.woff2') format('woff2');
+}
+
+/* ── Shabnam (شبنم) ────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Shabnam';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Shabnam'),
+       url('../assets/fonts/shabnam-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Shabnam';
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+  src: local('Shabnam Bold'),
+       url('../assets/fonts/shabnam-700.woff2') format('woff2');
+}
+
+/* ── Samim (صمیم) ──────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Samim';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Samim'),
+       url('../assets/fonts/samim-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Samim';
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+  src: local('Samim Bold'),
+       url('../assets/fonts/samim-700.woff2') format('woff2');
+}
+
+/* ── Parastoo (پرستو) ──────────────────────────────────────────── */
+@font-face {
+  font-family: 'Parastoo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Parastoo'),
+       url('../assets/fonts/parastoo-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Parastoo';
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+  src: local('Parastoo Bold'),
+       url('../assets/fonts/parastoo-700.woff2') format('woff2');
+}
+
+/* ── Gandom (گندم) ─────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Gandom';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: local('Gandom'),
+       url('../assets/fonts/gandom-400.woff2') format('woff2');
+}
+
+/* ── Noto Naskh Arabic (نسخ رسمی) ─────────────────────────────── */
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: local('Noto Naskh Arabic'),
+       url('../assets/fonts/noto-naskh-arabic-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: local('Noto Naskh Arabic Bold'),
+       url('../assets/fonts/noto-naskh-arabic-700.woff2') format('woff2');
+}
+
+/* ── Scheherazade New (همتای آزاد B Nazanin) ───────────────────── */
+@font-face {
+  font-family: 'Scheherazade New';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Scheherazade New'),
+       url('../assets/fonts/scheherazade-new-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Scheherazade New';
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+  src: local('Scheherazade New Bold'),
+       url('../assets/fonts/scheherazade-new-700.woff2') format('woff2');
+}
+
+/* ── Markazi Text ──────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Markazi Text';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: local('Markazi Text'),
+       url('../assets/fonts/markazi-text-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Markazi Text';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: local('Markazi Text Bold'),
+       url('../assets/fonts/markazi-text-700.woff2') format('woff2');
+}
+
+/* ── Mirza ─────────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Mirza';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: local('Mirza'),
+       url('../assets/fonts/mirza-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Mirza';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: local('Mirza Bold'),
+       url('../assets/fonts/mirza-700.woff2') format('woff2');
+}
+
+/* ── Harmattan ─────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Harmattan';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: local('Harmattan'),
+       url('../assets/fonts/harmattan-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Harmattan';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: local('Harmattan Bold'),
+       url('../assets/fonts/harmattan-700.woff2') format('woff2');
+}
+
+/* ── Katibeh ───────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Katibeh';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: local('Katibeh'),
+       url('../assets/fonts/katibeh-400.woff2') format('woff2');
+}

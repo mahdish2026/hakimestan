@@ -4,12 +4,11 @@
 <!-- hakim-csp:start -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
 <!-- hakim-csp:end -->
-
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="../css/a11y.css">
 <!-- hakim-core:end -->
 
-  <link rel="icon" type="image/svg+xml" href="../icon.svg">
+<link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="UTF-8">
@@ -21,9 +20,15 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2329213c'/%3E%3Cpath d='m16 4 3 9 9 3-9 3-3 9-3-9-9-3 9-3Z' fill='%23e8c77f'/%3E%3C/svg%3E">
 <style>
 :root{--night:#171225;--night-2:#211a34;--panel:#29213c;--panel-soft:#332943;--violet:#9b86d9;--violet-soft:#c6b6ec;--gold:#e8c77f;--gold-light:#f6dfa6;--cream:#fbf6e9;--ink:#312642;--muted:#b9afc9;--line:rgba(224,205,249,.14);--green:#80cfb3;--red:#ef9d9d;--font:'Vazirmatn',Tahoma,sans-serif;--title:'Lalezar','Vazirmatn',sans-serif;--radius:24px;color-scheme:dark}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;min-height:100dvh;background:var(--night);color:var(--cream);font-family:var(--font);font-size:14px;line-height:1.85;overflow-x:hidden}body::before{content:'';position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 80% 12%,rgba(119,84,168,.19),transparent 47%),radial-gradient(ellipse at 10% 70%,rgba(136,93,49,.11),transparent 40%),linear-gradient(130deg,#191326,#161323);pointer-events:none}body::after{content:'';position:fixed;inset:0;z-index:-1;opacity:.18;background-image:radial-gradient(#d6bb8b .65px,transparent .65px);background-size:38px 38px;mask-image:linear-gradient(#000,transparent 75%);pointer-events:none}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button,a,input{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--gold)}button:disabled{cursor:not-allowed;opacity:.4}button{border:0}a{color:inherit}h1,h2,h3,p{margin:0}svg{display:block}.ic{width:21px;height:21px;display:inline-block;vertical-align:middle;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.hidden,[hidden]{display:none!important}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip-link{position:fixed;top:-80px;right:20px;background:var(--gold);color:var(--ink);padding:10px 20px;z-index:3000;border-radius:12px}.skip-link:focus{top:10px}.shell{max-width:1240px;margin:auto;padding:0 34px}.site-header{height:103px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:20px}.brand{display:flex;gap:12px;align-items:center;line-height:1.6}.brand-mark{width:46px;height:48px;color:var(--gold);display:grid;place-items:center;border:1px solid rgba(232,199,127,.38);border-radius:15px 15px 6px 6px;background:linear-gradient(145deg,rgba(232,199,127,.08),transparent)}.brand-mark .ic{width:27px;height:27px}.brand b{display:block;font-family:var(--title);font-size:26px;font-weight:400}.brand small{display:block;font-size:10px;letter-spacing:.4px;color:var(--muted)}.header-tools{display:flex;gap:8px;align-items:center}.tool-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);border-radius:12px;padding:9px 12px;font-size:12px;transition:.2s}.tool-btn:hover{background:rgba(255,255,255,.07);color:var(--cream);border-color:rgba(232,199,127,.4)}.tool-btn.playing,.tool-btn[aria-pressed=true]{color:var(--gold);background:rgba(232,199,127,.075);border-color:rgba(232,199,127,.35)}.tool-btn.off .ic{opacity:.55}.screen{display:none}.screen.active{display:block;animation:screenIn .4s ease both}@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth;overflow-x:clip}body{margin:0;min-height:100vh;min-height:100dvh;background-color:#171225;background:var(--night);color:var(--cream);font-family:var(--font);font-size:14px;line-height:1.85;overflow-x:hidden}
+body[data-theme="light"]{--night:#f6f1e6;--night-2:#ede4d3;--panel:#ffffff;--panel-soft:#f3ece0;--violet:#6246a8;--violet-soft:#4d358a;--gold:#8c5d0b;--gold-light:#6e4704;--cream:#231a30;--ink:#231a30;--muted:#5a4b6e;--line:rgba(66,46,96,.16);--green:#15803d;--red:#b91c1c;color-scheme:light;background-color:#f6f1e6}
+body[data-theme="light"]::before{background:radial-gradient(ellipse at 80% 12%,rgba(119,84,168,.10),transparent 47%),radial-gradient(ellipse at 10% 70%,rgba(180,130,60,.10),transparent 40%),linear-gradient(130deg,#faf6ee,#f1e9da)}
+body[data-theme="light"] .setup-panel,body[data-theme="light"] .hud,body[data-theme="light"] .journey-panel,body[data-theme="light"] .result-card,body[data-theme="light"] .dialog-card,body[data-theme="light"] .err-card,body[data-theme="light"] .cards-hakim-slot .hakim-panel{background:#ffffff;border-color:rgba(66,46,96,.18);color:#231a30;box-shadow:0 12px 32px rgba(45,30,70,.08)}
+body[data-theme="light"] .field input,body[data-theme="light"] .level-btn{background:#faf7f0;color:#231a30;border-color:rgba(66,46,96,.22)}
+body[data-theme="light"] .cards-hakim-slot .hakim-text,body[data-theme="light"] .lv-desc,body[data-theme="light"] .hero-meta,body[data-theme="light"] .table-caption,body[data-theme="light"] .hud-stat small,body[data-theme="light"] .win-sub,body[data-theme="light"] .stat .lbl{color:#4d3e61}
+body[data-theme="light"] .btn-ghost,body[data-theme="light"] .tool-btn{background:#ffffff;color:#231a30;border-color:rgba(66,46,96,.22)}body::before{content:'';position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 80% 12%,rgba(119,84,168,.19),transparent 47%),radial-gradient(ellipse at 10% 70%,rgba(136,93,49,.11),transparent 40%),linear-gradient(130deg,#191326,#161323);pointer-events:none}body::after{content:'';position:fixed;inset:0;z-index:-1;opacity:.18;background-image:radial-gradient(#d6bb8b .65px,transparent .65px);background-size:38px 38px;mask-image:linear-gradient(#000,transparent 75%);pointer-events:none}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button,a,input{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--gold)}button:disabled{cursor:not-allowed;opacity:.4}button{border:0}a{color:inherit}h1,h2,h3,p{margin:0}svg{display:block}.ic{width:21px;height:21px;display:inline-block;vertical-align:middle;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.hidden,[hidden]{display:none!important}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip-link{position:fixed;top:-80px;right:20px;background:var(--gold);color:var(--ink);padding:10px 20px;z-index:3000;border-radius:12px}.skip-link:focus{top:10px}.shell{max-width:1240px;margin:auto;padding:0 34px}.site-header{height:103px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:20px}.brand{display:flex;gap:12px;align-items:center;line-height:1.6}.brand-mark{width:46px;height:48px;color:var(--gold);display:grid;place-items:center;border:1px solid rgba(232,199,127,.38);border-radius:15px 15px 6px 6px;background:linear-gradient(145deg,rgba(232,199,127,.08),transparent)}.brand-mark .ic{width:27px;height:27px}.brand b{display:block;font-family:var(--title);font-size:26px;font-weight:400}.brand small{display:block;font-size:10px;letter-spacing:.4px;color:var(--muted)}.header-tools{display:flex;gap:8px;align-items:center}.tool-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);border-radius:12px;padding:9px 12px;font-size:12px;transition:.2s}.tool-btn:hover{background:rgba(255,255,255,.07);color:var(--cream);border-color:rgba(232,199,127,.4)}.tool-btn.playing,.tool-btn[aria-pressed=true]{color:var(--gold);background:rgba(232,199,127,.075);border-color:rgba(232,199,127,.35)}.tool-btn.off .ic{opacity:.55}.screen{display:none}.screen.active{display:block;animation:screenIn .4s ease both}@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 /* The library entrance */
-.library-label{display:flex;align-items:center;gap:9px;color:var(--gold);font-size:11px;letter-spacing:.6px}.library-label::before{content:'';width:23px;height:1px;background:currentColor}.landing-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:76px;align-items:start;padding-top:52px}.hero-intro{position:relative;min-width:0;padding-top:13px}.hero-intro h1{font-family:var(--title);font-size:clamp(42px,5.1vw,67px);font-weight:400;line-height:1.45;margin:16px 0 14px;letter-spacing:-.5px}.hero-intro h1 em{font-style:normal;color:var(--gold)}.hero-desc{max-width:450px;color:var(--muted);font-size:14px;line-height:2.15}.hero-meta{display:flex;align-items:center;gap:17px;margin-top:22px;color:#d2c7e2;font-size:11px}.hero-meta span{display:flex;align-items:center;gap:6px}.hero-meta .ic{width:17px;height:17px;color:var(--violet-soft)}.hero-meta i{height:14px;width:1px;background:var(--line)}.magic-art{height:257px;position:relative;margin:9px 0 10px;isolation:isolate;display:grid;place-items:center}.orbit{position:absolute;width:345px;height:210px;border:1px solid rgba(232,199,127,.14);border-radius:50%;transform:rotate(-16deg)}.orbit::before{content:'';position:absolute;inset:15px;border:1px dashed rgba(232,199,127,.11);border-radius:50%}.orbit::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);position:absolute;top:32px;right:32px;box-shadow:0 0 24px #e8c77f}.art-glow{position:absolute;width:240px;height:130px;border-radius:50%;background:#9874c1;filter:blur(60px);opacity:.16;bottom:25px}.demo-card{width:130px;height:179px;position:absolute;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,.32);display:flex;align-items:center;justify-content:center;transform-origin:center 70%}.demo-card::after{content:'';position:absolute;inset:8px;border:1px solid currentColor;opacity:.35;border-radius:10px}.demo-back{background:linear-gradient(145deg,#554177,#352844);color:#e1c896;transform:translate(67px,7px) rotate(15deg)}.demo-back .sigil{width:83px;height:100px}.demo-front{background:linear-gradient(140deg,#fff8e8,#eaddbd);color:#514065;transform:translate(-50px,-6px) rotate(-12deg);display:flex;flex-direction:column;gap:12px}.demo-front .ic{width:54px;height:54px;stroke-width:1}.demo-front small{font-size:10px;letter-spacing:2px}.art-spark{position:absolute;color:var(--gold);animation:twinkle 5s ease-in-out infinite}.art-spark.one{top:33px;right:8%;width:22px}.art-spark.two{bottom:52px;left:8%;width:15px;animation-delay:2s}.art-caption{position:absolute;bottom:2px;left:0;color:#9c8ba8;font-size:10px;display:flex;gap:7px;align-items:center}.art-caption .ic{width:14px}.setup-panel{background:linear-gradient(145deg,rgba(56,43,77,.77),rgba(35,28,49,.97));border:1px solid rgba(208,183,237,.19);border-radius:26px;padding:28px;box-shadow:0 24px 55px rgba(0,0,0,.18);position:relative}.setup-panel::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,#ac91cf,transparent)}.panel-kicker{color:var(--muted);font-size:10px;letter-spacing:.5px}.panel-title{font-family:var(--title);font-weight:400;font-size:29px;margin:3px 0 19px}.field{margin-bottom:22px}.field label,.level-legend{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#e1d7ed;margin-bottom:9px}.field label small{font-size:10px;color:#ab9fbd}.input-shell{position:relative}.input-shell>.ic{position:absolute;right:15px;top:16px;color:#a596b7;width:18px;height:18px}.field input{width:100%;border:1px solid #51445f;background:#211a30;border-radius:13px;padding:13px 44px 13px 15px;color:var(--cream);font-size:14px;line-height:1.8;transition:border .2s}.field input::placeholder{color:#91849f}.field input:focus{border-color:var(--violet);outline:2px solid rgba(155,134,217,.25)}.levels{display:grid;gap:9px}.level-btn{display:flex;align-items:center;gap:13px;padding:12px 14px;border-radius:14px;background:rgba(15,10,25,.15);color:#cec1df;border:1px solid #463952;text-align:right;transition:background .2s,border-color .2s}.level-btn:hover{background:rgba(174,151,218,.08);border-color:#7d679a}.level-btn.sel{background:linear-gradient(110deg,rgba(119,83,159,.21),rgba(181,145,86,.1));border-color:#d2b16d;color:var(--cream)}.lv-icon{width:43px;height:43px;background:rgba(207,182,243,.045);border:1px solid rgba(198,176,226,.14);border-radius:12px;display:grid;place-items:center;color:#ae95d0;flex:none}.lv-icon .ic{width:23px;height:23px}.sel .lv-icon{color:var(--gold);border-color:rgba(232,199,127,.25);background:rgba(232,199,127,.06)}.lv-copy{flex:1;min-width:0}.lv-name{font-size:13px;font-weight:700;display:block}.lv-desc{display:block;font-size:10px;color:#b3a4c5;margin-top:2px}.lv-pick{width:17px;height:17px;border:1px solid #7c6b90;border-radius:50%;flex:none}.sel .lv-pick{border-color:var(--gold);background:var(--gold);box-shadow:inset 0 0 0 4px #392c47}.btn{display:flex;justify-content:center;align-items:center;gap:9px;min-height:48px;padding:12px 20px;border:1px solid transparent;border-radius:13px;font-weight:700;font-size:13px;transition:transform .2s,background .2s;line-height:1.8}.btn:active{transform:translateY(1px)}.btn-primary{background:linear-gradient(105deg,#dfb768,#f1d49a);color:#362634;box-shadow:0 8px 26px rgba(227,184,104,.12)}.btn-primary:hover{background:linear-gradient(105deg,#eaca89,#f9dfaf);box-shadow:0 8px 32px rgba(227,184,104,.2)}.btn-ghost{color:#d8cae6;border-color:#594761;background:rgba(255,255,255,.025)}.btn-ghost:hover{background:rgba(255,255,255,.065);border-color:#9d80b4}.btn-danger{color:#ffe8e8;background:#743f50;border-color:#9f5a6d}.start-cta{width:100%;margin-top:20px;min-height:52px;font-size:15px}.start-cta .ic{margin-right:auto;width:20px}.start-cta span{margin-right:auto}.setup-foot{display:flex;gap:5px;justify-content:center;align-items:center;font-size:10px;color:#ac9cbb;margin-top:13px}.setup-foot .ic{width:14px;height:14px}.import-box{display:flex;gap:12px;align-items:center;border:1px dashed #51405f;border-radius:17px;margin-top:18px;padding:15px 16px;background:rgba(255,255,255,.018)}.import-box>.ic{color:var(--violet-soft);width:25px;height:25px}.import-copy{flex:1}.import-copy b{font-size:11px;font-weight:600;display:block}.import-copy p{font-size:10px;color:var(--muted)}.text-btn{background:transparent;color:var(--gold);font-size:11px;padding:8px 0;display:inline-flex;align-items:center;gap:5px}.text-btn .ic{width:14px;height:14px}.source-note{display:flex;gap:10px;align-items:center;justify-content:space-between;color:#a99db8;font-size:10px;flex-wrap:wrap;margin:11px 3px 0}.source-note p{max-width:100%;overflow-wrap:anywhere}.source-note button{font-size:10px}.quick-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;border-top:1px solid var(--line);padding:28px 0;margin-top:46px}.guide-item{display:flex;align-items:flex-start;gap:13px}.guide-number{color:#ab99bc;font-family:serif;font-size:24px;line-height:1.2}.guide-item h3{font-size:12px;font-weight:600;margin-bottom:4px;color:#ded2e9}.guide-item p{font-size:11px;color:#a99bb8}.help-inline{margin-top:8px;color:#c9b2e2}.help-inline .ic{width:16px;height:16px}
+.library-label{display:flex;align-items:center;gap:9px;color:var(--gold);font-size:11px;letter-spacing:.6px}.library-label::before{content:'';width:23px;height:1px;background:currentColor}.landing-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:76px;align-items:start;padding-top:52px}.hero-intro{position:relative;min-width:0;padding-top:13px}.hero-intro h1{font-family:var(--title);font-size:clamp(42px,5.1vw,67px);font-weight:400;line-height:1.45;margin:16px 0 14px;letter-spacing:-.5px}.hero-intro h1 em{font-style:normal;color:var(--gold)}.hero-desc{max-width:450px;color:var(--muted);font-size:14px;line-height:2.15}.hero-meta{display:flex;align-items:center;gap:17px;margin-top:22px;color:#d2c7e2;font-size:11px}.hero-meta span{display:flex;align-items:center;gap:6px}.hero-meta .ic{width:17px;height:17px;color:var(--violet-soft)}.hero-meta i{height:14px;width:1px;background:var(--line)}.magic-art{height:257px;position:relative;margin:9px 0 10px;isolation:isolate;display:grid;place-items:center}.orbit{position:absolute;width:345px;height:210px;border:1px solid rgba(232,199,127,.14);border-radius:50%;transform:rotate(-16deg)}.orbit::before{content:'';position:absolute;inset:15px;border:1px dashed rgba(232,199,127,.11);border-radius:50%}.orbit::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);position:absolute;top:32px;right:32px;box-shadow:0 0 24px #e8c77f}.art-glow{position:absolute;width:240px;height:130px;border-radius:50%;background:#9874c1;filter:blur(60px);opacity:.16;bottom:25px}.demo-card{width:130px;height:179px;position:absolute;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,.32);display:flex;align-items:center;justify-content:center;transform-origin:center 70%}.demo-card::after{content:'';position:absolute;inset:8px;border:1px solid currentColor;opacity:.35;border-radius:10px}.demo-back{background:linear-gradient(145deg,#554177,#352844);color:#e1c896;transform:translate(67px,7px) rotate(15deg)}.demo-back .sigil{width:83px;height:100px}.demo-front{background:linear-gradient(140deg,#fff8e8,#eaddbd);color:#514065;transform:translate(-50px,-6px) rotate(-12deg);display:flex;flex-direction:column;gap:12px}.demo-front .ic{width:54px;height:54px;stroke-width:1}.demo-front small{font-size:10px;letter-spacing:2px}.art-spark{position:absolute;color:var(--gold);animation:twinkle 5s ease-in-out infinite}.art-spark.one{top:33px;right:8%;width:22px}.art-spark.two{bottom:52px;left:8%;width:15px;animation-delay:2s}.art-caption{position:absolute;bottom:2px;left:0;color:#9c8ba8;font-size:10px;display:flex;gap:7px;align-items:center}.art-caption .ic{width:14px}.setup-panel{background:linear-gradient(145deg,rgba(56,43,77,.77),rgba(35,28,49,.97));border:1px solid rgba(208,183,237,.19);border-radius:26px;padding:28px;box-shadow:0 24px 55px rgba(0,0,0,.18);position:relative}.setup-panel::before{content:'';position:absolute;top:-1px;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,#ac91cf,transparent)}.panel-kicker{color:var(--muted);font-size:10px;letter-spacing:.5px}.panel-title{font-family:var(--title);font-weight:400;font-size:29px;margin:3px 0 19px}.field{margin-bottom:22px}.field label,.level-legend{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#e1d7ed;margin-bottom:9px}.field label small{font-size:10px;color:#ab9fbd}.input-shell{position:relative}.input-shell>.ic{position:absolute;right:15px;top:16px;color:#a596b7;width:18px;height:18px}.field input{width:100%;border:1px solid #51445f;background:#211a30;border-radius:13px;padding:13px 44px 13px 15px;color:#fbf6e9;font-size:14px;line-height:1.8;transition:border .2s}.field input::placeholder{color:#91849f}.field input:focus{border-color:var(--violet);outline:2px solid rgba(155,134,217,.25)}.levels{display:grid;gap:9px}.level-btn{display:flex;align-items:center;gap:13px;padding:12px 14px;border-radius:14px;background:rgba(15,10,25,.15);color:#cec1df;border:1px solid #463952;text-align:right;transition:background .2s,border-color .2s}.level-btn:hover{background:rgba(174,151,218,.08);border-color:#7d679a}.level-btn.sel{background:linear-gradient(110deg,rgba(119,83,159,.21),rgba(181,145,86,.1));border-color:#d2b16d;color:var(--cream)}.lv-icon{width:43px;height:43px;background:rgba(207,182,243,.045);border:1px solid rgba(198,176,226,.14);border-radius:12px;display:grid;place-items:center;color:#ae95d0;flex:none}.lv-icon .ic{width:23px;height:23px}.sel .lv-icon{color:var(--gold);border-color:rgba(232,199,127,.25);background:rgba(232,199,127,.06)}.lv-copy{flex:1;min-width:0}.lv-name{font-size:13px;font-weight:700;display:block}.lv-desc{display:block;font-size:10px;color:#b3a4c5;margin-top:2px}.lv-pick{width:17px;height:17px;border:1px solid #7c6b90;border-radius:50%;flex:none}.sel .lv-pick{border-color:var(--gold);background:var(--gold);box-shadow:inset 0 0 0 4px #392c47}.btn{display:flex;justify-content:center;align-items:center;gap:9px;min-height:48px;padding:12px 20px;border:1px solid transparent;border-radius:13px;font-weight:700;font-size:13px;transition:transform .2s,background .2s;line-height:1.8}.btn:active{transform:translateY(1px)}.btn-primary{background:linear-gradient(105deg,#dfb768,#f1d49a);color:#362634;box-shadow:0 8px 26px rgba(227,184,104,.12)}.btn-primary:hover{background:linear-gradient(105deg,#eaca89,#f9dfaf);box-shadow:0 8px 32px rgba(227,184,104,.2)}.btn-ghost{color:#d8cae6;border-color:#594761;background:rgba(255,255,255,.025)}.btn-ghost:hover{background:rgba(255,255,255,.065);border-color:#9d80b4}.btn-danger{color:#ffe8e8;background:#743f50;border-color:#9f5a6d}.start-cta{width:100%;margin-top:20px;min-height:52px;font-size:15px}.start-cta .ic{margin-right:auto;width:20px}.start-cta span{margin-right:auto}.setup-foot{display:flex;gap:5px;justify-content:center;align-items:center;font-size:10px;color:#ac9cbb;margin-top:13px}.setup-foot .ic{width:14px;height:14px}.import-box{display:flex;gap:12px;align-items:center;border:1px dashed #51405f;border-radius:17px;margin-top:18px;padding:15px 16px;background:rgba(255,255,255,.018)}.import-box>.ic{color:var(--violet-soft);width:25px;height:25px}.import-copy{flex:1}.import-copy b{font-size:11px;font-weight:600;display:block}.import-copy p{font-size:10px;color:var(--muted)}.text-btn{background:transparent;color:var(--gold);font-size:11px;padding:8px 0;display:inline-flex;align-items:center;gap:5px}.text-btn .ic{width:14px;height:14px}.source-note{display:flex;gap:10px;align-items:center;justify-content:space-between;color:#a99db8;font-size:10px;flex-wrap:wrap;margin:11px 3px 0}.source-note p{max-width:100%;overflow-wrap:anywhere}.source-note button{font-size:10px}.quick-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;border-top:1px solid var(--line);padding:28px 0;margin-top:46px}.guide-item{display:flex;align-items:flex-start;gap:13px}.guide-number{color:#ab99bc;font-family:serif;font-size:24px;line-height:1.2}.guide-item h3{font-size:12px;font-weight:600;margin-bottom:4px;color:#ded2e9}.guide-item p{font-size:11px;color:#a99bb8}.help-inline{margin-top:8px;color:#c9b2e2}.help-inline .ic{width:16px;height:16px}
 /* Core wizard, never a duplicate inline avatar */
 .cards-hakim-slot:empty{display:none}.cards-hakim-slot .hakim-panel{max-width:none;margin:0;padding:17px 16px;border:1px solid rgba(232,199,127,.18);border-radius:19px;background:linear-gradient(135deg,rgba(52,39,67,.65),rgba(31,25,44,.86));box-shadow:none;gap:14px;overflow:visible}.cards-hakim-slot .hakim-panel::before{display:none}.cards-hakim-slot .hakim-panel.speaking{box-shadow:none}.cards-hakim-slot .hakim-avatar{width:66px;height:66px;box-shadow:0 0 16px rgba(232,199,127,.15);flex-shrink:0}.cards-hakim-slot .hakim-bubble{min-width:0;background:none;border:0;padding:0;box-shadow:none}.cards-hakim-slot .hakim-bubble::before,.cards-hakim-slot .hakim-bubble::after{display:none}.cards-hakim-slot .hakim-name{background:none;padding:0;margin-bottom:6px;box-shadow:none;border:0;color:var(--gold);font-size:10px}.cards-hakim-slot .hakim-text{color:#d6cbe2;font-size:11px;line-height:2;min-height:44px;overflow-wrap:anywhere}.cards-hakim-slot .hakim-text.typing::after{color:var(--gold)}.cards-hakim-slot .hakim-fallback{padding:16px;color:#d6cbe2;border:1px solid var(--line);border-radius:18px;font-size:12px;line-height:2}.cards-hakim-slot .hakim-face{background:#292037}.cards-hakim-slot .hakim-glow{opacity:.5}
 /* Playing table */
@@ -93,6 +98,7 @@
 <header class="site-header">
   <div class="brand"><span class="brand-mark"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg></span><div><b>حکیمستان</b><small>سرزمین کوچکِ کشف‌های بزرگ</small></div></div>
   <nav class="header-tools" aria-label="تنظیمات و راهنما">
+    <button class="tool-btn" id="themeBtn" type="button" aria-label="تغییر حالت روز و شب" aria-pressed="false" title="تغییر حالت روز و شب"><span id="themeIcon">☀️</span><span class="control-label">حالت روز</span></button>
     <button class="tool-btn" id="musicBtn" type="button" aria-label="روشن کردن موسیقی" aria-pressed="false" title="موسیقی پس‌زمینه"><span id="musicIcon"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg></span><span class="control-label">موسیقی</span></button>
     <button class="tool-btn" id="sfxBtn" type="button" aria-label="خاموش کردن افکت‌های صوتی" aria-pressed="true" title="صدای کارت‌ها"><svg class="ic" aria-hidden="true"><use href="#i-sound"/></svg><span class="control-label">صدا</span></button>
     <button class="tool-btn" id="helpBtn" type="button" aria-label="راهنمای بازی" title="راهنمای بازی"><svg class="ic" aria-hidden="true"><use href="#i-help"/></svg><span class="control-label">راهنما</span></button>
@@ -131,7 +137,7 @@
   <div class="quick-guide" aria-label="بازی در سه قدم"><div class="guide-item"><span class="guide-number">۰۱</span><div><h3>دو کارت را رو کن</h3><p>روی کارت‌ها بزن و نوشته‌هایشان را بخوان.</p></div></div><div class="guide-item"><span class="guide-number">۰۲</span><div><h3>سؤال را به پاسخ برسان</h3><p>جفت درست می‌ماند؛ جای بقیه را به خاطر بسپار.</p></div></div><div class="guide-item"><span class="guide-number">۰۳</span><div><h3>کشف‌هایت را کامل کن</h3><p>همهٔ جفت‌ها را پیدا کن و ستاره بگیر.</p></div></div></div>
 </section>
 <section class="screen" id="screen-game" aria-labelledby="gameTitle">
-  <div class="game-heading"><div><div class="breadcrumb"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span id="levelCaption">کتابخانهٔ جادویی / اولین کشف</span></div><h1 class="game-title" id="gameTitle">کارت‌های حکیم</h1></div><div class="game-top-actions"><button class="tool-btn" id="sizeBtn" aria-pressed="false" type="button" title="تغییر اندازهٔ کارت‌ها"><svg class="ic" aria-hidden="true"><use href="#i-zoom"/></svg><span>نمای درشت</span></button><button class="tool-btn mobile-pause" id="pauseBtnMobile" type="button"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg><span>مکث</span></button><button class="tool-btn" id="homeBtn" type="button" aria-label="بازگشت به خانه"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span class="home-text">خانه</span></button></div></div>
+  <div class="game-heading"><div><div class="breadcrumb"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span id="levelCaption">کتابخانهٔ جادویی / اولین کشف</span></div><h2 class="game-title" id="gameTitle">کارت‌های حکیم</h2></div><div class="game-top-actions"><button class="tool-btn" id="sizeBtn" aria-pressed="false" type="button" title="تغییر اندازهٔ کارت‌ها"><svg class="ic" aria-hidden="true"><use href="#i-zoom"/></svg><span>نمای درشت</span></button><button class="tool-btn mobile-pause" id="pauseBtnMobile" type="button"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg><span>مکث</span></button><button class="tool-btn" id="homeBtn" type="button" aria-label="بازگشت به خانه"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span class="home-text">خانه</span></button></div></div>
   <div class="game-layout">
     <div class="table-main">
       <div class="hud" aria-label="وضعیت بازی"><div class="hud-stat"><svg class="ic" aria-hidden="true"><use href="#i-cards"/></svg><div><small>جفت‌های کشف‌شده</small><strong id="hudPairs">۰ / ۶</strong></div></div><div class="hud-stat"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg><div><small>تلاش‌ها</small><strong id="hudTries">۰</strong></div></div><div class="hud-stat"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><div><small id="timeLabel">زمان بازی</small><strong id="hudTime">۰۰:۰۰</strong></div></div><button id="pauseHudBtn" class="hud-pause" type="button" aria-label="مکث در بازی" title="مکث"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg></button></div>
@@ -148,7 +154,7 @@
   </div>
 </section>
 <section class="screen" id="screen-result" aria-labelledby="resultTitle">
-  <div class="result-wrap"><div class="result-emblem" aria-hidden="true"><svg class="ic"><use href="#i-trophy"/></svg></div><p class="result-eyebrow">یک ماجرا، پر از کشف‌های کوچک</p><h1 class="win-title" id="resultTitle">راز کارت‌ها را پیدا کردی!</h1><p class="win-sub" id="winSub"></p><div class="stars" id="stars" aria-label="ستاره‌های این دور"></div>
+  <div class="result-wrap"><div class="result-emblem" aria-hidden="true"><svg class="ic"><use href="#i-trophy"/></svg></div><p class="result-eyebrow">یک ماجرا، پر از کشف‌های کوچک</p><h2 class="win-title" id="resultTitle">راز کارت‌ها را پیدا کردی!</h2><p class="win-sub" id="winSub"></p><div class="stars" id="stars" aria-label="ستاره‌های این دور"></div>
     <div class="result-card"><div class="score-zone"><div class="score-label">امتیاز این ماجرا</div><div class="score-big" id="scoreBig">۰</div><p class="score-break" id="scoreBreak"></p></div><div class="stat-grid"><div class="stat"><div class="num" id="stPairs">۰</div><div class="lbl">جفتِ پیدا شده</div></div><div class="stat"><div class="num" id="stTries">۰</div><div class="lbl">تلاش</div></div><div class="stat"><div class="num" id="stTime">۰۰:۰۰</div><div class="lbl">زمان فعال</div></div><div class="stat"><div class="num" id="stAcc">۰٪</div><div class="lbl">تطبیق درست</div></div></div></div>
     <div class="cards-hakim-slot" id="hakimResult"></div><div class="result-actions"><button class="btn btn-primary" id="againBtn" type="button"><svg class="ic" aria-hidden="true"><use href="#i-restart"/></svg>یک ماجرای دیگر</button><button class="btn btn-ghost" id="homeBtn2" type="button"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>انتخاب سطح</button></div><p class="result-footnote">مهم‌ترین دستاورد، چیزهایی است که یاد گرفتی.</p>
   </div>
@@ -166,7 +172,7 @@
 
 'use strict';
 /* =========================================================================
-   کارت‌های حکیم — بازی حافظه‌ی جفتی (Memory Match)
+   کارت‌های حکیم — بازی حافظهٔ جفتی (Memory Match)
    مهدی شریفیان — پلتفرم آموزشی حکیمستان
    ========================================================================= */
 
@@ -191,7 +197,7 @@ const DEFAULT_HQF = {
       "text": "جنس ماده در تغییر شیمیایی تغییر می‌کند؟",
       "answer": ["می‌کند"], "score": 1 },
     { "id": "q5", "type": "short", "section": "فصل ۲: تغییرات مواد",
-      "text": "وسیله‌ی آهنی در چه هوایی سریع‌تر زنگ می‌زند؟",
+      "text": "وسیلهٔ آهنی در چه هوایی سریع‌تر زنگ می‌زند؟",
       "answer": ["مرطوب"], "score": 1 },
     { "id": "q6", "type": "short", "section": "فصل ۲: تغییرات مواد",
       "text": "زنگ زدن آهن چه نوع تغییر شیمیایی است؟",
@@ -237,8 +243,8 @@ const DEFAULT_HQF = {
       "text": "فسیل‌ها بیشتر در کدام نوع سنگ‌ها یافت می‌شوند؟",
       "answer": ["رسوبی"], "score": 1 },
     { "id": "q19", "type": "short", "section": "فصل ۴: فسیل‌ها",
-      "text": "زمین‌شناسان با مطالعه‌ی فسیل‌ها چه چیزی می‌فهمند؟",
-      "answer": ["گذشته‌ی زمین"], "score": 1 },
+      "text": "زمین‌شناسان با مطالعهٔ فسیل‌ها چه چیزی می‌فهمند؟",
+      "answer": ["گذشتهٔ زمین"], "score": 1 },
     { "id": "q20", "type": "short", "section": "فصل ۴: فسیل‌ها",
       "text": "فسیل‌ها بیشتر کجا پیدا می‌شوند؟",
       "answer": ["در کوه‌ها"], "score": 1 },
@@ -780,6 +786,20 @@ function checkPair(){
   const c1 = state.cards[i1], c2 = state.cards[i2];
   // همان قانون قبلی: دو سمت متفاوت، با پاسخ یکسان پس از نرمال‌سازی.
   const isMatch = c1.side !== c2.side && c1.key === c2.key;
+  if(window.Hakim && typeof Hakim.saveAnswer === 'function'){
+    const qPair = state.pairs[c1.pair] || {};
+    Hakim.saveAnswer({
+      student_name: state.name || 'بازیکن',
+      game_id: 'hakim-cards',
+      experiment_id: 'level-' + state.level,
+      question_id: 'pair-' + (c1.pair + 1),
+      question_text: qPair.q || c1.text,
+      student_answer: c2.text,
+      correct_answer: qPair.a || '',
+      is_correct: !!isMatch,
+      time_taken: Math.max(1, state.seconds || 1)
+    });
+  }
   if(isMatch){
     setPrompt('یک جفتِ درست!');
     schedulePair(() => {
@@ -906,19 +926,26 @@ function endGame(){
   /* 📤 ارسال نتیجه به پنل معلم */
 function sendResultsToPanel(){
   try {
-    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     const pairs = state.pairs.length;
     const totalSec = state.seconds;
     const score = computeScore(pairs, state.attempts, totalSec);
     const stars = computeStars(pairs, state.attempts);
     const acc = Math.min(100, Math.round(pairs / Math.max(1, state.attempts) * 100));
+    try {
+      const prev = JSON.parse(localStorage.getItem('hakim_cards_best_v1') || '{}');
+      localStorage.setItem('hakim_cards_best_v1', JSON.stringify({
+        bestScore: Math.max(prev.bestScore || 0, score.total),
+        bestStars: Math.max(prev.bestStars || 0, stars),
+        lastLevel: state.level
+      }));
+    } catch(e){}
     const payload = {
       action: 'session',
       student_name: state.name || 'بازیکن',
       student_class: '',
       student_school: '',
       game_id: 'hakim-cards',
-      experiment_id: '',
+      experiment_id: 'level-' + state.level,
       duration: totalSec,
       device: /mobile|android|iphone/i.test(navigator.userAgent) ? 'موبایل' : 'دسکتاپ',
       score: score.total,
@@ -938,12 +965,18 @@ function sendResultsToPanel(){
         accuracyBonus: score.accuracy
       })
     };
+    if(window.Hakim && typeof Hakim.saveSession === 'function'){
+      Hakim.saveSession(payload);
+      return;
+    }
+    if(navigator.onLine === false) return;
+    const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
     fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-    }).catch(function(e){ console.log('send result failed:', e); });
-  } catch(e) { console.log('sendResultsToPanel error:', e); }
+    }).catch(function(){});
+  } catch(e) {}
 }
 function renderResult(){
   const pairs = state.pairs.length;
@@ -951,7 +984,7 @@ function renderResult(){
   const stars = computeStars(pairs, state.attempts);
   const acc = Math.min(100, Math.round(pairs / Math.max(1, state.attempts) * 100));
 
-  document.getElementById('winSub').textContent = 'آفرین ' + state.name + '! همه‌ی ' + toFa(pairs) + ' جفت را پیدا کردی.';
+  document.getElementById('winSub').textContent = 'آفرین ' + state.name + '! همهٔ ' + toFa(pairs) + ' جفت را پیدا کردی.';
   // ستاره‌ها
   const starsEl = document.getElementById('stars');
   starsEl.setAttribute('aria-label',toFa(stars) + ' ستاره از ۳ ستاره');
@@ -974,9 +1007,11 @@ function renderResult(){
 /* ۱۱) افکت‌ها                                                         */
 /* ------------------------------------------------------------------ */
 function celebrate(){
+  if(REDUCED || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   const layer = document.getElementById('fx');
+  if(!layer) return;
   const colors = ['#e8b35f','#f7d89c','#2dd4a8','#d8a53f','#b87333','#ffffff'];
-  const n = REDUCED ? 20 : 70;
+  const n = 70;
   for(let i = 0; i < n; i++){
     const c = document.createElement('span');
     c.className = 'confetti';
@@ -989,7 +1024,9 @@ function celebrate(){
   }
 }
 function sparkleAt(x, y){
+  if(REDUCED || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   const layer = document.getElementById('fx');
+  if(!layer) return;
   for(let i = 0; i < 8; i++){
     const s = document.createElement('span');
     s.className = 'sparkle';
@@ -1137,12 +1174,16 @@ function resetToDefault(){
   hakimReact('welcome');
 }
 function renderHome(){
-  document.getElementById('resetBtn').style.display=state.customLoaded?'inline-flex':'none';
+  const resetEl = document.getElementById('resetBtn');
+  const qCountEl = document.getElementById('qCount');
+  const startEl = document.getElementById('startBtn');
+  if(!resetEl || !qCountEl || !startEl) return;
+  resetEl.style.display=state.customLoaded?'inline-flex':'none';
   buildPairs();
   const subject=state.meta.title || (state.customLoaded?'سؤال‌های تو':'علوم پنجم');
-  document.getElementById('qCount').textContent=subject + ' · ' + toFa(state.pairs.length) + ' جفت آماده';
+  qCountEl.textContent=subject + ' · ' + toFa(state.pairs.length) + ' جفت آماده';
   updateLevelHints();
-  document.getElementById('startBtn').disabled=fileLoading || state.pairs.length<3;
+  startEl.disabled=fileLoading || state.pairs.length<3;
 }
 function updateLevelHints(){
   const avail=state.pairs.length;
@@ -1252,6 +1293,10 @@ function goHome(){
 }
 /* 📥 لود سؤالات از پنل معلم */
 function loadServerQuestions(callback){
+  if(navigator.onLine === false){
+    if(callback) callback();
+    return;
+  }
   const API_URL = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
   fetch(API_URL, {
     method: 'POST',
@@ -1266,16 +1311,37 @@ function loadServerQuestions(callback){
           state.questions = checked.valid;
           state.customLoaded = true;
           state.meta = { title: 'کارت‌های حکیم (از پنل معلم)', subject: 'عمومی', grade: '' };
-          console.log('✅ ' + checked.valid.length + ' سؤال از پنل معلم لود شد');
         }
       }
-      if(callback) callback();
+      if(callback && document.getElementById('qCount')) callback();
     })
-    .catch(function(e){
-      console.warn('loadServerQuestions failed:', e);
-      if(callback) callback();
+    .catch(function(){
+      if(callback && document.getElementById('qCount')) callback();
     });
 }
+
+(function initCardsTheme(){
+  const tb = document.getElementById('themeBtn');
+  const ti = document.getElementById('themeIcon');
+  const apply = (th) => {
+    const light = th === 'light';
+    document.body.dataset.theme = light ? 'light' : 'dark';
+    if(tb){
+      tb.setAttribute('aria-pressed', light ? 'true' : 'false');
+      const lbl = tb.querySelector('.control-label');
+      if(lbl) lbl.textContent = light ? 'حالت شب' : 'حالت روز';
+    }
+    if(ti) ti.textContent = light ? '🌙' : '☀️';
+  };
+  let saved = 'dark';
+  try{ saved = localStorage.getItem('hakim_cards_theme') || 'dark'; }catch(e){}
+  apply(saved);
+  if(tb) tb.addEventListener('click', () => {
+    const nxt = document.body.dataset.theme === 'light' ? 'dark' : 'light';
+    try{ localStorage.setItem('hakim_cards_theme', nxt); }catch(e){}
+    apply(nxt);
+  });
+})();
 
 renderHome();updateHUD();refreshSoundUI();
 document.getElementById('screen-game').inert=true;document.getElementById('screen-result').inert=true;
@@ -1329,6 +1395,7 @@ loadServerQuestions(function(){
       else ref = 'سایر';
     }
 
+    if (navigator.onLine === false) return;
     fetch(API, {
       method: 'POST',
       mode: 'no-cors',

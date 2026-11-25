@@ -146,7 +146,7 @@
       </div>
 
         <ul class="hero-stats" data-anim style="--i:5">
-          <li><b>۱۱</b> <span>بازی تعاملی</span></li>
+          <li><b>۱۷</b> <span>بازی تعاملی</span></li>
           <li><b>۷</b> <span>ابزار معلم</span></li>
           <li><b>۱۰۰٪</b> <span>رایگان و آفلاین</span></li>
         </ul>
@@ -158,7 +158,7 @@
     <div class="wrap">
       <div class="section-head">
         <div>
-          <p class="kicker"><span class="count-num" data-count-for="grid-games">۱۱</span> بازی تعاملی</p>
+          <p class="kicker"><span class="count-num" data-count-for="grid-games">۱۱</span> بخش · ۱۷ بازی تعاملی</p>
           <h2 id="games-title">بازی‌خانهٔ حکیمستان</h2>
         </div>
         <p class="section-note">هر بازی یک قالب آماده است؛ معلم می‌تواند سؤال‌ها را با درس خودش بسازد و لینک را به کلاس بدهد.</p>
@@ -269,8 +269,8 @@
             <span class="card-cta">شروع <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </div>
           <h3 class="card-title">آزمایشگاه ۲بعدی</h3>
-          <p class="card-desc">۹ آزمایش تعاملی علوم پنجم — فسیل، اهرم، آب، چشم، بازو، فرسایش و…</p>
-          <div class="card-tags"><span>علوم پنجم</span> <span>۹ آزمایش</span> <span>آماده و ثابت</span></div>
+          <p class="card-desc">۹ آزمایش تعاملی و ۴ شبیه‌ساز علوم پنجم — فسیل، اهرم، آب، چشم، گوش، قرقره و…</p>
+          <div class="card-tags"><span>علوم پنجم</span> <span>۹ آزمایش + ۴ شبیه‌ساز</span> <span>آماده و ثابت</span></div>
         </a>
 
         <!-- منچ آنلاین -->
@@ -424,7 +424,7 @@
           </div>
           <h3 class="card-title">درسگاه حکیمستان</h3>
           <p class="card-desc">تدریس روی کتاب PDF و وب‌کم را ضبط کن؛ بدون ضبط صفحه.</p>
-          <div class="card-tags"><span>ضبط تدریس</span> <span>۹ کتاب</span> <span>ابزار نقاشی</span></div>
+          <div class="card-tags"><span>ضبط تدریس</span> <span>۸ کتاب درسی</span> <span>ابزار نقاشی</span></div>
         </a>
 
       </div>
@@ -1532,14 +1532,20 @@ var API_CF    = 'https://hakim-game-worker.mahdisharifian7.workers.dev/ai/chat';
       }
     };
 
-    fetch(API, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload)
-    })
-    .then(function(){
-      msg.textContent = '✅ ممنون! نظرت ثبت شد.';
+    var sendSurvey = (window.HakimOutbox && typeof window.HakimOutbox.send === 'function')
+      ? window.HakimOutbox.send(API, payload)
+      : fetch(API, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+
+    sendSurvey
+    .then(function(res){
+      msg.textContent = (res && res.queued)
+        ? '📥 نظرت ذخیره شد و به محض اتصال اینترنت ارسال می‌شه.'
+        : '✅ ممنون! نظرت ثبت شد.';
       msg.className = 'sf-msg';
       form.reset();
       // برگشت به حالت دانش‌آموز

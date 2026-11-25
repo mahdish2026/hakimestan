@@ -20,6 +20,13 @@ jobs:
           node tests/pwa-a11y.cjs
           node tests/site-metadata.cjs
           node tests/math-school-cards.cjs
+          node tests/math-time-mission-audio.cjs
+          node tests/phase1-quality-gates.cjs
+          node tests/math-phase2-games.cjs
+          node tests/phase3-general-games.cjs
+          node tests/payamresan-outbox.cjs
+          node tests/teacher-panel-wiring.cjs
+          node tests/phase4-teacher-showcase.cjs
       - name: Check public pages on Chromium
         env:
           SITE_AXE: '1'

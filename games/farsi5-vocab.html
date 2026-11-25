@@ -4,12 +4,11 @@
 <!-- hakim-csp:start -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
 <!-- hakim-csp:end -->
-
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="../css/a11y.css">
 <!-- hakim-core:end -->
 
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
 <link rel="stylesheet" href="../css/fonts.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="theme-color" content="#140c2c" />
@@ -245,11 +244,13 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-x: clip;
     }
 
     body {
       font-family: 'Vazirmatn', Tahoma, sans-serif;
-      background-color: var(--bg-primary);
+      background-color: #0d081d;
+      background-color: var(--bg-primary, #0d081d);
       color: var(--text-primary);
       line-height: 1.65;
       min-height: 100vh;
@@ -1336,13 +1337,15 @@
     .floating-bubble {
       position: absolute;
       padding: 12px 18px;
+      max-width: calc(100% - 20px);
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.28), rgba(157,101,255,0.45));
+      background-color: #3b1d7a;
+      background: radial-gradient(circle at 30% 30%, #6d3fd6, #3b1d7a);
       border: 2px solid var(--accent-primary);
-      color: #fff;
+      color: #ffffff;
       font-weight: 800;
       font-size: 0.92rem;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35), inset 0 0 12px rgba(255,255,255,0.35);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35), inset 0 0 12px rgba(255,255,255,0.22);
       cursor: pointer;
       user-select: none;
       transition: transform 0.15s, background 0.2s;
@@ -1672,7 +1675,8 @@
     /* پایه — همهٔ تم‌ها */
     body[data-app="farsi5-vocab"] #hakimMount .hakim-panel,
     body[data-app="farsi5-vocab"] #hakimPanelMount .hakim-panel {
-      background: var(--bg-card) !important;
+      background-color: #1e153e !important;
+      background: var(--bg-card, #1e153e) !important;
       border: 1.5px solid var(--border-color) !important;
       border-radius: 20px !important;
       box-shadow: var(--shadow-main) !important;
@@ -1682,7 +1686,8 @@
 
     body[data-app="farsi5-vocab"] #hakimMount .hakim-bubble,
     body[data-app="farsi5-vocab"] #hakimPanelMount .hakim-bubble {
-      background: var(--bg-glass) !important;
+      background-color: #1e153e !important;
+      background: var(--bg-card-solid, #1e153e) !important;
       border: 1px solid var(--border-color) !important;
       color: var(--text-primary) !important;
       border-radius: 16px !important;
@@ -1738,7 +1743,8 @@
     body[data-app="farsi5-vocab"] #hakimMount .hakim-badge,
     body[data-app="farsi5-vocab"] #hakimPanelMount .hakim-badge {
       color: var(--accent-secondary) !important;
-      background: color-mix(in srgb, var(--accent-secondary) 14%, transparent) !important;
+      background-color: var(--bg-card-solid, #1e153e) !important;
+      background: color-mix(in srgb, var(--accent-secondary) 14%, var(--bg-card-solid, #1e153e)) !important;
       border-color: var(--border-color) !important;
     }
 
@@ -2026,6 +2032,53 @@
     }
 
     /* --- ♿ کاهش حرکت: همهٔ افکت‌های جدید خاموش --- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .bubble-stage {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 16px !important;
+        height: auto !important;
+        min-height: 220px !important;
+      }
+      .floating-bubble {
+        position: static !important;
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+    html[data-motion="reduced"] .bubble-stage {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding: 16px !important;
+      height: auto !important;
+      min-height: 220px !important;
+    }
+    html[data-motion="reduced"] .floating-bubble {
+      position: static !important;
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    @media (max-width: 380px) {
+      .app-container { padding-left: 8px; padding-right: 8px; }
+      .top-header { padding: 10px; gap: 8px; }
+      .brand-title { font-size: 1.12rem; }
+      .memory-board-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .floating-bubble { left: 10px !important; right: 10px; text-align: center; }
+    }
 
     /* --- 🌱 پانوشت برند: اعتبار طراح + شعار --- */
     .app-footer {
@@ -3183,7 +3236,7 @@
       {"lesson": 3, "word": "خونسردی", "meaning": "آرامش و شکیبایی", "synonym": "آرامش", "antonym": "اضطراب", "family": "خونسرد", "category": "اسم", "example": "رازی با خونسردی مشکل را حل کرد."},
       {"lesson": 3, "word": "زرگر", "meaning": "کسی که با طلا چیز می‌سازد", "synonym": "طلاکار", "antonym": "", "family": "زر، زرگری", "category": "اسم", "example": "رازی در دکان زرگری کار می‌کرد."},
       {"lesson": 3, "word": "معالجت", "meaning": "معالجه کردن، درمان کردن", "synonym": "درمان", "antonym": "", "family": "معالج", "category": "اسم", "example": "معالجت بیمار چند هفته طول کشید."},
-      {"lesson": 3, "word": "مکتب خانه", "meaning": "مکانی که کودکان سنتی آموزش می‌دیدند", "synonym": "مکتب", "antonym": "", "family": "مکتب‌دار", "category": "اسم", "example": "در مکتب خانه خواندن یاد می‌گرفتند."},
+      {"lesson": 3, "word": "مکتب‌خانه", "meaning": "مکانی که کودکان سنتی آموزش می‌دیدند", "synonym": "مکتب", "antonym": "", "family": "مکتب‌دار", "category": "اسم", "example": "در مکتب‌خانه خواندن یاد می‌گرفتند."},
       {"lesson": 3, "word": "تدبیر", "meaning": "چاره‌اندیشی، راه‌حل", "synonym": "چاره‌اندیشی", "antonym": "بی‌تدبیری", "family": "تدبر، مدبر", "category": "اسم", "example": "با تدبیر مشکل حل شد."},
       {"lesson": 3, "word": "تدوین", "meaning": "نوشتن، گردآوردن، تألیف کردن", "synonym": "تألیف", "antonym": "", "family": "مدون", "category": "اسم", "example": "این کتاب با تلاش زیاد تدوین شد."},
       {"lesson": 3, "word": "زرنگار", "meaning": "طلاکاری‌شده، با ارزش", "synonym": "طلاکاری", "antonym": "", "family": "زر، نگار", "category": "صفت", "example": "کتاب زرنگار در کتابخانه بود."},
@@ -3245,7 +3298,7 @@
       {"lesson": 8, "word": "گران‌سنگ", "meaning": "سنگ بزرگ و سنگین", "synonym": "سنگین", "antonym": "سبک", "family": "", "category": "صفت", "example": "سنگ‌های گران‌سنگ فرو ریختند."},
       {"lesson": 8, "word": "مسکین", "meaning": "بینوا، بیچاره، نیازمند، تهیدست", "synonym": "فقیر", "antonym": "ثروتمند", "family": "", "category": "صفت", "example": "به مسکین کمک کرد."},
       {"lesson": 8, "word": "ایثار", "meaning": "دیگری را بر خود ترجیح دادن، از خودگذشتگی", "synonym": "از خودگذشتگی", "antonym": "خودخواهی", "family": "ایثارگر", "category": "اسم", "example": "ایثار رمز پیروزی است."},
-      {"lesson": 8, "word": "سایه‌ی وحشت", "meaning": "اثر ترس، نشانهٔ بیم و هراس", "synonym": "ترس", "antonym": "آرامش", "family": "وحشت", "category": "اسم", "example": "سایه‌ی وحشت بر شهر افتاد."},
+      {"lesson": 8, "word": "سایهٔ وحشت", "meaning": "اثر ترس، نشانهٔ بیم و هراس", "synonym": "ترس", "antonym": "آرامش", "family": "وحشت", "category": "اسم", "example": "سایهٔ وحشت بر شهر افتاد."},
       {"lesson": 8, "word": "با خاک یکسان کرد", "meaning": "همه چیز را نابود کرد", "synonym": "ویران کرد", "antonym": "ساخت", "family": "", "category": "عبارت", "example": "دشمن شهر را با خاک یکسان کرد."},
       {"lesson": 8, "word": "باختر", "meaning": "مغرب", "synonym": "غرب", "antonym": "خاور", "family": "باختری", "category": "اسم", "example": "از باختر لشکر آمد."},
       {"lesson": 9, "word": "منظم", "meaning": "مرتب و دارای نظم", "synonym": "مرتب", "antonym": "نامنظم", "family": "نظم", "category": "صفت", "example": "کتاب‌ها را منظم چیدیم."},
@@ -3341,7 +3394,7 @@
       {"lesson": 8, "word": "بوم و بر", "meaning": "سرزمین، آب و خاک", "synonym": "سرزمین", "antonym": "", "family": "بوم، بر", "category": "اسم", "example": "بوم و بر خود را دوست دارم."},
       {"lesson": 8, "word": "بوم", "meaning": "زادگاه، سرزمین، زیستگاه", "synonym": "زادگاه", "antonym": "", "family": "بومی", "category": "اسم", "example": "بوم من اینجاست."},
       {"lesson": 18, "word": "پرشکوه", "meaning": "چشمگیر، زیبا و باعظمت", "synonym": "باعظمت", "antonym": "بی‌شکوه", "family": "شکوه", "category": "صفت", "example": "کاخی پرشکوه ساخته شد."},
-      {"lesson": 17, "word": "پیرایه", "meaning": "آنچه سبب زیبایی چیزی شود، زینت و زیور", "synonym": "زینت", "antonym": "", "family": "پیراستن", "category": "اسم", "example": "پیرایه‌ی سخن، راستی است."},
+      {"lesson": 17, "word": "پیرایه", "meaning": "آنچه سبب زیبایی چیزی شود، زینت و زیور", "synonym": "زینت", "antonym": "", "family": "پیراستن", "category": "اسم", "example": "پیرایهٔ سخن، راستی است."},
       {"lesson": 8, "word": "به نومیدی گرایید", "meaning": "ناامید شد، دل‌سرد شد، پشیمان شد", "synonym": "ناامید شد", "antonym": "امیدوار شد", "family": "نومیدی", "category": "فعل", "example": "سپاه به نومیدی گرایید."},
       {"lesson": 12, "word": "بهشت برین", "meaning": "بهشت آسمان", "synonym": "بهشت", "antonym": "دوزخ", "family": "", "category": "اسم", "example": "روانش در بهشت برین آرام باد."},
       {"lesson": 8, "word": "تازیانه", "meaning": "رشته‌ای از چرم که برای راندن چهارپایان به کار می‌رود", "synonym": "شلاق", "antonym": "", "family": "", "category": "اسم", "example": "باد چون تازیانه شاخه‌ها را تکان می‌داد."},
@@ -3782,9 +3835,11 @@
 
       function launch(count) {
         if (document.documentElement.getAttribute('data-motion') === 'reduced') return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         const canvas = document.getElementById('confettiCanvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
+        if (!ctx) return;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         const colors = ['#f5b942', '#9d65ff', '#22c55e', '#38bdf8', '#f43f5e', '#fbbf24'];
@@ -3841,11 +3896,15 @@
       // وضعیت برنامه
       let words = [];
       let teacherAuth = null; // { token, username, name, expiresAt }
+      let activeTab = 'lessons';
       let selectedChapter = 'all';
-      let openLessonsSet = new Set([1, 4]);
+      let openLessonsSet = new Set([1]);
       let selectedAlpha = 'همه';
       let alphaPage = 1;
       let alphaPageSize = 24;
+      const SEARCH_PAGE_STEP = 24;
+      let searchPageLimit = SEARCH_PAGE_STEP;
+      let lessonsChunkRaf = 0;
 
       // انتخاب درس‌ها برای بازی و خروجی
       let gameSelectedLessons = new Set();
@@ -3958,6 +4017,7 @@
          🌐 ارتباط با Apps Script (POST با text/plain;charset=utf-8)
          ───────────────────────────────────────────────────────────────── */
       async function callAppsScript(payload, useNoCors) {
+        if (navigator.onLine === false) return { ok: false, offline: true };
         const opts = {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -4494,6 +4554,12 @@
           return;
         }
 
+        if (lessonsChunkRaf) {
+          cancelAnimationFrame(lessonsChunkRaf);
+          lessonsChunkRaf = 0;
+        }
+        const pendingOpenBodies = [];
+
         container.innerHTML = filteredLessons.map(lessonKey => {
           const lessonWords = words.filter(w => String(w.lesson) === String(lessonKey)).sort((a, b) => a.word.localeCompare(b.word, 'fa'));
           const isOpen = openLessonsSet.has(Number(lessonKey)) || openLessonsSet.has(String(lessonKey));
@@ -4501,6 +4567,18 @@
 
           const isBankCard = String(lessonKey) === '18';
           const separatorHtml = (isBankCard && filteredLessons[filteredLessons.length - 1] == 18) ? '<div style="text-align:center; margin:18px 0 10px; padding:10px; background:var(--bg-glass); border:1px dashed var(--border-highlight); border-radius:12px; color:var(--text-secondary); font-weight:800; font-size:0.95rem;">📚 بخش پایانی کتاب — 🗂️ بانک واژگان تکمیلی</div>' : '';
+          let bodyHtml = '';
+          if (isOpen) {
+            if (pendingOpenBodies.length < 3 && filteredLessons.filter(k => openLessonsSet.has(Number(k)) || openLessonsSet.has(String(k))).length <= 3) {
+              bodyHtml = '<div class="words-grid">' + lessonWords.map(w => buildWordCardHTML(w, false)).join('') + '</div>';
+            } else if (pendingOpenBodies.length === 0) {
+              bodyHtml = '<div class="words-grid">' + lessonWords.map(w => buildWordCardHTML(w, false)).join('') + '</div>';
+              pendingOpenBodies.push(null);
+            } else {
+              pendingOpenBodies.push({ lessonKey, lessonWords });
+              bodyHtml = '<div class="words-grid" data-lazy-lesson="' + lessonKey + '"></div>';
+            }
+          }
           return (
             separatorHtml + '<div class="lesson-card ' + (isOpen ? 'open' : '') + '" id="lesson-card-' + lessonKey + '">' +
               '<div class="lesson-card-header" onclick="App.toggleLessonAccordion(\'' + lessonKey + '\')">' +
@@ -4517,14 +4595,23 @@
                   '<button type="button" class="btn btn-outline btn-sm" onclick="App.exportSingleLesson(\'' + lessonKey + '\')">📤 خروجی JSON</button>' +
                 '</div>' +
               '</div>' +
-              '<div class="lesson-card-body">' +
-                '<div class="words-grid">' +
-                  lessonWords.map(w => buildWordCardHTML(w, false)).join('') +
-                '</div>' +
-              '</div>' +
+              '<div class="lesson-card-body">' + bodyHtml + '</div>' +
             '</div>'
           );
         }).join('');
+
+        const lazyQueue = pendingOpenBodies.filter(Boolean);
+        if (lazyQueue.length > 0 && typeof requestAnimationFrame === 'function') {
+          const pump = () => {
+            const next = lazyQueue.shift();
+            if (!next) { lessonsChunkRaf = 0; return; }
+            const slot = container.querySelector('[data-lazy-lesson="' + next.lessonKey + '"]');
+            if (slot) slot.innerHTML = next.lessonWords.map(w => buildWordCardHTML(w, false)).join('');
+            if (lazyQueue.length > 0) lessonsChunkRaf = requestAnimationFrame(pump);
+            else lessonsChunkRaf = 0;
+          };
+          lessonsChunkRaf = requestAnimationFrame(pump);
+        }
       }
 
       /* ─────────────────────────────────────────────────────────────────
@@ -4636,7 +4723,15 @@
         if (results.length === 0) {
           grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:32px; color:var(--text-secondary);">هیچ لغتی با این مشخصات پیدا نشد. عبارت دیگری را امتحان کن! 🔍</div>';
         } else {
-          grid.innerHTML = results.map(w => buildWordCardHTML(w, true)).join('');
+          const visibleItems = results.slice(0, searchPageLimit);
+          const moreBtn = results.length > visibleItems.length
+            ? '<div style="grid-column:1/-1; text-align:center; padding:14px 0 4px;">' +
+                '<button type="button" class="btn btn-outline" id="btnLoadMoreSearch" onclick="App.loadMoreSearchResults()">' +
+                  'نمایش واژه‌های بیشتر (نمایش ' + toPersianDigits(visibleItems.length) + ' از ' + toPersianDigits(results.length) + ' واژه)' +
+                '</button>' +
+              '</div>'
+            : '';
+          grid.innerHTML = visibleItems.map(w => buildWordCardHTML(w, true)).join('') + moreBtn;
         }
       }
 
@@ -5408,7 +5503,9 @@
         };
         activeGame.answerLogs.push(logItem);
 
-        if (activeGame.sendEachAnswer && navigator.onLine) {
+        if (typeof Hakim !== 'undefined' && typeof Hakim.saveAnswer === 'function') {
+          Hakim.saveAnswer(logItem);
+        } else if (activeGame.sendEachAnswer && navigator.onLine) {
           callAppsScript(logItem, true).catch(() => {});
         }
         updateHudStats();
@@ -5492,7 +5589,13 @@
         });
         if (!isCorrect && btnEl) btnEl.classList.add('wrong');
 
-        recordAnswer(target, pickedObj ? pickedObj.meaning : '', target.meaning, isCorrect);
+        const useWordField = activeGame.type === 'fillblank' || !!activeGame.currentReverse;
+        recordAnswer(
+          target,
+          pickedObj ? (useWordField ? pickedObj.word : pickedObj.meaning) : '',
+          useWordField ? target.word : target.meaning,
+          isCorrect
+        );
         if (isCorrect) ConfettiFX.launch(30);
 
         setTimeout(() => {
@@ -5640,7 +5743,7 @@
           '</div>' +
           '<div class="memory-board-grid" id="memoryBoardGrid">' +
             activeGame.memDeck.map((card, idx) =>
-              '<div class="mem-card" data-idx="' + idx + '" onclick="App.flipMemoryCard(' + idx + ', this)">' +
+              '<div class="mem-card" role="button" tabindex="0" aria-label="کارت حافظهٔ شماره ' + toPersianDigits(idx + 1) + '" data-idx="' + idx + '" onclick="App.flipMemoryCard(' + idx + ', this)" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();App.flipMemoryCard(' + idx + ', this);}">' +
                 '<div class="mem-card-inner">' +
                   '<div class="mem-face mem-front">🧙‍♂️<span style="font-size:0.7rem; margin-top:4px;">حکیمستان</span></div>' +
                   '<div class="mem-face mem-back">' +
@@ -5706,6 +5809,8 @@
 
         const distractors = shuffleArray(words.filter(w => w.id !== target.id)).slice(0, 3);
         const options = shuffleArray([target, ...distractors]);
+        activeGame.currentOptions = options;
+        activeGame.currentReverse = false;
 
         stage.innerHTML =
           '<div class="quiz-prompt-box">' +
@@ -5931,6 +6036,8 @@
         const target = activeGame.items[activeGame.currentIndex];
         const distractors = shuffleArray(words.filter(w => w.id !== target.id)).slice(0, 3);
         const options = shuffleArray([target, ...distractors]);
+        activeGame.currentOptions = options;
+        activeGame.currentReverse = false;
 
         stage.innerHTML =
           '<div class="millionaire-ladder">' +
@@ -6110,7 +6217,15 @@
           })
         };
         try {
-          if (!navigator.onLine) throw new Error('offline');
+          if (typeof Hakim !== 'undefined' && typeof Hakim.saveSession === 'function') {
+            await Hakim.saveSession(sessionPayload);
+            showToast(navigator.onLine ? '☁️ نتیجهٔ بازی در پنل معلم ثبت شد.' : '💾 نتیجهٔ بازی در دستگاه ذخیره شد و با اتصال اینترنت همگام می‌شود.');
+            return;
+          }
+          if (!navigator.onLine) {
+            showToast('💾 نتیجهٔ بازی به‌صورت محلی در دستگاه ذخیره شد.');
+            return;
+          }
           const response = await fetch(APPS_SCRIPT_URL, {
             method: 'POST',
             mode: 'cors',
@@ -6120,15 +6235,22 @@
           const bodyText = await response.text();
           const result = JSON.parse(bodyText);
           if (!response.ok || (result && result.ok === false)) throw new Error('server rejected session');
-          showToast('☁️ نتیجه بازی در پنل معلم ثبت شد.');
+          showToast('☁️ نتیجهٔ بازی در پنل معلم ثبت شد.');
         } catch (e) {
-          showToast('⚠️ ثبت نتیجه در سرور ناموفق بود. اگر معلمی، لطفاً دوباره وارد شو.');
+          showToast('💾 نتیجهٔ بازی در این دستگاه ذخیره شد.');
         }
       }
 
       async function sendAllAnswersBatch() {
         if (!lastGameResult || !lastGameResult.answerLogs || !lastGameResult.answerLogs.length) {
           showToast('ℹ️ فهرست پاسخ‌ها خالی است.');
+          return;
+        }
+        if (typeof Hakim !== 'undefined' && typeof Hakim.saveAnswer === 'function') {
+          lastGameResult.answerLogs.forEach(item => Hakim.saveAnswer(item));
+          showToast(navigator.onLine
+            ? '📡 ' + toPersianDigits(lastGameResult.answerLogs.length) + ' پاسخ تک‌به‌تک در سرور ثبت شد.'
+            : '💾 ' + toPersianDigits(lastGameResult.answerLogs.length) + ' پاسخ در صف آفلاین ذخیره شد.');
           return;
         }
         let failed = false;
@@ -6220,7 +6342,7 @@
             canvas = renderCertificateFallbackCanvas();
           }
           triggerCanvasDownload(canvas, 'hakimistan-certificate.png');
-          showToast('✅ تصویر گواهینامه دانلود شد.');
+          showToast('✅ تصویر گواهی‌نامه دانلود شد.');
         } catch (e) {
           showToast('⚠️ خطا در ساخت تصویر.');
         } finally {
@@ -6534,23 +6656,50 @@
         if (chkCB) chkCB.checked = !!uiSettings.colorblind;
       }
 
+      function renderActiveTab() {
+        if (activeTab !== 'lessons') {
+          const lc = document.getElementById('lessonsContainer');
+          if (lc && lc.childElementCount > 0) lc.innerHTML = '';
+        }
+        if (activeTab !== 'alphabet') {
+          const ag = document.getElementById('alphabetWordsGrid');
+          if (ag && ag.childElementCount > 0) ag.innerHTML = '';
+        }
+        if (activeTab !== 'search') {
+          const sg = document.getElementById('searchResultsGrid');
+          if (sg && sg.childElementCount > 0) sg.innerHTML = '';
+        }
+        switch (activeTab) {
+          case 'lessons': renderLessonsTab(); break;
+          case 'alphabet': renderAlphabetTab(); break;
+          case 'search': renderSearchTab(); break;
+          case 'games': renderGamesSetupBar(); break;
+          case 'notebook': renderNotebookTab(); break;
+          case 'export': renderExportTab(); break;
+          case 'manage': if (isTeacherLoggedIn()) renderTeacherDashboard(); break;
+          default: renderLessonsTab(); break;
+        }
+      }
+
       function switchTab(tabId) {
         SoundFX.click();
+        activeTab = tabId || 'lessons';
         document.querySelectorAll('.tab-btn').forEach(btn => {
-          const isMatch = btn.getAttribute('data-tab') === tabId;
+          const isMatch = btn.getAttribute('data-tab') === activeTab;
           btn.classList.toggle('active', isMatch);
           btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
         });
         document.querySelectorAll('.tab-panel').forEach(panel => {
-          panel.classList.toggle('active', panel.id === 'panel-' + tabId);
+          panel.classList.toggle('active', panel.id === 'panel-' + activeTab);
         });
+        renderActiveTab();
 
         const guideTextEl = document.getElementById('tabGuideText');
-        if (guideTextEl && TAB_GUIDES[tabId]) {
-          guideTextEl.textContent = TAB_GUIDES[tabId];
+        if (guideTextEl && TAB_GUIDES[activeTab]) {
+          guideTextEl.textContent = TAB_GUIDES[activeTab];
         }
-        if (TAB_GUIDES[tabId]) {
-          hakimSay(TAB_GUIDES[tabId], 'happy');
+        if (TAB_GUIDES[activeTab]) {
+          hakimSay(TAB_GUIDES[activeTab], 'happy');
         }
       }
 
@@ -6598,13 +6747,8 @@
 
       function renderAll() {
         renderStudentHeaderBar();
-        renderLessonsTab();
-        renderAlphabetTab();
-        renderSearchTab();
-        renderGamesSetupBar();
-        renderNotebookTab();
-        renderExportTab();
-        if (isTeacherLoggedIn()) renderTeacherDashboard();
+        renderActiveTab();
+        if (isTeacherLoggedIn() && activeTab === 'manage') renderTeacherDashboard();
       }
 
       async function init() {
@@ -6775,9 +6919,13 @@
           renderAlphabetTab();
         });
 
-        document.getElementById('searchInput').addEventListener('input', renderSearchTab);
-        document.getElementById('searchLessonFilter').addEventListener('change', renderSearchTab);
-        document.getElementById('searchDiffFilter').addEventListener('change', renderSearchTab);
+        const resetAndRenderSearch = () => {
+          searchPageLimit = SEARCH_PAGE_STEP;
+          renderSearchTab();
+        };
+        document.getElementById('searchInput').addEventListener('input', resetAndRenderSearch);
+        document.getElementById('searchLessonFilter').addEventListener('change', resetAndRenderSearch);
+        document.getElementById('searchDiffFilter').addEventListener('change', resetAndRenderSearch);
 
         document.getElementById('btnGameSelectAllLessons').addEventListener('click', () => {
           getAllLessonNumbers().forEach(l => gameSelectedLessons.add(String(l)));
@@ -7098,6 +7246,7 @@
         deleteWordById,
         selectAlphaLetter: (letter) => { SoundFX.click(); selectedAlpha = letter; alphaPage = 1; renderAlphabetTab(); },
         setAlphaPage: (p) => { SoundFX.click(); alphaPage = p; renderAlphabetTab(); },
+        loadMoreSearchResults: () => { SoundFX.click(); searchPageLimit += SEARCH_PAGE_STEP; renderSearchTab(); },
         toggleGameLesson: (lKey) => {
           SoundFX.click();
           const k = String(lKey);
@@ -7237,6 +7386,7 @@
         var device = /tablet|ipad/i.test(ua) ? 'tablet' : (/mobile|android|iphone/i.test(ua) ? 'mobile' : 'desktop');
         var browser = /edg/i.test(ua) ? 'Edge' : (/chrome/i.test(ua) ? 'Chrome' : (/firefox/i.test(ua) ? 'Firefox' : (/safari/i.test(ua) ? 'Safari' : 'Other')));
         var os = /windows/i.test(ua) ? 'Windows' : (/android/i.test(ua) ? 'Android' : (/iphone|ipad|mac/i.test(ua) ? 'iOS/Mac' : (/linux/i.test(ua) ? 'Linux' : 'Other')));
+        if (navigator.onLine === false) return;
 
         fetch('https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec', {
           method: 'POST',
