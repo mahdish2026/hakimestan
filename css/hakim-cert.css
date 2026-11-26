@@ -183,7 +183,7 @@
 
 /* Footer: right = the world's seal | left = stamp and signature (Hakimestan logo) */
 .hk-a4-foot {
-  display: flex; justify-content: space-between; align-items: flex-end;
+  display: flex; justify-content: center; align-items: flex-end;
   gap: 1em; margin-top: .55em;
 }
 .hk-a4-seal { display: grid; justify-items: center; text-align: center; width: 8.4em; }
@@ -198,13 +198,6 @@
 .hk-a4-sign b { font-size: .82em; font-weight: 900; color: var(--hk-ink); line-height: 1.5; }
 .hk-a4-sign small { font-size: .7em; color: #6b5a3a; line-height: 1.5; }
 .hk-a4-sign .hk-a4-dev { margin-top: .1em; font-weight: 800; color: var(--hk-accent, #4b3a8f); white-space: nowrap; }
-.hk-a4-sign::before {
-  /* round stamp ring around the logo, like an ink stamp */
-  content: ""; position: absolute; top: .55em; left: 50%; width: 7.4em; height: 7.4em;
-  transform: translateX(-50%) rotate(-8deg);
-  border: .16em double rgba(75, 58, 143, .22); border-radius: 50%;
-  pointer-events: none;
-}
 .hk-a4-note { margin: .35em 0 0; text-align: center; font-size: .66em; color: #7a6a4a; line-height: 1.6; }
 
 /* Screen toolbar */
@@ -246,3 +239,6 @@ html[data-theme="night"] .hk-a4, html[data-theme="night"] .hk-a4 * { color-schem
   .hk-a4-tools { display: none !important; }
 }
 .hk-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+/* نشان رسمی، مشترک در گواهی‌های قدیمی و نسخهٔ چاپی */
+.hk-cert-brand { display:block; width:58px; height:100px; object-fit:contain; margin:8px auto; }

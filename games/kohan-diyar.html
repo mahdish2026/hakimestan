@@ -3397,11 +3397,12 @@ html { scrollbar-gutter: stable; }
 </div>
 </div>
 <div class="question-text" id="question-text">متن سوال</div>
-<div class="city-progress-bar">
+<div class="city-progress-bar" id="city-progress-bar" role="progressbar" aria-label="پاسخ‌های درست برای فتح شهر" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
 <div class="city-progress-fill" id="city-progress-fill" style="width:0%"></div>
 </div>
 <div class="city-progress-text" id="city-progress-text"></div>
-<div id="options-area"></div>
+<p class="answer-hint" id="answerHint">یک پاسخ را انتخاب کن</p>
+<div id="options-area" aria-describedby="answerHint"></div>
 <div aria-live="polite" class="feedback-box" id="feedbackBox" role="status">
 <div class="fb-title" id="fbTitle">📚 نکته آموزشی</div>
 <div id="fbText">توضیح پاسخ صحیح اینجا نمایش داده می‌شود.</div>
@@ -3819,23 +3820,10 @@ html { scrollbar-gutter: stable; }
 <div aria-hidden="true" class="cert-stars" id="certStarsPreview">⭐⭐⭐</div>
 <hr aria-hidden="true" class="cert-divider"/>
 <div class="cert-seal-row">
-<svg aria-hidden="true" class="cert-seal" height="52" viewbox="0 0 52 52" width="52" xmlns="http://www.w3.org/2000/svg">
-<polygon fill="rgba(197,148,26,0.1)" points="26,2 30,10 39,8 37,17 46,20 40,27 46,34 37,37 39,46 30,44 26,52 22,44 13,46 15,37 6,34 12,27 6,20 15,17 13,8 22,10" stroke="#c9941a" stroke-width="1.2"></polygon>
-<circle cx="26" cy="27" fill="rgba(197,148,26,0.08)" r="14" stroke="#c9941a" stroke-width=".8"></circle>
-<text fill="#8b5e0a" font-family="sans-serif" font-size="9" font-weight="bold" text-anchor="middle" x="26" y="24">مهر</text>
-<text fill="#8b5e0a" font-family="sans-serif" font-size="7" text-anchor="middle" x="26" y="34">تأیید</text>
-</svg>
-<div class="cert-footer-text">
-                    این گواهی به پاس حضور فعال<br/>و تلاش ارزشمند صادر گردید
-                  </div>
-<svg aria-hidden="true" height="52" style="opacity:.7" viewbox="0 0 52 52" width="52" xmlns="http://www.w3.org/2000/svg">
-<circle cx="26" cy="26" fill="none" r="24" stroke="#c9941a" stroke-width="1"></circle>
-<circle cx="26" cy="26" fill="none" r="18" stroke="rgba(197,148,26,0.4)" stroke-dasharray="3,2" stroke-width=".6"></circle>
-<text font-size="16" text-anchor="middle" x="26" y="22">🏺</text>
-<text fill="#8b5e0a" font-family="sans-serif" font-size="7" text-anchor="middle" x="26" y="36">ایران کهن</text>
-</svg>
+<img class="hk-cert-brand" src="../assets/img/hakimestan-logo-stacked.svg" alt="لوگوی حکیمستان">
+<div class="cert-footer-text">این گواهی به پاس حضور فعال<br/>و تلاش ارزشمند صادر گردید</div>
 </div>
-<div style="font-size:.45rem;color:#a08050;margin-top:6px;letter-spacing:1px">✍️ طراحی و توسعه: مهدی شریفیان</div>
+<div style="font-size:.45rem;color:#a08050;margin-top:6px;letter-spacing:1px">طراحی و توسعه: مهدی شریفیان</div>
 </div>
 </div>
 </div>
@@ -6025,6 +6013,14 @@ function animateTravelDot(fromIndex, toIndex) {
       return candidates[Math.floor(Math.random() * candidates.length)];
     }
 
+    function updateCityQuestionProgress(cityIndex) {
+      const city = CITIES[cityIndex];
+      const pct = Math.min(100, Math.round(state.cityCorrect / city.needCorrect * 100));
+      document.getElementById('city-progress-fill').style.width = pct + '%';
+      document.getElementById('city-progress-bar').setAttribute('aria-valuenow', pct);
+      document.getElementById('city-progress-text').textContent = `${toPersianNum(state.cityCorrect)} از ${toPersianNum(city.needCorrect)} پاسخ درست برای فتح ${city.name}`;
+    }
+
     function showQuestion() {
       if (state.currentQ >= QUESTIONS.length) { endGame(); return; }
 
@@ -6049,10 +6045,7 @@ function animateTravelDot(fromIndex, toIndex) {
       document.getElementById('q-number-label').textContent = `سوال ${toPersianNum(state.currentQ + 1)} از ۲۰`;
       document.getElementById('q-city-badge').textContent = CITIES[q.city].name;
       document.getElementById('question-text').textContent = q.q;
-      const city = CITIES[q.city];
-      const pct = state.cityCorrect / city.needCorrect * 100;
-      document.getElementById('city-progress-fill').style.width = Math.min(100, pct) + '%';
-      document.getElementById('city-progress-text').textContent = `${toPersianNum(state.cityCorrect)} از ${toPersianNum(city.needCorrect)} پاسخ درست برای فتح ${city.name}`;
+      updateCityQuestionProgress(q.city);
       document.getElementById('feedbackBox').classList.remove('show');
       document.getElementById('nextBtnWrap').classList.remove('show');
       const area = document.getElementById('options-area');
@@ -6114,6 +6107,7 @@ function animateTravelDot(fromIndex, toIndex) {
     function updateTimerDisplay() {
       const t = state.timeLeft;
       document.getElementById('timer-num').textContent = toPersianNum(t);
+      document.querySelector('.timer-circle').setAttribute('aria-label', 'زمان باقی‌مانده: ' + toPersianNum(t) + ' ثانیه');
       const maxTime = getMaxTime();
       const circumference = 163;
       const offset = circumference * (1 - t / maxTime);
@@ -6197,6 +6191,7 @@ function animateTravelDot(fromIndex, toIndex) {
         if (state.hearts > 0) { updateHeader(); flashScreen('rgba(231,76,60,0.2)'); }
         reviewList.push({ question: q.q, user: userAnswer, correct: q.type === 'tf' ? (q.answer ? 'صحیح' : 'غلط') : q.options[q.answer], explain: q.explanation || '' });
       }
+      updateCityQuestionProgress(q.city);
       showFeedback(correct);
       trackAnswer(correct, timeUsed, lesson);
       if (typeof Hakim !== 'undefined' && typeof Hakim.saveAnswer === 'function') {
@@ -6251,7 +6246,7 @@ function animateTravelDot(fromIndex, toIndex) {
       if (state.currentQ >= QUESTIONS.length) { endGame(); return; }
       const proceed = () => {
         showQuestion();
-        if (window.innerWidth < 768) { setTimeout(() => { document.getElementById('game-area').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150); }
+        if (window.innerWidth < 768) { setTimeout(() => { document.getElementById('game-area').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }); }, 150); }
       };
       const nextCity = QUESTIONS[state.currentQ].city;
       if (nextCity !== state.currentCity) {
@@ -7004,62 +6999,9 @@ function animateTravelDot(fromIndex, toIndex) {
 
     divLine(1192);
 
-    // --- مهر و نشان پایین ---
-    function drawSeal(x, y) {
-      ctx.save();
-      ctx.translate(x, y);
-      const points = 8;
-      ctx.beginPath();
-      for (let i = 0; i < points * 2; i++) {
-        const r = i % 2 === 0 ? 58 : 30;
-        const a = (i * Math.PI) / points - Math.PI / 2;
-        if (i === 0) ctx.moveTo(r * Math.cos(a), r * Math.sin(a));
-        else ctx.lineTo(r * Math.cos(a), r * Math.sin(a));
-      }
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(197,148,26,0.2)';
-      ctx.fill();
-      ctx.strokeStyle = '#c9941a';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(0, 0, 36, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(197,148,26,0.7)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.fillStyle = '#8b5e0a';
-      ctx.font = 'bold 22px "Vazirmatn", Tahoma, sans-serif';
-      ctx.fillText('مهر', 0, -6);
-      ctx.fillStyle = '#8b5e0a';
-      ctx.font = '18px "Vazirmatn", Tahoma, sans-serif';
-      ctx.fillText('تأیید', 0, 18);
-      ctx.restore();
-    }
-    drawSeal(150, 1262);
-
-    // حلقه تزیینی سمت راست
-    ctx.save();
-    ctx.translate(W - 150, 1262);
-    ctx.beginPath();
-    ctx.arc(0, 0, 52, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(197,148,26,0.7)';
-    ctx.lineWidth = 2.5;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(0, 0, 42, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(197,148,26,0.5)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([4, 3]);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.font = '48px "Amiri", serif';
-    ctx.fillText('🏺', 0, 0);
-    ctx.fillStyle = '#8b5e0a';
-    ctx.font = '18px "Vazirmatn", Tahoma, sans-serif';
-    ctx.fillText('ایران کهن', 0, 32);
-    ctx.restore();
+    // نشان رسمی حکیمستان، مانند پیش‌نمایش گواهی
+    const brand = await loadCertImage('../assets/img/hakimestan-logo-stacked.svg');
+    if (brand) ctx.drawImage(brand, 117, 1205, 66, 115);
 
     ctx.fillStyle = '#7a5010';
     ctx.font = '500 25px "Vazirmatn", Tahoma, sans-serif';
@@ -7067,7 +7009,7 @@ function animateTravelDot(fromIndex, toIndex) {
 
     ctx.fillStyle = '#a08050';
     ctx.font = '400 24px "Vazirmatn", Tahoma, sans-serif';
-    ctx.fillText('✍️  طراحی و توسعه: مهدی شریفیان', W / 2, 1280);
+    ctx.fillText('طراحی و توسعه: مهدی شریفیان', W / 2, 1280);
 
     divLine(1330);
     ctx.fillStyle = 'rgba(197,148,26,0.5)';

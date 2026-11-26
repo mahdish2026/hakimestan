@@ -434,6 +434,7 @@ html[data-theme="night"] .my-stamp { color: #fca5a5; border-color: #fca5a5; back
 <meta name="twitter:description" content="گذرنامهٔ قهرمان حکیمستان و تقویم یادگیری سال تحصیلی پایهٔ پنجم (مهر تا اردیبهشت) — مشاهدهٔ یکپارچهٔ پیشرفت در ۲۱ بازی آموزشی، نشان‌های افتخار، لوح جامع قابل چاپ و نقشهٔ راه ماه‌به‌ماه.">
 <meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
 <!-- hakim-meta:end -->
+<style>.my-cert-brand{text-align:center;color:#243c64;font-size:.78rem}.my-cert-brand small{display:block;color:#4b3a8f;font-weight:800}.my-cert-brand .hk-cert-brand{margin:0 auto 4px}.my-cert-top{grid-template-columns:minmax(0,1fr) 110px;justify-content:center}@media(max-width:600px){.my-cert-top{grid-template-columns:1fr}}</style>
 <link rel="stylesheet" href="css/hakim-cert.css"><script src="js/hakim-logo.js"></script><script src="js/hakim-cert.js"></script>
 </head>
 <body>
@@ -836,7 +837,6 @@ html[data-theme="night"] .my-stamp { color: #fca5a5; border-color: #fca5a5; back
         </div>
         <article class="cert-sheet hw-cert hk-tazhib" data-hk-cert aria-label="گواهی‌نامهٔ جامع قهرمان حکیمستان">
           <div class="hw-cert-top my-cert-top">
-            ${W ? W.seal('حکیمستان', prog.activeCount >= 10 ? 'مهر قهرمانی' : 'مهر پیشرفت') : ''}
             <div style="text-align:center">
               <div style="font-size:0.86rem;font-weight:800;color:#4b5b78">سامانهٔ آموزشی حکیمستان · پایهٔ پنجم ابتدایی</div>
               <h2 style="margin:6px 0;font-size:1.6rem">لوح و گواهی‌نامهٔ جامع «حکیمِ جوان»</h2>
@@ -862,7 +862,7 @@ html[data-theme="night"] .my-stamp { color: #fca5a5; border-color: #fca5a5; back
             <p><b>حکیم:</b> ${prog.activeCount >= 10 ? 'تو یک قهرمان واقعی حکیمستانی! دانایی مثل چراغی است که هرچه بیشتر روشنش کنی، راه بیشتری را می‌بینی.' : 'هر بازی که تجربه کنی یک مهر تازه در این لوح می‌نشیند. راه دانایی را قدم‌به‌قدم ادامه بده!'}</p></div>
           <div class="hw-cert-foot">
             <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>پیشرفت تقویم سالانه: ${fa(prog.monthsDone)} از ۸ ماه</span></div>
-            ${W ? W.signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی و توسعه: مهدی شریفیان · حکیمستان</span>'}
+            <div class="my-cert-brand"><img class="hk-cert-brand" src="assets/img/hakimestan-logo-stacked.svg" alt="لوگوی حکیمستان"><b>سامانهٔ آموزشی حکیمستان</b><small>طراحی و توسعه: مهدی شریفیان</small></div>
           </div>
           <p class="hw-cert-note">این لوح بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
         </article>

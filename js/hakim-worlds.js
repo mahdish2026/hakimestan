@@ -457,8 +457,8 @@
       '</svg>' + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>';
   }
   function signature(name, role) {
-    return '<div class="hw-sign"><svg viewBox="0 0 160 46" aria-hidden="true" focusable="false"><path d="M8 32c14-22 22-26 26-14s-6 18 2 10 14-24 22-18-4 22 6 16 12-18 20-12 2 14 12 10 14-12 22-8 12 6 30-2" fill="none" stroke="#1f3a68" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-      '<span class="hw-sign-line"></span><b>' + esc(name || 'مهدی شریفیان') + '</b><small>' + esc(role || 'طراح و توسعه‌دهنده · حکیمستان') + '</small></div>';
+    var logo = global.HakimLogo ? global.HakimLogo.stacked({ label: 'لوگوی حکیمستان' }) : '';
+    return '<div class="hw-sign">' + logo + '<b>سامانهٔ آموزشی حکیمستان</b><small>طراحی و توسعه: ' + esc(name || 'مهدی شریفیان') + '</small></div>';
   }
   function certHakim(text) {
     return '<div class="hw-cert-hakim"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>' +
