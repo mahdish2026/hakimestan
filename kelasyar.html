@@ -436,6 +436,8 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
   </div>
 </dialog>
 
+<script src="hakim-core.js"></script>
+<script src="js/hakim-companion.js"></script>
 <script>
 (function () {
   'use strict';
@@ -734,6 +736,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
         playChime();
         persist();
         if (activeTab === 'wheel') renderWheelTab();
+        try { window.HakimCompanion && window.HakimCompanion.say(`نوبت «${chosen}» است! با آرامش فکر کن و جواب بده.`, 'happy'); } catch (e) {}
       }, 2450);
     };
   }
@@ -868,6 +871,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
               timerInterval = null;
               playChime();
               if (activeTab === 'timer') renderTimerTab();
+              try { window.HakimCompanion && window.HakimCompanion.say('زمان تمام شد! حالا وقت جمع‌بندی و گفت‌وگوی کلاسی است.', 'thinking'); } catch (e) {}
             }
           }
         }, 1000);
@@ -1147,6 +1151,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
   applyTheme();
   refreshClassDropdown();
   renderActiveTab();
+  try { window.HakimCompanion && window.HakimCompanion.mount({ gameId: 'kelasyar', intro: 'سلام همکار گرامی! من حکیمم. با گردونهٔ شانس، گروه‌بندی، زمان‌سنج و دوئل، کلاس را پرنشاط‌تر می‌کنیم.' }); } catch (e) {}
 
   window.KelasyarApp = {
     getState: () => state,

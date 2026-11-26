@@ -4,6 +4,28 @@
 
   const D = window.IranGeoData;
   const GAME_ID = 'iran-geography';
+  const HC = () => window.HakimCompanion || null;
+  const ALL_UNITS = () => D.missions;
+  function companionAfterSolve(unit) {
+    const hc = HC();
+    if (!hc) return;
+    const solvedHere = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
+    if (solvedHere === unit.tasks.length) {
+      const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
+      const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+      if (allDone) hc.finish('شگفت‌انگیز بود ' + profile.name + '! همهٔ تمرین‌ها را حل کردی؛ گواهی‌نامه‌ات آماده است 🏆');
+      else hc.stageDone(unit.title, perfect);
+      reportUnit(unit);
+    }
+  }
+  function reportUnit(unit) {
+    const hc = HC();
+    if (!hc) return;
+    const solved = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
+    const guided = unit.tasks.filter((x) => profile.done[x.id]?.guided).length;
+    const stars = solved === unit.tasks.length ? (guided === 0 ? 3 : guided <= 2 ? 2 : 1) : solved > 0 ? 1 : 0;
+    hc.reportStage({ gameId: GAME_ID, name: profile.name, stage: unit.title, stageId: unit.id, solved, total: unit.tasks.length, stars, guided, xp: profile.xp, durationSec: (Date.now() - stageStartedAt) / 1000, startedAt: stageStartedAt });
+  }
   const STORAGE_KEY = 'hakim.irangeo.v1';
   const $ = (id) => document.getElementById(id);
   const main = $('main');
@@ -170,28 +192,41 @@
       return '#0f766e';
     };
 
-    return `<svg viewBox="0 0 520 370" role="img" aria-label="نقشهٔ تعاملی جغرافیای ایران، دریاها، شهرها و همسایگان">
-      <!-- دریای خزر -->
-      <path d="M210,25 C235,20 272,26 286,52 C292,72 288,92 275,98 C252,102 214,98 198,86 C196,64 198,38 210,25 Z" fill="#38bdf8" fill-opacity="0.45" stroke="#0284c7" stroke-width="2"/>
-      <!-- مرز سرزمین ایران -->
-      <path d="M112,52 L148,46 L176,68 L198,86 L275,98 L322,82 L396,88 L428,128 L418,186 L434,242 L444,306 L382,312 L334,296 L308,308 L268,288 L212,266 L174,248 L152,222 L134,178 L118,128 Z" fill="#bbf7d0" fill-opacity="0.52" stroke="#0d6859" stroke-width="3" stroke-linejoin="round"/>
-      <!-- خلیج فارس و دریای عمان -->
-      <path d="M158,254 L212,268 L272,292 L312,310 L345,298 L448,314 L462,356 L320,356 L248,338 L158,295 Z" fill="#38bdf8" fill-opacity="0.45" stroke="#0284c7" stroke-width="2"/>
-      <!-- البرز و زاگرس و کویر (نمایش نمادین) -->
-      <polyline points="184,102 225,112 268,108 312,100" fill="none" stroke="#78350f" stroke-width="4" stroke-dasharray="7 5" opacity="0.55"/>
-      <polyline points="142,118 168,168 208,216 264,258" fill="none" stroke="#78350f" stroke-width="4" stroke-dasharray="7 5" opacity="0.55"/>
-      <ellipse cx="332" cy="206" rx="48" ry="32" fill="#fde68a" fill-opacity="0.55"/>
-      <!-- رود کارون و سفیدرود و زاینده‌رود -->
-      <path d="M196,196 Q180,218 172,248" fill="none" stroke="#0284c7" stroke-width="2.5"/>
-      <path d="M214,158 Q236,184 256,196" fill="none" stroke="#0284c7" stroke-width="2"/>
-
-      ${D.mapPins.map((p) => {
-        const isSel = activePinId === p.id;
-        return `<g class="map-pin ${isSel ? 'selected' : ''}" data-pin-id="${p.id}">
+    const G = window.IranGeoMap;
+    const pins = D.mapPins.map((p) => {
+      const isSel = activePinId === p.id;
+      const lbl = p.label || p.name;
+      return `<g class="map-pin ${isSel ? 'selected' : ''}" data-pin-id="${p.id}">
           <circle cx="${p.x}" cy="${p.y}" r="${isSel ? 10 : 7}" fill="${isSel ? '#dc2626' : pinColor(p.kind)}" stroke="#ffffff" stroke-width="2"/>
-          ${!hideLabels ? `<text x="${p.x}" y="${p.y - 11}" text-anchor="middle" font-size="10" font-weight="800" fill="#132826">${esc(p.name.split(' ')[0])}</text>` : ''}
+          ${!hideLabels ? `<text class="pin-label" x="${p.x}" y="${p.y - 11}" text-anchor="middle" font-size="10.5" font-weight="800" fill="#132826" paint-order="stroke" stroke="#ffffff" stroke-width="3" stroke-linejoin="round">${esc(lbl)}</text>` : ''}
         </g>`;
-      }).join('')}
+    }).join('');
+    if (!G) {
+      return `<svg viewBox="0 0 520 400" role="img" aria-label="نقشهٔ تعاملی ایران"><rect width="520" height="400" rx="16" fill="#e0f2fe"/>${pins}</svg>`;
+    }
+    const featLabel = (x, y, txt, color) => (hideLabels ? '' : `<text x="${x}" y="${y}" text-anchor="middle" font-size="9" font-weight="700" fill="${color}" opacity="0.85" paint-order="stroke" stroke="#ffffff" stroke-width="2.5">${txt}</text>`);
+    return `<svg viewBox="0 0 ${G.W} ${G.H}" role="img" aria-label="نقشهٔ تعاملی جغرافیای ایران، دریاها، شهرها و همسایگان">
+      <defs>
+        <linearGradient id="igSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdeefc"/><stop offset="1" stop-color="#a5dcf5"/></linearGradient>
+        <linearGradient id="igLand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dcfce7"/><stop offset="1" stop-color="#bbf7d0"/></linearGradient>
+        <pattern id="igSand" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#fde68a"/><circle cx="2" cy="2" r="0.9" fill="#d97706" opacity="0.45"/></pattern>
+        <filter id="igShadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0d6859" flood-opacity="0.28"/></filter>
+      </defs>
+      <rect width="${G.W}" height="${G.H}" fill="url(#igSea)"/>
+      <path d="${G.neighbors}" fill="#f5eedd" stroke="#c4b393" stroke-width="0.8" stroke-linejoin="round"/>
+      <path d="${G.iran}" fill="url(#igLand)" stroke="#0d6859" stroke-width="2.4" stroke-linejoin="round" filter="url(#igShadow)"/>
+      <ellipse cx="${G.kavir[0]}" cy="${G.kavir[1]}" rx="40" ry="19" fill="url(#igSand)" opacity="0.8"/>
+      <ellipse cx="${G.lut[0]}" cy="${G.lut[1]}" rx="24" ry="34" fill="url(#igSand)" opacity="0.8"/>
+      <polyline points="${G.alborz}" fill="none" stroke="#92400e" stroke-width="4.5" stroke-dasharray="1.5 5" stroke-linecap="round" opacity="0.7"/>
+      <polyline points="${G.zagros}" fill="none" stroke="#92400e" stroke-width="4.5" stroke-dasharray="1.5 5" stroke-linecap="round" opacity="0.7"/>
+      <polyline points="${G.karun}" fill="none" stroke="#0284c7" stroke-width="2.4" stroke-linecap="round"/>
+      <polyline points="${G.zayandeh}" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
+      <polyline points="${G.sefidrud}" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
+      <polyline points="${G.aras}" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"/>
+      ${featLabel(G.kavir[0], G.kavir[1] + 3, 'دشت کویر', '#92400e')}
+      ${featLabel(300, 120, 'البرز', '#78350f')}
+      ${featLabel(205, 188, 'زاگرس', '#78350f')}
+      ${pins}
     </svg>`;
   }
 
@@ -267,6 +302,7 @@
     $('nameForm').onsubmit = (e) => {
       e.preventDefault();
       profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || 'ایران‌گرد جوان';
+      HC()?.setName(profile.name);
       saveState();
       renderHome();
     };
@@ -434,20 +470,19 @@
           ? (D.mapPins.find((p) => p.id === t.targetPin)?.name || t.targetPin)
           : t.options[t.answer];
 
-      try {
-        if (window.Hakim && typeof window.Hakim.saveAnswer === 'function') {
-          window.Hakim.saveAnswer({
-            gameId: GAME_ID,
-            playerName: profile.name,
-            questionId: t.id,
-            questionText: t.prompt,
-            userAnswer: userAnswerText,
-            correctAnswer: correctText,
-            isCorrect: isOk,
-            attempts: taskAttempts
-          });
-        }
-      } catch {}
+      HC()?.reportAnswer({
+        gameId: GAME_ID,
+        name: profile.name,
+        stage: m.title,
+        questionId: t.id,
+        questionNum: qi + 1,
+        questionText: t.prompt,
+        studentAnswer: userAnswerText,
+        correctAnswer: correctText,
+        isCorrect: isOk,
+        attempts: taskAttempts
+      });
+      HC()?.answer(isOk);
 
       if (isOk) {
         playTone('win');
@@ -459,6 +494,7 @@
         taskSolved = true;
         saveState();
         drawTask(`<b>🌟 آفرین ایران‌گرد کوچک! کاملاً درست است.</b><br>${esc(t.why)}`, 'ok');
+        companionAfterSolve(m);
       } else {
         playTone('err');
         profile.combo = 0;
@@ -472,20 +508,7 @@
         if (qi < m.tasks.length - 1) {
           openTask(mi, qi + 1);
         } else {
-          try {
-            if (window.Hakim && typeof window.Hakim.saveSession === 'function') {
-              const s = missionSolved(m);
-              window.Hakim.saveSession({
-                gameId: GAME_ID,
-                playerName: profile.name,
-                score: s * 20,
-                totalQuestions: m.tasks.length,
-                correctCount: s,
-                durationSec: Math.max(1, Math.round((Date.now() - stageStartedAt) / 1000)),
-                stageName: m.title
-              });
-            }
-          } catch {}
+          reportUnit(m);
           if (mi < D.missions.length - 1) openLesson(mi + 1);
           else renderCertificate();
         }
@@ -603,6 +626,29 @@
   window.addEventListener('pagehide', saveState);
   applyPrefs();
   updateHud();
+  const baseHome = renderHome;
+  renderHome = function () {
+    baseHome();
+    const hc = HC();
+    if (!hc) return;
+    const units = ALL_UNITS();
+    const total = units.reduce((n, u) => n + u.tasks.length, 0);
+    const done = units.reduce((n, u) => n + u.tasks.filter((x) => profile.done[x.id]?.ok).length, 0);
+    const next = units.find((u) => u.tasks.some((x) => !profile.done[x.id]?.ok));
+    const fa2 = (v) => String(v).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const msg = done === 0
+      ? 'از مأموریت اول شروع کن؛ اول درسنامه را با دقت ببین، بعد تمرین‌ها را حل کن. هر جا گیر کردی، دکمهٔ راهنما را بزن!'
+      : done >= total
+        ? 'همهٔ ' + fa2(total) + ' تمرین را حل کرده‌ای! گواهی‌نامه‌ات را چاپ کن و به دوستانت هم یاد بده.'
+        : fa2(done) + ' تمرین از ' + fa2(total) + ' را حل کرده‌ای. ادامهٔ سفر: «' + String(next ? next.title : '').replace(/^[^:]*:\s*/, '') + '».';
+    hc.decorateHome(main, msg);
+  };
+  const baseOpenTask = openTask;
+  openTask = function (a, b) {
+    HC()?.taskStart();
+    baseOpenTask(a, b);
+  };
+  HC()?.mount({ gameId: GAME_ID, name: profile.name, intro: "سلام ایران‌گرد کوچک! من حکیمم. روی نقشهٔ واقعی ایران سفر می‌کنیم؛ اول درسنامهٔ هر مأموریت را بخوان، بعد نقطهٔ درست را روی نقشه پیدا کن." });
   renderHome();
 
   window.IranGeoApp = {

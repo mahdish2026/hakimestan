@@ -405,6 +405,8 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
   طراحی و توسعه: مهدی شریفیان · سامانهٔ آموزشی حکیمستان · همگام با برنامهٔ درسی پایهٔ پنجم ابتدایی ایران
 </footer>
 
+<script src="hakim-core.js"></script>
+<script src="js/hakim-companion.js"></script>
 <script>
 (function () {
   'use strict';
@@ -618,6 +620,14 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
     $('heroNameInput').value = state.name === 'پژوهشگر حکیمستان' ? '' : state.name;
     const prog = scanProgress();
     const unlockedBadges = prog.badges.filter((b) => b.ok).length;
+    try {
+      const HCm = window.HakimCompanion;
+      if (HCm && state.name && state.name !== 'پژوهشگر حکیمستان') HCm.setName(state.name);
+      if (HCm && renderAll._said !== prog.activeCount) {
+        renderAll._said = prog.activeCount;
+        if (renderAll._mounted) HCm.say(prog.activeCount ? `تا حالا ${fa(prog.activeCount)} مهر در گذرنامه‌ات خورده و ${fa(unlockedBadges)} نشان گرفته‌ای. ادامه بده!` : 'گذرنامه‌ات هنوز خالی است. از یک بازی شروع کن تا اولین مهر را بگیری!', 'happy');
+      }
+    } catch (e) {}
 
     $('kpiRow').innerHTML = `
       <div class="kpi-box"><b>${fa(prog.activeCount)} / ${fa(GAMES.length)}</b><small>مهر بازی‌های ثبت‌شده در گذرنامه</small></div>
@@ -737,7 +747,9 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
 
   window.addEventListener('pagehide', saveState);
   applyTheme();
+  try { window.HakimCompanion && window.HakimCompanion.mount({ gameId: 'masir-yadgiri', name: state.name, intro: 'سلام! من حکیمم. این گذرنامهٔ یادگیری توست؛ هر بازی که تجربه کنی، یک مهر اینجا می‌خورد.' }); } catch (e) {}
   renderAll();
+  renderAll._mounted = true;
 })();
 </script>
 <!-- hakim-core:start -->

@@ -260,6 +260,36 @@ for (const rel of ['math-measurement.html', 'math-stats.html', 'farsi5-hamava.ht
   assert.ok(readme.includes('`' + rel + '`'), `README is missing ${rel}`);
 }
 
+// Hakim Core + companion wiring and snake_case telemetry for the Phase 5 pages.
+for (const [html, appJs, gameId] of [
+  ['games/math-measurement.html', 'games/math-measurement/app.js', 'math-measurement'],
+  ['games/math-stats.html', 'games/math-stats/app.js', 'math-stats'],
+  ['games/farsi5-hamava.html', 'games/farsi5-hamava/app.js', 'farsi5-hamava'],
+  ['games/iran-geography.html', 'games/iran-geography/app.js', 'iran-geography']
+]) {
+  const page = read(html);
+  const coreAt = page.indexOf('../hakim-core.js');
+  const compAt = page.indexOf('../js/hakim-companion.js');
+  assert.ok(coreAt > 0 && compAt > coreAt, html + ' must load hakim-core.js then hakim-companion.js');
+  const app = read(appJs);
+  assert.ok(app.includes(gameId), appJs + ' must declare game id ' + gameId);
+  assert.ok(/HakimCompanion/.test(app) && /reportStage|reportAnswer/.test(app), appJs + ' must report through HakimCompanion');
+  assert.ok(!/Hakim\s*\.\s*save(Answer|Session)\s*\(/.test(app), appJs + ' must not bypass the companion snake_case telemetry bridge');
+}
+for (const page of ['kelasyar.html', 'masir-yadgiri.html']) {
+  const src = read(page);
+  assert.ok(src.includes('src="hakim-core.js"') && src.includes('src="js/hakim-companion.js"'), page + ' must load Hakim Core and the companion');
+}
+const companion = read('js/hakim-companion.js');
+for (const field of ['game_id', 'student_name', 'is_correct', 'experiment_id']) {
+  assert.ok(companion.includes(field), 'companion telemetry must use snake_case field ' + field);
+}
+assert.ok(/pointer-events\s*:\s*none/.test(companion), 'companion panel must not block game buttons');
+const swSrc = read('sw.js');
+for (const asset of ['./js/hakim-companion.js', './games/iran-geography/map-geo.js']) {
+  assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
+}
+
 console.log(JSON.stringify({
   measurement: { stations: measurement.stages.length, tasks: measurementTasks },
   stats: { stations: stats.stages.length, tasks: statsTasks },

@@ -4,6 +4,28 @@
 
   const D = window.MeasurementData;
   const GAME_ID = 'math-measurement';
+  const HC = () => window.HakimCompanion || null;
+  const ALL_UNITS = () => D.stages;
+  function companionAfterSolve(unit) {
+    const hc = HC();
+    if (!hc) return;
+    const solvedHere = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
+    if (solvedHere === unit.tasks.length) {
+      const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
+      const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+      if (allDone) hc.finish('شگفت‌انگیز بود ' + profile.name + '! همهٔ تمرین‌ها را حل کردی؛ گواهی‌نامه‌ات آماده است 🏆');
+      else hc.stageDone(unit.title, perfect);
+      reportUnit(unit);
+    }
+  }
+  function reportUnit(unit) {
+    const hc = HC();
+    if (!hc) return;
+    const solved = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
+    const guided = unit.tasks.filter((x) => profile.done[x.id]?.guided).length;
+    const stars = solved === unit.tasks.length ? (guided === 0 ? 3 : guided <= 2 ? 2 : 1) : solved > 0 ? 1 : 0;
+    hc.reportStage({ gameId: GAME_ID, name: profile.name, stage: unit.title, stageId: unit.id, solved, total: unit.tasks.length, stars, guided, xp: profile.xp, durationSec: (Date.now() - stageStartedAt) / 1000, startedAt: stageStartedAt });
+  }
   const STORAGE_KEY = 'hakim.measurement.v1';
   const $ = (id) => document.getElementById(id);
   const main = $('main');
@@ -363,6 +385,7 @@
     $('nameForm').onsubmit = (e) => {
       e.preventDefault();
       profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || 'معمار جوان';
+      HC()?.setName(profile.name);
       saveState();
       renderMap();
     };
@@ -772,37 +795,23 @@
   }
 
   function reportAnswer(stage, task, userVal, isCorrect) {
-    try {
-      if (window.Hakim && typeof window.Hakim.saveAnswer === 'function') {
-        window.Hakim.saveAnswer({
-          gameId: GAME_ID,
-          playerName: profile.name,
-          questionId: task.id,
-          questionText: task.prompt,
-          userAnswer: String(userVal ?? ''),
-          correctAnswer: task.kind === 'choice' ? task.options[task.answer] : String(task.answer),
-          isCorrect: Boolean(isCorrect),
-          attempts: taskAttempts
-        });
-      }
-    } catch {}
+    HC()?.reportAnswer({
+      gameId: GAME_ID,
+      name: profile.name,
+      stage: stage.title,
+      questionId: task.id,
+      questionNum: qi + 1,
+      questionText: task.prompt,
+      studentAnswer: userVal ?? '',
+      correctAnswer: task.kind === 'choice' ? task.options[task.answer] : String(task.answer),
+      isCorrect: Boolean(isCorrect),
+      attempts: taskAttempts
+    });
+    HC()?.answer(Boolean(isCorrect));
   }
 
   function reportStageSession(stage) {
-    try {
-      if (window.Hakim && typeof window.Hakim.saveSession === 'function') {
-        const solved = stageSolvedCount(stage);
-        window.Hakim.saveSession({
-          gameId: GAME_ID,
-          playerName: profile.name,
-          score: solved * 20,
-          totalQuestions: stage.tasks.length,
-          correctCount: solved,
-          durationSec: Math.max(1, Math.round((Date.now() - stageStartedAt) / 1000)),
-          stageName: stage.title
-        });
-      }
-    } catch {}
+    reportUnit(stage);
   }
 
   function handleCheckTask() {
@@ -845,9 +854,7 @@
         `<b>🌟 آفرین قهرمان! کاملاً درست است.</b><br>${esc(t.why)}${profile.combo >= 2 ? `<br><small>🔥 ${fa(profile.combo)} پاسخ درست پیاپی!</small>` : ''}`,
         'ok'
       );
-      if (stageSolvedCount(s) === s.tasks.length) {
-        reportStageSession(s);
-      }
+      companionAfterSolve(s);
       return;
     }
 
@@ -1042,6 +1049,29 @@
   window.addEventListener('pagehide', saveState);
   applyPrefs();
   updateHud();
+  const baseHome = renderMap;
+  renderMap = function () {
+    baseHome();
+    const hc = HC();
+    if (!hc) return;
+    const units = ALL_UNITS();
+    const total = units.reduce((n, u) => n + u.tasks.length, 0);
+    const done = units.reduce((n, u) => n + u.tasks.filter((x) => profile.done[x.id]?.ok).length, 0);
+    const next = units.find((u) => u.tasks.some((x) => !profile.done[x.id]?.ok));
+    const fa2 = (v) => String(v).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const msg = done === 0
+      ? 'از ایستگاه اول شروع کن؛ اول درسنامه را با دقت ببین، بعد تمرین‌ها را حل کن. هر جا گیر کردی، دکمهٔ راهنما را بزن!'
+      : done >= total
+        ? 'همهٔ ' + fa2(total) + ' تمرین را حل کرده‌ای! گواهی‌نامه‌ات را چاپ کن و به دوستانت هم یاد بده.'
+        : fa2(done) + ' تمرین از ' + fa2(total) + ' را حل کرده‌ای. ادامهٔ سفر: «' + String(next ? next.title : '').replace(/^[^:]*:\s*/, '') + '».';
+    hc.decorateHome(main, msg);
+  };
+  const baseOpenTask = openTask;
+  openTask = function (a, b) {
+    HC()?.taskStart();
+    baseOpenTask(a, b);
+  };
+  HC()?.mount({ gameId: GAME_ID, name: profile.name, intro: "سلام! من حکیمم. در پیمانه‌ستان با هم راز مساحت لوزی و ذوزنقه، محیط دایره و حجم را کشف می‌کنیم. اول درسنامهٔ هر ایستگاه را ببین، بعد سراغ تمرین برو!" });
   renderMap();
 
   window.PeymanestanApp = {

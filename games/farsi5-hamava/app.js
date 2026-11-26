@@ -4,6 +4,28 @@
 
   const D = window.HamavaData;
   const GAME_ID = 'farsi5-hamava';
+  const HC = () => window.HakimCompanion || null;
+  const ALL_UNITS = () => D.chapters;
+  function companionAfterSolve(unit) {
+    const hc = HC();
+    if (!hc) return;
+    const solvedHere = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
+    if (solvedHere === unit.tasks.length) {
+      const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
+      const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+      if (allDone) hc.finish('شگفت‌انگیز بود ' + profile.name + '! همهٔ تمرین‌ها را حل کردی؛ گواهی‌نامه‌ات آماده است 🏆');
+      else hc.stageDone(unit.title, perfect);
+      reportUnit(unit);
+    }
+  }
+  function reportUnit(unit) {
+    const hc = HC();
+    if (!hc) return;
+    const solved = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
+    const guided = unit.tasks.filter((x) => profile.done[x.id]?.guided).length;
+    const stars = solved === unit.tasks.length ? (guided === 0 ? 3 : guided <= 2 ? 2 : 1) : solved > 0 ? 1 : 0;
+    hc.reportStage({ gameId: GAME_ID, name: profile.name, stage: unit.title, stageId: unit.id, solved, total: unit.tasks.length, stars, guided, xp: profile.xp, durationSec: (Date.now() - stageStartedAt) / 1000, startedAt: stageStartedAt });
+  }
   const STORAGE_KEY = 'hakim.hamava.v1';
   const $ = (id) => document.getElementById(id);
   const main = $('main');
@@ -246,6 +268,7 @@
     $('nameForm').onsubmit = (e) => {
       e.preventDefault();
       profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || 'ادیب جوان';
+      HC()?.setName(profile.name);
       saveState();
       renderMap();
     };
@@ -386,20 +409,19 @@
       const chosen = opts[selectedIdx];
       const correctOpt = opts.find((o) => o.isCorrect);
 
-      try {
-        if (window.Hakim && typeof window.Hakim.saveAnswer === 'function') {
-          window.Hakim.saveAnswer({
-            gameId: GAME_ID,
-            playerName: profile.name,
-            questionId: t.id,
-            questionText: t.sentence,
-            userAnswer: chosen.text,
-            correctAnswer: correctOpt ? correctOpt.text : '',
-            isCorrect: chosen.isCorrect,
-            attempts: taskAttempts
-          });
-        }
-      } catch {}
+      HC()?.reportAnswer({
+        gameId: GAME_ID,
+        name: profile.name,
+        stage: ch.title,
+        questionId: t.id,
+        questionNum: qi + 1,
+        questionText: t.sentence,
+        studentAnswer: chosen.text,
+        correctAnswer: correctOpt ? correctOpt.text : '',
+        isCorrect: chosen.isCorrect,
+        attempts: taskAttempts
+      });
+      HC()?.answer(chosen.isCorrect);
 
       if (chosen.isCorrect) {
         playTone('win');
@@ -411,6 +433,7 @@
         taskSolved = true;
         saveState();
         drawTask(`<b>🌟 آفرین ادیب جوان! درست نوشتی.</b><br>${esc(t.why)}`, 'ok');
+        companionAfterSolve(ch);
       } else {
         playTone('err');
         profile.combo = 0;
@@ -424,20 +447,7 @@
         if (qi < ch.tasks.length - 1) {
           openTask(ci, qi + 1);
         } else {
-          try {
-            if (window.Hakim && typeof window.Hakim.saveSession === 'function') {
-              const s = chapterSolved(ch);
-              window.Hakim.saveSession({
-                gameId: GAME_ID,
-                playerName: profile.name,
-                score: s * 20,
-                totalQuestions: ch.tasks.length,
-                correctCount: s,
-                durationSec: Math.max(1, Math.round((Date.now() - stageStartedAt) / 1000)),
-                stageName: ch.title
-              });
-            }
-          } catch {}
+          reportUnit(ch);
           if (ci < D.chapters.length - 1) openLesson(ci + 1);
           else renderCertificate();
         }
@@ -556,6 +566,29 @@
   window.addEventListener('pagehide', saveState);
   applyPrefs();
   updateHud();
+  const baseHome = renderMap;
+  renderMap = function () {
+    baseHome();
+    const hc = HC();
+    if (!hc) return;
+    const units = ALL_UNITS();
+    const total = units.reduce((n, u) => n + u.tasks.length, 0);
+    const done = units.reduce((n, u) => n + u.tasks.filter((x) => profile.done[x.id]?.ok).length, 0);
+    const next = units.find((u) => u.tasks.some((x) => !profile.done[x.id]?.ok));
+    const fa2 = (v) => String(v).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const msg = done === 0
+      ? 'از فصل اول شروع کن؛ اول درسنامه را با دقت ببین، بعد تمرین‌ها را حل کن. هر جا گیر کردی، دکمهٔ راهنما را بزن!'
+      : done >= total
+        ? 'همهٔ ' + fa2(total) + ' تمرین را حل کرده‌ای! گواهی‌نامه‌ات را چاپ کن و به دوستانت هم یاد بده.'
+        : fa2(done) + ' تمرین از ' + fa2(total) + ' را حل کرده‌ای. ادامهٔ سفر: «' + String(next ? next.title : '').replace(/^[^:]*:\s*/, '') + '».';
+    hc.decorateHome(main, msg);
+  };
+  const baseOpenTask = openTask;
+  openTask = function (a, b) {
+    HC()?.taskStart();
+    baseOpenTask(a, b);
+  };
+  HC()?.mount({ gameId: GAME_ID, name: profile.name, intro: "سلام ادیب جوان! من حکیمم. هر جفت هم‌آوا یک «رمز یادیار» دارد؛ اول رمز را بخوان، بعد واژهٔ درست را در جمله پیدا کن." });
   renderMap();
 
   window.HamavaApp = {
