@@ -547,6 +547,15 @@ const AUTH_KEY = 'ftah_teacher_auth';
 const AUTH_DURATION = 7 * 24 * 60 * 60 * 1000;
 const THEME_KEY = 'ftah_teacher_theme';
 
+// داده‌های این پنل را دانش‌آموزان می‌فرستند؛ پیش از درج در HTML حتماً امن شوند.
+function escHTML(v) {
+  return String(v == null ? '' : v).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
+}
+function numOr(v, fallback) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : (fallback || 0);
+}
+
 const COMMANDER_NAMES = {
   abumuslim: '⚔️ ابومسلم',
   nizam: '📚 خواجه نظام‌الملک',
@@ -701,7 +710,7 @@ async function loadData(isAutoRefresh) {
     if (!listRes.ok || !statsRes.ok) { throw new Error('دسترسی پنل تأیید نشد'); }
     const students = await listRes.json();
     const stats = await statsRes.json();
-    allStudents = students || [];
+    allStudents = Array.isArray(students) ? students.filter(s => s && typeof s === 'object') : [];
    setConnStatus(true);
 
     if (!allStudents.length) {
@@ -715,7 +724,7 @@ async function loadData(isAutoRefresh) {
       'آخرین به‌روزرسانی: ' + new Date().toLocaleTimeString('fa-IR');
   } catch (e) {
     setConnStatus(false);
-    content.innerHTML = '<div class="empty-state">❌ خطا در ارتباط با سرور<br><small>' + e.message + '</small></div>';
+    content.innerHTML = '<div class="empty-state">❌ خطا در ارتباط با سرور<br><small>' + escHTML(e && e.message) + '</small></div>';
   }
 }
 
@@ -773,17 +782,17 @@ function renderPanel(stats, partialOnly) {
   // ===== آمار =====
   if (!partialOnly && stats) {
     html += '<div class="stats-grid">';
-    html += `<div class="stat-box"><span class="num">${stats.total_plays || 0}</span><div class="label">تعداد بازی</div></div>`;
-    html += `<div class="stat-box"><span class="num">${Math.round(stats.avg_score || 0)}</span><div class="label">میانگین امتیاز</div></div>`;
-    html += `<div class="stat-box"><span class="num">${stats.max_score || 0}</span><div class="label">بالاترین امتیاز</div></div>`;
-    html += `<div class="stat-box"><span class="num">${stats.min_score || 0}</span><div class="label">پایین‌ترین امتیاز</div></div>`;
+    html += `<div class="stat-box"><span class="num">${numOr(stats.total_plays)}</span><div class="label">تعداد بازی</div></div>`;
+    html += `<div class="stat-box"><span class="num">${Math.round(numOr(stats.avg_score))}</span><div class="label">میانگین امتیاز</div></div>`;
+    html += `<div class="stat-box"><span class="num">${numOr(stats.max_score)}</span><div class="label">بالاترین امتیاز</div></div>`;
+    html += `<div class="stat-box"><span class="num">${numOr(stats.min_score)}</span><div class="label">پایین‌ترین امتیاز</div></div>`;
     html += '</div>';
   }
 
   // ===== فیلترها =====
   html += `
     <div class="toolbar">
-      <input type="text" id="searchInput" placeholder="🔍 جستجوی نام..." value="${searchQuery}" oninput="onSearch(this.value)">
+      <input type="text" id="searchInput" placeholder="🔍 جستجوی نام..." value="${escHTML(searchQuery)}" oninput="onSearch(this.value)">
       <select id="dateFilter" onchange="onDateFilter(this.value)">
         <option value="all" ${dateFilter==='all'?'selected':''}>📅 همه زمان‌ها</option>
         <option value="today" ${dateFilter==='today'?'selected':''}>امروز</option>
@@ -799,7 +808,7 @@ function renderPanel(stats, partialOnly) {
   const binLabels = ['۰-۴', '۵-۸', '۹-۱۲', '۱۳-۱۶', '۱۷-۲۰'];
   const binColors = ['#e74c3c', '#e67e22', '#3498db', '#2ecc71', '#27ae60'];
   filteredStudents.forEach(s => {
-    const sc = s.score || 0;
+    const sc = numOr(s.score);
     if (sc <= 4) bins[0]++;
     else if (sc <= 8) bins[1]++;
     else if (sc <= 12) bins[2]++;
@@ -828,9 +837,9 @@ function renderPanel(stats, partialOnly) {
       try {
         const ls = JSON.parse(s.lesson_stats);
         for (let lesson in ls) {
-          if (lessonStats[lesson]) {
-            lessonStats[lesson].c += ls[lesson].c || 0;
-            lessonStats[lesson].w += ls[lesson].w || 0;
+          if (Object.prototype.hasOwnProperty.call(lessonStats, lesson)) {
+            lessonStats[lesson].c += numOr(ls[lesson] && ls[lesson].c);
+            lessonStats[lesson].w += numOr(ls[lesson] && ls[lesson].w);
           }
         }
       } catch(e) {}
@@ -866,9 +875,9 @@ function renderPanel(stats, partialOnly) {
     html += '<div class="empty-state">🔍 هیچ نتیجه‌ای برای این فیلتر پیدا نشد</div>';
   } else {
     // مرتب‌سازی بر اساس امتیاز برای رتبه‌بندی
-    const sorted = [...filteredStudents].sort((a, b) => (b.score || 0) - (a.score || 0));
+    const sorted = [...filteredStudents].sort((a, b) => numOr(b.score) - numOr(a.score));
     const rankMap = new Map();
-    sorted.forEach((s, i) => rankMap.set(s.id, i + 1));
+    sorted.forEach((s, i) => rankMap.set(String(s.id || ''), i + 1));
 
     html += '<div class="table-wrap"><table class="students-table"><thead><tr>';
     html += '<th><input type="checkbox" onchange="toggleSelectAll(this.checked)"></th>';
@@ -877,12 +886,15 @@ function renderPanel(stats, partialOnly) {
 
     filteredStudents.forEach((s, idx) => {
       let cities = 0;
-      try { cities = JSON.parse(s.conquered_cities || '[]').length; } catch(e) {}
-      const scoreClass = s.score >= 16 ? 'score-high' : s.score >= 11 ? 'score-mid' : 'score-low';
-      const hearts = '❤️'.repeat(s.hearts || 0) + '🖤'.repeat(3 - (s.hearts || 0));
-      const date = (s.created_at || '').split(' ')[0];
-      const cmd = COMMANDER_NAMES[s.commander] || '—';
-      const sid = s.id || '';
+      try { const cc = JSON.parse(s.conquered_cities || '[]'); cities = Array.isArray(cc) ? Math.min(cc.length, 6) : 0; } catch(e) {}
+      const score = numOr(s.score);
+      const scoreClass = score >= 16 ? 'score-high' : score >= 11 ? 'score-mid' : 'score-low';
+      // مقدار نامعتبر قلب (بیش از ۳ یا منفی) نباید کل جدول را با RangeError از کار بیندازد.
+      const heartCount = Math.max(0, Math.min(3, Math.trunc(numOr(s.hearts))));
+      const hearts = '❤️'.repeat(heartCount) + '🖤'.repeat(3 - heartCount);
+      const date = String(s.created_at || '').split(' ')[0];
+      const cmd = Object.prototype.hasOwnProperty.call(COMMANDER_NAMES, s.commander) ? COMMANDER_NAMES[s.commander] : '—';
+      const sid = String(s.id || '');
       const rank = rankMap.get(sid) || 0;
       let medal = '';
       if (rank === 1) medal = '🥇';
@@ -891,21 +903,21 @@ function renderPanel(stats, partialOnly) {
       else medal = rank;
 
       // هشدار نمره پایین
-      const warn = (s.score || 0) < 8 ? '<span class="warn-tag">⚠️ ضعیف</span>' : '';
+      const warn = score < 8 ? '<span class="warn-tag">⚠️ ضعیف</span>' : '';
 
       const isSelected = selectedIds.has(sid);
       html += `<tr class="${isSelected ? 'selected' : ''}">
-        <td><input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleSelect('${sid}', this.checked)"></td>
+        <td><input type="checkbox" ${isSelected ? 'checked' : ''} data-id="${escHTML(sid)}" onchange="toggleSelect(this.dataset.id, this.checked)" aria-label="انتخاب ${escHTML(s.student_name)}"></td>
         <td><span class="rank-medal">${medal}</span></td>
         <td>${idx + 1}</td>
-        <td><strong>${s.student_name}</strong> ${warn}</td>
-        <td><span class="score-badge ${scoreClass}">${s.score}</span></td>
+        <td><strong>${escHTML(s.student_name)}</strong> ${warn}</td>
+        <td><span class="score-badge ${scoreClass}">${score}</span></td>
         <td>${cities}/6</td>
         <td style="font-size:.9rem">${hearts}</td>
-        <td>${s.max_combo || 0}</td>
+        <td>${numOr(s.max_combo)}</td>
         <td><span class="commander-tag">${cmd}</span></td>
-        <td style="font-size:.7rem;color:var(--muted)">${date}</td>
-        <td><button class="delete-btn" onclick="deleteRecord('${sid}', '${(s.student_name||'').replace(/'/g,"\\'")}')">🗑️</button></td>
+        <td style="font-size:.7rem;color:var(--muted)">${escHTML(date)}</td>
+        <td><button class="delete-btn" data-id="${escHTML(sid)}" data-name="${escHTML(s.student_name)}" onclick="deleteRecord(this.dataset.id, this.dataset.name)" aria-label="حذف ${escHTML(s.student_name)}">🗑️</button></td>
       </tr>`;
     });
     html += '</tbody></table></div>';
@@ -931,7 +943,7 @@ function toggleSelect(id, checked) {
 }
 
 function toggleSelectAll(checked) {
-  if (checked) filteredStudents.forEach(s => selectedIds.add(s.id));
+  if (checked) filteredStudents.forEach(s => { if (s.id != null && s.id !== '') selectedIds.add(String(s.id)); });
   else selectedIds.clear();
   renderPanel(null, true);
 }
@@ -987,7 +999,7 @@ function exportCSV() {
       rows.push([
         cells[1].textContent.trim(),
         cells[2].textContent.trim(),
-        cells[3].textContent.trim(),
+        (cells[3].querySelector('strong') || cells[3]).textContent.trim(),
         cells[4].textContent.trim(),
         cells[5].textContent.trim(),
         cells[6].textContent.trim(),
@@ -999,7 +1011,8 @@ function exportCSV() {
   });
   let csv = '\ufeff' + headers.join(',') + '\n';
   rows.forEach(row => {
-    csv += row.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',') + '\n';
+    // جلوگیری از تزریق فرمول در Excel (نام‌هایی که با = + - @ شروع می‌شوند)
+    csv += row.map(c => { let v = String(c); if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; return `"${v.replace(/"/g,'""')}"`; }).join(',') + '\n';
   });
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement('a');
