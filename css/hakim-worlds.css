@@ -674,16 +674,16 @@ body[data-world] .cert-sheet {
   box-shadow: 0 0 0 10px #fffdf6, 0 0 0 12px #c9a14a, 0 0 0 16px #fffdf6, 0 0 0 17px #c9a14a, 0 40px 60px -30px rgba(0, 0, 0, .45);
   margin: 24px auto;
 }
-body[data-world] .cert-sheet::before,
-body[data-world] .cert-sheet::after {
+body[data-world] .cert-sheet:not(.hk-tazhib)::before,
+body[data-world] .cert-sheet:not(.hk-tazhib)::after {
   content: '❖';
   position: absolute;
   top: 8px;
   font-size: 1.6rem;
   color: #c9a14a;
 }
-body[data-world] .cert-sheet::before { right: 12px; }
-body[data-world] .cert-sheet::after { left: 12px; }
+body[data-world] .cert-sheet:not(.hk-tazhib)::before { right: 12px; }
+body[data-world] .cert-sheet:not(.hk-tazhib)::after { left: 12px; }
 body[data-world] .cert-sheet h2,
 body[data-world] .cert-header h2 { font-family: 'Lalezar', 'Vazirmatn', sans-serif; font-weight: 400; font-size: 2rem; color: #5a3a06; }
 body[data-world] .cert-student-name { font-family: 'Lalezar', 'Vazirmatn', sans-serif; font-weight: 400; font-size: 2.4rem; }
@@ -740,7 +740,7 @@ html[data-theme="night"] .hw-node button { border-color: var(--surface); }
 
 @media print {
   .hw-journey, .hw-cert-banner, .hw-celebrate, .hw-art { display: none !important; }
-  body[data-world] .cert-sheet { box-shadow: none; border: 3px double #c9a14a; margin: 0; }
+  body[data-world] .cert-sheet:not(.hk-tazhib) { box-shadow: none; border: 3px double #c9a14a; margin: 0; }
 }
 
 /* جای برچسب‌ها در دنیای ایران‌گرد (قطب‌نما گوشهٔ بالا را گرفته است) */
@@ -910,3 +910,7 @@ body[data-world] .cert-skills-grid li.mastered::after { content: '🏅'; positio
 }
 .hw-figure:not(.iran-map-box) > svg { max-width: 680px; margin: 0 auto; }
 .hw-split .hw-figure > svg { max-width: none; }
+body[data-world] .cert-sheet.hk-tazhib { max-width: 960px; }
+body[data-world] .hk-tazhib .cert-stat,
+body[data-world] .hk-tazhib .cert-skills-grid li,
+body[data-world] .hk-tazhib .hw-cert-quote { background: rgba(255, 249, 232, .8); }

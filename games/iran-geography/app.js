@@ -738,7 +738,7 @@
         <button type="button" id="certBack">🗺️ بازگشت به مأموریت‌ها</button>
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
-      <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ ایران‌گرد کوچک">
+      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ ایران‌گرد کوچک">
         <div class="hw-cert-top" style="border-bottom:2px dashed #e5d3a5;padding-bottom:14px;margin-bottom:6px">
           ${w ? w.seal('ایران‌گرد کوچک', done === allTasks.length ? 'مهر پایان سفر' : 'مهر پیشرفت') : ''}
           <div style="text-align:center">

@@ -1042,7 +1042,7 @@
         </div>
       </div>
 
-      <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ مهارت پیمانه‌ستان">
+      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ مهارت پیمانه‌ستان">
         <div class="hw-cert-top">
         ${W() ? W().seal('پیمانه‌ستان', done === allTasks.length ? 'مهر استادی' : 'مهر پیشرفت') : ''}
         <div class="cert-header">

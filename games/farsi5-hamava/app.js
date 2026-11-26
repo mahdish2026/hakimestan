@@ -687,7 +687,7 @@
         <button type="button" id="certBackMap">🗺️ بازگشت به تالار فصل‌ها</button>
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
-      <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ مهارت هم‌آواستان">
+      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ مهارت هم‌آواستان">
         <div class="hw-cert-top" style="border-bottom:2px dashed #e5d3a5;padding-bottom:14px;margin-bottom:6px">
           ${w ? w.seal('هم‌آواستان', done === allTasks.length ? 'مهر استادی املا' : 'مهر پیشرفت') : ''}
           <div style="text-align:center">
