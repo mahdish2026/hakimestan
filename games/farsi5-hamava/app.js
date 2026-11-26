@@ -95,7 +95,8 @@
       bestCombo: 0,
       sound: false,
       theme: 'light',
-      scale: 1
+      scale: 1,
+      book: { init: false, sealed: {} }
     };
   }
 
@@ -120,6 +121,12 @@
       base.sound = Boolean(raw.sound);
       base.theme = raw.theme === 'night' ? 'night' : 'light';
       base.scale = [0.92, 1, 1.1, 1.2].includes(raw.scale) ? raw.scale : 1;
+      if (raw.book && typeof raw.book === 'object') {
+        base.book.init = Boolean(raw.book.init);
+        if (raw.book.sealed && typeof raw.book.sealed === 'object') {
+          for (const c of D.chapters) if (raw.book.sealed[c.id]) base.book.sealed[c.id] = true;
+        }
+      }
       return base;
     } catch {
       return defaultState();
@@ -230,18 +237,18 @@
     const nextIdx = Math.max(0, D.chapters.findIndex((c) => chapterSolved(c) < c.tasks.length));
 
     main.innerHTML = `
-      <section class="hero-card hw-hero-split">
+      <section class="hero-card hw-hero-split${window.HamavaBook ? ' hs-hero' : ''}">
         <div>
         <span class="hero-kicker">فارسی و نگارش پایهٔ پنجم دبستان · هم‌آواها و درست‌نویسی</span>
         <h2 class="hero-title">به تالار ادب <span class="hw-accent">«هم‌آواستان»</span> خوش آمدی!</h2>
         <p class="hero-sub">چرا «نمازگزار» با «ز» نوشته می‌شود ولی «کتاب را روی میز گذارد» با «ذ»؟ در ۶ فصل جذاب، اول با «رمزهای یادیار» راز هر جفت هم‌آوا را یاد بگیر، بعد در داستان‌ها و میزِ ویراستاری استادت را نشان بده!</p>
         <div class="hero-actions">
-          <button type="button" class="btn-primary" id="btnStartNext">🚀 ${done === 0 ? 'شروع فصل اول' : 'ادامهٔ ماجراجویی'}</button>
+          <button type="button" class="btn-primary" id="btnStartNext">${window.HamavaBook ? '📜' : '🚀'} ${done === 0 ? (window.HamavaBook ? 'باز کردن فصل اول کتاب' : 'شروع فصل اول') : 'ادامهٔ ماجراجویی'}</button>
           <button type="button" class="btn-soft" id="btnOpenLexicon">📖 فرهنگ‌نامهٔ جیبی هم‌آواها</button>
           <button type="button" class="btn-gold" id="btnOpenCert">🏆 گواهی‌نامهٔ من</button>
         </div>
         </div>
-        ${W() ? W().art('hamava', { chips: ['📜 ' + fa(D.chapters.length) + ' فصل', '✍️ ' + fa(allTasks.length) + ' چالش', '📖 ' + fa(D.lexicon.length) + ' جفت هم‌آوا'] }) : ''}
+        ${W() && !window.HamavaBook ? W().art('hamava', { chips: ['📜 ' + fa(D.chapters.length) + ' فصل', '✍️ ' + fa(allTasks.length) + ' چالش', '📖 ' + fa(D.lexicon.length) + ' جفت هم‌آوا'] }) : ''}
       </section>
 
       <section class="profile-bar" aria-label="پروفایل ادیب جوان">
@@ -261,7 +268,7 @@
         </div>
       </section>
 
-      ${W() ? W().journey(D.chapters.map((u, i) => ({ title: u.title, solved: chapterSolved(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'فصل', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
+      ${window.HamavaBook ? window.HamavaBook.render(bookCtx()) : W() ? W().journey(D.chapters.map((u, i) => ({ title: u.title, solved: chapterSolved(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'فصل', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
 
       <section aria-labelledby="chaptersHeading">
         <h2 id="chaptersHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">📚 شش فصل املا و واژه‌شناسی پایهٔ پنجم</h2>
@@ -299,7 +306,8 @@
       ${W() ? W().certBanner({ done, total: allTasks.length, word: 'فصل', taskWord: 'چالش', attr: 'data-lesson', nextIdx }) : ''}
     `;
 
-    $('btnStartNext').onclick = () => openLesson(nextIdx);
+    $('btnStartNext').onclick = () => (window.HamavaBook ? window.HamavaBook.goNext() : openLesson(nextIdx));
+    window.HamavaBook?.mount(main, bookCtx());
     $('btnOpenLexicon').onclick = renderLexicon;
     $('btnOpenCert').onclick = renderCertificate;
     W()?.bind(main, { cert: renderCertificate });
@@ -316,6 +324,24 @@
     main.querySelectorAll('[data-play]').forEach((b) => {
       b.onclick = () => openTask(Number(b.dataset.play), 0);
     });
+  }
+
+  // پیوند کتاب جادویی با وضعیت بازی
+  function bookCtx() {
+    return {
+      chapters: D.chapters,
+      book: profile.book,
+      solved: (i) => chapterSolved(D.chapters[i]),
+      stars: (i) => chapterStars(D.chapters[i]),
+      seen: (i) => Boolean(profile.lessons[D.chapters[i].id]),
+      locked: (i) => isLocked(i),
+      openLesson: (i) => openLesson(i, 0),
+      openTask: (i) => openTask(i, Math.max(0, D.chapters[i].tasks.findIndex((t) => !profile.done[t.id]?.ok))),
+      lockedNotice: (i) => lockedNotice(i),
+      save: saveState,
+      sound: () => profile.sound,
+      say: (m) => HC()?.say?.(m, 'happy')
+    };
   }
 
   function unitsInfo() {

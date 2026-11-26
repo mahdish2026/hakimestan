@@ -295,7 +295,7 @@ for (const [appJs, track] of [['games/math-measurement/app.js', 'music9.mp3'], [
   assert.ok(exists('games/' + track), 'missing music file games/' + track);
 }
 const swSrc = read('sw.js');
-for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/farsi5-hamava/lessons.js']) {
+for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/iran-geography/roadtrip.js', './games/farsi5-hamava/lessons.js', './js/hakim-scene-kit.js', './css/hakim-scenes.css', './games/math-measurement/city.js', './games/math-stats/wheel.js', './games/farsi5-hamava/book.js', './assets/img/hamava-page-tazhib.webp', './assets/img/hamava-cover.webp']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
 }
 for (const L of [...Object.values(loadData('games/iran-geography/lessons.js', 'IranGeoLessons')), ...Object.values(loadData('games/farsi5-hamava/lessons.js', 'HamavaLessons'))]) {
@@ -331,7 +331,70 @@ for (const g of GAMES) {
     assert.ok(L.narration.length > 400 && /^farsi5-hamava\/audio\/ch[1-6]-[a-z-]+\.mp3$/.test(L.audio), 'hamava lesson ' + ch.id + ' needs narration + audio path');
     assert.ok(L.check.length >= 2 && L.check.every((q) => q.o[q.a] && q.why), 'hamava lesson ' + ch.id + ' needs a valid self-check');
   }
-  for (const [html, files] of [['games/iran-geography.html', ['iran-geography/data.js', 'iran-geography/lessons.js', 'iran-geography/lesson-view.js', 'iran-geography/app.js']], ['games/farsi5-hamava.html', ['farsi5-hamava/data.js', 'farsi5-hamava/lessons.js', 'farsi5-hamava/app.js']]]) {
+  // Road-trip home map: every mission is a station on a drivable road and stations/roads stay lock-aware.
+  {
+    const sandbox = { window: { matchMedia: () => ({ matches: false }) } };
+    sandbox.globalThis = sandbox;
+    vm.createContext(sandbox);
+    vm.runInContext(read('games/iran-geography/roadtrip.js'), sandbox, { filename: 'roadtrip.js' });
+    const R = sandbox.window.IranGeoRoad;
+    assert.ok(R && typeof R.render === 'function' && typeof R.mount === 'function' && typeof R.goNext === 'function', 'roadtrip.js must expose IranGeoRoad.render/mount/goNext');
+    assert.equal(R.STOPS.length, geo.missions.length + 1, 'road trip needs a start node plus one station per mission');
+    assert.equal(R.ROADS.length, geo.missions.length, 'road trip needs one road between consecutive stations');
+    for (const st of R.STOPS) assert.ok(geo.mapPins.some((p) => p.id === st.pin), 'road-trip station must sit on a real map pin: ' + st.pin);
+    const lockedAt = 3;
+    const html = R.render({
+      missions: geo.missions, pins: geo.mapPins, map: loadData('games/iran-geography/map-geo.js', 'IranGeoMap'), trip: { at: 0, km: 0, paved: 1 },
+      solved: (i) => (i < lockedAt - 1 ? geo.missions[i].tasks.length : 0), stars: () => 0, seen: (i) => i < lockedAt - 1,
+      locked: (i) => i >= lockedAt, openLesson() {}, openTask() {}, lockedNotice() {}, save() {}, sound: () => false
+    });
+    assert.equal((html.match(/data-rt-stop="/g) || []).length, R.STOPS.length, 'every station must be rendered as a tappable stop');
+    assert.equal((html.match(/role="button" tabindex="0"/g) || []).length, R.STOPS.length, 'stations must be keyboard-focusable buttons');
+    assert.equal((html.match(/class="rt-stop is-locked/g) || []).length, geo.missions.length - lockedAt, 'locked missions must render as locked stations');
+    assert.equal((html.match(/class="rt-road is-locked"/g) || []).length, geo.missions.length - lockedAt, 'roads to locked stations must stay closed');
+  }
+  const geoApp = read('games/iran-geography/app.js');
+  assert.ok(/IranGeoRoad\.render\(roadCtx\(\)\)/.test(geoApp) && /IranGeoRoad\?\.mount\(main, roadCtx\(\)\)/.test(geoApp), 'geo home must mount the road-trip map');
+  // Each game has its own animated world: city builder, spinner + live charts, illuminated book.
+  {
+    const kit = read('js/hakim-scene-kit.js');
+    const worlds = [
+      { file: 'games/math-measurement/city.js', api: 'PeymanCity', data: measurement, list: 'stages', key: 'stages', sel: /data-cy-lot="/g, lockedRe: /class="cy-lot is-locked/g, html: 'games/math-measurement.html', app: 'games/math-measurement/app.js', extra: { city: { shown: [] } } },
+      { file: 'games/math-stats/wheel.js', api: 'AmarWheel', data: stats, list: 'stages', key: 'stages', sel: /data-aw-slice="/g, lockedRe: /class="aw-slice is-locked/g, html: 'games/math-stats.html', app: 'games/math-stats/app.js', extra: { daily: { '2026-11-24': 3, '2026-11-25': 5 }, guided: () => 1 } },
+      { file: 'games/farsi5-hamava/book.js', api: 'HamavaBook', data: hamava, list: 'chapters', key: 'chapters', sel: /data-hb-ch="/g, lockedRe: /class="hb-row is-locked/g, html: 'games/farsi5-hamava.html', app: 'games/farsi5-hamava/app.js', extra: { book: { init: true, sealed: {} } } }
+    ];
+    for (const w of worlds) {
+      const sandbox = { window: { matchMedia: () => ({ matches: false }) }, performance: { now: () => 0 }, setTimeout, clearTimeout };
+      sandbox.globalThis = sandbox;
+      vm.createContext(sandbox);
+      vm.runInContext(kit, sandbox, { filename: 'hakim-scene-kit.js' });
+      vm.runInContext(read(w.file), sandbox, { filename: w.file });
+      const M = sandbox.window[w.api];
+      assert.ok(M && typeof M.render === 'function' && typeof M.mount === 'function' && typeof M.goNext === 'function', w.file + ' must expose ' + w.api + '.render/mount/goNext');
+      const units = w.data[w.list];
+      const lockedFrom = 2;
+      const html = M.render(Object.assign({
+        [w.key]: units,
+        solved: (i) => (i < lockedFrom ? units[i].tasks.length : 0), stars: (i) => (i < lockedFrom ? 3 : 0), seen: (i) => i < lockedFrom,
+        locked: (i) => i > lockedFrom, openLesson() {}, openTask() {}, lockedNotice() {}, save() {}, sound: () => false
+      }, w.extra));
+      assert.equal((html.match(w.sel) || []).length, units.length, w.api + ' must render one tappable element per unit');
+      assert.ok((html.match(/role="button" tabindex="0"/g) || []).length >= units.length, w.api + ' units must be keyboard-focusable buttons');
+      assert.equal((html.match(w.lockedRe) || []).length, units.length - lockedFrom - 1, w.api + ' must render locked units as locked');
+      assert.ok(/data-hs-card/.test(html) && /data-hs-live/.test(html), w.api + ' must include the info card and a live region');
+      const app = read(w.app);
+      assert.ok(app.includes(w.api + '.render(') && app.includes(w.api + '?.mount(main'), w.app + ' must render and mount ' + w.api);
+      const page = read(w.html);
+      const kitAt = page.indexOf('src="../js/hakim-scene-kit.js"'), modAt = page.indexOf('src="' + w.file.replace('games/', '') + '"'), appAt = page.indexOf('src="' + w.app.replace('games/', '') + '"');
+      assert.ok(kitAt > 0 && modAt > kitAt && appAt > modAt, w.html + ' must load scene kit → world → app');
+      assert.ok(page.includes('href="../css/hakim-scenes.css"'), w.html + ' must load hakim-scenes.css');
+    }
+    assert.ok(/data-aw-hub/.test(read('games/math-stats/wheel.js')) && /barChart|lineChart|pieChart|tally/.test(read('games/math-stats/wheel.js')), 'stats world must include the spinner hub and the live charts');
+    for (const img of ['assets/img/hamava-page-tazhib.webp', 'assets/img/hamava-cover.webp']) {
+      assert.ok(exists(img) && fs.statSync(path.join(root, img)).size < 150 * 1024, img + ' must exist and stay under 150 KB');
+    }
+  }
+  for (const [html, files] of [['games/iran-geography.html', ['iran-geography/data.js', 'iran-geography/lessons.js', 'iran-geography/lesson-view.js', 'iran-geography/roadtrip.js', 'iran-geography/app.js']], ['games/farsi5-hamava.html', ['farsi5-hamava/data.js', 'farsi5-hamava/lessons.js', 'farsi5-hamava/app.js']]]) {
     const page = read(html);
     const at = files.map((f) => page.indexOf('src="' + f + '"'));
     assert.ok(at.every((x, i) => x > 0 && (i === 0 || x > at[i - 1])), html + ' must load ' + files.join(' → '));

@@ -80,7 +80,8 @@
       bestCombo: 0,
       sound: false,
       theme: 'light',
-      scale: 1
+      scale: 1,
+      daily: {}
     };
   }
 
@@ -107,6 +108,12 @@
       base.sound = Boolean(raw.sound);
       base.theme = raw.theme === 'night' ? 'night' : 'light';
       base.scale = [0.92, 1, 1.1, 1.2].includes(raw.scale) ? raw.scale : 1;
+      if (raw.daily && typeof raw.daily === 'object') {
+        Object.keys(raw.daily).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort().slice(-60).forEach((d) => {
+          const v = Number(raw.daily[d]);
+          if (Number.isInteger(v) && v > 0) base.daily[d] = Math.min(v, allTasks.length);
+        });
+      }
       return base;
     } catch {
       return defaultState();
@@ -357,18 +364,18 @@
     const nextIdx = Math.max(0, D.stages.findIndex((s) => stageSolvedCount(s) < s.tasks.length));
 
     main.innerHTML = `
-      <section class="hero-card">
+      <section class="hero-card${window.AmarWheel ? ' hs-hero' : ''}">
         <div>
           <span class="hero-kicker">فصل هفتم ریاضی پنجم · پوشش ۱۰۰٪ کتاب درسی</span>
           <h2 class="hero-title">به سرزمین <span class="hw-accent">«آمارستان»</span> خوش آمدی!</h2>
           <p class="hero-sub">در ۹ ایستگاه جذاب، اول با درسنامهٔ تصویری و تعاملی راز نمودار خط شکسته، تراز کردن میانگین و چرخنده‌های شانس را کشف کن، بعد مرحله‌به‌مرحله همهٔ تیپ‌سؤال‌های کتاب را فتح کن!</p>
           <div class="hero-actions">
-            <button type="button" class="btn-primary" id="btnStartNext">🚀 ${done === 0 ? 'شروع از ایستگاه اول' : done === allTasks.length ? 'مرور ایستگاه‌ها' : 'ادامهٔ مسیر یادگیری'}</button>
+            <button type="button" class="btn-primary" id="btnStartNext">${window.AmarWheel ? '🎡' : '🚀'} ${done === 0 ? (window.AmarWheel ? 'بچرخان؛ شروع از ایستگاه اول' : 'شروع از ایستگاه اول') : done === allTasks.length ? 'مرور ایستگاه‌ها' : 'ادامهٔ مسیر یادگیری'}</button>
             <button type="button" class="btn-soft" id="btnOpenStudio">🛠️ آزمایشگاه آزاد نمودار و دو تاس</button>
             <button type="button" class="btn-gold" id="btnOpenCert">🏆 گواهی‌نامهٔ من</button>
           </div>
         </div>
-        ${W() ? W().art('stats', { chips: ['📊 ' + fa(D.stages.length) + ' ایستگاه', '🎲 ' + fa(allTasks.length) + ' تمرین', '🏅 ' + fa(D.stages.length) + ' نشان'] }) : ''}
+        ${W() && !window.AmarWheel ? W().art('stats', { chips: ['📊 ' + fa(D.stages.length) + ' ایستگاه', '🎲 ' + fa(allTasks.length) + ' تمرین', '🏅 ' + fa(D.stages.length) + ' نشان'] }) : ''}
       </section>
 
       <section class="profile-bar" aria-label="پروفایل و پیشرفت قهرمان">
@@ -388,7 +395,7 @@
         </div>
       </section>
 
-      ${W() ? W().journey(D.stages.map((u, i) => ({ title: u.title, solved: stageSolvedCount(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'ایستگاه', attr: 'data-open-lesson', nextIdx, done, total: allTasks.length }) : ''}
+      ${window.AmarWheel ? window.AmarWheel.render(wheelCtx()) : W() ? W().journey(D.stages.map((u, i) => ({ title: u.title, solved: stageSolvedCount(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'ایستگاه', attr: 'data-open-lesson', nextIdx, done, total: allTasks.length }) : ''}
 
       <section aria-labelledby="stationsHeading">
         <h2 id="stationsHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">🗺️ نقشهٔ ۹ ایستگاه فصل هفتم (نمودارها، میانگین و احتمال)</h2>
@@ -427,7 +434,8 @@
       ${W() ? W().certBanner({ done, total: allTasks.length, word: 'ایستگاه', taskWord: 'تمرین', attr: 'data-open-lesson', nextIdx }) : ''}
     `;
 
-    $('btnStartNext').onclick = () => openLesson(nextIdx);
+    $('btnStartNext').onclick = () => (window.AmarWheel ? window.AmarWheel.goNext() : openLesson(nextIdx));
+    window.AmarWheel?.mount(main, wheelCtx());
     $('btnOpenStudio').onclick = renderStudio;
     $('btnOpenCert').onclick = renderCertificate;
     W()?.bind(main, { cert: renderCertificate });
@@ -481,6 +489,23 @@
         </section>
       </div>
     `;
+  }
+
+  // پیوند چرخندهٔ شانس و داشبورد با وضعیت بازی
+  function wheelCtx() {
+    return {
+      stages: D.stages,
+      daily: profile.daily,
+      guided: () => allTasks.filter((t) => profile.done[t.id]?.ok && profile.done[t.id].guided).length,
+      solved: (i) => stageSolvedCount(D.stages[i]),
+      stars: (i) => stageStars(D.stages[i]),
+      seen: (i) => Boolean(profile.lessons[D.stages[i].id]),
+      locked: (i) => isLocked(i),
+      openLesson: (i) => openLesson(i),
+      openTask: (i) => openTask(i, Math.max(0, D.stages[i].tasks.findIndex((t) => !profile.done[t.id]?.ok))),
+      lockedNotice: (i) => lockedNotice(i),
+      sound: () => profile.sound
+    };
   }
 
   function unitsInfo() {
@@ -866,6 +891,10 @@
       if (profile.combo > profile.bestCombo) profile.bestCombo = profile.combo;
       if (!already) {
         profile.xp += taskGuided ? 15 : 25 + Math.min(20, profile.combo * 3);
+        // دادهٔ نمودار خط شکسته: تمرین‌های تازه‌حل‌شدهٔ هر روز
+        const d = new Date();
+        const day = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        profile.daily[day] = (profile.daily[day] || 0) + 1;
       }
       taskSolved = true;
       saveState();

@@ -461,3 +461,115 @@ html[data-theme="night"] .hm-hint { background: rgba(255, 213, 107, .14); color:
 .hm-more ul { margin: 8px 0 0; padding-inline-start: 18px; line-height: 2; }
 @media (max-width: 560px) { .hm-pair { grid-template-columns: 1fr; } .hm-vs { justify-self: center; } }
 @media (prefers-reduced-motion: reduce) { .hm-tile { animation: none; } }
+
+/* ═════════ کتاب جادویی هم‌آواها (book.js) ═════════ */
+.hb-wrap { --hs-g1: #8c3b19; --hs-g2: #3b1d0e; }
+.hb-desk { position: relative; padding: 26px 22px 34px; min-height: 100%;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255, 214, 140, .35), transparent 60%),
+    repeating-linear-gradient(92deg, #6b3a1f 0 14px, #74401f 14px 22px, #5e321a 22px 40px), #6b3a1f; }
+.hb-book { --bw: 26px; position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 430px; padding: 8px; border-radius: 12px;
+  background: linear-gradient(90deg, #4a120c, #6d1c12 48%, #3b0d08 50%, #6d1c12 52%, #4a120c); box-shadow: 0 26px 40px -18px rgba(0, 0, 0, .75), 0 4px 0 #2a0905; }
+.hb-page { position: relative; min-width: 0; border-style: solid; border-width: var(--bw); border-image-source: url('../../assets/img/hamava-page-tazhib.webp'); border-image-slice: 98 96 104 96; border-image-repeat: round; color: #292524; background: radial-gradient(ellipse at 50% 45%, #fbf3df 0%, #f3e4c3 70%, #e9d3a6 100%); background-clip: padding-box; }
+.hb-page-r { box-shadow: inset 22px 0 26px -20px rgba(60, 30, 10, .55); border-radius: 6px 2px 2px 6px; }
+.hb-page-l { z-index: 2; box-shadow: inset -22px 0 26px -20px rgba(60, 30, 10, .55); border-radius: 2px 6px 6px 2px; }
+.hb-spine { position: absolute; z-index: 3; top: 8px; bottom: 8px; left: calc(50% - 5px); width: 10px; background: linear-gradient(90deg, rgba(0, 0, 0, .25), rgba(255, 255, 255, .15), rgba(0, 0, 0, .25)); pointer-events: none; }
+.hb-ribbon { position: absolute; z-index: 4; bottom: -30px; left: calc(50% + 14px); width: 14px; height: 60px; background: linear-gradient(90deg, #991b1b, #dc2626, #991b1b); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%); transform-origin: top; animation: hbSway 4s ease-in-out infinite; }
+@keyframes hbSway { 50% { transform: rotate(4deg); } }
+/* فهرست */
+.hb-toc-in { display: flex; flex-direction: column; height: 100%; padding: 6px 4px; }
+.hb-toc-title { margin: 0 0 8px; text-align: center; font-size: 1.05rem; color: #7c2d12; letter-spacing: .5px; }
+.hb-toc-title::before, .hb-toc-title::after { content: "❦"; margin: 0 8px; color: #b45309; }
+.hb-toc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.hb-row { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 10px; border: 1px dashed rgba(124, 45, 18, .25); background: rgba(255, 251, 235, .55); transition: background .2s, transform .2s; }
+.hb-row:hover { background: rgba(254, 243, 199, .95); transform: translateX(-3px); }
+.hb-row:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.hb-row.is-current { background: #fef3c7; border: 1.5px solid #b45309; box-shadow: 0 4px 10px -6px rgba(124, 45, 18, .6); }
+.hb-row.is-current::before { content: ""; position: absolute; top: -4px; right: -10px; width: 10px; height: calc(100% + 8px); background: linear-gradient(90deg, #991b1b, #dc2626); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 40% 50%); }
+.hb-row-ic { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #fff7ed; border: 1.5px solid #d6a76c; font-size: 1rem; }
+.hb-row-t { display: grid; min-width: 0; line-height: 1.5; }
+.hb-row-t b { font-size: .84rem; color: #7c2d12; }
+.hb-row-t small { font-size: .74rem; color: #44403c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hb-row.is-locked .hb-row-ic { filter: grayscale(1); }
+.hb-row.is-locked .hb-row-t b, .hb-row.is-locked .hb-row-t small { color: #57534e; }
+.hb-row.is-locked { cursor: not-allowed; background: rgba(231, 229, 228, .55); }
+.hb-row.is-shake { animation: hbShake .45s ease; }
+@keyframes hbShake { 25%, 75% { translate: -5px 0; } 50% { translate: 5px 0; } }
+.hb-dots { display: flex; gap: 3px; }
+.hb-dots i { width: 7px; height: 7px; border-radius: 50%; border: 1px solid #a8a29e; }
+.hb-dots i.on { background: #1e3a8a; border-color: #1e3a8a; }
+.hb-mini-seal { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ef4444, #7f1d1d); color: #fde68a; font-size: .75rem; font-weight: 900; box-shadow: 0 2px 4px rgba(0, 0, 0, .3); }
+/* صفحهٔ تصویر فصل */
+.hb-art { height: 100%; }
+.hb-art-in { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; padding: 6px 4px 30px; text-align: center; }
+.hb-sarlowh { padding: 4px 18px; border-radius: 999px; border: 2px solid #d4a017; background: linear-gradient(180deg, #1e3a8a, #1d4ed8); color: #fde68a; font-weight: 900; font-size: .88rem; box-shadow: 0 0 0 3px #fef3c7, 0 0 0 4px #d4a017; }
+.hb-ch-title { margin: 4px 0 0; font-size: 1rem; line-height: 1.6; color: #7c2d12; }
+.hb-pair { position: relative; display: flex; align-items: flex-start; justify-content: center; gap: 14px; margin: 8px 0 2px; padding: 10px 6px; width: 100%; }
+.hb-w { display: grid; gap: 2px; justify-items: center; min-width: 0; }
+.hb-word { display: inline-block; font-size: clamp(2rem, 3.6vw, 3rem); font-weight: 900; line-height: 1.35; color: var(--ink, #1e3a8a); text-shadow: 0 1px 0 rgba(255, 255, 255, .6), 0 2px 3px rgba(0, 0, 0, .15); }
+.hb-w small { font-size: .74rem; color: #44403c; max-width: 15ch; line-height: 1.6; }
+.hb-amp { align-self: center; font-size: 1.6rem; font-weight: 900; color: #b45309; }
+.hb-quill { position: absolute; top: -6px; right: 0; font-size: 1.8rem; opacity: 0; pointer-events: none; transform: rotate(-20deg); }
+.hb-hint { margin: 0; font-size: .8rem; color: #78350f; font-weight: 700; }
+.hb-more { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 2px 0 0; padding: 0; list-style: none; }
+.hb-more li { padding: 3px 10px; border-radius: 999px; background: rgba(255, 251, 235, .85); border: 1px solid #e7c58f; font-size: .78rem; color: #44403c; }
+.hb-more b { color: var(--ink, #1e3a8a); }
+.hb-ink { display: flex; gap: 8px; align-items: center; margin-top: auto; font-size: .78rem; color: #57534e; font-weight: 700; }
+.hb-drops { display: flex; gap: 5px; }
+.hb-drops i { width: 12px; height: 12px; border-radius: 50% 0 50% 50%; transform: rotate(-45deg); border: 1.5px solid #a8a29e; }
+.hb-drops i.on { background: var(--ink, #1e3a8a); border-color: var(--ink, #1e3a8a); }
+.hb-seal { position: absolute; left: 4px; bottom: 2px; display: grid; place-items: center; align-content: center; width: 78px; height: 78px; border-radius: 47% 53% 50% 50% / 52% 48% 52% 48%; transform: rotate(-12deg);
+  background: radial-gradient(circle at 38% 34%, #f87171, #b91c1c 55%, #7f1d1d); color: #fde68a; font-size: .66rem; font-weight: 900; line-height: 1.3; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, .35), inset 0 0 0 4px rgba(127, 29, 29, .6), inset 0 0 0 6px rgba(253, 230, 138, .5); }
+.hb-seal b { font-size: .62rem; letter-spacing: 1px; }
+.hb-veil { position: absolute; inset: -4px; display: grid; place-items: center; align-content: center; gap: 6px; border-radius: 8px; background: rgba(245, 235, 215, .9); color: #44403c; font-weight: 800; font-size: .88rem; text-align: center; padding: 16px; }
+.hb-veil p { margin: 0; }
+.hb-clasp { font-size: 2.4rem; animation: hbBob 2s ease-in-out infinite; }
+@keyframes hbBob { 50% { transform: translateY(-4px); } }
+/* نوشتن با قلم پر: از راست به چپ آشکار می‌شود */
+.hb-art-in.is-writing .hb-word { animation: hbWrite .85s cubic-bezier(.5, .1, .4, 1) both; }
+.hb-art-in.is-writing .hb-w2 .hb-word { animation-delay: .95s; }
+.hb-art-in.is-writing .hb-amp { animation: hbFade .4s ease .8s both; }
+.hb-art-in.is-writing .hb-w small, .hb-art-in.is-writing .hb-more, .hb-art-in.is-writing .hb-hint { animation: hbFade .5s ease 1.6s both; }
+.hb-art-in.is-writing .hb-quill { animation: hbQuill 1.9s ease-in-out both; }
+.hb-art-in.is-writing .hb-ch-title, .hb-art-in.is-writing .hb-sarlowh { animation: hbFade .5s ease both; }
+.hb-seal.is-stamp { animation: hbStamp .55s cubic-bezier(.3, 1.6, .5, 1) 1.5s both; }
+@keyframes hbWrite { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
+@keyframes hbFade { from { opacity: 0; transform: translateY(6px); } }
+@keyframes hbQuill { 0% { right: 4%; opacity: 0; } 8% { opacity: 1; } 44% { right: 42%; } 56% { right: 56%; } 92% { opacity: 1; } 100% { right: 96%; opacity: 0; } }
+@keyframes hbStamp { 0% { opacity: 0; transform: scale(2.6) rotate(-40deg); } 70% { opacity: 1; transform: scale(.9) rotate(-8deg); } 100% { transform: scale(1) rotate(-12deg); } }
+/* ورق خوردن و جلد */
+.hb-leaves { position: absolute; inset: calc(-1 * var(--bw)); perspective: 2200px; pointer-events: none; z-index: 6; }
+.hb-leaf { position: absolute; inset: 0; transform-origin: right center; transform-style: preserve-3d; }
+.hb-leaf-f, .hb-leaf-b { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 4px; background: linear-gradient(90deg, #efe1c2, #f8efdb 70%, #e9d8b4); box-shadow: inset -14px 0 20px -14px rgba(60, 30, 10, .5); }
+.hb-leaf-b { transform: rotateY(180deg); background: linear-gradient(270deg, #efe1c2, #f8efdb 70%, #e9d8b4); }
+.hb-leaf.is-fwd { animation: hbFlipF .62s cubic-bezier(.45, .05, .35, 1) both; }
+.hb-leaf.is-back { animation: hbFlipB .62s cubic-bezier(.45, .05, .35, 1) both; }
+@keyframes hbFlipF { from { transform: rotateY(0); } to { transform: rotateY(-180deg); } }
+@keyframes hbFlipB { from { transform: rotateY(-180deg); } to { transform: rotateY(0); } }
+.hb-cover { display: none; position: absolute; inset: calc(-1 * var(--bw) - 8px) calc(-1 * var(--bw) - 4px) calc(-1 * var(--bw) - 8px) calc(-1 * var(--bw) - 8px); z-index: 7; transform-origin: right center; transform-style: preserve-3d; pointer-events: none; }
+.hb-book.is-closed .hb-cover { display: block; }
+.hb-cover-face, .hb-cover-back { position: absolute; inset: 0; border-radius: 10px 4px 4px 10px; backface-visibility: hidden; }
+.hb-cover-face { background: url('../../assets/img/hamava-cover.webp') center / cover no-repeat, #6d1c12; box-shadow: 0 18px 30px -12px rgba(0, 0, 0, .7); }
+.hb-cover-back { transform: rotateY(180deg); background: radial-gradient(circle at 30% 30%, #e7d2a5, #c9a66b); }
+.hb-book.is-closed .hb-page-r > * { visibility: hidden; }
+.hb-book.is-closed .hb-art { visibility: hidden; }
+.hb-book.is-opening .hb-cover { animation: hbOpen 1.15s cubic-bezier(.5, .05, .3, 1) forwards; }
+.hb-book.is-opening .hb-page-r > * { visibility: visible; animation: hbFade .4s ease .9s both; }
+@keyframes hbOpen { 0% { transform: perspective(2200px) rotateY(0); } 100% { transform: perspective(2200px) rotateY(-180deg); opacity: .0; } }
+/* شمع و دوات */
+.hb-candle { position: absolute; left: 10px; bottom: 10px; width: 14px; height: 44px; border-radius: 3px; background: linear-gradient(90deg, #fef3c7, #fde68a, #fcd34d); box-shadow: 0 0 24px 10px rgba(253, 186, 116, .25); }
+.hb-flame { position: absolute; left: 2px; top: -20px; width: 10px; height: 18px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: radial-gradient(circle at 50% 70%, #fff7ed, #fbbf24 45%, #f97316 80%); animation: hbFlicker .18s ease-in-out infinite alternate; transform-origin: bottom center; }
+@keyframes hbFlicker { to { transform: scale(.92, 1.08) rotate(2deg); opacity: .9; } }
+.hb-inkpot { position: absolute; right: 12px; bottom: 6px; font-size: 1.7rem; filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .4)); }
+html[data-theme="night"] .hb-wrap { --hs-g1: #431407; --hs-g2: #1c0a03; }
+html[data-theme="night"] .hb-desk { background: radial-gradient(ellipse at 50% 40%, rgba(253, 186, 116, .2), transparent 60%), repeating-linear-gradient(92deg, #3b200f 0 14px, #42240f 14px 22px, #2f190b 22px 40px), #3b200f; }
+html[data-theme="night"] .hb-page { filter: brightness(.9) sepia(.12); }
+@media (max-width: 680px) {
+  .hb-desk { padding: 14px 8px 24px; }
+  .hb-book { --bw: 20px; grid-template-columns: 1fr; gap: 6px; min-height: 0; background: #5b1a12; }
+  .hb-page-l { order: -1; }
+  .hb-spine, .hb-ribbon, .hb-candle, .hb-inkpot { display: none; }
+  .hb-cover { inset: calc(-1 * var(--bw) - 6px); }
+  .hb-art-in { padding-bottom: 36px; }
+  .hb-seal { width: 64px; height: 64px; }
+}
+@media (prefers-reduced-motion: reduce) { .hb-book.is-closed .hb-cover { display: none; } }
