@@ -1,0 +1,59 @@
+/* اطلس فتوحات: لایه‌ای مستقل برای نقشه، بدون وابستگی شبکه */
+#mapModalOverlay { background:rgba(10,8,7,.83); padding:12px!important; }
+#mapModalOverlay .map-modal-box { width:min(1120px, 96vw)!important; max-width:1120px!important; max-height:94vh!important; display:block!important; padding:clamp(14px,2vw,26px)!important; color:#f7e7c4; text-align:right; background:linear-gradient(140deg,#302011,#17130d 64%,#291b0d); border:1px solid #a87a36; border-radius:20px; box-shadow:0 20px 70px #000b,inset 0 0 0 5px #9d733522; }
+.atlas-header { display:flex; justify-content:space-between; align-items:start; gap:16px; padding:0 0 16px; border-bottom:1px solid #ad844955; }
+.atlas-eyebrow { color:#d4af6b; font-size:.72rem; letter-spacing:.03em; }
+#mapModalOverlay .map-modal-title { color:#f7dfab; font:900 clamp(1.4rem,2.8vw,2.15rem)/1.3 Vazirmatn,Tahoma,sans-serif; margin:4px 0; text-align:right; }
+#mapModalOverlay .map-modal-sub { color:#c9b497; font-size:.8rem; margin:0; text-align:right; }
+.atlas-close,.atlas-toolbar button { display:inline-grid; place-items:center; min-width:40px; min-height:40px; border:1px solid #9c7842; border-radius:10px; background:#342618; color:#fbe4ad; font:inherit; cursor:pointer; }
+.atlas-close:hover,.atlas-toolbar button:hover { background:#664823; }
+.atlas-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(240px,290px); gap:18px; margin-top:16px; align-items:start; }
+.atlas-map-section,.atlas-sidebar { min-width:0; }
+.atlas-toolbar { display:flex; justify-content:space-between; align-items:center; gap:10px; color:#e6c789; font-size:.78rem; font-weight:800; margin-bottom:10px; }
+.atlas-toolbar > div { display:flex; gap:5px; direction:ltr; }
+#mapModalOverlay #modalMapContainer, #finalMapContainer { position:relative!important; width:100%!important; max-width:none!important; height:auto!important; aspect-ratio:1.1 / 1!important; overflow:hidden; background:radial-gradient(ellipse at 46% 43%,#f2dfaf 0%,#dfc58f 65%,#b88c53 100%); border:5px double #8a5d2c; border-radius:10px; box-shadow:inset 0 0 36px #81542177,0 5px 18px #0005; touch-action:none; }
+#mapModalOverlay #modalMapContainer::before,#finalMapContainer::before { content:''; position:absolute; inset:7px; border:1px solid #9c713f88; pointer-events:none; z-index:1; }
+#modalMapContainer .province-map-root, #finalMapContainer .province-map-root { position:absolute!important; inset:7%!important; width:86%!important; height:86%!important; min-height:0!important; transform-origin:center; }
+#modalMapContainer .iran-map-svg, #finalMapContainer .iran-map-svg { position:absolute!important; inset:0!important; width:100%!important; height:100%!important; opacity:1; filter:none; }
+#modalMapContainer .city-markers-overlay, #finalMapContainer .city-markers-overlay { inset:0!important; transform-origin:center; }
+#modalMapContainer .iran-map-svg path, #finalMapContainer .iran-map-svg path { fill:#c8b58f; stroke:#a38b67; stroke-width:1; filter:none; }
+#modalMapContainer .iran-map-svg path.conquered-province, #finalMapContainer .iran-map-svg path.conquered-province { fill:#bf8a35; stroke:#fff0c5; filter:drop-shadow(0 0 3px #bc8b39); }
+#modalMapContainer .iran-map-svg path:focus-visible,#finalMapContainer .iran-map-svg path:focus-visible { outline:none; stroke:#532116; stroke-width:3; }
+#modalMapContainer .city-marker,#finalMapContainer .city-marker { pointer-events:auto!important; padding:0; border:0; background:transparent; color:#422b1c; }
+#modalMapContainer .city-marker .city-dot,#finalMapContainer .city-marker .city-dot { width:27px; height:27px; background:#754a2c; border:2px solid #f7e4ae; color:#fff6d7; font-size:.65rem; box-shadow:0 2px 5px #533a2f88; opacity:1; animation:none; }
+#modalMapContainer .city-marker.conquered .city-dot,#finalMapContainer .city-marker.conquered .city-dot { background:#346c52; color:white; }
+#modalMapContainer .city-marker.active .city-dot { background:#b66c2c; }
+#modalMapContainer .city-marker .city-label,#finalMapContainer .city-marker .city-label { display:none!important; }
+#modalMapContainer .city-marker:focus-visible,#finalMapContainer .city-marker:focus-visible,.atlas-samarkand:focus-visible,.atlas-close:focus-visible,.atlas-toolbar button:focus-visible,.atlas-timeline button:focus-visible { outline:3px solid #f8d55b; outline-offset:3px; }
+.atlas-route { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.atlas-route polyline { fill:none; stroke:#8b4b2e; stroke-width:.55; stroke-dasharray:2 1; vector-effect:non-scaling-stroke; animation:atlas-route 12s linear infinite; }
+@keyframes atlas-route { to { stroke-dashoffset:-20; } }
+.atlas-compass,.atlas-scale { position:absolute; z-index:16; color:#79522c; pointer-events:none; text-align:center; line-height:1; }
+.atlas-compass { left:3%; top:3%; font-size:2.4rem; } .atlas-compass small,.atlas-scale small { display:block; font-size:.6rem; font-weight:800; }
+.atlas-scale { left:4%; bottom:4%; font-size:1rem; }
+.atlas-samarkand { position:absolute; z-index:16; right:3%; top:3%; display:flex; flex-direction:column; align-items:center; gap:2px; max-width:34%; padding:7px 10px; color:#532b1b; border:1px solid #a3733c; border-radius:8px; background:#f8e9c7; font:inherit; cursor:pointer; box-shadow:0 2px 8px #67452133; }
+.atlas-samarkand span,.atlas-samarkand small { font-size:.58rem; }.atlas-samarkand strong { font-size:.75rem; }
+.atlas-hint { color:#bdaa8e; font-size:.7rem; line-height:1.7; margin-top:7px; }
+.atlas-sidebar { display:grid; gap:12px; }
+.atlas-panel { padding:15px; border:1px solid #a8804655; border-radius:12px; background:#ffffff09; }
+.atlas-panel h3 { color:#eac988; font-size:.84rem; margin:0 0 12px; }
+.atlas-panel p { color:#cfbda0; font-size:.72rem; line-height:1.8; margin:10px 0 0; }
+.atlas-numbers { display:flex; justify-content:space-between; align-items:baseline; color:#f7e6bf; }.atlas-numbers strong { font-size:1.5rem; }.atlas-numbers small { font-size:.72rem; color:#cfbda0; }.atlas-numbers b { color:#e9bd6d; }
+.atlas-progress-track { height:7px; border-radius:8px; background:#0e0c09; overflow:hidden; margin-top:8px; }.atlas-progress-track span { display:block; height:100%; background:linear-gradient(90deg,#a86a31,#f5d27b); border-radius:8px; }
+.atlas-timeline { list-style:none; display:grid; gap:10px; }.atlas-timeline li:not(.atlas-empty) { display:grid; grid-template-columns:25px 1fr; column-gap:8px; align-items:center; }.atlas-timeline li > span { grid-row:span 2; display:grid; place-items:center; width:24px; height:24px; color:#35230f; background:#ddb568; border-radius:50%; font-size:.7rem; font-weight:bold; }.atlas-timeline button { border:0; background:none; color:#f3e4c4; text-align:right; font:inherit; cursor:pointer; }.atlas-timeline small,.atlas-empty { color:#baa990; font-size:.68rem; line-height:1.7; }
+.atlas-legend { display:flex; flex-wrap:wrap; gap:10px; color:#e3d1b2; font-size:.72rem; }.atlas-legend span { display:flex; align-items:center; gap:5px; }.atlas-legend i { width:12px; height:12px; border-radius:50%; }.legend-gold { background:#bf8a35; }.legend-mist { background:#c8b58f; }
+.province-popup { max-height:min(85vh,700px)!important; overflow:auto!important; }.province-popup .pp-row { gap:8px; }.province-popup .pp-value { overflow-wrap:anywhere; }
+body[data-theme="light"] #mapModalOverlay .map-modal-box { background:linear-gradient(140deg,#5b3a21,#302013); }
+@media(max-width:760px) { .atlas-layout { grid-template-columns:1fr; }.atlas-sidebar { grid-template-columns:1fr 1fr; }.atlas-sidebar > #mapModalStats { grid-column:1 / -1; }.atlas-header { padding-bottom:10px; } }
+@media(max-width:470px) { #mapModalOverlay { padding:5px!important; } #mapModalOverlay .map-modal-box { width:98vw!important; max-height:96vh!important; padding:12px!important; }.atlas-sidebar { grid-template-columns:1fr; }.atlas-sidebar > #mapModalStats { grid-column:auto; }.atlas-samarkand { padding:4px; }.atlas-compass { font-size:1.6rem; }.atlas-toolbar { font-size:.7rem; } }
+@media(prefers-reduced-motion:reduce) { .atlas-route polyline { animation:none; } #modalMapContainer *,#finalMapContainer * { transition:none!important; animation:none!important; } }
+
+@media(min-width:1000px) { #mapModalOverlay #modalMapContainer { max-width:min(100%, 62vh)!important; margin-inline:auto; } }
+.atlas-final-toolbar { display:flex; justify-content:center; align-items:center; gap:5px; padding:8px; color:#e8cf9e; font-size:.75rem; }
+.atlas-final-toolbar button { min-width:40px; min-height:40px; background:#342618; border:1px solid #9c7842; color:#fbe4ad; border-radius:8px; font:inherit; cursor:pointer; }
+.atlas-final-toolbar button:focus-visible { outline:3px solid #f8d55b; outline-offset:2px; }
+#modalMapContainer .iran-map-svg path.atlas-recent-conquest { animation:atlas-conquest 1.2s ease-out; }
+#modalMapContainer .atlas-recent-flag .city-dot { animation:atlas-flag .8s ease-out; }
+@keyframes atlas-conquest { from { fill:#fff3b0; } to { fill:#bf8a35; } }
+@keyframes atlas-flag { from { transform:translateY(14px) scale(.6); opacity:.3; } to { transform:translateY(0) scale(1); opacity:1; } }
+@media(prefers-reduced-motion:reduce) { #modalMapContainer .iran-map-svg path.atlas-recent-conquest,#modalMapContainer .atlas-recent-flag .city-dot { animation:none; } }
