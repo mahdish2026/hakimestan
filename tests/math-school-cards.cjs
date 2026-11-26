@@ -143,7 +143,7 @@ console.log(JSON.stringify({
   mathSchoolGamesListed: features.length,
   spotlight: true,
   gameCountsFixedTo: 21,
-  cacheVersion: 'hakim-v1.5.81',
+  cacheVersion: 'hakim-v1.5.82',
   schoolPagePrefetched: true,
   docsUpdated: true
 }, null, 2));

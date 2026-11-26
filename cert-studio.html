@@ -41,7 +41,7 @@
 @font-face{font-family:'Harmattan';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/harmattan-700.woff2') format('woff2')}
 @font-face{font-family:'Gandom';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/gandom-400.woff2') format('woff2')}
 
-:root{--accent:#0e7c86;--accent-2:#d4af37;--ink:#26354a;--muted:#5f6b7d;--line:#dfe5ec;--cream:#faf9f5;--white:#fff;--shadow:0 10px 34px #1b2c4014;--radius:20px;color-scheme:light;font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:var(--cream)}
+:root{--accent:#0e7c86;--accent-2:#d4af37;--ink:#26354a;--muted:#4a5466;--line:#dfe5ec;--cream:#faf9f5;--white:#fff;--shadow:0 10px 34px #1b2c4014;--radius:20px;color-scheme:light;font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:var(--cream)}
 *{box-sizing:border-box}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 body{margin:0;line-height:1.85;overflow-x:hidden}
@@ -71,7 +71,7 @@ legend{font-weight:700;margin-bottom:9px;font-size:13px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);border-radius:13px;padding:10px 16px;background:#fff;color:var(--ink);font-size:13px;font-weight:600;white-space:nowrap;text-decoration:none}
 .btn.primary{background:linear-gradient(135deg,var(--accent),#0a5f68);border-color:transparent;color:#fff;box-shadow:0 6px 16px #0e7c8633}
 .btn.gold{background:linear-gradient(135deg,#c99a2e,#a8761a);border-color:transparent;color:#fff;box-shadow:0 6px 16px #c99a2e33}
-.btn.soft{background:#eef6f6;border-color:transparent;color:var(--accent)}
+.btn.soft{background:#eef6f6;border-color:transparent;color:#0a5f68}
 .btn.danger{background:#fff0f0;border-color:#efcbcb;color:#a22a2a}
 .btn.ghost{background:transparent}
 .btn.block{width:100%}
@@ -113,22 +113,22 @@ legend{font-weight:700;margin-bottom:9px;font-size:13px}
 .cp-zone{position:relative;z-index:2}
 .cp-pad{position:absolute;inset:0;padding:7.5% 9%}
 .cp-head{text-align:center}
-.cp-title{font-size:clamp(22px,4.6vw,40px);font-weight:800;line-height:1.5}
-.cp-subtitle{font-size:clamp(11px,1.6vw,16px);opacity:.85;margin-top:.5em}
+.cp-title{font-size:calc(clamp(22px,4.6vw,40px) * var(--tscale,1));font-weight:800;line-height:1.5}
+.cp-subtitle{font-size:calc(clamp(11px,1.6vw,16px) * var(--tscale,1));opacity:.85;margin-top:.5em}
 .cp-ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin:.7em 0 .2em;color:currentColor;opacity:.7}
 .cp-ornament .line{height:1px;width:22%;background:currentColor}
 .cp-orn-dot{width:9px;height:9px;border-radius:50%;background:currentColor;flex:0 0 auto}
 .cp-name{text-align:center;margin-top:6%}
-.cp-name .cp-field{font-size:clamp(20px,4vw,38px);font-weight:800;display:inline-block;border-bottom:2px solid currentColor;padding:0 .25em .06em;line-height:1.6}
+.cp-name .cp-field{font-size:calc(clamp(20px,4vw,38px) * var(--tscale,1));font-weight:800;display:inline-block;border-bottom:2px solid currentColor;padding:0 .25em .06em;line-height:1.6}
 .cp-body{text-align:center;margin-top:6%}
-.cp-body .cp-field{font-size:clamp(12px,1.75vw,17px);line-height:2.2}
+.cp-body .cp-field{font-size:calc(clamp(12px,1.75vw,17px) * var(--tscale,1));line-height:2.2}
 .cp-mid{display:flex;align-items:flex-end;justify-content:space-between;margin-top:7%;gap:14px}
-.cp-date{text-align:right;font-size:clamp(11px,1.5vw,15px);line-height:1.9}
-.cp-seal{flex:0 0 auto;width:clamp(74px,11vw,118px);aspect-ratio:1;border-radius:50%;border:2.5px solid currentColor;display:grid;place-items:center;text-align:center;font-size:clamp(9px,1.25vw,13px);font-weight:800;line-height:1.5;padding:6px}
+.cp-date{text-align:right;font-size:calc(clamp(11px,1.5vw,15px) * var(--tscale,1));line-height:1.9}
+.cp-seal{flex:0 0 auto;width:clamp(74px,11vw,118px);aspect-ratio:1;border-radius:50%;border:2.5px solid currentColor;display:grid;place-items:center;text-align:center;font-size:calc(clamp(9px,1.25vw,13px) * var(--tscale,1));font-weight:800;line-height:1.5;padding:6px}
 .cp-seal svg{width:56%;height:56%}
 .cp-foot{display:flex;align-items:flex-end;justify-content:space-between;margin-top:7%;gap:14px}
-.cp-sign{text-align:right;font-size:clamp(11px,1.5vw,15px);line-height:1.9}
-.cp-serial{text-align:left;font-size:clamp(9px,1.2vw,12px);opacity:.8;word-break:break-all;max-width:46%}
+.cp-sign{text-align:right;font-size:calc(clamp(11px,1.5vw,15px) * var(--tscale,1));line-height:1.9}
+.cp-serial{text-align:left;font-size:calc(clamp(9px,1.2vw,12px) * var(--tscale,1));opacity:.8;word-break:break-all;max-width:46%}
 [contenteditable=true]{outline:none;border-radius:6px;caret-color:var(--accent-2);transition:box-shadow .15s}
 [contenteditable=true]:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent-2) 55%,transparent)}
 .panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;min-width:0}
@@ -206,6 +206,15 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
 #exportStage .cert-page{box-shadow:none;width:780px}
 .helper{font-size:11.5px;color:var(--muted);line-height:2;background:#f6f9fa;border:1px solid var(--line);border-radius:12px;padding:10px 13px}
 .helper b{color:var(--ink)}
+.vis-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+.vis-grid .check-label{font-weight:400;margin:0;font-size:12px}
+@media print{
+  .app-header,.studio,.app-footer,.toast-area{display:none!important}
+  body{background:#fff;overflow:visible}
+  #exportStage{position:static!important;left:0!important;top:0!important;width:210mm;height:297mm;overflow:hidden}
+  #exportStage .cert-page{width:210mm!important;box-shadow:none!important}
+  @page{size:A4;margin:0}
+}
 @media(max-width:1180px){.studio{grid-template-columns:minmax(0,1fr)}.stage{position:static}.panel{position:static}}
 @media(max-width:760px){.header-top{padding:12px 16px}.brand-name{font-size:20px}.brand-mark{width:40px;height:40px}.brand-mark .icon{width:24px;height:24px}.studio{padding:16px 14px}.stage-stage{padding:22px 14px}.panel-pane{padding:15px}.grid2,.grid3,.export-grid{grid-template-columns:1fr}.tpl-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}.style-row{grid-template-columns:1fr 1fr}.map-row{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
@@ -328,6 +337,9 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
         <div><h2>الگوهای آماده</h2><p>هر الگو یک طرح کامل است؛ همه‌ی بخش‌های آن قابل ویرایش است.</p></div>
       </div>
       <div class="helper" style="margin-bottom:12px">انتخاب الگو، همه‌ی رنگ‌ها، فونت‌ها و متن‌ها را با هم تغییر می‌دهد. بعد می‌توانی هر بخش را جداگانه ویرایش کنی.</div>
+      <div class="row" style="margin-bottom:12px">
+        <button class="btn soft" id="btnSaveTpl" type="button">＋ ذخیره‌ی الگوی جدید از همین طراحی</button>
+      </div>
       <div class="tpl-grid" id="tplGrid"></div>
     </div>
 
@@ -380,10 +392,11 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
       <div class="stack">
         <fieldset>
           <legend>فونت‌ها</legend>
-          <div class="field" style="margin-bottom:10px"><label for="fontFamily">فونت همگام‌سازی‌شده</label><select id="fontFamily"></select><small>این فونت روی بخش‌هایی که فونت جداگانه‌ای ندارند生效 می‌شود.</small></div>
+          <div class="field" style="margin-bottom:10px"><label for="fontFamily">فونت همگام‌سازی‌شده</label><select id="fontFamily"></select><small>این فونت روی بخش‌هایی که فونت جداگانه‌ای ندارند</small></div>
           <div class="font-list" id="fontList" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
           <div class="row" style="margin-top:10px">
             <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="fontSameAll"> همان فونت برای همه بخش‌ها</label>
+            <button class="btn soft" id="btnAddFont" type="button" style="margin-inline-start:auto">＋ افزودن فونت خود</button>
           </div>
         </fieldset>
         <fieldset>
@@ -407,6 +420,34 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
             <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="ornOn" checked> زینت‌های تزئینی</label>
           </div>
         </fieldset>
+
+        <fieldset style="margin-top:16px">
+          <legend>چاپ روی برگه‌ی گلاسه</legend>
+          <div class="helper" style="margin-bottom:10px">اگر برگه‌ی تذهیب گلاسه خودت را داری و فقط می‌خواهی متن را داخلش بنشینی: این حالت را روشن کن — پس‌زمینه سفید، قاب و زینت پنهان می‌شوند و می‌توانی حاشیه و اندازه متن را تنظیم کنی. خروجی PNG شفاف است و روی برگه‌ی خودت قرار می‌گیرد.</div>
+          <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="printMode"> 🖨 حالت برگه گلاسه (پس‌زمینه سفید، قاب پنهان)</label>
+          <div class="style-row" style="margin-top:10px">
+            <div class="field"><label for="tscale">اندازه متن</label><input id="tscale" type="range" min="70" max="140" value="100"><small>۵٪ تا ۴۰٪ تغییر می‌کند.</small></div>
+            <div class="field"><label for="padX">حاشیه افقی متن</label><input id="padX" type="range" min="3" max="20" value="9"></div>
+          </div>
+          <div class="style-row" style="margin-top:10px">
+            <div class="field"><label for="padY">حاشیه عمودی متن</label><input id="padY" type="range" min="3" max="20" value="7.5"></div>
+            <div class="field"><label for="inkPrint">رنگ متن در حالت گلاسه</label><input id="inkPrint" type="color" value="#2a2116"></div>
+          </div>
+        </fieldset>
+
+        <fieldset style="margin-top:16px">
+          <legend>دید بخش‌ها</legend>
+          <div class="vis-grid" id="visGrid">
+            <label class="check-label"><input type="checkbox" data-vis="title" checked> عنوان اصلی</label>
+            <label class="check-label"><input type="checkbox" data-vis="subtitle" checked> عنوان فرعی</label>
+            <label class="check-label"><input type="checkbox" data-vis="name" checked> نام دریافت‌کننده</label>
+            <label class="check-label"><input type="checkbox" data-vis="body" checked> متن میانی</label>
+            <label class="check-label"><input type="checkbox" data-vis="seal" checked> مهره</label>
+            <label class="check-label"><input type="checkbox" data-vis="date" checked> تاریخ</label>
+            <label class="check-label"><input type="checkbox" data-vis="sign" checked> امضا</label>
+            <label class="check-label"><input type="checkbox" data-vis="serial" checked> شماره سری</label>
+          </div>
+        </fieldset>
       </div>
     </div>
 
@@ -423,7 +464,7 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
           <div class="field"><label for="bgColor2">رنگ دوم</label><input id="bgColor2" type="color" value="#f3e3c0"></div>
           <div class="field"><label for="bgAngle">جهت تغير</label><input id="bgAngle" type="range" min="0" max="360" value="135"></div>
         </div>
-        <button class="btn soft block" id="btnCustomBg" type="button" style="margin-top:10px">می‌شود از این دو رنگ پس‌زمینه‌ی شیب‌دار بسازی؟ — ساخت شیب سفارشی</button>
+        <button class="btn soft block" id="btnCustomBg" type="button" style="margin-top:10px">ساخت شیب سفارشی از این دو رنگ</button>
       </fieldset>
     </div>
 
@@ -434,6 +475,7 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
       <div class="data-toolbar">
         <div class="field"><label for="fileInput">فایل اکسل یا CSV</label><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.tsv"></div>
         <button class="btn" id="btnLoadFile" type="button">ورود</button>
+        <button class="btn danger" id="btnClearData" type="button">پاک‌سازی داده‌ها</button>
       </div>
       <div class="field" style="margin-top:12px"><label for="pasteArea">یا کپی و که از اکسل داردیم را می‌چسبانی</label><textarea id="pasteArea" placeholder="نام | عنوان | متن | تاریخ&#10;سارا احمدی | رتبه اول | ... | ۱۴۰۴/۰۱/۰۱"></textarea></div>
       <div class="row" style="margin-top:10px">
@@ -462,8 +504,8 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
         <div><h2>خروجی</h2><p>تصویر، PDF، ورد، یا صدور گروهی در یک فایل.</p></div>
       </div>
       <div class="export-grid">
-        <button class="export-choice" id="btnPng" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M4 18l5-5 4 3 3-4 4 6" fill="none" stroke="currentColor"/></svg><span><strong>تصویر PNG</strong><small>یک گواهی،คبیلایه</small></span></button>
-        <button class="export-choice" id="btnPdf" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6V3z" fill="none" stroke="currentColor"/><path d="M14 3v4h4" fill="none" stroke="currentColor"/></svg><span><strong>PDF</strong><small>چاپ A4، رنگ‌های دقیق</small></span></button>
+        <button class="export-choice" id="btnPng" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M4 18l5-5 4 3 3-4 4 6" fill="none" stroke="currentColor"/></svg><span><strong>تصویر PNG</strong><small>یک گواهی، با کیفیت (در حالت گلاسه: شفاف)</small></span></button>
+        <button class="export-choice" id="btnPdf" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6V3z" fill="none" stroke="currentColor"/><path d="M14 3v4h4" fill="none" stroke="currentColor"/></svg><span><strong>PDF</strong><small>چاپ A4، زمینه سفید، رنگ‌های دقیق</small></span></button>
         <button class="export-choice" id="btnDoc" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6V3z" fill="none" stroke="currentColor"/><path d="M14 3v4h4M9 12h6M9 15h6" fill="none" stroke="currentColor"/></svg><span><strong>ورد Word</strong><small>ویرایش‌پذیر در ورد</small></span></button>
         <button class="export-choice" id="btnZip" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v9m0 0-3-3m3 3 3-3M5 19h14" fill="none" stroke="currentColor"/></svg><span><strong>ZIP گروهی</strong><small>صدور هزاران گواهی</small></span></button>
       </div>
@@ -473,6 +515,10 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
         <div class="row" style="gap:14px">
           <div class="field" style="min-width:150px"><label for="batchLimit">تعداد حداکثر</label><input id="batchLimit" type="number" min="1" max="100000" value="2000"></div>
           <div class="field" style="min-width:150px"><label for="batchScale">رزولوز تصویر</label><select id="batchScale"><option value="1">یکسان با صفحه</option><option value="2" selected>دو برابر (وضوح بالا)</option></select></div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="autoSerial"> شماره‌ی سری خودکار (۱…N)</label>
+          <input id="serialPrefix" type="text" value="HK / " style="max-width:130px" aria-label="پیش‌وند شماره">
         </div>
         <div class="row" style="margin-top:12px">
           <button class="btn gold" id="btnBatch" type="button">🚀 صدور گروهی به ZIP</button>
@@ -491,12 +537,12 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
       </div>
       <div class="stack">
         <div class="guide-step"><b>۱</b><p><span class="k">الگوی می‌کنی:</span> از بین الگوهای آماده، مدرن یا تذهیب، یکی را که بیشتر دوست داری انتخاب کن. تمام رنگ‌ها، فونت‌ها و متن‌ها با هم تغییر می‌کنند.</p></div>
-        <div class="guide-step"><b>۲</b><p><span class="k">متن را ویرایش می‌کنی:</span> در بخش «متن»، عنوان، نام، متن میانی، تاریخ، امضا و شماره را façon می‌کنی. ثبت‌شدن روی گواهی همان‌لحظة ذخیره می‌شود.</p></div>
-        <div class="guide-step"><b>۳</b><p><span class="k">فونت و رنگ را تنظیم می‌کنی:</span> هر بخش می‌تواند فونت مخصوص به خود داشته باشد؛ رنگ متن، ضخامت قاب، حاشیه و میزان تیک‌دار بودن گواهی را هم می‌توانی تغییر دهی. حتی می‌توانی فونت خود را اضافه کن.</p></div>
-        <div class="guide-step"><b>۴</b><p><span class="k">پس‌زمینه می‌سازی:</span> پس‌زمینه‌های آماده را انتخاب کن یا با دو رنگ و جهت تغير، شیب‌ی سفارشی بسازی.</p></div>
+        <div class="guide-step"><b>۲</b><p><span class="k">متن را ویرایش می‌کنی:</span> در بخش «متن»، عنوان، نام، متن میانی، تاریخ، امضا و شماره را تعیین می‌کنی. ثبت‌شدن روی گواهی همان‌لحظة ذخیره می‌شود.</p></div>
+        <div class="guide-step"><b>۳</b><p><span class="k">فونت و رنگ را تنظیم می‌کنی:</span> هر بخش می‌تواند فونت مخصوص به خود داشته باشد؛ رنگ متن، ضخامت قاب، حاشیه، اندازه متن و میزان تیک‌دار بودن گواهی را هم می‌توانی تغییر دهی. حتی می‌توانی فونت خود را اضافه کن و دید هر بخش (عنوان، نام، متن، تاریخ…) را جداگانه روشن یا خاموش کنی.</p></div>
+        <div class="guide-step"><b>۴</b><p><span class="k">پس‌زمینه می‌سازی:</span> پس‌زمینه‌های آماده را انتخاب کن یا با دو رنگ و جهت تغير، شیب‌ی سفارشی بسازی. اگر برگه‌ی تذهیب گلاسه خودت را داری، «حالت برگه گلاسه» را روشن کن تا پس‌زمینه سفید، قاب و زینت پنهان شوند و فقط متن با حاشیه‌ی دلخواه روی برگه‌ی تو بنشینند.</p></div>
         <div class="guide-step"><b>۵</b><p><span class="k">داده‌ها را وارد می‌کنی:</span> فایل اکسل یا CSV را وارد کن (یا از اکسل کپی کن و می‌چسبینی). Columnها را mapping می‌کنی: کدام ستون نام است، کدام تاریخ و…</p></div>
-        <div class="guide-step"><b>۶</b><p><span class="k">خروجی می‌گیری:</span> یک گواهی را به PNG، PDF یا ورد می‌دی؛ یا با دکمهٔ صدور گروهی، برای هزاران نفر در یک فایل ZIP یا PDF می‌سازی.</p></div>
-        <div class="helper">💡 <b>نکات تکمیلی:</b> طراحی‌ها در مرورگر ذخیره می‌شوند؛ با دکمهٔ «ذخیره» می‌توانی آن‌ها را به صورت فایل جابیابی کنی. در حالت offline هم همه چیز کار می‌کند.</div>
+        <div class="guide-step"><b>۶</b><p><span class="k">خروجی می‌گیری:</span> یک گواهی را به PNG، PDF یا ورد می‌دی؛ یا با دکمهٔ صدور گروهی، برای هزاران نفر در یک فایل ZIP یا PDF می‌سازی. در حالت برگه گلاسه، PNG شفاف است و روی برگه‌ی تذهیب خودت قرار می‌گیرد؛ PDF هم با زمینه‌ی سفید و اندازه A4 دقیق می‌چاپد.</p></div>
+        <div class="helper">💡 <b>نکات تکمیلی:</b> طراحی‌ها در مرورگر ذخیره می‌شوند؛ با دکمهٔ «ذخیره» می‌توانی آن‌ها را به صورت فایل جابیابی کنی. در حالت offline هم همه چیز کار می‌کند. خروجی‌ها تماماً در مرورگر تو ساخته می‌شوند و هیچ داده‌ای از تو خارج نمی‌شود.</div>
       </div>
     </div>
   </aside>
@@ -521,7 +567,7 @@ dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop
  * ─────────────────────────────────────────────────────────────
  *  - الگوهای آماده: هر طرح، رنگ‌ها، فونت‌ها، قاب و متن کامل
  *  - پس‌زمینه‌های CSSی: مدرن، ساده، تذهیب و شیب‌های سفارشی
- *  - فونت: ۱۶ فونت محلی + اضافه کردن فونت خود
+ *  - فونت: ۱۵ فونت محلی + فونت شخصی + اضافه کردن فونت خود
  *  - هر بخش: فونت، رنگ، ضخامت، حاشیه و تیک‌دار شدن مستقل
  *  - ورود اکسل/CSV/کپی‌شدگی با تشخیص خودکار ستون‌ها
  *  - خروجی PNG / PDF / ورد / ZIP گروهی (صدور تکه‌تکه، هنگ نمی‌کند)
@@ -545,7 +591,7 @@ const FONTS = [
   ['Scheherazade New','scheherazade','شهرزاد — روایت‌گونه'],
   ['Noto Naskh Arabic','noto-naskh','نسخه‌ی عربی استاندارد'],
   ['Harmattan','harmattan','حرمتان — باوقار'],
-  ['Gandom','gandom','گندم — ساده وخوبن'],
+  ['Gandom','gandom','گندم — ساده و خوش‌آهنگ'],
 ];
 
 const SWATCHES = ['#2a2116','#1e3a5f','#7a1f1f','#3d5a32','#5b2a6b','#8a5a00','#0f4c5c','#ffffff'];
@@ -588,6 +634,10 @@ const BACKGROUNDS = [
    css:`linear-gradient(160deg,#eef7ff 0%,#d9ecfa 60%,#c3ddf5 100%)`, pattern:'waves', patternColor:'rgba(15,79,111,.14)'},
   {id:'rays',   name:'شعاع‌ها',     cat:'مدرن',
    css:`linear-gradient(150deg,#fff9ec 0%,#fdeccd 60%,#f4d99a 100%)`, pattern:'rays', patternColor:'rgba(184,134,43,.2)'},
+  {id:'white',  name:'سفید برای چاپ', cat:'چاپ',
+   css:`#ffffff`},
+  {id:'clear',  name:'شفاف برای الحاق', cat:'چاپ',
+   css:`transparent`},
 ];
 
 /* الگوها: طرح کامل گواهی */
@@ -596,7 +646,7 @@ const TEMPLATES = [
    bg:'tazhib', frame:'tazhib', frameColor:'#b8862b',
    ink:'#2a2116', gold:'#b8862b',
    fonts:{title:'Lalezar',subtitle:'Estedad',name:'Samim',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
-   texts:{title:'گواهی افتخار',subtitle:'دیار حکیم، سرزمين یادگیری',name:'— نام —',body:'به پاس تلاش، تمرکز و تمنای یادگیری، این گواهی با احترام اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-CERT / —'}},
+   texts:{title:'گواهی افتخار',subtitle:'دیار حکیم، سرزمین یادگیری',name:'— نام —',body:'به پاس تلاش، تمرکز و تمنای یادگیری، این گواهی با احترام اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-CERT / —'}},
   {id:'tazhib-turq', name:'تذهیب فیروزه', cat:'تذهیب',
    bg:'tazhib2', frame:'tazhib', frameColor:'#0e7c86',
    ink:'#123c42', gold:'#0e7c86',
@@ -646,7 +696,7 @@ const TEMPLATES = [
    bg:'emerald', frame:'plain', frameColor:'#4fd1a5',
    ink:'#e8f7f0', gold:'#7fe0bb',
    fonts:{title:'Lalezar',subtitle:'Scheherazade New',name:'Samim',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
-   texts:{title:'گواهی افتخار',subtitle:'دیار حکیم، سرزمين یادگیری',name:'— نام —',body:'به پاس تلاش و وردِ تو در راه آمیزش، این گواهی با افتخار تقدیم می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-EM / —'}},
+   texts:{title:'گواهی افتخار',subtitle:'دیار حکیم، سرزمین یادگیری',name:'— نام —',body:'به پاس تلاش و وردِ تو در راه آمیزش، این گواهی با افتخار تقدیم می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-EM / —'}},
   {id:'wine-classic', name:'عنبی کلاسیک', cat:'مدرن',
    bg:'wine', frame:'plain', frameColor:'#d98a9e',
    ink:'#fbeef2', gold:'#eab9c7',
@@ -688,6 +738,15 @@ const DEFAULT_STATE = {
   texts: {},
   data: null,           // {columns:[], rows:[[...]]}
   mapping: {},
+  printMode: false,     // حالت برگه گلاسه: پس‌زمینه سفید، قاب پنهان
+  padX: 9, padY: 7.5,   // حاشیه متن (٪)
+  inkPrint: '#2a2116',  // رنگ متن در حالت گلاسه
+  tscale: 1,            // اندازه متن (ضربی)
+  fieldVis: {},         // دید هر بخش: title/subtitle/name/body/seal/date/sign/serial
+  customFonts: [],      // فونت‌های افزوده‌ی تو
+  autoSerial: false,    // شماره‌ی خودکار در صدور گروهی
+  serialPrefix: 'HK / ',
+  customTpls: [],       // الگوهای ذخیره‌شده‌ی تو
 };
 let state = loadState();
 
@@ -756,22 +815,44 @@ function currentBg() {
   if (state.bgCustom) return state.bgCustom;
   return BACKGROUNDS.find(b => b.id === state.bgId) || BACKGROUNDS.find(b => b.id === tplById(state.template).bg);
 }
-function tplById(id) { return TEMPLATES.find(t => t.id === id) || TEMPLATES[0]; }
+function isClearBg() {
+  if (state.printMode) return false;
+  const bg = currentBg();
+  return !!bg && (bg.id === 'clear' || bg.css === 'transparent');
+}
+function tplById(id) {
+  return TEMPLATES.find(t => t.id === id) || (state.customTpls || []).find(t => t.id === id) || TEMPLATES[0];
+}
+function allTemplates() { return TEMPLATES.concat(state.customTpls || []); }
 
 function renderCert(el = $('certPage'), opts = {}) {
   const tpl = tplById(state.template);
   const bg = currentBg();
-  const bgCss = bg ? bg.css : 'radial-gradient(130% 90% at 50% 0%,#fdf6e3,#f3e7c9 55%,#ecdbb6)';
+  const printMode = !!state.printMode;
+  const bgCss = printMode ? '#ffffff' : (bg ? bg.css : 'radial-gradient(130% 90% at 50% 0%,#fdf6e3,#f3e7c9 55%,#ecdbb6)');
 
   // پس‌زمینه
-  const patCss = patternCss(bg && bg.pattern, (bg && bg.patternColor) || 'rgba(184,134,43,.25)');
-  el.querySelector('.cp-bg').style.cssText = `background:${bgCss};${patCss}`;
-  if (bg && bg.dark) el.style.color = state.ink;
+  const transparent = printMode || isClearBg();
+  const patCss = printMode ? '' : patternCss(bg && bg.pattern, (bg && bg.patternColor) || 'rgba(184,134,43,.25)');
+  el.querySelector('.cp-bg').style.cssText = `background:${transparent ? 'transparent' : bgCss};${patCss}`;
+  el.style.background = transparent ? 'transparent' : '';
+  // صفحه نمایش سفید می‌شود (برای نمايش)؛ خروجی PNG شفاف می‌ماند
+  const wrap = $('zoomWrap');
+  if (wrap) wrap.style.background = transparent ? '#fff' : '';
+  if (bg && bg.dark && !printMode) el.style.color = state.ink;
+
+  // اندازه متن
+  el.style.setProperty('--tscale', state.tscale || 1);
+
+  // حاشیه متن (بر اساس تنظیمات)
+  const pad = el.querySelector('.cp-pad');
+  if (pad) pad.style.padding = `${state.padY != null ? state.padY : 7.5}% ${state.padX != null ? state.padX : 9}%`;
+  if (printMode) el.style.color = state.inkPrint || state.ink;
 
   // قاب
   const frameEl = el.querySelector('.cp-frame');
   const fw = opts.frameWidth || state.frameWidth;
-  if (state.frameOn && state.frame) {
+  if (!printMode && state.frameOn && state.frame) {
     const f = FRAME_SVG[state.frame] || FRAME_SVG.plain;
     frameEl.style.cssText = 'position:absolute;inset:0;z-index:1;pointer-events:none';
     frameEl.innerHTML = f(state.frameColor, fw);
@@ -810,9 +891,15 @@ function renderCert(el = $('certPage'), opts = {}) {
   applyField('fDate','date','');
   applyField('fSign','sign','');
   applyField('fSerial','serial','');
-  $('fOrnament').style.display = state.ornOn ? 'flex' : 'none';
+  $('fOrnament').style.display = (state.ornOn && !printMode && !(state.fieldVis && state.fieldVis.ornament === false)) ? 'flex' : 'none';
   $('fOrnament').style.color = state.ink;
-  el.querySelector('#fSeal').style.display = state.sealOn ? '' : 'none';
+  el.querySelector('#fSeal').style.display = (state.sealOn && !(state.fieldVis && state.fieldVis.seal === false)) ? '' : 'none';
+  // دید بخش‌ها
+  const vis = state.fieldVis || {};
+  for (const [id, key] of [['fTitle','title'],['fSubtitle','subtitle'],['fName','name'],['fBody','body'],['fDate','date'],['fSign','sign'],['fSerial','serial']]) {
+    const n = el.querySelector('#' + id);
+    if (n) n.style.display = vis[key] === false ? 'none' : '';
+  }
   el.style.setProperty('--tz-w', '1px');
 
   // منطبق‌سازی رنگ قاب با تمپلیت
@@ -1143,7 +1230,7 @@ function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&
 
 /* ── الگوها و پس‌زمینه‌ها در بازر ─────────────────────────────── */
 function renderTemplates() {
-  $('tplGrid').innerHTML = TEMPLATES.map(t => `
+  $('tplGrid').innerHTML = allTemplates().map(t => `
     <div class="tpl-card" role="button" tabindex="0" aria-pressed="${state.template === t.id}"
          data-tpl="${t.id}" title="الگوی ${esc(t.name)}">
       <div class="tpl-thumb">${tplMini(t)}</div>
@@ -1213,6 +1300,16 @@ function fullRender() {
   $('bgColor1').value = (state.bgCustom && state.bgCustom.c1) || '#fdf6e3';
   $('bgColor2').value = (state.bgCustom && state.bgCustom.c2) || '#f3e3c0';
   $('bgAngle').value = (state.bgCustom && state.bgCustom.angle) || 135;
+  $('printMode').checked = !!state.printMode;
+  $('autoSerial').checked = !!state.autoSerial;
+  $('serialPrefix').value = state.serialPrefix != null ? state.serialPrefix : 'HK / ';
+  $('tscale').value = Math.round((state.tscale || 1) * 100);
+  $('padX').value = state.padX != null ? state.padX : 9;
+  $('padY').value = state.padY != null ? state.padY : 7.5;
+  $('inkPrint').value = state.inkPrint || '#2a2116';
+  document.querySelectorAll('#visGrid input[data-vis]').forEach(cb => {
+    cb.checked = !(state.fieldVis && state.fieldVis[cb.dataset.vis] === false);
+  });
   renderSwatches();
   renderDataPreview();
 }
@@ -1221,7 +1318,7 @@ function renderSwatches() {
 }
 
 /* ── صدور یک‌تکه برای یک سطر ────────────────────────────────── */
-function renderForRow(row) {
+function renderForRow(row, idx) {
   const t = Object.assign({}, tplById(state.template).texts, state.texts);
   const map = state.mapping || {};
   const get = (idx) => idx != null && row[idx] != null ? String(row[idx]) : '';
@@ -1233,6 +1330,9 @@ function renderForRow(row) {
   if (map.serial != null) {
     const serial = get(map.serial);
     if (serial) t.serial = serial;
+  }
+  if (state.autoSerial && idx != null) {
+    t.serial = (state.serialPrefix || 'HK / ') + String(idx + 1).padStart(4, '0');
   }
   const el = $('certPage');
   const textsBackup = state.texts;
@@ -1258,7 +1358,7 @@ async function runBatch(format) {
   let certIdx = 0;
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    const el = renderForRow(row);
+    const el = renderForRow(row, i);
     // کپی به stage خروجی با id غیرتکراری
     const clone = el.cloneNode(true);
     clone.removeAttribute('id');
@@ -1310,7 +1410,14 @@ async function runBatch(format) {
 
 /* PDF ساز ساده: JPEG کنش‌دار درون PDF (بدون وابستگی خارجی) */
 async function makePdfFromCanvas(canvas) {
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+  // JPEG بدون الشاست؛ روی زمینه‌ی سفید می‌کشیم تا مناطق شفاف سیاه نشوند
+  const flat = document.createElement('canvas');
+  flat.width = canvas.width; flat.height = canvas.height;
+  const fctx = flat.getContext('2d');
+  fctx.fillStyle = '#ffffff';
+  fctx.fillRect(0, 0, flat.width, flat.height);
+  fctx.drawImage(canvas, 0, 0);
+  const dataUrl = flat.toDataURL('image/jpeg', 0.9);
   const jpegB64 = dataUrl.split(',')[1];
   const jpegBytes = Uint8Array.from(atob(jpegB64), c => c.charCodeAt(0));
   const w = canvas.width, h = canvas.height;
@@ -1442,6 +1549,42 @@ $('rounded').addEventListener('input', () => { state.rounded = +$('rounded').val
 $('frameOn').addEventListener('change', () => { state.frameOn = $('frameOn').checked; renderCert(); });
 $('sealOn').addEventListener('change', () => { state.sealOn = $('sealOn').checked; renderCert(); });
 $('ornOn').addEventListener('change', () => { state.ornOn = $('ornOn').checked; renderCert(); });
+$('printMode').addEventListener('change', () => { state.printMode = $('printMode').checked; renderCert(); saveState(true); });
+$('tscale').addEventListener('input', () => { state.tscale = +$('tscale').value / 100; renderCert(); saveState(true); });
+$('padX').addEventListener('input', () => { state.padX = +$('padX').value; renderCert(); saveState(true); });
+$('padY').addEventListener('input', () => { state.padY = +$('padY').value; renderCert(); saveState(true); });
+$('inkPrint').addEventListener('input', () => { state.inkPrint = $('inkPrint').value; renderCert(); saveState(true); });
+$('autoSerial').addEventListener('change', () => { state.autoSerial = $('autoSerial').checked; saveState(true); });
+$('serialPrefix').addEventListener('input', () => { state.serialPrefix = $('serialPrefix').value; saveState(true); });
+$('btnClearData').addEventListener('click', () => {
+  state.data = null; state.mapping = {};
+  saveState(true); renderDataPreview();
+  toast('داده‌ها پاک شدند.');
+});
+$('btnSaveTpl').addEventListener('click', () => {
+  const t = tplById(state.template);
+  const name = prompt('نام الگوی جدید را بنویس:', 'الگوی من');
+  if (!name || !name.trim()) return;
+  const id = 'custom-' + Date.now().toString(36);
+  const nt = {
+    id, name: name.trim(), cat: 'شخصی',
+    bg: state.bgId || t.bg, frame: state.frame, frameColor: state.frameColor,
+    ink: state.ink, gold: state.gold,
+    fonts: Object.assign({}, state.fieldFonts),
+    texts: Object.assign({}, state.texts),
+  };
+  state.customTpls = state.customTpls || [];
+  state.customTpls.push(nt);
+  saveState(true); renderTemplates();
+  toast(`الگوی «${nt.name}» ذخیره شد.`);
+});
+$('visGrid').addEventListener('change', e => {
+  const cb = e.target.closest('input[data-vis]');
+  if (!cb) return;
+  state.fieldVis = state.fieldVis || {};
+  state.fieldVis[cb.dataset.vis] = cb.checked;
+  renderCert(); saveState(true);
+});
 $('btnCustomBg').addEventListener('click', () => {
   state.bgCustom = {
     css: `linear-gradient(${$('bgAngle').value}deg, ${$('bgColor1').value}, ${$('bgColor2').value})`,
@@ -1503,6 +1646,31 @@ $('fileLoad').addEventListener('change', async e => {
     toast('✅ طراحی باز شد.');
   } catch (err) {
     toast('فایل نامعتبر است.', true);
+  }
+  e.target.value = '';
+});
+
+/* آپلود فونت شخصی */
+$('btnAddFont').addEventListener('click', () => $('fontFile').click());
+$('fontFile').addEventListener('change', async e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  try {
+    const buf = await f.arrayBuffer();
+    const b64 = Array.from(new Uint8Array(buf), c => String.fromCharCode(c)).join('');
+    const dataUrl = 'data:font/' + (f.name.split('.').pop().toLowerCase()) + ';base64,' + b64;
+    const styleEl = document.createElement('style');
+    const fam = f.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+    styleEl.textContent = `@font-face{font-family:'${fam}';src:url('${dataUrl}') format('${f.name.split('.').pop().toLowerCase()}');font-display:swap}`;
+    document.head.appendChild(styleEl);
+    state.customFonts = state.customFonts || [];
+    if (!state.customFonts.includes(fam)) state.customFonts.push(fam);
+    saveState(true);
+    renderFontList();
+    renderCert();
+    toast(`فونت «${fam}» افزوده شد.`);
+  } catch (err) {
+    toast('خطا در خواندن فونت: ' + err.message, true);
   }
   e.target.value = '';
 });
