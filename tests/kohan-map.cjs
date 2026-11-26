@@ -17,7 +17,9 @@ window.__atlasTest = {
   city: showCityCard,
   zoom: atlasZoom,
   view: () => atlasView,
-  province: showProvincePopup
+  province: showProvincePopup,
+  start: () => { state = {}; buildMap(); },
+  result: () => toggleMapAccordion()
 };
 // بستن مودال با کلیک روی پس‌زمینه یا کلید Escape`);
 const errors = [];
@@ -34,12 +36,18 @@ assert.equal(Object.keys(data.provinces).length,31);
 assert.equal(data.cityCount,6);
 assert.equal(data.samarkandProvinces.length,0);
 for (const info of Object.values(data.provinces)) for (const key of ['name','center','historicalCity','era','landmarks','famous','souvenir','didYouKnow']) assert.ok(info[key], `${info.name}: ${key}`);
+api.start();
+assert.equal(doc.querySelectorAll('#startCityMarkers .city-marker').length,5, 'five markers inside Iran; Samarkand is separate');
+assert.ok(doc.querySelector('#startCityMarkers .atlas-route polyline'), 'the start map previews the journey');
+assert.ok(doc.querySelector('.start-map-wrapper .atlas-samarkand'));
 api.seed(); api.open();
 assert.ok(doc.querySelector('#mapModalOverlay').classList.contains('show'));
 assert.equal(doc.querySelectorAll('#modalMapContainer path.conquered-province').length,2);
 assert.equal(doc.querySelectorAll('#atlasTimeline li').length,2);
 assert.equal(doc.querySelectorAll('#modalCityMarkers .city-marker').length,5);
-assert.ok(doc.querySelector('.atlas-route polyline'));
+assert.ok(doc.querySelector('#modalCityMarkers .atlas-route polyline'));
+assert.equal(doc.querySelectorAll('#modalCityMarkers .flag-banner').length,2, 'conquered cities have flags');
+assert.match(doc.querySelector('#modal-city-0').getAttribute('aria-label'), /فتح‌شده/);
 api.zoom(1.25); assert.equal(api.view().scale,1.25);
 api.city(4,doc.querySelector('#modalMapContainer'));
 assert.match(doc.querySelector('#provincePopup').textContent,/ازبکستان/);
@@ -49,6 +57,10 @@ assert.equal(doc.querySelector('#provincePopup'),null);
 assert.ok(doc.querySelector('#mapModalOverlay').classList.contains('show'));
 w.document.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
 assert.ok(!doc.querySelector('#mapModalOverlay').classList.contains('show'));
+api.result();
+assert.equal(doc.querySelectorAll('#finalCityMarkers .flag-banner').length,2, 'results map has the same flags');
+assert.match(doc.querySelector('#finalAtlasSummary').textContent, /از ۶ مرحله/);
+assert.ok(doc.querySelector('#finalCityMarkers .atlas-route polyline'));
 assert.deepEqual(errors,[]);
 dom.window.close();
 console.log('Kohan conquest atlas: 31 provinces, 6 stages, offline data and interactions OK');

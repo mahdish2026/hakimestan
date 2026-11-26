@@ -57,3 +57,87 @@ body[data-theme="light"] #mapModalOverlay .map-modal-box { background:linear-gra
 @keyframes atlas-conquest { from { fill:#fff3b0; } to { fill:#bf8a35; } }
 @keyframes atlas-flag { from { transform:translateY(14px) scale(.6); opacity:.3; } to { transform:translateY(0) scale(1); opacity:1; } }
 @media(prefers-reduced-motion:reduce) { #modalMapContainer .iran-map-svg path.atlas-recent-conquest,#modalMapContainer .atlas-recent-flag .city-dot { animation:none; } }
+
+
+/* صفحهٔ آغاز: اطلس و آماده‌سازی، کنار هم در نمایشگرهای بزرگ */
+#start-screen { justify-content:flex-start; padding:clamp(18px,3vw,42px) 16px 54px; text-align:right; }
+.journey-shell { position:relative; z-index:1; width:min(1160px,100%); margin:auto; color:#f7ead0; font-family:Vazirmatn,Tahoma,sans-serif; }
+.journey-hero { display:flex; justify-content:space-between; align-items:center; gap:24px; padding:clamp(20px,3vw,34px); margin-bottom:18px; border:1px solid #bb915352; border-radius:22px; background:linear-gradient(120deg,#25170eeF,#3b2516ed 60%,#4b3019ed); box-shadow:0 18px 48px #0007,inset 0 0 0 5px #d8b37c0c; }
+.journey-hero-copy { min-width:0; max-width:710px; }
+.journey-kicker,.journey-eyebrow { color:#e6c380; font-weight:800; font-size:.73rem; letter-spacing:.03em; }
+#start-screen .start-title { font:900 clamp(1.9rem,4vw,3.4rem)/1.45 Vazirmatn,Tahoma,sans-serif; color:#ffe4a3; background:none; -webkit-text-fill-color:initial; text-shadow:0 3px 20px #0008; margin:5px 0; }
+.journey-intro { color:#f2e0c2; font-size:clamp(.82rem,1.25vw,.98rem); line-height:1.9; margin:0; }
+.journey-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:15px; }
+.journey-meta span { padding:5px 11px; border:1px solid #b48b5255; border-radius:30px; color:#f4dfb9; background:#140f0b66; font-size:.72rem; }
+.journey-seal { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:130px; }
+.journey-seal .bismillah { font-size:1.55rem; margin:0 0 5px; color:#e9c978; }
+.journey-seal .start-emblem { width:72px; height:72px; margin:0; animation:none; }
+.journey-layout { display:grid; grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr); gap:18px; align-items:start; }
+.journey-card,.journey-extra-story,.journey-extra-guide { min-width:0; border:1px solid #b18b5355; border-radius:18px; padding:clamp(16px,2vw,24px); background:linear-gradient(145deg,#302014f5,#1c160ff5); box-shadow:0 14px 38px #0007,inset 0 0 0 4px #d8b37c0b; }
+#start-screen .start-map-wrapper { width:100%; max-width:none; margin:0; }
+.journey-section-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:15px; text-align:right; }
+.journey-section-head h2 { font:900 clamp(1.1rem,1.8vw,1.35rem)/1.6 Vazirmatn,Tahoma,sans-serif; color:#fae5b9; margin:3px 0; }
+.journey-section-head p { color:#cfbea1; font-size:.76rem; line-height:1.8; margin:0; }
+.journey-section-ornament { font-size:1.8rem; line-height:1; color:#c49e5e; }
+#startMapContainer { position:relative!important; width:100%!important; max-width:none!important; height:auto!important; aspect-ratio:1.1/1!important; overflow:hidden; background:radial-gradient(ellipse at 45% 43%,#f7e5b9,#dfc58f 70%,#b88c53); border:5px double #8a5d2c; border-radius:11px; box-shadow:inset 0 0 36px #81542177,0 8px 24px #0004; }
+#startMapContainer::before { content:''; position:absolute; inset:7px; border:1px solid #9c713f88; pointer-events:none; z-index:1; }
+#startMapContainer .province-map-root { position:absolute!important; inset:7%!important; width:86%!important; height:86%!important; min-height:0!important; }
+#startMapContainer .iran-map-svg { position:absolute!important; inset:0!important; width:100%!important; height:100%!important; opacity:1; filter:none; }
+#startMapContainer .iran-map-svg path { fill:#c8b58f; stroke:#a38b67; stroke-width:1; filter:none; }
+#startMapContainer .iran-map-svg path.conquered-province { fill:#bf8a35; stroke:#fff0c5; }
+#startMapContainer .iran-map-svg path:focus-visible { outline:none; stroke:#532116; stroke-width:3; }
+#startMapContainer .city-markers-overlay { inset:0!important; }
+#startMapContainer .city-marker { pointer-events:auto!important; padding:0; border:0; background:transparent; }
+#startMapContainer .city-marker .city-dot { width:27px; height:27px; background:#754a2c; border:2px solid #f7e4ae; color:#fff6d7; font-size:.67rem; box-shadow:0 2px 5px #533a2f88; opacity:1; animation:none; }
+#startMapContainer .city-marker .city-label { display:none!important; }
+#startMapContainer .atlas-route polyline { stroke:#986143; stroke-width:1.2; stroke-dasharray:3 3; animation:none; }
+.journey-map-hint,.journey-geography-note { color:#d4c2a4; font-size:.7rem; line-height:1.8; margin:10px 0; }
+.journey-geography-note { margin-bottom:0; color:#bfae93; }
+.journey-stops { display:flex; flex-wrap:wrap; gap:7px; }
+.journey-stops button { display:inline-flex; align-items:center; gap:6px; min-height:36px; border:1px solid #bd935657; border-radius:30px; background:#f9dfa00c; color:#f5e5c7; font:700 .73rem Vazirmatn,Tahoma,sans-serif; padding:4px 10px; cursor:pointer; }
+.journey-stops button b { display:grid; place-items:center; width:22px; height:22px; border-radius:50%; color:#422b19; background:#e2bf7c; }
+.journey-stops button:hover { background:#9b6d343d; }
+#start-screen .name-input-box,#start-screen .commander-select-box { max-width:none; width:100%; margin:0 0 12px; text-align:right; background:#100d0a66; border:1px solid #ab82513d; box-shadow:none; }
+#start-screen .name-input-box label,#start-screen .name-input-box input { text-align:right; }
+#start-screen .name-input-box label { color:#f9e8c7; }
+#start-screen .name-input-box input { background:#120e0bcf; border-color:#ae8858; color:#fff2d9; }
+#start-screen .name-hint,#start-screen .commander-select-sub { color:#d2c1a5; }
+#start-screen .commander-select-title { color:#f4d79b; }
+#start-screen .commander-select-hint { color:#e9cd90; }
+#start-screen .commander-grid { width:100%; }
+.journey-actions { display:flex; flex-direction:column; align-items:stretch; gap:8px; }
+.journey-actions .start-btn { width:100%; margin:0; padding:13px 20px; border-radius:12px; font-size:1rem; box-shadow:0 6px 18px #0005; }
+.journey-actions .start-actions-row { display:flex; justify-content:center; }
+.journey-extras { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px; }
+.journey-extras h2 { color:#f0d49e; font-size:1rem; margin-bottom:12px; }
+.journey-video h3 { color:#e3c18a; font-size:.84rem; margin:15px 0 8px; }
+#start-screen .journey-extras .story-box,#start-screen .journey-extras .game-video,#start-screen .journey-extras .accordion-item,#start-screen .journey-extras .owner-box,#start-screen .journey-extras .high-score-box { width:100%; max-width:none; }
+#start-screen .journey-extras .story-box { background:#0e0a0777; color:#f0e2c8; }
+#start-screen .journey-extras .game-video { display:block; margin:0 0 14px; }
+.journey-shell button:focus-visible,#startMapContainer .city-marker:focus-visible { outline:3px solid #f8d55b; outline-offset:3px; }
+
+/* نشان فتح به‌صورت درفش، نه دایره؛ شمارهٔ مرحله روی پرچم می‌ماند. */
+.iran-map-container .city-marker.conquered .city-dot { position:relative; display:block!important; width:32px!important; height:32px!important; border:0!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; opacity:1!important; overflow:visible!important; }
+.flag-pole { position:absolute; left:4px; top:0; width:3px; height:32px; border-radius:2px; background:#5a351c; box-shadow:0 1px 2px #fff8; }
+.flag-banner { position:absolute; left:6px; top:1px; width:27px; height:20px; display:grid; place-items:center; padding-right:4px; color:#fff8df; font:bold .65rem Vazirmatn,Tahoma,sans-serif; background:linear-gradient(135deg,#27644b,#174636); border:1px solid #f6dca0; clip-path:polygon(0 0,100% 0,78% 50%,100% 100%,0 100%); text-shadow:0 1px 2px #000; }
+.atlas-samarkand.is-conquered { border:2px solid #3f7655; background:#e8f0d8; }
+.atlas-samarkand.is-conquered strong::before { content:'⚑ '; color:#256144; }
+.final-atlas-heading { text-align:right; padding:3px 3px 12px; }
+.final-atlas-heading span { color:#d7ad6a; font-size:.7rem; font-weight:800; }
+.final-atlas-heading h3 { color:#f7e2b7; font-size:1.1rem; margin:3px 0; }
+.final-atlas-heading p { color:#d4c1a1; font-size:.72rem; line-height:1.7; }
+.final-atlas-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; margin-bottom:10px; }
+.final-atlas-summary > div { display:flex; flex-direction:column; gap:3px; align-items:center; padding:9px 3px; border:1px solid #b28d5455; border-radius:9px; background:#ffffff0b; }
+.final-atlas-summary strong { color:#f6dc9f; font-size:1rem; }.final-atlas-summary small,.final-atlas-summary span { color:#dbc9aa; font-size:.64rem; }
+.final-atlas-summary p { grid-column:1/-1; color:#dbc9aa; font-size:.7rem; text-align:right; line-height:1.7; margin:2px 0; }
+#finalMapContainer .atlas-route polyline,#modalMapContainer .atlas-route polyline { stroke-width:1.2; }
+@media(max-width:800px) { .journey-layout,.journey-extras { grid-template-columns:1fr; }.journey-setup { order:0; }.journey-hero { gap:10px; }.journey-seal { min-width:90px; }.journey-seal .start-emblem { width:56px; height:56px; } }
+@media(max-width:480px) { #start-screen { padding:14px 10px 40px; }.journey-hero { padding:17px; }.journey-seal { min-width:54px; }.journey-seal .bismillah { font-size:1rem; }.journey-seal .start-emblem { width:45px; height:45px; }.journey-meta { gap:5px; }.journey-meta span { font-size:.65rem; padding:4px 7px; }.journey-card,.journey-extra-story,.journey-extra-guide { padding:14px; }.journey-section-ornament { font-size:1.5rem; }.journey-stops { gap:5px; }.journey-stops button { font-size:.68rem; } }
+@media(prefers-reduced-motion:reduce) { #startMapContainer *, .journey-shell * { animation:none!important; transition:none!important; } }
+
+/* قاب سمرقند بیرون از صفحهٔ نقشه است تا روی استان یا پرچم نیفتد. */
+.atlas-samarkand { position:relative; inset:auto; display:flex; flex-direction:row; justify-content:space-between; align-items:center; gap:8px; width:100%; max-width:none; margin:8px auto 0; padding:8px 12px; text-align:right; }
+.atlas-samarkand span,.atlas-samarkand small { font-size:.65rem; }
+#startMapContainer::after,#modalMapContainer::after,#finalMapContainer::after { content:'↗'; position:absolute; z-index:2; top:8%; right:7%; color:#80532e; font-weight:bold; pointer-events:none; }
+
+@media(max-width:600px) { .journey-seal { flex:0 0 48px; min-width:48px; }.journey-seal .bismillah { display:none; } #start-screen .start-title { font-size:clamp(1.55rem,7vw,2rem); } }
