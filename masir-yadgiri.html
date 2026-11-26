@@ -12,6 +12,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
+<link rel="stylesheet" href="css/hakim-worlds.css">
 <!-- hakim-core:end -->
 <style>
 @font-face {
@@ -330,6 +331,85 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
   .cert-sheet { box-shadow: none !important; border: 3px double #333 !important; max-width: 100% !important; }
 }
 
+/* ── طراحی تازهٔ مسیر یادگیری ── */
+.my-hero { position: relative; overflow: hidden; background: linear-gradient(135deg, #1e3a8a 0%, #312e81 55%, #6d28d9 100%); color: #fff; border: 0; padding: 26px; }
+.my-hero::after { content: ""; position: absolute; inset: auto -80px -120px auto; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(234, 179, 56, .35), transparent 70%); pointer-events: none; }
+.my-hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr); gap: 20px; align-items: center; }
+.my-eyebrow { display: inline-block; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .14); color: #ffe7a3; font-size: .82rem; font-weight: 800; }
+.my-hero-title { margin: 8px 0 6px; font-size: 1.75rem; line-height: 1.5; font-weight: 900; color: #fff; }
+.my-hero-title span { color: #fcd34d; }
+.my-hero-sub { margin: 0 0 14px; color: rgba(255, 255, 255, .88); font-size: .95rem; }
+.my-name-form { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; border-radius: 16px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18); width: fit-content; max-width: 100%; }
+.my-name-form input { min-height: 44px; padding: 6px 12px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, .35); background: #fff; color: #142038; width: 190px; max-width: 100%; }
+.my-name-form .btn-soft { background: #fcd34d; color: #241700; }
+.my-hakim { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border-radius: 22px; background: rgba(255, 255, 255, .96); color: #142038; box-shadow: 0 18px 40px -20px rgba(0, 0, 0, .6); }
+.my-hakim-face { flex: none; width: 76px; height: 76px; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 30% 28%, #ffe9b0 0%, #e9b44c 45%, #8a5a1a 100%); box-shadow: 0 0 0 3px #fcd34d, 0 8px 18px -8px rgba(0, 0, 0, .5); }
+.my-hakim-face svg { width: 118%; height: 118%; margin: -4% 0 0 -9%; }
+.my-hakim-bubble { display: grid; gap: 4px; min-width: 0; }
+.my-hakim-bubble b { color: #6d28d9; font-size: .88rem; }
+.my-hakim-bubble p { margin: 0; font-size: .92rem; line-height: 1.9; }
+.my-next-link { justify-self: start; margin-top: 4px; padding: 6px 12px; border-radius: 12px; background: #1e3a8a; color: #fff; font-size: .82rem; font-weight: 800; text-decoration: none; }
+.my-next-link:hover { background: #312e81; }
+.my-hero .kpi-row { position: relative; z-index: 1; margin-top: 18px; }
+.my-hero .kpi-box { display: grid; justify-items: center; gap: 2px; background: rgba(255, 255, 255, .97); border: 0; border-top: 5px solid var(--kc); border-radius: 18px; box-shadow: 0 12px 26px -18px rgba(0, 0, 0, .6); }
+.my-hero .kpi-box b { color: var(--kc); font-size: 1.5rem; }
+.kpi-of { font-size: .9rem; color: #4b5b78; font-weight: 700; }
+.kpi-icon { font-size: 1.5rem; line-height: 1; }
+.my-hero .kpi-box small { color: #4b5b78; }
+.kpi-bar { width: 100%; height: 8px; margin-top: 6px; border-radius: 999px; background: #e5eaf5; overflow: hidden; }
+.kpi-bar i { display: block; height: 100%; border-radius: inherit; background: var(--kc); }
+html[data-theme="night"] .my-hakim, html[data-theme="night"] .my-hero .kpi-box { background: #1b2946; color: var(--ink); }
+html[data-theme="night"] .my-hero .kpi-box small, html[data-theme="night"] .kpi-of { color: var(--muted); }
+html[data-theme="night"] .my-hero .kpi-box b { color: #fcd34d; }
+html[data-theme="night"] .kpi-bar { background: #2c3e66; }
+html[data-theme="night"] .my-hakim-bubble b { color: #c4b5fd; }
+.section-tab { border-radius: 999px; padding-inline: 18px; }
+.my-timeline { list-style: none; margin: 0; padding: 0 0 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; counter-reset: none; }
+.my-timeline .month-card { position: relative; border-top: 6px solid var(--mc); padding-top: 22px; }
+.my-timeline .month-card.is-now { box-shadow: 0 0 0 3px var(--gold), var(--shadow); }
+.my-timeline .month-card.checked { border-color: var(--ok); border-top-color: var(--ok); }
+.my-dot { position: absolute; top: -18px; inset-inline-start: 16px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: var(--mc); color: #fff; font-weight: 900; box-shadow: 0 0 0 4px var(--bg); }
+.month-card.checked .my-dot { background: var(--ok); }
+.my-timeline .month-tag { background: color-mix(in srgb, var(--mc) 12%, #ffffff); color: color-mix(in srgb, var(--mc) 62%, #000000); }
+html[data-theme="night"] .my-timeline .month-tag { background: color-mix(in srgb, var(--mc) 30%, var(--surface)); }
+html[data-theme="night"] .my-timeline .month-tag { color: var(--ink); }
+.my-now { padding: 3px 10px; border-radius: 999px; background: var(--gold); color: var(--gold-ink); font-size: .76rem; font-weight: 900; }
+.my-check { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700; cursor: pointer; margin-inline-start: auto; }
+.my-check input { width: 20px; height: 20px; accent-color: var(--ok); }
+.my-season { color: var(--muted); font-weight: 700; }
+.my-topic { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: 12px; background: var(--surface-soft); font-size: .9rem; }
+.my-topic-soft { background: transparent; border: 1px dashed var(--line); color: var(--muted); font-size: .86rem; }
+.res-chip.is-stamped { border-color: var(--ok); background: var(--ok-soft); }
+.my-tick { color: var(--ok); font-weight: 900; margin-inline-start: 4px; }
+.my-h2 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 6px 0 12px; font-size: 1.15rem; }
+.my-h2 small, .my-cat h3 small { font-size: .8rem; color: var(--muted); font-weight: 700; }
+.badges-row .badge-tile { display: grid; gap: 2px; justify-items: start; }
+.my-medal { font-size: 1.6rem; line-height: 1; }
+.my-badge-desc { font-size: .8rem; margin-top: 2px; }
+.my-cat { margin-bottom: 18px; }
+.my-cat h3 { display: flex; align-items: baseline; gap: 8px; margin: 0 0 10px; font-size: 1rem; padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+.stamp-card { position: relative; transition: transform .2s ease, box-shadow .2s ease; }
+.stamp-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.my-stamp-top { display: flex; justify-content: space-between; align-items: center; min-height: 60px; }
+.my-stamp-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; background: var(--surface-soft); font-size: 1.6rem; }
+.my-stamp { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 3px double #b91c1c; color: #b91c1c; font-size: .62rem; font-weight: 900; line-height: 1.5; text-align: center; transform: rotate(-14deg); background: rgba(254, 226, 226, .55); }
+html[data-theme="night"] .my-stamp { color: #fca5a5; border-color: #fca5a5; background: rgba(127, 29, 29, .3); }
+.my-ready { color: var(--muted); font-weight: 800; }
+.my-stamp-title { font-size: .96rem; }
+.stamp-card .res-chip { margin-top: auto; justify-content: center; }
+.my-cert-top { grid-template-columns: 120px 1fr 120px; }
+.my-cert-list { list-style: none; padding: 0; margin: 0 0 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.my-cert-list li { padding: 8px 12px; border-radius: 10px; border: 1px solid #e5d3a5; background: #fffaf0; font-size: .85rem; }
+.my-cert-list li.ok { background: #e6f6ed; border-color: #a7dcbc; }
+@media (max-width: 860px) { .my-hero-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) {
+  .my-hero { padding: 16px; } .my-hero-title { font-size: 1.35rem; }
+  .my-timeline { grid-template-columns: 1fr; }
+  .my-cert-list { grid-template-columns: 1fr; }
+  .my-cert-top { grid-template-columns: 1fr; justify-items: center; }
+}
+@media print { .my-cert-list li { break-inside: avoid; } }
+
 /* احترام به تنظیم «کاهش حرکت» سیستم‌عامل */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -377,17 +457,26 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
 </header>
 
 <main id="main" tabindex="-1">
-  <section class="hero-banner" aria-label="خلاصهٔ وضعیت قهرمان حکیمستان">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
-      <div>
-        <h2 style="margin:0 0 4px;font-size:1.4rem">سفرنامهٔ تحصیلی پایهٔ پنجم دبستان</h2>
-        <p style="margin:0;color:var(--muted);font-size:0.93rem">از اولین روز <b>مهر</b> تا جشن پایان سال در <b>اردیبهشت</b>، هر ماه بازی‌ها، فیلم‌ها و کتاب‌های مرتبط را گام‌به‌گام دنبال کن و مهرهای گذرنامه‌ات را جمع کن!</p>
+  <section class="hero-banner my-hero" aria-label="خلاصهٔ وضعیت قهرمان حکیمستان">
+    <div class="my-hero-grid">
+      <div class="my-hero-main">
+        <span class="my-eyebrow">🛂 گذرنامهٔ قهرمان · سال تحصیلی پایهٔ پنجم</span>
+        <h2 class="my-hero-title">سفرنامهٔ تحصیلی <span>پایهٔ پنجم دبستان</span></h2>
+        <p class="my-hero-sub">از اولین روز <b>مهر</b> تا جشن پایان سال در <b>اردیبهشت</b>، هر ماه بازی‌ها، فیلم‌ها و کتاب‌های مرتبط را گام‌به‌گام دنبال کن و مهرهای گذرنامه‌ات را جمع کن!</p>
+        <form id="heroNameForm" class="my-name-form">
+          <label for="heroNameInput"><b>نام قهرمان:</b></label>
+          <input id="heroNameInput" type="text" maxlength="36" placeholder="نام خودت را بنویس" autocomplete="off">
+          <button type="submit" class="btn-soft">ثبت نام</button>
+        </form>
       </div>
-      <form id="heroNameForm" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <label for="heroNameInput"><b>نام قهرمان:</b></label>
-        <input id="heroNameInput" type="text" maxlength="36" placeholder="نام خودت را بنویس" autocomplete="off" style="min-height:44px;padding:6px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);width:185px">
-        <button type="submit" class="btn-soft">ثبت نام</button>
-      </form>
+      <aside class="my-hakim" aria-label="پیام حکیم">
+        <span class="my-hakim-face" data-hk-face="wise" aria-hidden="true"></span>
+        <div class="my-hakim-bubble">
+          <b>حکیم می‌گوید:</b>
+          <p id="heroHakimSay">سلام! من حکیمم. این گذرنامهٔ یادگیری توست؛ هر بازی که تجربه کنی، یک مهر اینجا می‌خورد.</p>
+          <a class="my-next-link" id="heroNextLink" href="games/farsi5-hamava.html" hidden>پیشنهاد امروز ←</a>
+        </div>
+      </aside>
     </div>
     <div class="kpi-row" id="kpiRow"></div>
   </section>
@@ -407,6 +496,7 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
 
 <script src="hakim-core.js"></script>
 <script src="js/hakim-companion.js"></script>
+<script src="js/hakim-worlds.js"></script>
 <script>
 (function () {
   'use strict';
@@ -616,48 +706,85 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
     $('btnTheme').textContent = state.theme === 'night' ? '☀ روز' : '☾ شب';
   }
 
+  const MONTH_COLORS = ['#c2410c', '#b45309', '#7c2d12', '#1d4ed8', '#0e7490', '#0f766e', '#15803d', '#be185d'];
+  const MONTH_ICONS = ['🍂', '🍁', '🌧️', '❄️', '⛄', '🌱', '🌸', '🎓'];
+  const CAT_ICONS = { 'ریاضی پنجم': '🧮', 'فارسی و نگارش': '🖋️', 'علوم تجربی': '🔬', 'مطالعات اجتماعی': '🧭', 'هوش و رقابت': '🧠' };
+
+  // شمارهٔ ماه شمسی امروز → جایگاهش در تقویم مهر تا اردیبهشت
+  function currentMonthIndex() {
+    try {
+      const parts = new Intl.DateTimeFormat('en-US-u-ca-persian', { month: 'numeric' }).formatToParts(new Date());
+      const m = Number((parts.find((p) => p.type === 'month') || {}).value);
+      if (!m) return -1;
+      if (m >= 7) return m - 7; // مهر=۷ … اسفند=۱۲
+      if (m <= 2) return m + 5; // فروردین=۱ → ۶ ، اردیبهشت=۲ → ۷
+      return -1; // تابستان
+    } catch (e) { return -1; }
+  }
+
+  function kpi(icon, value, total, label, color) {
+    const pct = total ? Math.round((value / total) * 100) : 0;
+    return `<div class="kpi-box" style="--kc:${color}">
+      <span class="kpi-icon" aria-hidden="true">${icon}</span>
+      <b>${fa(value)} <small class="kpi-of">/ ${fa(total)}</small></b>
+      <small>${esc(label)}</small>
+      <span class="kpi-bar" role="img" aria-label="${fa(pct)} درصد"><i style="width:${pct}%"></i></span>
+    </div>`;
+  }
+
   function renderAll() {
     $('heroNameInput').value = state.name === 'پژوهشگر حکیمستان' ? '' : state.name;
     const prog = scanProgress();
     const unlockedBadges = prog.badges.filter((b) => b.ok).length;
+    const curIdx = currentMonthIndex();
+    const curMonth = curIdx >= 0 ? MONTHS[curIdx] : null;
+    const nextGame = prog.stamped.find((g) => !g.active && curMonth && curMonth.links.some((lk) => lk.href === g.href)) || prog.stamped.find((g) => !g.active);
     try {
       const HCm = window.HakimCompanion;
       if (HCm && state.name && state.name !== 'پژوهشگر حکیمستان') HCm.setName(state.name);
-      if (HCm && renderAll._said !== prog.activeCount) {
-        renderAll._said = prog.activeCount;
-        if (renderAll._mounted) HCm.say(prog.activeCount ? `تا حالا ${fa(prog.activeCount)} مهر در گذرنامه‌ات خورده و ${fa(unlockedBadges)} نشان گرفته‌ای. ادامه بده!` : 'گذرنامه‌ات هنوز خالی است. از یک بازی شروع کن تا اولین مهر را بگیری!', 'happy');
-      }
     } catch (e) {}
+    const who = state.name && state.name !== 'پژوهشگر حکیمستان' ? state.name + ' عزیز، ' : '';
+    $('heroHakimSay').textContent = prog.activeCount
+      ? `${who}تا حالا ${fa(prog.activeCount)} مهر در گذرنامه‌ات خورده و ${fa(unlockedBadges)} نشان افتخار گرفته‌ای.${curMonth ? ' الان «' + curMonth.month + '» است؛ برنامهٔ همین ماه را با رنگ طلایی برایت علامت زده‌ام.' : ' ادامه بده!'}`
+      : `${who}گذرنامه‌ات هنوز خالی است. از یک بازی شروع کن تا اولین مهر را بگیری!${curMonth ? ' برنامهٔ «' + curMonth.month + '» را برایت علامت زده‌ام.' : ''}`;
+    const nl = $('heroNextLink');
+    if (nextGame) { nl.hidden = false; nl.href = nextGame.href; nl.textContent = `پیشنهاد امروز: ${nextGame.icon} ${nextGame.title} ←`; } else nl.hidden = true;
 
-    $('kpiRow').innerHTML = `
-      <div class="kpi-box"><b>${fa(prog.activeCount)} / ${fa(GAMES.length)}</b><small>مهر بازی‌های ثبت‌شده در گذرنامه</small></div>
-      <div class="kpi-box"><b>${fa(prog.mathCount)} / ۹</b><small>بازی‌های فتح‌شدهٔ مدرسهٔ ریاضی</small></div>
-      <div class="kpi-box"><b>${fa(prog.monthsDone)} / ۸</b><small>ماه‌های تکمیل‌شدهٔ تقویم تحصیلی</small></div>
-      <div class="kpi-box"><b>🏅 ${fa(unlockedBadges)} / ${fa(prog.badges.length)}</b><small>نشان افتخار کلان حکیمستان</small></div>
-    `;
+    $('kpiRow').innerHTML = [
+      kpi('🛂', prog.activeCount, GAMES.length, 'مهر بازی‌های ثبت‌شده در گذرنامه', '#1e3a8a'),
+      kpi('🧮', prog.mathCount, 9, 'بازی‌های فتح‌شدهٔ مدرسهٔ ریاضی', '#0f766e'),
+      kpi('🗓️', prog.monthsDone, 8, 'ماه‌های تکمیل‌شدهٔ تقویم تحصیلی', '#b45309'),
+      kpi('🏅', unlockedBadges, prog.badges.length, 'نشان افتخار کلان حکیمستان', '#be185d')
+    ].join('');
 
     if (currentView === 'roadmap') {
       $('viewContainer').innerHTML = `
-        <div class="months-grid">
-          ${MONTHS.map((m) => {
+        <ol class="my-timeline" aria-label="تقویم ماه‌به‌ماه سال تحصیلی">
+          ${MONTHS.map((m, i) => {
             const done = Boolean(state.checkedMonths[m.id]);
-            return `<article class="month-card ${done ? 'checked' : ''}">
+            const isNow = i === curIdx;
+            return `<li class="month-card ${done ? 'checked' : ''} ${isNow ? 'is-now' : ''}" style="--mc:${MONTH_COLORS[i]}">
+              <span class="my-dot" aria-hidden="true">${done ? '✓' : fa(i + 1)}</span>
               <div class="month-head">
-                <span class="month-tag">${esc(m.month)}</span>
-                <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:700;cursor:pointer">
-                  <input type="checkbox" data-month-chk="${m.id}" ${done ? 'checked' : ''} style="width:18px;height:18px">
+                <span class="month-tag"><span aria-hidden="true">${MONTH_ICONS[i]}</span> ${esc(m.month)}</span>
+                ${isNow ? '<span class="my-now">📍 ماه جاری</span>' : ''}
+                <label class="my-check">
+                  <input type="checkbox" data-month-chk="${m.id}" ${done ? 'checked' : ''}>
                   مرور شد
                 </label>
               </div>
-              <small style="color:var(--muted);font-weight:700">${esc(m.season)}</small>
-              <div style="font-size:0.9rem"><b>🧮 ریاضی پنجم:</b> ${esc(m.mathTopic)}</div>
-              <div style="font-size:0.86rem;color:var(--muted)"><b>📚 سایر دروس:</b> ${esc(m.otherTopics)}</div>
+              <small class="my-season">${esc(m.season)}</small>
+              <div class="my-topic"><span aria-hidden="true">🧮</span><div><b>ریاضی پنجم:</b> ${esc(m.mathTopic)}</div></div>
+              <div class="my-topic my-topic-soft"><span aria-hidden="true">📚</span><div><b>سایر دروس:</b> ${esc(m.otherTopics)}</div></div>
               <div class="resource-links">
-                ${m.links.map((lk) => `<a class="res-chip" href="${esc(lk.href)}">${esc(lk.label)}</a>`).join('')}
+                ${m.links.map((lk) => {
+                  const g = prog.stamped.find((x) => x.href === lk.href);
+                  return `<a class="res-chip ${g && g.active ? 'is-stamped' : ''}" href="${esc(lk.href)}">${esc(lk.label)}${g && g.active ? ' <span class="my-tick" aria-label="مهر خورده">✓</span>' : ''}</a>`;
+                }).join('')}
               </div>
-            </article>`;
+            </li>`;
           }).join('')}
-        </div>
+        </ol>
       `;
       document.querySelectorAll('[data-month-chk]').forEach((chk) => {
         chk.onchange = () => {
@@ -667,59 +794,80 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
         };
       });
     } else if (currentView === 'passport') {
+      const cats = [...new Set(prog.stamped.map((g) => g.cat))];
       $('viewContainer').innerHTML = `
-        <h2 style="margin:0 0 10px;font-size:1.15rem">🏅 نشان‌های افتخار کلان حکیمستان</h2>
+        <h2 class="my-h2">🏅 نشان‌های افتخار کلان حکیمستان <small>${fa(unlockedBadges)} از ${fa(prog.badges.length)}</small></h2>
         <div class="badges-row">
           ${prog.badges.map((b) => `
             <div class="badge-tile ${b.ok ? 'unlocked' : ''}">
-              <b>${b.ok ? '✅ ' : '🔒 '}${esc(b.title)}</b>
-              <div style="font-size:0.8rem;margin-top:4px">${esc(b.desc)}</div>
+              <span class="my-medal" aria-hidden="true">${b.ok ? '🏅' : '🔒'}</span>
+              <b>${esc(b.title)}</b>
+              <div class="my-badge-desc">${esc(b.desc)}</div>
             </div>
           `).join('')}
         </div>
 
-        <h2 style="margin:0 0 10px;font-size:1.15rem">🛂 مهرهای ۲۱ بازی آموزشی روی این دستگاه</h2>
-        <div class="stamps-grid">
-          ${prog.stamped.map((g) => `
-            <article class="stamp-card ${g.active ? 'active' : ''}">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <span style="font-size:1.35rem" aria-hidden="true">${g.icon}</span>
-                <small style="font-weight:800">${g.active ? '✓ مهر ثبت شد' : 'آمادهٔ کشف'}</small>
-              </div>
-              <b style="font-size:0.96rem">${esc(g.title)}</b>
-              <small style="color:var(--muted)">${esc(g.cat)}</small>
-              <a class="res-chip" href="${esc(g.href)}" style="margin-top:auto;justify-content:center">ورود به بازی ←</a>
-            </article>
-          `).join('')}
-        </div>
+        <h2 class="my-h2">🛂 مهرهای ۲۱ بازی آموزشی روی این دستگاه <small>${fa(prog.activeCount)} مهر خورده</small></h2>
+        ${cats.map((cat) => `
+          <section class="my-cat" aria-label="${esc(cat)}">
+            <h3><span aria-hidden="true">${CAT_ICONS[cat] || '⭐'}</span> ${esc(cat)} <small>${fa(prog.stamped.filter((g) => g.cat === cat && g.active).length)} / ${fa(prog.stamped.filter((g) => g.cat === cat).length)}</small></h3>
+            <div class="stamps-grid">
+              ${prog.stamped.filter((g) => g.cat === cat).map((g) => `
+                <article class="stamp-card ${g.active ? 'active' : ''}">
+                  <div class="my-stamp-top">
+                    <span class="my-stamp-icon" aria-hidden="true">${g.icon}</span>
+                    ${g.active ? '<span class="my-stamp" aria-label="مهر ثبت شد">حکیمستان<br>✓ ثبت شد</span>' : '<small class="my-ready">آمادهٔ کشف</small>'}
+                  </div>
+                  <b class="my-stamp-title">${esc(g.title)}</b>
+                  <a class="res-chip" href="${esc(g.href)}">${g.active ? 'ادامهٔ بازی ←' : 'ورود به بازی ←'}</a>
+                </article>
+              `).join('')}
+            </div>
+          </section>
+        `).join('')}
       `;
     } else {
+      const W = window.HakimWorlds;
       $('viewContainer').innerHTML = `
         <div class="no-print" style="display:flex;justify-content:flex-end;margin-bottom:14px">
           <button type="button" class="btn-primary" id="btnPrintGrandCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF گواهی‌نامهٔ جامع</button>
         </div>
-        <article class="cert-sheet" aria-label="گواهی‌نامهٔ جامع قهرمان حکیمستان">
-          <div style="text-align:center;border-bottom:2px dashed #cfd9eb;padding-bottom:14px;margin-bottom:16px">
-            <div style="font-size:0.86rem;font-weight:800;color:#4b5b78">سامانهٔ آموزشی حکیمستان · پایهٔ پنجم ابتدایی</div>
-            <h2 style="margin:6px 0;font-size:1.6rem">لوح و گواهی‌نامهٔ جامع «حکیمِ جوان»</h2>
-            <div style="font-size:1.75rem;font-weight:900;color:#1e3a8a;margin:8px 0">${esc(state.name)}</div>
-            <p style="margin:0;font-size:0.92rem;color:#4b5b78">به پاس تلاش مستمر در مسیر یادگیری پایهٔ پنجم (مهر تا اردیبهشت)، کسب <b>${fa(prog.activeCount)}</b> مهر از ۲۱ بازی آموزشی و <b>${fa(unlockedBadges)}</b> نشان افتخار کلان حکیمستان</p>
+        <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ جامع قهرمان حکیمستان">
+          <div class="hw-cert-top my-cert-top">
+            ${W ? W.seal('حکیمستان', prog.activeCount >= 10 ? 'مهر قهرمانی' : 'مهر پیشرفت') : ''}
+            <div style="text-align:center">
+              <div style="font-size:0.86rem;font-weight:800;color:#4b5b78">سامانهٔ آموزشی حکیمستان · پایهٔ پنجم ابتدایی</div>
+              <h2 style="margin:6px 0;font-size:1.6rem">لوح و گواهی‌نامهٔ جامع «حکیمِ جوان»</h2>
+              <div style="font-size:.9rem;color:#4b5b78">این لوح با افتخار تقدیم می‌شود به</div>
+              <div style="font-size:1.85rem;font-weight:900;color:#1e3a8a;margin:4px 0">${esc(state.name)}</div>
+              <p style="margin:0;font-size:0.92rem;color:#4b5b78">به پاس تلاش مستمر در مسیر یادگیری پایهٔ پنجم (مهر تا اردیبهشت)، کسب <b>${fa(prog.activeCount)}</b> مهر از ۲۱ بازی آموزشی و <b>${fa(unlockedBadges)}</b> نشان افتخار کلان حکیمستان</p>
+            </div>
+            ${W ? W.certHakim('') : ''}
           </div>
+          ${W ? W.certStats([
+            { icon: '🛂', value: fa(prog.activeCount) + ' / ' + fa(GAMES.length), label: 'مهر گذرنامه' },
+            { icon: '🧮', value: fa(prog.mathCount) + ' / ۹', label: 'بازی ریاضی' },
+            { icon: '🗓️', value: fa(prog.monthsDone) + ' / ۸', label: 'ماه تقویم' },
+            { icon: '🏅', value: fa(unlockedBadges) + ' / ' + fa(prog.badges.length), label: 'نشان افتخار' }
+          ]) : ''}
 
           <h3 style="margin:0 0 8px;font-size:1rem">خلاصهٔ دستاوردهای ثبت‌شده در گذرنامه:</h3>
-          <ul style="list-style:none;padding:0;margin:0 0 16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
-            ${prog.badges.map((b) => `<li style="padding:8px 12px;border-radius:10px;border:1px solid #cfd9eb;background:${b.ok ? '#e6f6ed' : '#f8fafc'};font-size:0.85rem"><b>${b.ok ? '☑' : '☐'} ${esc(b.title)}</b><br><small>${esc(b.desc)}</small></li>`).join('')}
+          <ul class="my-cert-list">
+            ${prog.badges.map((b) => `<li class="${b.ok ? 'ok' : ''}"><b>${b.ok ? '☑' : '☐'} ${esc(b.title)}</b><br><small>${esc(b.desc)}</small></li>`).join('')}
           </ul>
 
-          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid #cfd9eb;padding-top:12px;font-size:0.82rem;color:#4b5b78">
-            <span>تاریخ صدور: ${new Date().toLocaleDateString('fa-IR')}</span>
-            <span>پیشرفت تقویم سالانه: ${fa(prog.monthsDone)} از ۸ ماه</span>
-            <span>طراحی و توسعه: مهدی شریفیان · حکیمستان</span>
+          <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
+            <p><b>حکیم:</b> ${prog.activeCount >= 10 ? 'تو یک قهرمان واقعی حکیمستانی! دانایی مثل چراغی است که هرچه بیشتر روشنش کنی، راه بیشتری را می‌بینی.' : 'هر بازی که تجربه کنی یک مهر تازه در این لوح می‌نشیند. راه دانایی را قدم‌به‌قدم ادامه بده!'}</p></div>
+          <div class="hw-cert-foot">
+            <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>پیشرفت تقویم سالانه: ${fa(prog.monthsDone)} از ۸ ماه</span></div>
+            ${W ? W.signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی و توسعه: مهدی شریفیان · حکیمستان</span>'}
           </div>
+          <p class="hw-cert-note">این لوح بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
         </article>
       `;
       $('btnPrintGrandCert').onclick = () => window.print();
     }
+    try { window.HakimCompanion && window.HakimCompanion.paintFaces(document); } catch (e) {}
   }
 
   $('heroNameForm').onsubmit = (e) => {
@@ -747,7 +895,8 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
 
   window.addEventListener('pagehide', saveState);
   applyTheme();
-  try { window.HakimCompanion && window.HakimCompanion.mount({ gameId: 'masir-yadgiri', name: state.name, intro: 'سلام! من حکیمم. این گذرنامهٔ یادگیری توست؛ هر بازی که تجربه کنی، یک مهر اینجا می‌خورد.' }); } catch (e) {}
+  // حکیم در کارت ثابت بالای صفحه حرف می‌زند، نه در حباب شناور روی کارت‌ها.
+  try { window.HakimCompanion && window.HakimCompanion.mount({ gameId: 'masir-yadgiri', name: state.name !== 'پژوهشگر حکیمستان' ? state.name : '' }); } catch (e) {}
   renderAll();
   renderAll._mounted = true;
 })();

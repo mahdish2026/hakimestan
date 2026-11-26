@@ -372,7 +372,7 @@
         </div>
       </section>
 
-      ${W() ? W().journey(D.stages.map((u) => ({ title: u.title, solved: stageSolvedCount(u), total: u.tasks.length })), { word: 'ایستگاه', attr: 'data-open-lesson', nextIdx, done, total: allTasks.length }) : ''}
+      ${W() ? W().journey(D.stages.map((u, i) => ({ title: u.title, solved: stageSolvedCount(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'ایستگاه', attr: 'data-open-lesson', nextIdx, done, total: allTasks.length }) : ''}
 
       <section aria-labelledby="stationsHeading">
         <h2 id="stationsHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">🗺️ نقشهٔ ۱۰ ایستگاه فصل ششم (از مساحت تا حجم و گنجایش)</h2>
@@ -381,7 +381,9 @@
             const solved = stageSolvedCount(s);
             const stars = stageStars(s);
             const complete = solved === s.tasks.length;
-            const hw = W() ? W().card(solved, s.tasks.length, idx, nextIdx) : null;
+            const locked = isLocked(idx);
+            const seen = Boolean(profile.lessons[s.id]) || solved > 0;
+            const hw = W() ? W().card(solved, s.tasks.length, idx, nextIdx, locked) : null;
             return `<article class="station-card ${complete ? 'done' : ''} ${hw ? 'hw-card' : ''}" ${hw ? hw.attrs : ''}>
               <div class="station-top">
                 <span class="station-icon" aria-hidden="true">${s.icon}${hw ? hw.num : ''}</span>
@@ -395,8 +397,10 @@
               <div class="station-foot">
                 <small><b>${fa(solved)}</b> از <b>${fa(s.tasks.length)}</b> تمرین ${profile.lessons[s.id] ? '· 📖 درس دیده شد' : ''}</small>
                 <div style="display:flex;gap:6px;flex-wrap:wrap">
-                  <button type="button" class="btn-soft" data-open-lesson="${idx}">📖 درسنامه</button>
-                  <button type="button" class="btn-primary" data-open-tasks="${idx}">${complete ? 'مرور' : 'شروع ←'}</button>
+                  ${locked ? `<button type="button" class="btn-soft" data-open-lesson="${idx}" aria-label="ایستگاه ${fa(idx + 1)} قفل است؛ اول ایستگاه قبلی را کامل کن">🔒 قفل</button>` :
+                    seen ? `<button type="button" class="btn-soft" data-open-lesson="${idx}">📖 درسنامه</button>
+                  <button type="button" class="btn-primary" data-open-tasks="${idx}">${complete ? 'مرور تمرین‌ها' : '🎯 تمرین‌ها ←'}</button>` :
+                    `<button type="button" class="btn-primary" data-open-lesson="${idx}">📖 شروع با درسنامه ←</button>`}
                 </div>
               </div>
             </article>`;
@@ -463,7 +467,21 @@
     `;
   }
 
+  function unitsInfo() {
+    return D.stages.map((st) => ({ solved: stageSolvedCount(st), total: st.tasks.length, seen: Boolean(profile.lessons[st.id]) }));
+  }
+  function isLocked(idx) {
+    const u = unitsInfo();
+    if (W() && W().isLocked) return W().isLocked(u, idx);
+    return idx > 0 && !u[idx].seen && !u[idx].solved && u[idx - 1].solved < u[idx - 1].total;
+  }
+  function lockedNotice(idx) {
+    const msg = 'این ایستگاه هنوز قفل است؛ اول ایستگاه «' + (W() ? W().shortTitle(D.stages[idx - 1].title) : D.stages[idx - 1].title) + '» را کامل کن 🔒';
+    if (W()?.toast) W().toast(msg); else HC()?.say?.(msg);
+  }
+
   function openLesson(stageIndex) {
+    if (isLocked(stageIndex)) { lockedNotice(stageIndex); renderMap(); return; }
     si = stageIndex;
     view = 'lesson';
     lessonStep = 0;
@@ -592,6 +610,13 @@
   }
 
   function openTask(stageIndex, taskIndex) {
+    if (isLocked(stageIndex)) { lockedNotice(stageIndex); renderMap(); return; }
+    const us = D.stages[stageIndex];
+    if (!profile.lessons[us.id] && stageSolvedCount(us) === 0) {
+      W()?.toast?.('اول درسنامهٔ این ایستگاه را ببین؛ بعد تمرین‌ها باز می‌شوند 📖');
+      openLesson(stageIndex);
+      return;
+    }
     si = stageIndex;
     qi = taskIndex;
     view = 'task';
@@ -991,13 +1016,17 @@
         </div>
       </div>
 
-      <article class="cert-sheet" aria-label="گواهی‌نامهٔ مهارت پیمانه‌ستان">
+      <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ مهارت پیمانه‌ستان">
+        <div class="hw-cert-top">
+        ${W() ? W().seal('پیمانه‌ستان', done === allTasks.length ? 'مهر استادی' : 'مهر پیشرفت') : ''}
         <div class="cert-header">
           <div style="font-size:0.85rem;font-weight:800;color:#47585c">حکیمستان · مدرسهٔ ریاضی پایهٔ پنجم دبستان</div>
           <h2 style="margin:6px 0;font-size:1.55rem;color:#142429">${done === allTasks.length ? 'گواهی‌نامهٔ استادی کامل فصل ششم (پیمانه‌ستان)' : 'گواهی‌نامهٔ پیشرفت یادگیری فصل ششم (پیمانه‌ستان)'}</h2>
           <span class="cert-rank-badge">${esc(rankTitle())}</span>
           <div class="cert-student-name">${esc(profile.name)}</div>
           <p style="margin:0;font-size:0.9rem;color:#47585c">با تلاش، کشف شهودی و حل مسئله‌های مساحت لوزی و ذوزنقه، محیط دایره، حجم مکعب‌مستطیل و گنجایش (لیتر و سی‌سی)</p>
+        </div>
+        ${W() ? W().certHakim('') : ''}
         </div>
 
         <div class="cert-stats-row">
@@ -1019,14 +1048,17 @@
           }).join('')}
         </ul>
 
-        <div class="cert-foot">
-          <span>تاریخ صدور: ${new Date().toLocaleDateString('fa-IR')}</span>
-          <span>شناسهٔ کارنامه: <b class="ltr">${certCode}</b></span>
-          <span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>
+        <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
+          <p><b>حکیم:</b> ${done === allTasks.length ? 'آفرین معمار کوچک! حالا مساحت لوزی و ذوزنقه، محیط دایره، حجم و گنجایش را مثل یک مهندس حساب می‌کنی.' : 'هر ایستگاهی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. اول درسنامه، بعد تمرین؛ ادامه بده!'}</p></div>
+        <div class="hw-cert-foot">
+          <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>شناسهٔ کارنامه: <b class="ltr">${certCode}</b></span></div>
+          ${W() ? W().signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>'}
         </div>
+        <p class="hw-cert-note">این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
       </article>
     `;
 
+    W()?.bind(main, {});
     $('certBackMap').onclick = renderMap;
     $('btnPrintCert').onclick = () => window.print();
   }

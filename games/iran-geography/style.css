@@ -412,3 +412,19 @@ dialog::backdrop { background: rgba(10, 28, 24, 0.55); }
 @media (max-width: 1024px) {
   .topbar { position: static; }
 }
+
+/* ── درسنامهٔ سه‌گامی ── */
+.ig-lesson-map { padding: 8px; }
+.ig-lesson-map svg { border-radius: 14px; }
+.ig-flow { animation: igFlow 1.4s linear infinite; }
+@keyframes igFlow { to { stroke-dashoffset: -22; } }
+@media (prefers-reduced-motion: reduce) { .ig-flow { animation: none; } }
+.ig-ntable-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); margin: 6px 0 12px; }
+.ig-ntable { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 520px; }
+.ig-ntable caption { caption-side: top; text-align: start; padding: 10px 14px; font-weight: 900; }
+.ig-ntable th, .ig-ntable td { padding: 8px 12px; border-top: 1px solid var(--line); text-align: start; }
+.ig-ntable thead th { background: #ede9fe; color: #3b1f7a; font-size: .82rem; }
+.ig-ntable tbody th { color: #5b21b6; }
+.ig-popbar { display: inline-block; width: var(--w); max-width: 90px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #a78bfa, #7c3aed); margin-inline-end: 6px; vertical-align: middle; }
+html[data-theme="night"] .ig-ntable thead th { background: #2e1f57; color: #ede9fe; }
+html[data-theme="night"] .ig-ntable tbody th { color: #c4b5fd; }

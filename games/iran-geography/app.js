@@ -290,7 +290,7 @@
         </div>
       </section>
 
-      ${W() ? W().journey(D.missions.map((u) => ({ title: u.title, solved: missionSolved(u), total: u.tasks.length })), { word: 'مأموریت', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
+      ${W() ? W().journey(D.missions.map((u, i) => ({ title: u.title, solved: missionSolved(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'مأموریت', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
 
       <section aria-labelledby="missionsHeading">
         <h2 id="missionsHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">🗺️ شش مأموریت جغرافیای ایران (درس‌های ۵ تا ۱۱ کتاب)</h2>
@@ -299,7 +299,9 @@
             const s = missionSolved(m);
             const st = missionStars(m);
             const full = s === m.tasks.length;
-            const hw = W() ? W().card(s, m.tasks.length, idx, nextIdx) : null;
+            const locked = isLocked(idx);
+            const seen = Boolean(profile.lessons[m.id]) || s > 0;
+            const hw = W() ? W().card(s, m.tasks.length, idx, nextIdx, locked) : null;
             return `<article class="mission-card ${full ? 'done' : ''} ${hw ? 'hw-card' : ''}" ${hw ? hw.attrs : ''}>
               <div class="mission-top">
                 <span class="mission-icon" aria-hidden="true">${m.icon}${hw ? hw.num : ''}</span>
@@ -312,8 +314,10 @@
               <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:10px;border-top:1px dashed var(--line)">
                 <small><b>${fa(s)} / ${fa(m.tasks.length)}</b> چالش</small>
                 <div style="display:flex;gap:6px">
-                  <button type="button" class="btn-soft" data-lesson="${idx}">📖 مرور درس</button>
-                  <button type="button" class="btn-primary" data-play="${idx}">${full ? 'مرور' : 'شروع ←'}</button>
+                  ${locked ? `<button type="button" class="btn-soft" data-lesson="${idx}" aria-label="مأموریت ${fa(idx + 1)} قفل است؛ اول مأموریت قبلی را کامل کن">🔒 قفل</button>` :
+                    seen ? `<button type="button" class="btn-soft" data-lesson="${idx}">📖 درسنامه</button>
+                  <button type="button" class="btn-primary" data-play="${idx}">${full ? 'مرور چالش‌ها' : '🎯 چالش‌ها ←'}</button>` :
+                    `<button type="button" class="btn-primary" data-lesson="${idx}">📖 شروع با درسنامه ←</button>`}
                 </div>
               </div>
             </article>`;
@@ -343,44 +347,151 @@
     });
   }
 
-  function openLesson(idx) {
+  function unitsInfo() {
+    return D.missions.map((m) => ({ solved: missionSolved(m), total: m.tasks.length, seen: Boolean(profile.lessons[m.id]) }));
+  }
+  function isLocked(idx) {
+    const w = W();
+    const u = unitsInfo();
+    if (w && w.isLocked) return w.isLocked(u, idx);
+    return idx > 0 && !u[idx].seen && !u[idx].solved && u[idx - 1].solved < u[idx - 1].total;
+  }
+  function lockedNotice(idx) {
+    const msg = 'این مأموریت هنوز قفل است؛ اول مأموریت «' + (W() ? W().shortTitle(D.missions[idx - 1].title) : D.missions[idx - 1].title) + '» را کامل کن 🔒';
+    if (W()?.toast) W().toast(msg); else HC()?.say?.(msg);
+  }
+
+  let lessonStep = 0;
+  let lessonSeenMax = 0;
+  let lessonChecks = {};
+  const STEP_LABELS = ['ببین و کشف کن', 'بفهم و یاد بگیر', 'نکتهٔ امتحانی و خودآزمایی'];
+
+  function openLesson(idx, step) {
+    if (isLocked(idx)) { lockedNotice(idx); renderHome(); return; }
+    if (idx !== mi || step === undefined) { lessonChecks = {}; lessonSeenMax = profile.lessons[D.missions[idx].id] ? 2 : 0; }
     mi = idx;
+    lessonStep = Math.max(0, Math.min(2, step || 0));
+    lessonSeenMax = Math.max(lessonSeenMax, lessonStep);
     stageStartedAt = Date.now();
     const m = D.missions[mi];
-    profile.lessons[m.id] = true;
-    saveState();
+    const L = (window.IranGeoLessons || {})[m.id];
+    const V = window.IranGeoLessonView;
+    const w = W();
+    if (!L || !V) return openLessonLegacy(m);
+    const seen = Boolean(profile.lessons[m.id]);
+    const allChecked = L.exam.check.every((q, i) => lessonChecks[i] === 'ok');
+    const canGo = seen || allChecked;
+
+    let body = '';
+    if (lessonStep === 0) {
+      const visual = L.see.map ? `<figure class="hw-figure iran-map-box ig-lesson-map">${V.lessonMap(L.see.map, D.mapPins)}<figcaption>${esc(L.see.title)}</figcaption></figure>` : V.visual(L.see.visual);
+      body = `
+        <div class="hw-hook"><span aria-hidden="true">🤔</span><span>${esc(L.hook)}</span></div>
+        ${w ? w.audioCard({ src: L.audio || '', text: L.narration, title: 'حکیم درس را برایت تعریف می‌کند', sub: (L.audio ? 'صدای فارسی حکیم' : 'صدای مرورگر') + ' · ' + L.lessonNo }) : ''}
+        <h3 class="hw-stage-title">${esc(L.see.title)}</h3>
+        <p style="margin:0 0 10px;color:var(--muted)">${esc(L.see.text)}</p>
+        <div class="hw-split">
+          ${visual}
+          <ul class="hw-legend">${L.see.legend.map((g) => `<li style="--c:${g.c}"><i aria-hidden="true"></i><b>${esc(g.t)}</b><small>${esc(g.d)}</small></li>`).join('')}</ul>
+        </div>`;
+    } else if (lessonStep === 1) {
+      body = `
+        <h3 class="hw-stage-title">${esc(L.learn.title)}</h3>
+        ${V.visual(L.learn.visual)}
+        <div class="hw-cards">${L.learn.cards.map((c, i) => `<article class="hw-ccard" style="--hw-c:${w ? w.color(i) : 'var(--primary)'}"><span class="ic" aria-hidden="true">${c.i}</span><h4>${esc(c.t)}</h4><p>${esc(c.d)}</p></article>`).join('')}</div>
+        ${L.learn.compare ? `<h3 class="hw-stage-title">${esc(L.learn.compare.title)}</h3><div class="hw-compare">
+          <div class="l"><h4>${esc(L.learn.compare.left.t)}</h4><ul>${L.learn.compare.left.items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>
+          <div class="vs" aria-hidden="true">⇄</div>
+          <div class="r"><h4>${esc(L.learn.compare.right.t)}</h4><ul>${L.learn.compare.right.items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div></div>` : ''}`;
+    } else {
+      body = `
+        <div class="hw-exam"><h3>📝 نکته‌های امتحانی این درس</h3><ol>${L.exam.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ol></div>
+        <h3 class="hw-stage-title" style="margin-top:16px">✅ خودآزمایی کوتاه (برای باز شدن چالش‌ها)</h3>
+        <div class="hw-check">${L.exam.check.map((q, qi2) => `
+          <div class="hw-q" data-q="${qi2}"><p>${fa(qi2 + 1)}) ${esc(q.q)}</p>
+            <div class="opts" role="group" aria-label="گزینه‌های پرسش ${fa(qi2 + 1)}">${q.o.map((o, oi) => `<button type="button" data-lq="${qi2}" data-lo="${oi}"${lessonChecks[qi2] === 'ok' && oi === q.a ? ' data-res="ok"' : ''}${lessonChecks[qi2] === 'ok' ? ' disabled' : ''}>${esc(o)}</button>`).join('')}</div>
+            <p class="why" role="status" aria-live="polite">${lessonChecks[qi2] === 'ok' ? '✅ ' + esc(q.why) : lessonChecks[qi2] === 'no' ? '🔁 دوباره فکر کن؛ متن درس را مرور کن.' : ''}</p>
+          </div>`).join('')}</div>`;
+    }
 
     main.innerHTML = `
-      <div class="paper-box">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-          <div>
-            <small style="color:var(--muted)">درسنامهٔ سفر · مأموریت ${fa(mi + 1)}</small>
-            <h2 style="margin:2px 0 0">${esc(m.title)}</h2>
+      <div class="paper-box ig-lesson">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+          <div class="hw-lhero">
+            <span class="hw-lhero-icon" aria-hidden="true">${m.icon}</span>
+            <div><span class="hw-lno">${esc(L.lessonNo)} · ${esc(L.pages)}</span><h2>درسنامهٔ مأموریت ${fa(mi + 1)}: ${esc(w ? w.shortTitle(m.title) : m.title)}</h2></div>
           </div>
           <button type="button" id="btnBackHome">🗺️ بازگشت به مأموریت‌ها</button>
         </div>
-        <div style="background:var(--primary-soft);border-right:4px solid var(--primary);padding:14px 16px;border-radius:14px;margin-bottom:14px">
-          <p style="margin:0">${esc(m.summary)}</p>
+        ${w ? w.steps(STEP_LABELS, lessonStep, lessonSeenMax) : ''}
+        ${body}
+        <div class="hw-lnav">
+          ${lessonStep > 0 ? '<button type="button" class="btn-soft" id="btnLessonPrev">→ گام قبل</button>' : '<span></span>'}
+          ${lessonStep < 2 ? '<button type="button" class="btn-primary" id="btnLessonNext">گام بعد ←</button>' :
+            `<span style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">${canGo ? '' : '<span class="hw-unlock-note">🔒 به هر دو پرسش درست پاسخ بده تا چالش‌ها باز شوند.</span>'}
+             <button type="button" class="btn-primary" id="btnGoTasks"${canGo ? '' : ' disabled'}>🎯 آماده‌ام! شروع ${fa(m.tasks.length)} چالش مأموریت ←</button></span>`}
         </div>
-        <div class="iran-map-box">
-          ${renderIranSvg('tehran', false)}
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-          <button type="button" class="btn-primary" id="btnGoTasks">🎯 آماده‌ام! شروع ۶ چالش مأموریت ←</button>
-          <button type="button" class="btn-soft" id="btnSpeakLesson">🔊 شنیدن خلاصهٔ درس</button>
-        </div>
-      </div>
-    `;
+      </div>`;
 
     $('btnBackHome').onclick = renderHome;
-    $('btnSpeakLesson').onclick = () => speakText(m.summary);
-    $('btnGoTasks').onclick = () => {
+    w?.bindAudio(main);
+    w?.bind(main, {});
+    main.querySelectorAll('[data-hw-step]').forEach((b) => { b.onclick = () => openLesson(mi, Number(b.dataset.hwStep)); });
+    if ($('btnLessonPrev')) $('btnLessonPrev').onclick = () => openLesson(mi, lessonStep - 1);
+    if ($('btnLessonNext')) $('btnLessonNext').onclick = () => { openLesson(mi, lessonStep + 1); main.scrollIntoView?.({ block: 'start' }); };
+    main.querySelectorAll('[data-lq]').forEach((b) => {
+      b.onclick = () => {
+        const qn = Number(b.dataset.lq), on = Number(b.dataset.lo);
+        const q = L.exam.check[qn];
+        lessonChecks[qn] = on === q.a ? 'ok' : 'no';
+        playTone(on === q.a ? 'win' : 'err');
+        if (L.exam.check.every((_, i) => lessonChecks[i] === 'ok') && !profile.lessons[m.id]) {
+          profile.lessons[m.id] = true;
+          saveState();
+          HC()?.say?.('آفرین! درسنامه را کامل کردی؛ حالا چالش‌های این مأموریت باز شد 🎯');
+        }
+        openLesson(mi, 2);
+        const again = main.querySelector(`[data-q="${qn}"] .why`);
+        if (again) again.focus?.();
+      };
+    });
+    if ($('btnGoTasks')) $('btnGoTasks').onclick = () => {
+      if (!profile.lessons[m.id]) { profile.lessons[m.id] = true; saveState(); }
       const firstOpen = Math.max(0, m.tasks.findIndex((t) => !profile.done[t.id]?.ok));
       openTask(mi, firstOpen);
     };
   }
 
+  function openLessonLegacy(m) {
+    profile.lessons[m.id] = true;
+    saveState();
+    main.innerHTML = `
+      <div class="paper-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+          <div><small style="color:var(--muted)">درسنامهٔ سفر · مأموریت ${fa(mi + 1)}</small><h2 style="margin:2px 0 0">${esc(m.title)}</h2></div>
+          <button type="button" id="btnBackHome">🗺️ بازگشت به مأموریت‌ها</button>
+        </div>
+        <div style="background:var(--primary-soft);border-right:4px solid var(--primary);padding:14px 16px;border-radius:14px;margin-bottom:14px"><p style="margin:0">${esc(m.summary)}</p></div>
+        <div class="iran-map-box">${renderIranSvg('tehran', false)}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <button type="button" class="btn-primary" id="btnGoTasks">🎯 آماده‌ام! شروع ${fa(m.tasks.length)} چالش مأموریت ←</button>
+          <button type="button" class="btn-soft" id="btnSpeakLesson">🔊 شنیدن خلاصهٔ درس</button>
+        </div>
+      </div>`;
+    $('btnBackHome').onclick = renderHome;
+    $('btnSpeakLesson').onclick = () => speakText(m.summary);
+    $('btnGoTasks').onclick = () => openTask(mi, Math.max(0, m.tasks.findIndex((t) => !profile.done[t.id]?.ok)));
+  }
+
   function openTask(missionIdx, taskIdx) {
+    if (isLocked(missionIdx)) { lockedNotice(missionIdx); renderHome(); return; }
+    const um = D.missions[missionIdx];
+    if (!profile.lessons[um.id] && missionSolved(um) === 0) {
+      W()?.toast?.('اول درسنامهٔ این مأموریت را ببین؛ بعد چالش‌ها باز می‌شوند 📖');
+      openLesson(missionIdx, 0);
+      return;
+    }
+    W()?.stopAudio?.();
     mi = missionIdx;
     qi = taskIdx;
     selectedPin = null;
@@ -568,6 +679,7 @@
     `;
 
     $('atlasBack').onclick = renderHome;
+    W()?.stopAudio?.();
     const pick = (id) => {
       atlasSelectedPin = id;
       playTone('tap');
@@ -585,18 +697,33 @@
     const done = totalSolved();
     const pct = Math.round((done / allTasks.length) * 100);
     const stars = totalStars();
+    const w = W();
+    w?.stopAudio?.();
+    const lessonsRead = D.missions.filter((m) => profile.lessons[m.id]).length;
+    const guidedCount = allTasks.filter((t) => profile.done[t.id]?.guided).length;
     main.innerHTML = `
       <div class="no-print" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px">
         <button type="button" id="certBack">🗺️ بازگشت به مأموریت‌ها</button>
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
-      <article class="cert-sheet" aria-label="گواهی‌نامهٔ ایران‌گرد کوچک">
-        <div style="text-align:center;border-bottom:2px dashed #c7dedb;padding-bottom:14px;margin-bottom:16px">
-          <div style="font-size:0.85rem;font-weight:800;color:#46615e">حکیمستان · مطالعات اجتماعی پایهٔ پنجم دبستان</div>
-          <h2 style="margin:6px 0;font-size:1.55rem">گواهی‌نامهٔ مهارت جغرافیای ایران («ایران‌گرد کوچک»)</h2>
-          <div style="font-size:1.65rem;font-weight:900;color:#0d6859;margin:8px 0">${esc(profile.name)}</div>
-          <div>رتبه: <b>${esc(rankTitle())}</b> · ستاره: <b>${fa(stars)} / ${fa(D.missions.length * 3)}</b> · پیشرفت: <b>${fa(pct)}٪</b></div>
+      <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ ایران‌گرد کوچک">
+        <div class="hw-cert-top" style="border-bottom:2px dashed #e5d3a5;padding-bottom:14px;margin-bottom:6px">
+          ${w ? w.seal('ایران‌گرد کوچک', done === allTasks.length ? 'مهر پایان سفر' : 'مهر پیشرفت') : ''}
+          <div style="text-align:center">
+            <div style="font-size:0.85rem;font-weight:800;color:#6b5a3a">حکیمستان · مطالعات اجتماعی پایهٔ پنجم دبستان · درس‌های ۵ تا ۱۱</div>
+            <h2 style="margin:6px 0;font-size:1.7rem">${done === allTasks.length ? 'گواهی‌نامهٔ پایان سفر ایران‌گردی' : 'گواهی‌نامهٔ پیشرفت ایران‌گردی'}</h2>
+            <div style="font-size:.9rem;color:#5a4a2a">این گواهی‌نامه با افتخار تقدیم می‌شود به</div>
+            <div class="cert-student-name" style="color:#0d6859;margin:4px 0">${esc(profile.name)}</div>
+            <div>رتبه: <b>${esc(rankTitle())}</b> · پیشرفت: <b>${fa(pct)}٪</b></div>
+          </div>
+          ${w ? w.certHakim('') : ''}
         </div>
+        ${w ? w.certStats([
+          { icon: '⭐', value: fa(stars) + ' / ' + fa(D.missions.length * 3), label: 'ستاره' },
+          { icon: '🎯', value: fa(done) + ' / ' + fa(allTasks.length), label: 'چالش حل‌شده' },
+          { icon: '📖', value: fa(lessonsRead) + ' / ' + fa(D.missions.length), label: 'درسنامهٔ کامل' },
+          { icon: '🔥', value: fa(profile.bestCombo), label: 'رکورد پاسخ پیاپی' }
+        ]) : ''}
         <h3 style="margin:0 0 8px;font-size:1rem">فهرست مهارت‌های شش‌گانهٔ جغرافیای ایران (درس‌های ۵ تا ۱۱):</h3>
         <ul class="cert-skills-grid">
           ${D.missions.map((m) => {
@@ -605,12 +732,16 @@
             return `<li class="${full ? 'mastered' : ''}"><b>${full ? '☑' : '☐'} ${esc(m.title)}</b><br><small>${fa(s)} از ${fa(m.tasks.length)} چالش (${esc(m.badge)})</small></li>`;
           }).join('')}
         </ul>
-        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid #c7dedb;padding-top:10px;font-size:0.82rem;color:#46615e">
-          <span>تاریخ صدور: ${new Date().toLocaleDateString('fa-IR')}</span>
-          <span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>
+        <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
+          <p><b>حکیم:</b> ${done === allTasks.length ? 'آفرین ایران‌گرد کوچک! از کرانهٔ خزر تا بندر چابهار، نقشهٔ ایران را مثل یک جغرافی‌دان خواندی. به تو افتخار می‌کنم!' : 'سفرت خوب پیش می‌رود! هر مأموریتی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. ادامه بده!'}</p></div>
+        <div class="hw-cert-foot">
+          <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>${fa(guidedCount)} پاسخ با راهنمای قطب‌نما</span></div>
+          ${w ? w.signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>'}
         </div>
+        <p class="hw-cert-note">این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
       </article>
     `;
+    w?.bind(main, {});
     $('certBack').onclick = renderHome;
     $('btnPrintCert').onclick = () => window.print();
   }

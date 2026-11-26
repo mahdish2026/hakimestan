@@ -7,6 +7,9 @@
  *  • card(solved,total,i,n)  وضعیت، رنگ، نشان و نوار پیشرفت هر کارت ایستگاه
  *  • certBanner(opts)        بنر پایانی گواهی‌نامه با حلقهٔ پیشرفت
  *  • celebrate(opts)         جشن پایان هر ایستگاه (ستاره‌ها، نشان، کاغذرنگی، ادامهٔ مسیر)
+ *  • isLocked/toast/steps     قفل مرحله‌ای «اول درسنامه»، پیام حکیم و گام‌شمار درسنامه
+ *  • audioCard/bindAudio     پخش‌کنندهٔ گفتار فارسی حکیم با متن کامل (بدون پخش خودکار)
+ *  • seal/signature/certHakim/certStats  مهر طلایی، امضا، چهرهٔ حکیم و کارت‌های آمار گواهی‌نامه
  *
  * بدون وابستگی؛ اگر بارگذاری نشود، بازی‌ها با ظاهر سادهٔ قبلی کار می‌کنند.
  */
@@ -31,8 +34,9 @@
     return s;
   }
 
-  function stateOf(solved, total, idx, nextIdx) {
+  function stateOf(solved, total, idx, nextIdx, locked) {
     if (total && solved >= total) return 'done';
+    if (locked) return 'locked';
     if (idx === nextIdx) return 'current';
     if (solved > 0) return 'progress';
     return 'todo';
@@ -66,13 +70,13 @@
     var fill = n > 1 ? (allDone ? 100 : (nextIdx / (n - 1)) * 100) : 100;
     var pct = o.total ? (o.done / o.total) * 100 : (doneCount / n) * 100;
     var nodes = units.map(function (u, i) {
-      var st = stateOf(u.solved, u.total, i, allDone ? -1 : nextIdx);
+      var st = stateOf(u.solved, u.total, i, allDone ? -1 : nextIdx, u.locked);
       var title = shortTitle(u.title);
-      var status = st === 'done' ? 'کامل شد' : st === 'current' ? 'پیشنهاد حکیم برای ادامه' : st === 'progress' ? fa(u.solved) + ' از ' + fa(u.total) + ' حل شده' : 'هنوز شروع نشده';
+      var status = st === 'locked' ? 'قفل؛ اول ' + word + ' قبلی را کامل کن' : st === 'done' ? 'کامل شد' : st === 'current' ? 'پیشنهاد حکیم برای ادامه' : st === 'progress' ? fa(u.solved) + ' از ' + fa(u.total) + ' حل شده' : 'هنوز شروع نشده';
       return '<li class="hw-node" data-state="' + st + '" style="--hw-c:' + color(i) + '">' +
         (st === 'current' ? '<span class="hw-here" aria-hidden="true">تو اینجایی</span>' : '') +
         '<button type="button" ' + attr + '="' + i + '" aria-label="' + esc(word + ' ' + fa(i + 1) + ': ' + title + ' — ' + status) + '">' +
-        '<span class="hw-dot" aria-hidden="true">' + (st === 'done' ? '✓' : fa(i + 1)) + '</span></button>' +
+        '<span class="hw-dot" aria-hidden="true">' + (st === 'done' ? '✓' : st === 'locked' ? '🔒' : fa(i + 1)) + '</span></button>' +
         '<span class="hw-node-label" aria-hidden="true">' + esc(title) + '</span></li>';
     }).join('');
     return '<section class="hw-journey" aria-labelledby="hwJourneyTitle">' +
@@ -87,10 +91,10 @@
   }
 
   /* ───────────── اجزای کارت ایستگاه ───────────── */
-  function card(solved, total, idx, nextIdx) {
-    var st = stateOf(solved, total, idx, nextIdx);
+  function card(solved, total, idx, nextIdx, locked) {
+    var st = stateOf(solved, total, idx, nextIdx, locked);
     var pct = total ? Math.round((solved / total) * 100) : 0;
-    var badge = st === 'done' ? '<span class="hw-badge hw-badge-done">✓ کامل شد</span>' :
+    var badge = st === 'locked' ? '<span class="hw-badge hw-badge-locked">🔒 قفل · اول مرحلهٔ قبل</span>' : st === 'done' ? '<span class="hw-badge hw-badge-done">✓ کامل شد</span>' :
       st === 'current' ? '<span class="hw-badge hw-badge-next">✨ پیشنهاد حکیم</span>' :
       st === 'progress' ? '<span class="hw-badge hw-badge-progress">در حال انجام</span>' : '';
     return {
@@ -231,6 +235,7 @@
   function bind(root, handlers) {
     handlers = handlers || {};
     if (!root || !root.querySelectorAll) return;
+    if (!root.querySelector('[data-hw-audio]')) stopAudio();
     root.querySelectorAll('[data-hw-cert]').forEach(function (b) { if (handlers.cert) b.onclick = handlers.cert; });
     try { if (global.HakimCompanion && global.HakimCompanion.paintFaces) global.HakimCompanion.paintFaces(root); } catch (_) {}
   }
@@ -308,6 +313,163 @@
     return wrap;
   }
 
+
+  /* ───────────── قفل مرحله‌ای (درسنامه اول، بعد تمرین؛ ایستگاه‌ها به ترتیب) ─────────────
+     units: [{solved,total,seen}] — ایستگاهی که قبلاً شروع/دیده شده همیشه باز می‌ماند (سازگاری با پیشرفت قدیمی). */
+  function isLocked(units, i) {
+    if (i <= 0) return false;
+    var u = units[i] || {};
+    if (u.seen || u.solved > 0) return false;
+    var prev = units[i - 1] || {};
+    return !(prev.total && prev.solved >= prev.total);
+  }
+
+  var toastTimer = null;
+  function toast(msg) {
+    if (typeof document === 'undefined') return;
+    var el = document.getElementById('hwToast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'hwToast';
+      el.className = 'hw-toast';
+      el.setAttribute('role', 'status');
+      el.setAttribute('aria-live', 'polite');
+      document.body.appendChild(el);
+    }
+    el.innerHTML = '<span class="hw-toast-face" data-hk-face="wise" aria-hidden="true"></span><span>' + esc(msg) + '</span>';
+    try { if (global.HakimCompanion && global.HakimCompanion.paintFaces) global.HakimCompanion.paintFaces(el); } catch (_) {}
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4200);
+  }
+
+  /* ───────────── گام‌شمار درسنامه ───────────── */
+  function steps(labels, cur, seenMax) {
+    var max = Math.max(cur, seenMax || 0);
+    return '<nav class="hw-steps" aria-label="گام‌های درسنامه"><ol>' + labels.map(function (l, i) {
+      var st = i < cur ? 'done' : i === cur ? 'current' : 'todo';
+      return '<li data-state="' + st + '"><button type="button" data-hw-step="' + i + '"' + (i > max ? ' disabled' : '') +
+        (i === cur ? ' aria-current="step"' : '') + '><span class="hw-step-dot" aria-hidden="true">' + (st === 'done' ? '✓' : fa(i + 1)) + '</span>' +
+        '<span class="hw-step-label">' + esc(l) + '</span></button></li>';
+    }).join('') + '</ol></nav>';
+  }
+
+  /* ───────────── پخش‌کنندهٔ گفتار حکیم (بدون پخش خودکار، با متن کامل) ───────────── */
+  var player = { audio: null, btn: null, raf: 0, speaking: false };
+  function fmtTime(s) {
+    s = Math.max(0, Math.floor(s || 0));
+    return fa(Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'));
+  }
+  function audioCard(o) {
+    o = o || {};
+    return '<div class="hw-audio" data-hw-audio data-src="' + esc(o.src || '') + '">' +
+      '<span class="hw-audio-face" data-hk-face="wise" aria-hidden="true"></span>' +
+      '<div class="hw-audio-main">' +
+      '<div class="hw-audio-head"><b>' + esc(o.title || 'درسنامهٔ صوتی حکیم') + '</b><small>' + esc(o.sub || 'صدای فارسی · بدون پخش خودکار') + '</small></div>' +
+      '<div class="hw-audio-row"><button type="button" class="hw-audio-play" aria-pressed="false">▶ گوش کن</button>' +
+      '<div class="hw-audio-bar" aria-hidden="true"><span></span></div><span class="hw-audio-time" aria-hidden="true">' + fmtTime(0) + '</span></div>' +
+      '<details class="hw-audio-tx"><summary>📜 متن کامل گفتار حکیم</summary><p>' + esc(o.text || '') + '</p></details>' +
+      '</div></div>';
+  }
+  function stopAudio() {
+    try { if (player.audio) { player.audio.pause(); } } catch (_) {}
+    try { if (player.speaking && global.speechSynthesis) global.speechSynthesis.cancel(); } catch (_) {}
+    player.speaking = false;
+    cancelAnimationFrame(player.raf);
+    if (player.btn) { player.btn.textContent = '▶ گوش کن'; player.btn.setAttribute('aria-pressed', 'false'); }
+  }
+  function bindAudio(root) {
+    stopAudio();
+    player.btn = null;
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('[data-hw-audio]').forEach(function (box) {
+      var btn = box.querySelector('.hw-audio-play');
+      var bar = box.querySelector('.hw-audio-bar span');
+      var time = box.querySelector('.hw-audio-time');
+      var src = box.getAttribute('data-src');
+      var text = (box.querySelector('.hw-audio-tx p') || {}).textContent || '';
+      function speakFallback() {
+        if (!global.speechSynthesis || !text) { toast('پخش صدا در این مرورگر ممکن نیست؛ متن کامل گفتار را باز کن و بخوان.'); return; }
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang = 'fa-IR'; u.rate = 0.95;
+        u.onend = function () { player.speaking = false; btn.textContent = '▶ گوش کن'; btn.setAttribute('aria-pressed', 'false'); };
+        global.speechSynthesis.cancel();
+        global.speechSynthesis.speak(u);
+        player.speaking = true;
+        btn.textContent = '⏸ توقف'; btn.setAttribute('aria-pressed', 'true');
+      }
+      function tick() {
+        var a = player.audio;
+        if (!a || player.btn !== btn) return;
+        if (a.duration) bar.style.width = (100 * a.currentTime / a.duration).toFixed(1) + '%';
+        time.textContent = fmtTime(a.currentTime) + (a.duration ? ' / ' + fmtTime(a.duration) : '');
+        if (!a.paused) player.raf = requestAnimationFrame(tick);
+      }
+      btn.onclick = function () {
+        var playing = btn.getAttribute('aria-pressed') === 'true';
+        if (playing) { stopAudio(); return; }
+        stopAudio();
+        player.btn = btn;
+        if (!src || typeof Audio === 'undefined') { speakFallback(); return; }
+        if (!player.audio) { player.audio = new Audio(); player.audio.preload = 'none'; }
+        var a = player.audio;
+        if (a.getAttribute('data-src') !== src) { a.src = src; a.setAttribute('data-src', src); }
+        a.onended = function () { stopAudio(); bar.style.width = '100%'; };
+        a.onerror = function () { if (player.btn === btn && !player.speaking) { stopAudio(); player.btn = btn; speakFallback(); } };
+        var p = a.play();
+        btn.textContent = '⏸ توقف'; btn.setAttribute('aria-pressed', 'true');
+        if (p && p.catch) p.catch(function (err) {
+          if (player.btn !== btn || !a.paused || player.speaking) return;
+          stopAudio();
+          // فایل صوتی پیدا نشد یا پشتیبانی نشد ← گفتار فارسی مرورگر
+          if (err && err.name === 'NotSupportedError') { player.btn = btn; speakFallback(); }
+        });
+        player.raf = requestAnimationFrame(tick);
+      };
+      box.querySelector('.hw-audio-bar').parentNode.onclick = function (e) {
+        var a = player.audio;
+        if (!a || player.btn !== btn || !a.duration || !e.target.closest('.hw-audio-bar')) return;
+        var r = e.target.closest('.hw-audio-bar').getBoundingClientRect();
+        a.currentTime = a.duration * Math.min(1, Math.max(0, (r.right - e.clientX) / r.width));
+        tick();
+      };
+    });
+  }
+
+  /* ───────────── اجزای گرافیکی گواهی‌نامه ───────────── */
+  var sealSeq = 0;
+  function seal(label, sub) {
+    var id = 'hwSeal' + (++sealSeq);
+    var rays = '';
+    for (var i = 0; i < 24; i++) {
+      var a = (i / 24) * Math.PI * 2, a2 = a + Math.PI / 24;
+      rays += (i ? 'L' : 'M') + (70 + 58 * Math.cos(a)).toFixed(1) + ' ' + (66 + 58 * Math.sin(a)).toFixed(1) + 'L' + (70 + 50 * Math.cos(a2)).toFixed(1) + ' ' + (66 + 50 * Math.sin(a2)).toFixed(1);
+    }
+    return '<div class="hw-seal" role="img" aria-label="' + esc('مهر طلایی ' + (label || 'حکیمستان')) + '"><svg viewBox="0 0 140 170" aria-hidden="true" focusable="false"><defs>' +
+      '<linearGradient id="' + id + 'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1bf"/><stop offset=".45" stop-color="#f1c453"/><stop offset="1" stop-color="#b9822a"/></linearGradient>' +
+      '<linearGradient id="' + id + 'r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d64545"/><stop offset="1" stop-color="#8e1f1f"/></linearGradient></defs>' +
+      '<path d="M48 104l-16 58 24-11 12 20 14-60z" fill="url(#' + id + 'r)"/><path d="M92 104l16 58-24-11-12 20-14-60z" fill="url(#' + id + 'r)"/>' +
+      '<path d="' + rays + 'Z" fill="url(#' + id + 'g)" stroke="#9a6a1f" stroke-width="1.2"/>' +
+      '<circle cx="70" cy="66" r="44" fill="url(#' + id + 'g)" stroke="#8a5f1c" stroke-width="2"/>' +
+      '<circle cx="70" cy="66" r="36" fill="none" stroke="#fff6dc" stroke-width="1.5" stroke-dasharray="3 3"/>' +
+      '<path d="M70 38l7.6 15.4 17 2.5-12.3 12 2.9 16.9L70 76.8 54.8 84.8l2.9-16.9-12.3-12 17-2.5z" fill="#7a5214"/>' +
+      '<text x="70" y="100" text-anchor="middle" font-size="9.5" font-weight="900" fill="#5a3b0c">' + esc(label || 'حکیمستان') + '</text>' +
+      '</svg>' + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>';
+  }
+  function signature(name, role) {
+    return '<div class="hw-sign"><svg viewBox="0 0 160 46" aria-hidden="true" focusable="false"><path d="M8 32c14-22 22-26 26-14s-6 18 2 10 14-24 22-18-4 22 6 16 12-18 20-12 2 14 12 10 14-12 22-8 12 6 30-2" fill="none" stroke="#1f3a68" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+      '<span class="hw-sign-line"></span><b>' + esc(name || 'مهدی شریفیان') + '</b><small>' + esc(role || 'طراح و توسعه‌دهنده · حکیمستان') + '</small></div>';
+  }
+  function certHakim(text) {
+    return '<div class="hw-cert-hakim"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>' +
+      (text ? '<p><b>حکیم:</b> ' + esc(text) + '</p>' : '') + '</div>';
+  }
+  function certStats(items) {
+    return '<div class="hw-cert-stats">' + (items || []).map(function (it, i) {
+      return '<div class="hw-cert-stat" style="--hw-c:' + color(i + 1) + '"><span aria-hidden="true">' + esc(it.icon || '⭐') + '</span><b>' + esc(it.value) + '</b><small>' + esc(it.label) + '</small></div>';
+    }).join('') + '</div>';
+  }
+
   global.HakimWorlds = {
     art: art,
     journey: journey,
@@ -317,6 +479,16 @@
     bind: bind,
     celebrate: celebrate,
     shortTitle: shortTitle,
-    color: color
+    color: color,
+    isLocked: isLocked,
+    toast: toast,
+    steps: steps,
+    audioCard: audioCard,
+    bindAudio: bindAudio,
+    stopAudio: stopAudio,
+    seal: seal,
+    signature: signature,
+    certHakim: certHakim,
+    certStats: certStats
   };
 })(typeof window !== 'undefined' ? window : this);

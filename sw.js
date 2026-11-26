@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.77';
+const VERSION = 'hakim-v1.5.78';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -130,11 +130,14 @@ const PREFETCH_PAGES = [
   './games/farsi5-hamava.html',
   './games/farsi5-hamava/style.css',
   './games/farsi5-hamava/data.js',
+  './games/farsi5-hamava/lessons.js',
   './games/farsi5-hamava/app.js',
   './games/iran-geography.html',
   './games/iran-geography/style.css',
   './games/iran-geography/map-geo.js',
   './games/iran-geography/data.js',
+  './games/iran-geography/lessons.js',
+  './games/iran-geography/lesson-view.js',
   './games/iran-geography/app.js',
   './kelasyar.html',
   './masir-yadgiri.html',
@@ -440,6 +443,13 @@ function isExtractedAudio(url) {
   const prefix=new URL('assets/audio/',self.registration.scope);
   return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^games-lab2d-voice-[1-5]\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
 }
+// گفتار فارسی حکیم در درسنامه‌های هم‌آواستان و ایران‌گرد کوچک
+function isPhase5Audio(url) {
+  const scope = new URL(self.registration.scope);
+  if (url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname)) return false;
+  const rel = url.pathname.slice(scope.pathname.length);
+  return /^games\/iran-geography\/audio\/m[1-6]-[a-z]+\.mp3$/.test(rel) || /^games\/farsi5-hamava\/audio\/ch[1-6]-[a-z-]+\.mp3$/.test(rel);
+}
 async function handleGeometryAudio(request) {
   let full = await matchSafe(request.url);
   if (!full || full.status !== 200) {
@@ -481,7 +491,7 @@ self.addEventListener('fetch', (event) => {
   // External APIs and explicitly private requests must never use app storage.
   if (url.origin !== new URL(self.registration.scope).origin || request.cache === 'no-store' || request.headers.has('authorization')) return;
 
-  if (isGeometryAudio(url) || isDecimalAudio(url) || isTimeMissionAudio(url) || isExtractedAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
+  if (isGeometryAudio(url) || isDecimalAudio(url) || isTimeMissionAudio(url) || isExtractedAudio(url) || isPhase5Audio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
   // سایر Rangeها بدون تغییر به شبکه می‌روند.
   if (request.headers.get('range')) return;
 

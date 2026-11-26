@@ -261,7 +261,7 @@
         </div>
       </section>
 
-      ${W() ? W().journey(D.chapters.map((u) => ({ title: u.title, solved: chapterSolved(u), total: u.tasks.length })), { word: 'فصل', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
+      ${W() ? W().journey(D.chapters.map((u, i) => ({ title: u.title, solved: chapterSolved(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'فصل', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
 
       <section aria-labelledby="chaptersHeading">
         <h2 id="chaptersHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">📚 شش فصل املا و واژه‌شناسی پایهٔ پنجم</h2>
@@ -270,7 +270,9 @@
             const s = chapterSolved(c);
             const st = chapterStars(c);
             const full = s === c.tasks.length;
-            const hw = W() ? W().card(s, c.tasks.length, idx, nextIdx) : null;
+            const locked = isLocked(idx);
+            const seen = Boolean(profile.lessons[c.id]) || s > 0;
+            const hw = W() ? W().card(s, c.tasks.length, idx, nextIdx, locked) : null;
             return `<article class="chapter-card ${full ? 'done' : ''} ${hw ? 'hw-card' : ''}" ${hw ? hw.attrs : ''}>
               <div class="chapter-top">
                 <span class="chapter-icon" aria-hidden="true">${c.icon}${hw ? hw.num : ''}</span>
@@ -283,8 +285,10 @@
               <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:10px;border-top:1px dashed var(--line)">
                 <small><b>${fa(s)} / ${fa(c.tasks.length)}</b> چالش</small>
                 <div style="display:flex;gap:6px">
-                  <button type="button" class="btn-soft" data-lesson="${idx}">📖 رمز یادیار</button>
-                  <button type="button" class="btn-primary" data-play="${idx}">${full ? 'مرور' : 'شروع ←'}</button>
+                  ${locked ? `<button type="button" class="btn-soft" data-lesson="${idx}" aria-label="فصل ${fa(idx + 1)} قفل است؛ اول فصل قبلی را کامل کن">🔒 قفل</button>` :
+                    seen ? `<button type="button" class="btn-soft" data-lesson="${idx}">📖 درسنامه</button>
+                  <button type="button" class="btn-primary" data-play="${idx}">${full ? 'مرور چالش‌ها' : '🎯 چالش‌ها ←'}</button>` :
+                    `<button type="button" class="btn-primary" data-lesson="${idx}">📖 شروع با درسنامه ←</button>`}
                 </div>
               </div>
             </article>`;
@@ -314,51 +318,167 @@
     });
   }
 
-  function openLesson(chapterIdx) {
+  function unitsInfo() {
+    return D.chapters.map((c) => ({ solved: chapterSolved(c), total: c.tasks.length, seen: Boolean(profile.lessons[c.id]) }));
+  }
+  function isLocked(idx) {
+    const w = W();
+    const u = unitsInfo();
+    if (w && w.isLocked) return w.isLocked(u, idx);
+    return idx > 0 && !u[idx].seen && !u[idx].solved && u[idx - 1].solved < u[idx - 1].total;
+  }
+  function lockedNotice(idx) {
+    const msg = 'این فصل هنوز قفل است؛ اول فصل «' + (W() ? W().shortTitle(D.chapters[idx - 1].title) : D.chapters[idx - 1].title) + '» را کامل کن 🔒';
+    if (W()?.toast) W().toast(msg); else HC()?.say?.(msg);
+  }
+  const DIACRITICS = /[\u064B-\u0652\u0670]/;
+  function markWord(word, other) {
+    const A = Array.from(String(word)), B = Array.from(String(other || ''));
+    if (A.length === B.length) return A.map((ch, i) => (ch !== B[i] && !DIACRITICS.test(ch) && /[\u0600-\u06FF]/.test(ch) ? `<mark class="hm-diff">${esc(ch)}</mark>` : esc(ch))).join('');
+    const otherSet = new Set(B);
+    return A.map((ch) => (!DIACRITICS.test(ch) && ch.trim() && !otherSet.has(ch) && /[\u0600-\u06FF]/.test(ch) ? `<mark class="hm-diff">${esc(ch)}</mark>` : esc(ch))).join('');
+  }
+
+  let lessonStep = 0;
+  let lessonSeenMax = 0;
+  let lessonChecks = {};
+  const STEP_LABELS = ['بشنو و مقایسه کن', 'رمز تصویری و هم‌خانواده‌ها', 'خودآزمایی کوتاه'];
+
+  function openLesson(chapterIdx, step) {
+    if (isLocked(chapterIdx)) { lockedNotice(chapterIdx); renderMap(); return; }
+    if (chapterIdx !== ci || step === undefined) { lessonChecks = {}; lessonSeenMax = profile.lessons[D.chapters[chapterIdx].id] ? 2 : 0; }
     ci = chapterIdx;
+    lessonStep = Math.max(0, Math.min(2, step || 0));
+    lessonSeenMax = Math.max(lessonSeenMax, lessonStep);
     stageStartedAt = Date.now();
     const ch = D.chapters[ci];
-    profile.lessons[ch.id] = true;
-    saveState();
+    const L = (window.HamavaLessons || {})[ch.id];
+    const w = W();
+    if (!L) return openLessonLegacy(ch);
+    const seen = Boolean(profile.lessons[ch.id]);
+    const allChecked = L.check.every((q, i) => lessonChecks[i] === 'ok');
+    const canGo = seen || allChecked;
+
+    let body = '';
+    if (lessonStep === 0) {
+      body = `
+        <div class="hm-concept">
+          <div class="hm-letters" aria-hidden="true">${L.letters.map((l, i) => `<span class="hm-tile" style="--d:${i * 0.12}s">${esc(l)}</span>${i < L.letters.length - 1 ? '<span class="hm-eq">=</span>' : ''}`).join('')}<span class="hm-wave">🔊 «${esc(L.sound)}»</span></div>
+          <p>${esc(L.concept)}</p>
+        </div>
+        ${w ? w.audioCard({ src: L.audio || '', text: L.narration, title: 'حکیم رمزهای این فصل را می‌گوید', sub: (L.audio ? 'صدای فارسی حکیم' : 'صدای مرورگر') + ' · فصل ' + fa(ci + 1) }) : ''}
+        <h3 class="hw-stage-title">${L.steps ? 'چهار گام سرویراستار' : 'جفت‌های هم‌آوای این فصل را مقایسه کن'}</h3>
+        ${L.steps ? `<ol class="hm-editor-steps">${L.steps.map((s) => `<li><span aria-hidden="true">${s.i}</span><b>${esc(s.t)}</b><small>${esc(s.d)}</small></li>`).join('')}</ol>` : ''}
+        <div class="hm-pairs">${L.pairs.map((p) => `
+          <article class="hm-pair">
+            <div class="hm-word"><span class="hm-ic" aria-hidden="true">${p.a.icon}</span><b class="hm-w">${markWord(p.a.w, p.b.w)}</b><small>${esc(p.a.m)}</small></div>
+            <span class="hm-vs" aria-hidden="true">≠</span>
+            <div class="hm-word"><span class="hm-ic" aria-hidden="true">${p.b.icon}</span><b class="hm-w">${markWord(p.b.w, p.a.w)}</b><small>${esc(p.b.m)}</small></div>
+          </article>`).join('')}</div>
+        <p class="hm-legend-note">حرف‌هایی که <mark class="hm-diff">رنگی</mark> شده‌اند، تفاوت املای دو واژه است؛ صدایشان یکی است!</p>`;
+    } else if (lessonStep === 1) {
+      body = `
+        <h3 class="hw-stage-title">رمز تصویری هر واژه و خانوادهٔ آن</h3>
+        <div class="hm-mnemo">${L.pairs.map((p, i) => `
+          <article class="hm-mcard" style="--hw-c:${w ? w.color(i) : 'var(--primary)'}">
+            <div class="hm-mside"><span class="hm-big" aria-hidden="true">${p.a.icon}</span><b>${esc(p.a.w)}</b><small>${esc(p.a.m)}</small>
+              ${p.a.fam.length ? `<div class="hm-fam" aria-label="هم‌خانواده‌ها">${p.a.fam.map((f) => `<span>${esc(f)}</span>`).join('')}</div>` : ''}</div>
+            <div class="hm-mside"><span class="hm-big" aria-hidden="true">${p.b.icon}</span><b>${esc(p.b.w)}</b><small>${esc(p.b.m)}</small>
+              ${p.b.fam.length ? `<div class="hm-fam" aria-label="هم‌خانواده‌ها">${p.b.fam.map((f) => `<span>${esc(f)}</span>`).join('')}</div>` : ''}</div>
+            <p class="hm-hint">💡 ${esc(p.hint)}</p>
+          </article>`).join('')}</div>
+        <div class="hw-exam" style="margin-top:12px"><h3>📏 ${esc(L.rule.t)}</h3><p style="margin:0;line-height:2.1">${esc(L.rule.d)}</p></div>
+        <details class="hm-more"><summary>📚 رمزهای کتاب برای این فصل (${fa(ch.pairs.length)} جفت)</summary>
+          <ul>${ch.pairs.map((p) => `<li><b>${esc(p.a)}</b> ⚡ <b>${esc(p.b)}</b><br><small>${esc(p.tip)}</small></li>`).join('')}</ul></details>`;
+    } else {
+      body = `
+        <div class="hw-exam"><h3>📝 پیش از چالش‌ها یادت باشد</h3><ol>
+          <li>اوّل معنای جمله را بفهم؛ بعد سراغ املا برو.</li>
+          <li>برای واژهٔ مشکوک یک هم‌خانواده بساز تا حرف ریشه معلوم شود.</li>
+          <li>${esc(L.rule.d)}</li></ol></div>
+        <h3 class="hw-stage-title" style="margin-top:16px">✅ خودآزمایی کوتاه (برای باز شدن چالش‌ها)</h3>
+        <div class="hw-check">${L.check.map((q, qn) => `
+          <div class="hw-q" data-q="${qn}"><p>${fa(qn + 1)}) ${esc(q.q)}</p>
+            <div class="opts" role="group" aria-label="گزینه‌های پرسش ${fa(qn + 1)}">${q.o.map((o, oi) => `<button type="button" data-lq="${qn}" data-lo="${oi}"${lessonChecks[qn] === 'ok' && oi === q.a ? ' data-res="ok"' : ''}${lessonChecks[qn] === 'ok' ? ' disabled' : ''}>${esc(o)}</button>`).join('')}</div>
+            <p class="why" role="status" aria-live="polite">${lessonChecks[qn] === 'ok' ? '✅ ' + esc(q.why) : lessonChecks[qn] === 'no' ? '🔁 دوباره فکر کن؛ رمز و هم‌خانواده را به یاد بیاور.' : ''}</p>
+          </div>`).join('')}</div>`;
+    }
 
     main.innerHTML = `
-      <div class="paper-box">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-          <div>
-            <small style="color:var(--muted)">درسنامهٔ یادیار · فصل ${fa(ci + 1)}</small>
-            <h2 style="margin:2px 0 0">${esc(ch.title)}</h2>
+      <div class="paper-box hm-lesson">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+          <div class="hw-lhero">
+            <span class="hw-lhero-icon" aria-hidden="true">${ch.icon}</span>
+            <div><span class="hw-lno">درسنامهٔ یادیار · فصل ${fa(ci + 1)} از ${fa(D.chapters.length)}</span><h2>${esc(w ? w.shortTitle(ch.title) : ch.title)}</h2></div>
           </div>
           <button type="button" id="lessonBackMap">🗺️ بازگشت به نقشهٔ فصل‌ها</button>
         </div>
-        <p style="margin-top:0;color:var(--muted)">قبل از شروع چالش‌ها، به رمزهای تصویری و معنایی هر جفت واژه دقت کن تا دیگر هیچ‌وقت در املا جابه‌جایشان نکنی:</p>
-
-        <div class="pairs-grid">
-          ${ch.pairs.map((p) => `
-            <article class="pair-card">
-              <div class="pair-words">${esc(p.a)}<br>⚡ ${esc(p.b)}</div>
-              <span class="mnemonic-pill">💡 ${esc(p.tip)}</span>
-            </article>
-          `).join('')}
+        ${w ? w.steps(STEP_LABELS, lessonStep, lessonSeenMax) : ''}
+        ${body}
+        <div class="hw-lnav">
+          ${lessonStep > 0 ? '<button type="button" class="btn-soft" id="btnLessonPrev">→ گام قبل</button>' : '<span></span>'}
+          ${lessonStep < 2 ? '<button type="button" class="btn-primary" id="btnLessonNext">گام بعد ←</button>' :
+            `<span style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">${canGo ? '' : '<span class="hw-unlock-note">🔒 به هر دو پرسش درست پاسخ بده تا چالش‌ها باز شوند.</span>'}
+             <button type="button" class="btn-primary" id="btnStartChapterTasks"${canGo ? '' : ' disabled'}>🎯 یاد گرفتم! ورود به ${fa(ch.tasks.length)} چالش این فصل ←</button></span>`}
         </div>
-
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-          <button type="button" class="btn-primary" id="btnStartChapterTasks">🎯 یاد گرفتم! ورود به ۶ چالش این فصل ←</button>
-          <button type="button" class="btn-soft" id="btnReadPairs">🔊 شنیدن رمزهای این فصل</button>
-        </div>
-      </div>
-    `;
+      </div>`;
 
     $('lessonBackMap').onclick = renderMap;
-    $('btnStartChapterTasks').onclick = () => {
+    w?.bind(main, {});
+    w?.bindAudio(main);
+    main.querySelectorAll('[data-hw-step]').forEach((b) => { b.onclick = () => openLesson(ci, Number(b.dataset.hwStep)); });
+    if ($('btnLessonPrev')) $('btnLessonPrev').onclick = () => openLesson(ci, lessonStep - 1);
+    if ($('btnLessonNext')) $('btnLessonNext').onclick = () => { openLesson(ci, lessonStep + 1); main.scrollIntoView?.({ block: 'start' }); };
+    main.querySelectorAll('[data-lq]').forEach((b) => {
+      b.onclick = () => {
+        const qn = Number(b.dataset.lq), on = Number(b.dataset.lo);
+        const q = L.check[qn];
+        lessonChecks[qn] = on === q.a ? 'ok' : 'no';
+        playTone(on === q.a ? 'win' : 'err');
+        if (L.check.every((_, i) => lessonChecks[i] === 'ok') && !profile.lessons[ch.id]) {
+          profile.lessons[ch.id] = true;
+          saveState();
+          HC()?.say?.('آفرین! رمزهای این فصل را یاد گرفتی؛ حالا چالش‌ها باز شد 🎯');
+        }
+        openLesson(ci, 2);
+      };
+    });
+    if ($('btnStartChapterTasks')) $('btnStartChapterTasks').onclick = () => {
+      if (!profile.lessons[ch.id]) { profile.lessons[ch.id] = true; saveState(); }
       const firstOpen = Math.max(0, ch.tasks.findIndex((t) => !profile.done[t.id]?.ok));
       openTask(ci, firstOpen);
     };
-    $('btnReadPairs').onclick = () => {
-      speakText(ch.pairs.map((p) => `${p.a} در برابر ${p.b}. ${p.tip}`).join(' '));
-    };
+  }
+
+  function openLessonLegacy(ch) {
+    profile.lessons[ch.id] = true;
+    saveState();
+    main.innerHTML = `
+      <div class="paper-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+          <div><small style="color:var(--muted)">درسنامهٔ یادیار · فصل ${fa(ci + 1)}</small><h2 style="margin:2px 0 0">${esc(ch.title)}</h2></div>
+          <button type="button" id="lessonBackMap">🗺️ بازگشت به نقشهٔ فصل‌ها</button>
+        </div>
+        <div class="pairs-grid">${ch.pairs.map((p) => `<article class="pair-card"><div class="pair-words">${esc(p.a)}<br>⚡ ${esc(p.b)}</div><span class="mnemonic-pill">💡 ${esc(p.tip)}</span></article>`).join('')}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+          <button type="button" class="btn-primary" id="btnStartChapterTasks">🎯 یاد گرفتم! ورود به ${fa(ch.tasks.length)} چالش این فصل ←</button>
+          <button type="button" class="btn-soft" id="btnReadPairs">🔊 شنیدن رمزهای این فصل</button>
+        </div>
+      </div>`;
+    $('lessonBackMap').onclick = renderMap;
+    $('btnStartChapterTasks').onclick = () => openTask(ci, Math.max(0, ch.tasks.findIndex((t) => !profile.done[t.id]?.ok)));
+    $('btnReadPairs').onclick = () => speakText(ch.pairs.map((p) => `${p.a} در برابر ${p.b}. ${p.tip}`).join(' '));
   }
 
   function openTask(chapterIdx, taskIdx) {
+    if (isLocked(chapterIdx)) { lockedNotice(chapterIdx); renderMap(); return; }
+    const uc = D.chapters[chapterIdx];
+    if (!profile.lessons[uc.id] && chapterSolved(uc) === 0) {
+      W()?.toast?.('اول درسنامهٔ این فصل را ببین؛ بعد چالش‌ها باز می‌شوند 📖');
+      openLesson(chapterIdx, 0);
+      return;
+    }
+    W()?.stopAudio?.();
     ci = chapterIdx;
     qi = taskIdx;
     selectedIdx = null;
@@ -490,6 +610,7 @@
   }
 
   function renderLexicon() {
+    W()?.stopAudio?.();
     const q = searchQuery.trim();
     const list = D.lexicon.filter((item) => !q || item.a.includes(q) || item.b.includes(q) || item.tip.includes(q));
 
@@ -530,18 +651,34 @@
     const done = totalSolved();
     const pct = Math.round((done / allTasks.length) * 100);
     const stars = totalStars();
+    const w = W();
+    w?.stopAudio?.();
+    const lessonsRead = D.chapters.filter((c) => profile.lessons[c.id]).length;
+    const guidedCount = allTasks.filter((t) => profile.done[t.id]?.guided).length;
+    const fullChapters = D.chapters.filter((c) => chapterSolved(c) === c.tasks.length).length;
     main.innerHTML = `
       <div class="no-print" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px">
         <button type="button" id="certBackMap">🗺️ بازگشت به تالار فصل‌ها</button>
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
-      <article class="cert-sheet" aria-label="گواهی‌نامهٔ مهارت هم‌آواستان">
-        <div style="text-align:center;border-bottom:2px dashed #d8c79e;padding-bottom:14px;margin-bottom:16px">
-          <div style="font-size:0.85rem;font-weight:800;color:#615041">حکیمستان · تالار فارسی و نگارش پایهٔ پنجم</div>
-          <h2 style="margin:6px 0;font-size:1.55rem">گواهی‌نامهٔ مهارت واژه‌شناسی و املای «هم‌آواستان»</h2>
-          <div style="font-size:1.65rem;font-weight:900;color:#8c3b19;margin:8px 0">${esc(profile.name)}</div>
-          <div>رتبهٔ ادبی: <b>${esc(rankTitle())}</b> · امتیاز: <b>${fa(profile.xp)}</b> · ستاره: <b>${fa(stars)} / ${fa(D.chapters.length * 3)}</b> (${fa(pct)}٪)</div>
+      <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ مهارت هم‌آواستان">
+        <div class="hw-cert-top" style="border-bottom:2px dashed #e5d3a5;padding-bottom:14px;margin-bottom:6px">
+          ${w ? w.seal('هم‌آواستان', done === allTasks.length ? 'مهر استادی املا' : 'مهر پیشرفت') : ''}
+          <div style="text-align:center">
+            <div style="font-size:0.85rem;font-weight:800;color:#615041">حکیمستان · تالار فارسی و نگارش پایهٔ پنجم</div>
+            <h2 style="margin:6px 0;font-size:1.7rem">${done === allTasks.length ? 'گواهی‌نامهٔ استادی هم‌آواها و درست‌نویسی' : 'گواهی‌نامهٔ پیشرفت هم‌آواستان'}</h2>
+            <div style="font-size:.9rem;color:#5a4a2a">این گواهی‌نامه با افتخار تقدیم می‌شود به</div>
+            <div class="cert-student-name" style="color:#8c3b19;margin:4px 0">${esc(profile.name)}</div>
+            <div>رتبهٔ ادبی: <b>${esc(rankTitle())}</b> · پیشرفت: <b>${fa(pct)}٪</b></div>
+          </div>
+          ${w ? w.certHakim('') : ''}
         </div>
+        ${w ? w.certStats([
+          { icon: '⭐', value: fa(stars) + ' / ' + fa(D.chapters.length * 3), label: 'ستاره' },
+          { icon: '✍️', value: fa(done) + ' / ' + fa(allTasks.length), label: 'چالش حل‌شده' },
+          { icon: '📜', value: fa(fullChapters) + ' / ' + fa(D.chapters.length), label: 'فصل کامل' },
+          { icon: '💎', value: fa(profile.xp), label: 'امتیاز' }
+        ]) : ''}
         <h3 style="margin:0 0 8px;font-size:1rem">فهرست مهارت‌های شش‌گانهٔ هم‌آواها و درست‌نویسی پنجم:</h3>
         <ul class="cert-skills-grid">
           ${D.chapters.map((c) => {
@@ -550,12 +687,16 @@
             return `<li class="${full ? 'mastered' : ''}"><b>${full ? '☑' : '☐'} ${esc(c.title)}</b><br><small>${fa(s)} از ${fa(c.tasks.length)} چالش (${esc(c.badge)})</small></li>`;
           }).join('')}
         </ul>
-        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid #e2d3be;padding-top:10px;font-size:0.82rem;color:#615041">
-          <span>تاریخ صدور: ${new Date().toLocaleDateString('fa-IR')}</span>
-          <span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>
+        <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
+          <p><b>حکیم:</b> ${done === allTasks.length ? 'آفرین سرویراستار! حالا فرق «گذاردن» و «گزاردن» و همهٔ هم‌آواهای پنجم را می‌دانی. قلمت همیشه درست‌نویس باشد!' : 'هر فصلی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. با رمزها و هم‌خانواده‌ها ادامه بده!'}</p></div>
+        <div class="hw-cert-foot">
+          <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>${fa(lessonsRead)} درسنامهٔ کامل · ${fa(guidedCount)} پاسخ با راهنما</span></div>
+          ${w ? w.signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>'}
         </div>
+        <p class="hw-cert-note">این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
       </article>
     `;
+    w?.bind(main, {});
     $('certBackMap').onclick = renderMap;
     $('btnPrintCert').onclick = () => window.print();
   }

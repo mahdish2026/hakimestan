@@ -295,8 +295,43 @@ for (const [appJs, track] of [['games/math-measurement/app.js', 'music9.mp3'], [
   assert.ok(exists('games/' + track), 'missing music file games/' + track);
 }
 const swSrc = read('sw.js');
-for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js']) {
+for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/farsi5-hamava/lessons.js']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
+}
+assert.ok(/function isPhase5Audio/.test(swSrc) && /isPhase5Audio\(url\)\)\s*\{\s*event\.respondWith\(handleGeometryAudio/.test(swSrc), 'sw.js must serve lesson narration through the Range-aware audio handler');
+
+// ---- 7) lesson-first path, 3-step lessons and gold certificates ------------
+const worldsJs = read('js/hakim-worlds.js');
+for (const fn of ['isLocked', 'steps', 'audioCard', 'bindAudio', 'seal', 'signature', 'certHakim', 'certStats']) {
+  assert.ok(new RegExp('function ' + fn + '\\b').test(worldsJs), 'hakim-worlds.js must provide ' + fn + '()');
+}
+assert.ok(/speechSynthesis/.test(worldsJs) && /fa-IR/.test(worldsJs), 'audio card must fall back to fa-IR speech synthesis');
+for (const g of GAMES) {
+  const app = read(`games/${g.id}/app.js`);
+  assert.ok(/function isLocked\(/.test(app) && /locked: isLocked\(/.test(app), g.id + ' must lock stages until the previous one is complete');
+  assert.ok(/function openTask\([^)]*\)\s*\{\s*if \(isLocked\(/.test(app), g.id + ' openTask must refuse locked stages');
+  assert.ok(/w\??\.?seal\(|W\(\)\.seal\(/.test(app) && /signature\(/.test(app) && /certHakim\(/.test(app), g.id + ' certificate must show the gold seal, Hakim and signature');
+}
+{
+  const geoLessons = loadData('games/iran-geography/lessons.js', 'IranGeoLessons');
+  const hamLessons = loadData('games/farsi5-hamava/lessons.js', 'HamavaLessons');
+  for (const m of geo.missions) {
+    const L = geoLessons[m.id];
+    assert.ok(L && L.see && L.learn && L.exam, 'geo lesson for ' + m.id + ' must have see/learn/exam steps');
+    assert.ok(L.narration.length > 400 && /^iran-geography\/audio\/m[1-6]-[a-z]+\.mp3$/.test(L.audio), 'geo lesson ' + m.id + ' needs narration + audio path');
+    assert.ok(L.exam.check.length >= 2 && L.exam.check.every((q) => q.o[q.a] && q.why), 'geo lesson ' + m.id + ' needs a valid self-check');
+  }
+  for (const ch of hamava.chapters) {
+    const L = hamLessons[ch.id];
+    assert.ok(L && L.pairs.length >= 2 && L.rule && L.concept, 'hamava lesson for ' + ch.id + ' must have concept, pairs and rule');
+    assert.ok(L.narration.length > 400 && /^farsi5-hamava\/audio\/ch[1-6]-[a-z-]+\.mp3$/.test(L.audio), 'hamava lesson ' + ch.id + ' needs narration + audio path');
+    assert.ok(L.check.length >= 2 && L.check.every((q) => q.o[q.a] && q.why), 'hamava lesson ' + ch.id + ' needs a valid self-check');
+  }
+  for (const [html, files] of [['games/iran-geography.html', ['iran-geography/data.js', 'iran-geography/lessons.js', 'iran-geography/lesson-view.js', 'iran-geography/app.js']], ['games/farsi5-hamava.html', ['farsi5-hamava/data.js', 'farsi5-hamava/lessons.js', 'farsi5-hamava/app.js']]]) {
+    const page = read(html);
+    const at = files.map((f) => page.indexOf('src="' + f + '"'));
+    assert.ok(at.every((x, i) => x > 0 && (i === 0 || x > at[i - 1])), html + ' must load ' + files.join(' → '));
+  }
 }
 
 console.log(JSON.stringify({
