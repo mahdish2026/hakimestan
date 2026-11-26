@@ -149,7 +149,7 @@ const judgesHtml = read('judges.html');
 const videosHtml = read('videos.html');
 const installHtml = read('install-pwa.html');
 
-assert.match(indexHtml, /<li><b>۱۷<\/b>\s*<span>بازی تعاملی<\/span><\/li>/, 'index.html hero must state ۱۷ interactive games');
+assert.match(indexHtml, /<li><b>۲۱<\/b>\s*<span>بازی تعاملی<\/span><\/li>/, 'index.html hero must state ۲۱ interactive games');
 assert.match(indexHtml, /<span>۸ کتاب درسی<\/span>/, 'index.html darsgah card must state ۸ bundled textbooks');
 assert.doesNotMatch(indexHtml, /<span>۹ کتاب<\/span>/, 'index.html must not claim ۹ bundled textbooks');
 

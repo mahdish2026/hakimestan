@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.73';
+const VERSION = 'hakim-v1.5.74';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -116,6 +116,24 @@ const PREFETCH_PAGES = [
   './games/mancheh-online.html',
   './games/lab2d.html',
   './games/farsi5-vocab.html',
+  './games/math-measurement.html',
+  './games/math-measurement/style.css',
+  './games/math-measurement/data.js',
+  './games/math-measurement/app.js',
+  './games/math-stats.html',
+  './games/math-stats/style.css',
+  './games/math-stats/data.js',
+  './games/math-stats/app.js',
+  './games/farsi5-hamava.html',
+  './games/farsi5-hamava/style.css',
+  './games/farsi5-hamava/data.js',
+  './games/farsi5-hamava/app.js',
+  './games/iran-geography.html',
+  './games/iran-geography/style.css',
+  './games/iran-geography/data.js',
+  './games/iran-geography/app.js',
+  './kelasyar.html',
+  './masir-yadgiri.html',
   './azmoon-saz.html',
   './daftar.html',
   './tarh-dars.html',

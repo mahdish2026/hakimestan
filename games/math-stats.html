@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<!-- hakim-csp:start -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
+<!-- hakim-csp:end -->
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#51389e">
+<meta name="description" content="آمارستان — بازی و کارگاه تعاملی فصل هفتم ریاضی پنجم (جدول داده، نمودار خط شکسته، میانگین و احتمال) با درسنامهٔ تصویری، شبیه‌ساز دو تاس و گواهی‌نامهٔ استادی.">
+<title>آمارستان | کارگاه نمودار خط شکسته، میانگین و احتمال ریاضی پنجم</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+<link rel="stylesheet" href="math-stats/style.css">
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/games/math-stats.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="آمارستان | کارگاه نمودار خط شکسته، میانگین و احتمال ریاضی پنجم">
+<meta property="og:description" content="آمارستان — بازی و کارگاه تعاملی فصل هفتم ریاضی پنجم (جدول داده، نمودار خط شکسته، میانگین و احتمال) با درسنامهٔ تصویری، شبیه‌ساز دو تاس و گواهی‌نامهٔ استادی.">
+<meta property="og:url" content="https://hakimistan.ir/games/math-stats.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="آمارستان | کارگاه نمودار خط شکسته، میانگین و احتمال ریاضی پنجم">
+<meta name="twitter:description" content="آمارستان — بازی و کارگاه تعاملی فصل هفتم ریاضی پنجم (جدول داده، نمودار خط شکسته، میانگین و احتمال) با درسنامهٔ تصویری، شبیه‌ساز دو تاس و گواهی‌نامهٔ استادی.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
+</head>
+<body>
+<a class="skip-link" href="#main">پرش به محتوای بازی</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../math-learning.html">
+      <span class="brand-badge" aria-hidden="true">📊</span>
+      <span class="brand-text">
+        <h1 style="margin:0;font-size:1.05rem;line-height:1.3;font-weight:900">آمارستان</h1>
+        <small>فصل هفتم ریاضی پنجم · مدرسهٔ ریاضی حکیمستان</small>
+      </span>
+    </a>
+    <nav class="top-nav" aria-label="ابزارها و ناوبری بازی">
+      <a class="top-link" href="../math-learning.html">← مدرسهٔ ریاضی</a>
+      <button type="button" id="mapNavBtn">🗺️ نقشه</button>
+      <button type="button" id="studioNavBtn">🛠️ آزمایشگاه</button>
+      <button type="button" id="certNavBtn">🏆 گواهی‌نامه</button>
+      <button type="button" id="fontSmaller" aria-label="کوچک‌تر کردن اندازهٔ متن" title="متن کوچک‌تر">A−</button>
+      <button type="button" id="fontBigger" aria-label="بزرگ‌تر کردن اندازهٔ متن" title="متن بزرگ‌تر">A+</button>
+      <button type="button" id="soundBtn" aria-pressed="false">🔇 صدا: خاموش</button>
+      <button type="button" id="themeBtn" aria-pressed="false">☾ شب</button>
+      <button type="button" id="helpBtn" aria-label="راهنمای بازی آمارستان">❔</button>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip" role="region" aria-label="وضعیت امتیاز و ذخیره">
+  <div class="hud-pills">
+    <span class="hud-pill" id="hudStars">⭐ ۰ / ۲۷</span>
+    <span class="hud-pill" id="hudXp">💎 ۰ امتیاز</span>
+    <span class="hud-pill" id="hudCombo">🔥 کمبو: ۰ (رکورد: ۰)</span>
+  </div>
+  <span id="saveStatus" role="status">ذخیرهٔ خودکار روی این دستگاه فعال است</span>
+</div>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="site-footer">
+  طراحی و توسعه: مهدی شریفیان · سامانهٔ آموزشی حکیمستان · پوشش کامل فصل هفتم کتاب ریاضی پایهٔ پنجم
+</footer>
+
+<dialog id="helpDialog" aria-labelledby="helpDialogTitle">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px">
+    <h2 id="helpDialogTitle" style="margin:0;font-size:1.15rem">راهنمای «آمارستان»</h2>
+    <button type="button" id="closeHelpBtn" aria-label="بستن راهنما">✕</button>
+  </div>
+  <p>در هر یک از ۹ ایستگاه آمارستان، ابتدا وارد <b>«📖 درسنامهٔ تعاملی»</b> شو تا با تغییر مقیاس نمودارها، رسم خط شکسته، هم‌قد کردن برج‌های میانگین و رنگ‌آمیزی چرخنده‌های شانس، مفهوم هر درس را عمیق یاد بگیری.</p>
+  <p>سپس در بخش <b>«🎯 چالش‌های مرحله»</b> هر ۵ نوع سؤال کتاب درسی را حل کن، کمبو بزن و در پایان <b>گواهی‌نامهٔ استاندارد A4</b> خود را دریافت و چاپ کن.</p>
+</dialog>
+
+<script src="../hakim-core.js"></script>
+<script src="math-stats/data.js"></script>
+<script src="math-stats/app.js"></script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-read-aloud.js" defer></script>
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
+</html>

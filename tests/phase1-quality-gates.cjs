@@ -98,10 +98,10 @@ const read = (rel) => readFileSync(path.join(root, rel), 'utf8');
   }
 }
 
-// 5. Mission 5: Semantic <h1> Across All 38 Pages, Sitemap & SW Offline Coverage
+// 5. Mission 5: Semantic <h1> Across All 44 Pages, Sitemap & SW Offline Coverage
 {
   const htmlFiles = execFileSync('git', ['ls-files', '*.html'], { cwd: root, encoding: 'utf8' }).trim().split('\n');
-  assert.equal(htmlFiles.length, 38, 'expected 38 tracked HTML files');
+  assert.equal(htmlFiles.length, 44, 'expected 44 tracked HTML files');
   for (const f of htmlFiles) {
     const dom = new JSDOM(read(f));
     const h1Count = dom.window.document.querySelectorAll('h1').length;
@@ -129,5 +129,5 @@ const read = (rel) => readFileSync(path.join(root, rel), 'utf8');
   assert.equal(after, before, 'tools/* --dry must not mutate working tree files');
 }
 
-console.log('PASS: Phase 1 quality gates (PWA/a11y, offline fonts, heavy-page DOM & extraction, teacher panel, 38/38 h1, sitemap/SW, dry-run tools)');
+console.log('PASS: Phase 1 quality gates (PWA/a11y, offline fonts, heavy-page DOM & extraction, teacher panel, 44/44 h1, sitemap/SW, dry-run tools)');
 })().catch((err) => { console.error(err); process.exit(1); });
