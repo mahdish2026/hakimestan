@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"><head>
+<!-- hakim-csp:start -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' data:; font-src 'self' data: blob:; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' blob:; manifest-src 'self'; worker-src 'self' blob:">
+<!-- hakim-csp:end -->
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
+<link rel="preload" href="assets/fonts/lalezar-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/vazirmatn-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" type="image/svg+xml" href="icon.svg"><link rel="apple-touch-icon" href="icon.svg"><link rel="manifest" href="manifest.json"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0e7c86"><meta name="description" content="ابزار ساخت گواهی و تقدیرنامه حکیمستان؛ الگوهای آماده، فونت‌های زیبا، پس‌زمینه‌های مدرن و تذهیب، ورود فایل Excel و صدور هزاران گواهی"><title>ساخت گواهی و تقدیرنامه — حکیمستان</title><script src="hakim-core.js"></script><script src="assets/vendor/html2canvas.min.js" defer></script><style>
+@font-face{font-family:'Lalezar';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/lalezar-400.woff2') format('woff2')}
+@font-face{font-family:'Vazirmatn';font-style:normal;font-weight:100;font-display:swap;src:url('assets/fonts/vazirmatn-100-900.woff2') format('woff2')}
+@font-face{font-family:'Vazirmatn';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/vazirmatn-400.woff2') format('woff2')}
+@font-face{font-family:'Vazirmatn';font-style:normal;font-weight:500;font-display:swap;src:url('assets/fonts/vazirmatn-500.woff2') format('woff2')}
+@font-face{font-family:'Vazirmatn';font-style:normal;font-weight:600;font-display:swap;src:url('assets/fonts/vazirmatn-600.woff2') format('woff2')}
+@font-face{font-family:'Vazirmatn';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/vazirmatn-700.woff2') format('woff2')}
+@font-face{font-family:'Vazirmatn';font-style:normal;font-weight:800;font-display:swap;src:url('assets/fonts/vazirmatn-800.woff2') format('woff2')}
+@font-face{font-family:'Mirza';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/mirza-400.woff2') format('woff2')}
+@font-face{font-family:'Mirza';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/mirza-700.woff2') format('woff2')}
+@font-face{font-family:'Samim';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/samim-400.woff2') format('woff2')}
+@font-face{font-family:'Samim';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/samim-700.woff2') format('woff2')}
+@font-face{font-family:'Estedad';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/estedad-400.woff2') format('woff2')}
+@font-face{font-family:'Estedad';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/estedad-700.woff2') format('woff2')}
+@font-face{font-family:'Katibeh';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/katibeh-400.woff2') format('woff2')}
+@font-face{font-family:'Markazi Text';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/markazi-text-400.woff2') format('woff2')}
+@font-face{font-family:'Markazi Text';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/markazi-text-700.woff2') format('woff2')}
+@font-face{font-family:'Shabnam';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/shabnam-400.woff2') format('woff2')}
+@font-face{font-family:'Shabnam';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/shabnam-700.woff2') format('woff2')}
+@font-face{font-family:'Parastoo';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/parastoo-400.woff2') format('woff2')}
+@font-face{font-family:'Parastoo';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/parastoo-700.woff2') format('woff2')}
+@font-face{font-family:'Sahel';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/sahel-vf.woff2') format('woff2')}
+@font-face{font-family:'Amiri';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/amiri-400.woff2') format('woff2')}
+@font-face{font-family:'Amiri';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/amiri-700.woff2') format('woff2')}
+@font-face{font-family:'Scheherazade New';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/scheherazade-new-400.woff2') format('woff2')}
+@font-face{font-family:'Scheherazade New';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/scheherazade-new-700.woff2') format('woff2')}
+@font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/noto-naskh-arabic-400.woff2') format('woff2')}
+@font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/noto-naskh-arabic-700.woff2') format('woff2')}
+@font-face{font-family:'Harmattan';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/harmattan-400.woff2') format('woff2')}
+@font-face{font-family:'Harmattan';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/harmattan-700.woff2') format('woff2')}
+@font-face{font-family:'Gandom';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/gandom-400.woff2') format('woff2')}
+
+:root{--accent:#0e7c86;--accent-2:#d4af37;--ink:#26354a;--muted:#5f6b7d;--line:#dfe5ec;--cream:#faf9f5;--white:#fff;--shadow:0 10px 34px #1b2c4014;--radius:20px;color-scheme:light;font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:var(--cream)}
+*{box-sizing:border-box}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+body{margin:0;line-height:1.85;overflow-x:hidden}
+button,input,select,textarea{font:inherit}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+button,input,select{min-height:48px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+a{color:var(--accent)}
+button{transition:background .15s,transform .15s,filter .15s}
+button:hover:not(:disabled){filter:brightness(.97)}
+button:active:not(:disabled){transform:translateY(1px)}
+h1,h2,h3,h4,p,ul,ol{margin:0}
+h1,h2{font-family:Lalezar,Vazirmatn,sans-serif;font-weight:400;line-height:1.5}
+small,.small{font-size:12px}
+input,select,textarea{width:100%;padding:10px 13px;border:1px solid #cdd6df;border-radius:12px;background:#fff;color:var(--ink);min-width:0}
+input[type=color]{padding:4px;height:48px}
+input[type=checkbox]{width:21px;height:21px;min-height:21px;accent-color:var(--accent);flex:0 0 auto}
+textarea{min-height:96px;resize:vertical}
+label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend{font-weight:700;margin-bottom:9px;font-size:13px}
+.field{min-width:0}
+.field small{display:block;color:var(--muted);margin-top:4px;font-size:11px}
+.icon{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);border-radius:13px;padding:10px 16px;background:#fff;color:var(--ink);font-size:13px;font-weight:600;white-space:nowrap;text-decoration:none}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#0a5f68);border-color:transparent;color:#fff;box-shadow:0 6px 16px #0e7c8633}
+.btn.gold{background:linear-gradient(135deg,#c99a2e,#a8761a);border-color:transparent;color:#fff;box-shadow:0 6px 16px #c99a2e33}
+.btn.soft{background:#eef6f6;border-color:transparent;color:var(--accent)}
+.btn.danger{background:#fff0f0;border-color:#efcbcb;color:#a22a2a}
+.btn.ghost{background:transparent}
+.btn.block{width:100%}
+.btn:disabled:hover{filter:none}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.between{justify-content:space-between}
+.spacer{flex:1}
+.stack{display:grid;gap:14px}
+.hidden,[hidden]{display:none!important}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:999px;font-size:11px;font-weight:600;background:#eef6f6;color:var(--accent)}
+.pill.green{background:#e9f7ef;color:#206342}
+.pill.amber{background:#fff5d9;color:#80600b}
+.pill.red{background:#feeeee;color:#a33030}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.app-header{position:sticky;top:0;z-index:30;background:#fffeefaf2;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.header-top{max-width:1440px;margin:auto;padding:15px 26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#e8f4f4,#f6efdc);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 22%,white)}
+.brand-mark .icon{width:27px;height:27px}
+.brand-name{font-family:Lalezar;font-size:23px;line-height:1.3}
+.brand-sub{font-size:10px;color:var(--muted)}
+.tabs{display:flex;gap:3px;overflow-x:auto;scrollbar-width:thin;max-width:100%}
+.tab{flex:1 0 auto;border:0;border-bottom:3px solid transparent;background:none;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--muted);padding:12px 11px;font-size:12.5px;min-height:52px}
+.tab .icon{width:17px;height:17px}
+.tab[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.studio{max-width:1440px;margin:auto;padding:26px;display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:26px;align-items:start}
+.stage{position:sticky;top:96px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.stage-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:var(--shadow)}
+.stage-bar .zoom-val{font-size:12px;color:var(--muted);min-width:52px;text-align:center}
+.stage-bar input[type=range]{flex:1;min-width:130px}
+.stage-stage{position:relative;background:
+  linear-gradient(45deg,#eef1f4 25%,transparent 25%,transparent 75%,#eef1f4 75%),
+  linear-gradient(45deg,#eef1f4 25%,transparent 25%,transparent 75%,#eef1f4 75%);
+  background-size:26px 26px;background-position:0 0,13px 13px;border-radius:22px;padding:38px 26px;display:flex;justify-content:center;align-items:flex-start;overflow:auto;border:1px solid var(--line)}
+.zoom-wrap{transform-origin:top center;transition:transform .12s ease;width:100%;display:flex;justify-content:center}
+.cert-page{position:relative;width:min(100%,780px);aspect-ratio:210/297;background:#fdf6e3;overflow:hidden;box-shadow:0 30px 60px #1b2c4033,0 2px 0 #fff0;flex:0 0 auto;color:#2a2116}
+.cp-bg{position:absolute;inset:0;z-index:0}
+.cp-frame{position:absolute;inset:0;z-index:1;pointer-events:none}
+.cp-zone{position:relative;z-index:2}
+.cp-pad{position:absolute;inset:0;padding:7.5% 9%}
+.cp-head{text-align:center}
+.cp-title{font-size:clamp(22px,4.6vw,40px);font-weight:800;line-height:1.5}
+.cp-subtitle{font-size:clamp(11px,1.6vw,16px);opacity:.85;margin-top:.5em}
+.cp-ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin:.7em 0 .2em;color:currentColor;opacity:.7}
+.cp-ornament .line{height:1px;width:22%;background:currentColor}
+.cp-orn-dot{width:9px;height:9px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.cp-name{text-align:center;margin-top:6%}
+.cp-name .cp-field{font-size:clamp(20px,4vw,38px);font-weight:800;display:inline-block;border-bottom:2px solid currentColor;padding:0 .25em .06em;line-height:1.6}
+.cp-body{text-align:center;margin-top:6%}
+.cp-body .cp-field{font-size:clamp(12px,1.75vw,17px);line-height:2.2}
+.cp-mid{display:flex;align-items:flex-end;justify-content:space-between;margin-top:7%;gap:14px}
+.cp-date{text-align:right;font-size:clamp(11px,1.5vw,15px);line-height:1.9}
+.cp-seal{flex:0 0 auto;width:clamp(74px,11vw,118px);aspect-ratio:1;border-radius:50%;border:2.5px solid currentColor;display:grid;place-items:center;text-align:center;font-size:clamp(9px,1.25vw,13px);font-weight:800;line-height:1.5;padding:6px}
+.cp-seal svg{width:56%;height:56%}
+.cp-foot{display:flex;align-items:flex-end;justify-content:space-between;margin-top:7%;gap:14px}
+.cp-sign{text-align:right;font-size:clamp(11px,1.5vw,15px);line-height:1.9}
+.cp-serial{text-align:left;font-size:clamp(9px,1.2vw,12px);opacity:.8;word-break:break-all;max-width:46%}
+[contenteditable=true]{outline:none;border-radius:6px;caret-color:var(--accent-2);transition:box-shadow .15s}
+[contenteditable=true]:focus{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent-2) 55%,transparent)}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.panel-tab{display:flex;gap:3px;padding:10px 12px 0;overflow-x:auto;scrollbar-width:thin;border-bottom:1px solid var(--line)}
+.panel-pane{padding:20px;display:none}
+.panel-pane.active{display:block;animation:pop .18s ease}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.pane-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.pane-head h2{font-size:19px}
+.pane-head p{font-size:11.5px;color:var(--muted);margin-top:2px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.tpl-card{border:2px solid var(--line);border-radius:16px;background:#fff;padding:8px;cursor:pointer;text-align:center;transition:border-color .15s,transform .15s,box-shadow .15s}
+.tpl-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.tpl-card[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 3px #0e7c8622}
+.tpl-thumb{aspect-ratio:210/297;border-radius:10px;overflow:hidden;position:relative;box-shadow:inset 0 0 0 1px #0001}
+.tpl-thumb .cp-page{position:absolute;inset:0;width:100%;aspect-ratio:auto}
+.tpl-name{font-size:11.5px;font-weight:700;margin-top:7px}
+.tpl-cat{font-size:10px;color:var(--muted)}
+.bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.bg-card{border:2px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;background:#fff;transition:border-color .15s,transform .15s}
+.bg-card:hover{transform:translateY(-2px)}
+.bg-card[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 3px #0e7c8622}
+.bg-thumb{aspect-ratio:210/120;position:relative;overflow:hidden}
+.bg-thumb .cp-page{position:absolute;inset:0;width:100%;aspect-ratio:auto}
+.bg-name{font-size:10.5px;font-weight:700;padding:7px 6px 4px;text-align:center}
+.field-card{border:1px solid var(--line);border-radius:16px;padding:13px;background:#fff}
+.field-card+.field-card{margin-top:12px}
+.field-card-head{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.field-card-head .fname{font-weight:800;font-size:13.5px}
+.field-card-head .toggle{margin-inline-start:auto}
+.style-row{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:9px}
+.style-row.three{grid-template-columns:repeat(3,1fr)}
+select{appearance:auto}
+.data-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.data-toolbar .field{flex:1;min-width:200px}
+.table-wrap{border:1px solid var(--line);border-radius:14px;overflow:auto;max-height:340px;background:#fff}
+table.data{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}
+table.data th,table.data td{border-bottom:1px solid #edf0f4;padding:8px 11px;text-align:right}
+table.data th{background:#f6f9fa;position:sticky;top:0;font-weight:700}
+.map-row{display:grid;grid-template-columns:120px 1fr;gap:9px;align-items:center;margin-bottom:8px}
+.progress{height:10px;border-radius:999px;background:#e9eef2;overflow:hidden}
+.progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#58b7bf);transition:width .2s}
+.batch-log{font-size:11.5px;color:var(--muted);background:#f6f9fa;border:1px solid var(--line);border-radius:12px;padding:10px;max-height:150px;overflow:auto;line-height:1.9;font-family:ui-monospace,monospace;direction:ltr}
+.toast-area{position:fixed;bottom:20px;left:20px;z-index:200;display:grid;gap:9px;max-width:min(420px,calc(100vw - 32px))}
+.toast{display:flex;align-items:center;gap:11px;padding:13px 16px;border-radius:14px;background:#234c40;color:#fff;box-shadow:0 8px 30px #0002;font-size:12px;animation:pop .22s}
+.toast.error{background:#873535}
+.toast button{border:0;background:none;color:inherit;min-height:48px;padding:0 5px}
+dialog{border:1px solid var(--line);border-radius:22px;padding:0;max-width:min(94vw,720px);width:720px;max-height:90dvh;color:var(--ink);background:#fff;box-shadow:0 35px 100px #162c4b30;overflow:auto}
+dialog::backdrop{background:#23375162;-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:3;background:#fff}
+.modal-header h2{font-size:23px}
+.modal-content{padding:22px}
+.guide-step{display:flex;gap:13px;padding:13px 0;border-bottom:1px dashed var(--line)}
+.guide-step:last-child{border-bottom:0}
+.guide-step b{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:#eef6f6;color:var(--accent);display:grid;place-items:center;font-family:Lalezar}
+.guide-step p{font-size:12.5px;color:#3d4a5c;line-height:2}
+.guide-step .k{font-weight:700;color:var(--ink)}
+.font-chip{border:1px solid var(--line);border-radius:11px;padding:9px 10px;background:#fff;cursor:pointer;text-align:center;min-height:56px;display:flex;flex-direction:column;justify-content:center;gap:2px;transition:border-color .15s,background .15s}
+.font-chip:hover{border-color:var(--accent)}
+.font-chip[aria-pressed=true]{border-color:var(--accent);background:#eef6f6;box-shadow:0 0 0 2px #0e7c8622}
+.font-chip b{font-size:15px}
+.font-chip small{font-size:9.5px;color:var(--muted)}
+.swatch-row{display:flex;gap:7px;flex-wrap:wrap}
+.swatch{width:34px;height:34px;border-radius:10px;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer}
+.swatch[aria-pressed=true]{box-shadow:0 0 0 2px var(--accent)}
+.export-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.export-choice{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:15px;text-align:right;color:var(--ink)}
+.export-choice .icon{color:var(--accent)}
+.export-choice strong{display:block;font-size:13px}
+.export-choice small{color:var(--muted);display:block;font-size:10px}
+.app-footer{max-width:1440px;margin:0 auto;padding:26px 26px 40px;font-size:11px;color:var(--muted);text-align:center}
+#exportStage{position:fixed;left:-16000px;top:0;width:780px;z-index:-1}
+#exportStage .cert-page{box-shadow:none;width:780px}
+.helper{font-size:11.5px;color:var(--muted);line-height:2;background:#f6f9fa;border:1px solid var(--line);border-radius:12px;padding:10px 13px}
+.helper b{color:var(--ink)}
+@media(max-width:1180px){.studio{grid-template-columns:minmax(0,1fr)}.stage{position:static}.panel{position:static}}
+@media(max-width:760px){.header-top{padding:12px 16px}.brand-name{font-size:20px}.brand-mark{width:40px;height:40px}.brand-mark .icon{width:24px;height:24px}.studio{padding:16px 14px}.stage-stage{padding:22px 14px}.panel-pane{padding:15px}.grid2,.grid3,.export-grid{grid-template-columns:1fr}.tpl-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}.style-row{grid-template-columns:1fr 1fr}.map-row{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+@media print{
+  body{background:#fff}
+  .app-header,.stage-bar,.panel,.toast-area,.app-footer{display:none!important}
+  .studio{display:block;padding:0;max-width:none}
+  .stage{position:static}
+  .stage-stage{background:#fff;padding:0;border:0;display:block;overflow:visible}
+  .zoom-wrap{transform:none!important}
+  .cert-page{width:100%;box-shadow:none;page-break-after:always;break-after:page}
+  .cert-page:last-child{page-break-after:auto;break-after:auto}
+  -webkit-print-color-adjust:exact;print-color-adjust:exact
+}
+</style>
+
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/cert-studio.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="ساخت گواهی و تقدیرنامه — حکیمستان">
+<meta property="og:description" content="ابزار کامل ساخت گواهی و تقدیرنامه؛ الگوهای آماده، فونت‌های زیبا، پس‌زمینه‌های مدرن و تذهیب، ورود فایل Excel و صدور هزاران گواهی">
+<meta property="og:url" content="https://hakimistan.ir/cert-studio.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="ابزار ساخت گواهی و تقدیرنامه حکیمستان">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ساخت گواهی و تقدیرنامه — حکیمستان">
+<meta name="twitter:description" content="ابزار کامل ساخت گواهی و تقدیرنامه؛ الگوهای آماده، فونت‌های زیبا، پس‌زمینه‌های مدرن و تذهیب، ورود فایل Excel و صدور هزاران گواهی">
+<!-- hakim-meta:end -->
+</head>
+<body>
+<header class="app-header">
+  <div class="header-top">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4z" fill="none" stroke="currentColor"/><path d="M8 4V2h8v2M9 11h6M9 14.5h4" fill="none" stroke="currentColor"/><circle cx="17.5" cy="17.5" r="2.2" fill="none" stroke="currentColor"/></svg>
+      </span>
+      <span>
+        <h1 class="sr-only">ساخت گواهی و تقدیرنامه — ابزار حکیمستان</h1>
+        <span class="brand-name">ساخت گواهی و تقدیرنامه</span>
+        <span class="brand-sub">ابزار حکیمستان — از مدرن تا تذهیب</span>
+      </span>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="بخش‌های ابزار">
+      <button class="tab" role="tab" id="t-tpl" aria-selected="true" aria-controls="p-tpl" data-pane="p-tpl"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor"/><path d="M3 9h18M8 4v5" fill="none" stroke="currentColor"/></svg>الگوها</button>
+      <button class="tab" role="tab" id="t-content" aria-selected="false" aria-controls="p-content" data-pane="p-content"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14M5 10h14M5 15h9M5 20h5" fill="none" stroke="currentColor"/></svg>متن</button>
+      <button class="tab" role="tab" id="t-style" aria-selected="false" aria-controls="p-style" data-pane="p-style"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 100 18 1.5 1.5 0 001.6-1.5 1.5 1.5 0 011.5-1.5h1.6A3.4 3.4 0 0021 12a9 9 0 00-9-9z" fill="none" stroke="currentColor"/><circle cx="7.6" cy="10" r="1.2" fill="currentColor"/><circle cx="12" cy="7.4" r="1.2" fill="currentColor"/><circle cx="16.4" cy="9.6" r="1.2" fill="currentColor"/></svg>فونت و رنگ</button>
+      <button class="tab" role="tab" id="t-bg" aria-selected="false" aria-controls="p-bg" data-pane="p-bg"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M4 18l5-5 4 3 3-4 4 6" fill="none" stroke="currentColor"/></svg>پس‌زمینه</button>
+      <button class="tab" role="tab" id="t-data" aria-selected="false" aria-controls="p-data" data-pane="p-data"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v16M14 4v16M3 9h18M3 15h18" fill="none" stroke="currentColor"/></svg>داده‌ها</button>
+      <button class="tab" role="tab" id="t-export" aria-selected="false" aria-controls="p-export" data-pane="p-export"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" fill="none" stroke="currentColor"/></svg>خروجی</button>
+      <button class="tab" role="tab" id="t-guide" aria-selected="false" aria-controls="p-guide" data-pane="p-guide"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor"/><path d="M9.5 9a2.5 2.5 0 014.9.8c0 1.7-2.4 2-2.4 3.2M12 17h.01" fill="none" stroke="currentColor"/></svg>راهنما</button>
+    </nav>
+    <div class="row" style="margin-inline-start:auto">
+      <button class="btn soft" id="btnSave" type="button">💾 ذخیره</button>
+      <button class="btn primary" id="btnLoad" type="button">📂 باز کردن</button>
+    </div>
+  </div>
+</header>
+
+<div class="studio">
+  <section class="stage" aria-label="نمایش گواهی">
+    <div class="stage-bar">
+      <button class="btn ghost" id="btnReset" type="button" title="بازگشت به حداکثر">⤢</button>
+      <input type="range" id="zoom" min="40" max="140" value="100" aria-label="اندازه نمایش">
+      <span class="zoom-val" id="zoomVal">100٪</span>
+      <span class="spacer"></span>
+      <span class="pill" id="tplPill">— الگو</span>
+    </div>
+    <div class="stage-stage" id="stage">
+      <div class="zoom-wrap" id="zoomWrap">
+        <div class="cert-page" id="certPage">
+          <div class="cp-bg" id="cpBg" aria-hidden="true"></div>
+          <div class="cp-frame" id="cpFrame" aria-hidden="true"></div>
+          <div class="cp-zone cp-pad">
+            <div class="cp-head">
+              <div class="cp-title cp-field" id="fTitle" contenteditable="true" spellcheck="false"></div>
+              <div class="cp-subtitle cp-field" id="fSubtitle" contenteditable="true" spellcheck="false"></div>
+              <div class="cp-ornament" id="fOrnament" aria-hidden="true"><i class="line"></i><i class="cp-orn-dot"></i><i class="line"></i></div>
+            </div>
+            <div class="cp-name">
+              <span class="cp-field" id="fName" contenteditable="true" spellcheck="false"></span>
+            </div>
+            <div class="cp-body">
+              <div class="cp-field" id="fBody" contenteditable="true" spellcheck="false"></div>
+            </div>
+            <div class="cp-mid">
+              <div class="cp-seal cp-field" id="fSeal" contenteditable="true" spellcheck="false"></div>
+              <div class="cp-date">
+                <div class="cp-field" id="fDate" contenteditable="true" spellcheck="false"></div>
+              </div>
+            </div>
+            <div class="cp-foot">
+              <div class="cp-serial cp-field" id="fSerial" contenteditable="true" spellcheck="false"></div>
+              <div class="cp-sign">
+                <div class="cp-field" id="fSign" contenteditable="true" spellcheck="false"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel" aria-label="پرداخت‌گر">
+    <div class="panel-tab" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-pane="p-tpl">الگوها</button>
+      <button class="tab" role="tab" aria-selected="false" data-pane="p-content">متن</button>
+      <button class="tab" role="tab" aria-selected="false" data-pane="p-style">فونت و رنگ</button>
+      <button class="tab" role="tab" aria-selected="false" data-pane="p-bg">پس‌زمینه</button>
+      <button class="tab" role="tab" aria-selected="false" data-pane="p-data">داده‌ها</button>
+      <button class="tab" role="tab" aria-selected="false" data-pane="p-export">خروجی</button>
+      <button class="tab" role="tab" aria-selected="false" data-pane="p-guide">راهنما</button>
+    </div>
+
+    <div class="panel-pane active" id="p-tpl" role="tabpanel" aria-labelledby="t-tpl">
+      <div class="pane-head">
+        <div><h2>الگوهای آماده</h2><p>هر الگو یک طرح کامل است؛ همه‌ی بخش‌های آن قابل ویرایش است.</p></div>
+      </div>
+      <div class="helper" style="margin-bottom:12px">انتخاب الگو، همه‌ی رنگ‌ها، فونت‌ها و متن‌ها را با هم تغییر می‌دهد. بعد می‌توانی هر بخش را جداگانه ویرایش کنی.</div>
+      <div class="tpl-grid" id="tplGrid"></div>
+    </div>
+
+    <div class="panel-pane" id="p-content" role="tabpanel" aria-labelledby="t-content">
+      <div class="pane-head">
+        <div><h2>متن گواهی</h2><p>ثبت‌شدن روی گواهی همان‌لحظة ذخیره می‌شود.</p></div>
+      </div>
+      <div class="stack">
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">عنوان اصلی</span></div>
+          <textarea id="inTitle"></textarea>
+        </div>
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">عنوان فرعی</span></div>
+          <textarea id="inSubtitle"></textarea>
+        </div>
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">نام دریافت‌کننده</span></div>
+          <input id="inName" type="text">
+          <small>برای صدور گروهی، این متغیر نام دانش‌آموز از فایل داده‌ها می‌آید.</small>
+        </div>
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">متن میانی</span></div>
+          <textarea id="inBody"></textarea>
+          <small>متن روی هر گواهی می‌تواند از فایل داده‌ها بیاید؛ الباقی متنی که هنا وارد می‌کنی ثابت می‌ماند.</small>
+        </div>
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">سنگ‌نما / مهره</span></div>
+          <input id="inSeal" type="text">
+        </div>
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">تاریخ</span></div>
+          <input id="inDate" type="text">
+        </div>
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">امضا / مدرک‌دهنده</span></div>
+          <input id="inSign" type="text">
+        </div>
+        <div class="field-card">
+          <div class="field-card-head"><span class="dot" style="color:var(--accent-2)"></span><span class="fname">شماره‌ی سری</span></div>
+          <input id="inSerial" type="text">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-pane" id="p-style" role="tabpanel" aria-labelledby="t-style">
+      <div class="pane-head">
+        <div><h2>فونت و رنگ</h2><p>هر بخش می‌تواند فونت و رنگ مخصوص به خود داشته باشد.</p></div>
+      </div>
+      <div class="stack">
+        <fieldset>
+          <legend>فونت‌ها</legend>
+          <div class="field" style="margin-bottom:10px"><label for="fontFamily">فونت همگام‌سازی‌شده</label><select id="fontFamily"></select><small>این فونت روی بخش‌هایی که فونت جداگانه‌ای ندارند生效 می‌شود.</small></div>
+          <div class="font-list" id="fontList" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+          <div class="row" style="margin-top:10px">
+            <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="fontSameAll"> همان فونت برای همه بخش‌ها</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>رنگ متن</legend>
+          <div class="swatch-row" id="inkSwatches"></div>
+          <div class="row" style="margin-top:12px;gap:14px">
+            <div class="field"><label for="inkCustom">رنگ دستی</label><input id="inkCustom" type="color" value="#2a2116"></div>
+            <div class="field"><label for="goldCustom">طلایی / ثانویه</label><input id="goldCustom" type="color" value="#b8862b"></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>تنظیمات قاب</legend>
+          <div class="style-row three">
+            <div class="field"><label for="frameWidth">ضخامت قاب</label><input id="frameWidth" type="range" min="0" max="30" value="14"></div>
+            <div class="field"><label for="frameGap">حاشیه‌ی داخل</label><input id="frameGap" type="range" min="0" max="40" value="16"></div>
+            <div class="field"><label for="rounded">میزان تیک‌دار بودن</label><input id="rounded" type="range" min="0" max="40" value="6"></div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="frameOn" checked> نمایش قاب تذهیب</label>
+            <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="sealOn" checked> نمایش مهره</label>
+            <label class="check-label" style="font-weight:400;margin:0"><input type="checkbox" id="ornOn" checked> زینت‌های تزئینی</label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="panel-pane" id="p-bg" role="tabpanel" aria-labelledby="t-bg">
+      <div class="pane-head">
+        <div><h2>پس‌زمینه‌ها</h2><p>از مدرن و ساده تا تذهیب و گل‌های داری‌برگ.</p></div>
+      </div>
+      <div class="helper" style="margin-bottom:12px">پس‌زمینه‌ها کاملاًCSSی و بی‌وزن‌اند؛ در هر اندازه و در چاپ درست می‌نشینند.</div>
+      <div class="bg-grid" id="bgGrid"></div>
+      <fieldset style="margin-top:16px">
+        <legend>پس‌زمینه‌ی سفارشی</legend>
+        <div class="style-row three">
+          <div class="field"><label for="bgColor1">رنگ اول</label><input id="bgColor1" type="color" value="#fdf6e3"></div>
+          <div class="field"><label for="bgColor2">رنگ دوم</label><input id="bgColor2" type="color" value="#f3e3c0"></div>
+          <div class="field"><label for="bgAngle">جهت تغير</label><input id="bgAngle" type="range" min="0" max="360" value="135"></div>
+        </div>
+        <button class="btn soft block" id="btnCustomBg" type="button" style="margin-top:10px">می‌شود از این دو رنگ پس‌زمینه‌ی شیب‌دار بسازی؟ — ساخت شیب سفارشی</button>
+      </fieldset>
+    </div>
+
+    <div class="panel-pane" id="p-data" role="tabpanel" aria-labelledby="t-data">
+      <div class="pane-head">
+        <div><h2>ورود داده‌ها</h2><p>فایل اکسل، CSV یا جدول کپی‌شده؛ خودکار تشخیص می‌دهد.</p></div>
+      </div>
+      <div class="data-toolbar">
+        <div class="field"><label for="fileInput">فایل اکسل یا CSV</label><input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.tsv"></div>
+        <button class="btn" id="btnLoadFile" type="button">ورود</button>
+      </div>
+      <div class="field" style="margin-top:12px"><label for="pasteArea">یا کپی و که از اکسل داردیم را می‌چسبانی</label><textarea id="pasteArea" placeholder="نام | عنوان | متن | تاریخ&#10;سارا احمدی | رتبه اول | ... | ۱۴۰۴/۰۱/۰۱"></textarea></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn soft" id="btnLoadPaste" type="button">ورود از کپی‌شدگی</button>
+        <span class="pill" id="dataPill">هنوز داده‌ای وارد نشده</span>
+      </div>
+      <div id="dataPreview" class="stack" style="margin-top:14px">
+        <div class="field-card">
+          <div class="pane-head"><div><h2 style="font-size:15px">پیشنمایش داده‌ها</h2><p id="dataInfo"></p></div></div>
+          <div class="table-wrap"><table class="data" id="dataTable"><thead></thead><tbody></tbody></table></div>
+        </div>
+        <fieldset>
+          <legend>mapping — کدام ستون به کدام بخش می‌رود</legend>
+          <div class="map-row"><span class="muted">نام دریافت‌کننده</span><select id="mapName"></select></div>
+          <div class="map-row"><span class="muted">متن میانی</span><select id="mapBody"></select></div>
+          <div class="map-row"><span class="muted">تاریخ</span><select id="mapDate"></select></div>
+          <div class="map-row"><span class="muted">مهره</span><select id="mapSeal"></select></div>
+          <div class="map-row"><span class="muted">امضا</span><select id="mapSign"></select></div>
+          <div class="map-row"><span class="muted">شماره سری</span><select id="mapSerial"></select></div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="panel-pane" id="p-export" role="tabpanel" aria-labelledby="t-export">
+      <div class="pane-head">
+        <div><h2>خروجی</h2><p>تصویر، PDF، ورد، یا صدور گروهی در یک فایل.</p></div>
+      </div>
+      <div class="export-grid">
+        <button class="export-choice" id="btnPng" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M4 18l5-5 4 3 3-4 4 6" fill="none" stroke="currentColor"/></svg><span><strong>تصویر PNG</strong><small>یک گواهی،คبیلایه</small></span></button>
+        <button class="export-choice" id="btnPdf" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6V3z" fill="none" stroke="currentColor"/><path d="M14 3v4h4" fill="none" stroke="currentColor"/></svg><span><strong>PDF</strong><small>چاپ A4، رنگ‌های دقیق</small></span></button>
+        <button class="export-choice" id="btnDoc" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6V3z" fill="none" stroke="currentColor"/><path d="M14 3v4h4M9 12h6M9 15h6" fill="none" stroke="currentColor"/></svg><span><strong>ورد Word</strong><small>ویرایش‌پذیر در ورد</small></span></button>
+        <button class="export-choice" id="btnZip" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v9m0 0-3-3m3 3 3-3M5 19h14" fill="none" stroke="currentColor"/></svg><span><strong>ZIP گروهی</strong><small>صدور هزاران گواهی</small></span></button>
+      </div>
+      <fieldset style="margin-top:18px">
+        <legend>صدور گروهی</legend>
+        <div class="helper" style="margin-bottom:12px">با داده‌های واردشده، برای هر سطر یک گواهی ساخته و در یک فایل ZIP می‌دهم — پردازش تکه‌تکه می‌شود و **هنگ نمی‌کند**.</div>
+        <div class="row" style="gap:14px">
+          <div class="field" style="min-width:150px"><label for="batchLimit">تعداد حداکثر</label><input id="batchLimit" type="number" min="1" max="100000" value="2000"></div>
+          <div class="field" style="min-width:150px"><label for="batchScale">رزولوز تصویر</label><select id="batchScale"><option value="1">یکسان با صفحه</option><option value="2" selected>دو برابر (وضوح بالا)</option></select></div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn gold" id="btnBatch" type="button">🚀 صدور گروهی به ZIP</button>
+          <button class="btn" id="btnBatchPdf" type="button">صدور گروهی به PDF</button>
+        </div>
+        <div class="stack" style="margin-top:12px">
+          <div class="progress" aria-label="تقدم کار"><i id="batchBar"></i></div>
+          <div class="batch-log" id="batchLog"> در انتظار شروع…</div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="panel-pane" id="p-guide" role="tabpanel" aria-labelledby="t-guide">
+      <div class="pane-head">
+        <div><h2>راهنما</h2><p>کار با این ابزار در ۶ گام ساده.</p></div>
+      </div>
+      <div class="stack">
+        <div class="guide-step"><b>۱</b><p><span class="k">الگوی می‌کنی:</span> از بین الگوهای آماده، مدرن یا تذهیب، یکی را که بیشتر دوست داری انتخاب کن. تمام رنگ‌ها، فونت‌ها و متن‌ها با هم تغییر می‌کنند.</p></div>
+        <div class="guide-step"><b>۲</b><p><span class="k">متن را ویرایش می‌کنی:</span> در بخش «متن»، عنوان، نام، متن میانی، تاریخ، امضا و شماره را façon می‌کنی. ثبت‌شدن روی گواهی همان‌لحظة ذخیره می‌شود.</p></div>
+        <div class="guide-step"><b>۳</b><p><span class="k">فونت و رنگ را تنظیم می‌کنی:</span> هر بخش می‌تواند فونت مخصوص به خود داشته باشد؛ رنگ متن، ضخامت قاب، حاشیه و میزان تیک‌دار بودن گواهی را هم می‌توانی تغییر دهی. حتی می‌توانی فونت خود را اضافه کن.</p></div>
+        <div class="guide-step"><b>۴</b><p><span class="k">پس‌زمینه می‌سازی:</span> پس‌زمینه‌های آماده را انتخاب کن یا با دو رنگ و جهت تغير، شیب‌ی سفارشی بسازی.</p></div>
+        <div class="guide-step"><b>۵</b><p><span class="k">داده‌ها را وارد می‌کنی:</span> فایل اکسل یا CSV را وارد کن (یا از اکسل کپی کن و می‌چسبینی). Columnها را mapping می‌کنی: کدام ستون نام است، کدام تاریخ و…</p></div>
+        <div class="guide-step"><b>۶</b><p><span class="k">خروجی می‌گیری:</span> یک گواهی را به PNG، PDF یا ورد می‌دی؛ یا با دکمهٔ صدور گروهی، برای هزاران نفر در یک فایل ZIP یا PDF می‌سازی.</p></div>
+        <div class="helper">💡 <b>نکات تکمیلی:</b> طراحی‌ها در مرورگر ذخیره می‌شوند؛ با دکمهٔ «ذخیره» می‌توانی آن‌ها را به صورت فایل جابیابی کنی. در حالت offline هم همه چیز کار می‌کند.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="app-footer">ابزار ساخت گواهی و تقدیرنامه حکیمستان — تمام پردازش در مرورگر تو انجام می‌شود؛ هیچ داده‌ای از تو خارج نمی‌شود.</div>
+
+<!-- جعل خروجی خارج از دید -->
+<div id="exportStage" aria-hidden="true"></div>
+
+<input type="file" id="fileSave" accept=".json" hidden>
+<input type="file" id="fileLoad" accept=".json" hidden>
+<input type="file" id="fontFile" accept=".woff2,.woff,.ttf,.otf" hidden>
+
+<div class="toast-area" id="toastArea" role="status" aria-live="polite"></div>
+
+<script>
+
+"use strict";
+/* ═══════════════════════════════════════════════════════════════
+ * cert-studio.js — ابزار ساخت گواهی و تقدیرنامه
+ * ─────────────────────────────────────────────────────────────
+ *  - الگوهای آماده: هر طرح، رنگ‌ها، فونت‌ها، قاب و متن کامل
+ *  - پس‌زمینه‌های CSSی: مدرن، ساده، تذهیب و شیب‌های سفارشی
+ *  - فونت: ۱۶ فونت محلی + اضافه کردن فونت خود
+ *  - هر بخش: فونت، رنگ، ضخامت، حاشیه و تیک‌دار شدن مستقل
+ *  - ورود اکسل/CSV/کپی‌شدگی با تشخیص خودکار ستون‌ها
+ *  - خروجی PNG / PDF / ورد / ZIP گروهی (صدور تکه‌تکه، هنگ نمی‌کند)
+ * ═══════════════════════════════════════════════════════════════ */
+
+const $ = id => document.getElementById(id);
+
+/* ── داده‌های پایه ───────────────────────────────────────────── */
+const FONTS = [
+  ['Vazirmatn','vazirmatn','مکتب‌محور — مناسب متن'] ,
+  ['Lalezar','lalezar','نسخه‌ی سلطنتی برای عنوان'] ,
+  ['Mirza','mirza','خط میرزایی کهن'],
+  ['Samim','samim','سمیم — ظریف و قشنگ'],
+  ['Estedad','estedad','استداد — استاندارد و محكم'],
+  ['Katibeh','katibeh','کتیبه — تاریخی'],
+  ['Markazi Text','markazi','مرکزی — با مهارت'],
+  ['Shabnam','shabnam','شب‌نمای مدرن'],
+  ['Parastoo','parastoo','پرستو — خوش‌آهنگ'],
+  ['Sahel','sahel','ساحل — المالی و شیوا'],
+  ['Amiri','amiri','عمری — عربی کلاسیک'],
+  ['Scheherazade New','scheherazade','شهرزاد — روایت‌گونه'],
+  ['Noto Naskh Arabic','noto-naskh','نسخه‌ی عربی استاندارد'],
+  ['Harmattan','harmattan','حرمتان — باوقار'],
+  ['Gandom','gandom','گندم — ساده وخوبن'],
+];
+
+const SWATCHES = ['#2a2116','#1e3a5f','#7a1f1f','#3d5a32','#5b2a6b','#8a5a00','#0f4c5c','#ffffff'];
+
+/* پس‌زمینه‌ها: همگی CSSی، بی‌وزن و همه‌ی اندازه‌ها */
+const BACKGROUNDS = [
+  {id:'paper',  name:'کاغذ گرم',  cat:'ساده',
+   css:`radial-gradient(130% 90% at 50% 0%,#fdf6e3,#f3e7c9 55%,#ecdbb6)`},
+  {id:'mint',   name:'فیروزه‌ای',  cat:'مدرن',
+   css:`linear-gradient(150deg,#e8f7f4 0%,#bfe6df 45%,#9fd5cc 100%)`},
+  {id:'sky',    name:'آسمانی',    cat:'مدرن',
+   css:`linear-gradient(160deg,#eef5ff 0%,#d4e5fb 50%,#b9d3f6 100%)`},
+  {id:'rose',   name:'گل‌سرخی',   cat:'مدرن',
+   css:`linear-gradient(155deg,#fff3f6 0%,#fde0e8 50%,#f7c8d4 100%)`},
+  {id:'lilac',  name:'بته‌ای',     cat:'مدرن',
+   css:`linear-gradient(150deg,#f6f0ff 0%,#e6d9f8 50%,#d3bce c 100%)`},
+  {id:'saffron',name:'زعفرانی',   cat:'مدرن',
+   css:`linear-gradient(155deg,#fff8e6 0%,#ffe9bf 45%,#f7d187 100%)`},
+  {id:'deep',   name:'آبی عمق',   cat:'مدرن',
+   css:`linear-gradient(160deg,#0f2f4f 0%,#15496f 50%,#1d5f8a 100%)`, dark:true},
+  {id:'emerald',name:'یمشکی',     cat:'مدرن',
+   css:`linear-gradient(155deg,#0f3d34 0%,#16654f 50%,#1f8068 100%)`, dark:true},
+  {id:'wine',   name:'عنبی',      cat:'مدرن',
+   css:`linear-gradient(155deg,#4a1020 0%,#751f33 50%,#9c2f45 100%)`, dark:true},
+  {id:'gold',   name:'طلایی',      cat:'تذهیب',
+   css:`radial-gradient(120% 80% at 50% 8%,#fdf3d3,#f0dcab 55%,#e2c483)`},
+  {id:'tazhib', name:'تذهیب کلاسیک', cat:'تذهیب',
+   css:`radial-gradient(120% 80% at 50% 0%,#fdf6e3,#f2e3bd 55%,#e9cf9e)`, frame:'tazhib'},
+  {id:'tazhib2',name:'تذهیب فیروزه', cat:'تذهیب',
+   css:`radial-gradient(120% 80% at 50% 0%,#f0fbfa,#c9ecea 55%,#a6dcd8)`, frame:'tazhib', frameColor:'#0e7c86'},
+  {id:'tazhib3',name:'تذهیب عتیق',   cat:'تذهیب',
+   css:`radial-gradient(120% 80% at 50% 0%,#f7eed8,#e2cd9c 55%,#c9ac72)`, frame:'tazhib', frameColor:'#8a5a00'},
+  {id:'floral', name:'گل‌ستاره',   cat:'تذهیب',
+   css:`radial-gradient(120% 80% at 50% 0%,#fdf6e3,#f2e0c2 55%,#e8cd9a)`, pattern:'stars', patternColor:'rgba(184,134,43,.28)'},
+  {id:'floral2',name:'گل‌دانه',     cat:'تذهیب',
+   css:`radial-gradient(120% 80% at 50% 0%,#f0fbfa,#cbebe9 55%,#a8d9d5)`, pattern:'dots', patternColor:'rgba(14,124,134,.22)'},
+  {id:'dots',   name:'نوار نقطه',  cat:'مدرن',
+   css:`linear-gradient(150deg,#fffdf5 0%,#f8efdb 55%,#efe0c0 100%)`, pattern:'dots2', patternColor:'rgba(184,134,43,.18)'},
+  {id:'wave',   name:'مواج',       cat:'مدرن',
+   css:`linear-gradient(160deg,#eef7ff 0%,#d9ecfa 60%,#c3ddf5 100%)`, pattern:'waves', patternColor:'rgba(15,79,111,.14)'},
+  {id:'rays',   name:'شعاع‌ها',     cat:'مدرن',
+   css:`linear-gradient(150deg,#fff9ec 0%,#fdeccd 60%,#f4d99a 100%)`, pattern:'rays', patternColor:'rgba(184,134,43,.2)'},
+];
+
+/* الگوها: طرح کامل گواهی */
+const TEMPLATES = [
+  {id:'tazhib-gold', name:'تذهیب طلایی', cat:'تذهیب',
+   bg:'tazhib', frame:'tazhib', frameColor:'#b8862b',
+   ink:'#2a2116', gold:'#b8862b',
+   fonts:{title:'Lalezar',subtitle:'Estedad',name:'Samim',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی افتخار',subtitle:'دیار حکیم، سرزمين یادگیری',name:'— نام —',body:'به پاس تلاش، تمرکز و تمنای یادگیری، این گواهی با احترام اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-CERT / —'}},
+  {id:'tazhib-turq', name:'تذهیب فیروزه', cat:'تذهیب',
+   bg:'tazhib2', frame:'tazhib', frameColor:'#0e7c86',
+   ink:'#123c42', gold:'#0e7c86',
+   fonts:{title:'Lalezar',subtitle:'Noto Naskh Arabic',name:'Samim',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'تقدیرنامه',subtitle:'يادت، گنجدينهٔ تو',name:'— نام —',body:'با تشکر از تلاش و عزیمت در مسیر یادگیری، این تقدیرنامه با لطف به تو اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-TAZ / —'}},
+  {id:'tazhib-old', name:'تذهیب عتیق', cat:'تذهیب',
+   bg:'tazhib3', frame:'tazhib', frameColor:'#8a5a00',
+   ink:'#3a2a12', gold:'#8a5a00',
+   fonts:{title:'Katibeh',subtitle:'Estedad',name:'Mirza',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی‌نامه',subtitle:'سرزمین حکیم',name:'— نام —',body:'این گواهی به پاس زحمات و موفقیت‌های تو در راه آمیزش و دانش صادر شده است.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-OLD / —'}},
+  {id:'floral-gold', name:'گل‌ستاره‌ی طلایی', cat:'تذهیب',
+   bg:'floral', frame:'ornate', frameColor:'#b8862b',
+   ink:'#2a2116', gold:'#b8862b',
+   fonts:{title:'Lalezar',subtitle:'Samim',name:'Samim',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی افتخار',subtitle:'پیرویِ फूल‌های دانش',name:'— نام —',body:'به پاس عشق به دانش و زحمتِ بی‌دریغ، این گواهی با افتخار تقدیم می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-FL / —'}},
+  {id:'modern-mint', name:'مدرن فیروزه‌ای', cat:'مدرن',
+   bg:'mint', frame:'plain', frameColor:'#0e7c86',
+   ink:'#123c42', gold:'#0e7c86',
+   fonts:{title:'Lalezar',subtitle:'Vazirmatn',name:'Shabnam',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی تخصص',subtitle:'حکیمستان — مسیر یادگیری',name:'— نام —',body:'به دليل اکتسابی مهارت‌ها و نتیجه‌ی قابل تمجید، این گواهی صادر شد.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-MN / —'}},
+  {id:'modern-sky', name:'مدرن آبی آسمانی', cat:'مدرن',
+   bg:'sky', frame:'plain', frameColor:'#15496f',
+   ink:'#1a2f47', gold:'#15496f',
+   fonts:{title:'Lalezar',subtitle:'Vazirmatn',name:'Shabnam',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی افتخار',subtitle:'دیار حکیم',name:'— نام —',body:'برای تلاش، ورود و پیشرفتِ تو در مسیر یادگیری، این گواهی اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-SK / —'}},
+  {id:'modern-rose', name:'مدرن گلِ سرخ', cat:'مدرن',
+   bg:'rose', frame:'plain', frameColor:'#b04a63',
+   ink:'#5c1f2e', gold:'#b04a63',
+   fonts:{title:'Lalezar',subtitle:'Parastoo',name:'Samim',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'تقدیر و سپاس',subtitle:'به پاس تلاش، سپاس‌گزاریم',name:'— نام —',body:'با قدرشناسی از استقامت و عزم تو در راه آمیزش، این تقدیرنامه تقدیم می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-RS / —'}},
+  {id:'modern-lilac', name:'مدرن بته‌ای', cat:'مدرن',
+   bg:'lilac', frame:'plain', frameColor:'#5b2a6b',
+   ink:'#3a1c4a', gold:'#5b2a6b',
+   fonts:{title:'Lalezar',subtitle:'Samim',name:'Samim',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی عالی',subtitle:'سرزمین حکیم',name:'— نام —',body:'به پاس تمرکز و پیشرفتِ تو، این گواهی با افتخار صادر شد.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-LIL / —'}},
+  {id:'modern-saffron', name:'مدرن زعفرانی', cat:'مدرن',
+   bg:'saffron', frame:'plain', frameColor:'#a8761a',
+   ink:'#4a3208', gold:'#a8761a',
+   fonts:{title:'Lalezar',subtitle:'Katibeh',name:'Mirza',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی تقدیر',subtitle:'يادت، گنجدينهٔ تو',name:'— نام —',body:'به پاس شوق و استمرارِ تو در آمیزش، این گواهی با احترام اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-SF / —'}},
+  {id:'deep-navy', name:'آبی عمقِ شیک', cat:'مدرن',
+   bg:'deep', frame:'plain', frameColor:'#7fb8e8',
+   ink:'#eaf2fb', gold:'#8fd0f5',
+   fonts:{title:'Lalezar',subtitle:'Amiri',name:'Samim',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی تخصص',subtitle:'حکیمستان — مسیر یادگیری',name:'— نام —',body:'به پاس استقامت و پیشرفتِ تو در مسیر یادگیری، این گواهی صادر شد.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-DN / —'}},
+  {id:'emerald-nature', name:'یمشکی سبدی', cat:'مدرن',
+   bg:'emerald', frame:'plain', frameColor:'#4fd1a5',
+   ink:'#e8f7f0', gold:'#7fe0bb',
+   fonts:{title:'Lalezar',subtitle:'Scheherazade New',name:'Samim',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی افتخار',subtitle:'دیار حکیم، سرزمين یادگیری',name:'— نام —',body:'به پاس تلاش و وردِ تو در راه آمیزش، این گواهی با افتخار تقدیم می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-EM / —'}},
+  {id:'wine-classic', name:'عنبی کلاسیک', cat:'مدرن',
+   bg:'wine', frame:'plain', frameColor:'#d98a9e',
+   ink:'#fbeef2', gold:'#eab9c7',
+   fonts:{title:'Lalezar',subtitle:'Amiri',name:'Samim',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'تقدیرنامه',subtitle:'به پاس تلاش، سپاس‌گزاریم',name:'— نام —',body:'با قدرشناسی از استقامت تو در مسیر یادگیری، این تقدیرنامه تقدیم می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-WN / —'}},
+  {id:'dots-modern', name:'نوار نقطه‌ی مدرن', cat:'مدرن',
+   bg:'dots', frame:'plain', frameColor:'#b8862b',
+   ink:'#2a2116', gold:'#b8862b',
+   fonts:{title:'Lalezar',subtitle:'Vazirmatn',name:'Samim',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی افتخار',subtitle:'حکیمستان — مسیر یادگیری',name:'— نام —',body:'به پاس تلاش و عزیمت تو در راه آمیزش، این گواهی با افتخار صادر شد.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-DT / —'}},
+  {id:'wave-blue', name:'مواج آبی', cat:'مدرن',
+   bg:'wave', frame:'plain', frameColor:'#15496f',
+   ink:'#1a2f47', gold:'#15496f',
+   fonts:{title:'Lalezar',subtitle:'Vazirmatn',name:'Shabnam',body:'Vazirmatn',seal:'Sahel',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی تخصص',subtitle:'دیار حکیم',name:'— نام —',body:'برای تلاش و پیشرفتِ تو در مسیر یادگیری، این گواهی اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-WV / —'}},
+  {id:'rays-gold', name:'شعاع‌های طلایی', cat:'تذهیب',
+   bg:'rays', frame:'ornate', frameColor:'#b8862b',
+   ink:'#3a2a12', gold:'#8a5a00',
+   fonts:{title:'Lalezar',subtitle:'Katibeh',name:'Mirza',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی‌نامه',subtitle:'سرزمین حکیم',name:'— نام —',body:'به پاس زحمات و موفقیت‌های تو در راه آمیزش و دانش، این گواهی صادر شد.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-RY / —'}},
+  {id:'paper-simple', name:'کاغذ گرم ساده', cat:'ساده',
+   bg:'paper', frame:'plain', frameColor:'#b8862b',
+   ink:'#2a2116', gold:'#b8862b',
+   fonts:{title:'Lalezar',subtitle:'Vazirmatn',name:'Samim',body:'Vazirmatn',seal:'Markazi Text',date:'Vazirmatn',sign:'Vazirmatn',serial:'Vazirmatn'},
+   texts:{title:'گواهی افتخار',subtitle:'حکیمستان — مسیر یادگیری',name:'— نام —',body:'به پاس تلاش، تمرکز و تمنای یادگیری، این گواهی با احترام اهدا می‌شود.',seal:'حکیمستان',date:'۱۴۰۴/۰۱/۰۱',sign:'مدیریت حکیمستان',serial:'HK-PP / —'}},
+];
+
+/* ── حالت برنامه ─────────────────────────────────────────────── */
+const LS_KEY = 'hakim.cert-studio.v1';
+const DEFAULT_STATE = {
+  template: 'tazhib-gold',
+  bgId: null, bgCustom: null,
+  frame: 'tazhib', frameColor: '#b8862b', frameWidth: 14, frameGap: 16, rounded: 6,
+  frameOn: true, sealOn: true, ornOn: true,
+  ink: '#2a2116', gold: '#b8862b',
+  fonts: {},            // family کلی
+  fieldFonts: {},       // فونت هر بخش: title/subtitle/name/body/seal/date/sign/serial
+  fieldColors: {},      // رنگ هر بخش (اختیاری)
+  texts: {},
+  data: null,           // {columns:[], rows:[[...]]}
+  mapping: {},
+};
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) return Object.assign(clone(DEFAULT_STATE), JSON.parse(raw));
+  } catch (e) {}
+  return clone(DEFAULT_STATE);
+}
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+function saveState(silent) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+  if (!silent) toast('💾 طراحی ذخیره شد.');
+}
+
+/* ── تمپلیت استاتیک برای پیشنمایش الگوها ─────────────────────── */
+function tplMini(tpl) {
+  return `<div class="cp-page" style="--c:${tpl.ink};--g:${tpl.gold};background:${(BACKGROUNDS.find(b=>b.id===tpl.bg)||{}).css||'#fdf6e3'}">
+    <div style="position:absolute;inset:8% 10%;text-align:center;color:var(--c);display:grid;justify-items:center;gap:2px">
+      <div style="font-family:${tpl.fonts.title};font-size:11px;font-weight:800">${tpl.texts.title}</div>
+      <div style="font-family:${tpl.fonts.subtitle};font-size:5.5px;opacity:.8">${tpl.texts.subtitle}</div>
+      <div style="margin-top:4px;font-family:${tpl.fonts.name};font-size:8px;font-weight:800;border-bottom:1px solid currentColor;padding:0 4px">نام</div>
+      <div style="margin-top:3px;font-family:${tpl.fonts.body};font-size:4.6px;line-height:1.6;max-width:88%">متن</div>
+    </div></div>`;
+}
+
+/* ── نمادهای قاب (SVG) ─────────────────────────────────────────── */
+const FRAME_SVG = {
+  tazhib: (c, w) => `<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0">
+    <g fill="none" stroke="${c}" stroke-width="${Math.max(0.3, w/26)}" opacity=".92">
+      <path d="M2 6 Q2 2 6 2 M98 6 Q102 2 98 2 M2 94 Q2 98 6 98 M98 94 Q102 98 98 98"/>
+      <path d="M2 2 L7 7 M98 2 L93 7 M2 98 L7 93 M98 98 L93 93"/>
+      <path d="M6 6 L94 6 M6 94 L94 94" stroke-width="${Math.max(0.25, w/40)}"/>
+      <path d="M6 11 L94 11 M6 89 L94 89" stroke-width="${Math.max(0.2, w/56)}" opacity=".5"/>
+      <circle cx="50" cy="6" r="2.2"/><circle cx="50" cy="94" r="2.2"/>
+      <path d="M44 6 q6 -5 12 0" stroke-width="${Math.max(0.25, w/40)}"/>
+    </g></svg>`,
+  plain: (c, w) => `<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0">
+    <rect x="${w/2}" y="${w/2}" width="${100-w}" height="${100-w}" fill="none" stroke="${c}" stroke-width="${Math.max(0.4, w/18)}" rx="${state.rounded/12}"/></svg>`,
+  ornate: (c, w) => `<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0">
+    <g fill="none" stroke="${c}" stroke-width="${Math.max(0.4, w/16)}">
+      <rect x="2.5" y="2.5" width="95" height="95" rx="4"/>
+      <rect x="6" y="6" width="88" height="88" rx="3" stroke-width="${Math.max(0.2, w/32)}" opacity=".5"/>
+      <path d="M2.5 12 Q2.5 2.5 12 2.5 M97.5 12 Q97.5 2.5 88 2.5 M2.5 88 Q2.5 97.5 12 97.5 M97.5 88 Q97.5 97.5 88 97.5" stroke-width="${Math.max(0.5, w/10)}"/>
+      <path d="M44 2.5 Q50 8 56 2.5 M44 97.5 Q50 92 56 97.5" stroke-width="${Math.max(0.4, w/14)}"/>
+      <circle cx="50" cy="50" r="5" stroke-width="${Math.max(0.25, w/30)}" opacity=".7"/>
+    </g></svg>`,
+};
+
+/* ── پس‌زمینه‌ی مفهومی (لایهٔ تزئینی روی پس‌زمینه) ───────────── */
+function patternCss(pattern, color) {
+  if (!pattern) return '';
+  switch (pattern) {
+    case 'stars': return `background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84'%3E%3Cg fill='${color.replace('#','%23')}'%3E%3Cpath d='M42 6l2.2 8.8L53 17l-8.8 2.2L42 28l-2.2-8.8L31 17l8.8-2.2L42 6z'/%3E%3Ccircle cx='10' cy='50' r='2.4'/%3E%3Ccircle cx='74' cy='20' r='1.8'/%3E%3Ccircle cx='68' cy='72' r='2.2'/%3E%3Ccircle cx='16' cy='74' r='1.6'/%3E%3C/g%3E%3C/svg%3E");background-size:84px 84px;`;
+    case 'dots': return `background-image:radial-gradient(${color.replace('rgb','rgba').replace(')',',.9)')} 1.5px,transparent 1.6px);background-size:17px 17px;`;
+    case 'dots2': return `background-image:radial-gradient(${color.replace('rgb','rgba').replace(')',',.9)')} 2px,transparent 2.2px);background-size:26px 26px;`;
+    case 'waves': return `background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cpath d='M0 40q15 -22 30 0t30 0 30 0 30 0' fill='none' stroke='${color.replace('rgb','rgba').replace(')',',.9)')}' stroke-width='2'/%3E%3Cpath d='M0 50q15 -18 30 0t30 0 30 0 30 0' fill='none' stroke='${color.replace('rgb','rgba').replace(')',',.9)')}' stroke-width='1.6'/%3E%3C/svg%3E");background-size:120px 60px;`;
+    case 'rays': return `background-image:repeating-conic-gradient(from 0deg at 50% 0%, ${color} 0deg 3deg, transparent 3deg 30deg);background-size:100% 55%;background-position:top center;`;
+    default: return '';
+  }
+}
+
+/* ── رنده‌ی گواهی ──────────────────────────────────────────────── */
+function currentBg() {
+  if (state.bgCustom) return state.bgCustom;
+  return BACKGROUNDS.find(b => b.id === state.bgId) || BACKGROUNDS.find(b => b.id === tplById(state.template).bg);
+}
+function tplById(id) { return TEMPLATES.find(t => t.id === id) || TEMPLATES[0]; }
+
+function renderCert(el = $('certPage'), opts = {}) {
+  const tpl = tplById(state.template);
+  const bg = currentBg();
+  const bgCss = bg ? bg.css : 'radial-gradient(130% 90% at 50% 0%,#fdf6e3,#f3e7c9 55%,#ecdbb6)';
+
+  // پس‌زمینه
+  const patCss = patternCss(bg && bg.pattern, (bg && bg.patternColor) || 'rgba(184,134,43,.25)');
+  el.querySelector('.cp-bg').style.cssText = `background:${bgCss};${patCss}`;
+  if (bg && bg.dark) el.style.color = state.ink;
+
+  // قاب
+  const frameEl = el.querySelector('.cp-frame');
+  const fw = opts.frameWidth || state.frameWidth;
+  if (state.frameOn && state.frame) {
+    const f = FRAME_SVG[state.frame] || FRAME_SVG.plain;
+    frameEl.style.cssText = 'position:absolute;inset:0;z-index:1;pointer-events:none';
+    frameEl.innerHTML = f(state.frameColor, fw);
+  } else {
+    frameEl.innerHTML = '';
+  }
+  el.style.borderRadius = state.rounded + 'px';
+
+  // متن از حالت یا از تمپلیت
+  const texts = Object.assign({}, tpl.texts, state.texts);
+  const setText = (id, val) => { const n = el.querySelector('#' + id); if (n) n.textContent = val; };
+  setText('fTitle', texts.title);
+  setText('fSubtitle', texts.subtitle);
+  setText('fName', texts.name);
+  setText('fBody', texts.body);
+  setText('fSeal', texts.seal);
+  setText('fDate', texts.date);
+  setText('fSign', texts.sign);
+  setText('fSerial', texts.serial);
+
+  // فونت و رنگ هر بخش
+  const ff = state.fieldFonts || {};
+  const base = state.fonts || {};
+  const applyField = (id, key, extra) => {
+    const n = el.querySelector('#' + id);
+    if (!n) return;
+    const fam = ff[key] || base.family || 'Vazirmatn';
+    const col = (state.fieldColors && state.fieldColors[key]) || (bg && bg.dark ? state.ink : state.ink);
+    n.style.cssText = `font-family:'${fam}',Vazirmatn,sans-serif;color:${col};${extra||''}`;
+  };
+  applyField('fTitle','title','font-weight:800');
+  applyField('fSubtitle','subtitle','');
+  applyField('fName','name','');
+  applyField('fBody','body','');
+  applyField('fSeal','seal','');
+  applyField('fDate','date','');
+  applyField('fSign','sign','');
+  applyField('fSerial','serial','');
+  $('fOrnament').style.display = state.ornOn ? 'flex' : 'none';
+  $('fOrnament').style.color = state.ink;
+  el.querySelector('#fSeal').style.display = state.sealOn ? '' : 'none';
+  el.style.setProperty('--tz-w', '1px');
+
+  // منطبق‌سازی رنگ قاب با تمپلیت
+  if (!opts.keepFrameColor && tpl.frameColor) state.frameColor = tpl.frameColor;
+}
+
+/* ── فونت‌های قابل افزودن ──────────────────────────────────────── */
+function fontFamilyOptions() {
+  const out = [];
+  for (const [name, , desc] of FONTS) out.push(`<option value="${name}">${name} — ${desc}</option>`);
+  for (const name of state.customFonts || []) out.push(`<option value="${name}">${name} (خودکی)</option>`);
+  return out.join('');
+}
+
+/* ── خروجی‌ها ──────────────────────────────────────────────────── */
+async function makeCanvas(scale = 2, certEl) {
+  const src = certEl || $('certPage');
+  if (typeof window.html2canvas === 'function') {
+    return window.html2canvas(src, { scale, useCORS: true, backgroundColor: null, logging: false });
+  }
+  throw new Error('html2canvas unavailable');
+}
+function downloadBlob(blob, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+/* PDF بدون وابستگی: چاپ مرورگر (print) — یک صفحه‌ی آماده با گواهی */
+function printCertificate(certEl) {
+  const stage = $('exportStage');
+  stage.innerHTML = '';
+  const clone = certEl.cloneNode(true);
+  clone.style.width = '100%';
+  clone.style.boxShadow = 'none';
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+  stage.appendChild(clone);
+  window.requestAnimationFrame(() => {
+    window.print();
+    setTimeout(() => { stage.innerHTML = ''; }, 600);
+  });
+}
+
+/* ورد: HTML مستقیم با استایل درون‌مرزی (ورود به ورد کامل است) */
+function buildDocHtml(certEl) {
+  const cs = getComputedStyle(certEl);
+  const fields = [...certEl.querySelectorAll('.cp-field')].map(n => ({
+    cls: n.className, text: n.textContent, style: n.getAttribute('style') || '',
+  }));
+  const bg = getComputedStyle(certEl.querySelector('.cp-bg')).backgroundImage;
+  return `<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><title>گواهی</title><style>
+body{margin:0;font-family:Vazirmatn,Tahoma,sans-serif}
+.cert{position:relative;width:210mm;min-height:297mm;margin:0 auto;background:${bg ? '#fdf6e3' : '#fdf6e3'};overflow:hidden;color:${state.ink}}
+.cp-bg{position:absolute;inset:0}
+.cp-frame{position:absolute;inset:0}
+.cp-zone{position:relative;z-index:2}
+.cp-pad{position:absolute;inset:0;padding:7.5% 9%;text-align:center}
+.cp-title{font-size:34pt;font-weight:800}
+.cp-subtitle{font-size:13pt;opacity:.85}
+.cp-name{margin-top:8%;font-size:26pt;font-weight:800;border-bottom:2px solid currentColor;display:inline-block;padding:0 .25em .05em}
+.cp-body{margin-top:6%;font-size:13pt;line-height:2.1}
+.cp-mid{display:flex;justify-content:space-between;margin-top:8%}
+.cp-seal{width:110px;height:110px;border:2.5px solid currentColor;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.cp-date{text-align:right;font-size:12pt}
+.cp-foot{display:flex;justify-content:space-between;margin-top:8%}
+.cp-sign{text-align:right;font-size:12pt}
+.cp-serial{font-size:9pt;text-align:left}
+@page{size:A4;margin:0}
+</style></head><body>
+<div class="cert">
+<div class="cp-bg" style="${bg ? 'background:' + bg : ''}"></div>
+<div class="cp-frame"></div>
+<div class="cp-zone cp-pad">
+<div class="cp-head" style="text-align:center">
+<div class="cp-title">${fields[0].text}</div>
+<div class="cp-subtitle">${fields[1].text}</div>
+</div>
+<div class="cp-name"><span>${fields[2].text}</span></div>
+<div class="cp-body">${fields[3].text}</div>
+<div class="cp-mid"><div class="cp-seal">${fields[4].text}</div><div class="cp-date">${fields[5].text}</div></div>
+<div class="cp-foot"><div class="cp-serial">${fields[7].text}</div><div class="cp-sign">${fields[6].text}</div></div>
+</div></div></body></html>`;
+}
+
+/* ── تحليل CSV / TSV / جدول کپی‌شده ────────────────────────────── */
+function parseDelimited(text) {
+  const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
+  if (!lines.length) return null;
+  const looksTsv = lines[0].includes('\t') && lines[0].split('\t').length > 1;
+  const rows = lines.map(line => {
+    if (looksTsv) return line.split('\t').map(c => c.trim());
+    if (line.includes('|')) return line.split('|').map(c => c.trim());
+    return splitCsvLine(line);
+  });
+  return rows;
+}
+function splitCsvLine(line) {
+  const out = []; let cur = ''; let q = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (q) {
+      if (ch === '"' && line[i+1] === '"') { cur += '"'; i++; }
+      else if (ch === '"') q = false;
+      else cur += ch;
+    } else if (ch === '"') q = true;
+    else if (ch === ',') { out.push(cur.trim()); cur = ''; }
+    else cur += ch;
+  }
+  out.push(cur.trim());
+  return out;
+}
+
+/* ── تحليل اکسل (XLSX) بدون وابستگی خارجی ───────────────────── */
+async function parseXlsx(file) {
+  const buf = await file.arrayBuffer();
+  const u8 = new Uint8Array(buf);
+  const dv = new DataView(buf);
+  let eocd = -1;
+  for (let i = u8.length - 22; i >= 0; i--) {
+    if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  }
+  if (eocd < 0) throw new Error('فایل xlsx نامعتبر است');
+  const cdCount = dv.getUint16(eocd + 10, true);
+  let off = dv.getUint32(eocd + 16, true);
+  const entries = {};
+  for (let i = 0; i < cdCount; i++) {
+    if (dv.getUint32(off, true) !== 0x02014b50) break;
+    const method = dv.getUint16(off + 10, true);
+    const compSize = dv.getUint32(off + 20, true);
+    const nameLen = dv.getUint16(off + 28, true);
+    const extraLen = dv.getUint16(off + 30, true);
+    const commLen = dv.getUint16(off + 32, true);
+    const name = new TextDecoder().decode(u8.subarray(off + 46, off + 46 + nameLen));
+    const localOff = dv.getUint32(off + 42, true);   // آفست header محلی
+    entries[name] = { method, compSize, localOff };
+    off += 46 + nameLen + extraLen + commLen;
+  }
+  const readEntry = async (name) => {
+    const e = entries[name];
+    if (!e) return null;
+    // header محلی: sig + fields تا +30، سپس نام و excel، سپس داده
+    if (dv.getUint32(e.localOff, true) !== 0x04034b50) throw new Error('header محلی نامعتبر: ' + name);
+    const lNameLen = dv.getUint16(e.localOff + 26, true);
+    const lExtraLen = dv.getUint16(e.localOff + 28, true);
+    const dataStart = e.localOff + 30 + lNameLen + lExtraLen;
+    const raw = u8.subarray(dataStart, dataStart + e.compSize);
+    if (e.method === 0) return raw;
+    return inflateAsync(raw.slice());
+  };
+  // sharedStrings
+  let shared = [];
+  const ss = await readEntry('xl/sharedStrings.xml');
+  if (ss) {
+    const xml = new TextDecoder().decode(ss);
+    const re = /<si>([\s\S]*?)<\/si>/g;
+    let m;
+    while ((m = re.exec(xml))) {
+      const ts = m[1].match(/<t[^>]*>([\s\S]*?)<\/t>/g) || [];
+      shared.push(ts.map(t => t.replace(/<[^>]+>/g, '')).join(''));
+    }
+  }
+  // نخستین sheet
+  let sheet = await readEntry('xl/worksheets/sheet1.xml');
+  if (!sheet) {
+    for (const name of Object.keys(entries)) {
+      if (/^xl\/worksheets\/sheet\d+\.xml$/.test(name)) { sheet = await readEntry(name); break; }
+    }
+  }
+  if (!sheet) throw new Error('sheet پیدا نشد');
+  const xml = new TextDecoder().decode(sheet);
+  const rows = [];
+  const rowRe = /<row[^>]*>([\s\S]*?)<\/row>/g;
+  let rm;
+  while ((rm = rowRe.exec(xml))) {
+    const cells = [];
+    const cellRe = /<c\s+([^>]*)>([\s\S]*?)<\/c>/g;
+    let cm;
+    while ((cm = cellRe.exec(rm[1]))) {
+      const attrs = cm[1] || '';
+      const inner = cm[2] || '';
+      const ref = (attrs.match(/r="([A-Z]+)\d+"/) || [])[1] || '';
+      const colLetters = ref.replace(/\d/g, '');
+      const colIdx = colLetters.split('').reduce((a, ch) => a * 26 + (ch.charCodeAt(0) - 64), 0) - 1;
+      const type = (attrs.match(/t="([^"]+)"/) || [])[1] || '';
+      let val = '';
+      const vMatch = inner.match(/<v>([\s\S]*?)<\/v>/);
+      if (vMatch) val = vMatch[1];
+      else { const is = inner.match(/<is>([\s\S]*?)<\/is>/); if (is) val = is[1].replace(/<[^>]+>/g, ''); }
+      if (type === 's' && val !== '') val = shared[parseInt(val, 10)] || '';
+      cells[colIdx] = val.trim();
+    }
+    rows.push(cells);
+  }
+  return rows;
+}
+
+async function inflateAsync(u8) {
+  if (typeof DecompressionStream === 'function') {
+    const cs = new DecompressionStream('deflate-raw');
+    const stream = new Blob([u8]).stream().pipeThrough(cs);
+    const ab = await new Response(stream).arrayBuffer();
+    return new Uint8Array(ab);
+  }
+  throw new Error('مرورگرت DecompressionStream ندارد');
+}
+
+/* ── ZIP writers (ساده، بی‌کاهش — سریع و قابل اعتماد) ───────────── */
+function crc32(u8) {
+  let c = ~0;
+  for (let i = 0; i < u8.length; i++) {
+    c ^= u8[i];
+    for (let k = 0; k < 8; k++) c = (c >>> 1) ^ (0xEDB88320 & -(c & 1));
+  }
+  return (~c) >>> 0;
+}
+async function buildZip(files) {
+  const enc = new TextEncoder();
+  const chunks = []; const central = []; let offset = 0;
+  for (const f of files) {
+    const name = enc.encode(f.name);
+    const data = f.data;
+    const crc = crc32(data);
+    const lh = new Uint8Array(30 + name.length);
+    const dv = new DataView(lh.buffer);
+    dv.setUint32(0, 0x04034b50, true);
+    dv.setUint16(4, 20, true);
+    dv.setUint16(6, 0, true);
+    dv.setUint16(8, 0, true);           // ذخیره‌ی بی‌کاهش
+    dv.setUint16(10, 0, true); dv.setUint16(12, 0, true);
+    dv.setUint32(14, crc, true);
+    dv.setUint32(18, data.length, true);
+    dv.setUint32(22, data.length, true);
+    dv.setUint16(26, name.length, true);
+    lh.set(name, 30);
+    chunks.push(lh, data);
+    const ch = new Uint8Array(46 + name.length);
+    const cv = new DataView(ch.buffer);
+    cv.setUint32(0, 0x02014b50, true);
+    cv.setUint16(4, 20, true); cv.setUint16(6, 20, true);
+    cv.setUint16(8, 0, true); cv.setUint16(10, 0, true);
+    cv.setUint16(12, 0, true); cv.setUint16(14, 0, true);
+    cv.setUint32(16, crc, true);
+    cv.setUint32(20, data.length, true);
+    cv.setUint32(24, data.length, true);
+    cv.setUint16(28, name.length, true);
+    cv.setUint32(42, offset, true);
+    ch.set(name, 46);
+    central.push(ch);
+    offset += lh.length + data.length;
+  }
+  const cdStart = offset;
+  const cdSize = central.reduce((a, c) => a + c.length, 0);
+  const end = new Uint8Array(22);
+  const ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true);
+  ev.setUint16(8, files.length, true);
+  ev.setUint16(10, files.length, true);
+  ev.setUint32(12, cdSize, true);
+  ev.setUint32(16, cdStart, true);
+  return new Blob([...chunks, ...central, end], { type: 'application/zip' });
+}
+
+/* ── تحليل داده‌ها و mapping ──────────────────────────────────── */
+function normalizeRows(rows) {
+  if (!rows || !rows.length) return null;
+  const header = (rows[0] || []).map(h => (h || '').toString().trim());
+  const body = rows.slice(1).filter(r => r.some(c => (c || '').toString().trim() !== ''));
+  if (!body.length && header.some(h => h)) {
+    // اگر لهارد ندارد (تعداد سطر ۱)، همان سطر را داده شمار می‌دهیم
+    return { columns: header.filter(Boolean).length ? header : header.map((_, i) => 'ستون ' + (i + 1)), rows: body };
+  }
+  return { columns: header.map(h => h || 'ستون'), rows: body };
+}
+function guessMapping(columns) {
+  const m = {};
+  const find = (keys) => columns.findIndex(c => keys.some(k => c.toLowerCase().includes(k)));
+  const iName = find(['نام', 'name', 'student', 'دانش']);
+  if (iName >= 0) m.name = iName;
+  const iBody = find(['متن', 'body', 'text', 'توضیح', 'عنوان', 'rank', 'رتبه', 'امتحان', 'score', 'نمره']);
+  if (iBody >= 0 && iBody !== iName) m.body = iBody;
+  const iDate = find(['تاریخ', 'date', 'سال']);
+  if (iDate >= 0) m.date = iDate;
+  const iSeal = find(['مهره', 'seal', 'گواه']);
+  if (iSeal >= 0) m.seal = iSeal;
+  const iSign = find(['امضا', 'sign', 'مدیر', 'استاد']);
+  if (iSign >= 0) m.sign = iSign;
+  const iSerial = find(['شماره', 'serial', 'code', 'id', 'کد']);
+  if (iSerial >= 0) m.serial = iSerial;
+  return m;
+}
+function applyData(rows) {
+  const norm = normalizeRows(rows);
+  if (!norm) { toast('هیچ داده‌ای پیدا نشد.', true); return; }
+  state.data = norm;
+  state.mapping = Object.assign(guessMapping(norm.columns), state.mapping || {});
+  renderDataPreview();
+  toast(`✅ ${norm.rows.length} سطر داده وارد شد.`);
+}
+
+/* ── پیشنمایش داده‌ها ─────────────────────────────────────────── */
+function renderDataPreview() {
+  const d = state.data;
+  if (!d) { $('dataPill').textContent = 'هنوز داده‌ای وارد نشده'; return; }
+  $('dataPill').textContent = `${d.rows.length} سطر · ${d.columns.length} ستون`;
+  $('dataInfo').textContent = `ستون‌ها: ${d.columns.join(' · ')}`;
+  const thead = $('dataTable').querySelector('thead');
+  const tbody = $('dataTable').querySelector('tbody');
+  thead.innerHTML = '<tr>' + d.columns.map(c => `<th>${esc(c)}</th>`).join('') + '</tr>';
+  const show = d.rows.slice(0, 50);
+  tbody.innerHTML = show.map(r => '<tr>' + r.map(c => `<td>${esc(c || '')}</td>`).join('') + '</tr>').join('')
+    + (d.rows.length > 50 ? `<tr><td colspan="${d.columns.length}" style="text-align:center;color:var(--muted)">… و ${d.rows.length - 50} سطر دیگر</td></tr>` : '');
+  // mapping selects
+  const mapIds = ['mapName','mapBody','mapDate','mapSeal','mapSign','mapSerial'];
+  const mapKeys = ['name','body','date','seal','sign','serial'];
+  mapIds.forEach((id, i) => {
+    const sel = $(id);
+    sel.innerHTML = '<option value="">— ندارد —</option>' + d.columns.map((c, idx) => `<option value="${idx}">${esc(c)}</option>`).join('');
+    if (state.mapping[mapKeys[i]] != null && state.mapping[mapKeys[i]] < d.columns.length) sel.value = state.mapping[mapKeys[i]];
+    sel.addEventListener('change', () => { state.mapping[mapKeys[i]] = sel.value === '' ? null : +sel.value; saveState(true); });
+  });
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ── الگوها و پس‌زمینه‌ها در بازر ─────────────────────────────── */
+function renderTemplates() {
+  $('tplGrid').innerHTML = TEMPLATES.map(t => `
+    <div class="tpl-card" role="button" tabindex="0" aria-pressed="${state.template === t.id}"
+         data-tpl="${t.id}" title="الگوی ${esc(t.name)}">
+      <div class="tpl-thumb">${tplMini(t)}</div>
+      <div class="tpl-name">${esc(t.name)}</div>
+      <div class="tpl-cat">${esc(t.cat)}</div>
+    </div>`).join('');
+}
+function renderBackgrounds() {
+  $('bgGrid').innerHTML = BACKGROUNDS.map(b => `
+    <div class="bg-card" role="button" tabindex="0" aria-pressed="${state.bgId === b.id && !state.bgCustom}"
+         data-bg="${b.id}" title="${esc(b.name)}">
+      <div class="bg-thumb"><div class="cp-page" style="position:absolute;inset:0;background:${b.css};${patternCss(b.pattern, b.patternColor || 'rgba(184,134,43,.25)')}"></div></div>
+      <div class="bg-name">${esc(b.name)}</div>
+    </div>`).join('');
+}
+function renderFontList() {
+  const base = state.fonts.family || 'Vazirmatn';
+  $('fontList').innerHTML = FONTS.map(([name, , desc]) => `
+    <div class="font-chip" role="button" tabindex="0" data-fam="${name}" aria-pressed="${base === name}">
+      <b style="font-family:'${name}',Vazirmatn">نمونه متن</b>
+      <small>${esc(desc)}</small>
+    </div>`).join('')
+    + (state.customFonts || []).map(name => `
+    <div class="font-chip" role="button" tabindex="0" data-fam="${name}" aria-pressed="${base === name}">
+      <b style="font-family:'${name}',Vazirmatn">نمونه متن</b>
+      <small>فونت افزوده‌ی تو</small>
+    </div>`).join('');
+  $('fontFamily').innerHTML = fontFamilyOptions();
+  $('fontFamily').value = base;
+  $('fontSameAll').checked = !Object.keys(state.fieldFonts || {}).length;
+}
+
+/* ── رنده‌ی کامل ───────────────────────────────────────────────── */
+function fullRender() {
+  const tpl = tplById(state.template);
+  if (!state.bgId && !state.bgCustom) state.bgId = tpl.bg;
+  if (state.frameColor !== tpl.frameColor && !state._keepFrame) state.frameColor = tpl.frameColor;
+  if (!state.fonts.family) state.fonts.family = 'Vazirmatn';
+  if (!state.fieldFonts) state.fieldFonts = {};
+  // فونت‌های هر بخش از تمپلیتเติม می‌شود اگر نداده
+  for (const k of ['title','subtitle','name','body','seal','date','sign','serial']) {
+    if (!state.fieldFonts[k]) state.fieldFonts[k] = tpl.fonts[k] || state.fonts.family;
+  }
+  if (!state.texts || !Object.keys(state.texts).length) state.texts = {};
+  renderTemplates();
+  renderBackgrounds();
+  renderCert();
+  // متون در بازر متن
+  const t = Object.assign({}, tpl.texts, state.texts);
+  $('inTitle').value = t.title; $('inSubtitle').value = t.subtitle;
+  $('inName').value = t.name; $('inBody').value = t.body;
+  $('inSeal').value = t.seal; $('inDate').value = t.date;
+  $('inSign').value = t.sign; $('inSerial').value = t.serial;
+  // chipها
+  document.querySelectorAll('.tpl-card').forEach(c => c.setAttribute('aria-pressed', c.dataset.tpl === state.template));
+  document.querySelectorAll('.bg-card').forEach(c => c.setAttribute('aria-pressed', c.dataset.bg === state.bgId && !state.bgCustom));
+  $('tplPill').textContent = tpl.name + ' · ' + tpl.cat;
+  renderFontList();
+  $('frameWidth').value = state.frameWidth;
+  $('frameGap').value = state.frameGap;
+  $('rounded').value = state.rounded;
+  $('frameOn').checked = state.frameOn;
+  $('sealOn').checked = state.sealOn;
+  $('ornOn').checked = state.ornOn;
+  $('inkCustom').value = state.ink;
+  $('goldCustom').value = state.gold;
+  $('bgColor1').value = (state.bgCustom && state.bgCustom.c1) || '#fdf6e3';
+  $('bgColor2').value = (state.bgCustom && state.bgCustom.c2) || '#f3e3c0';
+  $('bgAngle').value = (state.bgCustom && state.bgCustom.angle) || 135;
+  renderSwatches();
+  renderDataPreview();
+}
+function renderSwatches() {
+  $('inkSwatches').innerHTML = SWATCHES.map(c => `<button class="swatch" style="background:${c}" data-ink="${c}" aria-label="رنگ ${c}" aria-pressed="${state.ink.toLowerCase() === c.toLowerCase()}"></button>`).join('');
+}
+
+/* ── صدور یک‌تکه برای یک سطر ────────────────────────────────── */
+function renderForRow(row) {
+  const t = Object.assign({}, tplById(state.template).texts, state.texts);
+  const map = state.mapping || {};
+  const get = (idx) => idx != null && row[idx] != null ? String(row[idx]) : '';
+  if (map.name != null) t.name = get(map.name);
+  if (map.body != null) t.body = get(map.body);
+  if (map.date != null) t.date = get(map.date);
+  if (map.seal != null) t.seal = get(map.seal);
+  if (map.sign != null) t.sign = get(map.sign);
+  if (map.serial != null) {
+    const serial = get(map.serial);
+    if (serial) t.serial = serial;
+  }
+  const el = $('certPage');
+  const textsBackup = state.texts;
+  state.texts = { title: t.title, subtitle: t.subtitle, name: t.name, body: t.body, seal: t.seal, date: t.date, sign: t.sign, serial: t.serial };
+  renderCert(el, { keepFrameColor: true });
+  state.texts = textsBackup;
+  return el;
+}
+
+/* ── صدور گروهی (تکه‌تکه، هنگ نمی‌کند) ─────────────────────── */
+async function runBatch(format) {
+  const d = state.data;
+  if (!d || !d.rows.length) { toast('ابتدا داده‌ها را وارد کن.', true); return; }
+  const limit = Math.min(Math.max(+($('batchLimit').value) || 1, 1), 100000);
+  const rows = d.rows.slice(0, limit);
+  const scale = +($('batchScale').value) || 1;
+  const bar = $('batchBar'), log = $('batchLog');
+  const t0 = performance.now();
+  bar.style.width = '0%';
+  log.textContent = `شروع صدور ${rows.length} گواهی (${format.toUpperCase()})…`;
+  const exportStage = $('exportStage');
+  const files = [];
+  let certIdx = 0;
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const el = renderForRow(row);
+    // کپی به stage خروجی با id غیرتکراری
+    const clone = el.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+    clone.style.boxShadow = 'none';
+    exportStage.innerHTML = '';
+    exportStage.appendChild(clone);
+    try {
+      if (format === 'png') {
+        const canvas = await makeCanvas(scale, clone);
+        const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+        files.push({ name: `certificate-${String(i + 1).padStart(4, '0')}.png`, data: new Uint8Array(await blob.arrayBuffer()) });
+      } else if (format === 'doc') {
+        const html = buildDocHtml(clone);
+        files.push({ name: `certificate-${String(i + 1).padStart(4, '0')}.doc`, data: new TextEncoder().encode(html) });
+      } else if (format === 'pdf') {
+        const canvas = await makeCanvas(scale, clone);
+        const blob = await makePdfFromCanvas(canvas);
+        const data = new Uint8Array(await blob.arrayBuffer());
+        files.push({ name: `certificate-${String(i + 1).padStart(4, '0')}.pdf`, data });
+      }
+    } catch (err) {
+      log.textContent += `\n✗ سطر ${i + 1}: ${err.message}`;
+    }
+    // yield برای جلوگیری از هنگ
+    await new Promise(r => setTimeout(r, 0));
+    if (i % 5 === 0 || i === rows.length - 1) {
+      const pct = Math.round(((i + 1) / rows.length) * 100);
+      bar.style.width = pct + '%';
+      const secs = ((performance.now() - t0) / 1000).toFixed(1);
+      log.textContent = `صاد شد: ${i + 1}/${rows.length} (${pct}%) — ${secs} ثانیه`;
+    }
+  }
+  exportStage.innerHTML = '';
+  if (!files.length) { toast('هیچ گواهی‌ای ساخته نشد.', true); return; }
+  const secs = ((performance.now() - t0) / 1000).toFixed(1);
+  if (format === 'png' || format === 'doc') {
+    const zip = await buildZip(files);
+    downloadBlob(zip, `certificates-${rows.length}.zip`);
+    log.textContent += `\n✅ تمام شد: ${files.length} فایل در یک ZIP (${secs} ثانیه).`;
+    toast(`✅ ${files.length} گواهی در ZIP صادر شد.`);
+  } else {
+    const zip = await buildZip(files);
+    downloadBlob(zip, `certificates-${rows.length}.pdf.zip`);
+    log.textContent += `\n✅ تمام شد: ${files.length} گواهی PDF در یک ZIP (${secs} ثانیه).`;
+    toast(`✅ ${files.length} گواهی PDF صادر شد.`);
+  }
+}
+
+/* PDF ساز ساده: JPEG کنش‌دار درون PDF (بدون وابستگی خارجی) */
+async function makePdfFromCanvas(canvas) {
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+  const jpegB64 = dataUrl.split(',')[1];
+  const jpegBytes = Uint8Array.from(atob(jpegB64), c => c.charCodeAt(0));
+  const w = canvas.width, h = canvas.height;
+  const pw = 595, ph = 842; // A4 در نقطه
+  const scale = Math.min(pw / w, ph / h);
+  const dw = (w * scale).toFixed(2), dh = (h * scale).toFixed(2);
+  const dx = ((pw - dw) / 2).toFixed(2), dy = ((ph - dh) / 2).toFixed(2);
+  const objs = [];
+  objs.push('<< /Type /Catalog /Pages 2 0 R >>');
+  objs.push('<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  objs.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Resources << /XObject << /Im1 5 0 R >> >> /Contents 4 0 R >>`);
+  const stream = `q ${dw} 0 0 ${dh} ${dx} ${dy} cm /Im1 Do Q`;
+  objs.push(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
+  objs.push(`<< /Type /XObject /Subtype /Image /Width ${w} /Height ${h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.length} >>\nstream\n`);
+  return buildPdfWithBinary(objs, jpegBytes);
+}
+function buildPdfWithBinary(objs, jpegBytes) {
+  const enc = new TextEncoder();
+  const parts = [enc.encode('%PDF-1.4\n')];
+  const offs = [];
+  for (let i = 0; i < objs.length; i++) {
+    offs.push(parts.reduce((a, p) => a + p.length, 0));
+    const body = objs[i];
+    if (i === objs.length - 1) {
+      parts.push(enc.encode(`${i + 1} 0 obj\n${body}\n`));
+      parts.push(jpegBytes);
+      parts.push(enc.encode('\nendobj\n'));
+    } else {
+      parts.push(enc.encode(`${i + 1} 0 obj\n${body}\nendobj\n`));
+    }
+  }
+  const xr = `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n`
+    + offs.map(o => `${String(o).padStart(10, '0')} 00000 n \n`).join('');
+  parts.push(enc.encode(xr));
+  const startxref = parts.reduce((a, p) => a + p.length, 0);
+  parts.push(enc.encode(`trailer\n<< /Size ${objs.length + 1} /Root 1 0 R >>\nstartxref\n${startxref}\n%%EOF`));
+  return new Blob(parts, { type: 'application/pdf' });
+}
+
+/* ── اتصالات UI ────────────────────────────────────────────────── */
+function toast(msg, isErr) {
+  const area = $('toastArea');
+  const t = document.createElement('div');
+  t.className = 'toast' + (isErr ? ' error' : '');
+  t.innerHTML = `<span>${esc(msg)}</span>`;
+  const b = document.createElement('button');
+  b.setAttribute('aria-label', 'بستن');
+  b.textContent = '✕';
+  b.onclick = () => t.remove();
+  t.appendChild(b);
+  area.appendChild(t);
+  setTimeout(() => t.remove(), 6000);
+}
+
+document.querySelectorAll('[data-pane]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.panel-pane').forEach(p => p.classList.toggle('active', p.id === btn.dataset.pane));
+    document.querySelectorAll('.panel-tab .tab[data-pane]').forEach(b => b.setAttribute('aria-selected', b.dataset.pane === btn.dataset.pane));
+  });
+});
+
+$('tplGrid').addEventListener('click', e => {
+  const card = e.target.closest('.tpl-card');
+  if (!card) return;
+  const tpl = tplById(card.dataset.tpl);
+  state.template = tpl.id;
+  state.frame = tpl.frame;
+  state.frameColor = tpl.frameColor;
+  state.ink = tpl.ink;
+  state.gold = tpl.gold;
+  state.bgId = tpl.bg;
+  state.bgCustom = null;
+  state.fieldFonts = Object.assign({}, tpl.fonts);
+  state.texts = Object.assign({}, tpl.texts);
+  saveState(true);
+  fullRender();
+  toast(`الگوی «${tpl.name}» انتخاب شد.`);
+});
+$('bgGrid').addEventListener('click', e => {
+  const card = e.target.closest('.bg-card');
+  if (!card) return;
+  state.bgId = card.dataset.bg;
+  state.bgCustom = null;
+  const bg = BACKGROUNDS.find(b => b.id === state.bgId);
+  if (bg && bg.frame) { state.frame = bg.frame; }
+  saveState(true);
+  renderCert();
+  fullRender();
+});
+$('fontList').addEventListener('click', e => {
+  const chip = e.target.closest('.font-chip');
+  if (!chip) return;
+  state.fonts.family = chip.dataset.fam;
+  saveState(true);
+  renderFontList();
+  renderCert();
+});
+$('fontFamily').addEventListener('change', () => {
+  state.fonts.family = $('fontFamily').value;
+  saveState(true);
+  renderFontList();
+  renderCert();
+});
+$('fontSameAll').addEventListener('change', () => {
+  if ($('fontSameAll').checked) {
+    const fam = state.fonts.family || 'Vazirmatn';
+    const f = {};
+    for (const k of ['title','subtitle','name','body','seal','date','sign','serial']) f[k] = fam;
+    state.fieldFonts = f;
+  } else {
+    state.fieldFonts = {};
+  }
+  saveState(true);
+  fullRender();
+});
+$('inkSwatches').addEventListener('click', e => {
+  const sw = e.target.closest('.swatch');
+  if (!sw) return;
+  state.ink = sw.dataset.ink;
+  saveState(true);
+  renderSwatches();
+  renderCert();
+});
+$('inkCustom').addEventListener('input', () => { state.ink = $('inkCustom').value; renderSwatches(); renderCert(); saveState(true); });
+$('goldCustom').addEventListener('input', () => { state.gold = $('goldCustom').value; state.frameColor = $('goldCustom').value; renderCert(); saveState(true); });
+$('frameWidth').addEventListener('input', () => { state.frameWidth = +$('frameWidth').value; renderCert(); });
+$('frameGap').addEventListener('input', () => { state.frameGap = +$('frameGap').value; renderCert(); });
+$('rounded').addEventListener('input', () => { state.rounded = +$('rounded').value; renderCert(); });
+$('frameOn').addEventListener('change', () => { state.frameOn = $('frameOn').checked; renderCert(); });
+$('sealOn').addEventListener('change', () => { state.sealOn = $('sealOn').checked; renderCert(); });
+$('ornOn').addEventListener('change', () => { state.ornOn = $('ornOn').checked; renderCert(); });
+$('btnCustomBg').addEventListener('click', () => {
+  state.bgCustom = {
+    css: `linear-gradient(${$('bgAngle').value}deg, ${$('bgColor1').value}, ${$('bgColor2').value})`,
+    c1: $('bgColor1').value, c2: $('bgColor2').value, angle: +$('bgAngle').value,
+  };
+  saveState(true);
+  renderCert();
+  toast('پس‌زمینه‌ی سفارشی ساخته شد.');
+});
+const IN_MAP = { inTitle:'title', inSubtitle:'subtitle', inName:'name', inBody:'body', inSeal:'seal', inDate:'date', inSign:'sign', inSerial:'serial' };
+Object.keys(IN_MAP).forEach(id => {
+  $(id).addEventListener('input', () => {
+    state.texts[IN_MAP[id]] = $(id).value;
+    renderCert();
+    saveState(true);
+  });
+});
+
+/* متن مستقیم روی گواهی */
+['fTitle','fSubtitle','fName','fBody','fSeal','fDate','fSign','fSerial'].forEach(id => {
+  $(id).addEventListener('input', () => {
+    const map = { fTitle:'title', fSubtitle:'subtitle', fName:'name', fBody:'body', fSeal:'seal', fDate:'date', fSign:'sign', fSerial:'serial' };
+    state.texts[map[id]] = $(id).textContent;
+    // بازر متن
+    const inMap = { title:'inTitle', subtitle:'inSubtitle', name:'inName', body:'inBody', seal:'inSeal', date:'inDate', sign:'inSign', serial:'inSerial' };
+    const inEl = $(inMap[map[id]]);
+    if (inEl && inEl.value !== $(id).textContent) inEl.value = $(id).textContent;
+    saveState(true);
+  });
+});
+
+/* زوم */
+function setZoom(v) {
+  $('zoomWrap').style.transform = `scale(${v / 100})`;
+  $('zoomVal').textContent = v + '٪';
+}
+$('zoom').addEventListener('input', () => setZoom(+$('zoom').value));
+$('btnReset').addEventListener('click', () => { $('zoom').value = 100; setZoom(100); });
+
+/* ذخیره / باز کردن */
+$('btnSave').addEventListener('click', () => $('fileSave').click());
+$('btnLoad').addEventListener('click', () => $('fileLoad').click());
+$('fileSave').addEventListener('change', async e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const text = await f.text();
+  downloadBlob(new Blob([text], { type: 'application/json' }), 'cert-studio-design.json');
+  toast('✏️ طراحی به فایل جابیابی شد.');
+  e.target.value = '';
+});
+$('fileLoad').addEventListener('change', async e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    state = Object.assign(clone(DEFAULT_STATE), data);
+    saveState(true);
+    fullRender();
+    toast('✅ طراحی باز شد.');
+  } catch (err) {
+    toast('فایل نامعتبر است.', true);
+  }
+  e.target.value = '';
+});
+
+/* ورود داده‌ها */
+$('btnLoadFile').addEventListener('click', async () => {
+  const f = $('fileInput').files[0];
+  if (!f) { toast('فایل را انتخاب کن.', true); return; }
+  try {
+    let rows;
+    if (/\.(xlsx|xls)$/i.test(f.name)) rows = await parseXlsx(f);
+    else rows = parseDelimited(await f.text());
+    applyData(rows);
+  } catch (err) {
+    toast('خطا در تحليل فایل: ' + err.message, true);
+  }
+  $('fileInput').value = '';
+});
+$('btnLoadPaste').addEventListener('click', () => {
+  const text = $('pasteArea').value;
+  if (!text.trim()) { toast('هر چیزی چسبانده نشده.', true); return; }
+  applyData(parseDelimited(text));
+});
+
+/* خروجی یک گواهی */
+$('btnPng').addEventListener('click', async () => {
+  try {
+    const canvas = await makeCanvas(2);
+    canvas.toBlob(b => downloadBlob(b, 'certificate.png'), 'image/png');
+    toast('✅ تصویر PNG دانلود شد.');
+  } catch (err) { toast(err.message, true); }
+});
+$('btnPdf').addEventListener('click', () => {
+  printCertificate($('certPage'));
+  toast('صفحه‌ی PDF را در پنجره‌ی چاپ ذخیره کن.');
+});
+$('btnDoc').addEventListener('click', () => {
+  const html = buildDocHtml($('certPage'));
+  downloadBlob(new Blob([html], { type: 'application/msword' }), 'certificate.doc');
+  toast('✅ فایل ورد دانلود شد.');
+});
+$('btnZip').addEventListener('click', () => {
+  document.querySelectorAll('.panel-tab .tab').forEach(b => b.setAttribute('aria-selected', b.dataset.pane === 'p-export'));
+  document.querySelectorAll('.panel-pane').forEach(p => p.classList.toggle('active', p.id === 'p-export'));
+  document.querySelectorAll('.tabs .tab').forEach(b => b.setAttribute('aria-selected', b.dataset.pane === 'p-export'));
+});
+$('btnBatch').addEventListener('click', () => runBatch('png'));
+$('btnBatchPdf').addEventListener('click', () => runBatch('pdf'));
+
+/* شروع */
+fullRender();
+setZoom(100);
+console.log('[cert-studio] ready —', TEMPLATES.length, 'templates,', BACKGROUNDS.length, 'backgrounds,', FONTS.length, 'fonts');
+</script>
+</body>
+</html>

@@ -147,6 +147,7 @@ const PREFETCH_PAGES = [
   './games/farsi5-hamava/audio/ch6-editor.mp3',
   './games/farsi5-hamava/app.js',
   './games/iran-geography.html',
+  './cert-studio.html',
   './games/iran-geography/style.css',
   './games/iran-geography/map-geo.js',
   './games/iran-geography/data.js',
