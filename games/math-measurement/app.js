@@ -5,18 +5,41 @@
   const D = window.MeasurementData;
   const GAME_ID = 'math-measurement';
   const HC = () => window.HakimCompanion || null;
+  const W = () => window.HakimWorlds || null;
   const ALL_UNITS = () => D.stages;
-  function companionAfterSolve(unit) {
+  function companionAfterSolve(unit, wasSolvedBefore) {
     const hc = HC();
-    if (!hc) return;
     const solvedHere = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
-    if (solvedHere === unit.tasks.length) {
-      const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
-      const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+    if (solvedHere !== unit.tasks.length) return;
+    const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
+    const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+    if (hc) {
       if (allDone) hc.finish('شگفت‌انگیز بود ' + profile.name + '! همهٔ تمرین‌ها را حل کردی؛ گواهی‌نامه‌ات آماده است 🏆');
       else hc.stageDone(unit.title, perfect);
       reportUnit(unit);
     }
+    const w = W();
+    if (!w || wasSolvedBefore) return;
+    const units = ALL_UNITS();
+    const guided = unit.tasks.filter((x) => profile.done[x.id]?.guided).length;
+    const stars = guided === 0 ? 3 : guided <= 2 ? 2 : 1;
+    const nextIdx = units.findIndex((u) => u.tasks.some((x) => !profile.done[x.id]?.ok));
+    const word = 'ایستگاه';
+    setTimeout(() => w.celebrate({
+      key: GAME_ID + ':' + unit.id,
+      word,
+      title: unit.title,
+      stars,
+      badge: unit.badge || '',
+      isFinal: allDone,
+      text: allDone ? 'همهٔ ' + word + '‌ها را کامل کردی و گواهی‌نامه‌ات آماده است. به خودت افتخار کن!' :
+        stars === 3 ? 'بی‌نقص! همهٔ سؤال‌های این ' + word + ' را خودت و بدون راهنما حل کردی.' :
+        'آفرین! این ' + word + ' را کامل کردی. اگر بدون راهنما حل کنی، ستاره‌های بیشتری می‌گیری.',
+      onNext: nextIdx > -1 ? () => openLesson(nextIdx) : null,
+      nextLabel: nextIdx > -1 ? word + ' بعدی ←' : '',
+      onMap: () => renderMap(),
+      onCert: () => renderCertificate()
+    }), 700);
   }
   function reportUnit(unit) {
     const hc = HC();
@@ -321,7 +344,7 @@
       <section class="hero-card">
         <div>
           <span class="hero-kicker">فصل ششم ریاضی پنجم · پوشش ۱۰۰٪ کتاب درسی</span>
-          <h2 class="hero-title">به سرزمین «پیمانه‌ستان» خوش آمدی!</h2>
+          <h2 class="hero-title">به سرزمین <span class="hw-accent">«پیمانه‌ستان»</span> خوش آمدی!</h2>
           <p class="hero-sub">در ۱۰ ایستگاه داستانی، اول با درسنامهٔ تصویری و تعاملی راز هر شکل و حجم را کشف کن، بعد مرحله‌به‌مرحله تمرین‌های کتاب را حل کن، کمبو بزن و گواهی‌نامهٔ استادی بگیر!</p>
           <div class="hero-actions">
             <button type="button" class="btn-primary" id="btnStartNext">🚀 ${done === 0 ? 'شروع از ایستگاه اول' : done === allTasks.length ? 'مرور ایستگاه‌ها' : 'ادامهٔ مسیر یادگیری'}</button>
@@ -329,9 +352,7 @@
             <button type="button" class="btn-gold" id="btnOpenCert">🏆 گواهی‌نامهٔ من</button>
           </div>
         </div>
-        <div class="hero-art" aria-hidden="true">
-          ${svgCubes(3, 3, 2)}
-        </div>
+        ${W() ? W().art('measure', { chips: ['📐 ' + fa(D.stages.length) + ' ایستگاه', '🧊 ' + fa(allTasks.length) + ' تمرین', '🏅 ' + fa(D.stages.length) + ' نشان'] }) : ''}
       </section>
 
       <section class="profile-bar" aria-label="پروفایل و پیشرفت قهرمان">
@@ -351,21 +372,26 @@
         </div>
       </section>
 
+      ${W() ? W().journey(D.stages.map((u) => ({ title: u.title, solved: stageSolvedCount(u), total: u.tasks.length })), { word: 'ایستگاه', attr: 'data-open-lesson', nextIdx, done, total: allTasks.length }) : ''}
+
       <section aria-labelledby="stationsHeading">
-        <h2 id="stationsHeading" style="margin:0 0 12px;font-size:1.2rem">🗺️ نقشهٔ ۱۰ ایستگاه فصل ششم (از مساحت تا حجم و گنجایش)</h2>
+        <h2 id="stationsHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">🗺️ نقشهٔ ۱۰ ایستگاه فصل ششم (از مساحت تا حجم و گنجایش)</h2>
         <div class="stations-grid">
           ${D.stages.map((s, idx) => {
             const solved = stageSolvedCount(s);
             const stars = stageStars(s);
             const complete = solved === s.tasks.length;
-            return `<article class="station-card ${complete ? 'done' : ''}">
+            const hw = W() ? W().card(solved, s.tasks.length, idx, nextIdx) : null;
+            return `<article class="station-card ${complete ? 'done' : ''} ${hw ? 'hw-card' : ''}" ${hw ? hw.attrs : ''}>
               <div class="station-top">
-                <span class="station-icon" aria-hidden="true">${s.icon}</span>
+                <span class="station-icon" aria-hidden="true">${s.icon}${hw ? hw.num : ''}</span>
                 <span class="station-stars" aria-label="${fa(stars)} از ۳ ستاره">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span>
               </div>
               <span class="station-pages">ایستگاه ${fa(idx + 1)} · ${esc(s.pages)}</span>
               <h3>${esc(s.title)}</h3>
+              ${hw ? hw.badge : ''}
               <p class="station-topic">${esc(s.topic)}</p>
+              ${hw ? hw.bar : ''}
               <div class="station-foot">
                 <small><b>${fa(solved)}</b> از <b>${fa(s.tasks.length)}</b> تمرین ${profile.lessons[s.id] ? '· 📖 درس دیده شد' : ''}</small>
                 <div style="display:flex;gap:6px;flex-wrap:wrap">
@@ -377,11 +403,14 @@
           }).join('')}
         </div>
       </section>
+
+      ${W() ? W().certBanner({ done, total: allTasks.length, word: 'ایستگاه', taskWord: 'تمرین', attr: 'data-open-lesson', nextIdx }) : ''}
     `;
 
     $('btnStartNext').onclick = () => openLesson(nextIdx);
     $('btnOpenStudio').onclick = renderStudio;
     $('btnOpenCert').onclick = renderCertificate;
+    W()?.bind(main, { cert: renderCertificate });
     $('nameForm').onsubmit = (e) => {
       e.preventDefault();
       profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || 'معمار جوان';
@@ -854,7 +883,7 @@
         `<b>🌟 آفرین قهرمان! کاملاً درست است.</b><br>${esc(t.why)}${profile.combo >= 2 ? `<br><small>🔥 ${fa(profile.combo)} پاسخ درست پیاپی!</small>` : ''}`,
         'ok'
       );
-      companionAfterSolve(s);
+      companionAfterSolve(s, already);
       return;
     }
 

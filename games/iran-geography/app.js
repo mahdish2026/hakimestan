@@ -5,18 +5,41 @@
   const D = window.IranGeoData;
   const GAME_ID = 'iran-geography';
   const HC = () => window.HakimCompanion || null;
+  const W = () => window.HakimWorlds || null;
   const ALL_UNITS = () => D.missions;
-  function companionAfterSolve(unit) {
+  function companionAfterSolve(unit, wasSolvedBefore) {
     const hc = HC();
-    if (!hc) return;
     const solvedHere = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
-    if (solvedHere === unit.tasks.length) {
-      const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
-      const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+    if (solvedHere !== unit.tasks.length) return;
+    const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
+    const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+    if (hc) {
       if (allDone) hc.finish('شگفت‌انگیز بود ' + profile.name + '! همهٔ تمرین‌ها را حل کردی؛ گواهی‌نامه‌ات آماده است 🏆');
       else hc.stageDone(unit.title, perfect);
       reportUnit(unit);
     }
+    const w = W();
+    if (!w || wasSolvedBefore) return;
+    const units = ALL_UNITS();
+    const guided = unit.tasks.filter((x) => profile.done[x.id]?.guided).length;
+    const stars = guided === 0 ? 3 : guided <= 2 ? 2 : 1;
+    const nextIdx = units.findIndex((u) => u.tasks.some((x) => !profile.done[x.id]?.ok));
+    const word = 'مأموریت';
+    setTimeout(() => w.celebrate({
+      key: GAME_ID + ':' + unit.id,
+      word,
+      title: unit.title,
+      stars,
+      badge: unit.badge || '',
+      isFinal: allDone,
+      text: allDone ? 'همهٔ ' + word + '‌ها را کامل کردی و گواهی‌نامه‌ات آماده است. به خودت افتخار کن!' :
+        stars === 3 ? 'بی‌نقص! همهٔ سؤال‌های این ' + word + ' را خودت و بدون راهنما حل کردی.' :
+        'آفرین! این ' + word + ' را کامل کردی. اگر بدون راهنما حل کنی، ستاره‌های بیشتری می‌گیری.',
+      onNext: nextIdx > -1 ? () => openLesson(nextIdx) : null,
+      nextLabel: nextIdx > -1 ? word + ' بعدی ←' : '',
+      onMap: () => renderHome(),
+      onCert: () => renderCertificate()
+    }), 700);
   }
   function reportUnit(unit) {
     const hc = HC();
@@ -239,7 +262,7 @@
       <section class="hero-card">
         <div>
           <span class="hero-kicker">مطالعات اجتماعی پایهٔ پنجم · فصل‌های ۲ و ۳ (درس‌های ۵ تا ۱۱)</span>
-          <h2 class="hero-title">به «ایران‌گرد کوچک» خوش آمدی!</h2>
+          <h2 class="hero-title">به <span class="hw-accent">«ایران‌گرد کوچک»</span> خوش آمدی!</h2>
           <p class="hero-sub">روی نقشهٔ زندهٔ ایران سفر کن! جمعیت و اقلیم، دریای خزر و خلیج فارس، رود کارون و زاینده‌رود، قطب‌های صنعتی، بندر چابهار و کشورهای همسایهٔ ایران را با بازی و کاوش یاد بگیر.</p>
           <div class="hero-actions">
             <button type="button" class="btn-primary" id="btnStartNext">🧭 ${done === 0 ? 'شروع مأموریت اول' : 'ادامهٔ ایران‌گردی'}</button>
@@ -247,9 +270,7 @@
             <button type="button" class="btn-gold" id="btnOpenCert">🏆 گواهی‌نامهٔ من</button>
           </div>
         </div>
-        <div class="iran-map-box" aria-hidden="true" style="margin:0">
-          ${renderIranSvg('tehran', false)}
-        </div>
+        ${W() ? W().art('geo', { chips: ['🧭 ' + fa(D.missions.length) + ' مأموریت', '📍 ' + fa(D.mapPins.length) + ' نقطه روی نقشه', '🏅 ' + fa(allTasks.length) + ' سؤال'], mapHtml: renderIranSvg('tehran', false) }) : ''}
       </section>
 
       <section class="profile-bar" aria-label="پروفایل ایران‌گرد کوچک">
@@ -269,20 +290,25 @@
         </div>
       </section>
 
+      ${W() ? W().journey(D.missions.map((u) => ({ title: u.title, solved: missionSolved(u), total: u.tasks.length })), { word: 'مأموریت', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
+
       <section aria-labelledby="missionsHeading">
-        <h2 id="missionsHeading" style="margin:0 0 12px;font-size:1.2rem">🗺️ شش مأموریت جغرافیای ایران (درس‌های ۵ تا ۱۱ کتاب)</h2>
+        <h2 id="missionsHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">🗺️ شش مأموریت جغرافیای ایران (درس‌های ۵ تا ۱۱ کتاب)</h2>
         <div class="missions-grid">
           ${D.missions.map((m, idx) => {
             const s = missionSolved(m);
             const st = missionStars(m);
             const full = s === m.tasks.length;
-            return `<article class="mission-card ${full ? 'done' : ''}">
+            const hw = W() ? W().card(s, m.tasks.length, idx, nextIdx) : null;
+            return `<article class="mission-card ${full ? 'done' : ''} ${hw ? 'hw-card' : ''}" ${hw ? hw.attrs : ''}>
               <div class="mission-top">
-                <span class="mission-icon" aria-hidden="true">${m.icon}</span>
+                <span class="mission-icon" aria-hidden="true">${m.icon}${hw ? hw.num : ''}</span>
                 <span class="mission-stars" aria-label="${fa(st)} از ۳ ستاره">${'★'.repeat(st)}${'☆'.repeat(3 - st)}</span>
               </div>
               <h3 style="margin:0;font-size:1.05rem">${esc(m.title)}</h3>
+              ${hw ? hw.badge : ''}
               <p style="margin:0;font-size:0.84rem;color:var(--muted)">${esc(m.subtitle)}</p>
+              ${hw ? hw.bar : ''}
               <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:10px;border-top:1px dashed var(--line)">
                 <small><b>${fa(s)} / ${fa(m.tasks.length)}</b> چالش</small>
                 <div style="display:flex;gap:6px">
@@ -294,11 +320,14 @@
           }).join('')}
         </div>
       </section>
+
+      ${W() ? W().certBanner({ done, total: allTasks.length, word: 'مأموریت', taskWord: 'سؤال', attr: 'data-lesson', nextIdx }) : ''}
     `;
 
     $('btnStartNext').onclick = () => openLesson(nextIdx);
     $('btnOpenAtlas').onclick = renderAtlas;
     $('btnOpenCert').onclick = renderCertificate;
+    W()?.bind(main, { cert: renderCertificate });
     $('nameForm').onsubmit = (e) => {
       e.preventDefault();
       profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || 'ایران‌گرد جوان';
@@ -494,7 +523,7 @@
         taskSolved = true;
         saveState();
         drawTask(`<b>🌟 آفرین ایران‌گرد کوچک! کاملاً درست است.</b><br>${esc(t.why)}`, 'ok');
-        companionAfterSolve(m);
+        companionAfterSolve(m, already);
       } else {
         playTone('err');
         profile.combo = 0;

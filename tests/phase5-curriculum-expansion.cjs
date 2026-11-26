@@ -271,9 +271,13 @@ for (const [html, appJs, gameId] of [
   const coreAt = page.indexOf('../hakim-core.js');
   const compAt = page.indexOf('../js/hakim-companion.js');
   assert.ok(coreAt > 0 && compAt > coreAt, html + ' must load hakim-core.js then hakim-companion.js');
+  const worldsAt = page.indexOf('../js/hakim-worlds.js');
+  assert.ok(worldsAt > compAt && worldsAt < page.indexOf('app.js"'), html + ' must load the shared world visuals before app.js');
+  assert.ok(page.includes('../css/hakim-worlds.css') && /<body data-world="(measure|stats|hamava|geo)">/.test(page), html + ' must use the shared world skin');
   const app = read(appJs);
   assert.ok(app.includes(gameId), appJs + ' must declare game id ' + gameId);
   assert.ok(/HakimCompanion/.test(app) && /reportStage|reportAnswer/.test(app), appJs + ' must report through HakimCompanion');
+  assert.ok(/W\(\)\.journey\(/.test(app) && /W\(\)\.certBanner\(/.test(app) && /w\.celebrate\(/.test(app), appJs + ' must show the stage journey, certificate banner and stage celebration');
   assert.ok(!/Hakim\s*\.\s*save(Answer|Session)\s*\(/.test(app), appJs + ' must not bypass the companion snake_case telemetry bridge');
 }
 for (const page of ['kelasyar.html', 'masir-yadgiri.html']) {
@@ -291,7 +295,7 @@ for (const [appJs, track] of [['games/math-measurement/app.js', 'music9.mp3'], [
   assert.ok(exists('games/' + track), 'missing music file games/' + track);
 }
 const swSrc = read('sw.js');
-for (const asset of ['./js/hakim-companion.js', './games/iran-geography/map-geo.js']) {
+for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
 }
 

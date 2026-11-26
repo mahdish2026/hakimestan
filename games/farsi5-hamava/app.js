@@ -5,18 +5,41 @@
   const D = window.HamavaData;
   const GAME_ID = 'farsi5-hamava';
   const HC = () => window.HakimCompanion || null;
+  const W = () => window.HakimWorlds || null;
   const ALL_UNITS = () => D.chapters;
-  function companionAfterSolve(unit) {
+  function companionAfterSolve(unit, wasSolvedBefore) {
     const hc = HC();
-    if (!hc) return;
     const solvedHere = unit.tasks.filter((x) => profile.done[x.id]?.ok).length;
-    if (solvedHere === unit.tasks.length) {
-      const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
-      const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+    if (solvedHere !== unit.tasks.length) return;
+    const perfect = unit.tasks.every((x) => profile.done[x.id]?.ok && !profile.done[x.id].guided);
+    const allDone = ALL_UNITS().every((u) => u.tasks.every((x) => profile.done[x.id]?.ok));
+    if (hc) {
       if (allDone) hc.finish('شگفت‌انگیز بود ' + profile.name + '! همهٔ تمرین‌ها را حل کردی؛ گواهی‌نامه‌ات آماده است 🏆');
       else hc.stageDone(unit.title, perfect);
       reportUnit(unit);
     }
+    const w = W();
+    if (!w || wasSolvedBefore) return;
+    const units = ALL_UNITS();
+    const guided = unit.tasks.filter((x) => profile.done[x.id]?.guided).length;
+    const stars = guided === 0 ? 3 : guided <= 2 ? 2 : 1;
+    const nextIdx = units.findIndex((u) => u.tasks.some((x) => !profile.done[x.id]?.ok));
+    const word = 'فصل';
+    setTimeout(() => w.celebrate({
+      key: GAME_ID + ':' + unit.id,
+      word,
+      title: unit.title,
+      stars,
+      badge: unit.badge || '',
+      isFinal: allDone,
+      text: allDone ? 'همهٔ ' + word + '‌ها را کامل کردی و گواهی‌نامه‌ات آماده است. به خودت افتخار کن!' :
+        stars === 3 ? 'بی‌نقص! همهٔ سؤال‌های این ' + word + ' را خودت و بدون راهنما حل کردی.' :
+        'آفرین! این ' + word + ' را کامل کردی. اگر بدون راهنما حل کنی، ستاره‌های بیشتری می‌گیری.',
+      onNext: nextIdx > -1 ? () => openLesson(nextIdx) : null,
+      nextLabel: nextIdx > -1 ? word + ' بعدی ←' : '',
+      onMap: () => renderMap(),
+      onCert: () => renderCertificate()
+    }), 700);
   }
   function reportUnit(unit) {
     const hc = HC();
@@ -207,15 +230,18 @@
     const nextIdx = Math.max(0, D.chapters.findIndex((c) => chapterSolved(c) < c.tasks.length));
 
     main.innerHTML = `
-      <section class="hero-card">
+      <section class="hero-card hw-hero-split">
+        <div>
         <span class="hero-kicker">فارسی و نگارش پایهٔ پنجم دبستان · هم‌آواها و درست‌نویسی</span>
-        <h2 class="hero-title">به تالار ادب «هم‌آواستان» خوش آمدی!</h2>
+        <h2 class="hero-title">به تالار ادب <span class="hw-accent">«هم‌آواستان»</span> خوش آمدی!</h2>
         <p class="hero-sub">چرا «نمازگزار» با «ز» نوشته می‌شود ولی «کتاب را روی میز گذارد» با «ذ»؟ در ۶ فصل جذاب، اول با «رمزهای یادیار» راز هر جفت هم‌آوا را یاد بگیر، بعد در داستان‌ها و میزِ ویراستاری استادت را نشان بده!</p>
         <div class="hero-actions">
           <button type="button" class="btn-primary" id="btnStartNext">🚀 ${done === 0 ? 'شروع فصل اول' : 'ادامهٔ ماجراجویی'}</button>
           <button type="button" class="btn-soft" id="btnOpenLexicon">📖 فرهنگ‌نامهٔ جیبی هم‌آواها</button>
           <button type="button" class="btn-gold" id="btnOpenCert">🏆 گواهی‌نامهٔ من</button>
         </div>
+        </div>
+        ${W() ? W().art('hamava', { chips: ['📜 ' + fa(D.chapters.length) + ' فصل', '✍️ ' + fa(allTasks.length) + ' چالش', '📖 ' + fa(D.lexicon.length) + ' جفت هم‌آوا'] }) : ''}
       </section>
 
       <section class="profile-bar" aria-label="پروفایل ادیب جوان">
@@ -235,20 +261,25 @@
         </div>
       </section>
 
+      ${W() ? W().journey(D.chapters.map((u) => ({ title: u.title, solved: chapterSolved(u), total: u.tasks.length })), { word: 'فصل', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
+
       <section aria-labelledby="chaptersHeading">
-        <h2 id="chaptersHeading" style="margin:0 0 12px;font-size:1.2rem">📚 شش فصل املا و واژه‌شناسی پایهٔ پنجم</h2>
+        <h2 id="chaptersHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">📚 شش فصل املا و واژه‌شناسی پایهٔ پنجم</h2>
         <div class="chapters-grid">
           ${D.chapters.map((c, idx) => {
             const s = chapterSolved(c);
             const st = chapterStars(c);
             const full = s === c.tasks.length;
-            return `<article class="chapter-card ${full ? 'done' : ''}">
+            const hw = W() ? W().card(s, c.tasks.length, idx, nextIdx) : null;
+            return `<article class="chapter-card ${full ? 'done' : ''} ${hw ? 'hw-card' : ''}" ${hw ? hw.attrs : ''}>
               <div class="chapter-top">
-                <span class="chapter-icon" aria-hidden="true">${c.icon}</span>
+                <span class="chapter-icon" aria-hidden="true">${c.icon}${hw ? hw.num : ''}</span>
                 <span class="chapter-stars" aria-label="${fa(st)} از ۳ ستاره">${'★'.repeat(st)}${'☆'.repeat(3 - st)}</span>
               </div>
               <h3 style="margin:0;font-size:1.05rem">${esc(c.title)}</h3>
+              ${hw ? hw.badge : ''}
               <p style="margin:0;font-size:0.84rem;color:var(--muted)">${esc(c.subtitle)}</p>
+              ${hw ? hw.bar : ''}
               <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-top:10px;border-top:1px dashed var(--line)">
                 <small><b>${fa(s)} / ${fa(c.tasks.length)}</b> چالش</small>
                 <div style="display:flex;gap:6px">
@@ -260,11 +291,14 @@
           }).join('')}
         </div>
       </section>
+
+      ${W() ? W().certBanner({ done, total: allTasks.length, word: 'فصل', taskWord: 'چالش', attr: 'data-lesson', nextIdx }) : ''}
     `;
 
     $('btnStartNext').onclick = () => openLesson(nextIdx);
     $('btnOpenLexicon').onclick = renderLexicon;
     $('btnOpenCert').onclick = renderCertificate;
+    W()?.bind(main, { cert: renderCertificate });
     $('nameForm').onsubmit = (e) => {
       e.preventDefault();
       profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || 'ادیب جوان';
@@ -433,7 +467,7 @@
         taskSolved = true;
         saveState();
         drawTask(`<b>🌟 آفرین ادیب جوان! درست نوشتی.</b><br>${esc(t.why)}`, 'ok');
-        companionAfterSolve(ch);
+        companionAfterSolve(ch, already);
       } else {
         playTone('err');
         profile.combo = 0;
