@@ -19,6 +19,7 @@
 <meta property="og:title" content="مار و پلهٔ دانش — حکیمستان">
 <meta property="og:description" content="بازی آموزشی ۲ تا ۴ نفره: هر جواب درست یک تاس است!">
 <title>🐍 مار و پلهٔ دانش — حکیمستان</title>
+<link rel="canonical" href="https://hakimistan.ir/games/snake-ladder.html">
 
 <!-- فونت‌ها: Lalezar (کارتونی) + Vazirmatn (متن) -->
 <style>
@@ -2241,6 +2242,7 @@ loadServerQuestions(() => {
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

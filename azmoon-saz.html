@@ -473,21 +473,32 @@ iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px 
 /* ---------- ثابت‌ها ---------- */
 const KEY='hakimestan_azmoon_v1', STYLE_KEY='hakimestan_azmoon_style_v1', RESULTS_KEY='hakimestan_results_v2', THEME_KEY='hakimestan_azmoon_theme', UI_KEY='hakimestan_ui_v2';
 
-/* ── پنهان‌سازی پاسخ‌های درست در فایل آزمون آنلاین ───────────────── */
-const EXAM_SECRET = 'hk_hakimestan_1404_x7m9k2p';
+/* ── پنهان‌سازی پاسخ‌های درست در فایل آزمون آنلاین ─────────────────
+   فایل آزمون آنلاین خودش (بدون سرور) تصحیح می‌کند، پس کلید پاسخ ناچار درون
+   همان فایل است و رمزنگاری واقعی ممکن نیست. برای اینکه پاسخ‌ها با یک
+   «نمایش سورس» یا atob ساده دیده نشوند:
+   • هر خروجی کلید تصادفیِ خودش را می‌گیرد (نه یک رمز ثابت برای همهٔ آزمون‌ها)
+   • پاسخ هر سؤال با جریان کلیدِ ویژهٔ همان سؤال درهم (XOR) و base64url می‌شود. */
+function newExamKey(){
+  try{ const a=new Uint8Array(12); crypto.getRandomValues(a); return Array.from(a,b=>b.toString(16).padStart(2,'0')).join(''); }
+  catch(e){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+}
+function keyStream(salt){
+  let h=0x811c9dc5; salt=String(salt);
+  for(let i=0;i<salt.length;i++){ h^=salt.charCodeAt(i); h=Math.imul(h,0x01000193)>>>0; }
+  let x=h||0x9e3779b9;
+  return ()=>{ x^=x<<13; x>>>=0; x^=x>>>17; x^=x<<5; x>>>=0; return x&255; };
+}
+function scramble(str, salt){
+  const bytes=new TextEncoder().encode('HK2|'+String(str)), ks=keyStream(salt);
+  let bin='';
+  for(let i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]^ks());
+  return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
 const LOCK_KEYS = ['answer','shortAnswers','blankAnswers','dropdownAnswer','sampleAnswer','explanation'];
 
-function b64enc(str){
-  try{
-    const bytes = new TextEncoder().encode(String(str));
-    let bin = '';
-    for(let i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
-    return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-  }catch(e){ return ''; }
-}
-
-function lockAnswers(qs){
-  return qs.map(q=>{
+function lockAnswers(qs, key){
+  return qs.map((q, qi)=>{
     const c = JSON.parse(JSON.stringify(q));
     const box = {};
     LOCK_KEYS.forEach(k=>{
@@ -501,7 +512,7 @@ function lockAnswers(qs){
       box.subAnswers = c.subQuestions.map(s=>(s&&s.answer)||'');
       c.subQuestions = c.subQuestions.map(s=>{ const t={...s}; delete t.answer; return t; });
     }
-    try{ c._x = b64enc(JSON.stringify(box) + '|' + EXAM_SECRET); }catch(e){ c._x = ''; }
+    try{ c._x = scramble(JSON.stringify(box), key + '|' + (c.id != null ? c.id : qi)); }catch(e){ c._x = ''; }
     return c;
   });
 }
@@ -1403,9 +1414,9 @@ window.addEventListener('message',e=>{const fr=$('#onlineFrame');if(!fr||!fr.con
 
 function onlineHTML({sameOrigin=false}={}){
   const e=JSON.parse(JSON.stringify(exam()));
-  const cfg={duration:clamp(e.onlineDuration||30,1,600),random:!!e.random,shuffleOptions:!!e.shuffleOptions,showCorrect:e.showCorrect||'end',requireName:e.requireName!==false,askClass:e.askClass!==false,passPercent:clamp(e.passPercent??50,0,100),showReview:e.showReview!==false,allowRetry:e.allowRetry!==false,labels:style.optionLabels||'abjad',secret:EXAM_SECRET};
+  const cfg={duration:clamp(e.onlineDuration||30,1,600),random:!!e.random,shuffleOptions:!!e.shuffleOptions,showCorrect:e.showCorrect||'end',requireName:e.requireName!==false,askClass:e.askClass!==false,passPercent:clamp(e.passPercent??50,0,100),showReview:e.showReview!==false,allowRetry:e.allowRetry!==false,labels:style.optionLabels||'abjad',secret:newExamKey()};
   const hideKey=(e.showCorrect||'end')==='never';
-  const qs=lockAnswers(e.questions.map(x=>{const o={id:x.id,type:x.type,text:x.text,image:x.image,options:x.options,answer:x.answer,shortAnswers:x.shortAnswers,blankAnswers:x.blankAnswers,pairs:x.pairs.filter(p=>has(p[0])||has(p[1])),distractors:x.distractors||[],dropdownOptions:x.dropdownOptions,dropdownAnswer:x.dropdownAnswer,score:+x.score||0,section:x.section,subQuestions:x.subQuestions,explanation:x.explanation,sampleAnswer:x.sampleAnswer};if(hideKey){o.explanation='';o.sampleAnswer=''}return o}));
+  const qs=lockAnswers(e.questions.map(x=>{const o={id:x.id,type:x.type,text:x.text,image:x.image,options:x.options,answer:x.answer,shortAnswers:x.shortAnswers,blankAnswers:x.blankAnswers,pairs:x.pairs.filter(p=>has(p[0])||has(p[1])),distractors:x.distractors||[],dropdownOptions:x.dropdownOptions,dropdownAnswer:x.dropdownAnswer,score:+x.score||0,section:x.section,subQuestions:x.subQuestions,explanation:x.explanation,sampleAnswer:x.sampleAnswer};if(hideKey){o.explanation='';o.sampleAnswer=''}return o}),cfg.secret);
   const safe=v=>JSON.stringify(v).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/`/g,'\\u0060').replace(/\$\{/g,'\\u0024\\u007b').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
   const EX=safe({id:e.id,title:e.title||'آزمون',subject:e.subject,grade:e.grade,school:e.school,teacher:e.teacher,date:e.date,questions:qs});
   return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>${esc(e.title||'آزمون')}</title>${sameOrigin?localFontLinks(false):''}<style>
@@ -1438,25 +1449,29 @@ textarea.field{min-height:140px;resize:vertical}
 <script>
 'use strict';
 const EXAM=${EX},CFG=${safe(cfg)};
-const EXAM_SECRET = ${safe(EXAM_SECRET)};
-
 function b64dec(s){
   try{
     s = String(s).replace(/-/g,'+').replace(/_/g,'/');
     while(s.length % 4) s += '=';
     const bin = atob(s), bytes = new Uint8Array(bin.length);
     for(let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
-    return new TextDecoder().decode(bytes);
-  }catch(e){ return ''; }
+    return bytes;
+  }catch(e){ return new Uint8Array(0); }
 }
-
-function unlock(q){
+function keyStream(salt){
+  let h=0x811c9dc5; salt=String(salt);
+  for(let i=0;i<salt.length;i++){ h^=salt.charCodeAt(i); h=Math.imul(h,0x01000193)>>>0; }
+  let x=h||0x9e3779b9;
+  return ()=>{ x^=x<<13; x>>>=0; x^=x>>>17; x^=x<<5; x>>>=0; return x&255; };
+}
+function unlock(q, qi){
   if(!q || !q._x) return q;
   try{
-    const raw = b64dec(q._x);
-    const i = raw.lastIndexOf('|');
-    if(i < 0 || raw.slice(i+1) !== (CFG.secret || EXAM_SECRET)) return q;
-    const box = JSON.parse(raw.slice(0, i));
+    const bytes = b64dec(q._x), ks = keyStream(CFG.secret + '|' + (q.id != null ? q.id : qi));
+    for(let i=0;i<bytes.length;i++) bytes[i] ^= ks();
+    const raw = new TextDecoder().decode(bytes);
+    if(raw.slice(0,4) !== 'HK2|') return q;
+    const box = JSON.parse(raw.slice(4));
     Object.assign(q, box);
     if(Array.isArray(box.subAnswers) && Array.isArray(q.subQuestions)){
       q.subQuestions = q.subQuestions.map((s,idx)=>({ ...s, answer: box.subAnswers[idx]||'' }));
@@ -1469,13 +1484,13 @@ function unlock(q){
 const ABJAD=['الف','ب','ج','د','ه','و','ز','ح','ط','ی'];
 const fa=v=>String(v).replace(/\\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const safeImg=u=>{const s=String(u||'').trim();return /^data:image\/(png|jpe?g|gif|webp|bmp|svg\+xml);base64,[A-Za-z0-9+/=\s]+$/i.test(s)||/^https?:\/\/[^\s"'<>]+$/i.test(s)||/^blob:/i.test(s)?s:''};
+const safeImg=u=>{const s=String(u||'').trim();return /^data:image\\/(png|jpe?g|gif|webp|bmp|svg\\+xml);base64,[A-Za-z0-9+/=\\s]+$/i.test(s)||/^https?:\\/\\/[^\\s"'<>]+$/i.test(s)||/^blob:/i.test(s)?s:''};
 const norm=v=>String(v??'').trim().replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\\u200c]/g,'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/\\s+/g,' ').toLowerCase();
 const lbl=j=>CFG.labels==='num'?fa(j+1):CFG.labels==='latin'?String.fromCharCode(65+j):ABJAD[j];
 const SKEY='hk_progress_'+EXAM.id;
 let qs=[],order=[],idx=0,answers=[],marked=[],started=0,student='',klass='',finished=false,timerId=null,out=null;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function prepare(){qs=EXAM.questions.map(q=>{q=unlock(JSON.parse(JSON.stringify(q)));if(!Array.isArray(q.pairs))q.pairs=[];if(CFG.shuffleOptions&&(q.type==='mcq'||q.type==='multi')){const idxs=shuffle(q.options.map((_,i)=>i));q.options=idxs.map(i=>q.options[i]);if(q.type==='multi')q.answer=(q.answer||[]).map(a=>idxs.indexOf(a));else if(Number.isInteger(q.answer))q.answer=idxs.indexOf(q.answer)}if(q.type==='match'){q.rightOpts=shuffle(q.pairs.map(p=>p[1]).concat(q.distractors||[]))}return q});if(CFG.random)qs=shuffle(qs);answers=qs.map(()=>null);marked=qs.map(()=>false)}
+function prepare(){qs=EXAM.questions.map((q,qi)=>{q=unlock(JSON.parse(JSON.stringify(q)),qi);if(!Array.isArray(q.pairs))q.pairs=[];if(CFG.shuffleOptions&&(q.type==='mcq'||q.type==='multi')){const idxs=shuffle(q.options.map((_,i)=>i));q.options=idxs.map(i=>q.options[i]);if(q.type==='multi')q.answer=(q.answer||[]).map(a=>idxs.indexOf(a));else if(Number.isInteger(q.answer))q.answer=idxs.indexOf(q.answer)}if(q.type==='match'){q.rightOpts=shuffle(q.pairs.map(p=>p[1]).concat(q.distractors||[]))}return q});if(CFG.random)qs=shuffle(qs);answers=qs.map(()=>null);marked=qs.map(()=>false)}
 const root=document.getElementById('root');
 function eq(a,b){a=[...(a||[])].map(String).sort();b=[...(b||[])].map(String).sort();return a.length===b.length&&a.every((v,i)=>v===b[i])}
 function check(q,a){if(a===null||a===undefined||a===''||(Array.isArray(a)&&!a.length))return null;switch(q.type){case 'mcq':return a===q.answer;case 'tf':return a===q.answer;case 'multi':return eq(a,q.answer||[]);case 'short':return (q.shortAnswers||[]).map(norm).includes(norm(a));case 'blank':{const e=q.blankAnswers||[];const v=Array.isArray(a)?a:[a];if(!e.length)return null;const ok=e.filter((x,i)=>norm(x)===norm(v[i])).length;return ok===e.length?true:ok===0?false:ok/e.length}case 'match':{if(!Array.isArray(a))return false;const n=q.pairs.length;if(!n)return null;const ok=q.pairs.filter((p,j)=>norm(a[j])===norm(p[1])).length;return ok===n?true:ok===0?false:ok/n}case 'dropdown':return norm(a)===norm(q.dropdownAnswer);default:return null}}
@@ -1607,6 +1622,7 @@ setTimeout(()=>{if(tab==='questions'&&exam().questions.length===1&&!has(exam().q
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

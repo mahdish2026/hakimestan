@@ -174,7 +174,7 @@ body.km-open { overflow: hidden; }
 .km-go { background: linear-gradient(135deg, #f5c842, #c9941a); color: #2a1506; box-shadow: 0 6px 18px rgba(201, 148, 26, .35); }
 .km-go:hover { filter: brightness(1.08); }
 
-.game-march-link { margin-inline-start: 6px; }
+.game-march-link { margin: 0; }
 
 body[data-theme="light"] .km-overlay { background: radial-gradient(ellipse at center, rgba(60, 40, 12, .55), rgba(30, 18, 4, .75)); }
 

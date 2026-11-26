@@ -15,6 +15,7 @@
   <meta name="theme-color" content="#140c2c" />
   <meta name="description" content="سامانه هوشمند آموزش، مرور و بازی لغات فارسی پنجم ابتدایی — حکیمستان" />
   <title>لغات فارسی پنجم ابتدایی — حکیمستان</title>
+  <link rel="canonical" href="https://hakimistan.ir/games/farsi5-vocab.html">
 
   <!-- آیکون و مانیفست سایت حکیمستان -->
   <link rel="icon" type="image/svg+xml" href="../icon.svg" />
@@ -7685,6 +7686,7 @@
        ═══════════════════════════════════════════════════════════════ */
     (function () {
       try {
+        if (localStorage.getItem('hk_no_stats') === '1') return;
         var uidKey = 'hk_uid';
         var userId = localStorage.getItem(uidKey);
         var isNew = false;

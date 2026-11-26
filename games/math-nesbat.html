@@ -14,6 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f766e">
 <title>نسبتستان | بازی نسبت، تناسب و درصد ریاضی پنجم</title>
+<link rel="canonical" href="https://hakimistan.ir/games/math-nesbat.html">
 <meta name="description" content="نسبتستان — بازی تعاملی آموزش نسبت، تناسب و درصد ریاضی پایهٔ پنجم؛ آموزش قدم‌به‌قدم، شکل‌های رنگی، جدول تناسب، صدخانهٔ درصد، بازار تخفیف و گواهی‌نامهٔ پایان با فهرست تیک‌دار.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💯</text></svg>">
 <link rel="manifest" href="../manifest.json">
@@ -2912,6 +2913,7 @@ hkSay('سلام! من حکیمم. اسمت را بنویس تا با هم وار
 (function(){
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

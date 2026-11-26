@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>پنل معلم — فتح کهن دیار ایران</title>
+<link rel="canonical" href="https://hakimistan.ir/games/teacher.html">
 <meta name="description" content="بازی معلم کلاس — تجربه مدیریت کلاس و پاسخ‌گویی به پرسش‌های دانش‌آموزان در دنیای بازی حکیمستان.">
 <style>
   /* =========================================================
@@ -1086,6 +1087,7 @@ window.addEventListener('online',  () => setConnStatus(true));
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {
