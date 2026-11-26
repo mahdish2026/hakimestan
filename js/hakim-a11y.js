@@ -666,6 +666,13 @@
       try {
         if (getComputedStyle(el).position === 'static') {
           el.style.position = 'relative';
+          /* اگر قاعدهٔ !important صفحه همچنان static نگهش دارد، ناحیهٔ
+             لمس به جدِ دیگری لنگر می‌شود و دکمه‌های کناری را می‌پوشاند؛
+             در این حالت بزرگ‌سازی را کنار می‌گذاریم. */
+          if (getComputedStyle(el).position === 'static') {
+            el.style.position = '';
+            el.classList.remove('a11y-hit');
+          }
         }
       } catch (e2) {}
       changed++;

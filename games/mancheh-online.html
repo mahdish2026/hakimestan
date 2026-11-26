@@ -20,6 +20,7 @@
 <meta property="og:title" content="منچِ دانش آنلاین — حکیمستان">
 <meta property="og:description" content="بازی آموزشی آنلاین ۲ تا ۴ نفره: هر جواب درست یک تاس است!">
 <title>🎲 منچِ دانش آنلاین — حکیمستان</title>
+<link rel="canonical" href="https://hakimistan.ir/games/mancheh-online.html">
 
 <style>
 /* ============================================================
@@ -2599,6 +2600,7 @@ console.log('سرور:', API_URL);
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

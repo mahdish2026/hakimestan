@@ -12,6 +12,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>.inline-hakim{display:inline-block;width:36px;height:36px;vertical-align:-9px;margin-inline-start:7px;line-height:36px;text-align:center}.inline-hakim svg{width:100%;height:100%;display:block}</style>
 <title>مأموریت زمان | بازی آموزشی زمان‌سنجی و عددهای مرکب (پایهٔ پنجم)</title>
+<link rel="canonical" href="https://hakimistan.ir/games/math-time-mission.html">
 <meta name="description" content="مأموریت زمان؛ بازی آموزشی تعاملی و خودکفا برای یادگیری ساعت عقربه‌ای و دیجیتال، عددهای مرکب، الگوهای زمانی و جمع و تفریق زمان در ریاضی پایهٔ پنجم.">
 <style>
 /* رنگ‌ها با متغیرها تعریف شده‌اند تا تغییر تم ساده بماند. */
@@ -1712,6 +1713,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 (function(){
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

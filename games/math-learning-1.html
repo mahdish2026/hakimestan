@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="../css/hakim-tazhib.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>بازی تقسیم چکشی | مدرسهٔ ریاضی حکیمستان 🧮</title>
+<link rel="canonical" href="https://hakimistan.ir/games/math-learning-1.html">
 <meta name="description" content="بازی تقسیم چکشی — تمرین تعاملی و گام‌به‌گام تقسیم ریاضی پایهٔ پنجم دبستان با تشخیص خطا و گواهی‌نامه در مدرسهٔ ریاضی حکیمستان.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
 <style>
@@ -1417,6 +1418,7 @@ init();
 (function(){
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

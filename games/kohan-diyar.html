@@ -20,6 +20,7 @@
 <meta content="مهدی شریفیان" name="author"/>
 <meta content="#140b04" name="theme-color"/>
 <title>فتح کهن دیار ایران</title>
+<link rel="canonical" href="https://hakimistan.ir/games/kohan-diyar.html">
 <style>
   /* ===== استایل‌های بازی ===== */
 
@@ -3110,6 +3111,23 @@ html { scrollbar-gutter: stable; }
 #map-section .game-map-link:focus-visible {
   transform:none !important;
 }
+/* دو دکمهٔ نقشه (فتوحات + لشکرکشی) کنار هم در ستون وسط، نه روی هم */
+#map-section .progress-title > .game-map-links {
+  grid-column:2 !important; grid-row:1 !important; justify-self:center !important; align-self:center !important;
+  display:flex !important; flex-wrap:wrap !important; justify-content:center !important; align-items:center !important;
+  gap:6px !important; min-width:0 !important;
+}
+#map-section .game-map-links > .game-map-link {
+  /* relative (نه static): ناحیهٔ لمس بزرگ‌شدهٔ a11y باید به خود دکمه لنگر شود */
+  position:relative !important; left:auto !important; top:auto !important; transform:none !important;
+  margin:0 !important; z-index:auto !important; white-space:nowrap !important;
+}
+@media (max-width:520px) {
+  #map-section .progress-title { grid-template-columns:1fr auto !important; row-gap:6px !important; }
+  #map-section .progress-title > span:first-child { grid-column:1 !important; grid-row:1 !important; }
+  #map-section .progress-title > #progressText { grid-column:2 !important; grid-row:1 !important; }
+  #map-section .progress-title > .game-map-links { grid-column:1 / -1 !important; grid-row:2 !important; }
+}
 
 /* v14: کشوی نقشه دقیقاً هم‌عرض کشوهای دیگر */
 .map-accordion {
@@ -3334,8 +3352,8 @@ html { scrollbar-gutter: stable; }
 <div class="game-progress" id="gameProgress">
 <div class="progress-title">
 <span>🏹 پیشروی شهر به شهر</span>
-<button aria-label="باز و بسته کردن نقشه فتوحات" class="game-map-link" onclick="toggleMapModal()" title="باز و بسته کردن نقشه فتوحات" type="button">🗺️ نقشه فتوحات</button>
-<button aria-label="دیدن مسیر لشکرکشی سپاه" class="game-map-link game-march-link" onclick="openMarchMap()" title="مسیر لشکرکشی سپاه" type="button">🐎 مسیر لشکرکشی</button>
+<div class="game-map-links" role="group" aria-label="نقشه‌های بازی"><button aria-label="باز و بسته کردن نقشه فتوحات" class="game-map-link" onclick="toggleMapModal()" title="باز و بسته کردن نقشه فتوحات" type="button">🗺️ نقشه فتوحات</button>
+<button aria-label="دیدن مسیر لشکرکشی سپاه" class="game-map-link game-march-link" onclick="openMarchMap()" title="مسیر لشکرکشی سپاه" type="button">🐎 مسیر لشکرکشی</button></div>
 <span id="progressText">۰ / ۶ شهر</span>
 </div>
 <div class="progress-bar">
@@ -5555,6 +5573,8 @@ function toggleMapModal() {
 function openMapModal() {
   const overlay = document.getElementById('mapModalOverlay');
   if (!overlay) return;
+  // در حین لشکرکشی، نقشهٔ فتوحات روی نقشهٔ سپاه باز نمی‌شود.
+  if (window.KohanMarch && window.KohanMarch.busy) return;
 
   // ⏸️ توقف موقت تایمر تا بازیکن فرصت بررسی نقشه را داشته باشد.
   // فقط وقتی تایمر واقعاً در حال اجراست، زمان باقی‌مانده را ذخیره می‌کنیم.
@@ -6034,6 +6054,7 @@ function animateTravelDot(fromIndex, toIndex) {
         // 🐎 لشکرکشی: سپاه از شهر قبلی به شهر بعدی می‌تازد؛ تایمر سوال بعد از ورود به شهر شروع می‌شود.
         if (window.KohanMarch) {
           isMarching = true;
+          closeMarchConflicts();
           document.getElementById('nextBtnWrap').classList.remove('show');
           window.KohanMarch.march(fromCity, nextCity, marchOptions()).then(() => { isMarching = false; proceed(); });
           return;
@@ -6042,6 +6063,11 @@ function animateTravelDot(fromIndex, toIndex) {
       proceed();
     }
     let isMarching = false;
+    // فقط یک نقشه در هر لحظه: پیش از نقشهٔ لشکرکشی، مودال نقشهٔ فتوحات بسته می‌شود.
+    function closeMarchConflicts() {
+      const ov = document.getElementById('mapModalOverlay');
+      if (ov && ov.classList.contains('show')) closeMapModal();
+    }
     function marchOptions() {
       return {
         conquered: (state && state.conqueredCities) ? state.conqueredCities.slice() : [],
@@ -6051,6 +6077,7 @@ function animateTravelDot(fromIndex, toIndex) {
     }
     function openMarchMap() {
       if (!window.KohanMarch || !state) return;
+      closeMarchConflicts();
       // ⏸️ هنگام دیدن نقشه، تایمر سوال متوقف می‌شود (مثل نقشهٔ فتوحات)
       const pausedTimer = !!(state.timerInterval && !state.answered);
       if (pausedTimer) { window._savedTimeLeft = state.timeLeft; clearInterval(state.timerInterval); state.timerInterval = null; }
@@ -7155,6 +7182,7 @@ function animateTravelDot(fromIndex, toIndex) {
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

@@ -108,5 +108,5 @@ try{localStorage.removeItem(KEY+'focusMode');}catch{}
 document.body.classList.remove('focus-mode');
 load(nameOf(read('last','کاوشگر مهمان')));map();flush();
 // Site visit tracking uses the same endpoint, but never treats an opaque response as an acknowledged report.
-if(location.protocol!=='file:'){const userId=read('visitor','')||('hk_dec_'+Date.now());store('visitor',userId);fetch(API,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'logVisit',userId,page:'games/math-decimals.html',device:/mobile|android/i.test(navigator.userAgent)?'موبایل':'دسکتاپ',browser:navigator.userAgent.slice(0,120),lang:navigator.language})}).catch(()=>{});}
+if(location.protocol!=='file:'&&(()=>{try{return localStorage.getItem('hk_no_stats')!=='1'}catch(e){return true}})()){const userId=read('visitor','')||('hk_dec_'+Date.now());store('visitor',userId);fetch(API,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'logVisit',userId,page:'games/math-decimals.html',device:/mobile|android/i.test(navigator.userAgent)?'موبایل':'دسکتاپ',browser:navigator.userAgent.slice(0,120),lang:navigator.language})}).catch(()=>{});}
 })();

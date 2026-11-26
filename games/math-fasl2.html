@@ -15,6 +15,7 @@
   <meta name="theme-color" content="#f5f6ff">
   <meta name="description" content="کسرستان؛ بازی آموزشی کسر‌ها، عدد‌های مخلوط و چهار عمل، با درس‌نامه، تمرین گام‌به‌گام، بازخورد آموزنده و گواهی‌نامهٔ پیشرفت.">
   <title>کسرستان | بازی کسر‌ها و چهار عمل</title>
+  <link rel="canonical" href="https://hakimistan.ir/games/math-fasl2.html">
   <link rel="stylesheet" href="../css/fonts.css">
 <link rel="stylesheet" href="../css/hakim-tazhib.css">
   <link rel="manifest" href="../manifest.json">
@@ -992,6 +993,7 @@
     }
     function logGameVisit(){
       try{
+        if(safeRead('hk_no_stats')==='1')return;
         let userId=safeRead('hk_uid'),isNew=false;
         if(!userId){userId='hk_'+Math.random().toString(36).slice(2,11);safeWrite('hk_uid',userId);isNew=true;}
         const ua=navigator.userAgent||'';

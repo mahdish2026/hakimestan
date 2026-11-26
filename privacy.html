@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<!-- CSP دستی و سخت‌گیرانه: این صفحه هیچ منبع بیرونی ندارد -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'">
+
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0a1f">
+<meta name="description" content="حریم خصوصی در حکیمستان: چه چیزی روی دستگاه می‌ماند، چه چیزی برای پنل معلم فرستاده می‌شود و چگونه آمار بازدید را خاموش کنید.">
+<title>حریم خصوصی | حکیمستان</title>
+<link rel="canonical" href="https://hakimistan.ir/privacy.html">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/fonts.css">
+<style>
+:root{
+  --bg:#0d0a1f; --gold:#f5c76a; --gold-light:#ffd98a; --teal:#5eead4;
+  --ink:#f1ecff; --muted:#c3b8e3; --card:rgba(255,255,255,.055); --line:rgba(255,255,255,.14);
+  --font:'Vazirmatn','Vazir',Tahoma,'Segoe UI',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; font-family:var(--font); color:var(--ink); line-height:1.95;
+  background:
+    radial-gradient(1000px 600px at 85% -10%, rgba(139,92,246,.22), transparent 60%),
+    radial-gradient(700px 500px at 5% 105%, rgba(94,234,212,.10), transparent 55%),
+    linear-gradient(180deg,#0d0a1f,#151033 50%,#0d0a1f);
+  min-height:100vh;
+}
+.wrap{max-width:860px; margin:0 auto; padding:30px 18px 70px}
+header{text-align:center; margin-bottom:26px}
+header .kicker{display:inline-block; font-size:.8rem; font-weight:800; color:var(--teal); border:1px solid rgba(94,234,212,.35); border-radius:99px; padding:2px 14px}
+h1{font-size:clamp(1.5rem,4.6vw,2.2rem); margin:.4em 0 .2em; color:var(--gold-light)}
+header p{color:var(--muted); margin:0 auto; max-width:620px}
+section{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px 20px; margin:14px 0}
+h2{font-size:1.08rem; margin:0 0 .5em; color:var(--gold)}
+ul{margin:.2em 0; padding-inline-start:1.3em}
+li{margin:.15em 0}
+p{margin:.35em 0}
+.muted{color:var(--muted); font-size:.92rem}
+code{font-family:inherit; background:rgba(255,255,255,.08); border-radius:6px; padding:0 .35em; direction:ltr; unicode-bidi:embed}
+.ctrl{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:10px}
+.btn{font:inherit; font-weight:800; min-height:44px; padding:8px 18px; border-radius:12px; cursor:pointer; border:1px solid rgba(245,199,106,.55); background:rgba(245,199,106,.14); color:var(--gold-light)}
+.btn:hover,.btn:focus-visible{background:rgba(245,199,106,.26)}
+.btn.alt{border-color:rgba(94,234,212,.45); background:rgba(94,234,212,.10); color:var(--teal)}
+.status{font-weight:800; padding:4px 12px; border-radius:99px; background:rgba(255,255,255,.08)}
+.status.off{color:#fca5a5} .status.on{color:#86efac}
+a{color:var(--teal)}
+footer{text-align:center; color:var(--muted); font-size:.85rem; margin-top:26px}
+</style>
+</head>
+<body>
+<main class="wrap" id="main">
+  <header>
+    <span class="kicker">حکیمستان · شفافیت</span>
+    <h1>حریم خصوصی</h1>
+    <p>حکیمستان برای یادگیری ساخته شده، نه برای جمع‌کردن اطلاعات. این صفحه به زبان ساده می‌گوید چه چیزی روی دستگاه شما می‌ماند و چه چیزی فرستاده می‌شود.</p>
+  </header>
+
+  <section aria-labelledby="h-local">
+    <h2 id="h-local">۱) آنچه فقط روی دستگاه شما می‌ماند</h2>
+    <ul>
+      <li>پیشرفت بازی‌ها، ستاره‌ها، تنظیمات (تم، صدا، اندازهٔ نوشته) و نامی که در بازی می‌نویسید، در حافظهٔ مرورگر همین دستگاه ذخیره می‌شود.</li>
+      <li>آزمون‌ها، طرح درس‌ها، لوح‌ها و یادداشت‌های ابزارهای معلم (آزمون‌ساز، طرح درس، لوح‌نگار، دفتر) هم روی همین دستگاه می‌مانند، مگر خودتان فایلی دانلود یا ارسال کنید.</li>
+      <li>برای پاک کردن همهٔ این‌ها کافی است «داده‌های سایت» حکیمستان را از تنظیمات مرورگر پاک کنید.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="h-sent">
+    <h2 id="h-sent">۲) آنچه هنگام اتصال به اینترنت فرستاده می‌شود</h2>
+    <p>این داده‌ها به سرویس حکیمستان روی <b>Google Apps Script</b> (و جدول‌های Google Sheets پنل معلم) فرستاده می‌شود:</p>
+    <ul>
+      <li><b>آمار بازدید:</b> یک شناسهٔ تصادفی و بی‌نام (مثل <code>hk_ab12cd34e</code>) که روی دستگاه ساخته می‌شود، نام صفحه، نوع دستگاه (موبایل/تبلت/دسکتاپ)، نوع مرورگر و سیستم‌عامل، زبان مرورگر، منبع ورود (مستقیم، داخلی، گوگل، ایتا، شاد یا سایر) و اینکه بازدید اول است یا نه. نام، شماره یا نشانی دقیق اینترنتی در این آمار نوشته نمی‌شود.</li>
+      <li><b>نتیجهٔ بازی‌ها برای پنل معلم:</b> نامی که دانش‌آموز در بازی نوشته، نام بازی و مرحله، امتیاز، ستاره، مدت بازی و کامل شدن یا نشدن. معلم این نتایج را در پنل معلم می‌بیند.</li>
+      <li><b>پیام‌رسان و بازی‌های آنلاین:</b> پیام‌ها، نام نمایشی و حرکت‌های بازی برای رساندن به دیگر شرکت‌کنندگان فرستاده می‌شود. تصویرهایی که در پیام‌رسان می‌فرستید در سرویس <b>imgbb</b> بارگذاری می‌شوند.</li>
+      <li><b>آزمون آنلاین:</b> نتیجهٔ آزمون خودکار فرستاده نمی‌شود؛ دانش‌آموز فایل نتیجه را دانلود می‌کند و خودش برای دبیر می‌فرستد.</li>
+    </ul>
+    <p class="muted">Google و imgbb به‌عنوان میزبان ممکن است اطلاعات فنی (مانند نشانی اینترنتی) را طبق سیاست‌های خودشان ثبت کنند.</p>
+  </section>
+
+  <section aria-labelledby="h-not">
+    <h2 id="h-not">۳) آنچه انجام نمی‌دهیم</h2>
+    <ul>
+      <li>تبلیغ، ابزار ردیابی شرکت‌های تبلیغاتی یا کوکی‌های بازاریابی نداریم.</li>
+      <li>داده‌ها فروخته یا با کسی برای تبلیغات به اشتراک گذاشته نمی‌شود.</li>
+      <li>برای استفاده از بازی‌ها نیازی به ثبت‌نام، شماره تلفن یا ایمیل نیست.</li>
+    </ul>
+    <p class="muted">پیشنهاد به معلمان: از دانش‌آموزان بخواهید فقط نام کوچک یا نام مستعار بنویسند.</p>
+  </section>
+
+  <section aria-labelledby="h-ctrl">
+    <h2 id="h-ctrl">۴) کنترل در دست شماست</h2>
+    <p>می‌توانید ارسال <b>آمار بازدید</b> را روی همین دستگاه خاموش کنید. بازی‌ها و نتایج پنل معلم مثل قبل کار می‌کنند.</p>
+    <div class="ctrl">
+      <span>وضعیت آمار بازدید: <span class="status" id="statsStatus" aria-live="polite">…</span></span>
+      <button type="button" class="btn" id="statsToggle">…</button>
+      <button type="button" class="btn alt" id="forgetId">پاک کردن شناسهٔ بی‌نام این دستگاه</button>
+    </div>
+    <p class="muted" id="forgetMsg" aria-live="polite"></p>
+  </section>
+
+  <section aria-labelledby="h-contact">
+    <h2 id="h-contact">۵) پرسش و درخواست</h2>
+    <p>اگر می‌خواهید نتیجه‌ای از پنل معلم حذف شود، به معلم کلاس یا طراح حکیمستان بگویید.</p>
+  </section>
+
+  <footer>
+    طراحی و توسعه: <b>مهدی شریفیان</b> — معلم پایهٔ پنجم · <a href="index.html">بازگشت به لابی</a>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var KEY = 'hk_no_stats';
+  var st = document.getElementById('statsStatus');
+  var tg = document.getElementById('statsToggle');
+  var fg = document.getElementById('forgetId');
+  var msg = document.getElementById('forgetMsg');
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function render() {
+    var off = get(KEY) === '1';
+    st.textContent = off ? 'خاموش' : 'روشن';
+    st.className = 'status ' + (off ? 'off' : 'on');
+    tg.textContent = off ? 'روشن کردن آمار بازدید' : 'خاموش کردن آمار بازدید';
+    tg.setAttribute('aria-pressed', String(off));
+  }
+  tg.addEventListener('click', function () {
+    try {
+      if (get(KEY) === '1') localStorage.removeItem(KEY); else localStorage.setItem(KEY, '1');
+    } catch (e) { msg.textContent = 'مرورگر اجازهٔ ذخیره نمی‌دهد.'; }
+    render();
+  });
+  fg.addEventListener('click', function () {
+    try { localStorage.removeItem('hk_uid'); localStorage.removeItem('hakim.decimals.v1.visitor'); } catch (e) {}
+    msg.textContent = 'شناسهٔ بی‌نام این دستگاه پاک شد.';
+  });
+  render();
+})();
+</script>
+<!-- hakim-core:start -->
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
+</html>

@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.91';
+const VERSION = 'hakim-v1.5.92';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -94,6 +94,7 @@ const PREFETCH_PAGES = [
   './videos.html',
   './judges.html',
   './install-pwa.html',
+  './privacy.html',
   './math-learning.html',
   './games/math-geometry.html',
   './games/math-decimals.html',

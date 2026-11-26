@@ -18,6 +18,7 @@
 <meta property="og:description" content="سفری در پنج وادی دانش — بازی آموزشی فارسی پنجم">
 <meta property="og:type" content="website">
 <title>ماجرای حکیم — دیار حکیم، سرزمین یادگیری</title>
+<link rel="canonical" href="https://hakimistan.ir/games/hakim-quest.html">
 
 <meta name="description" content="ماجرای حکیم — بازی ماجراجویی آموزشی با پنج وادی دانش برای دانش‌آموزان پایه پنجم دبستان. آفلاین و رایگان.">
 <link rel="stylesheet" href="../css/fonts.css">
@@ -2238,6 +2239,7 @@ renderHome();
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
+    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {

@@ -49,6 +49,7 @@ async function flush(){
 }
 function logVisit(){
  try{
+  if(localStorage.getItem('hk_no_stats')==='1')return;
   let userId=localStorage.getItem('hk_uid'),isNew=!userId;if(!userId){userId='hk_'+uid();localStorage.setItem('hk_uid',userId);}
   const ua=navigator.userAgent,device=/mobile|android|iphone/i.test(ua)?'موبایل':/ipad|tablet/i.test(ua)?'تبلت':'دسکتاپ';
   const browser=/Edg/.test(ua)?'Edge':/Firefox/.test(ua)?'Firefox':/Chrome/.test(ua)?'Chrome':/Safari/.test(ua)?'Safari':'سایر';

@@ -29,6 +29,7 @@ jobs:
           node tests/phase4-teacher-showcase.cjs
           node tests/phase5-curriculum-expansion.cjs
           node tests/cert-credit.cjs
+          node tests/site-review-fixes.cjs
       - name: Check public pages on Chromium
         env:
           SITE_AXE: '1'
