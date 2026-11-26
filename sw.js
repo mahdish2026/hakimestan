@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.78';
+const VERSION = 'hakim-v1.5.79';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -131,6 +131,12 @@ const PREFETCH_PAGES = [
   './games/farsi5-hamava/style.css',
   './games/farsi5-hamava/data.js',
   './games/farsi5-hamava/lessons.js',
+  './games/farsi5-hamava/audio/ch1-kh-vav.mp3',
+  './games/farsi5-hamava/audio/ch2-sin-sad-se.mp3',
+  './games/farsi5-hamava/audio/ch3-te-ta.mp3',
+  './games/farsi5-hamava/audio/ch4-ze-group.mp3',
+  './games/farsi5-hamava/audio/ch5-he-ayn.mp3',
+  './games/farsi5-hamava/audio/ch6-editor.mp3',
   './games/farsi5-hamava/app.js',
   './games/iran-geography.html',
   './games/iran-geography/style.css',
@@ -138,6 +144,12 @@ const PREFETCH_PAGES = [
   './games/iran-geography/data.js',
   './games/iran-geography/lessons.js',
   './games/iran-geography/lesson-view.js',
+  './games/iran-geography/audio/m1-population.mp3',
+  './games/iran-geography/audio/m2-water.mp3',
+  './games/iran-geography/audio/m3-industry.mp3',
+  './games/iran-geography/audio/m4-roads.mp3',
+  './games/iran-geography/audio/m5-governance.mp3',
+  './games/iran-geography/audio/m6-neighbors.mp3',
   './games/iran-geography/app.js',
   './kelasyar.html',
   './masir-yadgiri.html',

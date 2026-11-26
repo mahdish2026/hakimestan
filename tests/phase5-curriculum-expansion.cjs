@@ -298,6 +298,10 @@ const swSrc = read('sw.js');
 for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/farsi5-hamava/lessons.js']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
 }
+for (const L of [...Object.values(loadData('games/iran-geography/lessons.js', 'IranGeoLessons')), ...Object.values(loadData('games/farsi5-hamava/lessons.js', 'HamavaLessons'))]) {
+  assert.ok(exists('games/' + L.audio), 'missing narration audio games/' + L.audio);
+  assert.ok(swSrc.includes("'./games/" + L.audio + "'"), 'sw.js must precache narration games/' + L.audio);
+}
 assert.ok(/function isPhase5Audio/.test(swSrc) && /isPhase5Audio\(url\)\)\s*\{\s*event\.respondWith\(handleGeometryAudio/.test(swSrc), 'sw.js must serve lesson narration through the Range-aware audio handler');
 
 // ---- 7) lesson-first path, 3-step lessons and gold certificates ------------
