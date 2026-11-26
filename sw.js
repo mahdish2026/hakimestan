@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.89';
+const VERSION = 'hakim-v1.5.90';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -123,6 +123,8 @@ const PREFETCH_PAGES = [
   './games/math-learning-1.html',
   './games/math-time-mission.html',
   './games/kohan-diyar.html',
+  './games/kohan-diyar/march.js',
+  './games/kohan-diyar/march.css',
   './games/hakim-quest.html',
   './games/hakim-cards.html',
   './games/hakim-treasure.html',
