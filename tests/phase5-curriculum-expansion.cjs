@@ -295,7 +295,7 @@ for (const [appJs, track] of [['games/math-measurement/app.js', 'music9.mp3'], [
   assert.ok(exists('games/' + track), 'missing music file games/' + track);
 }
 const swSrc = read('sw.js');
-for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/iran-geography/roadtrip.js', './games/farsi5-hamava/lessons.js', './js/hakim-scene-kit.js', './css/hakim-scenes.css', './games/math-measurement/city.js', './games/math-stats/wheel.js', './games/farsi5-hamava/book.js', './assets/img/hamava-page-tazhib.webp', './assets/img/hamava-cover.webp']) {
+for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/iran-geography/roadtrip.js', './games/farsi5-hamava/lessons.js', './js/hakim-scene-kit.js', './css/hakim-scenes.css', './css/hakim-tazhib.css', './assets/img/tazhib-cert-frame.webp', './assets/img/tazhib-shamseh.svg', './games/math-measurement/city.js', './games/math-stats/wheel.js', './games/farsi5-hamava/book.js', './assets/img/hamava-page-tazhib.webp', './assets/img/hamava-cover.webp']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
 }
 for (const L of [...Object.values(loadData('games/iran-geography/lessons.js', 'IranGeoLessons')), ...Object.values(loadData('games/farsi5-hamava/lessons.js', 'HamavaLessons'))]) {

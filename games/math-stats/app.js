@@ -1025,7 +1025,7 @@
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
 
-      <article class="cert-sheet hw-cert" aria-label="گواهی‌نامهٔ مهارت آمارستان">
+      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ مهارت آمارستان">
         <div class="hw-cert-top">
         ${W() ? W().seal('آمارستان', done === allTasks.length ? 'مهر استادی' : 'مهر پیشرفت') : ''}
         <div class="cert-header">

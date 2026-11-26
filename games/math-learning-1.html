@@ -11,6 +11,7 @@
 
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/fonts.css">
+<link rel="stylesheet" href="../css/hakim-tazhib.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>بازی تقسیم چکشی | مدرسهٔ ریاضی حکیمستان 🧮</title>
 <meta name="description" content="بازی تقسیم چکشی — تمرین تعاملی و گام‌به‌گام تقسیم ریاضی پایهٔ پنجم دبستان با تشخیص خطا و گواهی‌نامه در مدرسهٔ ریاضی حکیمستان.">
@@ -1139,7 +1140,7 @@ function buildCertHTML(){
     return `${li}<span class="c-ic">${L.icon}</span><span class="c-nm">مرحلهٔ ${toFa(i+1)}: ${L.name}</span>${mark}<span class="c-res">${res}</span></li>`;
   }).join('');
   return `
-    <div class="cert" id="certCard">
+    <div class="cert hk-tazhib" id="certCard">
       <div class="cert-orn">✦ ✦ ✦</div>
       <div class="ov-emoji">${champion ? '🏆' : '🎖️'}</div>
       <h2 class="cert-title">${champion ? 'گواهی‌نامهٔ قهرمانی' : 'گواهی‌نامهٔ تلاش'}</h2>
