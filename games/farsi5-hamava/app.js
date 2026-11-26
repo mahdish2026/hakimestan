@@ -687,44 +687,27 @@
         <button type="button" id="certBackMap">🗺️ بازگشت به تالار فصل‌ها</button>
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
-      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ مهارت هم‌آواستان">
-        <div class="hw-cert-top" style="border-bottom:2px dashed #e5d3a5;padding-bottom:14px;margin-bottom:6px">
-          ${w ? w.seal('هم‌آواستان', done === allTasks.length ? 'مهر استادی املا' : 'مهر پیشرفت') : ''}
-          <div style="text-align:center">
-            <div style="font-size:0.85rem;font-weight:800;color:#615041">حکیمستان · تالار فارسی و نگارش پایهٔ پنجم</div>
-            <h2 style="margin:6px 0;font-size:1.7rem">${done === allTasks.length ? 'گواهی‌نامهٔ استادی هم‌آواها و درست‌نویسی' : 'گواهی‌نامهٔ پیشرفت هم‌آواستان'}</h2>
-            <div style="font-size:.9rem;color:#5a4a2a">این گواهی‌نامه با افتخار تقدیم می‌شود به</div>
-            <div class="cert-student-name" style="color:#8c3b19;margin:4px 0">${esc(profile.name)}</div>
-            <div>رتبهٔ ادبی: <b>${esc(rankTitle())}</b> · پیشرفت: <b>${fa(pct)}٪</b></div>
-          </div>
-          ${w ? w.certHakim('') : ''}
-        </div>
-        ${w ? w.certStats([
-          { icon: '⭐', value: fa(stars) + ' / ' + fa(D.chapters.length * 3), label: 'ستاره' },
-          { icon: '✍️', value: fa(done) + ' / ' + fa(allTasks.length), label: 'چالش حل‌شده' },
-          { icon: '📜', value: fa(fullChapters) + ' / ' + fa(D.chapters.length), label: 'فصل کامل' },
-          { icon: '💎', value: fa(profile.xp), label: 'امتیاز' }
-        ]) : ''}
-        <h3 style="margin:0 0 8px;font-size:1rem">فهرست مهارت‌های شش‌گانهٔ هم‌آواها و درست‌نویسی پنجم:</h3>
-        <ul class="cert-skills-grid">
-          ${D.chapters.map((c) => {
-            const s = chapterSolved(c);
-            const full = s === c.tasks.length;
-            return `<li class="${full ? 'mastered' : ''}"><b>${full ? '☑' : '☐'} ${esc(c.title)}</b><br><small>${fa(s)} از ${fa(c.tasks.length)} چالش (${esc(c.badge)})</small></li>`;
-          }).join('')}
-        </ul>
-        <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
-          <p><b>حکیم:</b> ${done === allTasks.length ? 'آفرین سرویراستار! حالا فرق «گذاردن» و «گزاردن» و همهٔ هم‌آواهای پنجم را می‌دانی. قلمت همیشه درست‌نویس باشد!' : 'هر فصلی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. با رمزها و هم‌خانواده‌ها ادامه بده!'}</p></div>
-        <div class="hw-cert-foot">
-          <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>${fa(lessonsRead)} درسنامهٔ کامل · ${fa(guidedCount)} پاسخ با راهنما</span></div>
-          ${w ? w.signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>'}
-        </div>
-        <p class="hw-cert-note">این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
-      </article>
+      <div id="hkCertMount"></div>
     `;
+    const esc0 = (v) => String(v == null ? '' : v);
+    window.HakimCert?.mount($('hkCertMount'), {
+      world: 'هم‌آواستان',
+      program: 'تالار فارسی و نگارش پایهٔ پنجم',
+      subtitle: done === allTasks.length ? 'استادی هم‌آواها و درست‌نویسی — فارسی و نگارش پنجم' : 'پیشرفت یادگیری هم‌آواها و درست‌نویسی — فارسی و نگارش پنجم',
+      name: profile.name,
+      number: 'HK-HM-' + fa(done) + '-' + fa(stars),
+      accent: '#8c3b19', accent2: '#9a6416',
+      course: 'دورهٔ آموزشی تعاملی «هم‌آواستان» (هم‌آواها و درست‌نویسی، فارسی و نگارش پنجم)',
+      achievement: done === allTasks.length ? 'همهٔ ' + fa(allTasks.length) + ' چالش آن را با موفقیت به پایان رسانده' : fa(done) + ' چالش از ' + fa(allTasks.length) + ' چالش آن (' + fa(pct) + '٪) را با موفقیت حل کرده',
+      stats: [{ icon: '✍️', value: fa(done) + ' / ' + fa(allTasks.length), label: 'چالش حل‌شده (' + fa(pct) + '٪)' }, { icon: '⭐', value: fa(stars) + ' / ' + fa(D.chapters.length * 3), label: 'ستاره' }, { icon: '📜', value: fa(fullChapters) + ' / ' + fa(D.chapters.length), label: 'فصل کامل' }, { icon: '💎', value: fa(profile.xp), label: 'امتیاز' }],
+      skillsTitle: 'کارنامهٔ مهارت‌های هم‌آوایی و درست‌نویسی',
+      skills: D.chapters.map((s) => { const c = chapterSolved(s); return { title: s.title, sub: fa(c) + ' از ' + fa(s.tasks.length) + ' چالش · ' + esc0(s.badge), done: c === s.tasks.length }; }),
+      quote: done === allTasks.length ? 'آفرین سرویراستار! حالا فرق «گذاردن» و «گزاردن» و همهٔ هم‌آواهای پنجم را می‌دانی. قلمت همیشه درست‌نویس باشد!' : 'هر فصلی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. با رمزها و هم‌خانواده‌ها ادامه بده!',
+      seal: { label: 'هم‌آواستان', sub: done === allTasks.length ? 'مهر استادی املا' : 'مهر پیشرفت' }
+    });
     w?.bind(main, {});
     $('certBackMap').onclick = renderMap;
-    $('btnPrintCert').onclick = () => window.print();
+    $('btnPrintCert').onclick = () => (window.HakimCert ? window.HakimCert.print() : window.print());
   }
 
   if ($('mapNavBtn')) $('mapNavBtn').onclick = renderMap;

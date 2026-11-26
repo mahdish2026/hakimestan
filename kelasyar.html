@@ -7,7 +7,7 @@
 <!-- hakim-csp:end -->
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f5a57">
-<meta name="description" content="کلاس‌یار — دستیار تختهٔ هوشمند معلم در حکیمستان: گردونهٔ اسامی متصل به دفتر معلم، گروه‌بند قابل چاپ، زمان‌سنج و آرامش‌سنج کلاس، و دوئل دونفرهٔ پای تخته با پشتیبانی از فایل HQF.">
+<meta name="description" content="کلاس‌یار — دستیار تختهٔ هوشمند معلم در حکیمستان: گردونهٔ اسامی متصل به دفتر معلم، گروه‌بند متوازن قابل چاپ، زمان‌سنج دیداری، آرامش‌سنج کلاس، دوئل دونفرهٔ پای تخته با پشتیبانی از فایل HQF و نظرسنجی سریع.">
 <title>کلاس‌یار | دستیار تختهٔ هوشمند و مدیریت پویای کلاس — حکیمستان</title>
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <!-- hakim-core:start -->
@@ -20,53 +20,73 @@
   font-weight: 100 900;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Lalezar';
+  src: url('assets/fonts/lalezar-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
 :root {
-  --bg: #f4f7f7;
-  --bg-2: #e7efef;
+  --bg: #eef4f3;
+  --bg-2: #e2ecea;
   --surface: #ffffff;
-  --surface-soft: #eef5f4;
-  --ink: #142625;
-  --muted: #4b6361;
-  --line: #cadcdb;
+  --surface-soft: #f2f8f7;
+  --ink: #102423;
+  --muted: #4a6260;
+  --line: #cfe0de;
   --primary: #0f5a57;
   --primary-2: #0a4240;
-  --primary-soft: #dff1ef;
+  --primary-3: #13807a;
+  --primary-soft: #dcf0ed;
   --on-primary: #ffffff;
-  --gold: #eab338;
+  --gold: #e9b23a;
+  --gold-2: #c58a12;
+  --gold-text: #8a5a00;
   --gold-ink: #241700;
-  --gold-soft: #fff5d9;
+  --gold-soft: #fff4d6;
   --ok: #13683b;
-  --ok-soft: #e3f6ec;
+  --ok-soft: #e1f5ea;
   --coral: #b33232;
   --coral-soft: #fdeaea;
   --blue: #1d4ed8;
   --blue-soft: #e0eaff;
-  --shadow: 0 10px 28px rgba(15, 55, 52, 0.08);
-  --radius: 18px;
+  --violet: #6d3fc0;
+  --shadow: 0 14px 34px rgba(15, 55, 52, 0.10);
+  --shadow-lg: 0 24px 60px rgba(15, 55, 52, 0.16);
+  --radius: 20px;
+  --hero-a: #0b4f4c;
+  --hero-b: #13807a;
   color-scheme: light;
 }
 html[data-theme="night"] {
-  --bg: #0e1919;
-  --bg-2: #152525;
-  --surface: #1b2e2e;
-  --surface-soft: #233b3b;
+  --bg: #0b1615;
+  --bg-2: #122221;
+  --surface: #172a29;
+  --surface-soft: #1f3635;
   --ink: #edf7f6;
-  --muted: #b5cecc;
-  --line: #335453;
+  --muted: #b2cbc9;
+  --line: #2f4f4d;
   --primary: #5eead4;
   --primary-2: #99f6e4;
-  --primary-soft: #17423f;
+  --primary-3: #2dd4bf;
+  --primary-soft: #153f3b;
   --on-primary: #062421;
   --gold: #f5c76a;
+  --gold-2: #e2a93a;
+  --gold-text: #f0c060;
   --gold-ink: #241700;
-  --gold-soft: #3b3018;
+  --gold-soft: #3a2f17;
   --ok: #6ee7a8;
   --ok-soft: #163b2b;
   --coral: #ff9494;
   --coral-soft: #422026;
   --blue: #93c5fd;
   --blue-soft: #1e3a5f;
-  --shadow: 0 12px 30px rgba(0, 0, 0, 0.42);
+  --violet: #c4b5fd;
+  --shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --hero-a: #062f2d;
+  --hero-b: #0d5b57;
   color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -74,7 +94,10 @@ html, body { overflow-x: clip; }
 body {
   margin: 0;
   font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(900px 420px at 100% -10%, color-mix(in srgb, var(--primary-3) 16%, transparent), transparent 70%),
+    radial-gradient(700px 380px at -10% 10%, color-mix(in srgb, var(--gold) 14%, transparent), transparent 70%),
+    var(--bg);
   color: var(--ink);
   line-height: 1.85;
   min-height: 100vh;
@@ -82,274 +105,285 @@ body {
   flex-direction: column;
 }
 .ltr, [dir="ltr"] { direction: ltr; unicode-bidi: isolate; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip-link {
-  position: absolute;
-  top: -100px;
-  right: 12px;
-  z-index: 200;
-  background: var(--primary);
-  color: var(--on-primary);
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-weight: 800;
-  text-decoration: none;
+  position: absolute; top: -100px; right: 12px; z-index: 200;
+  background: var(--primary); color: var(--on-primary);
+  padding: 10px 16px; border-radius: 12px; font-weight: 800; text-decoration: none;
 }
 .skip-link:focus { top: 12px; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button {
-  cursor: pointer;
-  min-height: 44px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--ink);
-  padding: 8px 14px;
-  font-weight: 700;
+  cursor: pointer; min-height: 44px; border-radius: 13px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  padding: 8px 14px; font-weight: 700;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
 }
 button:hover:not(:disabled) { border-color: var(--primary); }
+button:active:not(:disabled) { transform: translateY(1px) scale(.99); }
 button:disabled { opacity: 0.52; cursor: not-allowed; }
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--gold); outline-offset: 2px;
 }
-.btn-primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
-.btn-gold { background: var(--gold); border-color: #c59122; color: var(--gold-ink); }
+select, input[type="number"], input[type="text"], textarea {
+  min-height: 44px; padding: 6px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-soft);
+}
+.btn-primary { background: linear-gradient(135deg, var(--primary-3), var(--primary)); border-color: transparent; color: var(--on-primary); box-shadow: 0 8px 18px color-mix(in srgb, var(--primary) 28%, transparent); }
+html[data-theme="night"] .btn-primary { background: linear-gradient(135deg, var(--primary-2), var(--primary)); }
+.btn-gold { background: linear-gradient(135deg, #f6cf6a, var(--gold)); border-color: var(--gold-2); color: var(--gold-ink); box-shadow: 0 8px 18px rgba(197, 138, 18, .25); }
 .btn-soft { background: var(--primary-soft); border-color: transparent; color: var(--primary); }
+.btn-ghost { background: transparent; }
+.btn-big { font-size: 1.1rem; padding: 12px 26px; min-height: 52px; border-radius: 16px; }
 html[data-theme="night"] .btn-soft { color: var(--primary-2); }
+kbd { font-family: inherit; font-size: .72rem; font-weight: 800; padding: 0 6px; border-radius: 6px; border: 1px solid var(--line); border-bottom-width: 2px; background: var(--surface-soft); color: var(--muted); }
 
-.topbar {
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: 0;
-  z-index: 40;
-}
-.topbar-inner {
-  max-width: 1220px;
-  margin: 0 auto;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--ink);
-}
-.brand-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: var(--primary);
-  color: var(--on-primary);
-  display: grid;
-  place-items: center;
-  font-size: 1.4rem;
-}
-.top-nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+/* ── Top bar ── */
+.topbar { background: color-mix(in srgb, var(--surface) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 40; }
+.topbar-inner { max-width: 1240px; margin: 0 auto; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); min-width: 0; }
+.brand-logo { display: inline-flex; align-items: center; }
+.brand-logo svg { height: 46px; width: auto; display: block; }
+.brand-sep { width: 1px; height: 34px; background: var(--line); }
+.brand-title { margin: 0; font-size: 1.05rem; line-height: 1.3; font-weight: 900; }
+.brand small { display: block; color: var(--muted); font-size: .74rem; line-height: 1.5; }
+.top-nav { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .top-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: var(--surface-soft);
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.86rem;
+  display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 8px 12px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--surface-soft); color: var(--ink); text-decoration: none; font-weight: 700; font-size: .86rem;
 }
+.top-link:hover { border-color: var(--primary); }
+.ky-clock { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.2; padding: 4px 12px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); font-weight: 900; min-height: 44px; justify-content: center; }
+html[data-theme="night"] .ky-clock { color: var(--primary-2); }
+.ky-clock b { font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.ky-clock small { font-size: .68rem; font-weight: 700; opacity: .85; }
 
-.roster-strip {
-  max-width: 1220px;
-  margin: 12px auto 0;
-  padding: 0 16px;
-  width: 100%;
+/* ── Hero ── */
+.ky-hero { max-width: 1240px; width: 100%; margin: 16px auto 0; padding: 0 16px; }
+.ky-hero-card {
+  position: relative; overflow: hidden; isolation: isolate; border-radius: 26px; padding: 22px 24px; color: #f4fffd;
+  background: linear-gradient(125deg, var(--hero-a), var(--hero-b));
+  box-shadow: var(--shadow-lg);
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: center;
 }
-.roster-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+.ky-hero-card::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23ffe7a3' stroke-width='1.1'%3E%3Cpath d='M32 6l8 18 18 8-18 8-8 18-8-18-18-8 18-8z'/%3E%3Cpath d='M32 20l4 8 8 4-8 4-4 8-4-8-8-4 8-4z'/%3E%3C/g%3E%3C/svg%3E");
 }
+.ky-hero-card::after { content: ""; position: absolute; width: 380px; height: 380px; left: -120px; bottom: -220px; border-radius: 50%; background: radial-gradient(circle, rgba(245, 199, 106, .35), transparent 65%); z-index: -1; }
+.ky-kicker { display: inline-flex; align-items: center; gap: 6px; font-size: .76rem; font-weight: 800; padding: 3px 12px; border-radius: 999px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 231, 163, .45); color: #ffe7a3; }
+.ky-hero h2 { margin: 10px 0 4px; font-family: 'Lalezar', 'Vazirmatn', sans-serif; font-weight: 400; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.35; }
+.ky-hero h2 span { color: #ffd77a; }
+.ky-hero p { margin: 0 0 14px; color: #cfeeea; font-size: .92rem; }
+.ky-class-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ky-class-row label { font-weight: 800; color: #fff; }
+.ky-class-row select { background: rgba(255, 255, 255, .95); color: #102423; border-color: transparent; min-width: 200px; font-weight: 700; }
+.ky-class-row .btn-soft { background: rgba(255, 255, 255, .14); color: #fff; border: 1px solid rgba(255, 255, 255, .28); }
+.ky-class-row .btn-soft:hover { background: rgba(255, 255, 255, .22); border-color: #ffe7a3; }
+#saveIndicator { display: inline-block; margin-top: 10px; font-size: .78rem; color: #b9f5df; font-weight: 700; }
+.ky-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ky-stat { border-radius: 18px; padding: 12px 14px; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .16); display: flex; align-items: center; gap: 12px; }
+.ky-stat i { font-style: normal; width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; font-size: 1.25rem; background: rgba(255, 255, 255, .14); flex: 0 0 auto; }
+.ky-stat b { display: block; font-size: 1.35rem; font-weight: 900; line-height: 1.15; color: #fff; }
+.ky-stat small { color: #cfeeea; font-size: .76rem; }
+.ky-stat-bar { height: 5px; border-radius: 999px; background: rgba(255, 255, 255, .16); margin-top: 6px; overflow: hidden; }
+.ky-stat-bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #ffd77a, #fff2c4); transition: width .5s ease; }
 
-main#main {
-  flex: 1;
-  max-width: 1220px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 14px 16px 36px;
+/* ── Tool cards (tabs) ── */
+main#main { flex: 1; max-width: 1240px; width: 100%; margin: 0 auto; padding: 16px 16px 40px; }
+.tool-tabs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.tool-tab {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: right;
+  padding: 12px 14px; min-height: 88px; border-radius: 18px; background: var(--surface); box-shadow: 0 4px 14px rgba(15, 55, 52, .06);
 }
+.tool-tab .tt-ico { font-size: 1.4rem; line-height: 1; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--tt-soft, var(--primary-soft)); margin-bottom: 4px; }
+.tool-tab .tt-name { font-weight: 900; font-size: .95rem; }
+.tool-tab .tt-desc { font-weight: 500; font-size: .72rem; color: var(--muted); line-height: 1.5; }
+.tool-tab kbd { position: absolute; top: 10px; left: 10px; }
+.tool-tab:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow); }
+.tool-tab[aria-selected="true"] { background: linear-gradient(140deg, var(--primary-3), var(--primary)); border-color: transparent; color: var(--on-primary); box-shadow: 0 12px 26px color-mix(in srgb, var(--primary) 30%, transparent); }
+html[data-theme="night"] .tool-tab[aria-selected="true"] { background: linear-gradient(140deg, #134e4a, #0f766e); color: #f0fdfa; }
+.tool-tab[aria-selected="true"] .tt-desc { color: inherit; opacity: .85; }
+.tool-tab[aria-selected="true"] .tt-ico { background: rgba(255, 255, 255, .18); }
+.tool-tab[aria-selected="true"] kbd { background: rgba(255, 255, 255, .15); color: inherit; border-color: rgba(255, 255, 255, .3); }
 
-.tool-tabs {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.tool-tab[aria-selected="true"] {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--on-primary);
-}
+.panel-card { background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 22px; box-shadow: var(--shadow); animation: kyIn .35s ease; }
+@keyframes kyIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px dashed var(--line); }
+.panel-head h2 { margin: 0; font-size: 1.2rem; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+.panel-head p { margin: 0; font-size: .82rem; color: var(--muted); }
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.soft-box { background: var(--surface-soft); border: 1px solid var(--line); border-radius: 20px; padding: 18px; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-soft); font-size: .8rem; }
 
-.panel-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: 22px;
-  box-shadow: var(--shadow);
-}
-
-.wheel-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-  align-items: center;
-}
-.wheel-stage {
-  text-align: center;
-  position: relative;
-}
-.wheel-svg {
-  width: 100%;
-  max-width: 370px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  transition: transform 2.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.winner-banner {
-  background: var(--gold-soft);
-  border: 2px solid var(--gold);
-  border-radius: 18px;
-  padding: 16px;
-  text-align: center;
-  margin-bottom: 14px;
-}
-.winner-name {
-  font-size: clamp(1.5rem, 3.2vw, 2.3rem);
-  font-weight: 900;
-  color: var(--primary);
-}
+/* ── Wheel ── */
+.wheel-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 26px; align-items: start; }
+.wheel-stage { text-align: center; position: relative; }
+.wheel-box { position: relative; width: min(100%, 420px); margin: 0 auto; aspect-ratio: 1; }
+.wheel-svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 18px 30px rgba(15, 55, 52, .28)); }
+.wheel-rotor { transform-origin: 200px 200px; }
+.wheel-pointer { position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 46px; height: 58px; z-index: 2; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .3)); transform-origin: 50% 20%; }
+.wheel-pointer.tick { animation: kyTick .12s ease; }
+@keyframes kyTick { 50% { transform: translateX(-50%) rotate(-14deg); } }
+.wheel-hub { position: absolute; inset: 0; margin: auto; width: 23%; height: 23%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #f3ead2); border: 4px solid #c58a12; display: grid; place-items: center; box-shadow: 0 6px 16px rgba(0, 0, 0, .3), inset 0 -4px 8px rgba(197, 138, 18, .25); overflow: hidden; }
+.wheel-hub svg { width: 88%; height: 88%; }
+.bulb { fill: #fff6d6; }
+.spinning .bulb { animation: kyBulb .5s steps(2) infinite; }
+.spinning .bulb:nth-of-type(2n) { animation-delay: .25s; }
+@keyframes kyBulb { 50% { fill: #f5c76a; } }
+.winner-banner { position: relative; overflow: hidden; border-radius: 22px; padding: 18px; text-align: center; margin-bottom: 14px; background: linear-gradient(135deg, var(--gold-soft), color-mix(in srgb, var(--gold-soft) 60%, var(--surface))); border: 2px solid var(--gold); }
+.winner-banner.pop { animation: kyPop .55s cubic-bezier(.2, 1.4, .4, 1); }
+@keyframes kyPop { 0% { transform: scale(.92); } 60% { transform: scale(1.03); } 100% { transform: none; } }
+.winner-avatar { width: 64px; height: 64px; border-radius: 50%; margin: 6px auto 4px; display: grid; place-items: center; font-size: 1.7rem; font-weight: 900; color: #fff; background: linear-gradient(135deg, var(--primary-3), var(--violet)); box-shadow: 0 8px 18px rgba(0, 0, 0, .2); }
+.winner-name { font-family: 'Lalezar', 'Vazirmatn', sans-serif; font-weight: 400; font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.3; color: var(--primary); }
 html[data-theme="night"] .winner-name { color: var(--primary-2); }
+.switch-row { display: flex; align-items: flex-start; gap: 10px; font-weight: 700; cursor: pointer; margin: 4px 0 14px; padding: 10px 12px; border-radius: 14px; background: var(--surface-soft); border: 1px solid var(--line); }
+.switch-row input { width: 20px; height: 20px; margin-top: 4px; accent-color: var(--primary); flex: 0 0 auto; }
+.board { display: flex; flex-direction: column; gap: 6px; max-height: 360px; overflow: auto; padding-inline-end: 4px; }
+.board-row { display: grid; grid-template-columns: 34px 1fr auto auto; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 14px; background: var(--surface-soft); border: 1px solid var(--line); font-size: .9rem; }
+.board-row.picked { opacity: .62; }
+.board-row.top1 { border-color: var(--gold); background: var(--gold-soft); }
+.board-rank { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; font-weight: 900; font-size: .82rem; background: var(--primary-soft); color: var(--primary); }
+html[data-theme="night"] .board-rank { color: var(--primary-2); }
+.board-stars { font-weight: 900; color: var(--gold-text); font-variant-numeric: tabular-nums; }
+.board-row button { min-height: 34px; min-width: 34px; padding: 2px 8px; border-radius: 10px; font-size: .85rem; }
 
-.groups-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
-  margin-top: 16px;
-}
-.group-box {
-  background: var(--surface-soft);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 14px;
-}
-.group-box h3 { margin: 0 0 8px; font-size: 1rem; color: var(--primary); }
-html[data-theme="night"] .group-box h3 { color: var(--primary-2); }
-.group-box ol { margin: 0; padding-right: 20px; }
+/* ── Groups ── */
+.groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 16px; }
+.group-box { position: relative; overflow: hidden; background: var(--surface-soft); border: 1px solid var(--line); border-radius: 20px; padding: 14px 16px 12px; border-top: 6px solid var(--g, var(--primary)); animation: kyIn .4s ease both; }
+.group-box h3 { margin: 0 0 8px; font-size: 1.02rem; color: var(--g, var(--primary)); display: flex; align-items: center; gap: 8px; }
+.group-box h3 i { font-style: normal; width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--g) 16%, transparent); font-size: 1.1rem; }
+html[data-theme="night"] .group-box h3 { color: color-mix(in srgb, var(--g) 55%, #fff); }
+.group-box ol { margin: 0; padding-right: 22px; }
+.group-box li { padding: 2px 0; }
+.group-box li small { color: var(--muted); }
+.group-meta { font-size: .74rem; color: var(--muted); margin-top: 6px; }
 
-.timer-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 20px;
-}
-.timer-face {
-  font-size: clamp(2.8rem, 7vw, 4.8rem);
-  font-weight: 900;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  margin: 10px 0;
-}
-.noise-meter-bar {
-  height: 24px;
-  border-radius: 999px;
-  background: var(--bg-2);
-  border: 1px solid var(--line);
-  overflow: hidden;
-  margin: 12px 0;
-}
-.noise-meter-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #16a34a, #eab308, #dc2626);
-  transition: width 0.12s linear;
-}
+/* ── Timer ── */
+.timer-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 20px; align-items: start; }
+.timer-ring-box { position: relative; width: min(100%, 340px); aspect-ratio: 1; margin: 6px auto 14px; }
+.timer-ring-box svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.t-bg { fill: none; stroke: var(--bg-2); stroke-width: 16; }
+.t-fg { fill: none; stroke: var(--t-color, var(--primary-3)); stroke-width: 16; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke .4s; }
+.timer-face { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; }
+.timer-face b { direction: ltr; unicode-bidi: isolate; font-size: clamp(2.8rem, 8vw, 4.6rem); font-weight: 900; line-height: 1; letter-spacing: 1px; }
+.timer-face small { font-size: .82rem; color: var(--muted); margin-top: 6px; }
+.timer-ring-box.ending .timer-face b { color: var(--coral); animation: kyPulse 1s ease infinite; }
+@keyframes kyPulse { 50% { transform: scale(1.06); } }
+.preset-row { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.preset-row button { min-width: 64px; }
+.preset-row button[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.ky-board-mode { position: fixed; inset: 0; z-index: 120; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+.ky-board-mode .timer-ring-box { width: min(78vmin, 640px); }
+.ky-board-mode .t-bg { stroke: rgba(255, 255, 255, .15); }
+.ky-board-mode .timer-face b { font-size: clamp(4rem, 16vmin, 10rem); color: #fff; }
+.ky-board-mode .timer-face small { color: #cfeeea; font-size: 1.1rem; }
+.ky-board-mode .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, .4); }
 
-.duel-arena {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 14px;
-}
-.duel-side {
-  border-radius: 18px;
-  padding: 18px;
-  border: 2px solid var(--line);
-  background: var(--surface-soft);
-}
-.duel-side.p1 { border-color: var(--blue); }
-.duel-side.p2 { border-color: var(--gold); }
-.duel-opt {
-  width: 100%;
-  text-align: right;
-  margin-top: 8px;
-  padding: 12px 14px;
-  font-size: 1rem;
-}
+/* ── Calm meter ── */
+.calm-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.gauge { position: relative; width: min(100%, 380px); margin: 0 auto; }
+.gauge svg { width: 100%; height: auto; display: block; }
+.gauge-needle { transform-origin: 200px 200px; transition: transform .15s linear; }
+.gauge-face { text-align: center; font-size: 2.4rem; line-height: 1; margin-top: 4px; }
+.noise-meter-bar { height: 14px; border-radius: 999px; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; margin: 12px 0; }
+.noise-meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #16a34a, #eab308, #dc2626); transition: width 0.12s linear; }
+.calm-score { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.calm-score div { text-align: center; padding: 10px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.calm-score b { display: block; font-size: 1.4rem; font-weight: 900; color: var(--primary); font-variant-numeric: tabular-nums; }
+html[data-theme="night"] .calm-score b { color: var(--primary-2); }
+.calm-score small { font-size: .74rem; color: var(--muted); }
+input[type="range"] { width: 100%; accent-color: var(--primary); }
 
-.site-footer {
-  text-align: center;
-  padding: 16px;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.82rem;
-  background: var(--surface);
-}
+/* ── Duel ── */
+.duel-q { position: relative; background: linear-gradient(135deg, var(--primary-soft), color-mix(in srgb, var(--primary-soft) 40%, var(--surface))); border-radius: 22px; padding: 18px; text-align: center; margin-top: 4px; border: 1px solid var(--line); }
+.duel-q h2 { margin: 6px 0 6px; font-size: clamp(1.15rem, 2.4vw, 1.5rem); font-weight: 900; }
+.duel-msg { font-weight: 800; color: var(--primary); min-height: 1.85em; }
+html[data-theme="night"] .duel-msg { color: var(--primary-2); }
+.tug { position: relative; height: 16px; border-radius: 999px; overflow: hidden; display: flex; margin: 14px 0 4px; background: var(--bg-2); border: 1px solid var(--line); }
+.tug span { display: block; height: 100%; transition: width .5s ease; }
+.tug .t1 { background: linear-gradient(90deg, #60a5fa, #1d4ed8); }
+.tug .t2 { background: linear-gradient(90deg, #d97706, #fbbf24); }
+.duel-arena { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; margin-top: 14px; align-items: stretch; }
+.duel-vs { align-self: center; font-family: 'Lalezar', 'Vazirmatn', sans-serif; font-size: 2rem; color: var(--gold-2); text-shadow: 0 2px 0 rgba(0, 0, 0, .1); }
+.duel-side { border-radius: 22px; padding: 16px; border: 2px solid var(--line); background: var(--surface-soft); }
+.duel-side.p1 { border-color: var(--blue); background: linear-gradient(180deg, var(--blue-soft), var(--surface-soft) 40%); }
+.duel-side.p2 { border-color: var(--gold); background: linear-gradient(180deg, var(--gold-soft), var(--surface-soft) 40%); }
+.duel-side h3 { margin: 0; font-size: 1.05rem; }
+.duel-score { font-size: 1.6rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+.duel-opt { width: 100%; text-align: right; margin-top: 8px; padding: 12px 14px; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+.duel-opt .k { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font-weight: 900; background: var(--surface-soft); border: 1px solid var(--line); font-size: .85rem; }
+.duel-opt.right { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.duel-opt.wrong { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); }
 
-dialog {
-  max-width: min(640px, 94vw);
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background: var(--surface);
-  color: var(--ink);
-  padding: 20px;
-}
-dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
+/* ── Poll / exit ticket ── */
+.poll-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.poll-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.poll-btn { min-height: 110px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 1rem; border: 2px solid var(--pc); background: color-mix(in srgb, var(--pc) 10%, var(--surface)); }
+.poll-btn .e { font-size: 2rem; line-height: 1; }
+.poll-btn b { font-size: 1.5rem; font-variant-numeric: tabular-nums; color: var(--pc); }
+html[data-theme="night"] .poll-btn b { color: color-mix(in srgb, var(--pc) 55%, #fff); }
+.poll-btn.bump { animation: kyPop .4s ease; }
+.poll-bars { display: flex; flex-direction: column; gap: 10px; }
+.poll-bar { display: grid; grid-template-columns: 110px 1fr 70px; align-items: center; gap: 10px; font-size: .9rem; font-weight: 700; }
+.poll-bar .track { height: 26px; border-radius: 10px; background: var(--bg-2); overflow: hidden; border: 1px solid var(--line); }
+.poll-bar .fill { height: 100%; border-radius: 9px; background: var(--pc); transition: width .45s ease; min-width: 2px; }
+.poll-bar .pct { text-align: left; font-variant-numeric: tabular-nums; }
+.poll-verdict { margin-top: 14px; padding: 12px 14px; border-radius: 16px; background: var(--gold-soft); border: 1px solid var(--gold); font-weight: 700; font-size: .9rem; }
 
+/* confetti */
+.ky-confetti { position: fixed; inset: 0; pointer-events: none; z-index: 130; overflow: hidden; }
+.ky-confetti i { position: absolute; top: -12px; width: 9px; height: 14px; border-radius: 2px; animation: kyFall linear forwards; }
+@keyframes kyFall { to { transform: translateY(110vh) rotate(720deg); opacity: .6; } }
+
+.site-footer { text-align: center; padding: 18px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; background: var(--surface); }
+.site-footer b { color: var(--ink); }
+.ky-shortcuts { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; font-size: .74rem; }
+
+dialog { max-width: min(640px, 94vw); width: 100%; border: 1px solid var(--line); border-radius: 22px; background: var(--surface); color: var(--ink); padding: 20px; box-shadow: var(--shadow-lg); }
+dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px); }
+#rosterTextarea { width: 100%; border-radius: 14px; padding: 12px; }
+
+@media (max-width: 1100px) {
+  .tool-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 @media (max-width: 860px) {
+  .ky-hero-card { grid-template-columns: 1fr; }
+  .wheel-layout, .timer-grid, .calm-grid, .poll-grid { grid-template-columns: 1fr; }
+  .duel-arena { grid-template-columns: 1fr; }
+  .duel-vs { text-align: center; }
+  .tool-tab kbd, .ky-shortcuts { display: none; }
+  .brand-sep, .brand small { display: none; }
+}
+@media (max-width: 560px) {
   .tool-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .wheel-layout, .timer-grid, .duel-arena { grid-template-columns: 1fr; }
+  .tool-tab { min-height: 76px; padding: 10px 12px; }
+  .tool-tab .tt-desc { display: none; }
+  .ky-hero-card { padding: 18px 16px; border-radius: 22px; }
+  .ky-class-row select { min-width: 0; flex: 1 1 100%; }
+  .poll-bar { grid-template-columns: 84px 1fr 56px; }
+  .brand-logo svg { height: 38px; }
 }
 @media (max-width: 390px) {
-  .topbar-inner, .roster-strip, main#main { padding-inline: 10px; }
+  .topbar-inner, .ky-hero, main#main { padding-inline: 10px; }
   .panel-card { padding: 14px; }
-  .tool-tabs { grid-template-columns: 1fr; }
+  .ky-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ky-stat { padding: 10px; gap: 8px; }
+  .ky-stat i { width: 34px; height: 34px; font-size: 1rem; }
 }
 
 @page { size: A4 portrait; margin: 12mm; }
 @media print {
   body { background: #ffffff !important; color: #000000 !important; }
-  .topbar, .roster-strip, .tool-tabs, .no-print, .site-footer, #a11y-toolbar { display: none !important; }
+  .topbar, .ky-hero, .tool-tabs, .no-print, .site-footer, #a11y-toolbar, .ky-confetti { display: none !important; }
   main#main { max-width: 100%; padding: 0; margin: 0; }
-  .panel-card { box-shadow: none !important; border: 1px solid #444 !important; }
-  .group-box { break-inside: avoid; border: 1px solid #555 !important; background: #fff !important; }
+  .panel-card { box-shadow: none !important; border: none !important; animation: none !important; padding: 0 !important; }
+  .print-head { display: flex !important; }
+  .group-box { break-inside: avoid; border: 1px solid #555 !important; border-top: 5px solid #333 !important; background: #fff !important; animation: none !important; }
+  .group-box h3 { color: #000 !important; }
 }
+.print-head { display: none; justify-content: space-between; align-items: center; border-bottom: 2px solid #0f5a57; padding-bottom: 8px; margin-bottom: 10px; }
+.print-head svg { height: 54px; width: auto; }
 
-/* احترام به تنظیم «کاهش حرکت» سیستم‌عامل */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -378,48 +412,64 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="index.html">
-      <span class="brand-badge" aria-hidden="true">🖥️</span>
+    <a class="brand" href="index.html" aria-label="کلاس‌یار هوشمند حکیمستان — بازگشت به صفحهٔ اصلی">
+      <span class="brand-logo" id="kyLogo" aria-hidden="true"></span>
+      <span class="brand-sep" aria-hidden="true"></span>
       <span>
-        <h1 style="margin:0;font-size:1.08rem;line-height:1.3;font-weight:900">کلاس‌یار هوشمند حکیمستان</h1>
-        <small style="color:var(--muted);font-size:0.76rem">دستیار تختهٔ هوشمند کلاس · متصل به دفتر معلم و HQF</small>
+        <h1 class="brand-title">کلاس‌یار هوشمند حکیمستان</h1>
+        <small>دستیار تختهٔ هوشمند کلاس · متصل به دفتر معلم و HQF</small>
       </span>
     </a>
     <nav class="top-nav" aria-label="پیوندهای ابزار معلم">
+      <span class="ky-clock" aria-live="off"><b id="kyClock">--:--</b><small id="kyDate"></small></span>
       <a class="top-link" href="index.html">← صفحهٔ اصلی</a>
       <a class="top-link" href="daftar.html">📒 دفتر معلم</a>
       <a class="top-link" href="hqf-converter.html">🔄 مبدل HQF</a>
-      <button type="button" id="btnFullscreen">⛶ تمام‌صفحه</button>
+      <button type="button" id="btnFullscreen" aria-label="نمایش تمام‌صفحه">⛶ تمام‌صفحه</button>
       <button type="button" id="btnTheme" aria-pressed="false">☾ شب</button>
     </nav>
   </div>
 </header>
 
-<section class="roster-strip" aria-label="انتخاب کلاس و فهرست دانش‌آموزان">
-  <div class="roster-card">
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <label for="classSelect"><b>🏫 فهرست فعال کلاس:</b></label>
-      <select id="classSelect" style="min-height:44px;padding:6px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg)"></select>
-      <button type="button" class="btn-soft" id="btnEditRoster">✏️ ویرایش / افزودن اسامی</button>
-      <span id="rosterCountBadge" style="font-size:0.84rem;color:var(--muted)"></span>
+<section class="ky-hero roster-strip" aria-label="انتخاب کلاس و فهرست دانش‌آموزان">
+  <div class="ky-hero-card">
+    <div>
+      <span class="ky-kicker">✦ جلسهٔ امروز کلاس</span>
+      <h2>کلاسی پرنشاط با <span>شش ابزار هوشمند</span> پای تخته</h2>
+      <p>قرعه‌کشی عادلانه، گروه‌بندی متوازن، زمان‌سنج و آرامش‌سنج، دوئل دونفره و نظرسنجی سریع — همه آفلاین و خصوصی روی همین دستگاه.</p>
+      <div class="ky-class-row">
+        <label for="classSelect">🏫 کلاس فعال:</label>
+        <select id="classSelect"></select>
+        <button type="button" class="btn-soft" id="btnEditRoster">✏️ ویرایش اسامی</button>
+      </div>
+      <small id="saveIndicator" role="status">✓ ذخیرهٔ آفلاین مرورگر فعال است</small>
     </div>
-    <small id="saveIndicator" role="status" style="color:var(--ok);font-weight:700">✓ ذخیرهٔ آفلاین مرورگر فعال است</small>
+    <div class="ky-stats" aria-label="آمار جلسه">
+      <div class="ky-stat"><i aria-hidden="true">👩‍🎓</i><div><b id="kyStatStudents">۰</b><small id="rosterCountBadge">دانش‌آموز فعال</small></div></div>
+      <div class="ky-stat"><i aria-hidden="true">🎯</i><div><b id="kyStatCalled">۰</b><small>صدازده در این دور</small><div class="ky-stat-bar" aria-hidden="true"><span id="kyStatCalledBar" style="width:0%"></span></div></div></div>
+      <div class="ky-stat"><i aria-hidden="true">⭐</i><div><b id="kyStatStars">۰</b><small>ستارهٔ تشویقی جلسه</small></div></div>
+      <div class="ky-stat"><i aria-hidden="true">🌿</i><div><b id="kyStatCalm">۰</b><small>دقیقهٔ آرامش کلاس</small></div></div>
+    </div>
   </div>
 </section>
 
 <main id="main" tabindex="-1">
-  <div class="tool-tabs" role="tablist" aria-label="چهار ابزار کلاس‌یار">
-    <button type="button" role="tab" class="tool-tab" data-tab="wheel" aria-selected="true">🎡 ۱. گردونهٔ اسامی (بدون تکرار)</button>
-    <button type="button" role="tab" class="tool-tab" data-tab="groups" aria-selected="false">👥 ۲. گروه‌بند هوشمند و چاپ</button>
-    <button type="button" role="tab" class="tool-tab" data-tab="timer" aria-selected="false">⏱️ ۳. زمان‌سنج و آرامش‌سنج</button>
-    <button type="button" role="tab" class="tool-tab" data-tab="duel" aria-selected="false">⚔️ ۴. دوئل دونفرهٔ پای تخته</button>
+  <div class="tool-tabs" role="tablist" aria-label="شش ابزار کلاس‌یار">
+    <button type="button" role="tab" class="tool-tab" id="tab-wheel" data-tab="wheel" aria-controls="tabPanel" aria-selected="true" style="--tt-soft:#dcf0ed"><span class="tt-ico" aria-hidden="true">🎡</span><span class="tt-name">۱. گردونهٔ اسامی</span><span class="tt-desc">قرعه‌کشی عادلانه بدون تکرار</span><kbd aria-hidden="true">1</kbd></button>
+    <button type="button" role="tab" class="tool-tab" id="tab-groups" data-tab="groups" aria-controls="tabPanel" aria-selected="false" style="--tt-soft:#e8e1fb"><span class="tt-ico" aria-hidden="true">👥</span><span class="tt-name">۲. گروه‌بند هوشمند</span><span class="tt-desc">تصادفی یا متوازن · چاپ A4</span><kbd aria-hidden="true">2</kbd></button>
+    <button type="button" role="tab" class="tool-tab" id="tab-timer" data-tab="timer" aria-controls="tabPanel" aria-selected="false" style="--tt-soft:#fff1cf"><span class="tt-ico" aria-hidden="true">⏱️</span><span class="tt-name">۳. زمان‌سنج دیداری</span><span class="tt-desc">حلقهٔ زمان و نمای تخته</span><kbd aria-hidden="true">3</kbd></button>
+    <button type="button" role="tab" class="tool-tab" id="tab-calm" data-tab="calm" aria-controls="tabPanel" aria-selected="false" style="--tt-soft:#dff5e6"><span class="tt-ico" aria-hidden="true">🌿</span><span class="tt-name">۴. آرامش‌سنج</span><span class="tt-desc">سنجش صدای کلاس، بدون ضبط</span><kbd aria-hidden="true">4</kbd></button>
+    <button type="button" role="tab" class="tool-tab" id="tab-duel" data-tab="duel" aria-controls="tabPanel" aria-selected="false" style="--tt-soft:#e0eaff"><span class="tt-ico" aria-hidden="true">⚔️</span><span class="tt-name">۵. دوئل پای تخته</span><span class="tt-desc">مسابقهٔ دونفره · فایل HQF</span><kbd aria-hidden="true">5</kbd></button>
+    <button type="button" role="tab" class="tool-tab" id="tab-poll" data-tab="poll" aria-controls="tabPanel" aria-selected="false" style="--tt-soft:#fde4e4"><span class="tt-ico" aria-hidden="true">🗳️</span><span class="tt-name">۶. نظرسنجی سریع</span><span class="tt-desc">بلیت خروج و سنجش فهم</span><kbd aria-hidden="true">6</kbd></button>
   </div>
 
-  <section id="tabPanel" class="panel-card" aria-live="polite"></section>
+  <section id="tabPanel" class="panel-card" role="tabpanel" aria-labelledby="tab-wheel" tabindex="-1"></section>
+  <div id="kyLive" class="sr-only" aria-live="polite"></div>
 </main>
 
 <footer class="site-footer">
-  طراحی و توسعه: مهدی شریفیان · سامانهٔ آموزشی حکیمستان · تمام داده‌ها صددرصد خصوصی روی دستگاه شما ذخیره می‌شوند
+  طراحی و توسعه: <b>مهدی شریفیان</b> · سامانهٔ آموزشی حکیمستان · تمام داده‌ها صددرصد خصوصی روی دستگاه شما ذخیره می‌شوند
+  <div class="ky-shortcuts" aria-hidden="true"><span><kbd>1</kbd>…<kbd>6</kbd> تعویض ابزار</span><span><kbd>Space</kbd> چرخش گردونه / شروع زمان</span><span><kbd>F</kbd> تمام‌صفحه</span></div>
 </footer>
 
 <dialog id="rosterDialog" aria-labelledby="rosterDialogTitle">
@@ -427,9 +477,9 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     <h2 id="rosterDialogTitle" style="margin:0;font-size:1.15rem">فهرست دانش‌آموزان کلاس سفارشی</h2>
     <button type="button" id="btnCloseRosterDialog" aria-label="بستن پنجره">✕</button>
   </div>
-  <p style="margin-top:0;font-size:0.88rem;color:var(--muted)">نام هر دانش‌آموز را در یک خط بنویسید (اگر در «دفتر معلم» کلاس ساخته باشید، آن کلاس‌ها هم به طور خودکار در منوی بالا قابل انتخاب هستند):</p>
-  <label for="rosterTextarea" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">نام دانش‌آموزان</label>
-  <textarea id="rosterTextarea" rows="9" style="width:100%;border-radius:14px;border:1px solid var(--line);padding:12px;background:var(--bg)"></textarea>
+  <p style="margin-top:0;font-size:0.88rem;color:var(--muted)">نام هر دانش‌آموز را در یک خط بنویسید (اگر در «دفتر معلم» کلاس ساخته باشید، آن کلاس‌ها هم به طور خودکار در منوی کلاس فعال نمایش داده می‌شوند).</p>
+  <label for="rosterTextarea" class="sr-only">نام دانش‌آموزان</label>
+  <textarea id="rosterTextarea" rows="9"></textarea>
   <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px">
     <button type="button" class="btn-soft" id="btnLoadSampleRoster">نمونهٔ کلاس ۱۶ نفرهٔ پنجم</button>
     <button type="button" class="btn-primary" id="btnSaveCustomRoster">✓ ذخیرهٔ فهرست</button>
@@ -438,6 +488,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
 
 <script src="hakim-core.js"></script>
 <script src="js/hakim-companion.js"></script>
+<script src="js/hakim-logo.js"></script>
 <script>
 (function () {
   'use strict';
@@ -457,6 +508,8 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       '"': '&quot;',
       "'": '&#39;'
     }[c]));
+  const reduceMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const announce = (msg) => { const l = $('kyLive'); if (l) { l.textContent = ''; setTimeout(() => { l.textContent = msg; }, 30); } };
 
   const SAMPLE_STUDENTS = [
     'امیرعلی رضایی', 'زهرا محمدی', 'پارسا کریمی', 'فاطمه حسینی',
@@ -494,9 +547,29 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     }
   };
 
+
+  const TOOLS = ['wheel', 'groups', 'timer', 'calm', 'duel', 'poll'];
+  const PALETTE = [
+    ['#0f766e', '#14b8a6'], ['#1d4ed8', '#60a5fa'], ['#6d28d9', '#a78bfa'], ['#b45309', '#f59e0b'],
+    ['#be123c', '#fb7185'], ['#15803d', '#4ade80'], ['#4338ca', '#818cf8'], ['#0369a1', '#38bdf8']
+  ];
+  const GROUP_LOOK = [
+    ['کاوشگران خرد', '🧭', '#0f766e'], ['ستارگان دانش', '⭐', '#b45309'], ['پیشگامان فردا', '🚀', '#1d4ed8'],
+    ['اندیشمندان جوان', '💡', '#6d28d9'], ['سفیران امید', '🕊️', '#be123c'], ['معماران علم', '🏛️', '#15803d'],
+    ['پژوهشگران برتر', '🔬', '#0369a1'], ['یاران حکیم', '🦉', '#7c2d12'], ['قهرمانان کتاب', '📚', '#4338ca'],
+    ['نگهبانان طبیعت', '🌳', '#166534'], ['مخترعان کوچک', '⚙️', '#9a3412'], ['شاعران نوپا', '🖋️', '#831843']
+  ];
+  const ROLES = ['سرگروه', 'نگارنده', 'سخنگو', 'پژوهشگر', 'زمان‌نگهدار'];
+  const POLL_MODES = {
+    understand: { title: 'سنجش فهم درس', items: [['فهمیدم', '😃', '#15803d'], ['تقریباً', '🤔', '#b45309'], ['نفهمیدم', '😟', '#be123c']] },
+    abcd: { title: 'پاسخ چهارگزینه‌ای', items: [['گزینهٔ ۱', '1️⃣', '#1d4ed8'], ['گزینهٔ ۲', '2️⃣', '#6d28d9'], ['گزینهٔ ۳', '3️⃣', '#b45309'], ['گزینهٔ ۴', '4️⃣', '#0f766e']] },
+    yesno: { title: 'موافقم / مخالفم', items: [['موافقم', '👍', '#15803d'], ['مطمئن نیستم', '🤷', '#64748b'], ['مخالفم', '👎', '#be123c']] },
+    mood: { title: 'حال‌وهوای کلاس', items: [['پرانرژی', '⚡', '#b45309'], ['آرام', '🌿', '#15803d'], ['خسته', '😴', '#4338ca'], ['کنجکاو', '🔎', '#0369a1']] }
+  };
+
   function defaultState() {
     return {
-      version: 1,
+      version: 2,
       theme: 'light',
       selectedClassId: 'custom',
       customStudents: SAMPLE_STUDENTS.slice(),
@@ -506,10 +579,17 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       lastWinner: null,
       groupMode: 'size',
       groupVal: 4,
+      groupBalance: false,
       groups: [],
       timerTotalSec: 180,
+      calmSensitivity: 50,
+      calmThreshold: 45,
+      calmSeconds: 0,
+      calmBest: 0,
       duelBankKey: 'math5',
-      importedHqf: null
+      importedHqf: null,
+      poll: { mode: 'understand', question: '', counts: [0, 0, 0] },
+      lastTab: 'wheel'
     };
   }
 
@@ -517,19 +597,26 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     try {
       const raw = JSON.parse(localStorage.getItem(KEY_LS) || 'null');
       if (!raw || typeof raw !== 'object') return defaultState();
-      return { ...defaultState(), ...raw };
+      const merged = { ...defaultState(), ...raw };
+      if (!merged.poll || !POLL_MODES[merged.poll.mode]) merged.poll = defaultState().poll;
+      return merged;
     } catch {
       return defaultState();
     }
   })();
 
-  let activeTab = 'wheel';
+  let activeTab = TOOLS.includes(state.lastTab) ? state.lastTab : 'wheel';
   let wheelAngle = 0;
   let spinning = false;
   let timerRem = state.timerTotalSec || 180;
   let timerInterval = null;
+  let boardMode = false;
   let micStream = null;
+  let micCtx = null;
   let micRaf = null;
+  let calmLevel = 0;
+  let calmStreak = 0;
+  let calmLastTs = 0;
 
   let duelState = {
     p1Name: 'قهرمان آبی',
@@ -538,6 +625,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     p2Score: 0,
     qIdx: 0,
     locked: false,
+    picked: null,
     roundMsg: 'دکمهٔ «سؤال بعدی» یا یکی از گزینه‌ها را لمس کنید!'
   };
 
@@ -559,10 +647,12 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
 
   function persist() {
     try {
+      state.lastTab = activeTab;
       localStorage.setItem(KEY_LS, JSON.stringify(state));
       idbWrite(state);
       if ($('saveIndicator')) $('saveIndicator').textContent = '✓ ذخیره شد (' + new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }) + ')';
     } catch {}
+    updateHeroStats();
   }
 
   function readDaftarClasses() {
@@ -600,15 +690,33 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     sel.innerHTML = options
       .map((o) => `<option value="${esc(o.id)}" ${o.id === state.selectedClassId ? 'selected' : ''}>${esc(o.name)}</option>`)
       .join('');
-    const list = getActiveStudents();
-    $('rosterCountBadge').textContent = `(${fa(list.length)} دانش‌آموز فعال)`;
+    updateHeroStats();
   }
 
-  function playChime() {
+  function updateHeroStats() {
+    const all = getActiveStudents();
+    const called = state.pickedInRound.filter((n) => all.includes(n)).length;
+    const stars = all.reduce((s, n) => s + (state.scores[n] || 0), 0);
+    const set = (id, v) => { const el = $(id); if (el) el.textContent = v; };
+    set('kyStatStudents', fa(all.length));
+    set('rosterCountBadge', `دانش‌آموز فعال (${fa(all.length)} نفر)`);
+    set('kyStatCalled', fa(called) + ' / ' + fa(all.length));
+    set('kyStatStars', fa(stars));
+    set('kyStatCalm', fa(Math.floor((state.calmSeconds || 0) / 60)));
+    const bar = $('kyStatCalledBar');
+    if (bar) bar.style.width = (all.length ? Math.round((called / all.length) * 100) : 0) + '%';
+  }
+
+  /* ── Sound: chime + tick (Web Audio, no files) ── */
+  function audioCtx() {
     const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) return;
+    if (!Ctx) return null;
+    try { return playChime._ctx || (playChime._ctx = new Ctx()); } catch { return null; }
+  }
+  function playChime() {
+    const ctx = audioCtx();
+    if (!ctx) return;
     try {
-      const ctx = playChime._ctx || (playChime._ctx = new Ctx());
       const now = ctx.currentTime;
       [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
         const osc = ctx.createOscillator();
@@ -623,72 +731,166 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       });
     } catch {}
   }
+  function playTick() {
+    const ctx = audioCtx();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = 1400;
+      g.gain.setValueAtTime(0.035, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.05);
+    } catch {}
+  }
+
+  function confetti() {
+    if (reduceMotion()) return;
+    const box = document.createElement('div');
+    box.className = 'ky-confetti';
+    box.setAttribute('aria-hidden', 'true');
+    const colors = ['#f5c76a', '#14b8a6', '#60a5fa', '#fb7185', '#a78bfa', '#4ade80'];
+    for (let i = 0; i < 70; i++) {
+      const p = document.createElement('i');
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.background = colors[i % colors.length];
+      p.style.animationDuration = (1.8 + Math.random() * 1.6) + 's';
+      p.style.animationDelay = (Math.random() * 0.4) + 's';
+      p.style.transform = 'rotate(' + Math.floor(Math.random() * 180) + 'deg)';
+      box.appendChild(p);
+    }
+    document.body.appendChild(box);
+    setTimeout(() => box.remove(), 4000);
+  }
 
   function applyTheme() {
     if (state.theme === 'night') document.documentElement.setAttribute('data-theme', 'night');
     else document.documentElement.removeAttribute('data-theme');
     $('btnTheme').setAttribute('aria-pressed', String(state.theme === 'night'));
     $('btnTheme').textContent = state.theme === 'night' ? '☀ روز' : '☾ شب';
+    mountLogo();
+  }
+  function mountLogo() {
+    const L = window.HakimLogo;
+    const el = $('kyLogo');
+    if (!el) return;
+    if (!L) { el.textContent = '🖥️'; return; }
+    el.innerHTML = L.horizontal({ tone: state.theme === 'night' ? 'light' : 'dark', label: 'لوگوی حکیمستان' });
   }
 
+  const initialOf = (name) => (String(name || '').trim().charAt(0) || '؟');
+
   /* ── Tab 1: Wheel of Names ── */
+  function wheelSvg(items) {
+    const n = Math.max(1, items.length);
+    const cx = 200, cy = 200, r = 178;
+    let defs = '';
+    let slices = '';
+    if (n === 1) {
+      slices = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#kyg0)"/><text x="${cx}" y="${cy - 60}" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">${esc(items[0] || '')}</text>`;
+      defs = `<radialGradient id="kyg0" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="${PALETTE[0][1]}"/><stop offset="1" stop-color="${PALETTE[0][0]}"/></radialGradient>`;
+    } else {
+      const fs = n > 24 ? 8.5 : n > 16 ? 10 : n > 10 ? 11.5 : 13;
+      const maxChars = n > 20 ? 12 : 16;
+      items.forEach((name, i) => {
+        const pal = PALETTE[i % PALETTE.length];
+        defs += `<radialGradient id="kyg${i}" cx="200" cy="200" r="190" gradientUnits="userSpaceOnUse"><stop offset=".25" stop-color="${pal[1]}"/><stop offset="1" stop-color="${pal[0]}"/></radialGradient>`;
+        const a0 = ((i * 360) / n - 90) * (Math.PI / 180);
+        const a1 = (((i + 1) * 360) / n - 90) * (Math.PI / 180);
+        const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+        const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+        const large = 360 / n > 180 ? 1 : 0;
+        const midDeg = ((i + 0.5) * 360) / n;
+        const midRad = (midDeg - 90) * (Math.PI / 180);
+        const tx = cx + r * 0.6 * Math.cos(midRad);
+        const ty = cy + r * 0.6 * Math.sin(midRad);
+        const shortName = name.length > maxChars ? name.slice(0, maxChars - 1) + '…' : name;
+        slices += `<path d="M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 ${large},1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="url(#kyg${i})" stroke="rgba(255,255,255,.85)" stroke-width="1.6"/>` +
+          `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="${fs}" font-weight="800" style="paint-order:stroke" stroke="rgba(0,0,0,.18)" stroke-width="2" transform="rotate(${(midDeg > 180 ? midDeg + 90 : midDeg - 90).toFixed(2)}, ${tx.toFixed(1)}, ${ty.toFixed(1)})">${esc(shortName)}</text>`;
+      });
+    }
+    let bulbs = '';
+    const nb = 24;
+    for (let i = 0; i < nb; i++) {
+      const a = (i / nb) * Math.PI * 2;
+      bulbs += `<circle class="bulb" cx="${(cx + 191 * Math.cos(a)).toFixed(1)}" cy="${(cy + 191 * Math.sin(a)).toFixed(1)}" r="3.6"/>`;
+    }
+    return `<svg id="wheelSvgEl" class="wheel-svg" viewBox="0 0 400 400" role="img" aria-label="گردونهٔ قرعه‌کشی اسامی دانش‌آموزان (${fa(items.length)} نام)">
+      <defs>${defs}<linearGradient id="kyRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6d47a"/><stop offset=".5" stop-color="#c58a12"/><stop offset="1" stop-color="#f6d47a"/></linearGradient></defs>
+      <circle cx="200" cy="200" r="198" fill="url(#kyRim)"/>
+      <circle cx="200" cy="200" r="184" fill="#0b3b39"/>
+      <g class="wheel-rotor" id="wheelRotor" style="transform:rotate(${wheelAngle}deg)">${slices}</g>
+      <g>${bulbs}</g>
+    </svg>`;
+  }
+
   function renderWheelTab() {
     const all = getActiveStudents();
     const available = state.noRepeatWheel
       ? all.filter((n) => !state.pickedInRound.includes(n))
       : all.slice();
     const wheelItems = available.length ? available : all.slice();
-    const palette = ['#0f766e', '#2563eb', '#7c3aed', '#b45309', '#be123c', '#15803d', '#4338ca', '#0369a1'];
-    const n = Math.max(1, wheelItems.length);
-    const cx = 180, cy = 180, r = 162;
-
-    const slicesSvg = n === 1
-      ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0f766e"/><text x="${cx}" y="${cy}" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">${esc(wheelItems[0])}</text>`
-      : wheelItems.map((name, i) => {
-          const a0 = ((i * 360) / n - 90) * (Math.PI / 180);
-          const a1 = (((i + 1) * 360) / n - 90) * (Math.PI / 180);
-          const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
-          const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
-          const midDeg = ((i + 0.5) * 360) / n;
-          const midRad = (midDeg - 90) * (Math.PI / 180);
-          const tx = cx + r * 0.62 * Math.cos(midRad);
-          const ty = cy + r * 0.62 * Math.sin(midRad);
-          const shortName = name.length > 14 ? name.slice(0, 13) + '…' : name;
-          return `<path d="M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 0,1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="${palette[i % palette.length]}" stroke="#ffffff" stroke-width="2"/>
-            <text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="${n > 14 ? 9.5 : 11.5}" font-weight="800" transform="rotate(${midDeg - 90}, ${tx.toFixed(1)}, ${ty.toFixed(1)})">${esc(shortName)}</text>`;
-        }).join('');
+    const ranked = all.slice().sort((a, b) => (state.scores[b] || 0) - (state.scores[a] || 0) || a.localeCompare(b, 'fa'));
+    const topScore = ranked.length ? (state.scores[ranked[0]] || 0) : 0;
+    const emb = window.HakimLogo ? window.HakimLogo.emblem({ label: '' }).replace('role="img"', 'aria-hidden="true"') : '<span aria-hidden="true">🦉</span>';
 
     $('tabPanel').innerHTML = `
+      <div class="panel-head">
+        <div><h2>🎡 گردونهٔ اسامی</h2><p>هر چرخش یک نفر را عادلانه انتخاب می‌کند؛ ستارهٔ تشویقی را همان‌جا ثبت کنید.</p></div>
+        <div class="row"><span class="chip">باقی‌مانده در این دور: <b>${fa(available.length)}</b> از ${fa(all.length)}</span></div>
+      </div>
       <div class="wheel-layout">
         <div class="wheel-stage">
-          <div style="font-size:1.6rem;line-height:1;margin-bottom:-6px" aria-hidden="true">🔻</div>
-          <svg id="wheelSvgEl" class="wheel-svg" viewBox="0 0 360 360" style="transform:rotate(${wheelAngle}deg)" role="img" aria-label="گردونهٔ قرعه‌کشی اسامی دانش‌آموزان">
-            ${slicesSvg}
-            <circle cx="180" cy="180" r="22" fill="#ffffff" stroke="#142625" stroke-width="4"/>
-          </svg>
-          <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px">
-            <button type="button" class="btn-primary" id="btnSpinWheel" style="font-size:1.08rem;padding:10px 24px" ${spinning ? 'disabled' : ''}>🎡 چرخاندن گردونه!</button>
+          <div class="wheel-box ${spinning ? 'spinning' : ''}" id="wheelBox">
+            <svg class="wheel-pointer" id="wheelPointer" viewBox="0 0 46 58" aria-hidden="true"><path d="M23 56 L5 14 A20 20 0 1 1 41 14 Z" fill="#c0392b" stroke="#fff" stroke-width="3"/><circle cx="23" cy="20" r="7" fill="#fff"/></svg>
+            ${wheelSvg(wheelItems)}
+            <div class="wheel-hub" aria-hidden="true">${emb}</div>
+          </div>
+          <div class="row" style="justify-content:center;margin-top:16px">
+            <button type="button" class="btn-primary btn-big" id="btnSpinWheel" ${spinning ? 'disabled' : ''}>🎡 چرخاندن گردونه!</button>
             <button type="button" id="btnResetWheelRound">↺ بازگرداندن همهٔ اسامی (${fa(available.length)}/${fa(all.length)})</button>
           </div>
+          <p style="margin:8px 0 0;font-size:.78rem;color:var(--muted)">میان‌بر صفحه‌کلید: <kbd>Space</kbd></p>
         </div>
 
         <div>
-          <div class="winner-banner" role="status">
+          <div class="winner-banner" id="winnerBanner" role="status">
             <small style="font-weight:800">دانش‌آموز انتخاب‌شده برای پاسخ پای تخته:</small>
+            ${state.lastWinner ? `<div class="winner-avatar" aria-hidden="true">${esc(initialOf(state.lastWinner))}</div>` : ''}
             <div class="winner-name">${state.lastWinner ? esc(state.lastWinner) : 'آمادهٔ چرخش!'}</div>
-            ${state.lastWinner ? `<div style="margin-top:8px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+            ${state.lastWinner ? `<div class="row" style="justify-content:center;margin-top:8px">
               <button type="button" class="btn-gold" id="btnGiveStar">⭐ ثبت +۱ امتیاز تشویقی (${fa(state.scores[state.lastWinner] || 0)})</button>
+              <button type="button" class="btn-soft" id="btnSkipWinner" title="غایب است یا آماده نیست؛ به دور بعد برمی‌گردد">↩ غایب / بعداً</button>
             </div>` : ''}
           </div>
 
-          <label style="display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer;margin-bottom:12px">
-            <input type="checkbox" id="chkNoRepeat" ${state.noRepeatWheel ? 'checked' : ''} style="width:20px;height:20px">
-            حالت عادلانهٔ بدون تکرار (تا وقتی همه یک‌بار صدا زده نشوند، کسی تکرار نمی‌شود)
+          <label class="switch-row">
+            <input type="checkbox" id="chkNoRepeat" ${state.noRepeatWheel ? 'checked' : ''}>
+            <span>حالت عادلانهٔ بدون تکرار <small style="display:block;color:var(--muted);font-weight:500">تا وقتی همه یک‌بار صدا زده نشوند، کسی تکرار نمی‌شود.</small></span>
           </label>
 
-          <h2 style="font-size:1rem;margin:10px 0 6px">🏅 جدول امتیاز تشویقی جلسه:</h2>
-          <div style="display:flex;gap:6px;flex-wrap:wrap">
-            ${all.map((st) => `<span style="padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:${state.pickedInRound.includes(st) ? 'var(--surface-soft)' : 'var(--bg)'};font-size:0.82rem">${state.pickedInRound.includes(st) ? '✓ ' : ''}${esc(st)} <b>(${fa(state.scores[st] || 0)})</b></span>`).join('')}
+          <div class="row" style="justify-content:space-between;margin:6px 0 8px">
+            <h3 style="font-size:1rem;margin:0">🏅 جدول امتیاز تشویقی جلسه</h3>
+            <button type="button" class="btn-ghost" id="btnResetScores" style="min-height:36px;font-size:.8rem">صفر کردن امتیازها</button>
+          </div>
+          <div class="board" role="list" aria-label="جدول امتیاز تشویقی">
+            ${ranked.map((st, i) => {
+              const sc = state.scores[st] || 0;
+              const picked = state.pickedInRound.includes(st);
+              const medal = sc > 0 && sc === topScore ? '🥇' : fa(i + 1);
+              return `<div class="board-row ${picked ? 'picked' : ''} ${sc > 0 && sc === topScore ? 'top1' : ''}" role="listitem">
+                <span class="board-rank" aria-hidden="true">${medal}</span>
+                <span>${picked ? '✓ ' : ''}${esc(st)}${picked ? '<span class="sr-only"> (در این دور صدا زده شده)</span>' : ''}</span>
+                <span class="board-stars">⭐ ${fa(sc)}</span>
+                <span class="row" style="gap:4px;flex-wrap:nowrap">
+                  <button type="button" data-star-minus="${esc(st)}" aria-label="کم کردن یک ستاره از ${esc(st)}">−</button>
+                  <button type="button" data-star-plus="${esc(st)}" aria-label="افزودن یک ستاره به ${esc(st)}">+</button>
+                </span>
+              </div>`;
+            }).join('')}
           </div>
         </div>
       </div>
@@ -705,6 +907,12 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       persist();
       renderWheelTab();
     };
+    $('btnResetScores').onclick = () => {
+      if (!confirm('امتیازهای تشویقی این جلسه صفر شود؟')) return;
+      state.scores = {};
+      persist();
+      renderWheelTab();
+    };
     if ($('btnGiveStar')) {
       $('btnGiveStar').onclick = () => {
         const w = state.lastWinner;
@@ -712,33 +920,84 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
         playChime();
         persist();
         renderWheelTab();
+        announce(`یک ستاره برای ${w} ثبت شد.`);
       };
     }
-    $('btnSpinWheel').onclick = () => {
+    if ($('btnSkipWinner')) {
+      $('btnSkipWinner').onclick = () => {
+        const w = state.lastWinner;
+        state.pickedInRound = state.pickedInRound.filter((x) => x !== w);
+        state.lastWinner = null;
+        persist();
+        renderWheelTab();
+        announce(`${w} به دور بعد منتقل شد.`);
+      };
+    }
+    document.querySelectorAll('[data-star-plus]').forEach((b) => {
+      b.onclick = () => { const n = b.dataset.starPlus; state.scores[n] = (state.scores[n] || 0) + 1; persist(); renderWheelTab(); announce(`ستارهٔ ${n}: ${fa(state.scores[n])}`); };
+    });
+    document.querySelectorAll('[data-star-minus]').forEach((b) => {
+      b.onclick = () => { const n = b.dataset.starMinus; state.scores[n] = Math.max(0, (state.scores[n] || 0) - 1); persist(); renderWheelTab(); announce(`ستارهٔ ${n}: ${fa(state.scores[n])}`); };
+    });
+    $('btnSpinWheel').onclick = spinWheel;
+
+    function spinWheel() {
       if (spinning) return;
-      if (state.noRepeatWheel && available.length === 0) {
-        state.pickedInRound = [];
-      }
-      const pool = state.noRepeatWheel
-        ? all.filter(( nm ) => !state.pickedInRound.includes(nm))
-        : all.slice();
-      const chosen = pool[Math.floor(Math.random() * pool.length)];
+      if (state.noRepeatWheel && available.length === 0) state.pickedInRound = [];
+      const pool = state.noRepeatWheel ? all.filter((nm) => !state.pickedInRound.includes(nm)) : all.slice();
+      const items = pool.length ? pool : all.slice();
+      const idx = Math.floor(Math.random() * items.length);
+      const chosen = items[idx];
+      // re-render the wheel with exactly this pool so the pointer lands on the chosen slice
+      const n = Math.max(1, items.length);
+      const slice = 360 / n;
+      const target = 360 - (idx + 0.2 + Math.random() * 0.6) * slice;
+      const start = wheelAngle % 360;
+      const end = start + 360 * 5 + ((target - start) % 360 + 360) % 360;
       spinning = true;
-      wheelAngle += 1080 + Math.floor(Math.random() * 360);
-      const svgEl = $('wheelSvgEl');
-      if (svgEl) svgEl.style.transform = `rotate(${wheelAngle}deg)`;
-      setTimeout(() => {
+      const wb = $('wheelBox');
+      if (wb) {
+        wb.classList.add('spinning');
+        const holder = wb.querySelector('#wheelSvgEl');
+        if (holder) holder.outerHTML = wheelSvg(items);
+      }
+      const rotor = $('wheelRotor');
+      const ptr = $('wheelPointer');
+      const btn = $('btnSpinWheel');
+      if (btn) btn.disabled = true;
+      const dur = reduceMotion() ? 300 : 4200;
+      const t0 = performance.now();
+      let lastSlice = -1;
+      const ease = (t) => 1 - Math.pow(1 - t, 4);
+      const step = (now) => {
+        const t = Math.min(1, (now - t0) / dur);
+        const ang = start + (end - start) * ease(t);
+        if (rotor) rotor.style.transform = `rotate(${ang}deg)`;
+        const s = Math.floor(ang / slice);
+        if (s !== lastSlice) {
+          lastSlice = s;
+          playTick();
+          if (ptr && !reduceMotion()) { ptr.classList.remove('tick'); ptr.getBoundingClientRect(); ptr.classList.add('tick'); }
+        }
+        if (t < 1) { requestAnimationFrame(step); return; }
+        wheelAngle = end;
         spinning = false;
         state.lastWinner = chosen;
-        if (state.noRepeatWheel && !state.pickedInRound.includes(chosen)) {
-          state.pickedInRound.push(chosen);
-        }
+        if (state.noRepeatWheel && !state.pickedInRound.includes(chosen)) state.pickedInRound.push(chosen);
         playChime();
         persist();
-        if (activeTab === 'wheel') renderWheelTab();
+        if (activeTab === 'wheel') {
+          renderWheelTab();
+          const banner = $('winnerBanner');
+          if (banner) banner.classList.add('pop');
+        }
+        confetti();
+        announce(`نوبت ${chosen} است.`);
         try { window.HakimCompanion && window.HakimCompanion.say(`نوبت «${chosen}» است! با آرامش فکر کن و جواب بده.`, 'happy'); } catch (e) {}
-      }, 2450);
-    };
+      };
+      requestAnimationFrame(step);
+    }
+    renderWheelTab.spin = spinWheel;
   }
 
   /* ── Tab 2: Smart Group Maker ── */
@@ -751,56 +1010,214 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     const val = Math.max(2, Math.min(12, Number(state.groupVal) || 4));
     const numGroups = state.groupMode === 'count' ? Math.min(list.length, val) : Math.max(1, Math.ceil(list.length / val));
     const buckets = Array.from({ length: numGroups }, () => []);
-    list.forEach((student, idx) => {
-      buckets[idx % numGroups].push(student);
-    });
+    if (state.groupBalance) {
+      // snake draft by encouragement stars → groups with similar total strength
+      list.sort((a, b) => (state.scores[b] || 0) - (state.scores[a] || 0));
+      list.forEach((student, idx) => {
+        const round = Math.floor(idx / numGroups);
+        const pos = idx % numGroups;
+        buckets[round % 2 === 0 ? pos : numGroups - 1 - pos].push(student);
+      });
+    } else {
+      list.forEach((student, idx) => {
+        buckets[idx % numGroups].push(student);
+      });
+    }
     state.groups = buckets;
     persist();
   }
 
   function renderGroupsTab() {
     if (!state.groups || !state.groups.length) generateGroups();
-    const titles = ['کاوشگران خرد', 'ستارگان دانش', 'پیشگامان فردا', 'اندیشمندان جوان', 'سفیران امید', 'معماران علم', 'پژوهشگران برتر', 'یاران حکیم'];
-    const roles = ['سرگروه', 'نگارنده', 'سخنگو', 'پژوهشگر', 'زمان‌نگهدار'];
+    const logo = window.HakimLogo ? window.HakimLogo.horizontal({ label: 'لوگوی حکیمستان' }) : '';
+    const today = new Date().toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric' });
 
     $('tabPanel').innerHTML = `
-      <div class="no-print" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px">
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="panel-head no-print">
+        <div><h2>👥 گروه‌بند هوشمند</h2><p>گروه‌ها را تصادفی یا متوازن (بر پایهٔ ستاره‌های تشویقی) بچینید و برگهٔ A4 چاپ کنید.</p></div>
+        <button type="button" class="btn-gold" id="btnPrintGroups">🖨️ چاپ برگهٔ گروه‌بندی A4</button>
+      </div>
+      <div class="soft-box no-print">
+        <div class="row">
           <label for="grpMode"><b>روش تقسیم:</b></label>
-          <select id="grpMode" style="min-height:44px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg)">
+          <select id="grpMode">
             <option value="size" ${state.groupMode === 'size' ? 'selected' : ''}>بر اساس تعداد اعضای هر گروه</option>
             <option value="count" ${state.groupMode === 'count' ? 'selected' : ''}>بر اساس تعداد کل گروه‌ها</option>
           </select>
           <label for="grpVal"><b>تعداد:</b></label>
-          <input id="grpVal" type="number" min="2" max="12" value="${state.groupVal}" style="width:76px;min-height:44px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg);text-align:center">
-          <button type="button" class="btn-primary" id="btnBuildGroups">🎲 چیدن تصادفی جدید</button>
+          <input id="grpVal" type="number" min="2" max="12" value="${state.groupVal}" style="width:84px;text-align:center">
+          <label class="row" style="gap:6px;cursor:pointer;font-weight:700"><input type="checkbox" id="grpBalance" ${state.groupBalance ? 'checked' : ''} style="width:20px;height:20px;accent-color:var(--primary)"> گروه‌های متوازن</label>
+          <button type="button" class="btn-primary" id="btnBuildGroups">🎲 چیدن جدید</button>
         </div>
-        <button type="button" class="btn-gold" id="btnPrintGroups">🖨️ چاپ برگهٔ گروه‌بندی A4</button>
       </div>
 
-      <h2 style="margin:14px 0 4px;font-size:1.15rem">فهرست گروه‌های کارگاهی کلاس (${fa(state.groups.length)} گروه)</h2>
+      <div class="print-head"><div>${logo}</div><div style="text-align:left"><b>برگهٔ گروه‌بندی کلاس</b><br><small>${esc(today)}</small></div></div>
+      <h2 style="margin:16px 0 4px;font-size:1.15rem">فهرست گروه‌های کارگاهی کلاس (${fa(state.groups.length)} گروه)</h2>
       <div class="groups-grid">
-        ${state.groups.map((members, idx) => `
-          <article class="group-box">
-            <h3>گروه ${fa(idx + 1)}: ${titles[idx % titles.length]}</h3>
+        ${state.groups.map((members, idx) => {
+          const look = GROUP_LOOK[idx % GROUP_LOOK.length];
+          const stars = members.reduce((s, m) => s + (state.scores[m] || 0), 0);
+          return `
+          <article class="group-box" style="--g:${look[2]};animation-delay:${(idx * 0.05).toFixed(2)}s">
+            <h3><i aria-hidden="true">${look[1]}</i>گروه ${fa(idx + 1)}: ${look[0]}</h3>
             <ol>
-              ${members.map((m, mi) => `<li><b>${esc(m)}</b> <small style="color:var(--muted)">(${roles[mi % roles.length]})</small></li>`).join('')}
+              ${members.map((m, mi) => `<li><b>${esc(m)}</b> <small>(${ROLES[mi % ROLES.length]})</small></li>`).join('')}
             </ol>
-          </article>
-        `).join('')}
+            <div class="group-meta">${fa(members.length)} عضو${stars ? ' · ⭐ ' + fa(stars) : ''}</div>
+          </article>`;
+        }).join('')}
       </div>
     `;
 
     $('btnBuildGroups').onclick = () => {
       state.groupMode = $('grpMode').value;
       state.groupVal = Number($('grpVal').value) || 4;
+      state.groupBalance = $('grpBalance').checked;
       generateGroups();
       renderGroupsTab();
+      announce(`${fa(state.groups.length)} گروه تازه چیده شد.`);
     };
     $('btnPrintGroups').onclick = () => window.print();
   }
 
-  /* ── Tab 3: Visual Timer & Classroom Calm Meter ── */
+  /* ── Tab 3: Visual Timer ── */
+  const T_CIRC = 2 * Math.PI * 140;
+  function timerColor(frac) {
+    return frac > 0.5 ? 'var(--primary-3)' : frac > 0.2 ? '#e9a23a' : '#dc2626';
+  }
+  function timerRingHtml(id) {
+    const total = Math.max(1, state.timerTotalSec || 180);
+    const frac = timerRem / total;
+    const mm = String(Math.floor(timerRem / 60)).padStart(2, '0');
+    const ss = String(timerRem % 60).padStart(2, '0');
+    return `<div class="timer-ring-box ${timerRem > 0 && timerRem <= 10 && timerInterval ? 'ending' : ''}" id="${id}" role="timer" aria-label="زمان باقی‌مانده">
+      <svg viewBox="0 0 320 320" aria-hidden="true"><circle class="t-bg" cx="160" cy="160" r="140"/>
+        <circle class="t-fg" data-ring cx="160" cy="160" r="140" stroke-dasharray="${T_CIRC.toFixed(1)}" stroke-dashoffset="${(T_CIRC * (1 - frac)).toFixed(1)}" style="--t-color:${timerColor(frac)}"/></svg>
+      <div class="timer-face"><b data-face id="${id === 'timerRing' ? 'timerFaceDisplay' : 'timerFaceBoard'}">${fa(mm)}:${fa(ss)}</b><small>${timerRem === 0 ? '⏰ زمان تمام شد' : timerInterval ? 'در حال شمارش…' : 'آماده'}</small></div>
+    </div>`;
+  }
+  function paintTimer() {
+    const total = Math.max(1, state.timerTotalSec || 180);
+    const frac = timerRem / total;
+    const mm = String(Math.floor(timerRem / 60)).padStart(2, '0');
+    const ss = String(timerRem % 60).padStart(2, '0');
+    document.querySelectorAll('.timer-ring-box').forEach((box) => {
+      const ring = box.querySelector('[data-ring]');
+      const face = box.querySelector('[data-face]');
+      if (ring) { ring.setAttribute('stroke-dashoffset', (T_CIRC * (1 - frac)).toFixed(1)); ring.style.setProperty('--t-color', timerColor(frac)); }
+      if (face) face.textContent = `${fa(mm)}:${fa(ss)}`;
+      box.classList.toggle('ending', timerRem > 0 && timerRem <= 10);
+    });
+  }
+  function startTimer() {
+    if (timerInterval) return;
+    if (timerRem <= 0) timerRem = state.timerTotalSec || 180;
+    timerInterval = setInterval(() => {
+      if (timerRem > 0) {
+        timerRem--;
+        paintTimer();
+        if (timerRem <= 5 && timerRem > 0) playTick();
+        if (timerRem === 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          playChime();
+          confetti();
+          announce('زمان تمام شد.');
+          if (activeTab === 'timer') renderTimerTab();
+          if (boardMode) renderBoardMode();
+          try { window.HakimCompanion && window.HakimCompanion.say('زمان تمام شد! حالا وقت جمع‌بندی و گفت‌وگوی کلاسی است.', 'thinking'); } catch (e) {}
+        }
+      }
+    }, 1000);
+  }
+  function stopTimer() { clearInterval(timerInterval); timerInterval = null; }
+  function toggleTimer() {
+    if (timerInterval) stopTimer(); else startTimer();
+    if (activeTab === 'timer') renderTimerTab();
+    if (boardMode) renderBoardMode();
+  }
+  function renderBoardMode() {
+    let el = $('kyBoard');
+    if (!boardMode) { if (el) el.remove(); return; }
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'kyBoard';
+      el.className = 'ky-board-mode';
+      el.setAttribute('role', 'dialog');
+      el.setAttribute('aria-modal', 'true');
+      el.setAttribute('aria-label', 'زمان‌سنج در نمای تخته');
+      document.body.appendChild(el);
+    }
+    el.innerHTML = `${timerRingHtml('timerBoard')}
+      <div class="row" style="justify-content:center">
+        <button type="button" class="btn-gold btn-big" id="btnBoardToggle">${timerInterval ? '⏸ توقف' : '▶ شروع'}</button>
+        <button type="button" class="btn-ghost btn-big" id="btnBoardPlus">+۱ دقیقه</button>
+        <button type="button" class="btn-ghost btn-big" id="btnBoardClose">✕ بستن نمای تخته</button>
+      </div>`;
+    $('btnBoardToggle').onclick = toggleTimer;
+    $('btnBoardPlus').onclick = () => { timerRem += 60; state.timerTotalSec = Math.max(state.timerTotalSec, timerRem); persist(); paintTimer(); };
+    $('btnBoardClose').onclick = () => { boardMode = false; renderBoardMode(); if (activeTab === 'timer') renderTimerTab(); const b = $('btnBoardMode'); if (b) b.focus(); };
+    $('btnBoardToggle').focus();
+  }
+
+  function renderTimerTab() {
+    const presets = [60, 120, 180, 300, 600, 900];
+    $('tabPanel').innerHTML = `
+      <div class="panel-head">
+        <div><h2>⏱️ زمان‌سنج دیداری فعالیت کلاسی</h2><p>حلقهٔ رنگی زمان را برای همه قابل‌دیدن می‌کند؛ ده ثانیهٔ آخر با تپش و صدای ملایم همراه است.</p></div>
+        <button type="button" class="btn-soft" id="btnBoardMode">🖥️ نمای بزرگ تخته</button>
+      </div>
+      <div class="timer-grid">
+        <div class="soft-box" style="text-align:center">
+          ${timerRingHtml('timerRing')}
+          <div class="row" style="justify-content:center">
+            <button type="button" class="btn-primary btn-big" id="btnToggleTimer">${timerInterval ? '⏸ توقف موقت' : '▶ شروع شمارش معکوس'}</button>
+            <button type="button" id="btnResetTimer">↺ بازنشانی</button>
+            <button type="button" id="btnPlusMin">+۱ دقیقه</button>
+          </div>
+        </div>
+        <div class="soft-box">
+          <h3 style="margin:0 0 8px;font-size:1rem">⏲️ زمان‌های آماده</h3>
+          <div class="preset-row" style="justify-content:flex-start">
+            ${presets.map((sec) => `<button type="button" class="btn-soft" data-preset="${sec}" aria-pressed="${state.timerTotalSec === sec}">${fa(sec / 60)} دقیقه</button>`).join('')}
+          </div>
+          <label for="customMin" style="font-weight:800;display:block;margin-top:6px">زمان دلخواه (دقیقه):</label>
+          <div class="row">
+            <input id="customMin" type="number" min="1" max="90" value="${Math.max(1, Math.round((state.timerTotalSec || 180) / 60))}" style="width:96px;text-align:center">
+            <button type="button" class="btn-primary" id="btnSetCustom">تنظیم</button>
+          </div>
+          <p style="margin:14px 0 0;font-size:.82rem;color:var(--muted)">پیشنهاد: برای کار گروهی ۵ دقیقه، برای پاسخ پای تخته ۱ دقیقه و برای جمع‌بندی پایانی ۳ دقیقه.</p>
+        </div>
+      </div>
+    `;
+    document.querySelectorAll('[data-preset]').forEach((b) => {
+      b.onclick = () => {
+        stopTimer();
+        state.timerTotalSec = Number(b.dataset.preset);
+        timerRem = state.timerTotalSec;
+        persist();
+        renderTimerTab();
+      };
+    });
+    $('btnSetCustom').onclick = () => {
+      const m = Math.max(1, Math.min(90, Number($('customMin').value) || 3));
+      stopTimer();
+      state.timerTotalSec = m * 60;
+      timerRem = state.timerTotalSec;
+      persist();
+      renderTimerTab();
+    };
+    $('btnToggleTimer').onclick = toggleTimer;
+    $('btnResetTimer').onclick = () => {
+      stopTimer();
+      timerRem = state.timerTotalSec || 180;
+      renderTimerTab();
+    };
+    $('btnPlusMin').onclick = () => { timerRem += 60; state.timerTotalSec = Math.max(state.timerTotalSec, timerRem); persist(); paintTimer(); };
+    $('btnBoardMode').onclick = () => { boardMode = true; renderBoardMode(); };
+  }
+
+  /* ── Tab 4: Classroom Calm Meter (microphone stays on-device) ── */
   function stopMic() {
     if (micRaf) cancelAnimationFrame(micRaf);
     micRaf = null;
@@ -808,88 +1225,64 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       micStream.getTracks().forEach((t) => t.stop());
       micStream = null;
     }
+    if (micCtx) { try { micCtx.close(); } catch {} micCtx = null; }
   }
-
-  function renderTimerTab() {
-    const mm = String(Math.floor(timerRem / 60)).padStart(2, '0');
-    const ss = String(timerRem % 60).padStart(2, '0');
-
+  function gaugeSvg() {
+    const seg = (a0, a1, color) => {
+      const p = (a) => [200 + 160 * Math.cos(Math.PI * (1 - a)), 200 - 160 * Math.sin(Math.PI * (1 - a))];
+      const [x0, y0] = p(a0), [x1, y1] = p(a1);
+      return `<path d="M${x0.toFixed(1)} ${y0.toFixed(1)} A160 160 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}" stroke="${color}" stroke-width="30" fill="none" stroke-linecap="butt"/>`;
+    };
+    const thr = Math.max(0.05, Math.min(0.95, (state.calmThreshold || 45) / 100));
+    const tp = [200 + 182 * Math.cos(Math.PI * (1 - thr)), 200 - 182 * Math.sin(Math.PI * (1 - thr))];
+    return `<svg viewBox="0 0 400 230" aria-hidden="true">
+      ${seg(0, thr * 0.6, '#16a34a')}${seg(thr * 0.6, thr, '#84cc16')}${seg(thr, Math.min(1, thr + (1 - thr) * 0.5), '#eab308')}${seg(Math.min(1, thr + (1 - thr) * 0.5), 1, '#dc2626')}
+      <circle cx="${tp[0].toFixed(1)}" cy="${tp[1].toFixed(1)}" r="6" fill="var(--ink)"/>
+      <g class="gauge-needle" id="gaugeNeedle" style="transform:rotate(${(calmLevel / 100) * 180 - 90}deg)"><path d="M196 200 L200 62 L204 200 Z" fill="var(--ink)"/></g>
+      <circle cx="200" cy="200" r="14" fill="var(--ink)"/><circle cx="200" cy="200" r="6" fill="var(--gold)"/>
+    </svg>`;
+  }
+  function calmFace(pct) { return pct < (state.calmThreshold || 45) * 0.6 ? '😌' : pct < (state.calmThreshold || 45) ? '🙂' : pct < 80 ? '😮' : '🙉'; }
+  function renderCalmTab() {
     $('tabPanel').innerHTML = `
-      <div class="timer-grid">
-        <div style="background:var(--surface-soft);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center">
-          <h2 style="margin:0;font-size:1.15rem">⏱️ زمان‌سنج دیداری فعالیت کلاسی</h2>
-          <div class="timer-face" id="timerFaceDisplay">${fa(mm)}:${fa(ss)}</div>
-          <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px">
-            ${[60, 180, 300, 600, 900].map((sec) => `<button type="button" class="btn-soft" data-preset="${sec}">${fa(sec / 60)} دقیقه</button>`).join('')}
+      <div class="panel-head">
+        <div><h2>🌿 آرامش‌سنج هوشمند کلاس (اختیاری)</h2><p>با زدن دکمهٔ زیر، سطح بلندی صدای محیط فقط در مرورگر همین دستگاه سنجیده می‌شود (هیچ صدایی ضبط یا ارسال نمی‌شود).</p></div>
+        <button type="button" class="${micStream ? 'btn-soft' : 'btn-primary'}" id="btnToggleMic">${micStream ? '⏹ خاموش کردن میکروفون' : '🎙️ فعال‌سازی سنجش آرامش کلاس'}</button>
+      </div>
+      <div class="calm-grid">
+        <div class="soft-box">
+          <div class="gauge">${gaugeSvg()}<div class="gauge-face" id="gaugeFace" aria-hidden="true">${calmFace(calmLevel)}</div></div>
+          <div class="noise-meter-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${calmLevel}" id="noiseBarWrap" aria-label="سطح سر و صدای کلاس">
+            <div class="noise-meter-fill" id="noiseFill" style="width:${calmLevel}%"></div>
           </div>
-          <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
-            <button type="button" class="btn-primary" id="btnToggleTimer">${timerInterval ? '⏸ توقف موقت' : '▶ شروع شمارش معکوس'}</button>
-            <button type="button" id="btnResetTimer">↺ بازنشانی</button>
-          </div>
+          <p id="noiseStatusText" style="font-weight:800;margin:8px 0 0;text-align:center">${micStream ? 'در حال سنجش…' : 'میکروفون غیرفعال است.'}</p>
         </div>
-
-        <div style="background:var(--surface-soft);border:1px solid var(--line);border-radius:18px;padding:20px">
-          <h2 style="margin:0 0 6px;font-size:1.15rem">🌿 آرامش‌سنج هوشمند کلاس (اختیاری)</h2>
-          <p style="margin:0 0 12px;font-size:0.86rem;color:var(--muted)">با زدن دکمهٔ زیر، سطح بلندی صدای محیط فقط در مرورگر همین دستگاه سنجیده می‌شود (هیچ صدایی ضبط یا ارسال نمی‌شود):</p>
-          <div class="noise-meter-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="noiseBarWrap" aria-label="سطح سر و صدای کلاس">
-            <div class="noise-meter-fill" id="noiseFill"></div>
+        <div class="soft-box">
+          <h3 style="margin:0 0 6px;font-size:1rem">⚙️ تنظیم حساسیت</h3>
+          <label for="calmSens" style="font-size:.86rem;font-weight:700">حساسیت میکروفون: <b id="calmSensVal">${fa(state.calmSensitivity)}</b></label>
+          <input type="range" id="calmSens" min="10" max="100" value="${state.calmSensitivity}">
+          <label for="calmThr" style="font-size:.86rem;font-weight:700">مرز «آرام» (نقطهٔ سیاه روی عقربه‌سنج): <b id="calmThrVal">${fa(state.calmThreshold)}٪</b></label>
+          <input type="range" id="calmThr" min="15" max="85" value="${state.calmThreshold}">
+          <div class="calm-score">
+            <div><b id="calmStreak">${fa(Math.floor(calmStreak))}</b><small>ثانیهٔ آرامش پیوسته</small></div>
+            <div><b id="calmBest">${fa(Math.floor(state.calmBest || 0))}</b><small>بهترین رکورد (ثانیه)</small></div>
+            <div><b id="calmTotal">${fa(Math.floor((state.calmSeconds || 0) / 60))}</b><small>دقیقهٔ آرامش جلسه</small></div>
           </div>
-          <p id="noiseStatusText" style="font-weight:800;margin:8px 0 14px">میکروفون غیرفعال است.</p>
-          <button type="button" class="btn-soft" id="btnToggleMic">${micStream ? '⏹ خاموش کردن میکروفون' : '🎙️ فعال‌سازی سنجش آرامش کلاس'}</button>
+          <div class="row" style="margin-top:12px"><button type="button" class="btn-ghost" id="btnCalmReset">↺ صفر کردن رکوردها</button></div>
+          <p style="margin:10px 0 0;font-size:.8rem;color:var(--muted)">هر ۶۰ ثانیه آرامش پیوسته، یک ستارهٔ کلاسی است؛ آن را با بچه‌ها جشن بگیرید!</p>
         </div>
       </div>
     `;
-
-    document.querySelectorAll('[data-preset]').forEach((b) => {
-      b.onclick = () => {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        state.timerTotalSec = Number(b.dataset.preset);
-        timerRem = state.timerTotalSec;
-        persist();
-        renderTimerTab();
-      };
-    });
-
-    $('btnToggleTimer').onclick = () => {
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        renderTimerTab();
-      } else {
-        timerInterval = setInterval(() => {
-          if (timerRem > 0) {
-            timerRem--;
-            const el = $('timerFaceDisplay');
-            if (el) {
-              const m2 = String(Math.floor(timerRem / 60)).padStart(2, '0');
-              const s2 = String(timerRem % 60).padStart(2, '0');
-              el.textContent = `${fa(m2)}:${fa(s2)}`;
-            }
-            if (timerRem === 0) {
-              clearInterval(timerInterval);
-              timerInterval = null;
-              playChime();
-              if (activeTab === 'timer') renderTimerTab();
-              try { window.HakimCompanion && window.HakimCompanion.say('زمان تمام شد! حالا وقت جمع‌بندی و گفت‌وگوی کلاسی است.', 'thinking'); } catch (e) {}
-            }
-          }
-        }, 1000);
-        renderTimerTab();
-      }
-    };
-
-    $('btnResetTimer').onclick = () => {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerRem = state.timerTotalSec || 180;
-      renderTimerTab();
-    };
+    $('calmSens').oninput = (e) => { state.calmSensitivity = Number(e.target.value); $('calmSensVal').textContent = fa(state.calmSensitivity); };
+    $('calmSens').onchange = persist;
+    $('calmThr').oninput = (e) => { state.calmThreshold = Number(e.target.value); $('calmThrVal').textContent = fa(state.calmThreshold) + '٪'; };
+    $('calmThr').onchange = () => { persist(); renderCalmTab(); };
+    $('btnCalmReset').onclick = () => { state.calmSeconds = 0; state.calmBest = 0; calmStreak = 0; persist(); renderCalmTab(); };
 
     $('btnToggleMic').onclick = async () => {
       if (micStream) {
         stopMic();
-        renderTimerTab();
+        renderCalmTab();
         return;
       }
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -899,36 +1292,62 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       try {
         micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const Ctx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new Ctx();
-        const src = ctx.createMediaStreamSource(micStream);
-        const analyser = ctx.createAnalyser();
+        micCtx = new Ctx();
+        const src = micCtx.createMediaStreamSource(micStream);
+        const analyser = micCtx.createAnalyser();
         analyser.fftSize = 256;
         src.connect(analyser);
         const buf = new Uint8Array(analyser.frequencyBinCount);
-        renderTimerTab();
-        const tick = () => {
-          if (!micStream || activeTab !== 'timer') return;
+        renderCalmTab();
+        calmLastTs = performance.now();
+        let lastPersist = 0;
+        const tick = (now) => {
+          if (!micStream || activeTab !== 'calm') return;
           analyser.getByteFrequencyData(buf);
           const avg = buf.reduce((a, b) => a + b, 0) / buf.length;
-          const pct = Math.min(100, Math.round((avg / 95) * 100));
+          const gain = 0.4 + (state.calmSensitivity / 100) * 1.6;
+          const pct = Math.min(100, Math.round((avg / 95) * 100 * gain));
+          calmLevel = Math.round(calmLevel * 0.7 + pct * 0.3);
+          const dt = Math.min(1, ((now || performance.now()) - calmLastTs) / 1000);
+          calmLastTs = now || performance.now();
+          if (calmLevel < state.calmThreshold) {
+            const before = Math.floor(calmStreak / 60);
+            calmStreak += dt;
+            state.calmSeconds = (state.calmSeconds || 0) + dt;
+            if (calmStreak > (state.calmBest || 0)) state.calmBest = calmStreak;
+            if (Math.floor(calmStreak / 60) > before) { playChime(); confetti(); announce('یک دقیقه آرامش پیوسته! آفرین کلاس.'); }
+          } else {
+            calmStreak = 0;
+          }
           const fill = $('noiseFill');
           const txt = $('noiseStatusText');
           const wrap = $('noiseBarWrap');
-          if (fill) fill.style.width = pct + '%';
-          if (wrap) wrap.setAttribute('aria-valuenow', String(pct));
+          const needle = $('gaugeNeedle');
+          const face = $('gaugeFace');
+          if (fill) fill.style.width = calmLevel + '%';
+          if (wrap) wrap.setAttribute('aria-valuenow', String(calmLevel));
+          if (needle) needle.style.transform = `rotate(${(calmLevel / 100) * 180 - 90}deg)`;
+          if (face) face.textContent = calmFace(calmLevel);
+          const thr = state.calmThreshold;
           if (txt) {
-            txt.textContent = pct < 35 ? `🌿 کلاس آرام و متمرکز است (${fa(pct)}٪)` : pct < 70 ? `💬 همهمهٔ کار گروهی ملایم (${fa(pct)}٪)` : `🔔 صدا بالاست! لطفاً آرام‌تر (${fa(pct)}٪)`;
+            txt.textContent = calmLevel < thr ? `🌿 کلاس آرام و متمرکز است (${fa(calmLevel)}٪)` : calmLevel < Math.max(thr + 25, 70) ? `💬 همهمهٔ کار گروهی ملایم (${fa(calmLevel)}٪)` : `🔔 صدا بالاست! لطفاً آرام‌تر (${fa(calmLevel)}٪)`;
           }
+          const s1 = $('calmStreak'), s2 = $('calmBest'), s3 = $('calmTotal');
+          if (s1) s1.textContent = fa(Math.floor(calmStreak));
+          if (s2) s2.textContent = fa(Math.floor(state.calmBest || 0));
+          if (s3) s3.textContent = fa(Math.floor((state.calmSeconds || 0) / 60));
+          if ((now || 0) - lastPersist > 5000) { lastPersist = now || 0; persist(); }
           micRaf = requestAnimationFrame(tick);
         };
-        tick();
+        micRaf = requestAnimationFrame(tick);
       } catch {
+        stopMic();
         if ($('noiseStatusText')) $('noiseStatusText').textContent = 'اجازهٔ میکروفون داده نشد.';
       }
     };
   }
 
-  /* ── Tab 4: 2-Player Smartboard Duel + HQF Import ── */
+  /* ── Tab 5: 2-Player Smartboard Duel + HQF Import ── */
   function getDuelQuestions() {
     if (state.duelBankKey === 'hqf' && state.importedHqf && Array.isArray(state.importedHqf.questions) && state.importedHqf.questions.length) {
       return state.importedHqf.questions;
@@ -944,52 +1363,72 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     return items.slice(shift).concat(items.slice(0, shift));
   }
 
+  const P1_KEYS = ['1', '2', '3', '4'];
+  const P2_KEYS = ['7', '8', '9', '0'];
+  let duelAnswer = null;
+
   function renderDuelTab() {
     const qList = getDuelQuestions();
     const q = qList[duelState.qIdx % qList.length];
     const opts = orderedDuelOpts(q, duelState.qIdx);
+    const tot = duelState.p1Score + duelState.p2Score;
+    const w1 = tot ? Math.round((duelState.p1Score / tot) * 100) : 50;
+    const optBtn = (o, idx, p) => {
+      const pk = duelState.picked;
+      let cls = '';
+      if (duelState.locked) {
+        if (o.ok) cls = 'right';
+        else if (pk && pk.player === p && pk.idx === idx) cls = 'wrong';
+      }
+      const key = p === 1 ? P1_KEYS[idx] : P2_KEYS[idx];
+      return `<button type="button" class="duel-opt ${cls}" data-p${p}-opt="${idx}" ${duelState.locked ? 'disabled' : ''} aria-keyshortcuts="${key}"><span class="k" aria-hidden="true">${fa(key)}</span><span>${esc(o.txt)}</span></button>`;
+    };
 
     $('tabPanel').innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px">
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <div class="panel-head">
+        <div class="row">
           <label for="duelBankSelect"><b>📚 بانک سؤال دوئل:</b></label>
-          <select id="duelBankSelect" style="min-height:44px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg)">
+          <select id="duelBankSelect">
             <option value="math5" ${state.duelBankKey === 'math5' ? 'selected' : ''}>${esc(BUILTIN_BANKS.math5.title)}</option>
             <option value="farsi_social" ${state.duelBankKey === 'farsi_social' ? 'selected' : ''}>${esc(BUILTIN_BANKS.farsi_social.title)}</option>
             ${state.importedHqf ? `<option value="hqf" ${state.duelBankKey === 'hqf' ? 'selected' : ''}>فایل HQF بارگذاری‌شده (${fa(state.importedHqf.questions.length)} سؤال)</option>` : ''}
           </select>
           <label class="top-link" style="cursor:pointer">
             📂 بارگذاری فایل JSON / HQF
-            <input id="hqfFileInput" type="file" accept=".json,application/json" style="display:none">
+            <input id="hqfFileInput" type="file" accept=".json,.hqf,application/json" class="sr-only">
           </label>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="row">
           <button type="button" class="btn-soft" id="btnPickDuelists">🎲 قرعه‌کشی ۲ بازیکن از کلاس</button>
+          <button type="button" class="btn-ghost" id="btnResetDuel">↺ صفر کردن</button>
           <button type="button" class="btn-primary" id="btnNextDuelQ">سؤال بعدی ←</button>
         </div>
       </div>
 
-      <div style="background:var(--primary-soft);border-radius:16px;padding:16px;text-align:center;margin-top:14px">
+      <div class="duel-q">
         <small style="font-weight:800">سؤال ${fa((duelState.qIdx % qList.length) + 1)} از ${fa(qList.length)} · هر بازیکن که زودتر گزینهٔ درستِ ستون خودش را لمس کند امتیاز می‌گیرد!</small>
-        <h2 style="margin:6px 0 4px;font-size:1.25rem">${esc(q.text || q.prompt || '')}</h2>
-        <div style="font-weight:800;color:var(--primary)">${esc(duelState.roundMsg)}</div>
+        <h2>${esc(q.text || q.prompt || '')}</h2>
+        <div class="duel-msg" role="status">${esc(duelState.roundMsg)}</div>
       </div>
+      <div class="tug" aria-hidden="true"><span class="t1" style="width:${w1}%"></span><span class="t2" style="width:${100 - w1}%"></span></div>
 
       <div class="duel-arena">
         <div class="duel-side p1">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h3 style="margin:0">🔵 ${esc(duelState.p1Name)}</h3>
-            <b style="font-size:1.3rem">امتیاز: ${fa(duelState.p1Score)}</b>
+          <div class="row" style="justify-content:space-between">
+            <h3>🔵 ${esc(duelState.p1Name)}</h3>
+            <span class="duel-score" aria-label="امتیاز ${esc(duelState.p1Name)}">${fa(duelState.p1Score)}</span>
           </div>
-          ${opts.map((o, idx) => `<button type="button" class="duel-opt" data-p1-opt="${idx}" ${duelState.locked ? 'disabled' : ''}>${fa(idx + 1)}) ${esc(o.txt)}</button>`).join('')}
+          ${opts.map((o, idx) => optBtn(o, idx, 1)).join('')}
+          <small style="color:var(--muted)">صفحه‌کلید: ${fa('1')} تا ${fa('4')}</small>
         </div>
-
+        <div class="duel-vs" aria-hidden="true">VS</div>
         <div class="duel-side p2">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h3 style="margin:0">🟡 ${esc(duelState.p2Name)}</h3>
-            <b style="font-size:1.3rem">امتیاز: ${fa(duelState.p2Score)}</b>
+          <div class="row" style="justify-content:space-between">
+            <h3>🟡 ${esc(duelState.p2Name)}</h3>
+            <span class="duel-score" aria-label="امتیاز ${esc(duelState.p2Name)}">${fa(duelState.p2Score)}</span>
           </div>
-          ${opts.map((o, idx) => `<button type="button" class="duel-opt" data-p2-opt="${idx}" ${duelState.locked ? 'disabled' : ''}>${fa(idx + 1)}) ${esc(o.txt)}</button>`).join('')}
+          ${opts.map((o, idx) => optBtn(o, idx, 2)).join('')}
+          <small style="color:var(--muted)">صفحه‌کلید: ${fa('7')}، ${fa('8')}، ${fa('9')}، ${fa('0')}</small>
         </div>
       </div>
     `;
@@ -998,6 +1437,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       state.duelBankKey = e.target.value;
       duelState.qIdx = 0;
       duelState.locked = false;
+      duelState.picked = null;
       persist();
       renderDuelTab();
     };
@@ -1020,6 +1460,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
           state.duelBankKey = 'hqf';
           duelState.qIdx = 0;
           duelState.locked = false;
+          duelState.picked = null;
           duelState.roundMsg = `✓ ${fa(qs.length)} سؤال HQF با موفقیت بارگذاری شد!`;
           persist();
           renderDuelTab();
@@ -1042,15 +1483,26 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
         duelState.p1Score = 0;
         duelState.p2Score = 0;
         duelState.locked = false;
+        duelState.picked = null;
         duelState.roundMsg = `مسابقه بین «${duelState.p1Name}» و «${duelState.p2Name}» آغاز شد!`;
         playChime();
         renderDuelTab();
       }
     };
+    $('btnResetDuel').onclick = () => {
+      duelState.p1Score = 0;
+      duelState.p2Score = 0;
+      duelState.qIdx = 0;
+      duelState.locked = false;
+      duelState.picked = null;
+      duelState.roundMsg = 'امتیازها صفر شد؛ آمادهٔ دور تازه!';
+      renderDuelTab();
+    };
 
     $('btnNextDuelQ').onclick = () => {
       duelState.qIdx = (duelState.qIdx + 1) % qList.length;
       duelState.locked = false;
+      duelState.picked = null;
       duelState.roundMsg = 'هرکس زودتر پاسخ درست را لمس کند برندهٔ این امتیاز است!';
       renderDuelTab();
     };
@@ -1058,13 +1510,16 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     const answerDuel = (player, optIdx) => {
       if (duelState.locked) return;
       const chosen = opts[optIdx];
+      if (!chosen) return;
       const pName = player === 1 ? duelState.p1Name : duelState.p2Name;
+      duelState.picked = { player, idx: optIdx };
       if (chosen.ok) {
         if (player === 1) duelState.p1Score += 10;
         else duelState.p2Score += 10;
         duelState.locked = true;
         duelState.roundMsg = `🎉 آفرین به «${pName}»! پاسخ «${chosen.txt}» کاملاً درست بود (+۱۰ امتیاز)!`;
         playChime();
+        confetti();
       } else {
         if (player === 1) duelState.p2Score += 5;
         else duelState.p1Score += 5;
@@ -1074,6 +1529,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       }
       renderDuelTab();
     };
+    duelAnswer = answerDuel;
 
     document.querySelectorAll('[data-p1-opt]').forEach((b) => {
       b.onclick = () => answerDuel(1, Number(b.dataset.p1Opt));
@@ -1083,22 +1539,138 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     });
   }
 
+  /* ── Tab 6: Quick poll / exit ticket ── */
+  function renderPollTab() {
+    const poll = state.poll;
+    const mode = POLL_MODES[poll.mode] || POLL_MODES.understand;
+    if (!Array.isArray(poll.counts) || poll.counts.length !== mode.items.length) poll.counts = mode.items.map(() => 0);
+    const total = poll.counts.reduce((a, b) => a + b, 0);
+    const all = getActiveStudents().length;
+    const pct = (c) => (total ? Math.round((c / total) * 100) : 0);
+    let verdict = 'هر دانش‌آموز با لمس یک دکمه رأی می‌دهد؛ نتیجه بی‌نام و فوری نمایش داده می‌شود.';
+    if (total && poll.mode === 'understand') {
+      const ok = pct(poll.counts[0]);
+      verdict = ok >= 75 ? `✅ ${fa(ok)}٪ کلاس درس را فهمیده‌اند؛ می‌توانید سراغ گام بعد بروید.` : ok >= 50 ? `🟡 ${fa(ok)}٪ فهمیده‌اند؛ یک مثال دیگر یا کار دونفره کمک می‌کند.` : `🔁 فقط ${fa(ok)}٪ فهمیده‌اند؛ پیشنهاد می‌شود مفهوم با روشی تازه دوباره توضیح داده شود.`;
+    } else if (total) {
+      const max = Math.max(...poll.counts);
+      const lead = mode.items[poll.counts.indexOf(max)][0];
+      verdict = `بیشترین رأی: «${lead}» با ${fa(pct(max))}٪.`;
+    }
+
+    $('tabPanel').innerHTML = `
+      <div class="panel-head">
+        <div><h2>🗳️ نظرسنجی سریع و بلیت خروج</h2><p>در پایان درس، فهم کلاس را در یک دقیقه بسنجید؛ رأی‌ها بی‌نام‌اند.</p></div>
+        <div class="row">
+          <label for="pollMode" class="sr-only">نوع نظرسنجی</label>
+          <select id="pollMode">${Object.keys(POLL_MODES).map((k) => `<option value="${k}" ${k === poll.mode ? 'selected' : ''}>${POLL_MODES[k].title}</option>`).join('')}</select>
+          <button type="button" class="btn-ghost" id="btnPollUndo" ${total ? '' : 'disabled'}>↶ واگرد</button>
+          <button type="button" class="btn-soft" id="btnPollReset">↺ رأی‌گیری تازه</button>
+        </div>
+      </div>
+      <label for="pollQ" style="font-weight:800">پرسش روی تخته:</label>
+      <input id="pollQ" type="text" maxlength="140" value="${esc(poll.question)}" placeholder="مثلاً: آیا روش محاسبهٔ میانگین را فهمیدید؟" style="width:100%;font-size:1.05rem;margin:4px 0 16px">
+      <div class="poll-grid">
+        <div class="poll-btns" role="group" aria-label="دکمه‌های رأی">
+          ${mode.items.map((it, i) => `<button type="button" class="poll-btn" data-vote="${i}" style="--pc:${it[2]}"><span class="e" aria-hidden="true">${it[1]}</span><span>${it[0]}</span><b>${fa(poll.counts[i])}</b></button>`).join('')}
+        </div>
+        <div class="soft-box">
+          <div class="row" style="justify-content:space-between;margin-bottom:10px"><b>نتیجهٔ زنده</b><span class="chip">${fa(total)} رأی${all ? ' از ' + fa(all) + ' نفر' : ''}</span></div>
+          <div class="poll-bars">
+            ${mode.items.map((it, i) => `<div class="poll-bar" style="--pc:${it[2]}"><span>${it[1]} ${it[0]}</span><span class="track" role="progressbar" aria-label="${it[0]}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct(poll.counts[i])}"><span class="fill" style="width:${pct(poll.counts[i])}%;display:block"></span></span><span class="pct">${fa(pct(poll.counts[i]))}٪</span></div>`).join('')}
+          </div>
+          <div class="poll-verdict" role="status">${verdict}</div>
+        </div>
+      </div>
+    `;
+    $('pollMode').onchange = (e) => {
+      poll.mode = e.target.value;
+      poll.counts = POLL_MODES[poll.mode].items.map(() => 0);
+      poll.history = [];
+      persist();
+      renderPollTab();
+    };
+    $('pollQ').oninput = (e) => { poll.question = e.target.value; };
+    $('pollQ').onchange = persist;
+    $('btnPollReset').onclick = () => { poll.counts = mode.items.map(() => 0); poll.history = []; persist(); renderPollTab(); };
+    $('btnPollUndo').onclick = () => {
+      const h = poll.history || [];
+      const last = h.pop();
+      if (last != null && poll.counts[last] > 0) poll.counts[last]--;
+      persist();
+      renderPollTab();
+    };
+    document.querySelectorAll('[data-vote]').forEach((b) => {
+      b.onclick = () => {
+        const i = Number(b.dataset.vote);
+        poll.counts[i] = (poll.counts[i] || 0) + 1;
+        (poll.history = poll.history || []).push(i);
+        playTick();
+        persist();
+        renderPollTab();
+        const nb = document.querySelector(`[data-vote="${i}"]`);
+        if (nb) { nb.classList.add('bump'); nb.focus(); }
+        announce(`${mode.items[i][0]}: ${fa(poll.counts[i])} رأی`);
+      };
+    });
+  }
+
   function renderActiveTab() {
-    if (activeTab !== 'timer') stopMic();
+    if (activeTab !== 'calm') stopMic();
+    const panel = $('tabPanel');
+    panel.setAttribute('aria-labelledby', 'tab-' + activeTab);
     if (activeTab === 'wheel') renderWheelTab();
     else if (activeTab === 'groups') renderGroupsTab();
     else if (activeTab === 'timer') renderTimerTab();
+    else if (activeTab === 'calm') renderCalmTab();
+    else if (activeTab === 'poll') renderPollTab();
     else renderDuelTab();
   }
 
+  function selectTab(t, focusTab) {
+    if (!TOOLS.includes(t)) return;
+    activeTab = t;
+    document.querySelectorAll('.tool-tab').forEach((tb) => {
+      const on = tb.dataset.tab === t;
+      tb.setAttribute('aria-selected', String(on));
+      tb.tabIndex = on ? 0 : -1;
+      if (on && focusTab) tb.focus();
+    });
+    renderActiveTab();
+    persist();
+  }
+
   document.querySelectorAll('.tool-tab').forEach((btn) => {
-    btn.onclick = () => {
-      activeTab = btn.dataset.tab;
-      document.querySelectorAll('.tool-tab').forEach((t) => {
-        t.setAttribute('aria-selected', String(t === btn));
-      });
-      renderActiveTab();
+    btn.onclick = () => selectTab(btn.dataset.tab);
+    btn.onkeydown = (e) => {
+      const i = TOOLS.indexOf(btn.dataset.tab);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        const dir = e.key === 'ArrowLeft' ? 1 : -1; // RTL: left = next
+        selectTab(TOOLS[(i + dir + TOOLS.length) % TOOLS.length], true);
+      } else if (e.key === 'Home') { e.preventDefault(); selectTab(TOOLS[0], true); }
+      else if (e.key === 'End') { e.preventDefault(); selectTab(TOOLS[TOOLS.length - 1], true); }
     };
+  });
+
+  /* keyboard shortcuts for the smartboard (ignored while typing) */
+  document.addEventListener('keydown', (e) => {
+    const tg = e.target;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (tg && (tg.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName))) return;
+    if ($('rosterDialog') && $('rosterDialog').open) return;
+    const k = e.key.replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
+    if (e.key === 'Escape' && boardMode) { boardMode = false; renderBoardMode(); if (activeTab === 'timer') renderTimerTab(); return; }
+    if (activeTab === 'duel' && duelAnswer && !duelState.locked) {
+      if (P1_KEYS.includes(k)) { e.preventDefault(); duelAnswer(1, P1_KEYS.indexOf(k)); return; }
+      if (P2_KEYS.includes(k)) { e.preventDefault(); duelAnswer(2, P2_KEYS.indexOf(k)); return; }
+    }
+    if (/^[1-6]$/.test(k) && !(activeTab === 'duel')) { e.preventDefault(); selectTab(TOOLS[Number(k) - 1]); return; }
+    if ((e.key === ' ' || e.code === 'Space') && !(tg && /^(BUTTON|A)$/.test(tg.tagName))) {
+      if (activeTab === 'wheel' && renderWheelTab.spin) { e.preventDefault(); renderWheelTab.spin(); }
+      else if (activeTab === 'timer' || boardMode) { e.preventDefault(); toggleTimer(); }
+      return;
+    }
+    if (k === 'f' || k === 'F' || k === 'ب') { e.preventDefault(); $('btnFullscreen').click(); }
   });
 
   $('classSelect').onchange = (e) => {
@@ -1125,7 +1697,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
       .filter(Boolean)
       .slice(0, 60);
     if (lines.length >= 2) {
-      state.customStudents = lines;
+      state.customStudents = Array.from(new Set(lines));
       state.selectedClassId = 'custom';
       state.pickedInRound = [];
       state.groups = [];
@@ -1140,6 +1712,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     state.theme = state.theme === 'night' ? 'light' : 'night';
     applyTheme();
     persist();
+    if (activeTab === 'calm') renderCalmTab();
   };
 
   $('btnFullscreen').onclick = () => {
@@ -1147,18 +1720,26 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
     else document.exitFullscreen?.().catch(() => {});
   };
 
+  function tickClock() {
+    const d = new Date();
+    const c = $('kyClock');
+    const dt = $('kyDate');
+    if (c) c.textContent = d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+    if (dt) dt.textContent = d.toLocaleDateString('fa-IR', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
+  tickClock();
+  setInterval(tickClock, 15000);
+
   window.addEventListener('pagehide', persist);
+  window.addEventListener('storage', (e) => { if (e.key === KEY_DAFTAR) { refreshClassDropdown(); renderActiveTab(); } });
   applyTheme();
   refreshClassDropdown();
-  renderActiveTab();
-  try { window.HakimCompanion && window.HakimCompanion.mount({ gameId: 'kelasyar', intro: 'سلام همکار گرامی! من حکیمم. با گردونهٔ شانس، گروه‌بندی، زمان‌سنج و دوئل، کلاس را پرنشاط‌تر می‌کنیم.' }); } catch (e) {}
+  selectTab(activeTab);
+  try { window.HakimCompanion && window.HakimCompanion.mount({ gameId: 'kelasyar', intro: 'سلام همکار گرامی! من حکیمم. با گردونهٔ شانس، گروه‌بندی، زمان‌سنج، آرامش‌سنج، دوئل و نظرسنجی، کلاس را پرنشاط‌تر می‌کنیم.' }); } catch (e) {}
 
   window.KelasyarApp = {
     getState: () => state,
-    switchTab: (t) => {
-      activeTab = t;
-      renderActiveTab();
-    }
+    switchTab: (t) => selectTab(t)
   };
 })();
 </script>

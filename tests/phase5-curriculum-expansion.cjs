@@ -295,7 +295,7 @@ for (const [appJs, track] of [['games/math-measurement/app.js', 'music9.mp3'], [
   assert.ok(exists('games/' + track), 'missing music file games/' + track);
 }
 const swSrc = read('sw.js');
-for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/iran-geography/roadtrip.js', './games/farsi5-hamava/lessons.js', './js/hakim-scene-kit.js', './css/hakim-scenes.css', './css/hakim-tazhib.css', './assets/img/tazhib-cert-frame.webp', './assets/img/tazhib-shamseh.svg', './games/math-measurement/city.js', './games/math-stats/wheel.js', './games/farsi5-hamava/book.js', './assets/img/hamava-page-tazhib.webp', './assets/img/hamava-cover.webp']) {
+for (const asset of ['./js/hakim-logo.js', './js/hakim-cert.js', './css/hakim-cert.css', './assets/img/hakimestan-logo.svg', './assets/img/hakimestan-emblem.svg', './js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/iran-geography/roadtrip.js', './games/farsi5-hamava/lessons.js', './js/hakim-scene-kit.js', './css/hakim-scenes.css', './css/hakim-tazhib.css', './assets/img/tazhib-cert-frame.webp', './assets/img/tazhib-shamseh.svg', './games/math-measurement/city.js', './games/math-stats/wheel.js', './games/farsi5-hamava/book.js', './assets/img/hamava-page-tazhib.webp', './assets/img/hamava-cover.webp']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
 }
 for (const L of [...Object.values(loadData('games/iran-geography/lessons.js', 'IranGeoLessons')), ...Object.values(loadData('games/farsi5-hamava/lessons.js', 'HamavaLessons'))]) {
@@ -314,7 +314,8 @@ for (const g of GAMES) {
   const app = read(`games/${g.id}/app.js`);
   assert.ok(/function isLocked\(/.test(app) && /locked: isLocked\(/.test(app), g.id + ' must lock stages until the previous one is complete');
   assert.ok(/function openTask\([^)]*\)\s*\{\s*if \(isLocked\(/.test(app), g.id + ' openTask must refuse locked stages');
-  assert.ok(/w\??\.?seal\(|W\(\)\.seal\(/.test(app) && /signature\(/.test(app) && /certHakim\(/.test(app), g.id + ' certificate must show the gold seal, Hakim and signature');
+  assert.ok(/HakimCert\?*\.mount\(/.test(app) && /seal: \{/.test(app) && /quote:/.test(app), g.id + ' certificate must use the standard A4 HakimCert layout with the world seal and Hakim quote');
+  assert.ok(!/signature\(\s*'مهدی/.test(app), g.id + ' certificate must use the Hakimestan logo, not a personal signature line');
 }
 {
   const geoLessons = loadData('games/iran-geography/lessons.js', 'IranGeoLessons');

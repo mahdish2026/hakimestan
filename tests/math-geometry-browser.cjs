@@ -14,7 +14,7 @@ const D=require('../games/math-geometry/data.js');
  const url='http://localhost:8000/games/math-geometry.html';await page.goto(url,{waitUntil:'networkidle0'});await page.evaluate(()=>navigator.serviceWorker?.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister()))));
  fs.mkdirSync('reports/naghshestan',{recursive:true});
  if(!process.env.SKIP_SCREENSHOTS)await page.screenshot({path:'reports/naghshestan/map-desktop.png',fullPage:true});
- await page.click('#certBtn');assert.equal(await page.$$eval('.cert-list li.done',e=>e.length),0);assert.equal(await page.$$eval('.cert-list li',e=>e.length),12);
+ await page.click('#certBtn');assert.equal(await page.$$eval('.hk-a4-skills li.done',e=>e.length),0);assert.equal(await page.$$eval('.hk-a4-skills li',e=>e.length),12);
  await page.click('#certMap');await page.type('#playerName','آزمون نقشستان');await page.click('#startForm button');
  if(!process.env.SKIP_SCREENSHOTS)await page.screenshot({path:'reports/naghshestan/lesson-desktop.png',fullPage:true});
  // Reveal must not award credit.
@@ -37,7 +37,7 @@ const D=require('../games/math-geometry/data.js');
   }
  }
  assert.equal(await page.evaluate(()=>Object.keys(Naghshestan.profile.done).length),48);
- trace('certificate');await page.click('#finishCert');assert.equal(await page.$$eval('.cert-list li.done',e=>e.length),12);
+ trace('certificate');await page.click('#finishCert');assert.equal(await page.$$eval('.hk-a4-skills li.done',e=>e.length),12);
  if(!process.env.SKIP_SCREENSHOTS)await page.screenshot({path:'reports/naghshestan/certificate.png',fullPage:true});trace('pdf');await page.pdf({path:'reports/naghshestan/certificate.pdf',format:'A4',printBackground:true});
  trace('reload');await page.reload({waitUntil:'networkidle0'});assert.equal(await page.evaluate(()=>Object.keys(Naghshestan.profile.done).length),48);
  trace('profiles');
@@ -51,7 +51,7 @@ const D=require('../games/math-geometry/data.js');
  // Small touch viewport: no horizontal overflow; construction controls still work.
  await page.setViewport({width:360,height:800,isMobile:true,hasTouch:true,deviceScaleFactor:1});await page.click('#mapBtn');if(!process.env.SKIP_SCREENSHOTS)await page.screenshot({path:'reports/naghshestan/map-mobile.png',fullPage:true});
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
- await page.click('#workshopBtn');await page.select('#paintMode','both');await page.click('[data-cell="1,2"]');assert.equal(await page.$$eval('.paint-cell.on',e=>e.length),4);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.click('#artMap');
+ await new Promise(r=>setTimeout(r,400));await page.click('#workshopBtn');await page.waitForSelector('#paintMode');await page.select('#paintMode','both');await page.click('[data-cell="1,2"]');assert.equal(await page.$$eval('.paint-cell.on',e=>e.length),4);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.click('#artMap');
  await page.click('[data-stage="9"]');await page.click('#beginTasks');if(!process.env.SKIP_SCREENSHOTS)await page.screenshot({path:'reports/naghshestan/build-mobile.png',fullPage:true});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await page.select('#coordX','1');await page.select('#coordY','4');await page.click('#togglePoint');assert.equal(await page.$eval('[data-point="1,4"]',el=>el.getAttribute('aria-pressed')),'true');
  await page.click('#certBtn');assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));

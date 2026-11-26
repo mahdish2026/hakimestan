@@ -1042,51 +1042,28 @@
         </div>
       </div>
 
-      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ مهارت پیمانه‌ستان">
-        <div class="hw-cert-top">
-        ${W() ? W().seal('پیمانه‌ستان', done === allTasks.length ? 'مهر استادی' : 'مهر پیشرفت') : ''}
-        <div class="cert-header">
-          <div style="font-size:0.85rem;font-weight:800;color:#47585c">حکیمستان · مدرسهٔ ریاضی پایهٔ پنجم دبستان</div>
-          <h2 style="margin:6px 0;font-size:1.55rem;color:#142429">${done === allTasks.length ? 'گواهی‌نامهٔ استادی کامل فصل ششم (پیمانه‌ستان)' : 'گواهی‌نامهٔ پیشرفت یادگیری فصل ششم (پیمانه‌ستان)'}</h2>
-          <span class="cert-rank-badge">${esc(rankTitle())}</span>
-          <div class="cert-student-name">${esc(profile.name)}</div>
-          <p style="margin:0;font-size:0.9rem;color:#47585c">با تلاش، کشف شهودی و حل مسئله‌های مساحت لوزی و ذوزنقه، محیط دایره، حجم مکعب‌مستطیل و گنجایش (لیتر و سی‌سی)</p>
-        </div>
-        ${W() ? W().certHakim('') : ''}
-        </div>
-
-        <div class="cert-stats-row">
-          <div class="cert-stat"><b>${fa(done)} / ${fa(allTasks.length)}</b><small>تمرین حل‌شده (${fa(pct)}٪)</small></div>
-          <div class="cert-stat"><b>${fa(stars)} / ${fa(D.stages.length * 3)}</b><small>ستارهٔ مهارت</small></div>
-          <div class="cert-stat"><b>${fa(masteredStages)} / ${fa(D.stages.length)}</b><small>نشان ایستگاه</small></div>
-          <div class="cert-stat"><b>🔥 ${fa(profile.bestCombo)}</b><small>رکورد کمبوی پیاپی</small></div>
-        </div>
-
-        <h3 style="margin:12px 0 8px;font-size:1rem;color:#142429">فهرست مهارت‌های دهگانهٔ فصل ششم کتاب ریاضی پنجم:</h3>
-        <ul class="cert-skills-grid">
-          ${D.stages.map((s) => {
-            const c = stageSolvedCount(s);
-            const full = c === s.tasks.length;
-            return `<li class="${full ? 'mastered' : ''}">
-              <b>${full ? '☑' : '☐'} ${esc(s.title)}</b> (${esc(s.badge)})<br>
-              <small>${esc(s.topic)} — ${fa(c)} از ${fa(s.tasks.length)} تمرین</small>
-            </li>`;
-          }).join('')}
-        </ul>
-
-        <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
-          <p><b>حکیم:</b> ${done === allTasks.length ? 'آفرین معمار کوچک! حالا مساحت لوزی و ذوزنقه، محیط دایره، حجم و گنجایش را مثل یک مهندس حساب می‌کنی.' : 'هر ایستگاهی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. اول درسنامه، بعد تمرین؛ ادامه بده!'}</p></div>
-        <div class="hw-cert-foot">
-          <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>شناسهٔ کارنامه: <b class="ltr">${certCode}</b></span></div>
-          ${W() ? W().signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>'}
-        </div>
-        <p class="hw-cert-note">این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
-      </article>
+      <div id="hkCertMount"></div>
     `;
+    const esc0 = (v) => String(v == null ? '' : v);
+    window.HakimCert?.mount($('hkCertMount'), {
+      world: 'پیمانه‌ستان',
+      program: 'مدرسهٔ ریاضی پایهٔ پنجم',
+      subtitle: done === allTasks.length ? 'استادی کامل فصل ششم ریاضی پنجم — اندازه‌گیری' : 'پیشرفت یادگیری فصل ششم ریاضی پنجم — اندازه‌گیری',
+      name: profile.name,
+      number: certCode,
+      accent: '#12707a', accent2: '#9a6416',
+      course: 'دورهٔ آموزشی تعاملی «پیمانه‌ستان» (فصل ششم ریاضی پنجم: مساحت لوزی و ذوزنقه، محیط دایره، حجم و گنجایش)',
+      achievement: done === allTasks.length ? 'همهٔ ' + fa(allTasks.length) + ' تمرین آن را با موفقیت به پایان رسانده' : fa(done) + ' تمرین از ' + fa(allTasks.length) + ' تمرین آن (' + fa(pct) + '٪) را با موفقیت حل کرده',
+      stats: [{ value: fa(done) + ' / ' + fa(allTasks.length), label: 'تمرین حل‌شده (' + fa(pct) + '٪)' }, { icon: '⭐', value: fa(stars) + ' / ' + fa(D.stages.length * 3), label: 'ستارهٔ مهارت' }, { icon: '🏅', value: fa(masteredStages) + ' / ' + fa(D.stages.length), label: 'نشان ایستگاه' }, { icon: '🔥', value: fa(profile.bestCombo), label: 'رکورد کمبوی پیاپی' }],
+      skillsTitle: 'کارنامهٔ مهارت‌های فصل ششم',
+      skills: D.stages.map((s) => { const c = stageSolvedCount(s); return { title: s.title, sub: esc0(s.topic) + ' — ' + fa(c) + ' از ' + fa(s.tasks.length) + ' تمرین', done: c === s.tasks.length }; }),
+      quote: done === allTasks.length ? 'آفرین معمار کوچک! حالا مساحت لوزی و ذوزنقه، محیط دایره، حجم و گنجایش را مثل یک مهندس حساب می‌کنی.' : 'هر ایستگاهی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. اول درسنامه، بعد تمرین؛ ادامه بده!',
+      seal: { label: 'پیمانه‌ستان', sub: done === allTasks.length ? 'مهر استادی' : 'مهر پیشرفت' }
+    });
 
     W()?.bind(main, {});
     $('certBackMap').onclick = renderMap;
-    $('btnPrintCert').onclick = () => window.print();
+    $('btnPrintCert').onclick = () => (window.HakimCert ? window.HakimCert.print() : window.print());
   }
 
   /* ── Topbar & Global Controls ── */
