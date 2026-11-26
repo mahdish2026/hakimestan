@@ -16,4 +16,4 @@ for(const [src,file] of [['../hakim-core.js','hakim-core.js'],['math-geometry/da
 }
 const clips=['symmetry','angles','quadrilaterals','mirror','center','rotation',...Array.from({length:7},(_,i)=>'tool-'+i)];
 html=html.replace('<body>','<body>'+clips.map(key=>`<template id="geometry-audio-${key}">${fs.readFileSync(path.join(root,`games/math-geometry/audio/${key}.mp3`)).toString('base64')}</template>`).join('\n'));
-fs.mkdirSync(path.join(root,'exports'),{recursive:true});const out=path.join(root,'exports/naghshestan.html');fs.writeFileSync(out,html);console.log(out,fs.statSync(out).size+' bytes');
+html=html.replace('<link rel="stylesheet" href="../css/hakim-cert.css">',()=>`<style>${read('css/hakim-cert.css')}</style>`);for(const n of ['hakim-logo','hakim-cert','hakim-map-motion'])html=html.replace(`<script src="../js/${n}.js"></script>`,()=>`<script>\n${read('js/'+n+'.js').replace(/<\/script/gi,'<\\/script')}\n</script>`);fs.mkdirSync(path.join(root,'exports'),{recursive:true});const out=path.join(root,'exports/naghshestan.html');fs.writeFileSync(out,html);console.log(out,fs.statSync(out).size+' bytes');

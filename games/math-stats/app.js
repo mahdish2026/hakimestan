@@ -1025,51 +1025,28 @@
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
 
-      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ مهارت آمارستان">
-        <div class="hw-cert-top">
-        ${W() ? W().seal('آمارستان', done === allTasks.length ? 'مهر استادی' : 'مهر پیشرفت') : ''}
-        <div class="cert-header">
-          <div style="font-size:0.85rem;font-weight:800;color:#524b69">حکیمستان · مدرسهٔ ریاضی پایهٔ پنجم دبستان</div>
-          <h2 style="margin:6px 0;font-size:1.55rem;color:#1c1830">${done === allTasks.length ? 'گواهی‌نامهٔ استادی کامل فصل هفتم (آمارستان)' : 'گواهی‌نامهٔ پیشرفت یادگیری فصل هفتم (آمارستان)'}</h2>
-          <span class="cert-rank-badge">${esc(rankTitle())}</span>
-          <div class="cert-student-name">${esc(profile.name)}</div>
-          <p style="margin:0;font-size:0.9rem;color:#524b69">با تلاش، تحلیل داده‌ها و حل تمرین‌های جدول آماری، نمودار خط شکسته، میانگین و احتمال</p>
-        </div>
-        ${W() ? W().certHakim('') : ''}
-        </div>
-
-        <div class="cert-stats-row">
-          <div class="cert-stat"><b>${fa(done)} / ${fa(allTasks.length)}</b><small>تمرین حل‌شده (${fa(pct)}٪)</small></div>
-          <div class="cert-stat"><b>${fa(stars)} / ${fa(D.stages.length * 3)}</b><small>ستارهٔ مهارت</small></div>
-          <div class="cert-stat"><b>${fa(masteredStages)} / ${fa(D.stages.length)}</b><small>نشان ایستگاه</small></div>
-          <div class="cert-stat"><b>🔥 ${fa(profile.bestCombo)}</b><small>رکورد کمبوی پیاپی</small></div>
-        </div>
-
-        <h3 style="margin:12px 0 8px;font-size:1rem;color:#1c1830">فهرست مهارت‌های نه‌گانهٔ فصل هفتم کتاب ریاضی پنجم:</h3>
-        <ul class="cert-skills-grid">
-          ${D.stages.map((s) => {
-            const c = stageSolvedCount(s);
-            const full = c === s.tasks.length;
-            return `<li class="${full ? 'mastered' : ''}">
-              <b>${full ? '☑' : '☐'} ${esc(s.title)}</b> (${esc(s.badge)})<br>
-              <small>${esc(s.topic)} — ${fa(c)} از ${fa(s.tasks.length)} تمرین</small>
-            </li>`;
-          }).join('')}
-        </ul>
-
-        <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
-          <p><b>حکیم:</b> ${done === allTasks.length ? 'آفرین آمارشناس کوچک! جدول، نمودار خط شکسته، میانگین و احتمال را خوب یاد گرفتی.' : 'هر ایستگاهی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. اول درسنامه، بعد تمرین؛ ادامه بده!'}</p></div>
-        <div class="hw-cert-foot">
-          <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>شناسهٔ کارنامه: <b class="ltr">${certCode}</b></span></div>
-          ${W() ? W().signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>'}
-        </div>
-        <p class="hw-cert-note">این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
-      </article>
+      <div id="hkCertMount"></div>
     `;
+    const esc0 = (v) => String(v == null ? '' : v);
+    window.HakimCert?.mount($('hkCertMount'), {
+      world: 'آمارستان',
+      program: 'مدرسهٔ ریاضی پایهٔ پنجم',
+      subtitle: done === allTasks.length ? 'استادی کامل فصل هفتم ریاضی پنجم — آمار و احتمال' : 'پیشرفت یادگیری فصل هفتم ریاضی پنجم — آمار و احتمال',
+      name: profile.name,
+      number: certCode,
+      accent: '#5b3fb0', accent2: '#a0671a',
+      course: 'دورهٔ آموزشی تعاملی «آمارستان» (فصل هفتم ریاضی پنجم: جدول داده، نمودار خط شکسته، میانگین و احتمال)',
+      achievement: done === allTasks.length ? 'همهٔ ' + fa(allTasks.length) + ' تمرین آن را با موفقیت به پایان رسانده' : fa(done) + ' تمرین از ' + fa(allTasks.length) + ' تمرین آن (' + fa(pct) + '٪) را با موفقیت حل کرده',
+      stats: [{ value: fa(done) + ' / ' + fa(allTasks.length), label: 'تمرین حل‌شده (' + fa(pct) + '٪)' }, { icon: '⭐', value: fa(stars) + ' / ' + fa(D.stages.length * 3), label: 'ستارهٔ مهارت' }, { icon: '🏅', value: fa(masteredStages) + ' / ' + fa(D.stages.length), label: 'نشان ایستگاه' }, { icon: '🔥', value: fa(profile.bestCombo), label: 'رکورد کمبوی پیاپی' }],
+      skillsTitle: 'کارنامهٔ مهارت‌های فصل هفتم',
+      skills: D.stages.map((s) => { const c = stageSolvedCount(s); return { title: s.title, sub: esc0(s.topic) + ' — ' + fa(c) + ' از ' + fa(s.tasks.length) + ' تمرین', done: c === s.tasks.length }; }),
+      quote: done === allTasks.length ? 'آفرین آمارشناس کوچک! جدول، نمودار خط شکسته، میانگین و احتمال را خوب یاد گرفتی.' : 'هر ایستگاهی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. اول درسنامه، بعد تمرین؛ ادامه بده!',
+      seal: { label: 'آمارستان', sub: done === allTasks.length ? 'مهر استادی' : 'مهر پیشرفت' }
+    });
 
     W()?.bind(main, {});
     $('certBackMap').onclick = renderMap;
-    $('btnPrintCert').onclick = () => window.print();
+    $('btnPrintCert').onclick = () => (window.HakimCert ? window.HakimCert.print() : window.print());
   }
 
   if ($('mapNavBtn')) $('mapNavBtn').onclick = renderMap;

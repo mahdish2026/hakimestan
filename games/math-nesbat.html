@@ -893,6 +893,7 @@ html,body{overflow-x:clip;max-width:100%}
   .seal{animation:none!important;box-shadow:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
+<link rel="stylesheet" href="../css/hakim-cert.css"><script src="../js/hakim-logo.js"></script><script src="../js/hakim-cert.js"></script>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
@@ -1009,7 +1010,7 @@ html,body{overflow-x:clip;max-width:100%}
 
   <!-- CERT -->
   <section id="cert" class="hidden">
-    <article class="cert hk-tazhib" id="certPage">
+    <article class="cert hk-tazhib" id="certPage" data-hk-cert>
       <div class="orn">✦　✧　✦　✧　✦</div>
       <div class="mascot" id="certFace"></div>
       <h2>گواهی‌نامهٔ قهرمانی نسبتستان</h2>
@@ -2965,5 +2966,8 @@ hkSay('سلام! من حکیمم. اسمت را بنویس تا با هم وار
 <script src="../js/hakim-a11y.js" defer></script>
 <script src="../js/hakim-sw-register.js" defer></script>
 <!-- hakim-core:end -->
+<!-- حرکت نقشهٔ یادگیری (مسافر هم‌موضوع با بازی) -->
+<script src="../js/hakim-map-motion.js"></script>
+<script>window.HakimMapMotion && HakimMapMotion.watch({ key: 'nesbat', container: '#lands', item: '.land', done: function (n) { return n.classList.contains('done'); }, current: function (n) { return n.classList.contains('current'); }, theme: 'balloon', tag: 'بالن نسبت' });</script>
 </body>
 </html>

@@ -738,44 +738,27 @@
         <button type="button" id="certBack">🗺️ بازگشت به مأموریت‌ها</button>
         <button type="button" class="btn-primary" id="btnPrintCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF</button>
       </div>
-      <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ ایران‌گرد کوچک">
-        <div class="hw-cert-top" style="border-bottom:2px dashed #e5d3a5;padding-bottom:14px;margin-bottom:6px">
-          ${w ? w.seal('ایران‌گرد کوچک', done === allTasks.length ? 'مهر پایان سفر' : 'مهر پیشرفت') : ''}
-          <div style="text-align:center">
-            <div style="font-size:0.85rem;font-weight:800;color:#6b5a3a">حکیمستان · مطالعات اجتماعی پایهٔ پنجم دبستان · درس‌های ۵ تا ۱۱</div>
-            <h2 style="margin:6px 0;font-size:1.7rem">${done === allTasks.length ? 'گواهی‌نامهٔ پایان سفر ایران‌گردی' : 'گواهی‌نامهٔ پیشرفت ایران‌گردی'}</h2>
-            <div style="font-size:.9rem;color:#5a4a2a">این گواهی‌نامه با افتخار تقدیم می‌شود به</div>
-            <div class="cert-student-name" style="color:#0d6859;margin:4px 0">${esc(profile.name)}</div>
-            <div>رتبه: <b>${esc(rankTitle())}</b> · پیشرفت: <b>${fa(pct)}٪</b></div>
-          </div>
-          ${w ? w.certHakim('') : ''}
-        </div>
-        ${w ? w.certStats([
-          { icon: '⭐', value: fa(stars) + ' / ' + fa(D.missions.length * 3), label: 'ستاره' },
-          { icon: '🎯', value: fa(done) + ' / ' + fa(allTasks.length), label: 'چالش حل‌شده' },
-          { icon: '📖', value: fa(lessonsRead) + ' / ' + fa(D.missions.length), label: 'درسنامهٔ کامل' },
-          { icon: '🔥', value: fa(profile.bestCombo), label: 'رکورد پاسخ پیاپی' }
-        ]) : ''}
-        <h3 style="margin:0 0 8px;font-size:1rem">فهرست مهارت‌های شش‌گانهٔ جغرافیای ایران (درس‌های ۵ تا ۱۱):</h3>
-        <ul class="cert-skills-grid">
-          ${D.missions.map((m) => {
-            const s = missionSolved(m);
-            const full = s === m.tasks.length;
-            return `<li class="${full ? 'mastered' : ''}"><b>${full ? '☑' : '☐'} ${esc(m.title)}</b><br><small>${fa(s)} از ${fa(m.tasks.length)} چالش (${esc(m.badge)})</small></li>`;
-          }).join('')}
-        </ul>
-        <div class="hw-cert-quote"><span class="hw-cert-hakim-face" data-hk-face="happy" aria-hidden="true"></span>
-          <p><b>حکیم:</b> ${done === allTasks.length ? 'آفرین ایران‌گرد کوچک! از کرانهٔ خزر تا بندر چابهار، نقشهٔ ایران را مثل یک جغرافی‌دان خواندی. به تو افتخار می‌کنم!' : 'سفرت خوب پیش می‌رود! هر مأموریتی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. ادامه بده!'}</p></div>
-        <div class="hw-cert-foot">
-          <div class="hw-cert-date"><span>تاریخ صدور: <b>${new Date().toLocaleDateString('fa-IR')}</b></span><span>${fa(guidedCount)} پاسخ با راهنمای قطب‌نما</span></div>
-          ${w ? w.signature('مهدی شریفیان', 'طراح آموزشی و توسعه‌دهنده · حکیمستان') : '<span>طراحی آموزشی: مهدی شریفیان · حکیمستان</span>'}
-        </div>
-        <p class="hw-cert-note">این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و مدرک رسمی نیست.</p>
-      </article>
+      <div id="hkCertMount"></div>
     `;
+    const esc0 = (v) => String(v == null ? '' : v);
+    window.HakimCert?.mount($('hkCertMount'), {
+      world: 'ایران‌گرد کوچک',
+      program: 'مطالعات اجتماعی پایهٔ پنجم',
+      subtitle: done === allTasks.length ? 'پایان سفر ایران‌گردی — مطالعات اجتماعی پنجم، درس‌های ۵ تا ۱۱' : 'پیشرفت سفر ایران‌گردی — مطالعات اجتماعی پنجم، درس‌های ۵ تا ۱۱',
+      name: profile.name,
+      number: 'HK-IR-' + fa(done) + '-' + fa(stars),
+      accent: '#0d6859', accent2: '#9a6416',
+      course: 'دورهٔ آموزشی تعاملی «ایران‌گرد» (جغرافیای ایران، مطالعات اجتماعی پنجم، درس‌های ۵ تا ۱۱)',
+      achievement: done === allTasks.length ? 'همهٔ ' + fa(allTasks.length) + ' چالش آن را با موفقیت به پایان رسانده' : fa(done) + ' چالش از ' + fa(allTasks.length) + ' چالش آن (' + fa(pct) + '٪) را با موفقیت حل کرده',
+      stats: [{ icon: '🎯', value: fa(done) + ' / ' + fa(allTasks.length), label: 'چالش حل‌شده (' + fa(pct) + '٪)' }, { icon: '⭐', value: fa(stars) + ' / ' + fa(D.missions.length * 3), label: 'ستاره' }, { icon: '📖', value: fa(lessonsRead) + ' / ' + fa(D.missions.length), label: 'درسنامهٔ کامل' }, { icon: '🔥', value: fa(profile.bestCombo), label: 'رکورد پاسخ پیاپی' }],
+      skillsTitle: 'کارنامهٔ مهارت‌های جغرافیای ایران',
+      skills: D.missions.map((s) => { const c = missionSolved(s); return { title: s.title, sub: fa(c) + ' از ' + fa(s.tasks.length) + ' چالش · ' + esc0(s.badge), done: c === s.tasks.length }; }),
+      quote: done === allTasks.length ? 'آفرین ایران‌گرد کوچک! از کرانهٔ خزر تا بندر چابهار، نقشهٔ ایران را مثل یک جغرافی‌دان خواندی. به تو افتخار می‌کنم!' : 'سفرت خوب پیش می‌رود! هر مأموریتی که کامل شود، یک نشان 🏅 کنار مهارتش می‌نشیند. ادامه بده!',
+      seal: { label: 'ایران‌گرد کوچک', sub: done === allTasks.length ? 'مهر پایان سفر' : 'مهر پیشرفت' }
+    });
     w?.bind(main, {});
     $('certBack').onclick = renderHome;
-    $('btnPrintCert').onclick = () => window.print();
+    $('btnPrintCert').onclick = () => (window.HakimCert ? window.HakimCert.print() : window.print());
   }
 
   if ($('mapNavBtn')) $('mapNavBtn').onclick = renderHome;

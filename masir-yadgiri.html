@@ -434,6 +434,7 @@ html[data-theme="night"] .my-stamp { color: #fca5a5; border-color: #fca5a5; back
 <meta name="twitter:description" content="گذرنامهٔ قهرمان حکیمستان و تقویم یادگیری سال تحصیلی پایهٔ پنجم (مهر تا اردیبهشت) — مشاهدهٔ یکپارچهٔ پیشرفت در ۲۱ بازی آموزشی، نشان‌های افتخار، لوح جامع قابل چاپ و نقشهٔ راه ماه‌به‌ماه.">
 <meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
 <!-- hakim-meta:end -->
+<link rel="stylesheet" href="css/hakim-cert.css"><script src="js/hakim-logo.js"></script><script src="js/hakim-cert.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">پرش به مسیر یادگیری و گذرنامه</a>
@@ -833,7 +834,7 @@ html[data-theme="night"] .my-stamp { color: #fca5a5; border-color: #fca5a5; back
         <div class="no-print" style="display:flex;justify-content:flex-end;margin-bottom:14px">
           <button type="button" class="btn-primary" id="btnPrintGrandCert">🖨️ چاپ استاندارد A4 / ذخیرهٔ PDF گواهی‌نامهٔ جامع</button>
         </div>
-        <article class="cert-sheet hw-cert hk-tazhib" aria-label="گواهی‌نامهٔ جامع قهرمان حکیمستان">
+        <article class="cert-sheet hw-cert hk-tazhib" data-hk-cert aria-label="گواهی‌نامهٔ جامع قهرمان حکیمستان">
           <div class="hw-cert-top my-cert-top">
             ${W ? W.seal('حکیمستان', prog.activeCount >= 10 ? 'مهر قهرمانی' : 'مهر پیشرفت') : ''}
             <div style="text-align:center">

@@ -2100,7 +2100,124 @@
       .quiz-target-word { font-size: 1.65rem; }
       .hdr-btn span.hide-sm { display: none; }
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       🌄 طراحی تازهٔ واژه‌ستان (۱۴۰۵): داشبورد، کارت درس و کارت واژه
+       ═══════════════════════════════════════════════════════════════ */
+    .vz-hero {
+      position: relative; overflow: hidden; isolation: isolate;
+      display: grid; grid-template-columns: minmax(0, 1.5fr) auto minmax(0, 1fr); gap: 18px; align-items: center;
+      margin: 4px 0 14px; padding: 20px 22px; border-radius: 24px;
+      background:
+        radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent-secondary) 26%, transparent) 0%, transparent 55%),
+        radial-gradient(90% 120% at 0% 100%, color-mix(in srgb, var(--accent-primary) 20%, transparent) 0%, transparent 60%),
+        var(--bg-card);
+      border: 1px solid var(--border-highlight);
+      box-shadow: var(--shadow-main);
+    }
+    .vz-hero::before {
+      content: ""; position: absolute; inset: 0; z-index: -1; opacity: .09; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23f5b942' stroke-width='1.2'%3E%3Cpath d='M28 4l7 17 17 7-17 7-7 17-7-17-17-7 17-7z'/%3E%3Ccircle cx='28' cy='28' r='6'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .vz-hero-kicker { display: inline-block; font-size: .78rem; font-weight: 800; letter-spacing: 0; color: var(--accent-primary);
+      background: color-mix(in srgb, var(--accent-primary) 14%, transparent); border: 1px solid var(--border-highlight); padding: 3px 12px; border-radius: 999px; }
+    .vz-hero-title { margin: 10px 0 4px; font-family: 'Lalezar', 'Vazirmatn', sans-serif; font-weight: 400; font-size: clamp(1.25rem, 2.4vw, 1.9rem); line-height: 1.45; color: var(--text-primary); }
+    .vz-hero-title span { color: var(--accent-primary); }
+    .vz-hero-sub { margin: 0 0 14px; color: var(--text-secondary); font-size: .9rem; }
+    .vz-hero-cta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .vz-cta { font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; padding: 9px 15px; border-radius: 13px;
+      color: var(--text-primary); background: var(--bg-glass); border: 1px solid var(--border-color); transition: transform .2s, border-color .2s, background .2s; }
+    .vz-cta:hover { transform: translateY(-2px); border-color: var(--accent-primary); }
+    .vz-cta-gold { background: var(--gradient-accent); color: var(--btn-text-on-accent); border-color: transparent; box-shadow: var(--shadow-glow); }
+    .vz-cta:focus-visible, .vz-hero-wod:focus-visible { outline: 3px solid var(--accent-tertiary); outline-offset: 2px; }
+    .vz-hero-ring { position: relative; display: grid; grid-template-columns: 124px auto; align-items: center; gap: 14px; }
+    .vz-hero-ring svg { width: 124px; height: 124px; transform: rotate(-90deg) scaleY(-1); grid-row: 1; grid-column: 1; }
+    .vz-ring-bg { fill: none; stroke: var(--bg-glass); stroke-width: 11; }
+    .vz-ring-fg { fill: none; stroke: url(#vzRingGrad); stroke-width: 11; stroke-linecap: round; transition: stroke-dasharray 1s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 0 6px var(--accent-glow)); }
+    .vz-ring-txt { grid-row: 1; grid-column: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
+    .vz-ring-txt b { font-size: 1.55rem; font-weight: 900; color: var(--text-primary); line-height: 1.1; }
+    .vz-ring-txt small { font-size: .7rem; color: var(--text-muted); }
+    .vz-hero-stats { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    .vz-hero-stats li { display: flex; align-items: baseline; gap: 6px; font-size: .8rem; color: var(--text-secondary); }
+    .vz-hero-stats b { min-width: 2.2em; font-size: 1.05rem; font-weight: 900; color: var(--accent-primary); text-align: center; }
+    .vz-hero-stats li:nth-child(2) b { color: #fb923c; }
+    .vz-hero-stats li:nth-child(3) b { color: var(--accent-tertiary); }
+    .vz-hero-wod { position: relative; cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: 18px;
+      background: linear-gradient(160deg, color-mix(in srgb, var(--accent-secondary) 22%, var(--bg-card-solid)), var(--bg-card-solid));
+      border: 1px solid var(--border-color); min-height: 124px; transition: transform .2s, border-color .2s; }
+    .vz-hero-wod:hover { transform: translateY(-2px) rotate(-.4deg); border-color: var(--accent-primary); }
+    .vz-wod-k { font-size: .76rem; font-weight: 800; color: var(--accent-primary); }
+    .vz-wod-word { font-family: 'Lalezar', 'Vazirmatn', sans-serif; font-weight: 400; font-size: 2rem; line-height: 1.25; color: var(--text-primary); }
+    .vz-wod-mean { font-size: .92rem; color: var(--text-secondary); line-height: 1.6; }
+    .vz-wod-meta { font-size: .74rem; color: var(--text-muted); margin-top: auto; }
+
+    /* سربرگ درس */
+    .lesson-card { border-radius: 20px; box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+    .lesson-card.open { border-color: var(--border-highlight); box-shadow: 0 10px 28px rgba(0,0,0,.2), 0 0 0 1px color-mix(in srgb, var(--accent-primary) 25%, transparent); }
+    .lesson-card-header { padding: 14px 18px; background: linear-gradient(90deg, transparent, var(--bg-glass)); }
+    .lesson-num-badge { width: 48px; height: 48px; border-radius: 15px; font-size: 1.2rem; font-weight: 900; position: relative;
+      background: var(--gradient-purple); box-shadow: 0 6px 16px rgba(99, 51, 201, .35), inset 0 1px 0 rgba(255,255,255,.25); }
+    .lesson-card.open .lesson-num-badge { background: var(--gradient-accent); color: var(--btn-text-on-accent); }
+    .vz-lesson-title { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 1.12rem; color: var(--text-primary); }
+    .vz-lesson-name { font-weight: 900; }
+    .vz-lesson-chapter { font-size: .72rem; font-weight: 700; color: var(--accent-primary); background: color-mix(in srgb, var(--accent-primary) 13%, transparent); padding: 1px 9px; border-radius: 999px; }
+    .vz-lesson-meta { display: block; font-size: .78rem; color: var(--text-secondary); margin-top: 2px; }
+    .vz-lesson-bar { display: block; width: min(220px, 52vw); height: 6px; margin-top: 7px; border-radius: 999px; background: var(--bg-glass); overflow: hidden; border: 1px solid var(--border-color); }
+    .vz-lesson-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--success), var(--accent-primary)); transition: width .6s ease; }
+
+    /* کارت واژه */
+    .words-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+    .word-item-card { border-radius: 18px; padding: 14px 16px 13px; overflow: hidden;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--accent-secondary) 7%, var(--bg-secondary)), var(--bg-secondary));
+      box-shadow: 0 3px 10px rgba(0,0,0,.12); }
+    .word-item-card::before { content: ""; position: absolute; inset-block: 12px; inset-inline-start: 0; width: 4px; border-radius: 0 4px 4px 0;
+      background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary)); opacity: .85; }
+    .word-item-card.is-hard-word::before { background: linear-gradient(180deg, #fb923c, #ef4444); }
+    .word-item-card.is-easy-word::before { background: linear-gradient(180deg, #4ade80, #16a34a); }
+    .word-item-card:hover { box-shadow: 0 10px 24px rgba(0,0,0,.2); }
+    .word-main-text { font-size: 1.32rem; font-weight: 900; flex-wrap: wrap; line-height: 1.35; }
+    .word-main-text > span:first-child { background: linear-gradient(90deg, var(--accent-primary), color-mix(in srgb, var(--accent-primary) 60%, var(--accent-secondary))); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .word-main-text .meta-tag { font-size: .68rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; -webkit-text-fill-color: currentColor; }
+    .word-meaning-text { font-size: .95rem; line-height: 1.75; color: var(--text-secondary); padding-bottom: 6px; border-bottom: 1px dashed var(--border-color); }
+    .word-meaning-text strong { color: var(--text-primary); font-weight: 700; }
+    .word-extra-tags .meta-tag { border-radius: 999px; padding: 2px 10px; font-weight: 600; }
+    .meta-tag.syn { background: color-mix(in srgb, var(--success) 10%, transparent); }
+    .meta-tag.ant { background: color-mix(in srgb, var(--danger) 10%, transparent); }
+    .meta-tag.fam { background: color-mix(in srgb, var(--accent-tertiary) 10%, transparent); }
+    .word-example-action { border-radius: 999px; font-size: .74rem; padding: 4px 10px; }
+
+    /* نوار تب‌ها */
+    .tabs-nav { padding: 6px; gap: 6px; border-radius: 18px; background: var(--bg-card); border: 1px solid var(--border-color); box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+    .tab-btn { border-color: transparent; background: transparent; border-radius: 13px; }
+    .tab-btn:hover { background: var(--bg-glass); border-color: transparent; transform: none; }
+    .tab-btn.active { transform: none; }
+
+    .section-title { position: relative; padding-bottom: 6px; }
+    .section-title::after { content: ""; position: absolute; inset-inline-start: 0; bottom: 0; width: 64px; height: 3px; border-radius: 999px; background: var(--gradient-accent); }
+
+    /* گواهی A4 داخل مودال */
+    .vocab-cert-mount { max-width: 760px; margin: 0 auto; }
+
+    @media (max-width: 980px) {
+      .vz-hero { grid-template-columns: 1fr auto; }
+      .vz-hero-wod { grid-column: 1 / -1; min-height: 0; }
+    }
+    @media (max-width: 640px) {
+      .vz-hero { grid-template-columns: 1fr; padding: 16px; gap: 14px; border-radius: 20px; }
+      .vz-hero-ring { grid-template-columns: 100px auto; justify-content: start; }
+      .vz-hero-ring svg { width: 100px; height: 100px; }
+      .vz-hero-cta .vz-cta { flex: 1 1 calc(50% - 8px); }
+      .vz-wod-word { font-size: 1.7rem; }
+      .lesson-num-badge { width: 42px; height: 42px; font-size: 1.05rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vz-ring-fg, .vz-lesson-bar i { transition: none; }
+      .vz-cta:hover, .vz-hero-wod:hover { transform: none; }
+    }
+    [data-motion="reduced"] .vz-ring-fg, [data-motion="reduced"] .vz-lesson-bar i { transition: none; }
+    @media print { .vz-hero { display: none !important; } }
   </style>
+<link rel="stylesheet" href="../css/hakim-cert.css"><script src="../js/hakim-logo.js"></script><script src="../js/hakim-cert.js"></script>
 </head>
 <body data-app="farsi5-vocab">
   <!-- ✨ اسپلش خوش‌آمدگویی برند (خودکار محو می‌شود) -->
@@ -2234,6 +2351,40 @@
     <!-- ═══════════════════════════════════════════════════════════════
          🧭 نوار تب‌های برنامه (عمومی + مخصوص معلم)
          ═══════════════════════════════════════════════════════════════ -->
+    <!-- 🌄 داشبورد سفر واژه‌ها (طراحی تازه) -->
+    <section class="vz-hero" id="vzHero" aria-label="داشبورد پیشرفت واژه‌ستان">
+      <div class="vz-hero-greet">
+        <span class="vz-hero-kicker">سفر واژه‌ها · فارسی پنجم</span>
+        <h2 class="vz-hero-title">سلام <span id="vzHeroName">دانش‌آموز دانا</span>! امروز کدام واژه را کشف می‌کنی؟</h2>
+        <p class="vz-hero-sub" id="vzHeroLevel">سطح ۱: نوآموز واژه</p>
+        <div class="vz-hero-cta">
+          <button type="button" class="vz-cta vz-cta-gold" id="vzCtaContinue">📚 ادامهٔ درس</button>
+          <button type="button" class="vz-cta" id="vzCtaQuick">⚡ بازی سریع</button>
+          <button type="button" class="vz-cta" id="vzCtaFlash">🃏 فلش‌کارت</button>
+          <button type="button" class="vz-cta" id="vzCtaCert" hidden>🎓 گواهی آخرین بازی</button>
+        </div>
+      </div>
+      <div class="vz-hero-ring" role="img" id="vzRingBox" aria-label="پیشرفت یادگیری واژه‌ها">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs><linearGradient id="vzRingGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5b942"/><stop offset="1" stop-color="#9d65ff"/></linearGradient></defs>
+          <circle cx="60" cy="60" r="50" class="vz-ring-bg"/>
+          <circle cx="60" cy="60" r="50" class="vz-ring-fg" id="vzRingFg" pathLength="100" stroke-dasharray="0 100"/>
+        </svg>
+        <div class="vz-ring-txt"><b id="vzRingPct">۰٪</b><small>واژه‌های بلدم</small></div>
+        <ul class="vz-hero-stats">
+          <li><b id="vzStatEasy">۰</b><span>بلدم</span></li>
+          <li><b id="vzStatHard">۰</b><span>نیازمند مرور</span></li>
+          <li><b id="vzStatGames">۰</b><span>بازی</span></li>
+        </ul>
+      </div>
+      <div class="vz-hero-wod" id="vzWod" role="button" tabindex="0" aria-label="واژهٔ امروز؛ برای دیدن کارت کامل بزن">
+        <span class="vz-wod-k">✨ واژهٔ امروز</span>
+        <b class="vz-wod-word" id="vzWodWord">—</b>
+        <span class="vz-wod-mean" id="vzWodMean"></span>
+        <span class="vz-wod-meta" id="vzWodMeta"></span>
+      </div>
+    </section>
+
     <nav class="tabs-nav" role="tablist" aria-label="بخش‌های برنامه">
       <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="lessons">
         <span>📚</span><span>درس به درس</span>
@@ -3071,14 +3222,18 @@
       <div class="section-header no-print">
         <h3 class="section-title">🎓 گواهی‌نامهٔ هوشمند موفقیت</h3>
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <button type="button" class="btn btn-primary btn-sm" onclick="window.print()">🖨️ چاپ گواهی</button>
+          <button type="button" class="btn btn-primary btn-sm" id="btnPrintVocabCert" onclick="window.HakimCert ? HakimCert.print() : window.print()">🖨️ چاپ گواهی (A4)</button>
           <button type="button" class="btn btn-purple btn-sm" id="btnDownloadCertImg" onclick="App.downloadCertificateImage()">🖼️ دانلود تصویر (PNG)</button>
           <button type="button" class="btn btn-outline btn-sm" onclick="App.closeModal('certModalBackdrop')">✖ بستن</button>
         </div>
       </div>
 
       <!-- قاب گواهی قابل چاپ و تصویربرداری -->
-      <div class="certificate-frame hk-tazhib" id="certificateRenderTarget">
+      <!-- گواهی استاندارد A4 حکیمستان (HakimCert) -->
+      <div id="vocabCertMount" class="vocab-cert-mount"></div>
+
+      <!-- قاب قدیمی: فقط منبع دادهٔ جایگزین Canvas؛ نمایش داده نمی‌شود -->
+      <div class="certificate-frame hk-tazhib" id="certificateRenderTarget" hidden>
         <div class="cert-inner-border">
           <div style="font-size:2.2rem; margin-bottom:2px;" id="certMedalEmoji">🏆</div>
           <h2 class="cert-title">گواهی‌نامهٔ موفقیت</h2>
@@ -4396,6 +4551,42 @@
         if (totalWordsEl) totalWordsEl.textContent = toPersianDigits(words.length);
         if (starredEl) starredEl.textContent = toPersianDigits((studentState.starredIds || []).length);
         if (coinsEl) coinsEl.textContent = toPersianDigits(studentState.coins || 0);
+        renderVocabHero(lvl);
+      }
+
+      /* 🌄 داشبورد بالای صفحه: حلقهٔ پیشرفت، واژهٔ امروز و میان‌برها */
+      function renderVocabHero(lvl) {
+        const hero = document.getElementById('vzHero');
+        if (!hero) return;
+        const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        const total = words.length || 0;
+        const diffMap = studentState.wordDifficulty || {};
+        const easy = words.filter(w => diffMap[w.id] === 'easy' && !isDifficultWord(w)).length;
+        const hard = words.filter(w => isDifficultWord(w)).length;
+        const pct = total ? Math.round((easy / total) * 100) : 0;
+        set('vzHeroName', studentState.name || 'دانش‌آموز دانا');
+        set('vzHeroLevel', (lvl ? lvl.title : '') + ' · ' + toPersianDigits(studentState.xp || 0) + ' امتیاز تجربه');
+        set('vzRingPct', toPersianDigits(pct) + '٪');
+        set('vzStatEasy', toPersianDigits(easy));
+        set('vzStatHard', toPersianDigits(hard));
+        set('vzStatGames', toPersianDigits((studentState.history || []).length));
+        const fg = document.getElementById('vzRingFg');
+        if (fg) { fg.setAttribute('stroke-dasharray', pct + ' 100'); fg.style.opacity = pct > 0 ? '1' : '0'; }
+        const box = document.getElementById('vzRingBox');
+        if (box) box.setAttribute('aria-label', 'پیشرفت یادگیری: ' + toPersianDigits(easy) + ' واژه از ' + toPersianDigits(total) + ' واژه را بلدی (' + toPersianDigits(pct) + ' درصد)');
+        const certBtn = document.getElementById('vzCtaCert');
+        if (certBtn) { let ok = false; try { ok = !!(lastGameResult && lastGameResult.percent >= 50); } catch (e) { ok = false; } certBtn.hidden = !ok; }
+        if (total) {
+          const d = new Date();
+          const dayKey = Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000);
+          const pool = words.filter(w => String(w.lesson) !== '18');
+          const list = pool.length ? pool : words;
+          const w = list[dayKey % list.length];
+          set('vzWodWord', w.word);
+          set('vzWodMean', w.meaning || '');
+          set('vzWodMeta', getLessonShortLabel(w.lesson) + (w.synonym ? ' · مترادف: ' + w.synonym : ''));
+          hero.dataset.wodLesson = String(w.lesson);
+        }
       }
 
       function getSpecificWordExample(item) {
@@ -4565,6 +4756,12 @@
           const lessonWords = words.filter(w => String(w.lesson) === String(lessonKey)).sort((a, b) => a.word.localeCompare(b.word, 'fa'));
           const isOpen = openLessonsSet.has(Number(lessonKey)) || openLessonsSet.has(String(lessonKey));
           const title = LESSON_TITLES[lessonKey] || ('درس ' + toPersianDigits(lessonKey));
+          const titleM = String(title).match(/^(درس\s*[0-9۰-۹]+)\s*[:：]\s*(.+?)(?:\s*\(([^)]+)\))?$/);
+          const easyN = lessonWords.filter(w => (studentState.wordDifficulty || {})[w.id] === 'easy' && !isDifficultWord(w)).length;
+          const lessonPct = lessonWords.length ? Math.round((easyN / lessonWords.length) * 100) : 0;
+          const titleHtml = titleM
+            ? '<span class="vz-lesson-name">' + escapeHtml(titleM[2]) + '</span>' + (titleM[3] ? '<span class="vz-lesson-chapter">' + escapeHtml(titleM[3]) + '</span>' : '')
+            : '<span class="vz-lesson-name">' + escapeHtml(title) + '</span>';
 
           const isBankCard = String(lessonKey) === '18';
           const separatorHtml = (isBankCard && filteredLessons[filteredLessons.length - 1] == 18) ? '<div style="text-align:center; margin:18px 0 10px; padding:10px; background:var(--bg-glass); border:1px dashed var(--border-highlight); border-radius:12px; color:var(--text-secondary); font-weight:800; font-size:0.95rem;">📚 بخش پایانی کتاب — 🗂️ بانک واژگان تکمیلی</div>' : '';
@@ -4586,8 +4783,9 @@
                 '<div class="lesson-title-wrap">' +
                   '<div class="lesson-num-badge">' + toPersianDigits(lessonKey) + '</div>' +
                   '<div>' +
-                    '<h3 style="font-size:1.15rem; color:var(--text-primary);">' + escapeHtml(title) + '</h3>' +
-                    '<span style="font-size:0.8rem; color:var(--text-secondary);">دارای <strong>' + toPersianDigits(lessonWords.length) + '</strong> واژه آموزشی</span>' +
+                    '<h3 class="vz-lesson-title">' + titleHtml + '</h3>' +
+                    '<span class="vz-lesson-meta">دارای <strong>' + toPersianDigits(lessonWords.length) + '</strong> واژه آموزشی · <strong>' + toPersianDigits(easyN) + '</strong> واژه بلدم</span>' +
+                    '<span class="vz-lesson-bar" role="progressbar" aria-label="پیشرفت ' + escapeHtml(title) + '" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + lessonPct + '"><i style="width:' + lessonPct + '%"></i></span>' +
                   '</div>' +
                 '</div>' +
                 '<div class="lesson-header-actions" onclick="event.stopPropagation();">' +
@@ -6321,11 +6519,64 @@
         document.getElementById('certShamsiDate').textContent = shamsiDate;
         document.getElementById('certSerialNum').textContent = serialNum;
 
+        mountVocabCertificate({ gradeText, scopeLabel, shamsiDate, serialNum, medalEmoji });
         openModal('certModalBackdrop');
+        if (window.HakimCert) setTimeout(() => window.HakimCert.fit(document.getElementById('vocabCertMount')), 60);
+      }
+
+      /* گواهی استاندارد یک‌صفحه‌ای A4 — چیدمان رسمی: مشخصات راست، تاریخ و شماره چپ، مهر و امضا پایین چپ */
+      function mountVocabCertificate(info) {
+        const mountEl = document.getElementById('vocabCertMount');
+        if (!mountEl || !window.HakimCert) return null;
+        const r = lastGameResult;
+        const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const name = (r.studentName || studentState.name || 'دانش‌آموز دانا').trim();
+        const cls = (studentState.studentClass || '').trim();
+        const school = (studentState.school || '').trim().replace(/^حکیمستان$/, '');
+        const grade = cls ? (/پنجم/.test(cls) ? cls : 'پنجم دبستان — ' + cls) : 'پنجم دبستان';
+        const hard = Math.max(0, (Number(r.total) || 0) - (Number(r.correct) || 0));
+        const allL = getAllLessonNumbers().map(String);
+        const selL = Array.from(new Set((r.lessons || []).map(String))).filter(l => allL.includes(l));
+        const skills = [];
+        if (!selL.length || selL.length > 6) {
+          skills.push({ title: 'واژگان ' + (selL.length && selL.length < allL.length ? toPersianDigits(selL.length) + ' درس کتاب' : 'تمام دروس کتاب'), sub: 'دامنهٔ آزمون', done: true });
+        } else {
+          selL.forEach(l => skills.push({ title: String(LESSON_TITLES[l] || getLessonShortLabel(l)).replace(/^\s*درس\s*[0-9۰-۹]+\s*[:：-]\s*/, ''), sub: getLessonShortLabel(l) + ' · ' + toPersianDigits(words.filter(w => String(w.lesson) === l).length) + ' واژه', done: true }));
+        }
+        Array.from(new Set(r.wrongWords || [])).slice(0, 8 - Math.min(skills.length, 4)).forEach(w => skills.push({ title: w, sub: 'برای مرور دوباره', done: false }));
+        return window.HakimCert.mount(mountEl, {
+          world: 'واژه‌ستان فارسی پنجم',
+          kind: r.percent >= 90 ? 'taqdir' : 'cert',
+          subtitle: 'بازی هوشمند واژگان فارسی پنجم ابتدایی',
+          name,
+          grade,
+          number: info.serialNum,
+          date: info.shamsiDate,
+          attachment: 'کارنامهٔ آزمون',
+          accent: '#5b21b6',
+          accent2: '#9a6416',
+          bodyHtml:
+            '<p class="hk-a4-salute">با سلام و احترام،</p>' +
+            '<p>بدین‌وسیله گواهی می‌شود دانش‌آموز گرامی <b class="hk-a4-name">' + esc(name) + '</b>، پایهٔ ' + esc(grade) +
+            (school ? '، از ' + esc(school) : '') + '، در آزمون و بازی آموزشی «' + esc(r.gameName) + '» در دامنهٔ ' + esc(info.scopeLabel) +
+            ' شرکت نموده و با پاسخ درست به ' + toPersianDigits(r.correct) + ' پرسش از ' + toPersianDigits(r.total) + ' پرسش، رتبهٔ <b>' + esc(info.gradeText) + '</b> را کسب کرده است.</p>' +
+            '<p>این ' + (r.percent >= 90 ? 'تقدیرنامه' : 'گواهی‌نامه') + ' به پاس تلاش، دقت و علاقهٔ ایشان به گنجینهٔ واژه‌های زبان فارسی صادر و تقدیم می‌گردد.</p>',
+          stats: [
+            { icon: info.medalEmoji, value: toPersianDigits(r.percent) + '٪', label: 'درصد موفقیت' },
+            { value: toPersianDigits(r.correct) + ' از ' + toPersianDigits(r.total), label: 'پاسخ درست' },
+            { value: toPersianDigits(Math.max(0, hard)), label: 'واژه برای مرور دوباره' },
+            { value: String(info.gradeText).split(/[(—]/)[0].trim(), label: 'درجه' }
+          ],
+          skillsTitle: 'کارنامهٔ آزمون واژگان',
+          skills,
+          quote: 'هر واژهٔ تازه، پنجره‌ای تازه به جهان است؛ واژه‌های امروز، حکمتِ فردا.',
+          seal: { label: 'واژه‌ستان', sub: String(info.gradeText).split(/[(—]/)[0].trim() },
+          program: 'واژه‌ستان فارسی پنجم'
+        });
       }
 
       async function downloadCertificateImage() {
-        const target = document.getElementById('certificateRenderTarget');
+        const target = document.querySelector('#vocabCertMount .hk-a4') || document.getElementById('certificateRenderTarget');
         const btn = document.getElementById('btnDownloadCertImg');
         if (!target) return;
         if (btn) { btn.disabled = true; btn.textContent = '⏳ در حال ساخت تصویر...'; }
@@ -6881,6 +7132,23 @@
           showToast('✅ مشخصات دانش‌آموز ذخیره شد.');
           hakimSay('از آشنایی با تو خوشحالم ' + studentState.name + ' جان! 🌟', 'happy');
         });
+
+        const vzOn = (id, fn) => { const el = document.getElementById(id); if (el) el.addEventListener('click', fn); };
+        vzOn('vzCtaContinue', () => {
+          switchTab('lessons');
+          const hist = studentState.history || [];
+          const lastL = hist.length && hist[hist.length - 1].lessons && hist[hist.length - 1].lessons[0];
+          const key = lastL || (document.getElementById('vzHero').dataset.wodLesson) || '1';
+          const card = document.getElementById('lesson-card-' + key);
+          if (card && !card.classList.contains('open')) App.toggleLessonAccordion(String(key));
+          requestAnimationFrame(() => { const c = document.getElementById('lesson-card-' + key); if (c) c.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        });
+        vzOn('vzCtaQuick', () => { const b = document.getElementById('btnQuickGame'); if (b) b.click(); });
+        vzOn('vzCtaFlash', () => { const k = document.getElementById('vzHero').dataset.wodLesson; if (k) App.openFlashcardsForLesson(k); });
+        vzOn('vzCtaCert', () => openCertificateModal());
+        vzOn('vzWod', () => { const b = document.getElementById('btnQuickWordOfDay'); if (b) b.click(); });
+        const vzWodEl = document.getElementById('vzWod');
+        if (vzWodEl) vzWodEl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); vzWodEl.click(); } });
 
         document.getElementById('btnQuickWordOfDay').addEventListener('click', () => {
           switchTab('notebook');

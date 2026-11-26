@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="math-geometry/studio.css">
 <link rel="stylesheet" href="math-geometry/layout.css">
 <link rel="stylesheet" href="../css/hakim-tazhib.css">
+<link rel="stylesheet" href="../css/hakim-cert.css"><script src="../js/hakim-logo.js"></script><script src="../js/hakim-cert.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">پرش به بازی</a>
@@ -41,4 +42,7 @@
 <script src="../js/hakim-security.js"></script>
 <script src="../js/hakim-a11y.js"></script>
 <script src="../js/hakim-sw-register.js"></script>
+<!-- حرکت نقشهٔ یادگیری (مسافر هم‌موضوع با بازی) -->
+<script src="../js/hakim-map-motion.js"></script>
+<script>window.HakimMapMotion && HakimMapMotion.watch({ key: 'geometry', container: '.journey', item: '.station', done: function (n) { return n.classList.contains('completed'); }, current: function (n) { return n.classList.contains('recommended'); }, theme: 'plane', tag: 'هواپیمای هندسه' });</script>
 </body></html>

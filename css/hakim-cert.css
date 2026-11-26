@@ -1,0 +1,238 @@
+/* ============================================================
+   حکیمستان — گواهی‌نامهٔ استاندارد A4 + محافظ چاپ یک‌صفحه‌ای
+   ------------------------------------------------------------
+   Layout follows the standard for official Iranian certificates:
+     top centre: «بسمه تعالی», then the certificate title
+     right:      student details (name, grade, learner code)
+     top left:   date, number, attachment
+     centre:     the certificate text
+     bottom left: stamp and signature (Hakimestan logo); bottom right: the world's seal
+   Every size is in em, and the sheet's em is set from the container width
+   (cqw). So the sheet keeps exact A4 proportions (210×297) everywhere:
+   on a 320px phone, in a 1280px window, and on paper.
+   ============================================================ */
+.hk-a4-wrap {
+  container-type: inline-size;
+  width: 100%;
+  max-width: 210mm;
+  margin: 0 auto 18px;
+}
+.hk-a4 {
+  --hk-accent: #4b3a8f;
+  --hk-accent-2: #b8862b;
+  --hk-ink: #241b3d;
+  --hk-gold: #c9a14a;
+  --hk-k: 1;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 210 / 297;
+  overflow: hidden;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  font-size: calc(100cqw / 58.333); /* 1em = 3.6mm on A4 paper */
+  line-height: 1.75;
+  color: var(--hk-ink);
+  direction: rtl;
+  text-align: right;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 255, 255, .95), rgba(255, 252, 242, 0) 62%),
+    repeating-linear-gradient(45deg, rgba(201, 161, 74, .035) 0 2px, transparent 2px 9px),
+    #fffcf3;
+  border-radius: .35em;
+  box-shadow: 0 1.2em 3em -1.2em rgba(40, 26, 70, .45), 0 0 0 1px rgba(160, 120, 40, .25);
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.hk-a4 *, .hk-a4 *::before, .hk-a4 *::after { box-sizing: border-box; }
+
+/* Frame: thick outer line, thin inner line and four corner ornaments */
+.hk-a4-frame { position: absolute; inset: 0; pointer-events: none; }
+.hk-a4-frame::before {
+  content: ""; position: absolute; inset: 1.15em;
+  border: .32em solid var(--hk-accent);
+  border-radius: .25em;
+  box-shadow: inset 0 0 0 .14em #fffcf3, inset 0 0 0 .24em var(--hk-gold);
+}
+.hk-a4-frame::after {
+  content: ""; position: absolute; inset: 2.15em;
+  border: .07em solid var(--hk-gold);
+  border-radius: .15em;
+}
+.hk-a4-corner { position: absolute; width: 5.4em; height: 5.4em; color: var(--hk-gold); }
+.hk-a4-corner svg { width: 100%; height: 100%; display: block; }
+.hk-a4-corner.tr { top: .55em; right: .55em; }
+.hk-a4-corner.tl { top: .55em; left: .55em; transform: scaleX(-1); }
+.hk-a4-corner.br { bottom: .55em; right: .55em; transform: scaleY(-1); }
+.hk-a4-corner.bl { bottom: .55em; left: .55em; transform: scale(-1, -1); }
+.hk-a4-mark {
+  position: absolute; left: 50%; top: 50%; width: 30em; height: 30em;
+  transform: translate(-50%, -46%); opacity: .055; pointer-events: none;
+}
+.hk-a4-mark svg { width: 100%; height: 100%; }
+
+/* Inner content: fixed height, scaled down if it gets too long (--hk-k) */
+.hk-a4-in {
+  position: absolute; inset: 3.1em 3.3em 2.9em;
+  display: flex; flex-direction: column;
+  font-size: calc(1em * var(--hk-k));
+  overflow: hidden;
+}
+
+/* Header: right column = details | centre = بسمله and title | left = date and number */
+.hk-a4-head {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  align-items: start;
+  gap: .9em;
+}
+.hk-a4-box {
+  border: .08em solid rgba(160, 120, 40, .55);
+  border-radius: .55em;
+  background: rgba(255, 249, 232, .85);
+  padding: .5em .75em .55em;
+  font-size: .86em;
+  line-height: 1.7;
+}
+.hk-a4-box-t {
+  font-weight: 900; color: var(--hk-accent); font-size: .92em;
+  border-bottom: .07em dashed rgba(160, 120, 40, .55);
+  margin-bottom: .3em; padding-bottom: .15em;
+}
+.hk-a4-box dl { margin: 0; display: grid; gap: .08em; }
+.hk-a4-box dl > div { display: flex; gap: .35em; align-items: baseline; min-width: 0; }
+.hk-a4-box dt { color: #6b5a3a; white-space: nowrap; font-weight: 600; }
+.hk-a4-box dd { margin: 0; font-weight: 800; color: var(--hk-ink); min-width: 0; overflow-wrap: anywhere; }
+.hk-a4-box .ltr { direction: ltr; unicode-bidi: isolate; }
+.hk-a4-meta { justify-self: end; width: 100%; }
+.hk-a4-mid { display: grid; justify-items: center; text-align: center; gap: .15em; }
+.hk-a4-basmala { height: 2.05em; display: block; }
+.hk-a4-basmala svg { height: 100%; width: auto; display: block; }
+.hk-a4-emblem { width: 4.4em; height: 4.4em; margin: .1em 0 0; }
+.hk-a4-emblem svg { width: 100%; height: 100%; display: block; }
+.hk-a4-title { margin: .05em 0 0; height: 3.6em; display: block; }
+.hk-a4-title svg { height: 100%; width: auto; display: block; }
+.hk-a4-sub {
+  font-weight: 900; color: var(--hk-accent-2); font-size: .98em; line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.hk-a4-rule {
+  height: .9em; margin: .55em 0 .35em;
+  background:
+    radial-gradient(circle, var(--hk-gold) 0 .2em, transparent .22em) center / 1.2em 100% no-repeat,
+    linear-gradient(var(--hk-gold), var(--hk-gold)) center / 100% .07em no-repeat;
+}
+
+.hk-a4-body { text-align: justify; font-size: 1.04em; line-height: 2.05; }
+.hk-a4-body p { margin: 0 0 .25em; }
+.hk-a4-salute { font-weight: 800; }
+.hk-a4-name {
+  display: inline-block; font-weight: 900; color: var(--hk-accent);
+  font-size: 1.32em; line-height: 1.3; padding: 0 .25em;
+  border-bottom: .09em solid var(--hk-gold);
+}
+
+.hk-a4-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .55em; margin: .6em 0 .45em; }
+.hk-a4-stat {
+  display: grid; justify-items: center; text-align: center; gap: 0;
+  padding: .35em .3em .3em; border-radius: .6em;
+  background: rgba(255, 247, 227, .9);
+  border: .07em solid rgba(160, 120, 40, .4);
+  border-top: .3em solid var(--hk-c, var(--hk-accent));
+}
+.hk-a4-stat b { font-size: 1.12em; line-height: 1.45; color: var(--hk-ink); }
+.hk-a4-stat small { font-size: .74em; color: #6b5a3a; line-height: 1.4; }
+
+.hk-a4-skills { flex: 0 0 auto; display: flex; flex-direction: column; }
+.hk-a4-spacer { flex: 1 1 auto; min-height: .2em; }
+.hk-a4-skills h3 { margin: .1em 0 .3em; font-size: .92em; color: var(--hk-accent); font-weight: 900; }
+.hk-a4-skills ul {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .3em .55em;
+  align-content: start;
+}
+.hk-a4-skills li {
+  display: flex; gap: .4em; align-items: flex-start;
+  padding: .28em .5em; border-radius: .45em;
+  border: .07em solid rgba(160, 120, 40, .28);
+  background: rgba(255, 255, 255, .6);
+  font-size: .78em; line-height: 1.55;
+}
+.hk-a4-skills li.done { background: rgba(232, 247, 236, .85); border-color: rgba(40, 140, 80, .35); }
+.hk-a4-skills li > i { font-style: normal; flex: none; font-weight: 900; color: #b0a080; }
+.hk-a4-skills li.done > i { color: #1f8a4c; }
+.hk-a4-skills li b { display: block; font-weight: 800; }
+.hk-a4-skills li small { display: block; color: #6b5a3a; font-size: .9em; }
+
+.hk-a4-quote {
+  margin: .45em 0 0; padding: .35em .7em; border-radius: .55em;
+  background: rgba(255, 247, 227, .9); border-inline-start: .3em solid var(--hk-gold);
+  font-size: .82em; line-height: 1.8;
+}
+
+/* Footer: right = the world's seal | left = stamp and signature (Hakimestan logo) */
+.hk-a4-foot {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 1em; margin-top: .55em;
+}
+.hk-a4-seal { display: grid; justify-items: center; text-align: center; width: 8.4em; }
+.hk-a4-seal svg { width: 6.6em; height: auto; display: block; }
+.hk-a4-seal small { font-size: .72em; font-weight: 800; color: #7a5a1c; }
+.hk-a4-sign {
+  position: relative; display: grid; justify-items: center; text-align: center;
+  width: 12em; padding: .2em .5em 0;
+}
+.hk-a4-sign-t { font-size: .74em; font-weight: 800; color: #6b5a3a; }
+.hk-a4-sign .hk-logo { width: 5.6em; height: auto; display: block; margin: .2em 0 .1em; position: relative; }
+.hk-a4-sign b { font-size: .82em; font-weight: 900; color: var(--hk-ink); line-height: 1.5; }
+.hk-a4-sign small { font-size: .7em; color: #6b5a3a; line-height: 1.5; }
+.hk-a4-sign::before {
+  /* round stamp ring around the logo, like an ink stamp */
+  content: ""; position: absolute; top: .55em; left: 50%; width: 7.4em; height: 7.4em;
+  transform: translateX(-50%) rotate(-8deg);
+  border: .16em double rgba(75, 58, 143, .22); border-radius: 50%;
+  pointer-events: none;
+}
+.hk-a4-note { margin: .35em 0 0; text-align: center; font-size: .66em; color: #7a6a4a; line-height: 1.6; }
+
+/* Screen toolbar */
+.hk-a4-tools { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; max-width: 210mm; margin: 0 auto 14px; }
+.hk-a4-tools .hk-a4-tip { font-size: .82rem; opacity: .8; flex: 1 1 220px; }
+
+/* Night theme: the paper stays light, like a real certificate */
+html[data-theme="night"] .hk-a4, html[data-theme="night"] .hk-a4 * { color-scheme: light; }
+
+/* ───────────── Single-page A4 print ───────────── */
+/* @page { size: A4 portrait; margin: 0 } is injected by HakimCert only while a certificate is being printed,
+   so other print outputs on the same page keep their own margins. */
+@media print {
+  html.hk-a4-printing, html.hk-a4-printing body {
+    background: #fff !important; margin: 0 !important; min-height: 0 !important; height: auto !important;
+  }
+  html.hk-a4-printing body { padding: 10mm !important; }
+  html.hk-a4-printing.hk-a4-std body { padding: 0 !important; }
+  html.hk-a4-printing body::before, html.hk-a4-printing body::after { display: none !important; }
+  html.hk-a4-printing body *:not([data-hk-print-path]):not([data-hk-print-target]):not([data-hk-print-target] *) { display: none !important; }
+  html.hk-a4-printing [data-hk-print-path] {
+    display: block !important; position: static !important; transform: none !important;
+    margin: 0 !important; padding: 0 !important; border: 0 !important; box-shadow: none !important;
+    background: none !important; width: auto !important; max-width: none !important;
+    min-height: 0 !important; height: auto !important; overflow: visible !important;
+    animation: none !important; filter: none !important; opacity: 1 !important; visibility: visible !important;
+  }
+  html.hk-a4-printing [data-hk-print-target] {
+    width: 190mm !important; max-width: none !important; margin: 0 auto !important;
+    zoom: var(--hk-fit, 1); break-inside: avoid; page-break-inside: avoid;
+    position: relative !important; transform: none !important; animation: none !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  html.hk-a4-printing [data-hk-print-target].hk-a4-wrap {
+    width: 210mm !important; height: 297mm !important; overflow: hidden !important; zoom: 1;
+  }
+  .hk-a4-wrap { max-width: none; margin: 0; }
+  .hk-a4 { height: 296.6mm; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+  .hk-a4-tools { display: none !important; }
+}
+.hk-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
