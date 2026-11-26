@@ -55,15 +55,20 @@ must(h, /const ASSET_FRAME = '[^']+';/, 'ASSET_FRAME');
 h = h.replace(/const ASSET_FRAME = '([^']+)';/, (_, rel) => `const ASSET_FRAME = '${dataURI(rel)}';`)
      .replace(/const ASSET_SHAMSEH = '([^']+)';/, (_, rel) => `const ASSET_SHAMSEH = '${dataURI(rel)}';`);
 
+// قاب‌های نگارگری تذهیب و اسلیمی (نشانی‌ها درون رشته‌های JS هستند)
+must(h, /'assets\/img\/cert-frames\//, 'FRAME_IMGS');
+h = h.replace(/'(assets\/img\/cert-frames\/[^']+\.webp)'/g, (_, rel) => `'${dataURI(rel)}'`);
+
 // پیوند «خانه» به سایت حکیمستان
 h = h.replace(/href="index\.html"/g, `href="${SITE}" target="_blank" rel="noopener"`);
 
 // هیچ نشانی محلی باقی نماند
 const left = [...h.matchAll(/(?:src|href)="(?!data:|https?:|#|\$\{|javascript:)([^"]+)"/g)].map(m => m[1]);
 const leftUrl = [...h.matchAll(/url\((['"]?)(?!data:|#|\$\{|\+)([^'")]+)\1\)/g)].map(m => m[2]);
-if (left.length || leftUrl.length) throw new Error('ارجاع محلی باقی مانده: ' + [...left, ...leftUrl].join(', '));
+const leftJs = [...h.matchAll(/'(assets\/[^']+)'/g)].map(m => m[1]);
+if (left.length || leftUrl.length || leftJs.length) throw new Error('ارجاع محلی باقی مانده: ' + [...left, ...leftUrl, ...leftJs].join(', '));
 
-h = h.replace('<!DOCTYPE html>', `<!DOCTYPE html>\n<!-- نسخهٔ تک‌فایلی و آفلاین «ساخت گواهی و تقدیرنامه» حکیمستان — ${new Date().toISOString().slice(0, 10)} — ${SITE} -->`);
+h = h.replace('<!DOCTYPE html>', `<!DOCTYPE html>\n<!-- نسخهٔ تک‌فایلی و آفلاین «لوح‌نگار» حکیمستان (ساخت لوح تقدیر و گواهی) — ${new Date().toISOString().slice(0, 10)} — ${SITE} -->`);
 
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(OUT, h);

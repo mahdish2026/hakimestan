@@ -10,8 +10,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0e7c86">
-<meta name="description" content="ابزار ساخت گواهی و تقدیرنامه حکیمستان؛ الگوهای تذهیب و مدرن، حالت چاپ فقط متن روی برگهٔ تذهیب آماده، فیلدهای ادغامی از Excel، امضا و مهر، چاپ و PDF گروهی">
-<title>ساخت گواهی و تقدیرنامه — حکیمستان</title>
+<meta name="description" content="لوح‌نگار حکیمستان؛ ساخت لوح تقدیر و گواهی با قاب‌های تذهیب و اسلیمی، خط نستعلیق، جابه‌جایی آزاد هر بخش با کشیدن، چاپ فقط متن روی برگهٔ تذهیب آماده، فهرست Excel و چاپ و PDF گروهی">
+<title>لوح‌نگار — ساخت لوح تقدیر و گواهی | حکیمستان</title>
 <link rel="icon" type="image/svg+xml" href="icon.svg"><link rel="apple-touch-icon" href="icon.svg"><link rel="manifest" href="manifest.json">
 <link rel="preload" href="assets/fonts/vazirmatn-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/lalezar-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -43,6 +43,12 @@
 @font-face{font-family:'Harmattan';font-weight:400;font-display:swap;src:url('assets/fonts/harmattan-400.woff2') format('woff2')}
 @font-face{font-family:'Harmattan';font-weight:700;font-display:swap;src:url('assets/fonts/harmattan-700.woff2') format('woff2')}
 @font-face{font-family:'Gandom';font-weight:400;font-display:swap;src:url('assets/fonts/gandom-400.woff2') format('woff2')}
+@font-face{font-family:'IranNastaliq';font-weight:400;font-display:swap;src:url('assets/fonts/iran-nastaliq-400.woff2') format('woff2')}
+@font-face{font-family:'Gulzar';font-weight:400;font-display:swap;src:url('assets/fonts/gulzar-400.woff2') format('woff2')}
+@font-face{font-family:'Noto Nastaliq Urdu';font-weight:400;font-display:swap;src:url('assets/fonts/noto-nastaliq-urdu-400.woff2') format('woff2')}
+@font-face{font-family:'Noto Nastaliq Urdu';font-weight:700;font-display:swap;src:url('assets/fonts/noto-nastaliq-urdu-700.woff2') format('woff2')}
+@font-face{font-family:'Aref Ruqaa';font-weight:400;font-display:swap;src:url('assets/fonts/aref-ruqaa-400.woff2') format('woff2')}
+@font-face{font-family:'Aref Ruqaa';font-weight:700;font-display:swap;src:url('assets/fonts/aref-ruqaa-700.woff2') format('woff2')}
 </style>
 <style>
 :root{--accent:#0e7c86;--accent-d:#0a5f68;--gold:#a8761a;--ink:#24324a;--muted:#56637a;--line:#dde4eb;--cream:#f7f5ef;--card:#fff;--shadow:0 10px 30px #1b2c4012;--r:18px;color-scheme:light;font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:var(--cream)}
@@ -124,6 +130,8 @@ label{font-size:12.5px;font-weight:600}
 .pane-head p{font-size:12px;color:var(--muted)}
 .theme-filter{margin-bottom:10px}
 .theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:10px}
+.theme-sec{grid-column:1/-1;font-size:13px;font-weight:800;color:#6b4a0c;margin:6px 2px -2px;display:flex;align-items:center;gap:8px}
+.theme-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#e4d3a8)}
 .theme-card{border:2px solid var(--line);border-radius:14px;background:#fff;padding:7px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px;transition:border-color .15s,transform .15s}
 .theme-card:hover{transform:translateY(-2px)}
 .theme-card[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 3px #0e7c8622}
@@ -194,7 +202,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 .cert .safe{position:absolute;border:1px dashed #b5651d;border-radius:2px;background:#ffffff40}
 .cert .safe span{position:absolute;top:-1.6em;right:0;font-size:11px;color:#8a4f12;background:#fff;padding:0 6px;border-radius:5px;font-family:Vazirmatn;white-space:nowrap}
 .cert .c-box{position:absolute;display:flex;flex-direction:column}
-.cert .c-inner{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.cert .c-inner{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between;overflow:visible}
 .cert .c-inner.lay-center{justify-content:center;gap:calc(var(--mm) * 7 * var(--fit))}
 .cert .c-inner.lay-top{justify-content:flex-start;gap:calc(var(--mm) * 7 * var(--fit))}
 .cert .grp{display:flex;flex-direction:column;align-items:center;gap:calc(var(--mm) * 1.6 * var(--fit))}
@@ -206,7 +214,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 .cert .f-body.al-right{text-align:right;max-width:100%}
 .cert .f-body.al-justify{text-align:justify;text-align-last:center;max-width:100%}
 .cert .c-logo{display:block;width:calc(var(--mm) * var(--lg));height:calc(var(--mm) * var(--lg));object-fit:contain}
-.cert .divider{display:block;width:calc(var(--mm) * 62 * var(--fit));height:calc(var(--mm) * 6.2 * var(--fit));margin:calc(var(--mm) * .5) auto}
+.cert .divider{display:block;width:calc(var(--mm) * var(--dw,62) * var(--fit));height:calc(var(--mm) * var(--dw,62) * .1 * var(--fit));margin:calc(var(--mm) * .5) auto;overflow:visible}
 .cert .c-foot{display:flex;flex-direction:column;gap:calc(var(--mm) * 2.5 * var(--fit))}
 .cert .signers{display:flex;align-items:flex-end;gap:calc(var(--mm) * 6)}
 .cert .signers.n1.sa-end{justify-content:flex-end}
@@ -214,14 +222,29 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 .cert .signers.n1.sa-center,.cert .signers.many{justify-content:space-around}
 .cert .signer{position:relative;min-width:calc(var(--mm) * 42);display:flex;flex-direction:column;align-items:center}
 .cert .sig-img{display:block;height:calc(var(--mm) * 15 * var(--fit));max-width:calc(var(--mm) * 46);object-fit:contain;margin-bottom:calc(var(--mm) * -3 * var(--fit));position:relative;z-index:1}
-.cert .stamp{position:absolute;width:calc(var(--mm) * 27 * var(--fit));height:calc(var(--mm) * 27 * var(--fit));object-fit:contain;bottom:calc(var(--mm) * 2);left:calc(var(--mm) * -12);opacity:.88;z-index:0}
+.cert .stamp{position:absolute;width:calc(var(--mm) * var(--st,27) * var(--fit));height:calc(var(--mm) * var(--st,27) * var(--fit));object-fit:contain;bottom:calc(var(--mm) * 2);left:calc(var(--mm) * -12);opacity:.88;z-index:0}
 .cert .sig-txt b{font-weight:700}
 .cert .meta{display:flex;justify-content:center;gap:calc(var(--mm) * 8);flex-wrap:wrap}
 .cert .meta.top{position:absolute;top:0;left:0;flex-direction:column;gap:0;text-align:left;z-index:2;align-items:flex-start}
 .cert .meta.side{justify-content:space-between}
 .cert mark.ph{background:#fff2b3;color:#7a5300;border-radius:4px;padding:0 .2em;font-style:normal}
-.cert .clickable{cursor:pointer;border-radius:4px}
-.cert .clickable:hover{outline:1px dashed #0e7c8680;outline-offset:2px}
+.cert .clickable{cursor:grab;border-radius:4px;touch-action:none;-webkit-user-select:none;user-select:none}
+.cert .clickable:hover{outline:1px dashed #0e7c8690;outline-offset:2px}
+.cert .clickable.mv-sel{outline:2px solid #0e7c86;outline-offset:3px;background:#0e7c860d}
+.cert .clickable.mv-drag{cursor:grabbing;outline-style:dashed}
+.cert.measuring [data-mv]:not(.xt){transform:none!important}
+.cert .xt{position:absolute;white-space:pre-line;overflow-wrap:anywhere;z-index:3}
+.cert .snap{position:absolute;pointer-events:none;z-index:9;background:#e03131}
+.cert .snap.v{top:0;bottom:0;width:1px;left:50%}
+.cert .snap.h{left:0;right:0;height:1px;top:50%}
+.sel-bar{position:absolute;z-index:30;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:2px;padding:4px;border-radius:12px;background:#1f2d3d;color:#fff;box-shadow:0 8px 24px #0004;transform:translateX(-50%);white-space:nowrap;direction:rtl;max-width:min(560px,calc(100vw - 28px));width:max-content}
+@media(max-width:640px){.sel-bar b{display:none}.sel-bar button{min-width:32px;min-height:32px}.sel-bar .sep{display:none}}
+.sel-bar b{font-size:11.5px;padding:0 8px;max-width:130px;overflow:hidden;text-overflow:ellipsis}
+.sel-bar button{border:0;background:#ffffff14;color:#fff;border-radius:8px;min-width:34px;min-height:34px;font-size:14px;font-weight:700;padding:0 6px}
+.sel-bar button:hover{background:#ffffff30}
+.sel-bar .sep{width:1px;height:22px;background:#ffffff30;margin:0 3px}
+.drag-tip{font-size:12px;color:#3f4b5e;background:#fffbea;border:1px solid #f1e2a6;border-radius:12px;padding:6px 12px}
+.xcard .grid2{margin-top:6px}
 
 @media(max-width:1200px){.studio{grid-template-columns:minmax(0,1fr)}.stage{position:static}.stage-view{max-height:none}}
 @media(max-width:640px){.header-in{padding:8px 12px}.brand-title{font-size:18px}.studio{padding:12px 10px}.grid2,.export-grid{grid-template-columns:1fr}.mm-grid,.grid4{grid-template-columns:1fr 1fr}.pane{padding:12px}.stage-view{padding:14px 8px}.row-nav .who{max-width:110px}}
@@ -242,16 +265,16 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="حکیمستان">
 <meta property="og:locale" content="fa_IR">
-<meta property="og:title" content="ساخت گواهی و تقدیرنامه — حکیمستان">
-<meta property="og:description" content="ابزار کامل ساخت گواهی و تقدیرنامه؛ الگوهای آماده، فونت‌های زیبا، پس‌زمینه‌های مدرن و تذهیب، ورود فایل Excel و صدور هزاران گواهی">
+<meta property="og:title" content="لوح‌نگار — ساخت لوح تقدیر و گواهی | حکیمستان">
+<meta property="og:description" content="لوح‌نگار حکیمستان؛ قاب‌های تذهیب و اسلیمی، خط نستعلیق، جابه‌جایی آزاد متن‌ها، چاپ روی برگهٔ تذهیب آماده و صدور هزاران لوح از Excel">
 <meta property="og:url" content="https://hakimistan.ir/cert-studio.html">
 <meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="720">
-<meta property="og:image:alt" content="ابزار ساخت گواهی و تقدیرنامه حکیمستان">
+<meta property="og:image:alt" content="لوح‌نگار حکیمستان — ساخت لوح تقدیر و گواهی">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ساخت گواهی و تقدیرنامه — حکیمستان">
-<meta name="twitter:description" content="ابزار کامل ساخت گواهی و تقدیرنامه؛ الگوهای آماده، فونت‌های زیبا، پس‌زمینه‌های مدرن و تذهیب، ورود فایل Excel و صدور هزاران گواهی">
+<meta name="twitter:title" content="لوح‌نگار — ساخت لوح تقدیر و گواهی | حکیمستان">
+<meta name="twitter:description" content="لوح‌نگار حکیمستان؛ قاب‌های تذهیب و اسلیمی، خط نستعلیق، جابه‌جایی آزاد متن‌ها، چاپ روی برگهٔ تذهیب آماده و صدور هزاران لوح از Excel">
 <!-- hakim-meta:end -->
 </head>
 <body>
@@ -259,9 +282,9 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
   <div class="header-in">
     <a class="brand" href="index.html" aria-label="بازگشت به صفحهٔ اصلی حکیمستان">
       <span class="brand-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 8.5h8M8 12h5"/><circle cx="17" cy="17.5" r="2.6"/><path d="M15.6 19.8 15 23l2-1 2 1-.6-3.2"/></svg></span>
-      <span><span class="brand-title">ساخت گواهی و تقدیرنامه</span><span class="brand-sub">حکیمستان — از تذهیب تا مدرن، از یک نفر تا هزار نفر</span></span>
+      <span><span class="brand-title">لوح‌نگار</span><span class="brand-sub">ساخت لوح تقدیر و گواهی با تذهیب، اسلیمی و خط نستعلیق — حکیمستان</span></span>
     </a>
-    <h1 class="sr-only">ساخت گواهی و تقدیرنامه — ابزار حکیمستان</h1>
+    <h1 class="sr-only">لوح‌نگار حکیمستان — ساخت لوح تقدیر و گواهی</h1>
     <div class="row header-actions">
       <button class="btn sm" id="btnUndo" type="button" title="واگرد (Ctrl+Z)" aria-label="واگرد">↶ واگرد</button>
       <button class="btn sm" id="btnRedo" type="button" title="ازنو (Ctrl+Y)" aria-label="ازنو">↷ ازنو</button>
@@ -279,6 +302,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <button type="button" data-mode="design" aria-pressed="true">🎨 طرح کامل</button>
         <button type="button" data-mode="paper" aria-pressed="false">📜 فقط متن (برگهٔ تذهیب آماده)</button>
       </div>
+      <button class="btn sm gold" id="btnAddExtra" type="button" title="یک متن تازه که هرجای برگه می‌توانی بگذاری">➕ متن آزاد</button>
       <span class="spacer"></span>
       <div class="row-nav" id="rowNav" hidden>
         <button class="btn sm" id="rowPrev" type="button" aria-label="نفر قبلی">‹</button>
@@ -293,8 +317,26 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       </div>
     </div>
     <div class="row" id="stagePills" aria-live="polite"></div>
-    <div class="stage-view" id="stageView" role="region" tabindex="0" aria-label="پیش‌نمایش گواهی؛ روی هر بخش بزنید تا ویرایش شود">
-      <div class="page-holder" id="pageHolder"><div class="page-wrap" id="pageWrap"></div></div>
+    <p class="drag-tip" id="dragTip">✋ هر بخش را با موس یا انگشت <b>بکش</b> و هرجا خواستی بگذار؛ با یک بار زدن، نوار ابزارش باز می‌شود و با <b>دو بار زدن</b> متنش را ویرایش می‌کنی. کلیدهای جهت هم بخش انتخاب‌شده را میلی‌متری جابه‌جا می‌کنند.</p>
+    <div class="stage-view" id="stageView" role="region" tabindex="0" aria-label="پیش‌نمایش لوح؛ هر بخش را بکشید تا جابه‌جا شود، دو بار بزنید تا ویرایش شود">
+      <div class="page-holder" id="pageHolder"><div class="page-wrap" id="pageWrap"></div>
+        <div class="sel-bar" id="selBar" role="toolbar" aria-label="ابزار بخش انتخاب‌شده" hidden>
+          <b id="selName">—</b>
+          <button type="button" data-nudge="0,-1" aria-label="بالا" title="بالا (Shift: ۵ میلی‌متر)">▲</button>
+          <button type="button" data-nudge="0,1" aria-label="پایین" title="پایین">▼</button>
+          <button type="button" data-nudge="1,0" aria-label="راست" title="راست">▶</button>
+          <button type="button" data-nudge="-1,0" aria-label="چپ" title="چپ">◀</button>
+          <button type="button" data-center="1" aria-label="وسط افقی" title="وسطِ برگه (افقی)">⇔</button>
+          <span class="sep"></span>
+          <button type="button" data-grow="-1" aria-label="کوچک‌تر" title="کوچک‌تر">A−</button>
+          <button type="button" data-grow="1" aria-label="بزرگ‌تر" title="بزرگ‌تر">A+</button>
+          <span class="sep"></span>
+          <button type="button" data-selact="reset" aria-label="برگرداندن به جای اول" title="برگرداندن به جای اول">↺</button>
+          <button type="button" data-selact="edit" aria-label="ویرایش متن" title="ویرایش در پنل">✎</button>
+          <button type="button" data-selact="hide" aria-label="پنهان کردن" title="پنهان کن">⊘</button>
+          <button type="button" data-selact="close" aria-label="بستن نوار ابزار" title="بستن">✕</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -311,10 +353,11 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 
     <!-- الگوها -->
     <div class="pane active" id="pane-theme" role="tabpanel" aria-labelledby="tab-theme">
-      <div class="pane-head"><h2>الگوهای آماده</h2><p>با انتخاب الگو، رنگ، قاب، پس‌زمینه و فونت‌ها عوض می‌شود؛ <b>متن‌هایی که نوشته‌ای حفظ می‌شود.</b></p></div>
+      <div class="pane-head"><h2>الگوهای آماده</h2><p>قاب‌های نگارگری تذهیب و اسلیمی (برخی با میانهٔ سفید و فقط حاشیهٔ اسلیمی)، تذهیب خطی، مدرن، کودکانه و رسمی. با عوض کردن الگو <b>متن‌هایت حفظ می‌شود.</b></p></div>
       <div class="seg theme-filter" role="group" aria-label="دسته‌بندی الگوها" id="themeFilter">
         <button type="button" data-cat="all" aria-pressed="true">همه</button>
-        <button type="button" data-cat="تذهیب" aria-pressed="false">تذهیب</button>
+        <button type="button" data-cat="تذهیب و اسلیمی" aria-pressed="false">تذهیب و اسلیمی</button>
+        <button type="button" data-cat="تذهیب خطی" aria-pressed="false">تذهیب خطی</button>
         <button type="button" data-cat="مدرن" aria-pressed="false">مدرن</button>
         <button type="button" data-cat="کودکانه" aria-pressed="false">کودکانه</button>
         <button type="button" data-cat="رسمی" aria-pressed="false">رسمی</button>
@@ -345,7 +388,13 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       <div class="fld">
         <div class="fld-head"><span class="t">🏫 نشان / لوگو (بالای عنوان)</span></div>
         <div class="img-slot" id="slot-logo"></div>
-        <div class="mini-row" style="margin-top:8px"><div><label class="lbl" for="logoSize">اندازهٔ لوگو (میلی‌متر)</label><input id="logoSize" type="range" min="10" max="45" step="1"></div><output id="logoSizeVal" class="small muted"></output></div>
+        <div class="mini-row" style="margin-top:8px"><div><label class="lbl" for="logoSize">اندازهٔ لوگو (میلی‌متر)</label><input id="logoSize" type="range" min="10" max="60" step="1"></div><output id="logoSizeVal" class="small muted"></output></div>
+      </div>
+      <div class="fld" id="extrasBox">
+        <div class="fld-head"><span class="t">📝 متن‌های آزاد (هرجای برگه)</span></div>
+        <p class="small muted">برای بیت، جمله یا عنوانی که می‌خواهی دقیقاً جای دلخواهت باشد. بعد از افزودن، روی پیش‌نمایش بکشش.</p>
+        <div id="extraList" class="stack" style="margin-top:8px"></div>
+        <button class="btn soft block" id="btnAddExtra2" type="button" style="margin-top:8px">➕ افزودن متن آزاد</button>
       </div>
     </div>
 
@@ -393,7 +442,10 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
             <div><label class="lbl" for="metaPos">جای تاریخ و شماره</label><select id="metaPos"><option value="foot">پایین، وسط</option><option value="top">بالا، گوشهٔ چپ</option><option value="side">پایین، دو طرف</option></select></div>
             <div><label class="lbl" for="nameLine">زیر نام</label><select id="nameLine"><option value="none">بدون خط</option><option value="solid">خط ساده</option><option value="dots">نقطه‌چین</option></select></div>
             <div><label class="lbl" for="gScale">اندازهٔ کلی متن‌ها</label><input id="gScale" type="range" min="70" max="140" step="5"></div>
+            <div><label class="lbl" for="divStyle">نقش جداکنندهٔ زیر عنوان</label><select id="divStyle"><option value="classic">کلاسیک</option><option value="eslimi">اسلیمی</option><option value="toranj">ترنج</option><option value="line">خط ساده</option><option value="none">بدون نقش</option></select></div>
+            <div><label class="lbl" for="stampSize">اندازهٔ مهر (میلی‌متر)</label><input id="stampSize" type="range" min="15" max="50" step="1"></div>
           </div>
+          <div class="row" style="margin-top:8px"><button class="btn sm danger" id="btnResetPos" type="button">↺ برگرداندن همهٔ جابه‌جایی‌ها</button></div>
           <label class="check" style="margin-top:6px"><input type="checkbox" id="digitsFa"> عددها خودکار فارسی شوند (۱۲۳)</label>
           <label class="check"><input type="checkbox" id="autoFit"> اگر متن جا نشد، خودکار کوچک شود</label>
         </div>
@@ -444,6 +496,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <div class="card">
           <h3>🖼️ راهنمای روی صفحه (چاپ نمی‌شود)</h3>
           <label class="check"><input type="checkbox" id="guideOn"> نمایش نمونهٔ تذهیب و کادر ناحیهٔ متن</label>
+          <div style="margin:4px 0 8px"><label class="lbl" for="guideFrame">نمونهٔ تذهیب راهنما (اگر عکس برگه‌ات را ندادی)</label><select id="guideFrame"></select></div>
           <div class="img-slot" id="slot-guide"></div>
           <p class="small muted">از برگهٔ تذهیب خودت عکس صاف بگیر یا اسکن کن تا جای دقیق متن را ببینی.</p>
           <div style="margin-top:6px"><label class="lbl" for="guideOpacity">کم‌رنگیِ تصویر راهنما</label><input id="guideOpacity" type="range" min="10" max="100" step="5"></div>
@@ -550,18 +603,20 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       <div class="pane-head"><h2>راهنما</h2><p>در چند گام، گواهی آماده است.</p></div>
       <div>
         <div class="guide-step"><b class="n">۱</b><p><b>الگو:</b> یکی از الگوها را انتخاب کن. متن‌هایت با عوض کردن الگو پاک نمی‌شود.</p></div>
-        <div class="guide-step"><b class="n">۲</b><p><b>متن:</b> از «متن‌های آماده» شروع کن یا خودت بنویس. روی هر بخش پیش‌نمایش بزنی، کادر ویرایشش باز می‌شود. <b>{نام}</b>، <b>{امروز}</b>، <b>{شماره}</b> و <b>{ردیف}</b> خودکار پر می‌شوند.</p></div>
-        <div class="guide-step"><b class="n">۳</b><p><b>امضا و مهر:</b> عکس امضا و مهر را بده؛ با گزینهٔ «حذف زمینهٔ سفید» مثل امضای واقعی روی برگه می‌نشیند.</p></div>
-        <div class="guide-step"><b class="n">۴</b><p><b>برگهٔ تذهیب آماده:</b> اگر کاغذ گلاسهٔ تذهیب داری، حالت «فقط متن» را روشن کن، حاشیه‌ها را با خط‌کش اندازه بگیر و یک چاپ آزمایشی روی کاغذ معمولی بگیر.</p></div>
-        <div class="guide-step"><b class="n">۵</b><p><b>فهرست افراد:</b> نام‌ها را هر کدام در یک خط بنویس یا از اکسل کپی کن. هر ستون (مثلاً «رتبه») را با <b>{رتبه}</b> در متن بیاور.</p></div>
-        <div class="guide-step"><b class="n">۶</b><p><b>چاپ:</b> «چاپ همه» هر نفر را روی یک برگه چاپ می‌کند. اگر برگه‌ای خراب شد، با «از ردیف / تا ردیف» فقط همان را دوباره چاپ کن.</p></div>
-        <div class="helper" style="margin-top:10px">💡 همه‌چیز فقط در مرورگر خودت انجام می‌شود و هیچ داده‌ای جایی فرستاده نمی‌شود. طرح خودکار ذخیره می‌شود؛ با «ذخیرهٔ طرح» می‌توانی آن را به فایل ببری و روی دستگاه دیگر باز کنی. میان‌برها: <b>Ctrl+Z</b> واگرد، <b>Ctrl+Y</b> ازنو، <b>Ctrl+P</b> چاپ.</div>
+        <div class="guide-step"><b class="n">۲</b><p><b>جابه‌جایی آزاد:</b> هر بخش (عنوان، نام، متن، امضا، مهر، لوگو، تاریخ…) را روی پیش‌نمایش <b>بکش</b> و هرجا خواستی بگذار. یک بار زدن نوار ابزار را باز می‌کند (جابه‌جایی میلی‌متری، بزرگ و کوچک، وسط‌چین، برگرداندن). با «➕ متن آزاد» هم متن تازه‌ای هرجای برگه بگذار.</p></div>
+        <div class="guide-step"><b class="n">۳</b><p><b>متن:</b> از «متن‌های آماده» شروع کن یا خودت بنویس. روی هر بخش پیش‌نمایش دو بار بزنی، کادر ویرایشش باز می‌شود. برای حال‌وهوای سنتی، فونت «ایران نستعلیق» را برای عنوان و نام انتخاب کن. <b>{نام}</b>، <b>{امروز}</b>، <b>{شماره}</b> و <b>{ردیف}</b> خودکار پر می‌شوند.</p></div>
+        <div class="guide-step"><b class="n">۴</b><p><b>امضا و مهر:</b> عکس امضا و مهر را بده؛ با گزینهٔ «حذف زمینهٔ سفید» مثل امضای واقعی روی برگه می‌نشیند.</p></div>
+        <div class="guide-step"><b class="n">۵</b><p><b>برگهٔ تذهیب آماده:</b> اگر کاغذ گلاسهٔ تذهیب داری، حالت «فقط متن» را روشن کن، حاشیه‌ها را با خط‌کش اندازه بگیر و یک چاپ آزمایشی روی کاغذ معمولی بگیر.</p></div>
+        <div class="guide-step"><b class="n">۶</b><p><b>فهرست افراد:</b> نام‌ها را هر کدام در یک خط بنویس یا از اکسل کپی کن. هر ستون (مثلاً «رتبه») را با <b>{رتبه}</b> در متن بیاور.</p></div>
+        <div class="guide-step"><b class="n">۷</b><p><b>چاپ:</b> «چاپ همه» هر نفر را روی یک برگه چاپ می‌کند. اگر برگه‌ای خراب شد، با «از ردیف / تا ردیف» فقط همان را دوباره چاپ کن.</p></div>
+        <div class="helper" style="margin-top:10px">💡 همه‌چیز فقط در مرورگر خودت انجام می‌شود و هیچ داده‌ای جایی فرستاده نمی‌شود. طرح خودکار ذخیره می‌شود؛ با «ذخیرهٔ طرح» می‌توانی آن را به فایل ببری و روی دستگاه دیگر باز کنی. میان‌برها: <b>Ctrl+Z</b> واگرد، <b>Ctrl+Y</b> ازنو، <b>Ctrl+P</b> چاپ؛ برای بخش انتخاب‌شده: <b>کلیدهای جهت</b> جابه‌جایی ۱ میلی‌متری (با Shift پنج، با Alt دو دهم)، <b>+/−</b> بزرگ و کوچک، <b>Enter</b> ویرایش، <b>Esc</b> لغو انتخاب. هنگام کشیدن، بخش به خط وسط برگه می‌چسبد (با نگه داشتن Alt نمی‌چسبد).</div>
+        <p class="small muted" style="margin-top:10px">خط‌ها: «ایران نستعلیق» (طراحی شورای عالی اطلاع‌رسانی / حسین زاهدی)، «گلزار»، «نستعلیق نوتو» و «رقعهٔ عارف» همه با مجوز آزاد SIL OFL. قاب‌های تذهیب و اسلیمی برای حکیمستان ساخته شده‌اند.</p>
       </div>
     </div>
   </aside>
 </main>
 
-<footer class="app-footer">ابزار ساخت گواهی و تقدیرنامهٔ حکیمستان — همهٔ پردازش‌ها در مرورگر تو انجام می‌شود.</footer>
+<footer class="app-footer">لوح‌نگار حکیمستان — همهٔ پردازش‌ها در مرورگر تو انجام می‌شود و چیزی جایی فرستاده نمی‌شود.</footer>
 
 <div id="renderStage" aria-hidden="true"></div>
 <div id="printRoot" aria-hidden="true"></div>
@@ -573,8 +628,10 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 <script>
 "use strict";
 /* ═══════════════════════════════════════════════════════════════════
- * ساخت گواهی و تقدیرنامه — حکیمستان (نسخهٔ ۲)
- *  • الگوهای تذهیب (قاب نگارگری واقعی)، مدرن، کودکانه و رسمی
+ * لوح‌نگار حکیمستان — ساخت لوح تقدیر و گواهی (نسخهٔ ۳)
+ *  • قاب‌های نگارگری تذهیب و اسلیمی (عمودی و افقی)، تذهیب خطی، مدرن، کودکانه و رسمی
+ *  • جابه‌جایی آزاد هر بخش با کشیدن (موس/لمس/کلید جهت)، متن‌های آزاد، نوار ابزار شناور
+ *  • خط نستعلیق (ایران نستعلیق، گلزار، نوتو) و رقعه؛ فاصلهٔ سطر و حروف، پهنا، تراز و جلوهٔ هر بخش
  *  • حالت «فقط متن» برای چاپ روی برگهٔ گلاسهٔ تذهیب آماده با حاشیهٔ میلی‌متری،
  *    راهنمای تصویری چاپ‌نشدنی، جبران جابه‌جایی چاپگر و برگهٔ کالیبراسیون
  *  • فیلدهای ادغامی {نام} {امروز} {شماره} {ردیف} و هر ستون اکسل
@@ -586,14 +643,32 @@ const $ = id => document.getElementById(id);
 const PX_PER_MM = 96 / 25.4;
 const ASSET_FRAME = 'assets/img/tazhib-cert-frame.webp';
 const ASSET_SHAMSEH = 'assets/img/tazhib-shamseh.svg';
+/* ── قاب‌های نگارگری تذهیب و اسلیمی (تصویر کامل برگه؛ box = لبهٔ داخلی حاشیه به نسبت عرض/ارتفاع) ── */
+const FRAME_IMGS = {
+  'lajvard':       {n:'لاجورد و طلا', src:'assets/img/cert-frames/lajvard.webp', th:'assets/img/cert-frames/thumb/lajvard.webp', box:{l:.1768,r:.1787,t:.123,b:.1237}},
+  'eslimi-lajvard':{n:'اسلیمی لاجوردی (حاشیهٔ باریک)', src:'assets/img/cert-frames/eslimi-lajvard.webp', th:'assets/img/cert-frames/thumb/eslimi-lajvard.webp', pad:0.045, box:{l:.0991,r:.0991,t:.0708,b:.0701}},
+  'eslimi-gold':   {n:'اسلیمی طلایی ظریف', src:'assets/img/cert-frames/eslimi-gold.webp', th:'assets/img/cert-frames/thumb/eslimi-gold.webp', pad:0.085, box:{l:.0693,r:.0762,t:.0417,b:.0391}},
+  'firouzeh':      {n:'فیروزه و طلا', src:'assets/img/cert-frames/firouzeh.webp', th:'assets/img/cert-frames/thumb/firouzeh.webp', pad:0.04, box:{l:.1148,r:.1186,t:.0918,b:.0932}},
+  'lacquer':       {n:'لاکی قاجاری', src:'assets/img/cert-frames/lacquer.webp', th:'assets/img/cert-frames/thumb/lacquer.webp', box:{l:.2002,r:.2021,t:.1471,b:.1589}},
+  'zomorrod':      {n:'زمرد و طلا', src:'assets/img/cert-frames/zomorrod.webp', th:'assets/img/cert-frames/thumb/zomorrod.webp', box:{l:.167,r:.1709,t:.1413,b:.1419}},
+  'gol-morgh':     {n:'گل و مرغ', src:'assets/img/cert-frames/gol-morgh.webp', th:'assets/img/cert-frames/thumb/gol-morgh.webp', box:{l:.1602,r:.1621,t:.1087,b:.1094}},
+  'kashi':         {n:'کاشی هفت‌رنگ', src:'assets/img/cert-frames/kashi.webp', th:'assets/img/cert-frames/thumb/kashi.webp', box:{l:.1689,r:.1719,t:.1361,b:.1374}},
+  'toranj':        {n:'ترنج و لچک', src:'assets/img/cert-frames/toranj.webp', th:'assets/img/cert-frames/thumb/toranj.webp', pad:0.05, box:{l:.1133,r:.1143,t:.1309,b:.1484}},
+  'shahane':       {n:'شاهانهٔ سرمه‌ای', src:'assets/img/cert-frames/shahane.webp', th:'assets/img/cert-frames/thumb/shahane.webp', box:{l:.1738,r:.1787,t:.1393,b:.1387}}
+};
 
 /* ── فونت‌ها ── */
 const FONTS = [
   ['Vazirmatn','وزیرمتن — خوانا و امروزی'],['Lalezar','لاله‌زار — درشت و پرشکوه'],['Mirza','میرزا — کلاسیک و خوشنویسانه'],
   ['Amiri','امیری — نسخ کلاسیک'],['Katibeh','کتیبه — تاریخی'],['Samim','صمیم — ظریف'],['Estedad','استعداد — محکم'],
   ['Shabnam','شبنم — ساده'],['Sahel','ساحل — روان'],['Parastoo','پرستو — خوش‌فرم'],['Markazi Text','مرکزی — کتابی'],
-  ['Scheherazade New','شهرزاد — نسخ ادبی'],['Noto Naskh Arabic','نسخ نوتو — رسمی'],['Harmattan','هرمتان — باوقار'],['Gandom','گندم — کودکانه']
+  ['Scheherazade New','شهرزاد — نسخ ادبی'],['Noto Naskh Arabic','نسخ نوتو — رسمی'],['Harmattan','هرمتان — باوقار'],['Gandom','گندم — کودکانه'],
+  ['IranNastaliq','ایران نستعلیق — خوشنویسی سنتی'],['Gulzar','گلزار — نستعلیق روان'],['Noto Nastaliq Urdu','نستعلیق نوتو — پرشکوه'],['Aref Ruqaa','رقعه — خوشنویسی تزئینی']
 ];
+// خط‌های بلندبالا (نستعلیق) فاصلهٔ سطر بیشتری می‌خواهند تا کشیده‌ها بریده نشوند
+const FONT_LH = {'IranNastaliq':2.05, 'Gulzar':2.25, 'Noto Nastaliq Urdu':2.35, 'Aref Ruqaa':1.75, 'Lalezar':1.6, 'Katibeh':1.6};
+const NO_BOLD = new Set(['IranNastaliq','Gulzar','Lalezar','Katibeh','Gandom']);
+function fontLH(f){ return FONT_LH[f] || 1.75; }
 let customFonts = [];
 
 /* ── اندازهٔ برگه‌ها (mm، عمودی) ── */
@@ -659,13 +734,27 @@ const BG = {
 };
 
 /* ── الگوها ── */
+const NQ = {deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Vazirmatn'};
 const THEMES = [
-  {id:'lajvard', name:'تذهیب لاجوردی', cat:'تذهیب', bg:'ivory', frame:'image', fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Vazirmatn'}, sizes:{title:44}},
-  {id:'gold', name:'تذهیب طلایی', cat:'تذهیب', bg:'ivory', frame:'gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#2e2414', accent:'#6e430a', wm:'toranj', fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}},
-  {id:'firouzeh', name:'تذهیب فیروزه‌ای', cat:'تذهیب', bg:'turq', frame:'gold', fc:'#0e6f78', fc2:'#a87a22', ink:'#163a3e', accent:'#0b5a62', wm:'toranj', fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}},
-  {id:'shamseh', name:'شمسه و ترنج', cat:'تذهیب', bg:'ivory', frame:'double', fc:'#9a6d1c', fc2:'#6e430a', ink:'#33270f', accent:'#6e430a', wm:'shamseh', fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Noto Naskh Arabic'}, sizes:{title:42}},
-  {id:'antique', name:'کتیبهٔ عتیق', cat:'تذهیب', bg:'parchment', frame:'gold', fc:'#6b4a12', fc2:'#3e2a08', ink:'#2f2008', accent:'#5a2e06', wm:'toranj', fonts:{deco:'Amiri',title:'Katibeh',name:'Mirza',body:'Markazi Text'}, sizes:{title:46,body:16}},
-  {id:'wine', name:'زرشکی شاهانه', cat:'تذهیب', bg:'wine', frame:'gold', fc:'#e2bf6c', fc2:'#f3dc9b', ink:'#fbf1de', accent:'#f3d27e', wm:'toranj', dark:true, fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}},
+  {id:'f-lajvard', name:'لاجورد و طلا', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:lajvard', fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, fonts:NQ, sizes:{title:50, name:36, basmala:17}},
+  {id:'f-eslimi-lajvard', name:'اسلیمی لاجوردی (میانه سفید)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:eslimi-lajvard', fc:'#1d3a8a', fc2:'#b8862b', ink:'#24324a', accent:'#1d3a8a', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'Mirza', body:'Vazirmatn'}, sizes:{title:52, name:32, basmala:17}},
+  {id:'f-eslimi-gold', name:'اسلیمی طلایی ظریف (میانه سفید)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:eslimi-gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#33270f', accent:'#7a5410', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:54, name:38, basmala:17, body:16}},
+  {id:'f-firouzeh', name:'فیروزه و طلا', cat:'تذهیب و اسلیمی', bg:'ivory', frame:'img:firouzeh', fc:'#0e6f78', fc2:'#a87a22', ink:'#1f3236', accent:'#0b5a62', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'Mirza', body:'Vazirmatn'}, sizes:{title:50, name:32, basmala:17}},
+  {id:'f-lacquer', name:'لاکی قاجاری', cat:'تذهیب و اسلیمی', bg:'ivory', frame:'img:lacquer', fc:'#8a1c1c', fc2:'#b8862b', ink:'#2e1a10', accent:'#7a1414', wm:null, fonts:{deco:'IranNastaliq', title:'Aref Ruqaa', name:'IranNastaliq', body:'Vazirmatn'}, sizes:{title:40, name:34, basmala:15, body:13.5, intro:13}},
+  {id:'f-zomorrod', name:'زمرد و طلا', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:zomorrod', fc:'#0d5a32', fc2:'#b8862b', ink:'#1d2a22', accent:'#0d5a32', wm:null, fonts:NQ, sizes:{title:48, name:34, basmala:16, body:14}},
+  {id:'f-golmorgh', name:'گل و مرغ', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:gol-morgh', fc:'#8a1c1c', fc2:'#b8862b', ink:'#2b1d1d', accent:'#8a1c1c', wm:null, fonts:NQ, sizes:{title:50, name:34, basmala:16, body:14}},
+  {id:'f-kashi', name:'کاشی هفت‌رنگ', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:kashi', fc:'#1546a0', fc2:'#d9a400', ink:'#1c2740', accent:'#1546a0', wm:null, fonts:{deco:'IranNastaliq', title:'Lalezar', name:'IranNastaliq', body:'Vazirmatn'}, sizes:{title:38, name:34, basmala:16, body:14}},
+  {id:'f-toranj', name:'ترنج و لچک', cat:'تذهیب و اسلیمی', bg:'parchment', frame:'img:toranj', fc:'#6e430a', fc2:'#1f3a7a', ink:'#33240c', accent:'#6e430a', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:52, name:36, basmala:17, body:16}},
+  {id:'f-shahane', name:'شاهانهٔ سرمه‌ای', cat:'تذهیب و اسلیمی', bg:'navy', frame:'img:shahane', fc:'#d9b45e', fc2:'#f0d898', ink:'#f6ecd0', accent:'#ecc66c', wm:null, dark:true, fonts:NQ, sizes:{title:50, name:36, basmala:16, body:14}},
+  {id:'f-lajvard-l', name:'لاجورد و طلا (افقی)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:lajvard', fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, orient:'landscape', fonts:NQ, sizes:{title:44, name:32, basmala:15, body:13.5, intro:13}},
+  {id:'f-eslimi-gold-l', name:'اسلیمی طلایی (افقی)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:eslimi-gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#33270f', accent:'#7a5410', wm:null, orient:'landscape', fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:48, name:36, basmala:15, body:15}},
+  {id:'f-golmorgh-l', name:'گل و مرغ (افقی)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:gol-morgh', fc:'#8a1c1c', fc2:'#b8862b', ink:'#2b1d1d', accent:'#8a1c1c', wm:null, orient:'landscape', fonts:NQ, sizes:{title:44, name:32, basmala:15, body:13.5, intro:13}},
+  {id:'lajvard', name:'قاب ایران‌گرد', cat:'تذهیب و اسلیمی', bg:'ivory', frame:'image', fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Vazirmatn'}, sizes:{title:44}},
+  {id:'gold', name:'تذهیب طلایی', cat:'تذهیب خطی', bg:'ivory', frame:'gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#2e2414', accent:'#6e430a', wm:'toranj', fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}},
+  {id:'firouzeh', name:'تذهیب فیروزه‌ای', cat:'تذهیب خطی', bg:'turq', frame:'gold', fc:'#0e6f78', fc2:'#a87a22', ink:'#163a3e', accent:'#0b5a62', wm:'toranj', fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}},
+  {id:'shamseh', name:'شمسه و ترنج', cat:'تذهیب خطی', bg:'ivory', frame:'double', fc:'#9a6d1c', fc2:'#6e430a', ink:'#33270f', accent:'#6e430a', wm:'shamseh', fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Noto Naskh Arabic'}, sizes:{title:42}},
+  {id:'antique', name:'کتیبهٔ عتیق', cat:'تذهیب خطی', bg:'parchment', frame:'gold', fc:'#6b4a12', fc2:'#3e2a08', ink:'#2f2008', accent:'#5a2e06', wm:'toranj', fonts:{deco:'Amiri',title:'Katibeh',name:'Mirza',body:'Markazi Text'}, sizes:{title:46,body:16}},
+  {id:'wine', name:'زرشکی شاهانه', cat:'تذهیب خطی', bg:'wine', frame:'gold', fc:'#e2bf6c', fc2:'#f3dc9b', ink:'#fbf1de', accent:'#f3d27e', wm:'toranj', dark:true, fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}},
   {id:'navy', name:'سرمه‌ای و طلایی (افقی)', cat:'رسمی', bg:'navy', frame:'gold', fc:'#d9b45e', fc2:'#f0d898', ink:'#f3f6fb', accent:'#f0cf7a', wm:null, dark:true, orient:'landscape', fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}, sizes:{title:38,name:28,body:14}},
   {id:'teal', name:'مدرن فیروزه‌ای', cat:'مدرن', bg:'softwhite', frame:'band', fc:'#0e7c86', fc2:'#d4af37', ink:'#1f2d3d', accent:'#0a5f68', wm:null, fonts:{deco:'Vazirmatn',title:'Lalezar',name:'Estedad',body:'Vazirmatn'}},
   {id:'wave', name:'مدرن موج (افقی)', cat:'مدرن', bg:'white', frame:'wave', fc:'#2f4fd1', fc2:'#15aabf', ink:'#1d2741', accent:'#2a46b8', wm:null, orient:'landscape', fonts:{deco:'Vazirmatn',title:'Lalezar',name:'Estedad',body:'Vazirmatn'}, sizes:{title:38,name:28,body:14}},
@@ -674,9 +763,9 @@ const THEMES = [
   {id:'formal', name:'رسمی اداری', cat:'رسمی', bg:'white', frame:'double', fc:'#1e3a5f', fc2:'#1e3a5f', ink:'#1b2533', accent:'#1e3a5f', wm:null, fonts:{deco:'Noto Naskh Arabic',title:'Noto Naskh Arabic',name:'Noto Naskh Arabic',body:'Noto Naskh Arabic'}, sizes:{title:36,name:26}},
   {id:'kids', name:'ستاره‌های رنگی', cat:'کودکانه', bg:'sun', frame:'kids', fc:'#e8590c', fc2:'#7048e8', ink:'#2b2b2b', accent:'#c2410c', wm:null, fonts:{deco:'Vazirmatn',title:'Lalezar',name:'Lalezar',body:'Samim'}, sizes:{title:46,name:34,body:16}},
   {id:'kids-sky', name:'آسمان کودکانه', cat:'کودکانه', bg:'sky', frame:'kids', fc:'#1971c2', fc2:'#f08c00', ink:'#1c2a3a', accent:'#1864ab', wm:null, fonts:{deco:'Vazirmatn',title:'Lalezar',name:'Lalezar',body:'Samim'}, sizes:{title:46,name:34,body:16}},
-  {id:'paper', name:'برگهٔ تذهیب آماده (فقط متن)', cat:'تذهیب', bg:'white', frame:'none', fc:'#8a5a00', fc2:'#8a5a00', ink:'#1f1f1f', accent:'#1e3a5f', wm:null, paper:true, fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Vazirmatn'}, sizes:{title:40}}
+  {id:'paper', name:'برگهٔ تذهیب آماده (فقط متن)', cat:'تذهیب و اسلیمی', bg:'white', frame:'none', fc:'#8a5a00', fc2:'#8a5a00', ink:'#1f1f1f', accent:'#1e3a5f', wm:null, paper:true, fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Vazirmatn'}, sizes:{title:40}}
 ];
-const FRAME_STYLES = [['image','تذهیب نگارگری (تصویری)'],['gold','تذهیب طلایی خطی'],['double','دو خطی کلاسیک'],['minimal','مینیمال'],['band','نوار مدرن کناری'],['wave','موج مدرن'],['kids','ستاره‌های کودکانه'],['none','بدون قاب']];
+const FRAME_STYLES = [...Object.entries(FRAME_IMGS).map(([k, v]) => ['img:' + k, '🖼️ ' + v.n]), ['image','🖼️ قاب ایران‌گرد (کاشی‌وار)'],['gold','تذهیب طلایی خطی'],['double','دو خطی کلاسیک'],['minimal','مینیمال'],['band','نوار مدرن کناری'],['wave','موج مدرن'],['kids','ستاره‌های کودکانه'],['none','بدون قاب']];
 
 const PAPER_PRESETS = [
   {n:'A4 عمودی — تذهیب حاشیه‌پهن', size:'A4', o:'portrait', m:{t:50,r:42,b:46,l:42}},
@@ -694,7 +783,7 @@ function makeFieldStyles(th){
   const out = {};
   for (const f of FIELDS){
     const fam = th.fonts[f.role] || th.fonts.body;
-    out[f.k] = { font: fam, size: (th.sizes && th.sizes[f.k]) || DEFAULT_SIZE[f.k], bold: f.k === 'title' || f.k === 'name', color: '' };
+    out[f.k] = { font: fam, size: (th.sizes && th.sizes[f.k]) || DEFAULT_SIZE[f.k], bold: (f.k === 'title' || f.k === 'name') && !NO_BOLD.has(fam), color: '', lh: 0, ls: 0, w: 100, align: '', fx: '' };
   }
   return out;
 }
@@ -703,9 +792,9 @@ function baseState(){
   const fields = {};
   for (const f of FIELDS) if (f.type !== 'none') fields[f.k] = { on: !['verse','serial'].includes(f.k), text: DEFAULT_TEXT[f.k] || '' };
   return {
-    v:2, theme:th.id, mode:'design',
+    v:3, theme:th.id, mode:'design',
     page:{size:'A4', orient:'portrait', w:210, h:297},
-    margins:{t:31,r:31,b:31,l:31},
+    margins:autoMargins(th.frame, 210, 297, 1),
     frame:{style:th.frame, color:th.fc, color2:th.fc2, size:100},
     bg:{type:'theme', c1:'#fffdf6', c2:'#f3e5c3', angle:160},
     colors:{ink:th.ink, accent:th.accent},
@@ -713,9 +802,10 @@ function baseState(){
     layout:'spread', bodyAlign:'center', signAlign:'end', metaPos:'foot', nameLine:'none', gScale:100, digitsFa:true, autoFit:true,
     fields, styles:makeFieldStyles(th),
     signers:[{on:true,text:'نام مدیر\nمدیر آموزشگاه',img:null},{on:false,text:'نام آموزگار\nآموزگار پایه',img:null},{on:false,text:'',img:null}],
-    stamp:null, logo:null, logoSize:22,
+    stamp:null, logo:null, logoSize:22, stampSize:27, divider:'classic', divW:62,
+    pos:{}, extras:[],
     serialStart:1,
-    paper:{margins:{t:40,r:33,b:38,l:33}, offX:0, offY:0, guide:true, guideImg:null, guideOpacity:45, ink:'#1f1f1f', accent:'#1e3a5f', link:true},
+    paper:{margins:{t:40,r:33,b:38,l:33}, offX:0, offY:0, guide:true, guideImg:null, guideFrame:'img:lajvard', guideOpacity:45, ink:'#1f1f1f', accent:'#1e3a5f', link:true},
     data:null, map:{name:0, family:-1}, preview:0
   };
 }
@@ -729,8 +819,16 @@ function deepMerge(base, add){
 }
 let S = loadState();
 function loadState(){
-  try { const raw = localStorage.getItem(LS_KEY); if (raw) return deepMerge(baseState(), JSON.parse(raw)); } catch(e){}
+  try { const raw = localStorage.getItem(LS_KEY); if (raw) return fixState(deepMerge(baseState(), JSON.parse(raw))); } catch(e){}
   return baseState();
+}
+// طرح‌های نسخهٔ قبل: سبک‌های تازهٔ هر بخش و فهرست‌ها را کامل می‌کند
+function fixState(st){
+  for (const f of FIELDS){ const s = st.styles[f.k]; if (s) for (const [k, v] of Object.entries({lh:0, ls:0, w:100, align:'', fx:''})) if (s[k] == null) s[k] = v; }
+  if (!st.pos || typeof st.pos !== 'object' || Array.isArray(st.pos)) st.pos = {};
+  if (!Array.isArray(st.extras)) st.extras = [];
+  st.v = 3;
+  return st;
 }
 let saveTimer = 0, quotaWarned = false;
 function persist(){
@@ -757,7 +855,7 @@ function snapshot(immediate){
 }
 function undoRedo(d){
   const j = hist.i + d; if (j < 0 || j >= hist.stack.length) return;
-  hist.i = j; hist.lock = true; S = JSON.parse(hist.stack[j]); syncUI(); render(); persist(); hist.lock = false; updateUndoBtns();
+  hist.i = j; hist.lock = true; S = JSON.parse(hist.stack[j]); syncUI(); renderExtras(); render(); persist(); hist.lock = false; updateUndoBtns();
 }
 function updateUndoBtns(){ $('btnUndo').disabled = hist.i <= 0; $('btnRedo').disabled = hist.i >= hist.stack.length - 1; }
 function changed(opts){ opts = opts || {}; persist(); snapshot(opts.now); render(); if (opts.thumbs) thumbsDirty = true; }
@@ -943,6 +1041,13 @@ function loadFrameImg(){
   if (!frameImgP) frameImgP = new Promise(res => { const im = new Image(); im.onload = () => { frameImg = im; res(im); }; im.onerror = () => res(null); im.src = ASSET_FRAME; });
   return frameImgP;
 }
+function frameImgOf(style){ return typeof style === 'string' && style.startsWith('img:') ? FRAME_IMGS[style.slice(4)] || null : null; }
+// لایهٔ قاب نگارگری کامل؛ در برگهٔ افقی ۹۰ درجه می‌چرخد
+function frameImgLayer(fi, W, H, thumb, extra){
+  const src = thumb ? fi.th : fi.src;
+  const st = W > H ? `inset:auto;left:50%;top:50%;width:calc(var(--mm)*${H});height:calc(var(--mm)*${W});transform:translate(-50%,-50%) rotate(90deg)` : '';
+  return `<div class="lyr fr"${extra ? ` style="${extra}"` : ''}><img src="${src}" alt=""${st ? ` style="${st}"` : ''}></div>`;
+}
 function imageFrameURL(W, H, k, pxmm){
   if (!frameImg) return '';
   const cMm = Math.min(W, H) * .2 * k;
@@ -970,6 +1075,13 @@ function imageFrameURL(W, H, k, pxmm){
 function autoMargins(style, W, H, k){
   const m = Math.min(W, H);
   const v = (x) => Math.round(x);
+  const fi = frameImgOf(style);
+  if (fi){
+    const b = fi.box, p = (fi.pad || .03) * m;
+    if (W <= H) return {t:v(b.t*H + p), r:v(b.r*W + p), b:v(b.b*H + p), l:v(b.l*W + p)};
+    // افقی: تصویر ۹۰ درجه می‌چرخد (لبهٔ چپ تصویر ← بالای برگه)
+    return {t:v(b.l*H + p), r:v(b.t*W + p), b:v(b.r*H + p), l:v(b.b*W + p)};
+  }
   switch (style){
     case 'image': { const c = m * .2 * k; const a = v(c * .62 + 5); return {t:a, r:a, b:a, l:a}; }
     case 'gold': return {t:v(24*k+4), r:v(22*k+4), b:v(22*k+4), l:v(22*k+4)};
@@ -1004,34 +1116,37 @@ function pageHTML(o){
       if (th.wm === 'shamseh') layers += `<div class="lyr wm"><img src="${ASSET_SHAMSEH}" alt=""></div>`;
       else layers += `<div class="lyr wm">${watermarkSVG(W, H, S.frame.color)}</div>`;
     }
-    if (S.frame.style === 'image'){ const u = imageFrameURL(W, H, fk, o.pxmm || 3); if (u) layers += `<div class="lyr fr"><img src="${u}" alt=""></div>`; }
+    const fi = frameImgOf(S.frame.style);
+    if (fi) layers += frameImgLayer(fi, W, H, !!o.thumb);
+    else if (S.frame.style === 'image'){ const u = imageFrameURL(W, H, fk, o.pxmm || 3); if (u) layers += `<div class="lyr fr"><img src="${u}" alt=""></div>`; }
     else if (S.frame.style !== 'none') layers += `<div class="lyr fr">${frameSVG(S.frame.style, W, H, S.frame.color, S.frame.color2, fk)}</div>`;
   } else if (o.screen && S.paper.guide){
     const op = S.paper.guideOpacity / 100;
     if (S.paper.guideImg) layers += `<div class="lyr" style="opacity:${op}"><img src="${S.paper.guideImg}" alt="" style="object-fit:fill"></div>`;
-    else { const u = imageFrameURL(W, H, 1, o.pxmm || 2); if (u) layers += `<div class="lyr" style="opacity:${op}"><img src="${u}" alt=""></div>`; }
+    else { const gfi = frameImgOf(S.paper.guideFrame);
+      if (gfi) layers += frameImgLayer(gfi, W, H, !!o.thumb, 'opacity:' + op);
+      else { const u = imageFrameURL(W, H, 1, o.pxmm || 2); if (u) layers += `<div class="lyr" style="opacity:${op}"><img src="${u}" alt=""></div>`; } }
     if (!o.thumb) layers += `<div class="safe" style="top:calc(var(--mm)*${t});right:calc(var(--mm)*${r});bottom:calc(var(--mm)*${b});left:calc(var(--mm)*${l})"><span>ناحیهٔ متن ${faDigits(Math.round(W-l-r))}×${faDigits(Math.round(H-t-b))} میلی‌متر — این کادر چاپ نمی‌شود</span></div>`;
   }
   const st = S.styles;
   const fstyle = (k, extraColor) => {
     const s = st[k] || {font:'Vazirmatn', size:14};
-    const col = s.color || extraColor || ink;
-    return `font-family:'${s.font}',Vazirmatn,sans-serif;--sz:${s.size};font-weight:${s.bold ? 700 : 400};color:${col}`;
+    return textStyle(s, s.color || extraColor || ink, k === 'name' ? (FONT_LH[s.font] || 1.6) : fontLH(s.font)) + posCSS(k);
   };
   const F = S.fields, on = k => F[k] && F[k].on && String(F[k].text || '').trim() !== '';
   const cl = o.screen ? ' clickable' : '';
-  const fdiv = (k, cls, colr) => on(k) ? `<div class="cf f-${k}${cls ? ' ' + cls : ''}${cl}" data-f="${k}" style="${fstyle(k, colr)}">${fieldHTML(F[k].text, ctx)}</div>` : '';
+  const fdiv = (k, cls, colr) => on(k) ? `<div class="cf f-${k}${cls ? ' ' + cls : ''}${cl}" data-f="${k}" data-mv="${k}" style="${fstyle(k, colr)}">${fieldHTML(F[k].text, ctx)}</div>` : '';
   // سر
   let head = '';
   head += fdiv('basmala', '', accent);
-  if (S.logo) head += `<img class="c-logo${cl}" data-f="logo" src="${S.logo}" alt="" style="--lg:${S.logoSize}">`;
+  if (S.logo) head += `<img class="c-logo${cl}" data-f="logo" data-mv="logo" src="${S.logo}" alt="" style="--lg:${S.logoSize};${posCSS('logo')}">`;
   head += fdiv('verse', '', accent);
   head += fdiv('title', '', accent);
   head += fdiv('subtitle');
-  const divider = `<svg class="divider" viewBox="0 0 124 12" aria-hidden="true"><g fill="${accent}" stroke="${accent}"><path d="M6 6H50" stroke-width=".7" fill="none"/><path d="M74 6H118" stroke-width=".7" fill="none"/><path d="M62 1L67 6L62 11L57 6Z" stroke="none"/><circle cx="53" cy="6" r="1.4" stroke="none"/><circle cx="71" cy="6" r="1.4" stroke="none"/><path d="M2 6C4 3.5 6 3.5 8 6C6 8.5 4 8.5 2 6Z" stroke="none"/><path d="M116 6C118 3.5 120 3.5 122 6C120 8.5 118 8.5 116 6Z" stroke="none"/></g></svg>`;
+  const divider = S.divider === 'none' ? '' : `<svg class="divider${cl}" data-mv="divider" viewBox="0 0 124 12" aria-hidden="true" style="--dw:${S.divW || 62};${posCSS('divider')}">${dividerSVG(S.divider, accent)}</svg>`;
   // میانه
   let mid = fdiv('intro');
-  if (on('name')) mid += `<div class="cf f-name${S.nameLine !== 'none' ? ' line-' + S.nameLine : ''}${cl}" data-f="name" style="${fstyle('name', accent)}">${fieldHTML(F.name.text, ctx)}</div>`;
+  if (on('name')) mid += `<div class="cf f-name${S.nameLine !== 'none' ? ' line-' + S.nameLine : ''}${cl}" data-f="name" data-mv="name" style="${fstyle('name', accent)}">${fieldHTML(F.name.text, ctx)}</div>`;
   mid += fdiv('body', 'al-' + S.bodyAlign);
   // پا
   const sigs = S.signers.filter(s => s.on && (String(s.text).trim() || s.img));
@@ -1039,7 +1154,8 @@ function pageHTML(o){
   sigs.forEach((s, i) => {
     const lines = String(s.text || '').split('\n').map(x => x.trim()).filter(Boolean);
     const txt = lines.map((ln, j) => j === 0 && lines.length > 1 ? `<b>${fieldHTML(ln, ctx)}</b>` : fieldHTML(ln, ctx)).join('<br>');
-    signers += `<div class="signer${cl}" data-f="sign">${i === 0 && S.stamp ? `<img class="stamp" src="${S.stamp}" alt="">` : ''}${s.img ? `<img class="sig-img" src="${s.img}" alt="">` : ''}<div class="cf sig-txt" style="${fstyle('sign')}">${txt}</div></div>`;
+    const si = S.signers.indexOf(s);
+    signers += `<div class="signer${cl}" data-f="sign" data-mv="sign${si}" style="${posCSS('sign' + si)}">${i === 0 && S.stamp ? `<img class="stamp${cl}" data-f="stamp" data-mv="stamp" src="${S.stamp}" alt="" style="--st:${S.stampSize || 27};${posCSS('stamp')}">` : ''}${s.img ? `<img class="sig-img" src="${s.img}" alt="">` : ''}<div class="cf sig-txt" style="${textStyle(st.sign, st.sign.color || ink, fontLH(st.sign.font))}">${txt}</div></div>`;
   });
   const metaItems = fdiv('date') + fdiv('serial');
   let foot = '';
@@ -1051,13 +1167,51 @@ function pageHTML(o){
       <div class="grp c-head">${head}${(on('title') || on('subtitle')) ? divider : ''}</div>
       <div class="grp c-mid">${mid}</div>
       <div class="c-foot">${foot}</div></div>`;
+  // متن‌های آزاد: جایشان مستقیماً روی برگه (میلی‌متر از چپ و بالا) است
+  const odx = paper && o.offsets ? num(S.paper.offX,0) : 0, ody = paper && o.offsets ? num(S.paper.offY,0) : 0;
+  let extras = '';
+  for (const ex of (S.extras || [])){
+    if (!String(ex.text || '').trim()) continue;
+    const w = num(ex.w, 120);
+    extras += `<div class="cf xt${cl}" data-mv="x:${esc(ex.id)}" data-x="${esc(ex.id)}" style="--fit:1;--gs:${S.gScale/100};left:calc(var(--mm)*${num(ex.x, W/2) - w/2 + odx});top:calc(var(--mm)*${num(ex.y, H/2) + ody});width:calc(var(--mm)*${w});${textStyle(Object.assign({}, ex, {w:100}), ex.color || accent, fontLH(ex.font))}">${fieldHTML(ex.text, ctx)}</div>`;
+  }
   return `<div class="cert${paper ? ' is-paper' : ''}" style="--mm:${o.mm};--ink:${ink};width:calc(var(--mm)*${W});height:calc(var(--mm)*${H});background:${bg}">
     ${layers}
-    <div class="c-box" style="top:calc(var(--mm)*${t});right:calc(var(--mm)*${r});bottom:calc(var(--mm)*${b});left:calc(var(--mm)*${l})">${metaTop}${inner}</div>
+    <div class="c-box" style="top:calc(var(--mm)*${t});right:calc(var(--mm)*${r});bottom:calc(var(--mm)*${b});left:calc(var(--mm)*${l})">${metaTop}${inner}</div>${extras}
   </div>`;
 }
-// کوچک‌سازی خودکار؛ برمی‌گرداند آیا جا نشده بود
+// سبک متن یک بخش: فونت، اندازه، درشتی، رنگ، فاصلهٔ سطر و کلمه، پهنا، تراز و جلوه
+const FX = {
+  shadow:'0 .06em .12em rgba(0,0,0,.35)',
+  glow:'0 0 .18em #fff,0 0 .36em #fff,0 0 .5em #fff',
+  gold:'0 .03em 0 #fff6d5,0 .06em .1em rgba(120,80,10,.45)',
+  outline:'-.03em -.03em 0 #fff,.03em -.03em 0 #fff,-.03em .03em 0 #fff,.03em .03em 0 #fff,0 0 .12em #fff'
+};
+function textStyle(s, col, defLH){
+  let css = `font-family:'${s.font}',Vazirmatn,sans-serif;--sz:${s.size};font-weight:${s.bold ? 700 : 400};color:${col};line-height:${num(s.lh, 0) > 0 ? s.lh : defLH};`;
+  if (num(s.ls, 0)) css += `word-spacing:${s.ls}em;`;
+  if (s.w && +s.w !== 100) css += `max-width:${s.w}%;width:${s.w}%;`;
+  if (s.align) css += `text-align:${s.align};${s.align === 'justify' ? 'text-align-last:center;' : ''}`;
+  if (s.fx && FX[s.fx]) css += `text-shadow:${FX[s.fx]};`;
+  return css;
+}
+// جابه‌جایی دلخواه هر بخش (میلی‌متر) نسبت به جای خودکارش
+function posCSS(k){
+  const p = S.pos && S.pos[k];
+  return p && (p.x || p.y) ? `transform:translate(calc(var(--mm)*${p.x || 0}),calc(var(--mm)*${p.y || 0}));` : '';
+}
+function dividerSVG(kind, c){
+  if (kind === 'line') return `<g stroke="${c}" fill="none"><path d="M10 6H114" stroke-width=".8"/><path d="M34 9H90" stroke-width=".4"/></g>`;
+  if (kind === 'eslimi') return `<g fill="none" stroke="${c}" stroke-width=".7" stroke-linecap="round"><path d="M62 6C56 1 48 1 44 6C40 11 32 11 26 6C20 1 12 2 8 6"/><path d="M62 6C68 1 76 1 80 6C84 11 92 11 98 6C104 1 112 2 116 6"/><path d="M44 6C46 3.5 49 3.5 50 5.5M80 6C78 3.5 75 3.5 74 5.5M26 6C24 8.5 21 8.5 20 6.5M98 6C100 8.5 103 8.5 104 6.5"/></g><g fill="${c}"><path d="M62 2.2C64 4 64 8 62 9.8C60 8 60 4 62 2.2Z"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="119.5" cy="6" r="1.2"/></g>`;
+  if (kind === 'toranj') return `<g fill="${c}"><path d="M62 .6C67 2.5 70 4.5 72 6C70 7.5 67 9.5 62 11.4C57 9.5 54 7.5 52 6C54 4.5 57 2.5 62 .6Z" opacity=".9"/><path d="M62 3C64.5 4 66 5 67 6C66 7 64.5 8 62 9C59.5 8 58 7 57 6C58 5 59.5 4 62 3Z" fill="#fff" opacity=".55"/></g><g stroke="${c}" fill="none" stroke-width=".6"><path d="M8 6H48M76 6H116"/><path d="M14 4H44M80 4H110M14 8H44M80 8H110" stroke-width=".3"/></g><g fill="${c}"><path d="M4 6L7 3.6L10 6L7 8.4Z"/><path d="M114 6L117 3.6L120 6L117 8.4Z"/></g>`;
+  return `<g fill="${c}" stroke="${c}"><path d="M6 6H50" stroke-width=".7" fill="none"/><path d="M74 6H118" stroke-width=".7" fill="none"/><path d="M62 1L67 6L62 11L57 6Z" stroke="none"/><circle cx="53" cy="6" r="1.4" stroke="none"/><circle cx="71" cy="6" r="1.4" stroke="none"/><path d="M2 6C4 3.5 6 3.5 8 6C6 8.5 4 8.5 2 6Z" stroke="none"/><path d="M116 6C118 3.5 120 3.5 122 6C120 8.5 118 8.5 116 6Z" stroke="none"/></g>`;
+}
+// کوچک‌سازی خودکار؛ برمی‌گرداند آیا جا نشده بود (جابه‌جایی‌های دستی هنگام اندازه‌گیری نادیده گرفته می‌شود)
 function autofit(certEl){
+  certEl.classList.add('measuring');
+  try { return autofitCore(certEl); } finally { certEl.classList.remove('measuring'); }
+}
+function autofitCore(certEl){
   let shrunk = false;
   const nm = certEl.querySelector('.f-name');
   if (nm){ nm.style.setProperty('--nf', 1); let f = 1; while (nm.scrollWidth > nm.clientWidth + 1 && f > .5){ f -= .04; nm.style.setProperty('--nf', f.toFixed(2)); shrunk = true; } }
@@ -1080,6 +1234,7 @@ function render(){
   const cert = wrap.firstElementChild;
   const fit = autofit(cert);
   fitStage();
+  markSel();
   // نشانگرها
   const pills = [];
   if (isPaper()) pills.push('<span class="pill paper">📜 حالت فقط متن — قاب و زمینه چاپ نمی‌شود</span>');
@@ -1108,6 +1263,7 @@ function fitStage(){
   $('pageHolder').style.width = (pw * s) + 'px';
   $('pageHolder').style.height = (ph * s) + 'px';
   $('zoomVal').textContent = zoom ? faDigits(Math.round(s * 100)) + '٪' : 'جا';
+  placeSelBar();
 }
 
 /* ── تصاویر کوچک الگوها ── */
@@ -1116,8 +1272,11 @@ function renderThumbs(){
   thumbsDirty = false;
   const keep = JSON.stringify(S);
   const grid = $('themeGrid'); grid.innerHTML = '';
-  for (const th of THEMES){
-    if (themeCat !== 'all' && th.cat !== themeCat && !(themeCat === 'تذهیب' && th.paper)) continue;
+  const CATS = ['تذهیب و اسلیمی','تذهیب خطی','مدرن','کودکانه','رسمی'];
+  const list = THEMES.filter(th => themeCat === 'all' || th.cat === themeCat).sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
+  let lastCat = '';
+  for (const th of list){
+    if (themeCat === 'all' && th.cat !== lastCat){ lastCat = th.cat; const h = document.createElement('div'); h.className = 'theme-sec'; h.textContent = th.cat; grid.appendChild(h); }
     hist.lock = true;
     applyTheme(th, true);
     S.mode = th.paper ? 'paper' : 'design';
@@ -1144,7 +1303,7 @@ function applyTheme(th, quiet){
   S.margins = autoMargins(th.frame, W, H, 1);
   const old = S.styles || {};
   S.styles = makeFieldStyles(th);
-  if (quiet) for (const k in S.styles) if (old[k]) S.styles[k].bold = old[k].bold;
+  if (quiet) for (const k in S.styles) if (old[k]) S.styles[k].bold = old[k].bold && !NO_BOLD.has(S.styles[k].font);
   S.mode = th.paper ? 'paper' : (quiet ? S.mode : 'design');
   if (th.paper){ S.paper.ink = th.ink; S.paper.accent = th.accent; }
 }
@@ -1192,8 +1351,21 @@ function buildStyleBoxes(){
       <div class="mini-row"><div><label class="lbl" for="ss-${f.k}">اندازه: <output id="so-${f.k}">${faDigits(s.size)}</output> pt</label><input type="range" id="ss-${f.k}" data-ss="${f.k}" min="7" max="80" step="0.5" value="${s.size}"></div>
       <label class="check"><input type="checkbox" data-sb="${f.k}"${s.bold ? ' checked' : ''}> درشت</label></div>
       <div class="row"><label class="check"><input type="color" data-sc="${f.k}" value="${s.color || '#333333'}"> رنگ ویژه</label><button type="button" class="btn sm" data-scr="${f.k}">رنگ خودکار</button></div>
+      ${styleExtraHTML(f.k, s)}
     </div></details>`;
   }).join('');
+}
+// کنترل‌های پیشرفتهٔ هر بخش (برای بخش‌ها و متن‌های آزاد مشترک)
+function styleExtraHTML(k, s){
+  const sel = (attr, val, opts) => `<select data-${attr}="${k}">${opts.map(([v, n]) => `<option value="${v}"${String(val || '') === v ? ' selected' : ''}>${n}</option>`).join('')}</select>`;
+  return `<div class="grid2">
+    <div><label class="lbl">فاصلهٔ سطرها</label>${sel('slh', s.lh || '', [['','خودکار'],['1.3','فشرده'],['1.6','کم'],['1.9','معمولی'],['2.3','باز'],['2.8','خیلی باز']])}</div>
+    <div><label class="lbl">تراز</label>${sel('sal', s.align || '', [['','الگو'],['center','وسط'],['right','راست'],['left','چپ'],['justify','هم‌تراز']])}</div>
+    ${k.startsWith('x:') ? '' : `<div><label class="lbl">پهنای کادر: <output>${faDigits(s.w || 100)}٪</output></label><input type="range" min="30" max="100" step="5" value="${s.w || 100}" data-sw="${k}"></div>`}
+    <div><label class="lbl">فاصلهٔ کلمه‌ها</label><input type="range" min="0" max="0.6" step="0.05" value="${s.ls || 0}" data-sls="${k}"></div>
+    <div><label class="lbl">جلوه</label>${sel('sfx', s.fx || '', [['','بدون'],['shadow','سایهٔ نرم'],['gold','برجستهٔ طلایی'],['glow','هالهٔ سفید'],['outline','دورگیر سفید']])}</div>
+    ${k.startsWith('x:') ? '' : `<div style="align-self:end"><button type="button" class="btn sm" data-posreset="${k}">↺ جای اول</button></div>`}
+  </div>`;
 }
 function mmInputs(boxId, prefix){
   const lab = {t:'بالا', r:'راست', b:'پایین', l:'چپ'};
@@ -1223,11 +1395,13 @@ function syncUI(){
   $('inkColor').value = S.colors.ink; $('accentColor').value = S.colors.accent;
   $('layout').value = S.layout; $('bodyAlign').value = S.bodyAlign; $('signAlign').value = S.signAlign; $('metaPos').value = S.metaPos; $('nameLine').value = S.nameLine;
   $('gScale').value = S.gScale; $('digitsFa').checked = !!S.digitsFa; $('autoFit').checked = !!S.autoFit;
+  $('divStyle').value = S.divider || 'classic'; $('stampSize').value = S.stampSize || 27;
+  if (document.activeElement && document.activeElement.closest && !document.activeElement.closest('#extraList')) renderExtras();
   document.querySelectorAll('[data-mm]').forEach(el => { const src = el.dataset.mm === 'dm-' ? S.margins : S.paper.margins; el.value = src[el.dataset.side]; });
   buildStyleBoxesKeepOpen();
   // برگهٔ تذهیب
   $('paperOn').checked = isPaper(); $('linkMargins').checked = !!S.paper.link;
-  $('guideOn').checked = !!S.paper.guide; $('guideOpacity').value = S.paper.guideOpacity;
+  $('guideOn').checked = !!S.paper.guide; $('guideOpacity').value = S.paper.guideOpacity; $('guideFrame').value = S.paper.guideFrame || 'image';
   $('paperInk').value = S.paper.ink; $('paperAccent').value = S.paper.accent;
   $('offX').value = S.paper.offX; $('offY').value = S.paper.offY;
   $('inkPresets').innerHTML = INK_PRESETS.map(([c, n]) => `<button type="button" class="swatch" style="background:${c}" data-ink="${c}" aria-label="جوهر ${n}" title="${n}" aria-pressed="${S.paper.ink === c}"></button>`).join('');
@@ -1372,6 +1546,8 @@ $('pane-look').addEventListener('input', e => {
   const el = e.target, id = el.id;
   if (el.dataset.ss){ const k = el.dataset.ss; S.styles[k].size = +el.value; const o = $('so-' + k); if (o) o.textContent = faDigits(el.value); const sum = el.closest('details').querySelector('.sum'); sum.textContent = S.styles[k].font + ' · ' + faDigits(el.value) + 'pt'; changed(); return; }
   if (el.dataset.sc){ S.styles[el.dataset.sc].color = el.value; changed(); return; }
+  if (styleExtraInput(el, k => S.styles[k])) return;
+  if (el.id === 'stampSize'){ S.stampSize = +el.value; changed(); return; }
   if (el.dataset.mm){ S.margins[el.dataset.side] = num(el.value, 0); changed(); return; }
   const map = { frameSize:()=>{ S.frame.size = +el.value; const {W,H} = pageDims(); S.margins = autoMargins(S.frame.style, W, H, S.frame.size/100); document.querySelectorAll('[data-mm="dm-"]').forEach(x => x.value = S.margins[x.dataset.side]); },
     frameColor:()=> S.frame.color = el.value, frameColor2:()=> S.frame.color2 = el.value,
@@ -1381,7 +1557,9 @@ $('pane-look').addEventListener('input', e => {
 });
 $('pane-look').addEventListener('change', e => {
   const el = e.target, id = el.id;
-  if (el.dataset.sf){ S.styles[el.dataset.sf].font = el.value; buildStyleBoxesKeepOpen(); changed({now:true}); return; }
+  if (el.dataset.sf){ const st = S.styles[el.dataset.sf]; st.font = el.value; if (NO_BOLD.has(el.value)) st.bold = false; buildStyleBoxesKeepOpen(); changed({now:true}); return; }
+  if (styleExtraChange(el, k => S.styles[k])) return;
+  if (el.id === 'divStyle'){ S.divider = el.value; changed({now:true}); return; }
   if (el.dataset.sb){ S.styles[el.dataset.sb].bold = el.checked; changed({now:true}); return; }
   const map = { frameStyle:()=>{ S.frame.style = el.value; const {W,H} = pageDims(); S.margins = autoMargins(S.frame.style, W, H, S.frame.size/100); },
     wmOn:()=> S.watermark = el.checked, bgType:()=> S.bg.type = el.value,
@@ -1391,9 +1569,22 @@ $('pane-look').addEventListener('change', e => {
 });
 $('pane-look').addEventListener('click', e => {
   const r = e.target.closest('[data-scr]'); if (r){ S.styles[r.dataset.scr].color = ''; changed({now:true}); toast('رنگ این بخش به رنگ الگو برگشت.'); }
+  const pr = e.target.closest('[data-posreset]'); if (pr){ delete S.pos[pr.dataset.posreset]; changed({now:true}); toast('این بخش به جای اولش برگشت.'); }
 });
+function styleExtraInput(el, get){
+  if (el.dataset.sw){ get(el.dataset.sw).w = +el.value; const o = el.parentElement.querySelector('output'); if (o) o.textContent = faDigits(el.value) + '٪'; changed(); return true; }
+  if (el.dataset.sls){ get(el.dataset.sls).ls = +el.value; changed(); return true; }
+  return false;
+}
+function styleExtraChange(el, get){
+  if (el.dataset.slh){ get(el.dataset.slh).lh = +el.value || 0; changed({now:true}); return true; }
+  if (el.dataset.sal){ get(el.dataset.sal).align = el.value; changed({now:true}); return true; }
+  if (el.dataset.sfx){ get(el.dataset.sfx).fx = el.value; changed({now:true}); return true; }
+  return false;
+}
+$('btnResetPos').addEventListener('click', () => { S.pos = {}; changed({now:true}); toast('همهٔ بخش‌ها به جای خودکارشان برگشتند (متن‌های آزاد سر جایشان می‌مانند).'); });
 $('btnAutoMargins').addEventListener('click', () => { const {W, H} = pageDims(); S.margins = autoMargins(S.frame.style, W, H, S.frame.size / 100); syncUI(); changed({now:true}); });
-$('btnFontAll').addEventListener('click', () => { const f = $('fontAll').value; for (const k in S.styles) S.styles[k].font = f; buildStyleBoxesKeepOpen(); changed({now:true}); toast('یک فونت برای همهٔ بخش‌ها گذاشته شد.'); });
+$('btnFontAll').addEventListener('click', () => { const f = $('fontAll').value; for (const k in S.styles){ S.styles[k].font = f; if (NO_BOLD.has(f)) S.styles[k].bold = false; } buildStyleBoxesKeepOpen(); changed({now:true}); toast('یک فونت برای همهٔ بخش‌ها گذاشته شد.'); });
 $('btnFontUpload').addEventListener('click', () => { $('fontFile').value = ''; $('fontFile').click(); });
 $('fontFile').addEventListener('change', async () => {
   const f = $('fontFile').files[0]; if (!f) return;
@@ -1422,6 +1613,7 @@ $('pane-paper').addEventListener('change', e => {
   if (el.id === 'paperOn') setMode(el.checked ? 'paper' : 'design');
   else if (el.id === 'linkMargins'){ S.paper.link = el.checked; changed({now:true}); }
   else if (el.id === 'guideOn'){ S.paper.guide = el.checked; changed({now:true}); }
+  else if (el.id === 'guideFrame'){ S.paper.guideFrame = el.value; S.paper.guide = true; const {W, H} = pageDims(); S.paper.margins = autoMargins(el.value, W, H, 1); syncUI(); changed({now:true}); toast('نمونهٔ راهنما عوض شد و حاشیه‌ها متناسب با آن گذاشته شد؛ با برگهٔ واقعی‌ات دقیقش کن.'); }
 });
 $('pane-paper').addEventListener('click', e => {
   const p = e.target.closest('[data-preset]');
@@ -1430,13 +1622,206 @@ $('pane-paper').addEventListener('click', e => {
   if (ink){ S.paper.ink = ink.dataset.ink; syncUI(); changed({now:true}); }
 });
 $('btnCalib').addEventListener('click', printCalibration);
-// کلیک روی پیش‌نمایش ← ویرایش همان بخش
-$('stageView').addEventListener('click', e => {
-  const f = e.target.closest('[data-f]'); if (!f) return;
-  const k = f.dataset.f;
-  activateTab('tab-text');
-  let target = k === 'sign' ? $('sg-0') : k === 'logo' ? document.querySelector('#slot-logo button') : $('tx-' + k);
-  if (target){ target.scrollIntoView({block:'center', behavior:'smooth'}); setTimeout(() => target.focus({preventScroll:true}), 250); const box = target.closest('.fld, .card'); if (box){ box.style.boxShadow = '0 0 0 3px #d4af3780'; setTimeout(() => box.style.boxShadow = '', 1400); } }
+/* ── جابه‌جایی آزاد: کشیدن، انتخاب، نوار ابزار و کلیدهای جهت ── */
+let sel = null, drag = null;
+const MV_NAMES = {logo:'لوگو', divider:'نقش جداکننده', stamp:'مهر', sign0:'امضای اول', sign1:'امضای دوم', sign2:'امضای سوم'};
+function mvName(k){ return k.startsWith('x:') ? 'متن آزاد' : MV_NAMES[k] || FIELD_LABEL[k] || k; }
+function mvEl(k){ return k ? $('pageWrap').querySelector(`[data-mv="${CSS.escape(k)}"]`) : null; }
+function extraById(id){ return (S.extras || []).find(x => x.id === id); }
+function getOff(k){
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return ex ? {x:0, y:0} : null; }
+  const p = S.pos[k] || {}; return {x:num(p.x, 0), y:num(p.y, 0)};
+}
+// جابه‌جایی نهایی را در وضعیت ثبت می‌کند
+function moveBy(k, dx, dy){
+  const r1 = v => Math.round(v * 10) / 10;
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (!ex) return; const {W, H} = pageDims(); ex.x = r1(clamp(num(ex.x, W/2) + dx, 0, W)); ex.y = r1(clamp(num(ex.y, H/2) + dy, -10, H)); return; }
+  const p = S.pos[k] || {x:0, y:0};
+  p.x = r1(num(p.x, 0) + dx); p.y = r1(num(p.y, 0) + dy);
+  if (!p.x && !p.y) delete S.pos[k]; else S.pos[k] = p;
+}
+function markSel(){
+  const wrap = $('pageWrap');
+  wrap.querySelectorAll('.mv-sel').forEach(e => e.classList.remove('mv-sel'));
+  const el = mvEl(sel);
+  if (sel && !el){ sel = null; }
+  if (el) el.classList.add('mv-sel');
+  placeSelBar();
+}
+function placeSelBar(){
+  const bar = $('selBar'), el = mvEl(sel);
+  if (!el){ bar.hidden = true; return; }
+  bar.hidden = false; $('selName').textContent = mvName(sel);
+  const hr = $('pageHolder').getBoundingClientRect(), er = el.getBoundingClientRect();
+  let top = er.top - hr.top - bar.offsetHeight - 8;
+  if (top < 0) top = er.bottom - hr.top + 8;
+  const half = bar.offsetWidth / 2;
+  const x = clamp(er.left - hr.left + er.width / 2, half - 6, Math.max(half, hr.width - half + 6));
+  bar.style.top = top + 'px'; bar.style.left = x + 'px';
+}
+function select(k){ sel = k; markSel(); }
+function mmPerPx(){ return 1 / (PX_PER_MM * currentScale()); }
+$('stageView').addEventListener('pointerdown', e => {
+  if (e.button > 0 || e.target.closest('#selBar')) return;
+  const el = e.target.closest('[data-mv]');
+  if (!el || !$('pageWrap').contains(el)){ if (sel){ sel = null; markSel(); } return; }
+  e.preventDefault();
+  try { $('stageView').focus({preventScroll:true}); } catch(_){}
+  const k = el.dataset.mv, cert = el.closest('.cert');
+  const er = el.getBoundingClientRect(), cr = cert.getBoundingClientRect(), f = mmPerPx();
+  drag = { k, el, x0:e.clientX, y0:e.clientY, moved:false, base:getOff(k) || {x:0, y:0}, dx:0, dy:0,
+    cx:(er.left + er.width / 2 - (cr.left + cr.width / 2)) * f, cy:(er.top + er.height / 2 - (cr.top + cr.height / 2)) * f, cert, pid:e.pointerId };
+  try { $('stageView').setPointerCapture(e.pointerId); } catch(_){}
+});
+$('stageView').addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.pid) return;
+  const f = mmPerPx();
+  let dx = (e.clientX - drag.x0) * f, dy = (e.clientY - drag.y0) * f;
+  if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 4) return;
+  if (!drag.moved){ drag.moved = true; drag.el.classList.add('mv-drag'); $('selBar').hidden = true; }
+  // چسبیدن به خط وسط برگه (با Alt غیرفعال می‌شود)
+  let sv = false, sh = false;
+  if (!e.altKey){
+    if (Math.abs(drag.cx + dx) < 1.5){ dx = -drag.cx; sv = true; }
+    if (Math.abs(drag.cy + dy) < 1.5){ dy = -drag.cy; sh = true; }
+  }
+  drag.dx = dx; drag.dy = dy;
+  const bx = drag.base.x + dx, by = drag.base.y + dy;
+  drag.el.style.transform = `translate(calc(var(--mm)*${bx.toFixed(2)}),calc(var(--mm)*${by.toFixed(2)}))`;
+  snapLines(drag.cert, sv, sh);
+});
+function snapLines(cert, v, h){
+  cert.querySelectorAll('.snap').forEach(x => x.remove());
+  if (v) cert.insertAdjacentHTML('beforeend', '<i class="snap v"></i>');
+  if (h) cert.insertAdjacentHTML('beforeend', '<i class="snap h"></i>');
+}
+function endDrag(e){
+  if (!drag || (e && e.pointerId !== drag.pid)) return;
+  const d = drag; drag = null;
+  try { $('stageView').releasePointerCapture(d.pid); } catch(_){}
+  if (d.moved){ moveBy(d.k, d.dx, d.dy); sel = d.k; changed({now:true}); lastTap = null; return; }
+  // دو بار زدن (موس یا لمس) ← ویرایش
+  const now = Date.now();
+  if (lastTap && lastTap.k === d.k && now - lastTap.t < 450){ lastTap = null; select(d.k); openEditor(d.k); return; }
+  lastTap = {k:d.k, t:now};
+  select(d.k);
+}
+let lastTap = null;
+$('stageView').addEventListener('pointerup', endDrag);
+$('stageView').addEventListener('pointercancel', e => { if (drag){ drag = null; render(); } });
+function openEditor(k){
+  let target;
+  if (k.startsWith('x:')){ activateTab('tab-text'); renderExtras(); target = document.querySelector(`[data-xtext="${CSS.escape(k.slice(2))}"]`); }
+  else if (k === 'divider'){ activateTab('tab-look'); target = $('divStyle'); }
+  else {
+    activateTab('tab-text');
+    const m = /^sign(\d)$/.exec(k);
+    target = m ? $('sg-' + m[1]) : k === 'logo' ? document.querySelector('#slot-logo button') : k === 'stamp' ? document.querySelector('#slot-stamp button') : $('tx-' + k);
+  }
+  if (target){ target.scrollIntoView({block:'center', behavior:'smooth'}); setTimeout(() => target.focus({preventScroll:true}), 250); const box = target.closest('.fld, .card, .xcard'); if (box){ box.style.boxShadow = '0 0 0 3px #d4af3780'; setTimeout(() => box.style.boxShadow = '', 1400); } }
+}
+function growSel(dir){
+  const k = sel; if (!k) return;
+  const f = dir > 0 ? 1.08 : 1 / 1.08, r = v => Math.round(v * 2) / 2;
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex) ex.size = clamp(r(ex.size * f), 7, 120); }
+  else if (k === 'logo') S.logoSize = clamp(S.logoSize + dir * 2, 10, 60);
+  else if (k === 'stamp') S.stampSize = clamp((S.stampSize || 27) + dir * 2, 15, 50);
+  else if (k === 'divider') S.divW = clamp((S.divW || 62) + dir * 6, 20, 150);
+  else { const sk = /^sign\d$/.test(k) ? 'sign' : k; if (S.styles[sk]) S.styles[sk].size = clamp(r(S.styles[sk].size * f), 7, 120); }
+  syncUI(); changed();
+}
+function centerSel(){
+  const el = mvEl(sel); if (!el) return;
+  const er = el.getBoundingClientRect(), cr = el.closest('.cert').getBoundingClientRect();
+  moveBy(sel, -((er.left + er.width / 2) - (cr.left + cr.width / 2)) * mmPerPx(), 0); changed({now:true});
+}
+function hideSel(){
+  const k = sel; if (!k) return;
+  if (k.startsWith('x:')){ S.extras = S.extras.filter(x => x.id !== k.slice(2)); renderExtras(); }
+  else if (k === 'logo'){ if (!confirm('لوگو حذف شود؟')) return; S.logo = null; }
+  else if (k === 'stamp'){ if (!confirm('مهر حذف شود؟')) return; S.stamp = null; }
+  else if (k === 'divider') S.divider = 'none';
+  else if (/^sign\d$/.test(k)) S.signers[+k[4]].on = false;
+  else if (S.fields[k]) S.fields[k].on = false;
+  sel = null; syncUI(); changed({now:true}); toast('پنهان شد؛ از زبانهٔ «متن» یا «ظاهر» دوباره روشنش کن.');
+}
+function resetSel(){
+  const k = sel; if (!k) return;
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); const {W, H} = pageDims(); if (ex){ ex.x = W / 2; ex.y = H / 2; } }
+  else delete S.pos[k];
+  changed({now:true});
+}
+$('selBar').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || !sel) return;
+  if (b.dataset.nudge){ const [x, y] = b.dataset.nudge.split(',').map(Number), st = e.shiftKey ? 5 : 1; moveBy(sel, x * st, y * st); changed(); }
+  else if (b.dataset.center) centerSel();
+  else if (b.dataset.grow) growSel(+b.dataset.grow);
+  else if (b.dataset.selact === 'reset') resetSel();
+  else if (b.dataset.selact === 'edit') openEditor(sel);
+  else if (b.dataset.selact === 'hide') hideSel();
+  else if (b.dataset.selact === 'close'){ sel = null; markSel(); }
+});
+document.addEventListener('keydown', e => {
+  if (!sel || e.ctrlKey || e.metaKey) return;
+  const a = document.activeElement;
+  if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
+  if (a && a.closest && a.closest('.tabs')) return;
+  const st = e.shiftKey ? 5 : e.altKey ? .2 : 1;
+  const map = {ArrowUp:[0,-1], ArrowDown:[0,1], ArrowLeft:[-1,0], ArrowRight:[1,0]};
+  if (map[e.key]){ e.preventDefault(); moveBy(sel, map[e.key][0] * st, map[e.key][1] * st); changed(); }
+  else if (e.key === 'Escape'){ sel = null; markSel(); }
+  else if (e.key === 'Delete'){ e.preventDefault(); hideSel(); }
+  else if (e.key === 'Enter'){ e.preventDefault(); openEditor(sel); }
+  else if (e.key === '+' || e.key === '='){ growSel(1); }
+  else if (e.key === '-'){ growSel(-1); }
+});
+
+/* ── متن‌های آزاد ── */
+function addExtra(){
+  const {W, H} = pageDims();
+  const n = (S.extras || []).length;
+  const ex = {id:'e' + Date.now().toString(36), text:'متن تازه — دو بار بزن تا ویرایش شود', font:'IranNastaliq', size:22, color:'', bold:false, x:W / 2, y:Math.round(H * .3 + n * 12), w:Math.round(W * .7), align:'', lh:0, ls:0, fx:''};
+  S.extras = (S.extras || []).concat(ex);
+  sel = 'x:' + ex.id;
+  renderExtras(); changed({now:true});
+  toast('متن آزاد اضافه شد؛ روی پیش‌نمایش بکشش و هرجا خواستی بگذار.');
+  setTimeout(() => { const t = document.querySelector(`[data-xtext="${ex.id}"]`); if (t && document.querySelector('#pane-text.active')){ t.select(); } }, 60);
+}
+$('btnAddExtra').addEventListener('click', addExtra);
+$('btnAddExtra2').addEventListener('click', addExtra);
+function renderExtras(){
+  const box = $('extraList'); if (!box) return;
+  const {W} = pageDims();
+  box.innerHTML = (S.extras || []).map((ex, i) => `<div class="card xcard" data-xid="${esc(ex.id)}">
+    <div class="fld-head"><label class="t" for="xt-${esc(ex.id)}">متن آزاد ${faDigits(i + 1)}</label><span class="row"><button type="button" class="btn sm" data-xsel="${esc(ex.id)}">نشان بده</button><button type="button" class="btn sm danger" data-xdel="${esc(ex.id)}">حذف</button></span></div>
+    <textarea id="xt-${esc(ex.id)}" rows="2" data-xtext="${esc(ex.id)}">${esc(ex.text)}</textarea>
+    <div class="grid2">
+      <div><label class="lbl">فونت</label><select data-xfont="${esc(ex.id)}">${fontOptions(ex.font)}</select></div>
+      <div><label class="lbl">اندازه: <output>${faDigits(ex.size)}</output> pt</label><input type="range" min="7" max="120" step="0.5" value="${ex.size}" data-xsize="${esc(ex.id)}"></div>
+      <div><label class="lbl">پهنای کادر (میلی‌متر)</label><input type="number" min="20" max="${W}" step="1" value="${ex.w}" data-xw="${esc(ex.id)}"></div>
+      <div class="row" style="align-self:end"><label class="check"><input type="color" value="${ex.color || S.colors.accent}" data-xcolor="${esc(ex.id)}"> رنگ</label><label class="check"><input type="checkbox" data-xbold="${esc(ex.id)}"${ex.bold ? ' checked' : ''}> درشت</label></div>
+    </div>
+    ${styleExtraHTML('x:' + ex.id, ex)}
+  </div>`).join('') || '<p class="small muted">هنوز متن آزادی نداری.</p>';
+}
+const exOf = k => extraById(String(k).replace(/^x:/, ''));
+$('extraList').addEventListener('input', e => {
+  const el = e.target, d = el.dataset;
+  if (d.xtext){ const ex = extraById(d.xtext); if (ex){ ex.text = el.value; changed(); } return; }
+  if (d.xsize){ const ex = extraById(d.xsize); if (ex){ ex.size = +el.value; el.parentElement.querySelector('output').textContent = faDigits(el.value); changed(); } return; }
+  if (d.xw){ const ex = extraById(d.xw); if (ex){ ex.w = clamp(num(el.value, 120), 20, 400); changed(); } return; }
+  if (d.xcolor){ const ex = extraById(d.xcolor); if (ex){ ex.color = el.value; changed(); } return; }
+  styleExtraInput(el, exOf);
+});
+$('extraList').addEventListener('change', e => {
+  const el = e.target, d = el.dataset;
+  if (d.xfont){ const ex = extraById(d.xfont); if (ex){ ex.font = el.value; if (NO_BOLD.has(el.value)) ex.bold = false; changed({now:true}); renderExtras(); } return; }
+  if (d.xbold){ const ex = extraById(d.xbold); if (ex){ ex.bold = el.checked; changed({now:true}); } return; }
+  styleExtraChange(el, exOf);
+});
+$('extraList').addEventListener('click', e => {
+  const del = e.target.closest('[data-xdel]'); if (del){ S.extras = S.extras.filter(x => x.id !== del.dataset.xdel); if (sel === 'x:' + del.dataset.xdel) sel = null; renderExtras(); changed({now:true}); return; }
+  const s2 = e.target.closest('[data-xsel]'); if (s2){ select('x:' + s2.dataset.xsel); $('stageView').scrollIntoView({block:'nearest', behavior:'smooth'}); }
 });
 // زوم
 $('zoomIn').addEventListener('click', () => { zoom = clamp((zoom || currentScale()) + .1, .2, 2.5); fitStage(); });
@@ -1452,7 +1837,7 @@ $('btnSaveFile').addEventListener('click', () => { download(new Blob([JSON.strin
 $('btnOpenFile').addEventListener('click', () => { $('designFile').value = ''; $('designFile').click(); });
 $('designFile').addEventListener('change', async () => {
   const f = $('designFile').files[0]; if (!f) return;
-  try { const d = JSON.parse(await f.text()); if (!d || d.v !== 2) throw 0; S = deepMerge(baseState(), d); buildTextFields(); syncUI(); changed({now:true, thumbs:true}); toast('✅ طرح باز شد.'); }
+  try { const d = JSON.parse(await f.text()); if (!d || (d.v !== 2 && d.v !== 3)) throw 0; S = fixState(deepMerge(baseState(), d)); sel = null; buildTextFields(); syncUI(); renderExtras(); changed({now:true, thumbs:true}); toast('✅ طرح باز شد.'); }
   catch(e){ toast('این فایل، طرح معتبر این ابزار نیست.', true); }
 });
 $('btnUndo').addEventListener('click', () => undoRedo(-1));
@@ -1815,11 +2200,13 @@ function init(){
   const sizeOpts = Object.entries(SIZES).map(([k, v]) => `<option value="${k}">${esc(v[2])}</option>`).join('');
   $('pageSize').innerHTML = sizeOpts; $('pageSize2').innerHTML = sizeOpts;
   $('frameStyle').innerHTML = FRAME_STYLES.map(([k, n]) => `<option value="${k}">${esc(n)}</option>`).join('');
+  $('guideFrame').innerHTML = [['image', 'قاب ایران‌گرد'], ...Object.entries(FRAME_IMGS).map(([k, v]) => ['img:' + k, v.n])].map(([k, n]) => `<option value="${k}">${esc(n)}</option>`).join('');
   $('fontAll').innerHTML = fontOptions('Vazirmatn');
   $('paperPresets').innerHTML = PAPER_PRESETS.map((p, i) => `<button type="button" class="preset" data-preset="${i}"><b>${esc(p.n)}</b><small>${p.m.t}/${p.m.r}/${p.m.b}/${p.m.l} mm</small></button>`).join('');
   mmInputs('designMargins', 'dm-'); mmInputs('paperMargins', 'pm-');
   buildTextFields();
   syncUI();
+  renderExtras();
   render();
   snapshot(true);
   // تصویر کوچک الگوها پس از نقش‌بستن پیش‌نمایش اصلی و یک‌بار ساخته می‌شود
