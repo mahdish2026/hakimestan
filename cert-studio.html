@@ -129,6 +129,12 @@ label{font-size:12.5px;font-weight:600}
 .pane-head h2{font-family:Lalezar,Vazirmatn,sans-serif;font-weight:400;font-size:20px;line-height:1.5}
 .pane-head p{font-size:12px;color:var(--muted)}
 .theme-filter{margin-bottom:10px}
+.sub-card{margin-top:10px;padding:10px 12px;border:1px dashed #d9c79a;border-radius:14px;background:#fffdf6}
+.sub-card h4{margin:0 0 4px;font-size:14px;color:#6b4a0c}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 8px}
+.chips button{border:1px solid #e1d3ae;background:#fff;border-radius:999px;padding:4px 10px;font-size:12px;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chips button i{width:12px;height:12px;border-radius:50%;display:inline-block;border:1px solid #0002}
+.chips button:hover{border-color:#b8862b;background:#fff8e6}
 .theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:10px}
 .theme-sec{grid-column:1/-1;font-size:13px;font-weight:800;color:#6b4a0c;margin:6px 2px -2px;display:flex;align-items:center;gap:8px}
 .theme-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#e4d3a8)}
@@ -234,6 +240,11 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 .cert .clickable.mv-drag{cursor:grabbing;outline-style:dashed}
 .cert.measuring [data-mv]:not(.xt){transform:none!important}
 .cert .xt{position:absolute;white-space:pre-line;overflow-wrap:anywhere;z-index:3}
+.cert img.xt{height:auto;display:block}
+.cert .xo svg,.cert .xo img{display:block;width:100%;height:auto;overflow:visible}
+.cert .inline-edit{-webkit-user-select:text!important;user-select:text!important;cursor:text!important;outline:2px solid #d4af37!important;outline-offset:3px;background:#fffbe6d9!important;min-width:3em;touch-action:auto!important;text-overflow:clip!important}
+.stage-opts{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:12.5px;color:#3f4b5e}
+.stage-opts select{width:auto;min-height:32px;padding:2px 8px;font-size:12.5px}
 .cert .snap{position:absolute;pointer-events:none;z-index:9;background:#e03131}
 .cert .snap.v{top:0;bottom:0;width:1px;left:50%}
 .cert .snap.h{left:0;right:0;height:1px;top:50%}
@@ -302,7 +313,9 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <button type="button" data-mode="design" aria-pressed="true">🎨 طرح کامل</button>
         <button type="button" data-mode="paper" aria-pressed="false">📜 فقط متن (برگهٔ تذهیب آماده)</button>
       </div>
-      <button class="btn sm gold" id="btnAddExtra" type="button" title="یک متن تازه که هرجای برگه می‌توانی بگذاری">➕ متن آزاد</button>
+      <button class="btn sm gold" id="btnAddExtra" type="button" title="یک متن تازه که هرجای برگه می‌توانی بگذاری">➕ متن</button>
+      <button class="btn sm soft" id="btnAddOrn" type="button" title="شمسه، ترنج، ستاره، لچک یا جداکننده هرجای برگه">✳️ نقش</button>
+      <button class="btn sm soft" id="btnAddImg" type="button" title="عکس دانش‌آموز، لوگوی دوم یا هر تصویری">🖼️ تصویر</button>
       <span class="spacer"></span>
       <div class="row-nav" id="rowNav" hidden>
         <button class="btn sm" id="rowPrev" type="button" aria-label="نفر قبلی">‹</button>
@@ -317,7 +330,11 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       </div>
     </div>
     <div class="row" id="stagePills" aria-live="polite"></div>
-    <p class="drag-tip" id="dragTip">✋ هر بخش را با موس یا انگشت <b>بکش</b> و هرجا خواستی بگذار؛ با یک بار زدن، نوار ابزارش باز می‌شود و با <b>دو بار زدن</b> متنش را ویرایش می‌کنی. کلیدهای جهت هم بخش انتخاب‌شده را میلی‌متری جابه‌جا می‌کنند.</p>
+    <div class="stage-opts">
+      <label class="check"><input type="checkbox" id="lockMove"> 🔒 قفل جابه‌جایی</label>
+      <label>چسبیدن به گام: <select id="snapGrid" aria-label="گام جابه‌جایی"><option value="0">آزاد</option><option value="1">۱ میلی‌متر</option><option value="2.5">۲٫۵ میلی‌متر</option><option value="5">۵ میلی‌متر</option></select></label>
+    </div>
+    <p class="drag-tip" id="dragTip">✋ هر بخش را <b>بکش</b> و هرجا خواستی بگذار. یک بار زدن ← نوار ابزار (جابه‌جایی، اندازه، چرخش، شفافیت، تنظیمات). <b>دو بار زدن ← نوشتن مستقیم روی برگه</b> (Enter یا کلیک بیرون = ثبت، Esc = لغو).</p>
     <div class="stage-view" id="stageView" role="region" tabindex="0" aria-label="پیش‌نمایش لوح؛ هر بخش را بکشید تا جابه‌جا شود، دو بار بزنید تا ویرایش شود">
       <div class="page-holder" id="pageHolder"><div class="page-wrap" id="pageWrap"></div>
         <div class="sel-bar" id="selBar" role="toolbar" aria-label="ابزار بخش انتخاب‌شده" hidden>
@@ -331,8 +348,13 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
           <button type="button" data-grow="-1" aria-label="کوچک‌تر" title="کوچک‌تر">A−</button>
           <button type="button" data-grow="1" aria-label="بزرگ‌تر" title="بزرگ‌تر">A+</button>
           <span class="sep"></span>
-          <button type="button" data-selact="reset" aria-label="برگرداندن به جای اول" title="برگرداندن به جای اول">↺</button>
-          <button type="button" data-selact="edit" aria-label="ویرایش متن" title="ویرایش در پنل">✎</button>
+          <button type="button" data-rot="-1" aria-label="چرخش پادساعتگرد" title="چرخش (Shift: ۱۵ درجه)">⟲</button>
+          <button type="button" data-rot="1" aria-label="چرخش ساعتگرد" title="چرخش (Shift: ۱۵ درجه)">⟳</button>
+          <button type="button" data-selact="opacity" aria-label="شفافیت" title="شفافیت: ۱۰۰ ← ۷۵ ← ۵۰ ← ۲۵٪">◐</button>
+          <span class="sep"></span>
+          <button type="button" data-selact="reset" aria-label="برگرداندن به جای اول" title="برگرداندن جا، چرخش و شفافیت">↺</button>
+          <button type="button" data-selact="edit" aria-label="نوشتن روی برگه" title="نوشتن مستقیم روی برگه">✎</button>
+          <button type="button" data-selact="style" aria-label="تنظیمات این بخش" title="فونت، رنگ، اندازه و همهٔ تنظیمات این بخش">⚙</button>
           <button type="button" data-selact="hide" aria-label="پنهان کردن" title="پنهان کن">⊘</button>
           <button type="button" data-selact="close" aria-label="بستن نوار ابزار" title="بستن">✕</button>
         </div>
@@ -356,6 +378,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       <div class="pane-head"><h2>الگوهای آماده</h2><p>قاب‌های نگارگری تذهیب و اسلیمی (برخی با میانهٔ سفید و فقط حاشیهٔ اسلیمی)، تذهیب خطی، مدرن، کودکانه و رسمی. با عوض کردن الگو <b>متن‌هایت حفظ می‌شود.</b></p></div>
       <div class="seg theme-filter" role="group" aria-label="دسته‌بندی الگوها" id="themeFilter">
         <button type="button" data-cat="all" aria-pressed="true">همه</button>
+        <button type="button" data-cat="حاشیهٔ اسلیمی" aria-pressed="false">حاشیهٔ اسلیمی (میانه سفید)</button>
         <button type="button" data-cat="تذهیب و اسلیمی" aria-pressed="false">تذهیب و اسلیمی</button>
         <button type="button" data-cat="تذهیب خطی" aria-pressed="false">تذهیب خطی</button>
         <button type="button" data-cat="مدرن" aria-pressed="false">مدرن</button>
@@ -391,10 +414,14 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <div class="mini-row" style="margin-top:8px"><div><label class="lbl" for="logoSize">اندازهٔ لوگو (میلی‌متر)</label><input id="logoSize" type="range" min="10" max="60" step="1"></div><output id="logoSizeVal" class="small muted"></output></div>
       </div>
       <div class="fld" id="extrasBox">
-        <div class="fld-head"><span class="t">📝 متن‌های آزاد (هرجای برگه)</span></div>
-        <p class="small muted">برای بیت، جمله یا عنوانی که می‌خواهی دقیقاً جای دلخواهت باشد. بعد از افزودن، روی پیش‌نمایش بکشش.</p>
+        <div class="fld-head"><span class="t">📝 متن، تصویر و نقش آزاد (هرجای برگه)</span></div>
+        <p class="small muted">بیت، جمله، عکس دانش‌آموز، لوگوی دوم، شمسه، ترنج، ستاره یا لچک؛ بعد از افزودن روی پیش‌نمایش بکشش، بچرخانش و اندازه‌اش را عوض کن.</p>
         <div id="extraList" class="stack" style="margin-top:8px"></div>
-        <button class="btn soft block" id="btnAddExtra2" type="button" style="margin-top:8px">➕ افزودن متن آزاد</button>
+        <div class="row" style="margin-top:8px">
+          <button class="btn soft" id="btnAddExtra2" type="button">➕ متن آزاد</button>
+          <button class="btn soft" id="btnAddImg2" type="button">🖼️ تصویر (عکس، لوگوی دوم…)</button>
+        </div>
+        <div class="row" style="margin-top:6px;flex-wrap:nowrap"><label class="sr-only" for="ornKindNew">نوع نقش تزئینی</label><select id="ornKindNew"></select><button class="btn soft" id="btnAddOrn2" type="button" style="white-space:nowrap">✳️ افزودن نقش</button></div>
       </div>
     </div>
 
@@ -423,6 +450,42 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
             <label class="check"><input type="color" id="frameColor" aria-label="رنگ اصلی قاب"> رنگ قاب</label>
             <label class="check"><input type="color" id="frameColor2" aria-label="رنگ دوم قاب"> رنگ دوم</label>
             <label class="check"><input type="checkbox" id="wmOn"> نقش ترنج/شمسه در زمینه</label>
+          </div>
+          <div class="sub-card" id="adjBox" hidden>
+            <h4>🎨 رنگ و حال‌وهوای قاب نگارگری</h4>
+            <p class="small muted">رنگ هر قاب آماده را عوض کن: یک‌رنگ (مثلاً فقط لاجوردی یا طلایی)، کم‌رنگ برای چاپ ملایم، یا رنگ کاغذ کرم.</p>
+            <div class="chips" id="adjPresets"></div>
+            <div class="grid2">
+              <div><label class="lbl" for="adjHue">چرخش رنگ: <output id="adjHueV"></output></label><input type="range" id="adjHue" min="-180" max="180" step="5"></div>
+              <div><label class="lbl" for="adjSat">پررنگی (اشباع): <output id="adjSatV"></output></label><input type="range" id="adjSat" min="0" max="200" step="5"></div>
+              <div><label class="lbl" for="adjLight">روشنی: <output id="adjLightV"></output></label><input type="range" id="adjLight" min="-50" max="50" step="5"></div>
+              <div><label class="lbl" for="adjFade">کم‌رنگ کردن: <output id="adjFadeV"></output></label><input type="range" id="adjFade" min="0" max="90" step="5"></div>
+            </div>
+            <div class="row" style="margin-top:6px">
+              <label class="check"><input type="checkbox" id="adjMonoOn"> تک‌رنگ</label><input type="color" id="adjMono" aria-label="رنگ تک‌رنگ">
+              <label class="check"><input type="checkbox" id="adjPaperOn"> رنگ کاغذ</label><input type="color" id="adjPaper" aria-label="رنگ کاغذ">
+              <button type="button" class="btn sm" id="adjReset">↺ رنگ اصلی</button>
+            </div>
+          </div>
+          <div class="sub-card" id="vecBox" hidden>
+            <h4>✳️ قاب‌ساز اسلیمی</h4>
+            <p class="small muted">میانهٔ برگه سفید می‌ماند و فقط حاشیه نقش دارد؛ نقش، پهنا، گوشه‌ها، ترنج و همهٔ رنگ‌ها را خودت بساز. برداری است و در هر اندازه‌ای تیز چاپ می‌شود.</p>
+            <div class="chips" id="vecPresets"></div>
+            <div class="grid2">
+              <div><label class="lbl" for="vecPattern">نقش حاشیه</label><select id="vecPattern"><option value="eslimi">اسلیمی (پیچک و دهان‌اژدری)</option><option value="khatai">ختایی (گل و برگ)</option><option value="vine">پیچک خطی ظریف</option><option value="geo">گره‌چینی</option></select></div>
+              <div><label class="lbl" for="vecCorner">گوشه‌ها</label><select id="vecCorner"><option value="lachak">گل گوشه + لچک</option><option value="rosette">فقط گل گوشه</option><option value="none">ساده</option></select></div>
+              <div><label class="lbl" for="vecRules">خط‌های دور</label><select id="vecRules"><option value="double">دوخطی</option><option value="single">یک‌خطی</option><option value="none">بدون خط</option></select></div>
+              <div style="align-self:end"><label class="check"><input type="checkbox" id="vecToranj"> ترنج بالا و پایین</label></div>
+              <div><label class="lbl" for="vecBand">پهنای حاشیه: <output id="vecBandV"></output> mm</label><input type="range" id="vecBand" min="5" max="32" step="0.5"></div>
+              <div><label class="lbl" for="vecInset">فاصله از لبهٔ کاغذ: <output id="vecInsetV"></output> mm</label><input type="range" id="vecInset" min="0" max="30" step="0.5"></div>
+              <div><label class="lbl" for="vecDensity">فشردگی نقش</label><input type="range" id="vecDensity" min="1.4" max="4" step="0.1"></div>
+              <div><label class="lbl" for="vecLachak">اندازهٔ لچک</label><input type="range" id="vecLachak" min="1.2" max="4.5" step="0.1"></div>
+            </div>
+            <div class="row" style="margin-top:6px">
+              <label class="check"><input type="color" id="vecC1"> نقش</label>
+              <label class="check"><input type="color" id="vecC2"> گل و برگ</label>
+              <label class="check"><input type="checkbox" id="vecGroundOn"> زمینهٔ حاشیه</label><input type="color" id="vecGround" aria-label="رنگ زمینهٔ حاشیه">
+            </div>
           </div>
           <div class="grid2" style="margin-top:8px">
             <div><label class="lbl" for="bgType">پس‌زمینه</label><select id="bgType"><option value="theme">پس‌زمینهٔ الگو</option><option value="white">سفید ساده</option><option value="solid">یک رنگ دلخواه</option><option value="gradient">شیب دو رنگ</option></select></div>
@@ -605,6 +668,8 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <div class="guide-step"><b class="n">۱</b><p><b>الگو:</b> یکی از الگوها را انتخاب کن. متن‌هایت با عوض کردن الگو پاک نمی‌شود.</p></div>
         <div class="guide-step"><b class="n">۲</b><p><b>جابه‌جایی آزاد:</b> هر بخش (عنوان، نام، متن، امضا، مهر، لوگو، تاریخ…) را روی پیش‌نمایش <b>بکش</b> و هرجا خواستی بگذار. یک بار زدن نوار ابزار را باز می‌کند (جابه‌جایی میلی‌متری، بزرگ و کوچک، وسط‌چین، برگرداندن). با «➕ متن آزاد» هم متن تازه‌ای هرجای برگه بگذار.</p></div>
         <div class="guide-step"><b class="n">۳</b><p><b>متن:</b> از «متن‌های آماده» شروع کن یا خودت بنویس. روی هر بخش پیش‌نمایش دو بار بزنی، کادر ویرایشش باز می‌شود. برای حال‌وهوای سنتی، فونت «ایران نستعلیق» را برای عنوان و نام انتخاب کن. <b>{نام}</b>، <b>{امروز}</b>، <b>{شماره}</b> و <b>{ردیف}</b> خودکار پر می‌شوند.</p></div>
+        <div class="guide-step"><b class="n">✳</b><p><b>همه‌چیز قابل ویرایش:</b> روی هر متن <b>دو بار بزن</b> و همان‌جا روی برگه بنویس. با یک بار زدن، نوار ابزار باز می‌شود: چرخش (⟲ ⟳ یا کلیدهای [ و ])، شفافیت ◐، اندازه، و ⚙ برای فونت و رنگ همان بخش. با «✳️ نقش» و «🖼️ تصویر» شمسه، ترنج، ستاره، لچک، عکس یا لوگوی دوم را هرجا خواستی بگذار.</p></div>
+        <div class="guide-step"><b class="n">🎨</b><p><b>قاب دلخواه:</b> در «ظاهر»، رنگ هر قاب نگارگری را عوض کن (تک‌رنگ لاجوردی، طلایی، کم‌رنگ، کاغذ کرم…) یا «قاب اسلیمی برداری» را انتخاب کن و نقش، پهنا، لچک، ترنج و همهٔ رنگ‌هایش را خودت بساز. میانهٔ برگه همیشه سفید می‌ماند.</p></div>
         <div class="guide-step"><b class="n">۴</b><p><b>امضا و مهر:</b> عکس امضا و مهر را بده؛ با گزینهٔ «حذف زمینهٔ سفید» مثل امضای واقعی روی برگه می‌نشیند.</p></div>
         <div class="guide-step"><b class="n">۵</b><p><b>برگهٔ تذهیب آماده:</b> اگر کاغذ گلاسهٔ تذهیب داری، حالت «فقط متن» را روشن کن، حاشیه‌ها را با خط‌کش اندازه بگیر و یک چاپ آزمایشی روی کاغذ معمولی بگیر.</p></div>
         <div class="guide-step"><b class="n">۶</b><p><b>فهرست افراد:</b> نام‌ها را هر کدام در یک خط بنویس یا از اکسل کپی کن. هر ستون (مثلاً «رتبه») را با <b>{رتبه}</b> در متن بیاور.</p></div>
@@ -626,6 +691,9 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 <div class="toast-area" id="toastArea" role="status" aria-live="polite"></div>
 
 <script>
+const VEC_DEFAULT = {pattern:'eslimi', corner:'lachak', rules:'double', toranj:false, band:13, inset:9, density:2.4, lachak:2.4, c1:'#1f3a7a', c2:'#c9a03a', ground:''};
+const ADJ0 = {hue:0, sat:100, light:0, fade:0, mono:'', paper:''};
+
 "use strict";
 /* ═══════════════════════════════════════════════════════════════════
  * لوح‌نگار حکیمستان — ساخت لوح تقدیر و گواهی (نسخهٔ ۳)
@@ -654,8 +722,19 @@ const FRAME_IMGS = {
   'gol-morgh':     {n:'گل و مرغ', src:'assets/img/cert-frames/gol-morgh.webp', th:'assets/img/cert-frames/thumb/gol-morgh.webp', box:{l:.1602,r:.1621,t:.1087,b:.1094}},
   'kashi':         {n:'کاشی هفت‌رنگ', src:'assets/img/cert-frames/kashi.webp', th:'assets/img/cert-frames/thumb/kashi.webp', box:{l:.1689,r:.1719,t:.1361,b:.1374}},
   'toranj':        {n:'ترنج و لچک', src:'assets/img/cert-frames/toranj.webp', th:'assets/img/cert-frames/thumb/toranj.webp', pad:0.05, box:{l:.1133,r:.1143,t:.1309,b:.1484}},
-  'shahane':       {n:'شاهانهٔ سرمه‌ای', src:'assets/img/cert-frames/shahane.webp', th:'assets/img/cert-frames/thumb/shahane.webp', box:{l:.1738,r:.1787,t:.1393,b:.1387}}
+  'shahane':       {n:'شاهانهٔ سرمه‌ای', src:'assets/img/cert-frames/shahane.webp', th:'assets/img/cert-frames/thumb/shahane.webp', box:{l:.1738,r:.1787,t:.1393,b:.1387}},
+  'eslimi-firouzeh':{n:'اسلیمی فیروزه‌ای', src:'assets/img/cert-frames/eslimi-firouzeh.webp', th:'assets/img/cert-frames/thumb/eslimi-firouzeh.webp', pad:0.07, white:true, box:{l:0.0928,r:0.0938,t:0.0651,b:0.0605}},
+  'eslimi-zereshki':{n:'اسلیمی زرشکی', src:'assets/img/cert-frames/eslimi-zereshki.webp', th:'assets/img/cert-frames/thumb/eslimi-zereshki.webp', pad:0.075, white:true, box:{l:0.0918,r:0.0957,t:0.0648,b:0.0687}},
+  'eslimi-sabz':{n:'اسلیمی سبز', src:'assets/img/cert-frames/eslimi-sabz.webp', th:'assets/img/cert-frames/thumb/eslimi-sabz.webp', pad:0.045, white:true, box:{l:0.0892,r:0.092,t:0.057,b:0.0556}},
+  'eslimi-siah':{n:'اسلیمی مشکی (مناسب چاپ سیاه‌وسفید)', src:'assets/img/cert-frames/eslimi-siah.webp', th:'assets/img/cert-frames/thumb/eslimi-siah.webp', pad:0.03, white:true, box:{l:0.1019,r:0.1019,t:0.0721,b:0.0714}},
+  'eslimi-nili':{n:'اسلیمی نیلی', src:'assets/img/cert-frames/eslimi-nili.webp', th:'assets/img/cert-frames/thumb/eslimi-nili.webp', pad:0.03, white:true, box:{l:0.0977,r:0.0996,t:0.0717,b:0.0717}},
+  'eslimi-golbahi':{n:'اسلیمی گل‌بهی', src:'assets/img/cert-frames/eslimi-golbahi.webp', th:'assets/img/cert-frames/thumb/eslimi-golbahi.webp', pad:0.06, white:true, box:{l:0.082,r:0.084,t:0.0573,b:0.0579}},
+  'eslimi-zar-lachak':{n:'اسلیمی زر و لچک', src:'assets/img/cert-frames/eslimi-zar-lachak.webp', th:'assets/img/cert-frames/thumb/eslimi-zar-lachak.webp', pad:0.09, white:true, box:{l:0.0791,r:0.0879,t:0.0833,b:0.0885}},
+  'eslimi-banafsh':{n:'اسلیمی بنفش', src:'assets/img/cert-frames/eslimi-banafsh.webp', th:'assets/img/cert-frames/thumb/eslimi-banafsh.webp', pad:0.035, white:true, box:{l:0.1191,r:0.1201,t:0.0814,b:0.0788}},
+  'eslimi-ghahvei':{n:'اسلیمی قهوه‌ای کهن', src:'assets/img/cert-frames/eslimi-ghahvei.webp', th:'assets/img/cert-frames/thumb/eslimi-ghahvei.webp', pad:0.035, white:true, box:{l:0.107,r:0.107,t:0.0738,b:0.0764}},
+  'eslimi-chandrang':{n:'اسلیمی چندرنگ صفوی', src:'assets/img/cert-frames/eslimi-chandrang.webp', th:'assets/img/cert-frames/thumb/eslimi-chandrang.webp', pad:0.03, white:true, box:{l:0.1396,r:0.1406,t:0.0924,b:0.0924}}
 };
+FRAME_IMGS['eslimi-gold'].white = FRAME_IMGS['eslimi-lajvard'].white = true;
 
 /* ── فونت‌ها ── */
 const FONTS = [
@@ -737,8 +816,26 @@ const BG = {
 const NQ = {deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Vazirmatn'};
 const THEMES = [
   {id:'f-lajvard', name:'لاجورد و طلا', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:lajvard', fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, fonts:NQ, sizes:{title:50, name:36, basmala:17}},
-  {id:'f-eslimi-lajvard', name:'اسلیمی لاجوردی (میانه سفید)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:eslimi-lajvard', fc:'#1d3a8a', fc2:'#b8862b', ink:'#24324a', accent:'#1d3a8a', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'Mirza', body:'Vazirmatn'}, sizes:{title:52, name:32, basmala:17}},
-  {id:'f-eslimi-gold', name:'اسلیمی طلایی ظریف (میانه سفید)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:eslimi-gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#33270f', accent:'#7a5410', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:54, name:38, basmala:17, body:16}},
+  {id:'f-eslimi-lajvard', name:'اسلیمی لاجوردی', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-lajvard', fc:'#1d3a8a', fc2:'#b8862b', ink:'#24324a', accent:'#1d3a8a', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'Mirza', body:'Vazirmatn'}, sizes:{title:52, name:32, basmala:17}},
+  {id:'f-eslimi-gold', name:'اسلیمی طلایی ظریف', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#33270f', accent:'#7a5410', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:54, name:38, basmala:17, body:16}},
+  {id:'es-firouzeh', name:'اسلیمی فیروزه‌ای', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-firouzeh', fc:'#0e6f78', fc2:'#a87a22', ink:'#1f3236', accent:'#0b5a62', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Vazirmatn'}, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-zereshki', name:'اسلیمی زرشکی', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-zereshki', fc:'#8a1c2c', fc2:'#b8862b', ink:'#2e1a14', accent:'#7a1424', wm:null, fonts:NQ, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-sabz', name:'اسلیمی سبز', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-sabz', fc:'#1d6b3a', fc2:'#b8862b', ink:'#1d2a22', accent:'#1d6b3a', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'Mirza', body:'Vazirmatn'}, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-siah', name:'اسلیمی مشکی (چاپ سیاه‌وسفید)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-siah', fc:'#222222', fc2:'#555555', ink:'#1a1a1a', accent:'#111111', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-nili', name:'اسلیمی نیلی', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-nili', fc:'#1f2f7a', fc2:'#3b4fa8', ink:'#1d2540', accent:'#1f2f7a', wm:null, fonts:NQ, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-golbahi', name:'اسلیمی گل‌بهی (کودکانه)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-golbahi', fc:'#c2577a', fc2:'#7a9a6a', ink:'#3a2a30', accent:'#b04a6c', wm:null, fonts:{deco:'IranNastaliq', title:'Lalezar', name:'Gandom', body:'Vazirmatn'}, sizes:{title:40, name:34, basmala:15, body:15}},
+  {id:'es-zar', name:'اسلیمی زر و لچک', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-zar-lachak', fc:'#a87a22', fc2:'#1f3a7a', ink:'#33270f', accent:'#7a5410', wm:null, fonts:NQ, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-banafsh', name:'اسلیمی بنفش', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-banafsh', fc:'#5b2a86', fc2:'#b8862b', ink:'#2a1f36', accent:'#5b2a86', wm:null, fonts:NQ, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-ghahvei', name:'اسلیمی قهوه‌ای کهن', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-ghahvei', fc:'#6e430a', fc2:'#a87a22', ink:'#33240c', accent:'#6e430a', wm:null, fonts:{deco:'IranNastaliq', title:'Aref Ruqaa', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-chandrang', name:'اسلیمی چندرنگ صفوی', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-chandrang', fc:'#1f3a7a', fc2:'#0e8a8a', ink:'#22283a', accent:'#1f3a7a', wm:null, fonts:NQ, sizes:{title:52, name:36, basmala:17, body:15}},
+  {id:'es-firouzeh-l', name:'اسلیمی فیروزه‌ای (افقی)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-firouzeh', fc:'#0e6f78', fc2:'#a87a22', ink:'#1f3236', accent:'#0b5a62', wm:null, orient:'landscape', fonts:NQ, sizes:{title:44, name:32, basmala:15, body:13.5, intro:13}},
+  {id:'es-nili-l', name:'اسلیمی نیلی (افقی)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-nili', fc:'#1f2f7a', fc2:'#3b4fa8', ink:'#1d2540', accent:'#1f2f7a', wm:null, orient:'landscape', fonts:NQ, sizes:{title:44, name:32, basmala:15, body:13.5, intro:13}},
+  {id:'es-siah-l', name:'اسلیمی مشکی (افقی)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-siah', fc:'#222222', fc2:'#555555', ink:'#1a1a1a', accent:'#111111', wm:null, orient:'landscape', fonts:NQ, sizes:{title:44, name:32, basmala:15, body:13.5, intro:13}},
+  {id:'v-lajvard', name:'اسلیمی برداری لاجوردی (قابل ویرایش)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'vec', vec:{pattern:'eslimi', corner:'lachak', rules:'double', toranj:true, band:15, inset:9, density:2.4, lachak:2.4, c1:'#c9a03a', c2:'#f1d27a', ground:'#1f3a7a'}, fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, fonts:NQ, sizes:{title:50, name:34, basmala:16, body:14.5}},
+  {id:'v-firouzeh', name:'اسلیمی برداری فیروزه‌ای (قابل ویرایش)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'vec', vec:{pattern:'eslimi', corner:'rosette', rules:'double', toranj:false, band:12, inset:10, density:2.4, lachak:2.2, c1:'#0e6f78', c2:'#d9a400', ground:''}, fc:'#0e6f78', fc2:'#b8862b', ink:'#1f3236', accent:'#0b5a62', wm:null, fonts:NQ, sizes:{title:50, name:34, basmala:16, body:14.5}},
+  {id:'v-khatai', name:'ختایی برداری طلایی (قابل ویرایش)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'vec', vec:{pattern:'khatai', corner:'lachak', rules:'double', toranj:false, band:13, inset:9, density:2.2, lachak:2.6, c1:'#a87a22', c2:'#d64545', ground:''}, fc:'#a87a22', fc2:'#b8862b', ink:'#33270f', accent:'#7a5410', wm:null, fonts:NQ, sizes:{title:50, name:34, basmala:16, body:14.5}},
+  {id:'v-siah', name:'اسلیمی خطی مشکی (قابل ویرایش)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'vec', vec:{pattern:'vine', corner:'rosette', rules:'double', toranj:false, band:10, inset:10, density:2.6, lachak:2, c1:'#222222', c2:'#ffffff', ground:''}, fc:'#222222', fc2:'#b8862b', ink:'#1a1a1a', accent:'#111111', wm:null, fonts:NQ, sizes:{title:50, name:34, basmala:16, body:14.5}},
+  {id:'v-girih', name:'گره‌چینی زمردی (قابل ویرایش)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'vec', vec:{pattern:'geo', corner:'rosette', rules:'double', toranj:false, band:12, inset:9, density:2, lachak:2, c1:'#0d5a32', c2:'#c9a03a', ground:''}, fc:'#0d5a32', fc2:'#b8862b', ink:'#1d2a22', accent:'#0d5a32', wm:null, fonts:NQ, sizes:{title:50, name:34, basmala:16, body:14.5}},
   {id:'f-firouzeh', name:'فیروزه و طلا', cat:'تذهیب و اسلیمی', bg:'ivory', frame:'img:firouzeh', fc:'#0e6f78', fc2:'#a87a22', ink:'#1f3236', accent:'#0b5a62', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'Mirza', body:'Vazirmatn'}, sizes:{title:50, name:32, basmala:17}},
   {id:'f-lacquer', name:'لاکی قاجاری', cat:'تذهیب و اسلیمی', bg:'ivory', frame:'img:lacquer', fc:'#8a1c1c', fc2:'#b8862b', ink:'#2e1a10', accent:'#7a1414', wm:null, fonts:{deco:'IranNastaliq', title:'Aref Ruqaa', name:'IranNastaliq', body:'Vazirmatn'}, sizes:{title:40, name:34, basmala:15, body:13.5, intro:13}},
   {id:'f-zomorrod', name:'زمرد و طلا', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:zomorrod', fc:'#0d5a32', fc2:'#b8862b', ink:'#1d2a22', accent:'#0d5a32', wm:null, fonts:NQ, sizes:{title:48, name:34, basmala:16, body:14}},
@@ -747,7 +844,7 @@ const THEMES = [
   {id:'f-toranj', name:'ترنج و لچک', cat:'تذهیب و اسلیمی', bg:'parchment', frame:'img:toranj', fc:'#6e430a', fc2:'#1f3a7a', ink:'#33240c', accent:'#6e430a', wm:null, fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:52, name:36, basmala:17, body:16}},
   {id:'f-shahane', name:'شاهانهٔ سرمه‌ای', cat:'تذهیب و اسلیمی', bg:'navy', frame:'img:shahane', fc:'#d9b45e', fc2:'#f0d898', ink:'#f6ecd0', accent:'#ecc66c', wm:null, dark:true, fonts:NQ, sizes:{title:50, name:36, basmala:16, body:14}},
   {id:'f-lajvard-l', name:'لاجورد و طلا (افقی)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:lajvard', fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, orient:'landscape', fonts:NQ, sizes:{title:44, name:32, basmala:15, body:13.5, intro:13}},
-  {id:'f-eslimi-gold-l', name:'اسلیمی طلایی (افقی)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:eslimi-gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#33270f', accent:'#7a5410', wm:null, orient:'landscape', fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:48, name:36, basmala:15, body:15}},
+  {id:'f-eslimi-gold-l', name:'اسلیمی طلایی (افقی)', cat:'حاشیهٔ اسلیمی', bg:'white', frame:'img:eslimi-gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#33270f', accent:'#7a5410', wm:null, orient:'landscape', fonts:{deco:'IranNastaliq', title:'IranNastaliq', name:'IranNastaliq', body:'Markazi Text'}, sizes:{title:48, name:36, basmala:15, body:15}},
   {id:'f-golmorgh-l', name:'گل و مرغ (افقی)', cat:'تذهیب و اسلیمی', bg:'white', frame:'img:gol-morgh', fc:'#8a1c1c', fc2:'#b8862b', ink:'#2b1d1d', accent:'#8a1c1c', wm:null, orient:'landscape', fonts:NQ, sizes:{title:44, name:32, basmala:15, body:13.5, intro:13}},
   {id:'lajvard', name:'قاب ایران‌گرد', cat:'تذهیب و اسلیمی', bg:'ivory', frame:'image', fc:'#1f3a7a', fc2:'#b8862b', ink:'#2b2418', accent:'#1f3a7a', wm:null, fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Vazirmatn'}, sizes:{title:44}},
   {id:'gold', name:'تذهیب طلایی', cat:'تذهیب خطی', bg:'ivory', frame:'gold', fc:'#a87a22', fc2:'#7a4e0c', ink:'#2e2414', accent:'#6e430a', wm:'toranj', fonts:{deco:'Amiri',title:'Lalezar',name:'Mirza',body:'Vazirmatn'}},
@@ -765,7 +862,7 @@ const THEMES = [
   {id:'kids-sky', name:'آسمان کودکانه', cat:'کودکانه', bg:'sky', frame:'kids', fc:'#1971c2', fc2:'#f08c00', ink:'#1c2a3a', accent:'#1864ab', wm:null, fonts:{deco:'Vazirmatn',title:'Lalezar',name:'Lalezar',body:'Samim'}, sizes:{title:46,name:34,body:16}},
   {id:'paper', name:'برگهٔ تذهیب آماده (فقط متن)', cat:'تذهیب و اسلیمی', bg:'white', frame:'none', fc:'#8a5a00', fc2:'#8a5a00', ink:'#1f1f1f', accent:'#1e3a5f', wm:null, paper:true, fonts:{deco:'Amiri',title:'Mirza',name:'Mirza',body:'Vazirmatn'}, sizes:{title:40}}
 ];
-const FRAME_STYLES = [...Object.entries(FRAME_IMGS).map(([k, v]) => ['img:' + k, '🖼️ ' + v.n]), ['image','🖼️ قاب ایران‌گرد (کاشی‌وار)'],['gold','تذهیب طلایی خطی'],['double','دو خطی کلاسیک'],['minimal','مینیمال'],['band','نوار مدرن کناری'],['wave','موج مدرن'],['kids','ستاره‌های کودکانه'],['none','بدون قاب']];
+const FRAME_STYLES = [['vec','✳️ قاب اسلیمی برداری (همه‌چیزش قابل ویرایش)'], ...Object.entries(FRAME_IMGS).map(([k, v]) => ['img:' + k, (v.white ? '⬜ ' : '🖼️ ') + v.n]), ['image','🖼️ قاب ایران‌گرد (کاشی‌وار)'],['gold','تذهیب طلایی خطی'],['double','دو خطی کلاسیک'],['minimal','مینیمال'],['band','نوار مدرن کناری'],['wave','موج مدرن'],['kids','ستاره‌های کودکانه'],['none','بدون قاب']];
 
 const PAPER_PRESETS = [
   {n:'A4 عمودی — تذهیب حاشیه‌پهن', size:'A4', o:'portrait', m:{t:50,r:42,b:46,l:42}},
@@ -792,10 +889,11 @@ function baseState(){
   const fields = {};
   for (const f of FIELDS) if (f.type !== 'none') fields[f.k] = { on: !['verse','serial'].includes(f.k), text: DEFAULT_TEXT[f.k] || '' };
   return {
-    v:3, theme:th.id, mode:'design',
+    v:4, theme:th.id, mode:'design',
     page:{size:'A4', orient:'portrait', w:210, h:297},
     margins:autoMargins(th.frame, 210, 297, 1),
-    frame:{style:th.frame, color:th.fc, color2:th.fc2, size:100},
+    frame:{style:th.frame, color:th.fc, color2:th.fc2, size:100, adj:Object.assign({}, ADJ0)},
+    vec:Object.assign({}, VEC_DEFAULT), snap:0, lock:false,
     bg:{type:'theme', c1:'#fffdf6', c2:'#f3e5c3', angle:160},
     colors:{ink:th.ink, accent:th.accent},
     watermark:!!th.wm,
@@ -827,7 +925,9 @@ function fixState(st){
   for (const f of FIELDS){ const s = st.styles[f.k]; if (s) for (const [k, v] of Object.entries({lh:0, ls:0, w:100, align:'', fx:''})) if (s[k] == null) s[k] = v; }
   if (!st.pos || typeof st.pos !== 'object' || Array.isArray(st.pos)) st.pos = {};
   if (!Array.isArray(st.extras)) st.extras = [];
-  st.v = 3;
+  if (!st.frame.adj) st.frame.adj = Object.assign({}, ADJ0);
+  st.vec = Object.assign({}, VEC_DEFAULT, st.vec || {});
+  st.v = 4;
   return st;
 }
 let saveTimer = 0, quotaWarned = false;
@@ -1037,14 +1137,173 @@ function watermarkSVG(W, H, c){
 /* ── قاب تذهیب تصویری: برش ۹ تکه روی بوم، بدون کشیدگی ── */
 let frameImg = null, frameImgP = null;
 const frameCache = new Map();
-function loadFrameImg(){
+async function loadFrameImg(){ await loadFrameImgBase(); await ensureFrameAdj(); return frameImg; }
+function loadFrameImgBase(){
   if (!frameImgP) frameImgP = new Promise(res => { const im = new Image(); im.onload = () => { frameImg = im; res(im); }; im.onerror = () => res(null); im.src = ASSET_FRAME; });
   return frameImgP;
 }
+/* ── قاب اسلیمی برداری: هر جزء (نقش، رنگ، پهنا، گوشه، ترنج) قابل ویرایش ── */
+function vecCfg(){ try { return Object.assign({}, VEC_DEFAULT, (S && S.vec) || {}); } catch(e){ return Object.assign({}, VEC_DEFAULT); } }
+const f2 = v => +(+v).toFixed(2);
+// نقش یک کاشی در کادر ۱۰۰×۴۰ (v=0 لبهٔ بیرونی، v=40 لبهٔ درونی)
+function vecTile(kind, c1, c2){
+  const vine = (w) => `<path d="M0 20C12 5 38 5 50 20S88 35 100 20" fill="none" stroke="${c1}" stroke-width="${w}" stroke-linecap="round"/>`;
+  if (kind === 'geo') return `<g fill="none" stroke="${c1}" stroke-width="1.6" stroke-linejoin="round"><path d="M0 20L25 4L50 20L25 36Z"/><path d="M50 20L75 4L100 20L75 36Z"/><path d="M25 11L36 20L25 29L14 20Z" fill="${c2}"/><path d="M75 11L86 20L75 29L64 20Z" fill="${c2}"/><path d="M0 1.5H100M0 38.5H100" stroke-width=".9"/></g><g fill="${c1}"><circle cx="50" cy="20" r="2.6"/><circle cx="0" cy="20" r="2.6"/><circle cx="100" cy="20" r="2.6"/><circle cx="50" cy="5" r="1.4"/><circle cx="50" cy="35" r="1.4"/></g>`;
+  if (kind === 'khatai'){
+    let petals = '';
+    for (let k = 0; k < 8; k++) petals += `<ellipse cx="25" cy="13.2" rx="3.4" ry="6.6" transform="rotate(${k * 45} 25 20)"/>`;
+    return `${vine(1.7)}<g fill="${c2}" stroke="${c1}" stroke-width=".8">${petals}</g><circle cx="25" cy="20" r="3.6" fill="${c1}"/><circle cx="25" cy="20" r="1.5" fill="${c2}"/>`
+      + `<g fill="${c1}"><path d="M75 31C68 27 66 18 70 12C72 17 74 20 75 24C76 20 78 17 80 12C84 18 82 27 75 31Z" fill="${c2}" stroke="${c1}" stroke-width=".8"/><path d="M50 20C54 15 60 14 64 15C61 19 56 21 50 20Z"/><path d="M50 20C46 25 40 26 36 25C39 21 44 19 50 20Z"/></g>`;
+  }
+  if (kind === 'vine') return `${vine(1.5)}<g fill="none" stroke="${c1}" stroke-width="1.1" stroke-linecap="round"><path d="M25 8.8C19 14 19 24 26 25C32 26 33 18 28 17C25.5 16.6 24.5 19.5 26.5 20.5"/><path d="M75 31.2C81 26 81 16 74 15C68 14 67 22 72 23C74.5 23.4 75.5 20.5 73.5 19.5"/></g><g fill="${c1}"><path d="M50 20C54 15 60 14 64 15C61 19 56 21 50 20Z"/><path d="M50 20C46 25 40 26 36 25C39 21 44 19 50 20Z"/><circle cx="12" cy="31" r="1.5"/><circle cx="88" cy="9" r="1.5"/></g>`;
+  // اسلیمی (پیش‌فرض): پیچک، حلزونی، اسلیمی دهان‌اژدری و غنچه
+  return `${vine(2.2)}<path d="M25 8.8C19 14 19 24 26 25C32 26 33 18 28 17C25.5 16.6 24.5 19.5 26.5 20.5" fill="none" stroke="${c1}" stroke-width="1.6" stroke-linecap="round"/>`
+    + `<path d="M75 31C67 26 66 16 71 10C72.5 15 74 18 75 22C76 18 77.5 15 79 10C84 16 83 26 75 31Z" fill="${c2}" stroke="${c1}" stroke-width=".9"/>`
+    + `<g fill="${c1}"><path d="M50 20C54 15 60 14 64 15C61 19 56 21 50 20Z"/><path d="M50 20C46 25 40 26 36 25C39 21 44 19 50 20Z"/></g><g fill="${c2}" stroke="${c1}" stroke-width=".6"><circle cx="12" cy="31" r="2"/><circle cx="88" cy="9" r="2"/></g>`;
+}
+function rosetteSVG(cx, cy, r, c1, c2){
+  let p = '';
+  for (let k = 0; k < 8; k++) p += `<ellipse cx="${f2(cx)}" cy="${f2(cy - r * .52)}" rx="${f2(r * .2)}" ry="${f2(r * .46)}" transform="rotate(${k * 45} ${f2(cx)} ${f2(cy)})"/>`;
+  return `<g fill="${c2}" stroke="${c1}" stroke-width="${f2(r * .045)}">${p}</g><circle cx="${f2(cx)}" cy="${f2(cy)}" r="${f2(r * .3)}" fill="${c1}"/><circle cx="${f2(cx)}" cy="${f2(cy)}" r="${f2(r * .13)}" fill="${c2}"/>`;
+}
+// لبهٔ کنگره‌دار برای لچک و ترنج
+function scallopPath(cx, cy, rx, ry, a0, a1, n, out){
+  let d = '';
+  for (let j = 0; j <= n; j++){
+    const a = (a0 + (a1 - a0) * j / n) * Math.PI / 180, x = cx + rx * Math.cos(a), y = cy + ry * Math.sin(a);
+    if (j === 0){ d += `${f2(x)} ${f2(y)}`; continue; }
+    const am = (a0 + (a1 - a0) * (j - .5) / n) * Math.PI / 180;
+    d += `Q${f2(cx + rx * out * Math.cos(am))} ${f2(cy + ry * out * Math.sin(am))} ${f2(x)} ${f2(y)}`;
+  }
+  return d;
+}
+function vecFrameSVG(W, H, v){
+  v = Object.assign({}, VEC_DEFAULT, v || {});
+  const i = num(v.inset, 9), b = num(v.band, 13), c1 = v.c1, c2 = v.c2, gr = v.ground;
+  const x0 = i, y0 = i, x1 = W - i, y1 = H - i, ix0 = i + b, iy0 = i + b, ix1 = W - i - b, iy1 = H - i - b;
+  const lw = Math.max(.22, b * .028), p = b * .14, h = b - 2 * p, cs = b;
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`;
+  if (gr) s += `<path d="M${x0} ${y0}H${x1}V${y1}H${x0}Z M${ix0} ${iy0}V${iy1}H${ix1}V${iy0}Z" fill="${gr}" fill-rule="evenodd"/>`;
+  // کاشی‌های چهار لبه
+  const tile = vecTile(v.pattern, c1, c2);
+  const along = (len) => { const n = Math.max(1, Math.round(len / (h * num(v.density, 2.4)))); return [n, len / n]; };
+  const [nx, tx] = along(x1 - x0 - 2 * cs), [ny, ty] = along(y1 - y0 - 2 * cs);
+  let tiles = '';
+  for (let k = 0; k < nx; k++){
+    const X = x0 + cs + k * tx;
+    tiles += `<g transform="matrix(${f2(tx / 100)} 0 0 ${f2(h / 40)} ${f2(X)} ${f2(y0 + p)})">${tile}</g>`;
+    tiles += `<g transform="matrix(${f2(tx / 100)} 0 0 ${f2(-h / 40)} ${f2(X)} ${f2(y1 - p)})">${tile}</g>`;
+  }
+  for (let k = 0; k < ny; k++){
+    const Y = y0 + cs + k * ty;
+    tiles += `<g transform="matrix(0 ${f2(ty / 100)} ${f2(h / 40)} 0 ${f2(x0 + p)} ${f2(Y)})">${tile}</g>`;
+    tiles += `<g transform="matrix(0 ${f2(ty / 100)} ${f2(-h / 40)} 0 ${f2(x1 - p)} ${f2(Y)})">${tile}</g>`;
+  }
+  s += tiles;
+  // گوشه‌ها: گل‌چهارگوش
+  if (v.corner !== 'none'){
+    for (const [cx, cy] of [[x0 + cs / 2, y0 + cs / 2], [x1 - cs / 2, y0 + cs / 2], [x0 + cs / 2, y1 - cs / 2], [x1 - cs / 2, y1 - cs / 2]]) s += rosetteSVG(cx, cy, cs * .42, c1, c2);
+  }
+  // خط‌های حاشیه
+  const rect = (a, bb, c, d, w, col) => `<rect x="${f2(a)}" y="${f2(bb)}" width="${f2(c - a)}" height="${f2(d - bb)}" fill="none" stroke="${col}" stroke-width="${f2(w)}"/>`;
+  if (v.rules !== 'none'){
+    s += rect(x0, y0, x1, y1, lw * 1.6, c1) + rect(ix0, iy0, ix1, iy1, lw * 1.6, c1);
+    s += `<path d="M${f2(x0 + cs)} ${y0}V${f2(y0 + b)}M${f2(x1 - cs)} ${y0}V${f2(y0 + b)}M${f2(x0 + cs)} ${y1}V${f2(y1 - b)}M${f2(x1 - cs)} ${y1}V${f2(y1 - b)}M${x0} ${f2(y0 + cs)}H${f2(x0 + b)}M${x1} ${f2(y0 + cs)}H${f2(x1 - b)}M${x0} ${f2(y1 - cs)}H${f2(x0 + b)}M${x1} ${f2(y1 - cs)}H${f2(x1 - b)}" stroke="${c1}" stroke-width="${f2(lw)}"/>`;
+    if (v.rules === 'double'){
+      const g = lw * 3.2;
+      s += rect(x0 - g, y0 - g, x1 + g, y1 + g, lw * .7, c1) + rect(ix0 + g, iy0 + g, ix1 - g, iy1 - g, lw * .7, c2 === '#ffffff' ? c1 : c2);
+    }
+  }
+  // لچک‌های گوشهٔ میدان
+  if (v.corner === 'lachak'){
+    const L = b * num(v.lachak, 2.4);
+    const one = `<path d="M0 0L${f2(L)} 0${scallopPath(0, 0, L, L, 0, 90, 7, 1.12).replace(/^[\d.\-]+ [\d.\-]+/, '')}Z" fill="${gr || c2}" fill-opacity="${gr ? 1 : .22}" stroke="${c1}" stroke-width="${f2(lw)}"/>`
+      + `<path d="M${f2(L * .62)} 0${scallopPath(0, 0, L * .62, L * .62, 0, 90, 5, 1.1).replace(/^[\d.\-]+ [\d.\-]+/, '')}" fill="none" stroke="${gr ? c2 : c1}" stroke-width="${f2(lw * .8)}"/>`
+      + `<g transform="scale(${f2(L / 60)})"><path d="M8 8C20 10 26 18 24 26C22 32 15 31 15 26C15 22 19 21 20 24" fill="none" stroke="${gr ? c2 : c1}" stroke-width="1.6" stroke-linecap="round"/><path d="M6 6C12 3 20 4 24 8C18 9 12 9 6 6Z" fill="${gr ? c2 : c1}"/><path d="M6 6C3 12 4 20 8 24C9 18 9 12 6 6Z" fill="${gr ? c2 : c1}"/></g>`;
+    for (const [tx2, ty2, sx, sy] of [[ix0, iy0, 1, 1], [ix1, iy0, -1, 1], [ix0, iy1, 1, -1], [ix1, iy1, -1, -1]])
+      s += `<g transform="translate(${f2(tx2)} ${f2(ty2)}) scale(${sx} ${sy})">${one}</g>`;
+  }
+  // ترنج بالا و پایین
+  if (v.toranj){
+    const rx = b * 1.9, ry = b * .95;
+    for (const cy of [iy0 - b / 2, iy1 + b / 2]){
+      s += `<path d="M${scallopPath(W / 2, cy, rx, ry, 0, 360, 16, 1.07)}Z" fill="${gr || '#ffffff'}" stroke="${c1}" stroke-width="${f2(lw * 1.4)}"/>`;
+      s += `<path d="M${scallopPath(W / 2, cy, rx * .74, ry * .7, 0, 360, 12, 1.08)}Z" fill="${c2}" fill-opacity=".9" stroke="${c1}" stroke-width="${f2(lw)}"/>`;
+      s += rosetteSVG(W / 2, cy, ry * .55, c1, gr || '#ffffff');
+    }
+  }
+  return s + '</svg>';
+}
+
+/* ── رنگ‌آمیزی دوبارهٔ قاب‌های نگارگری (چرخش رنگ، اشباع، روشنی، کم‌رنگی، تک‌رنگ، رنگ کاغذ) ── */
+function isAdj(a){ return !!a && (+a.hue || +a.sat !== 100 || +a.light || +a.fade || a.mono || a.paper); }
+const adjCache = new Map();
+let adjBusy = false, adjWant = null;
+function hex3(c){ const m = /^#?([\da-f]{6})$/i.exec(c || ''); if (!m) return null; const n = parseInt(m[1], 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+function adjKey(fi, a){ return fi.src + '|' + JSON.stringify([a.hue, a.sat, a.light, a.fade, a.mono, a.paper]); }
+function frameAdjURL(fi, a){
+  const key = adjKey(fi, a);
+  if (adjCache.has(key)) return adjCache.get(key);
+  adjWant = {key, fi, a: Object.assign({}, a)};
+  if (!adjBusy) runAdj();
+  return null;
+}
+async function runAdj(){
+  adjBusy = true;
+  try {
+    while (adjWant){
+      const w = adjWant; adjWant = null;
+      if (adjCache.has(w.key)) continue;
+      try { const url = await processFrame(w.fi.src, w.a); if (adjCache.size > 8) adjCache.clear(); adjCache.set(w.key, url); } catch(e){ adjCache.set(w.key, w.fi.src); }
+    }
+  } finally { adjBusy = false; }
+  render();
+}
+async function ensureFrameAdj(){
+  const fi = frameImgOf(S.frame.style); if (!fi || !isAdj(S.frame.adj)) return;
+  const key = adjKey(fi, S.frame.adj); if (adjCache.has(key)) return;
+  frameAdjURL(fi, S.frame.adj);
+  for (let t = 0; t < 300 && !adjCache.has(key); t++) await new Promise(r => setTimeout(r, 40));
+}
+function processFrame(src, a){
+  return new Promise((res, rej) => {
+    const im = new Image();
+    im.onerror = rej;
+    im.onload = () => {
+      const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight;
+      const x = c.getContext('2d'); x.drawImage(im, 0, 0);
+      const d = x.getImageData(0, 0, c.width, c.height), px = d.data;
+      const mono = hex3(a.mono), paper = hex3(a.paper), hue = (+a.hue || 0) / 360, sat = (+a.sat || 0) / 100, light = (+a.light || 0) / 100, fade = (+a.fade || 0) / 100;
+      const hsl = !mono && (hue || sat !== 1 || light);
+      for (let i = 0; i < px.length; i += 4){
+        let r = px[i], g = px[i+1], b = px[i+2];
+        if (mono){
+          const t = Math.min(1, (1 - (r * .299 + g * .587 + b * .114) / 255) * 1.12);
+          r = 255 - (255 - mono[0]) * t; g = 255 - (255 - mono[1]) * t; b = 255 - (255 - mono[2]) * t;
+        } else if (hsl){
+          r /= 255; g /= 255; b /= 255;
+          const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0, l = (mx + mn) / 2;
+          if (mx !== mn){ const dd = mx - mn; s = l > .5 ? dd / (2 - mx - mn) : dd / (mx + mn); h = mx === r ? (g - b) / dd + (g < b ? 6 : 0) : mx === g ? (b - r) / dd + 2 : (r - g) / dd + 4; h /= 6; }
+          h = (h + hue + 1) % 1; s = Math.min(1, s * sat); l = light > 0 ? l + (1 - l) * light : l + l * light;
+          const q = l < .5 ? l * (1 + s) : l + s - l * s, pp = 2 * l - q;
+          const f = t => { t = (t + 1) % 1; return t < 1/6 ? pp + (q - pp) * 6 * t : t < .5 ? q : t < 2/3 ? pp + (q - pp) * (2/3 - t) * 6 : pp; };
+          r = f(h + 1/3) * 255; g = f(h) * 255; b = f(h - 1/3) * 255;
+        }
+        if (fade){ r = 255 - (255 - r) * (1 - fade); g = 255 - (255 - g) * (1 - fade); b = 255 - (255 - b) * (1 - fade); }
+        if (paper){ r = r * paper[0] / 255; g = g * paper[1] / 255; b = b * paper[2] / 255; }
+        px[i] = r; px[i+1] = g; px[i+2] = b;
+      }
+      x.putImageData(d, 0, 0);
+      let url = c.toDataURL('image/webp', .9); if (!url.startsWith('data:image/webp')) url = c.toDataURL('image/jpeg', .92);
+      res(url);
+    };
+    im.src = src;
+  });
+}
 function frameImgOf(style){ return typeof style === 'string' && style.startsWith('img:') ? FRAME_IMGS[style.slice(4)] || null : null; }
 // لایهٔ قاب نگارگری کامل؛ در برگهٔ افقی ۹۰ درجه می‌چرخد
-function frameImgLayer(fi, W, H, thumb, extra){
-  const src = thumb ? fi.th : fi.src;
+function frameImgLayer(fi, W, H, thumb, extra, srcOver){
+  const src = srcOver || (thumb ? fi.th : fi.src);
   const st = W > H ? `inset:auto;left:50%;top:50%;width:calc(var(--mm)*${H});height:calc(var(--mm)*${W});transform:translate(-50%,-50%) rotate(90deg)` : '';
   return `<div class="lyr fr"${extra ? ` style="${extra}"` : ''}><img src="${src}" alt=""${st ? ` style="${st}"` : ''}></div>`;
 }
@@ -1075,6 +1334,11 @@ function imageFrameURL(W, H, k, pxmm){
 function autoMargins(style, W, H, k){
   const m = Math.min(W, H);
   const v = (x) => Math.round(x);
+  if (style === 'vec'){
+    const vc = vecCfg(), e = num(vc.inset, 9) + num(vc.band, 13), cl = vc.corner === 'lachak' ? num(vc.band, 13) * num(vc.lachak, 2.4) * .3 : 0;
+    const tb = Math.max(vc.toranj ? num(vc.band, 13) * .5 : 0, cl);
+    return {t:v(e + 6 + tb), r:v(e + 5 + cl * .4), b:v(e + 6 + tb), l:v(e + 5 + cl * .4)};
+  }
   const fi = frameImgOf(style);
   if (fi){
     const b = fi.box, p = (fi.pad || .03) * m;
@@ -1117,7 +1381,8 @@ function pageHTML(o){
       else layers += `<div class="lyr wm">${watermarkSVG(W, H, S.frame.color)}</div>`;
     }
     const fi = frameImgOf(S.frame.style);
-    if (fi) layers += frameImgLayer(fi, W, H, !!o.thumb);
+    if (fi) layers += frameImgLayer(fi, W, H, !!o.thumb, '', !o.thumb && isAdj(S.frame.adj) ? frameAdjURL(fi, S.frame.adj) : null);
+    else if (S.frame.style === 'vec') layers += `<div class="lyr fr">${vecFrameSVG(W, H, S.vec)}</div>`;
     else if (S.frame.style === 'image'){ const u = imageFrameURL(W, H, fk, o.pxmm || 3); if (u) layers += `<div class="lyr fr"><img src="${u}" alt=""></div>`; }
     else if (S.frame.style !== 'none') layers += `<div class="lyr fr">${frameSVG(S.frame.style, W, H, S.frame.color, S.frame.color2, fk)}</div>`;
   } else if (o.screen && S.paper.guide){
@@ -1171,9 +1436,12 @@ function pageHTML(o){
   const odx = paper && o.offsets ? num(S.paper.offX,0) : 0, ody = paper && o.offsets ? num(S.paper.offY,0) : 0;
   let extras = '';
   for (const ex of (S.extras || [])){
+    const w = num(ex.w, 120), kx = 'x:' + ex.id;
+    const box = `data-mv="${esc(kx)}" data-x="${esc(ex.id)}" style="left:calc(var(--mm)*${num(ex.x, W/2) - w/2 + odx});top:calc(var(--mm)*${num(ex.y, H/2) + ody});width:calc(var(--mm)*${w});`;
+    if (ex.type === 'img'){ if (ex.src) extras += `<img class="xt xi${cl}" alt="" src="${ex.src}" ${box}${posCSS(kx)}">`; continue; }
+    if (ex.type === 'orn'){ extras += `<div class="xt xo${cl}" ${box}${posCSS(kx)}">${ornHTML(ex.kind, ex.color || accent, ex.color2 || '#ffffff')}</div>`; continue; }
     if (!String(ex.text || '').trim()) continue;
-    const w = num(ex.w, 120);
-    extras += `<div class="cf xt${cl}" data-mv="x:${esc(ex.id)}" data-x="${esc(ex.id)}" style="--fit:1;--gs:${S.gScale/100};left:calc(var(--mm)*${num(ex.x, W/2) - w/2 + odx});top:calc(var(--mm)*${num(ex.y, H/2) + ody});width:calc(var(--mm)*${w});${textStyle(Object.assign({}, ex, {w:100}), ex.color || accent, fontLH(ex.font))}">${fieldHTML(ex.text, ctx)}</div>`;
+    extras += `<div class="cf xt${cl}" ${box}--fit:1;--gs:${S.gScale/100};${textStyle(Object.assign({}, ex, {w:100}), ex.color || accent, fontLH(ex.font))}${posCSS(kx)}">${fieldHTML(ex.text, ctx)}</div>`;
   }
   return `<div class="cert${paper ? ' is-paper' : ''}" style="--mm:${o.mm};--ink:${ink};width:calc(var(--mm)*${W});height:calc(var(--mm)*${H});background:${bg}">
     ${layers}
@@ -1198,7 +1466,27 @@ function textStyle(s, col, defLH){
 // جابه‌جایی دلخواه هر بخش (میلی‌متر) نسبت به جای خودکارش
 function posCSS(k){
   const p = S.pos && S.pos[k];
-  return p && (p.x || p.y) ? `transform:translate(calc(var(--mm)*${p.x || 0}),calc(var(--mm)*${p.y || 0}));` : '';
+  if (!p) return '';
+  let css = '';
+  if (p.x || p.y || p.r) css += `transform:translate(calc(var(--mm)*${p.x || 0}),calc(var(--mm)*${p.y || 0}))${p.r ? ` rotate(${p.r}deg)` : ''};`;
+  if (p.o != null && p.o < 1) css += `opacity:${p.o};`;
+  return css;
+}
+// نقش‌های تزئینی آزاد (برداری و رنگ‌پذیر)
+const ORNS = [['rosette','گل شمسه (رنگی)'],['toranj','ترنج'],['star','ستارهٔ هشت‌پر گره'],['lachak','لچک گوشه'],['shamseh','شمسهٔ زرین (تصویری)'],['div-classic','جداکنندهٔ کلاسیک'],['div-eslimi','جداکنندهٔ اسلیمی'],['div-toranj','جداکنندهٔ ترنج'],['div-line','خط ساده'],['band','نوار اسلیمی']];
+function ornHTML(kind, c, c2){
+  const sv = (vb, body) => `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${body}</svg>`;
+  if (kind === 'shamseh') return `<img src="${ASSET_SHAMSEH}" alt="">`;
+  if (kind && kind.startsWith('div-')) return sv('0 0 124 12', dividerSVG(kind.slice(4), c));
+  if (kind === 'toranj') return sv('0 0 100 60', `<path d="M${scallopPath(50, 30, 48, 28, 0, 360, 18, 1.07)}Z" fill="${c}" fill-opacity=".14" stroke="${c}" stroke-width="1.2"/><path d="M${scallopPath(50, 30, 34, 19, 0, 360, 14, 1.08)}Z" fill="${c}" fill-opacity=".85"/>${rosetteSVG(50, 30, 12, c2 === c ? '#fff' : c2, '#fff')}<path d="M2 30H-8M98 30H108" stroke="${c}" stroke-width="1.2"/>`);
+  if (kind === 'star'){
+    let pts = []; for (let k = 0; k < 16; k++){ const a = (k * 22.5 - 90) * Math.PI / 180, r = k % 2 ? 26 : 48; pts.push(f2(50 + r * Math.cos(a)) + ' ' + f2(50 + r * Math.sin(a))); }
+    let pts2 = []; for (let k = 0; k < 16; k++){ const a = (k * 22.5 - 90) * Math.PI / 180, r = k % 2 ? 15 : 28; pts2.push(f2(50 + r * Math.cos(a)) + ' ' + f2(50 + r * Math.sin(a))); }
+    return sv('0 0 100 100', `<path d="M${pts.join('L')}Z" fill="${c}" fill-opacity=".16" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"/><path d="M${pts2.join('L')}Z" fill="${c}"/><circle cx="50" cy="50" r="7" fill="#fff"/><circle cx="50" cy="50" r="3.4" fill="${c}"/>`);
+  }
+  if (kind === 'lachak') return sv('0 0 100 100', `<path d="M0 0L96 0${scallopPath(0, 0, 96, 96, 0, 90, 7, 1.1).replace(/^[\d.\-]+ [\d.\-]+/, '')}Z" fill="${c}" fill-opacity=".18" stroke="${c}" stroke-width="1.4"/><path d="M60 0${scallopPath(0, 0, 60, 60, 0, 90, 5, 1.1).replace(/^[\d.\-]+ [\d.\-]+/, '')}" fill="none" stroke="${c}" stroke-width="1.2"/><path d="M10 10C28 12 38 26 35 38C32 46 22 45 22 38C22 33 27 31 29 35" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round"/><path d="M6 6C14 2 26 4 32 10C24 11 14 11 6 6Z" fill="${c}"/><path d="M6 6C2 14 4 26 10 32C11 24 11 14 6 6Z" fill="${c}"/>`);
+  if (kind === 'band'){ let t = ''; for (let k = 0; k < 4; k++) t += `<g transform="translate(${k * 100} 0)">${vecTile('eslimi', c, c2 === c ? '#fff' : c2)}</g>`; return sv('0 -2 400 44', `<path d="M0 -1H400M0 41H400" stroke="${c}" stroke-width="1.2"/>${t}`); }
+  return sv('0 0 100 100', rosetteSVG(50, 50, 46, c, c2 === c ? '#fff' : c2) + `<circle cx="50" cy="50" r="48" fill="none" stroke="${c}" stroke-width="1.2"/>`);
 }
 function dividerSVG(kind, c){
   if (kind === 'line') return `<g stroke="${c}" fill="none"><path d="M10 6H114" stroke-width=".8"/><path d="M34 9H90" stroke-width=".4"/></g>`;
@@ -1272,7 +1560,7 @@ function renderThumbs(){
   thumbsDirty = false;
   const keep = JSON.stringify(S);
   const grid = $('themeGrid'); grid.innerHTML = '';
-  const CATS = ['تذهیب و اسلیمی','تذهیب خطی','مدرن','کودکانه','رسمی'];
+  const CATS = ['حاشیهٔ اسلیمی','تذهیب و اسلیمی','تذهیب خطی','مدرن','کودکانه','رسمی'];
   const list = THEMES.filter(th => themeCat === 'all' || th.cat === themeCat).sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
   let lastCat = '';
   for (const th of list){
@@ -1295,7 +1583,8 @@ function renderThumbs(){
 function applyTheme(th, quiet){
   S.theme = th.id;
   S.colors = {ink:th.ink, accent:th.accent};
-  S.frame = {style:th.frame, color:th.fc, color2:th.fc2, size:100};
+  S.frame = {style:th.frame, color:th.fc, color2:th.fc2, size:100, adj:Object.assign({}, ADJ0)};
+  S.vec = Object.assign({}, VEC_DEFAULT, th.vec || {c1:th.fc, c2:th.fc2});
   S.bg = Object.assign({}, S.bg, {type:'theme'});
   S.watermark = !!th.wm;
   S.page.orient = th.orient || 'portrait';
@@ -1341,8 +1630,11 @@ function imgSlot(slotId, key, label){
     + `<button type="button" class="btn sm soft" data-img="${key}">${val ? 'تعویض' : 'افزودن'} ${esc(label)}</button>`
     + (val ? `<button type="button" class="btn sm" data-imgclean="${key}" title="زمینهٔ سفید عکس را شفاف می‌کند">حذف زمینهٔ سفید</button><button type="button" class="btn sm danger" data-imgdel="${key}">حذف</button>` : '');
 }
-function getImg(key){ if (key === 'logo') return S.logo; if (key === 'stamp') return S.stamp; if (key === 'guide') return S.paper.guideImg; const m = /^sig(\d)$/.exec(key); return m ? S.signers[+m[1]].img : null; }
-function setImg(key, v){ if (key === 'logo') S.logo = v; else if (key === 'stamp') S.stamp = v; else if (key === 'guide') S.paper.guideImg = v; else { const m = /^sig(\d)$/.exec(key); if (m) S.signers[+m[1]].img = v; } }
+function getImg(key){ if (String(key).startsWith('x:')){ const ex = extraById(key.slice(2)); return ex ? ex.src : null; } if (key === 'logo') return S.logo; if (key === 'stamp') return S.stamp; if (key === 'guide') return S.paper.guideImg; const m = /^sig(\d)$/.exec(key); return m ? S.signers[+m[1]].img : null; }
+function setImg(key, v){
+  if (key === 'newx'){ if (!v) return; const {W, H} = pageDims(); const ex = {id:newExtraId(), type:'img', src:v, x:W / 2, y:Math.round(H * .3), w:40}; S.extras = (S.extras || []).concat(ex); sel = 'x:' + ex.id; renderExtras(); toast('تصویر اضافه شد؛ بکشش و با A+ و A− اندازه‌اش را عوض کن.'); return; }
+  if (String(key).startsWith('x:')){ const ex = extraById(key.slice(2)); if (ex){ if (v) ex.src = v; else S.extras = S.extras.filter(x => x !== ex); renderExtras(); } return; }
+  if (key === 'logo') S.logo = v; else if (key === 'stamp') S.stamp = v; else if (key === 'guide') S.paper.guideImg = v; else { const m = /^sig(\d)$/.exec(key); if (m) S.signers[+m[1]].img = v; } }
 function buildStyleBoxes(){
   $('styleBoxes').innerHTML = FIELDS.map(f => {
     const s = S.styles[f.k]; if (!s) return '';
@@ -1396,6 +1688,7 @@ function syncUI(){
   $('layout').value = S.layout; $('bodyAlign').value = S.bodyAlign; $('signAlign').value = S.signAlign; $('metaPos').value = S.metaPos; $('nameLine').value = S.nameLine;
   $('gScale').value = S.gScale; $('digitsFa').checked = !!S.digitsFa; $('autoFit').checked = !!S.autoFit;
   $('divStyle').value = S.divider || 'classic'; $('stampSize').value = S.stampSize || 27;
+  syncFrameBoxes(); $('lockMove').checked = !!S.lock; $('snapGrid').value = String(S.snap || 0);
   if (document.activeElement && document.activeElement.closest && !document.activeElement.closest('#extraList')) renderExtras();
   document.querySelectorAll('[data-mm]').forEach(el => { const src = el.dataset.mm === 'dm-' ? S.margins : S.paper.margins; el.value = src[el.dataset.side]; });
   buildStyleBoxesKeepOpen();
@@ -1491,7 +1784,7 @@ document.addEventListener('click', e => {
 $('imgFile').addEventListener('change', async () => {
   const f = $('imgFile').files[0]; if (!f || !imgTarget) return;
   try {
-    const max = imgTarget === 'guide' ? 1400 : 700;
+    const max = imgTarget === 'guide' ? 1400 : /^(newx|x:)/.test(imgTarget) ? 1000 : 700;
     let url = await fileToDataURL(f, max);
     if (/^sig|stamp/.test(imgTarget)) url = await removeWhite(url);
     setImg(imgTarget, url); syncUI(); changed({now:true});
@@ -1561,7 +1854,7 @@ $('pane-look').addEventListener('change', e => {
   if (styleExtraChange(el, k => S.styles[k])) return;
   if (el.id === 'divStyle'){ S.divider = el.value; changed({now:true}); return; }
   if (el.dataset.sb){ S.styles[el.dataset.sb].bold = el.checked; changed({now:true}); return; }
-  const map = { frameStyle:()=>{ S.frame.style = el.value; const {W,H} = pageDims(); S.margins = autoMargins(S.frame.style, W, H, S.frame.size/100); },
+  const map = { frameStyle:()=>{ S.frame.style = el.value; if (el.value === 'vec' && !S.vec.c1) Object.assign(S.vec, {c1:S.frame.color, c2:S.frame.color2}); const {W,H} = pageDims(); S.margins = autoMargins(S.frame.style, W, H, S.frame.size/100); },
     wmOn:()=> S.watermark = el.checked, bgType:()=> S.bg.type = el.value,
     layout:()=> S.layout = el.value, bodyAlign:()=> S.bodyAlign = el.value, signAlign:()=> S.signAlign = el.value, metaPos:()=> S.metaPos = el.value, nameLine:()=> S.nameLine = el.value,
     digitsFa:()=> S.digitsFa = el.checked, autoFit:()=> S.autoFit = el.checked };
@@ -1570,6 +1863,78 @@ $('pane-look').addEventListener('change', e => {
 $('pane-look').addEventListener('click', e => {
   const r = e.target.closest('[data-scr]'); if (r){ S.styles[r.dataset.scr].color = ''; changed({now:true}); toast('رنگ این بخش به رنگ الگو برگشت.'); }
   const pr = e.target.closest('[data-posreset]'); if (pr){ delete S.pos[pr.dataset.posreset]; changed({now:true}); toast('این بخش به جای اولش برگشت.'); }
+});
+const ADJ_PRESETS = [
+  ['رنگ اصلی', {}, ''], ['طلایی', {mono:'#a5781c'}, '#a5781c'], ['لاجوردی', {mono:'#1d3a8a'}, '#1d3a8a'], ['فیروزه‌ای', {mono:'#0e7480'}, '#0e7480'],
+  ['زرشکی', {mono:'#8a1c2c'}, '#8a1c2c'], ['سبز', {mono:'#1d6b3a'}, '#1d6b3a'], ['بنفش', {mono:'#5b2a86'}, '#5b2a86'], ['مشکی', {mono:'#222222'}, '#222222'],
+  ['کم‌رنگ', {fade:55}, '#e8e2d0'], ['کاغذ کرم', {paper:'#f7edd3'}, '#f7edd3'], ['کاغذ نخودی کهنه', {paper:'#efe0bb', sat:70}, '#efe0bb']
+];
+const VEC_PRESETS = [
+  ['لاجورد و طلا', {c1:'#c9a03a', c2:'#f1d27a', ground:'#1f3a7a'}], ['فیروزه و طلا', {c1:'#0e6f78', c2:'#d9a400', ground:''}],
+  ['طلایی', {c1:'#a87a22', c2:'#f1d27a', ground:''}], ['زرشکی', {c1:'#8a1c2c', c2:'#d9a441', ground:''}], ['سبز زمردی', {c1:'#0d5a32', c2:'#c9a03a', ground:''}],
+  ['مشکی (سیاه‌وسفید)', {c1:'#222222', c2:'#ffffff', ground:''}], ['سرمه‌ای', {c1:'#1d2a5a', c2:'#9bb0e0', ground:''}], ['گل‌بهی', {c1:'#b04a6c', c2:'#9cc39a', ground:''}],
+  ['زمینهٔ زرشکی', {c1:'#e8c46a', c2:'#fff1c4', ground:'#7a1424'}], ['زمینهٔ سبز', {c1:'#e8c46a', c2:'#fff1c4', ground:'#0d4a2c'}]
+];
+function syncFrameBoxes(){
+  const fi = frameImgOf(S.frame.style), a = S.frame.adj || ADJ0, v = S.vec;
+  $('adjBox').hidden = !fi; $('vecBox').hidden = S.frame.style !== 'vec';
+  $('frameColor').closest('.row').querySelectorAll('label:not(:last-child)').forEach(l => l.hidden = !!fi || S.frame.style === 'vec');
+  if (fi){
+    $('adjHue').value = a.hue; $('adjHueV').textContent = faDigits(a.hue) + '°';
+    $('adjSat').value = a.sat; $('adjSatV').textContent = faDigits(a.sat) + '٪';
+    $('adjLight').value = a.light; $('adjLightV').textContent = faDigits(a.light);
+    $('adjFade').value = a.fade; $('adjFadeV').textContent = faDigits(a.fade) + '٪';
+    $('adjMonoOn').checked = !!a.mono; $('adjMono').value = a.mono || S.frame.color || '#1d3a8a';
+    $('adjPaperOn').checked = !!a.paper; $('adjPaper').value = a.paper || '#f7edd3';
+  }
+  if (S.frame.style === 'vec'){
+    $('vecPattern').value = v.pattern; $('vecCorner').value = v.corner; $('vecRules').value = v.rules; $('vecToranj').checked = !!v.toranj;
+    $('vecBand').value = v.band; $('vecBandV').textContent = faDigits(v.band); $('vecInset').value = v.inset; $('vecInsetV').textContent = faDigits(v.inset);
+    $('vecDensity').value = v.density; $('vecLachak').value = v.lachak;
+    $('vecC1').value = v.c1; $('vecC2').value = v.c2; $('vecGroundOn').checked = !!v.ground; $('vecGround').value = v.ground || '#1f3a7a';
+  }
+}
+function vecChanged(now){ const {W, H} = pageDims(); S.margins = autoMargins('vec', W, H, 1); document.querySelectorAll('[data-mm="dm-"]').forEach(x => x.value = S.margins[x.dataset.side]); syncFrameBoxes(); changed(now ? {now:true} : undefined); }
+$('adjBox').addEventListener('input', e => {
+  const id = e.target.id, a = S.frame.adj = Object.assign({}, ADJ0, S.frame.adj);
+  const m = {adjHue:'hue', adjSat:'sat', adjLight:'light', adjFade:'fade'};
+  if (m[id]) a[m[id]] = +e.target.value;
+  else if (id === 'adjMono'){ a.mono = e.target.value; }
+  else if (id === 'adjPaper'){ a.paper = e.target.value; }
+  else return;
+  syncFrameBoxes(); changed();
+});
+$('adjBox').addEventListener('change', e => {
+  const id = e.target.id, a = S.frame.adj = Object.assign({}, ADJ0, S.frame.adj);
+  if (id === 'adjMonoOn') a.mono = e.target.checked ? $('adjMono').value : '';
+  else if (id === 'adjPaperOn') a.paper = e.target.checked ? $('adjPaper').value : '';
+  else return;
+  syncFrameBoxes(); changed({now:true});
+});
+$('adjBox').addEventListener('click', e => {
+  if (e.target.closest('#adjReset')){ S.frame.adj = Object.assign({}, ADJ0); syncFrameBoxes(); changed({now:true}); return; }
+  const b = e.target.closest('[data-adjp]'); if (!b) return;
+  S.frame.adj = Object.assign({}, ADJ0, ADJ_PRESETS[+b.dataset.adjp][1]); syncFrameBoxes(); changed({now:true});
+});
+$('vecBox').addEventListener('input', e => {
+  const id = e.target.id, v = S.vec;
+  const m = {vecBand:'band', vecInset:'inset', vecDensity:'density', vecLachak:'lachak'};
+  if (m[id]) v[m[id]] = +e.target.value;
+  else if (id === 'vecC1') v.c1 = e.target.value; else if (id === 'vecC2') v.c2 = e.target.value;
+  else if (id === 'vecGround'){ v.ground = e.target.value; }
+  else return;
+  vecChanged();
+});
+$('vecBox').addEventListener('change', e => {
+  const id = e.target.id, v = S.vec;
+  if (id === 'vecPattern') v.pattern = e.target.value; else if (id === 'vecCorner') v.corner = e.target.value; else if (id === 'vecRules') v.rules = e.target.value;
+  else if (id === 'vecToranj') v.toranj = e.target.checked; else if (id === 'vecGroundOn') v.ground = e.target.checked ? $('vecGround').value : '';
+  else return;
+  vecChanged(true);
+});
+$('vecBox').addEventListener('click', e => {
+  const b = e.target.closest('[data-vecp]'); if (!b) return;
+  Object.assign(S.vec, VEC_PRESETS[+b.dataset.vecp][1]); vecChanged(true);
 });
 function styleExtraInput(el, get){
   if (el.dataset.sw){ get(el.dataset.sw).w = +el.value; const o = el.parentElement.querySelector('output'); if (o) o.textContent = faDigits(el.value) + '٪'; changed(); return true; }
@@ -1625,21 +1990,25 @@ $('btnCalib').addEventListener('click', printCalibration);
 /* ── جابه‌جایی آزاد: کشیدن، انتخاب، نوار ابزار و کلیدهای جهت ── */
 let sel = null, drag = null;
 const MV_NAMES = {logo:'لوگو', divider:'نقش جداکننده', stamp:'مهر', sign0:'امضای اول', sign1:'امضای دوم', sign2:'امضای سوم'};
-function mvName(k){ return k.startsWith('x:') ? 'متن آزاد' : MV_NAMES[k] || FIELD_LABEL[k] || k; }
+function mvName(k){ if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return !ex ? '' : ex.type === 'img' ? 'تصویر' : ex.type === 'orn' ? 'نقش تزئینی' : 'متن آزاد'; } return MV_NAMES[k] || FIELD_LABEL[k] || k; }
 function mvEl(k){ return k ? $('pageWrap').querySelector(`[data-mv="${CSS.escape(k)}"]`) : null; }
 function extraById(id){ return (S.extras || []).find(x => x.id === id); }
 function getOff(k){
-  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return ex ? {x:0, y:0} : null; }
-  const p = S.pos[k] || {}; return {x:num(p.x, 0), y:num(p.y, 0)};
+  const p = S.pos[k] || {};
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return ex ? {x:0, y:0, r:num(p.r, 0)} : null; }
+  return {x:num(p.x, 0), y:num(p.y, 0), r:num(p.r, 0)};
 }
+function cleanPos(k){ const p = S.pos[k]; if (p && !p.x && !p.y && !p.r && (p.o == null || p.o >= 1)) delete S.pos[k]; }
 // جابه‌جایی نهایی را در وضعیت ثبت می‌کند
 function moveBy(k, dx, dy){
   const r1 = v => Math.round(v * 10) / 10;
   if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (!ex) return; const {W, H} = pageDims(); ex.x = r1(clamp(num(ex.x, W/2) + dx, 0, W)); ex.y = r1(clamp(num(ex.y, H/2) + dy, -10, H)); return; }
   const p = S.pos[k] || {x:0, y:0};
   p.x = r1(num(p.x, 0) + dx); p.y = r1(num(p.y, 0) + dy);
-  if (!p.x && !p.y) delete S.pos[k]; else S.pos[k] = p;
+  S.pos[k] = p; cleanPos(k);
 }
+function rotateSel(d){ const k = sel; if (!k) return; const p = S.pos[k] || {x:0, y:0}; let r = num(p.r, 0) + d; r = ((r + 180) % 360 + 360) % 360 - 180; p.r = Math.round(r * 10) / 10; S.pos[k] = p; cleanPos(k); changed(); }
+function opacitySel(){ const k = sel; if (!k) return; const p = S.pos[k] || {x:0, y:0}; const steps = [1, .75, .5, .25]; const i = steps.indexOf(p.o == null ? 1 : p.o); p.o = steps[(i + 1) % steps.length]; if (p.o === 1) delete p.o; S.pos[k] = p; cleanPos(k); changed({now:true}); toast('شفافیت: ' + faDigits(Math.round((p.o == null ? 1 : p.o) * 100)) + '٪'); }
 function markSel(){
   const wrap = $('pageWrap');
   wrap.querySelectorAll('.mv-sel').forEach(e => e.classList.remove('mv-sel'));
@@ -1663,13 +2032,14 @@ function select(k){ sel = k; markSel(); }
 function mmPerPx(){ return 1 / (PX_PER_MM * currentScale()); }
 $('stageView').addEventListener('pointerdown', e => {
   if (e.button > 0 || e.target.closest('#selBar')) return;
+  if (editing){ if (editing.el.contains(e.target)) return; editing.el.blur(); }
   const el = e.target.closest('[data-mv]');
   if (!el || !$('pageWrap').contains(el)){ if (sel){ sel = null; markSel(); } return; }
   e.preventDefault();
   try { $('stageView').focus({preventScroll:true}); } catch(_){}
   const k = el.dataset.mv, cert = el.closest('.cert');
   const er = el.getBoundingClientRect(), cr = cert.getBoundingClientRect(), f = mmPerPx();
-  drag = { k, el, x0:e.clientX, y0:e.clientY, moved:false, base:getOff(k) || {x:0, y:0}, dx:0, dy:0,
+  drag = { k, el, x0:e.clientX, y0:e.clientY, moved:false, base:getOff(k) || {x:0, y:0, r:0}, dx:0, dy:0, locked:!!S.lock,
     cx:(er.left + er.width / 2 - (cr.left + cr.width / 2)) * f, cy:(er.top + er.height / 2 - (cr.top + cr.height / 2)) * f, cert, pid:e.pointerId };
   try { $('stageView').setPointerCapture(e.pointerId); } catch(_){}
 });
@@ -1677,7 +2047,7 @@ $('stageView').addEventListener('pointermove', e => {
   if (!drag || e.pointerId !== drag.pid) return;
   const f = mmPerPx();
   let dx = (e.clientX - drag.x0) * f, dy = (e.clientY - drag.y0) * f;
-  if (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 4) return;
+  if (drag.locked || (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 4)) return;
   if (!drag.moved){ drag.moved = true; drag.el.classList.add('mv-drag'); $('selBar').hidden = true; }
   // چسبیدن به خط وسط برگه (با Alt غیرفعال می‌شود)
   let sv = false, sh = false;
@@ -1685,9 +2055,11 @@ $('stageView').addEventListener('pointermove', e => {
     if (Math.abs(drag.cx + dx) < 1.5){ dx = -drag.cx; sv = true; }
     if (Math.abs(drag.cy + dy) < 1.5){ dy = -drag.cy; sh = true; }
   }
+  const g = num(S.snap, 0);
+  if (g > 0){ if (!sv) dx = Math.round((drag.base.x + dx) / g) * g - drag.base.x; if (!sh) dy = Math.round((drag.base.y + dy) / g) * g - drag.base.y; }
   drag.dx = dx; drag.dy = dy;
   const bx = drag.base.x + dx, by = drag.base.y + dy;
-  drag.el.style.transform = `translate(calc(var(--mm)*${bx.toFixed(2)}),calc(var(--mm)*${by.toFixed(2)}))`;
+  drag.el.style.transform = `translate(calc(var(--mm)*${bx.toFixed(2)}),calc(var(--mm)*${by.toFixed(2)}))${drag.base.r ? ` rotate(${drag.base.r}deg)` : ''}`;
   snapLines(drag.cert, sv, sh);
 });
 function snapLines(cert, v, h){
@@ -1702,13 +2074,63 @@ function endDrag(e){
   if (d.moved){ moveBy(d.k, d.dx, d.dy); sel = d.k; changed({now:true}); lastTap = null; return; }
   // دو بار زدن (موس یا لمس) ← ویرایش
   const now = Date.now();
-  if (lastTap && lastTap.k === d.k && now - lastTap.t < 450){ lastTap = null; select(d.k); openEditor(d.k); return; }
+  if (lastTap && lastTap.k === d.k && now - lastTap.t < 450){ lastTap = null; select(d.k); if (!inlineEdit(d.k)) openEditor(d.k); return; }
   lastTap = {k:d.k, t:now};
   select(d.k);
 }
 let lastTap = null;
 $('stageView').addEventListener('pointerup', endDrag);
 $('stageView').addEventListener('pointercancel', e => { if (drag){ drag = null; render(); } });
+/* نوشتن مستقیم روی برگه */
+let editing = null;
+function inlineEdit(k){
+  let el = mvEl(k); if (!el) return false;
+  let raw, commit, multi = true;
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (!ex || (ex.type && ex.type !== 'text')) return false; raw = ex.text; commit = v => { ex.text = v; }; }
+  else if (/^sign\d$/.test(k)){ const i = +k[4]; el = el.querySelector('.sig-txt'); if (!el) return false; raw = S.signers[i].text; commit = v => { S.signers[i].text = v; }; }
+  else if (S.fields[k]){ raw = S.fields[k].text; commit = v => { S.fields[k].text = v; }; multi = ['body','verse'].includes(k); }
+  else return false;
+  editing = {k, el};
+  $('selBar').hidden = true;
+  el.classList.add('inline-edit');
+  el.textContent = raw;
+  el.setAttribute('contenteditable', 'plaintext-only');
+  if (el.contentEditable !== 'plaintext-only') el.setAttribute('contenteditable', 'true');
+  el.setAttribute('spellcheck', 'false');
+  el.focus();
+  try { const r = document.createRange(); r.selectNodeContents(el); const sl = getSelection(); sl.removeAllRanges(); sl.addRange(r); } catch(_){}
+  let cancelled = false;
+  const finish = () => {
+    if (!editing || editing.el !== el) return;
+    editing = null;
+    el.removeAttribute('contenteditable');
+    if (cancelled){ render(); return; }
+    const v = el.innerText.replace(/\u00a0/g, ' ').replace(/\n+$/, '');
+    if (v !== raw){ commit(v); syncUI(); renderExtras(); changed({now:true}); } else render();
+  };
+  el.addEventListener('blur', finish, {once:true});
+  el.addEventListener('keydown', e => {
+    e.stopPropagation();
+    if (e.key === 'Escape'){ e.preventDefault(); cancelled = true; el.blur(); }
+    else if (e.key === 'Enter' && (!multi || e.ctrlKey || e.metaKey)){ e.preventDefault(); el.blur(); }
+  });
+  el.addEventListener('pointerdown', e => e.stopPropagation());
+  return true;
+}
+// تنظیمات کامل همان بخش (فونت، رنگ، اندازه، فاصله‌ها، جلوه…)
+function openStyle(k){
+  let target;
+  if (k.startsWith('x:')){ activateTab('tab-text'); renderExtras(); target = document.querySelector(`.xcard[data-xid="${CSS.escape(k.slice(2))}"]`); }
+  else if (k === 'logo' || k === 'stamp'){ activateTab('tab-text'); target = $(k === 'logo' ? 'slot-logo' : 'slot-stamp'); }
+  else if (k === 'divider'){ activateTab('tab-look'); target = $('divStyle'); }
+  else {
+    activateTab('tab-look');
+    const sk = /^sign\d$/.test(k) ? 'sign' : k;
+    const d = document.querySelector(`details.style-box[data-sk="${sk}"]`);
+    if (d){ d.open = true; target = d; }
+  }
+  if (target){ target.scrollIntoView({block:'center', behavior:'smooth'}); const box = target.closest('.fld, .card, .xcard, details') || target; box.style.boxShadow = '0 0 0 3px #d4af3780'; setTimeout(() => box.style.boxShadow = '', 1600); }
+}
 function openEditor(k){
   let target;
   if (k.startsWith('x:')){ activateTab('tab-text'); renderExtras(); target = document.querySelector(`[data-xtext="${CSS.escape(k.slice(2))}"]`); }
@@ -1723,7 +2145,7 @@ function openEditor(k){
 function growSel(dir){
   const k = sel; if (!k) return;
   const f = dir > 0 ? 1.08 : 1 / 1.08, r = v => Math.round(v * 2) / 2;
-  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex) ex.size = clamp(r(ex.size * f), 7, 120); }
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex){ if (ex.type === 'img' || ex.type === 'orn') ex.w = clamp(Math.round(num(ex.w, 40) * f), 5, 400); else ex.size = clamp(r(ex.size * f), 7, 120); } renderExtras(); }
   else if (k === 'logo') S.logoSize = clamp(S.logoSize + dir * 2, 10, 60);
   else if (k === 'stamp') S.stampSize = clamp((S.stampSize || 27) + dir * 2, 15, 50);
   else if (k === 'divider') S.divW = clamp((S.divW || 62) + dir * 6, 20, 150);
@@ -1748,7 +2170,7 @@ function hideSel(){
 function resetSel(){
   const k = sel; if (!k) return;
   if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); const {W, H} = pageDims(); if (ex){ ex.x = W / 2; ex.y = H / 2; } }
-  else delete S.pos[k];
+  delete S.pos[k];
   changed({now:true});
 }
 $('selBar').addEventListener('click', e => {
@@ -1757,13 +2179,17 @@ $('selBar').addEventListener('click', e => {
   else if (b.dataset.center) centerSel();
   else if (b.dataset.grow) growSel(+b.dataset.grow);
   else if (b.dataset.selact === 'reset') resetSel();
-  else if (b.dataset.selact === 'edit') openEditor(sel);
+  else if (b.dataset.rot) rotateSel(+b.dataset.rot * (e.shiftKey ? 15 : 3));
+  else if (b.dataset.selact === 'opacity') opacitySel();
+  else if (b.dataset.selact === 'style') openStyle(sel);
+  else if (b.dataset.selact === 'edit'){ if (!inlineEdit(sel)) openEditor(sel); }
   else if (b.dataset.selact === 'hide') hideSel();
   else if (b.dataset.selact === 'close'){ sel = null; markSel(); }
 });
 document.addEventListener('keydown', e => {
   if (!sel || e.ctrlKey || e.metaKey) return;
   const a = document.activeElement;
+  if (editing || (a && a.isContentEditable)) return;
   if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;
   if (a && a.closest && a.closest('.tabs')) return;
   const st = e.shiftKey ? 5 : e.altKey ? .2 : 1;
@@ -1774,55 +2200,89 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'Enter'){ e.preventDefault(); openEditor(sel); }
   else if (e.key === '+' || e.key === '='){ growSel(1); }
   else if (e.key === '-'){ growSel(-1); }
+  else if (e.key === '[' || e.key === ']'){ rotateSel((e.key === ']' ? 1 : -1) * (e.shiftKey ? 15 : 3)); }
 });
 
 /* ── متن‌های آزاد ── */
-function addExtra(){
-  const {W, H} = pageDims();
-  const n = (S.extras || []).length;
-  const ex = {id:'e' + Date.now().toString(36), text:'متن تازه — دو بار بزن تا ویرایش شود', font:'IranNastaliq', size:22, color:'', bold:false, x:W / 2, y:Math.round(H * .3 + n * 12), w:Math.round(W * .7), align:'', lh:0, ls:0, fx:''};
+function newExtraId(){ return 'e' + Date.now().toString(36) + Math.floor(Math.random() * 1e3).toString(36); }
+function pushExtra(ex, msg){
   S.extras = (S.extras || []).concat(ex);
   sel = 'x:' + ex.id;
   renderExtras(); changed({now:true});
-  toast('متن آزاد اضافه شد؛ روی پیش‌نمایش بکشش و هرجا خواستی بگذار.');
-  setTimeout(() => { const t = document.querySelector(`[data-xtext="${ex.id}"]`); if (t && document.querySelector('#pane-text.active')){ t.select(); } }, 60);
+  if (msg) toast(msg);
+}
+function addExtra(){
+  const {W, H} = pageDims();
+  const n = (S.extras || []).length;
+  const ex = {id:newExtraId(), type:'text', text:'متن تازه — دو بار بزن و همین‌جا بنویس', font:'IranNastaliq', size:22, color:'', bold:false, x:W / 2, y:Math.round(H * .3 + n * 12), w:Math.round(W * .7), align:'', lh:0, ls:0, fx:''};
+  pushExtra(ex, 'متن آزاد اضافه شد؛ بکشش و هرجا خواستی بگذار، با دو بار زدن رویش بنویس.');
+}
+function addOrn(kind){
+  const {W, H} = pageDims();
+  const k = kind || 'rosette', wide = k.startsWith('div-') || k === 'band';
+  pushExtra({id:newExtraId(), type:'orn', kind:k, color:'', color2:'', x:W / 2, y:Math.round(H * .42), w:wide ? Math.round(W * .45) : (k === 'toranj' ? 60 : 32)}, 'نقش تزئینی اضافه شد؛ بکشش، بچرخانش و اندازه‌اش را با A+ و A− عوض کن.');
 }
 $('btnAddExtra').addEventListener('click', addExtra);
 $('btnAddExtra2').addEventListener('click', addExtra);
+$('btnAddOrn').addEventListener('click', () => addOrn());
+$('btnAddOrn2').addEventListener('click', () => addOrn($('ornKindNew').value));
+$('btnAddImg').addEventListener('click', () => { imgTarget = 'newx'; $('imgFile').value = ''; $('imgFile').click(); });
+$('btnAddImg2').addEventListener('click', () => { imgTarget = 'newx'; $('imgFile').value = ''; $('imgFile').click(); });
 function renderExtras(){
   const box = $('extraList'); if (!box) return;
   const {W} = pageDims();
-  box.innerHTML = (S.extras || []).map((ex, i) => `<div class="card xcard" data-xid="${esc(ex.id)}">
-    <div class="fld-head"><label class="t" for="xt-${esc(ex.id)}">متن آزاد ${faDigits(i + 1)}</label><span class="row"><button type="button" class="btn sm" data-xsel="${esc(ex.id)}">نشان بده</button><button type="button" class="btn sm danger" data-xdel="${esc(ex.id)}">حذف</button></span></div>
-    <textarea id="xt-${esc(ex.id)}" rows="2" data-xtext="${esc(ex.id)}">${esc(ex.text)}</textarea>
-    <div class="grid2">
-      <div><label class="lbl">فونت</label><select data-xfont="${esc(ex.id)}">${fontOptions(ex.font)}</select></div>
-      <div><label class="lbl">اندازه: <output>${faDigits(ex.size)}</output> pt</label><input type="range" min="7" max="120" step="0.5" value="${ex.size}" data-xsize="${esc(ex.id)}"></div>
-      <div><label class="lbl">پهنای کادر (میلی‌متر)</label><input type="number" min="20" max="${W}" step="1" value="${ex.w}" data-xw="${esc(ex.id)}"></div>
-      <div class="row" style="align-self:end"><label class="check"><input type="color" value="${ex.color || S.colors.accent}" data-xcolor="${esc(ex.id)}"> رنگ</label><label class="check"><input type="checkbox" data-xbold="${esc(ex.id)}"${ex.bold ? ' checked' : ''}> درشت</label></div>
-    </div>
-    ${styleExtraHTML('x:' + ex.id, ex)}
-  </div>`).join('') || '<p class="small muted">هنوز متن آزادی نداری.</p>';
+  const kindLabel = {text:'متن آزاد', img:'تصویر', orn:'نقش تزئینی'};
+  box.innerHTML = (S.extras || []).map((ex, i) => {
+    const id = esc(ex.id), t = ex.type || 'text';
+    let body = '';
+    if (t === 'img'){
+      body = `<div class="img-slot" id="slot-x-${id}">${ex.src ? `<img src="${ex.src}" alt="تصویر">` : ''}<button type="button" class="btn sm soft" data-img="x:${id}">تعویض تصویر</button>${ex.src ? `<button type="button" class="btn sm" data-imgclean="x:${id}">حذف زمینهٔ سفید</button>` : ''}</div>
+        <div class="grid2"><div><label class="lbl">پهنا (میلی‌متر)</label><input type="number" min="5" max="${W}" step="1" value="${ex.w}" data-xw="${id}"></div></div>`;
+    } else if (t === 'orn'){
+      body = `<div class="grid2">
+        <div><label class="lbl">نوع نقش</label><select data-xkind="${id}">${ORNS.map(([k, n]) => `<option value="${k}"${k === ex.kind ? ' selected' : ''}>${esc(n)}</option>`).join('')}</select></div>
+        <div><label class="lbl">پهنا (میلی‌متر)</label><input type="number" min="5" max="${W}" step="1" value="${ex.w}" data-xw="${id}"></div>
+        <div class="row" style="align-self:end"><label class="check"><input type="color" value="${ex.color || S.colors.accent}" data-xcolor="${id}"> رنگ اصلی</label><label class="check"><input type="color" value="${ex.color2 || '#ffffff'}" data-xcolor2="${id}"> رنگ دوم</label></div>
+      </div>`;
+    } else {
+      body = `<textarea id="xt-${id}" rows="2" data-xtext="${id}">${esc(ex.text)}</textarea>
+      <div class="grid2">
+        <div><label class="lbl">فونت</label><select data-xfont="${id}">${fontOptions(ex.font)}</select></div>
+        <div><label class="lbl">اندازه: <output>${faDigits(ex.size)}</output> pt</label><input type="range" min="7" max="120" step="0.5" value="${ex.size}" data-xsize="${id}"></div>
+        <div><label class="lbl">پهنای کادر (میلی‌متر)</label><input type="number" min="20" max="${W}" step="1" value="${ex.w}" data-xw="${id}"></div>
+        <div class="row" style="align-self:end"><label class="check"><input type="color" value="${ex.color || S.colors.accent}" data-xcolor="${id}"> رنگ</label><label class="check"><input type="checkbox" data-xbold="${id}"${ex.bold ? ' checked' : ''}> درشت</label></div>
+      </div>
+      ${styleExtraHTML('x:' + ex.id, ex)}`;
+    }
+    return `<div class="card xcard" data-xid="${id}">
+      <div class="fld-head"><label class="t"${t === 'text' ? ` for="xt-${id}"` : ''}>${kindLabel[t]} ${faDigits(i + 1)}</label><span class="row"><button type="button" class="btn sm" data-xsel="${id}">نشان بده</button><button type="button" class="btn sm" data-xdup="${id}" title="یک نسخهٔ دیگر">⧉</button><button type="button" class="btn sm danger" data-xdel="${id}">حذف</button></span></div>
+      ${body}</div>`;
+  }).join('') || '<p class="small muted">هنوز چیزی اضافه نکرده‌ای.</p>';
 }
 const exOf = k => extraById(String(k).replace(/^x:/, ''));
 $('extraList').addEventListener('input', e => {
   const el = e.target, d = el.dataset;
   if (d.xtext){ const ex = extraById(d.xtext); if (ex){ ex.text = el.value; changed(); } return; }
   if (d.xsize){ const ex = extraById(d.xsize); if (ex){ ex.size = +el.value; el.parentElement.querySelector('output').textContent = faDigits(el.value); changed(); } return; }
-  if (d.xw){ const ex = extraById(d.xw); if (ex){ ex.w = clamp(num(el.value, 120), 20, 400); changed(); } return; }
+  if (d.xw){ const ex = extraById(d.xw); if (ex){ ex.w = clamp(num(el.value, 40), 5, 400); changed(); } return; }
   if (d.xcolor){ const ex = extraById(d.xcolor); if (ex){ ex.color = el.value; changed(); } return; }
+  if (d.xcolor2){ const ex = extraById(d.xcolor2); if (ex){ ex.color2 = el.value; changed(); } return; }
   styleExtraInput(el, exOf);
 });
 $('extraList').addEventListener('change', e => {
   const el = e.target, d = el.dataset;
   if (d.xfont){ const ex = extraById(d.xfont); if (ex){ ex.font = el.value; if (NO_BOLD.has(el.value)) ex.bold = false; changed({now:true}); renderExtras(); } return; }
   if (d.xbold){ const ex = extraById(d.xbold); if (ex){ ex.bold = el.checked; changed({now:true}); } return; }
+  if (d.xkind){ const ex = extraById(d.xkind); if (ex){ ex.kind = el.value; changed({now:true}); } return; }
   styleExtraChange(el, exOf);
 });
 $('extraList').addEventListener('click', e => {
-  const del = e.target.closest('[data-xdel]'); if (del){ S.extras = S.extras.filter(x => x.id !== del.dataset.xdel); if (sel === 'x:' + del.dataset.xdel) sel = null; renderExtras(); changed({now:true}); return; }
+  const del = e.target.closest('[data-xdel]'); if (del){ S.extras = S.extras.filter(x => x.id !== del.dataset.xdel); delete S.pos['x:' + del.dataset.xdel]; if (sel === 'x:' + del.dataset.xdel) sel = null; renderExtras(); changed({now:true}); return; }
+  const dup = e.target.closest('[data-xdup]'); if (dup){ const ex = extraById(dup.dataset.xdup); if (ex){ const c = JSON.parse(JSON.stringify(ex)); c.id = newExtraId(); c.x = num(c.x, 0) + 6; c.y = num(c.y, 0) + 6; if (S.pos['x:' + ex.id]) S.pos['x:' + c.id] = Object.assign({}, S.pos['x:' + ex.id]); pushExtra(c, 'یک نسخهٔ دیگر ساخته شد.'); } return; }
   const s2 = e.target.closest('[data-xsel]'); if (s2){ select('x:' + s2.dataset.xsel); $('stageView').scrollIntoView({block:'nearest', behavior:'smooth'}); }
 });
+$('lockMove').addEventListener('change', e => { S.lock = e.target.checked; persist(); toast(S.lock ? '🔒 جابه‌جایی قفل شد؛ فقط انتخاب و ویرایش ممکن است.' : 'جابه‌جایی آزاد شد.'); });
+$('snapGrid').addEventListener('change', e => { S.snap = +e.target.value; persist(); });
 // زوم
 $('zoomIn').addEventListener('click', () => { zoom = clamp((zoom || currentScale()) + .1, .2, 2.5); fitStage(); });
 $('zoomOut').addEventListener('click', () => { zoom = clamp((zoom || currentScale()) - .1, .2, 2.5); fitStage(); });
@@ -1844,7 +2304,7 @@ $('btnUndo').addEventListener('click', () => undoRedo(-1));
 $('btnRedo').addEventListener('click', () => undoRedo(1));
 document.addEventListener('keydown', e => {
   if (!(e.ctrlKey || e.metaKey)) return;
-  const k = e.key.toLowerCase(), inField = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  const k = e.key.toLowerCase(), inField = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) || document.activeElement.isContentEditable;
   if (k === 'p'){ e.preventDefault(); printPages(false); }
   else if (!inField && (k === 'z' || k === 'y')){ e.preventDefault(); undoRedo(k === 'z' && !e.shiftKey ? -1 : 1); }
 });
@@ -2051,9 +2511,33 @@ async function renderCanvas(idx, opts){
   const el = stage.firstElementChild;
   autofit(el);
   await whenImagesReady(stage);
+  // html2canvas اندازهٔ SVG بی‌ابعاد را درست نمی‌فهمد؛ ابعاد واقعی را صریح می‌کنیم
+  await svgToImgs(el);
   const canvas = await window.html2canvas(el, {scale:q, backgroundColor: transparent ? null : '#ffffff', useCORS:true, logging:false});
   stage.innerHTML = '';
   return canvas;
+}
+// SVGهای درون‌خطی را به تصویر هم‌اندازه تبدیل می‌کند (html2canvas در راست‌به‌چپ جایشان را اشتباه می‌کشد)
+async function svgToImgs(root){
+  const xs = new XMLSerializer(), jobs = [];
+  root.querySelectorAll('svg').forEach(sv => {
+    if (sv.parentElement && sv.parentElement.closest('svg')) return;
+    const cs = getComputedStyle(sv), w = parseFloat(cs.width), h = parseFloat(cs.height);
+    if (!(w > 0 && h > 0)) return;
+    const c = sv.cloneNode(true);
+    c.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); c.setAttribute('width', w); c.setAttribute('height', h);
+    c.removeAttribute('class'); c.removeAttribute('style'); c.removeAttribute('data-mv');
+    if (!c.getAttribute('overflow')) c.setAttribute('overflow', 'visible');
+    const im = new Image();
+    for (const at of sv.attributes) if (!/^(viewBox|xmlns|preserveAspectRatio|aria-hidden|width|height|overflow)$/i.test(at.name)) im.setAttribute(at.name, at.value);
+    im.style.width = w + 'px'; im.style.height = h + 'px'; im.style.overflow = 'visible';
+    if (cs.position === 'absolute'){ im.style.left = cs.left; im.style.top = cs.top; }
+    im.alt = '';
+    jobs.push(new Promise(r => { im.onload = im.onerror = r; }));
+    im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xs.serializeToString(c));
+    sv.replaceWith(im);
+  });
+  await Promise.all(jobs);
 }
 function canvasBlob(cv, type, q){ return new Promise(r => cv.toBlob(r, type, q)); }
 function progress(done, total, msg){
@@ -2200,6 +2684,9 @@ function init(){
   const sizeOpts = Object.entries(SIZES).map(([k, v]) => `<option value="${k}">${esc(v[2])}</option>`).join('');
   $('pageSize').innerHTML = sizeOpts; $('pageSize2').innerHTML = sizeOpts;
   $('frameStyle').innerHTML = FRAME_STYLES.map(([k, n]) => `<option value="${k}">${esc(n)}</option>`).join('');
+  $('adjPresets').innerHTML = ADJ_PRESETS.map(([n, , c], i) => `<button type="button" data-adjp="${i}">${c ? `<i style="background:${c}"></i>` : ''}${esc(n)}</button>`).join('');
+  $('vecPresets').innerHTML = VEC_PRESETS.map(([n, v], i) => `<button type="button" data-vecp="${i}"><i style="background:${v.ground || v.c1};box-shadow:inset 0 0 0 3px ${v.ground ? v.c1 : v.c2}"></i>${esc(n)}</button>`).join('');
+  $('ornKindNew').innerHTML = ORNS.map(([k, n]) => `<option value="${k}">${esc(n)}</option>`).join('');
   $('guideFrame').innerHTML = [['image', 'قاب ایران‌گرد'], ...Object.entries(FRAME_IMGS).map(([k, v]) => ['img:' + k, v.n])].map(([k, n]) => `<option value="${k}">${esc(n)}</option>`).join('');
   $('fontAll').innerHTML = fontOptions('Vazirmatn');
   $('paperPresets').innerHTML = PAPER_PRESETS.map((p, i) => `<button type="button" class="preset" data-preset="${i}"><b>${esc(p.n)}</b><small>${p.m.t}/${p.m.r}/${p.m.b}/${p.m.l} mm</small></button>`).join('');

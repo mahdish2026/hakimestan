@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.83';
+const VERSION = 'hakim-v1.5.84';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -239,6 +239,16 @@ const EXTRACTED_IMAGES = [
   './assets/img/cert-frames/shahane.webp',
   './assets/img/cert-frames/toranj.webp',
   './assets/img/cert-frames/zomorrod.webp',
+  './assets/img/cert-frames/eslimi-firouzeh.webp',
+  './assets/img/cert-frames/eslimi-zereshki.webp',
+  './assets/img/cert-frames/eslimi-sabz.webp',
+  './assets/img/cert-frames/eslimi-siah.webp',
+  './assets/img/cert-frames/eslimi-nili.webp',
+  './assets/img/cert-frames/eslimi-golbahi.webp',
+  './assets/img/cert-frames/eslimi-zar-lachak.webp',
+  './assets/img/cert-frames/eslimi-banafsh.webp',
+  './assets/img/cert-frames/eslimi-ghahvei.webp',
+  './assets/img/cert-frames/eslimi-chandrang.webp',
   './assets/img/cert-frames/thumb/eslimi-gold.webp',
   './assets/img/cert-frames/thumb/eslimi-lajvard.webp',
   './assets/img/cert-frames/thumb/firouzeh.webp',
@@ -249,6 +259,16 @@ const EXTRACTED_IMAGES = [
   './assets/img/cert-frames/thumb/shahane.webp',
   './assets/img/cert-frames/thumb/toranj.webp',
   './assets/img/cert-frames/thumb/zomorrod.webp',
+  './assets/img/cert-frames/thumb/eslimi-firouzeh.webp',
+  './assets/img/cert-frames/thumb/eslimi-zereshki.webp',
+  './assets/img/cert-frames/thumb/eslimi-sabz.webp',
+  './assets/img/cert-frames/thumb/eslimi-siah.webp',
+  './assets/img/cert-frames/thumb/eslimi-nili.webp',
+  './assets/img/cert-frames/thumb/eslimi-golbahi.webp',
+  './assets/img/cert-frames/thumb/eslimi-zar-lachak.webp',
+  './assets/img/cert-frames/thumb/eslimi-banafsh.webp',
+  './assets/img/cert-frames/thumb/eslimi-ghahvei.webp',
+  './assets/img/cert-frames/thumb/eslimi-chandrang.webp',
   './assets/img/games-hakim-quest-art.png',
   './assets/img/games-hakim-quest-art-2.png',
   './assets/img/games-kohan-diyar-art.png',
