@@ -14,7 +14,7 @@ const parse = html => new JSDOM(html, { url: 'https://hakimistan.ir/' }).window.
 const schoolSource = read('math-learning.html');
 const school = parse(schoolSource);
 const cards = [...school.querySelectorAll('main.games-grid > a.game-card')];
-assert.equal(cards.length, 7, 'school page must show exactly seven game cards');
+assert.equal(cards.length, 9, 'school page must show exactly nine game cards');
 const hrefs = cards.map(card => card.getAttribute('href'));
 assert.deepEqual(hrefs, [
   'games/math-learning-1.html',
@@ -23,7 +23,9 @@ assert.deepEqual(hrefs, [
   'games/math-fasl2.html',
   'games/math-nesbat.html',
   'games/math-geometry.html',
-  'games/math-decimals.html'
+  'games/math-decimals.html',
+  'games/math-measurement.html',
+  'games/math-stats.html'
 ], 'card order/links changed');
 for (const href of hrefs) {
   assert.ok(fs.existsSync(path.join(root, href)), `broken card link: ${href}`);
@@ -62,7 +64,8 @@ assert.match(schoolSource, /\.game-card::before\s*\{/);
 assert.doesNotMatch(schoolSource, /(?:kasrestan|nesbat)-(?:ribbon|note)/);
 assert.match(schoolSource, /\.game-card \.card-icon\s*\{/);
 assert.match(schoolSource, /body:is\(\[data-theme="night"\].*?\) \.game-card/, 'dark themes not covered');
-assert.match(schoolSource, /هفت بازی/, 'subtitle/meta do not mention five games');
+assert.match(schoolSource, /نُه بازی/, 'subtitle/meta do not mention nine games');
+assert.doesNotMatch(schoolSource, /هفت بازی/, 'stale seven-game wording remains');
 
 // ---- 2) detailed description page ---------------------------------------
 const judgesSource = read('judges.html');
@@ -82,7 +85,9 @@ const schoolSection = [...judges.querySelectorAll('section')]
   .find(sec => sec.textContent.includes('🧮 مدرسه ریاضی'));
 assert.ok(schoolSection, 'math-school section is missing');
 const features = [...schoolSection.querySelectorAll('.feature-list > li')];
-assert.equal(features.length, 7, 'math-school section must list seven games');
+assert.equal(features.length, 9, 'math-school section must list nine games');
+assert.ok(features.some(li => li.textContent.includes('پیمانه‌ستان')));
+assert.ok(features.some(li => li.textContent.includes('آمارستان')));
 assert.ok(features.some(li => li.textContent.includes('کسرستان')));
 assert.ok(schoolSection.querySelector('.ks-spotlight'), 'dedicated spotlight block missing');
 assert.ok(schoolSection.querySelector('.ks-chips'), 'feature chips missing');
@@ -90,11 +95,11 @@ assert.ok(schoolSection.querySelector('a[href="math-learning.html"]'), 'link to 
 assert.ok(schoolSection.querySelector('a[href="games/math-fasl2.html"]'), 'link to game missing');
 assert.match(judgesSource, /\.ks-spotlight\s*\{/);
 
-// Stale, contradictory counts used to say ۱۳ / ۱۲ / ۱۳.
-assert.match(judgesSource, /<strong>۱۷ بازی آموزشی<\/strong>/);
-assert.match(judgesSource, /پلتفرمی کامل با ۱۷ بازی آموزشی/);
-assert.match(judgesSource, /<span class="num">۱۷<\/span><span class="label">بازی تعاملی/);
-assert.ok(!/۱۴ بازی آموزشی|۱۳ بازی آموزشی|۱۲ بازی آموزشی|<span class="num">۱۴<\/span>/.test(judgesSource),
+// Stale, contradictory counts used to say ۱۳ / ۱۲ / ۱۳ / ۱۷.
+assert.match(judgesSource, /<strong>۲۱ بازی آموزشی<\/strong>/);
+assert.match(judgesSource, /پلتفرمی کامل با ۲۱ بازی آموزشی/);
+assert.match(judgesSource, /<span class="num">۲۱<\/span><span class="label">بازی تعاملی/);
+assert.ok(!/۱۷ بازی آموزشی|۱۴ بازی آموزشی|۱۳ بازی آموزشی|۱۲ بازی آموزشی|<span class="num">۱[47]<\/span>/.test(judgesSource),
   'stale game counts remain');
 
 // ---- 3) lobby, cache, docs ----------------------------------------------
@@ -102,10 +107,10 @@ const lobby = parse(read('index.html'));
 const schoolBento = [...lobby.querySelectorAll('a.bento-card')]
   .find(a => a.getAttribute('href') === 'math-learning.html');
 assert.ok(schoolBento, 'lobby link to math school missing');
-assert.match(schoolBento.textContent, /هفت بازی/);
+assert.match(schoolBento.textContent, /نُه بازی/);
 
 const sw = read('sw.js');
-assert.match(sw, /const VERSION = 'hakim-v1\.5\.73'/);
+assert.match(sw, /const VERSION = 'hakim-v1\.5\.79'/);
 assert.match(sw, /'\.\/math-learning\.html'/);
 assert.match(sw, /'\.\/judges\.html'/);
 assert.match(sw, /'\.\/games\/math-fasl2\.html'/);
@@ -116,7 +121,7 @@ for (const rel of ['games/math-learning-1.html', 'games/math-olgoha.html', 'game
 assert.ok(read('js/hakim-read-aloud.js').includes('SpeechSynthesisUtterance'), 'read-aloud speech fallback missing');
 
 const readme = read('README.md');
-for (const rel of ['math-fasl2.html', 'math-learning-1.html', 'math-time-mission.html', 'math-olgoha.html']) {
+for (const rel of ['math-fasl2.html', 'math-learning-1.html', 'math-time-mission.html', 'math-olgoha.html', 'math-measurement.html', 'math-stats.html']) {
   assert.ok(readme.includes('`' + rel + '`'), `README is missing ${rel}`);
 }
 assert.ok(readme.includes('math-learning.html'), 'README does not mention the school page');
@@ -137,8 +142,8 @@ console.log(JSON.stringify({
   descriptionRowsForKasrestan: kasrestanRows.length,
   mathSchoolGamesListed: features.length,
   spotlight: true,
-  gameCountsFixedTo: 17,
-  cacheVersion: 'hakim-v1.5.73',
+  gameCountsFixedTo: 21,
+  cacheVersion: 'hakim-v1.5.79',
   schoolPagePrefetched: true,
   docsUpdated: true
 }, null, 2));

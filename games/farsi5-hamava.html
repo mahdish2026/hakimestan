@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<!-- hakim-csp:start -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
+<!-- hakim-csp:end -->
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#8c3b19">
+<meta name="description" content="هم‌آواستان — بازی آموزشی واژگان هم‌آوا، املا و درست‌نویسی فارسی و نگارش پایهٔ پنجم دبستان با رمزهای یادیار، فرهنگ‌نامهٔ جیبی و گواهی‌نامهٔ مهارت.">
+<title>هم‌آواستان | بازی واژگان هم‌آوا و املای فارسی پایهٔ پنجم</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="../css/a11y.css">
+<!-- hakim-core:end -->
+<link rel="stylesheet" href="farsi5-hamava/style.css">
+<link rel="stylesheet" href="../css/hakim-worlds.css">
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/games/farsi5-hamava.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="هم‌آواستان | بازی واژگان هم‌آوا و املای فارسی پایهٔ پنجم">
+<meta property="og:description" content="هم‌آواستان — بازی آموزشی واژگان هم‌آوا، املا و درست‌نویسی فارسی و نگارش پایهٔ پنجم دبستان با رمزهای یادیار، فرهنگ‌نامهٔ جیبی و گواهی‌نامهٔ مهارت.">
+<meta property="og:url" content="https://hakimistan.ir/games/farsi5-hamava.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="هم‌آواستان | بازی واژگان هم‌آوا و املای فارسی پایهٔ پنجم">
+<meta name="twitter:description" content="هم‌آواستان — بازی آموزشی واژگان هم‌آوا، املا و درست‌نویسی فارسی و نگارش پایهٔ پنجم دبستان با رمزهای یادیار، فرهنگ‌نامهٔ جیبی و گواهی‌نامهٔ مهارت.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
+</head>
+<body data-world="hamava">
+<a class="skip-link" href="#main">پرش به محتوای بازی</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="brand-badge" aria-hidden="true">🖋️</span>
+      <span class="brand-text">
+        <h1 style="margin:0;font-size:1.05rem;line-height:1.3;font-weight:900">هم‌آواستان</h1>
+        <small>فارسی و نگارش پایهٔ پنجم · سامانهٔ حکیمستان</small>
+      </span>
+    </a>
+    <nav class="top-nav" aria-label="ابزارها و ناوبری بازی">
+      <a class="top-link" href="../index.html">← صفحهٔ اصلی</a>
+      <button type="button" id="mapNavBtn">🗺️ فصل‌ها</button>
+      <button type="button" id="lexNavBtn">📖 فرهنگ‌نامه</button>
+      <button type="button" id="certNavBtn">🏆 گواهی‌نامه</button>
+      <button type="button" id="fontSmaller" aria-label="کوچک‌تر کردن متن">A−</button>
+      <button type="button" id="fontBigger" aria-label="بزرگ‌تر کردن متن">A+</button>
+      <button type="button" id="soundBtn" aria-pressed="false">🔇 صدا: خاموش</button>
+      <button type="button" id="themeBtn" aria-pressed="false">☾ شب</button>
+      <button type="button" id="helpBtn" aria-label="راهنمای هم‌آواستان">؟ راهنما</button>
+    </nav>
+  </div>
+</header>
+
+<div class="status-strip" role="region" aria-label="وضعیت امتیاز و ذخیره">
+  <div class="hud-pills">
+    <span class="hud-pill" id="hudStars">⭐ ۰ / ۱۸</span>
+    <span class="hud-pill" id="hudXp">💎 ۰ امتیاز</span>
+    <span class="hud-pill" id="hudCombo">🔥 کمبو: ۰ (رکورد: ۰)</span>
+  </div>
+  <span id="saveStatus" role="status">ذخیرهٔ خودکار روی این دستگاه فعال است</span>
+</div>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="site-footer">
+  طراحی و توسعه: مهدی شریفیان · سامانهٔ آموزشی حکیمستان · واژگان هم‌آوا و درست‌نویسی فارسی پنجم
+</footer>
+
+<dialog id="helpDialog" aria-labelledby="helpDialogTitle">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px">
+    <h2 id="helpDialogTitle" style="margin:0;font-size:1.15rem">راهنمای «هم‌آواستان»</h2>
+    <button type="button" id="closeHelpBtn" aria-label="بستن راهنما">✕</button>
+  </div>
+  <p>در هم‌آواستان ۶ فصل از مهم‌ترین واژه‌های هم‌آوا و نکته‌های املایی فارسی و نگارش پایهٔ پنجم گردآوری شده است. در هر فصل ابتدا <b>«📖 رمز یادیار»</b> را بخوان تا راز تشخیص دو واژه در ذهنت بماند، سپس ۶ چالش داستانی را حل کن!</p>
+  <p>از دکمهٔ <b>«📖 فرهنگ‌نامه»</b> هم همیشه می‌توانی معنی و رمز هر واژه را جستجو کنی.</p>
+</dialog>
+
+<script src="../hakim-core.js"></script>
+<script src="../js/hakim-companion.js"></script>
+<script src="../js/hakim-worlds.js"></script>
+<script src="farsi5-hamava/data.js"></script>
+<script src="farsi5-hamava/lessons.js"></script>
+<script src="farsi5-hamava/app.js"></script>
+<!-- hakim-core:start -->
+<script src="../js/hakim-read-aloud.js" defer></script>
+<script src="../js/hakim-security.js" defer></script>
+<script src="../js/hakim-a11y.js" defer></script>
+<script src="../js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
+</html>

@@ -526,7 +526,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   <!-- ۲. این پروژه چیه؟ -->
   <section class="hk-card reveal">
     <h2 class="section-title">حکیمستان در یک نگاه</h2>
-    <p>«حکیمستان» یک سامانهٔ آموزشی تعاملی بر پایهٔ HTML است که شامل <strong>۱۷ بازی آموزشی</strong>، <strong>۷ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم و درسگاه) و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۳۰۰ سؤال و فعالیت تعاملی آماده</strong> و <strong>۱۶ فیلم منتشرشده</strong>.</p>
+    <p>«حکیمستان» یک سامانهٔ آموزشی تعاملی بر پایهٔ HTML است که شامل <strong>۲۱ بازی آموزشی</strong>، <strong>۸ ابزار</strong> (آزمون‌ساز، دفتر معلم، کارگاه طرح درس، مبدل سؤال، پیام‌رسان کلاسی، پنل معلم، درسگاه و کلاس‌یار)، «گذرنامهٔ قهرمان و مسیر یادگیری» و گفت‌وگو با دستیار هوشمند <strong>«حکیم»</strong> است؛ همراه با بیش از <strong>۳۰۰ سؤال و فعالیت تعاملی آماده</strong> و <strong>۱۶ فیلم منتشرشده</strong>.</p>
     <p>این سامانه برای پایهٔ پنجم ابتدایی طراحی شده و هدفش این است که مفاهیم درسی از طریق بازی، یادگیری فعال و بازخورد فوری به دانش‌آموز منتقل شود.</p>
     <p>تمام محتوا با HTML، CSS و JavaScript خالص ساخته شده و به‌صورت PWA روی هر مرورگر و هر دستگاهی (موبایل، تبلت، رایانه) بدون نیاز به نصب اجرا می‌شود.</p>
     <p>همهٔ صفحه‌های اصلی — لابی، فیلم‌ها و همین صفحهٔ معرفی — روی یک <strong>هویت بصری واحد</strong> به نام «کاشی» (کرم روشن، فیروزه و طلا، با نقش اسلیمی) ساخته شده‌اند و تم انتخابی کاربر (<strong>کاشی، اقیانوس یا صبح فیروزه</strong>) به‌صورت مشترک در همهٔ صفحه‌ها باقی می‌ماند.</p>
@@ -545,7 +545,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
         </picture>
         <figcaption><a href="videos.html">خانهٔ فیلم ←</a> · ۹ معرفی بازی و ۷ معرفی ابزار</figcaption>
       </figure>
-      <figure class="shot school-shot"><img src="screenshots/school.webp" alt="صفحهٔ ورودی مدرسهٔ ریاضی پایهٔ پنجم" width="1280" height="720" loading="lazy" decoding="async"><figcaption><a href="math-learning.html">مدرسهٔ ریاضی ←</a> · هفت بازی پایهٔ پنجم</figcaption></figure>
+      <figure class="shot school-shot"><img src="screenshots/school.webp" alt="صفحهٔ ورودی مدرسهٔ ریاضی پایهٔ پنجم" width="1280" height="720" loading="lazy" decoding="async"><figcaption><a href="math-learning.html">مدرسهٔ ریاضی ←</a> · نُه بازی پایهٔ پنجم</figcaption></figure>
       <figure class="shot">
         <picture>
           <source srcset="screenshots/mancheh.webp" type="image/webp">
@@ -585,7 +585,7 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
       <div class="tl-item">
         <span class="tl-phase">فاز ۱۴۰۵–۱۴۰۶</span>
         <h4>ساخت «حکیمستان»</h4>
-        <p>ایدهٔ «حکیمستان» از همان جملهٔ بچه‌ها آمد؛ امسال با همین انگیزه، پلتفرمی کامل با ۱۷ بازی آموزشی، ۷ ابزار، پیام‌رسان کلاسی و دستیار هوش مصنوعی «حکیم» ساخته شد.</p>
+        <p>ایدهٔ «حکیمستان» از همان جملهٔ بچه‌ها آمد؛ امسال با همین انگیزه، پلتفرمی کامل با ۲۱ بازی آموزشی، ۸ ابزار، پیام‌رسان کلاسی و دستیار هوش مصنوعی «حکیم» ساخته شد.</p>
       </div>
     </div>
   </section>
@@ -693,12 +693,17 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
           <tr><td>ممیزستان (مدرسه ریاضی)</td><td>ریاضی؛ عددهای اعشاری، ۱۱ ایستگاه و ۷۶ تمرین (+ سنجش تشخیصی)</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td></tr>
           <tr>
             <td>نقشستان (مدرسه ریاضی)</td><td>ریاضی (تقارن و چندضلعی‌ها، ۱۲ ایستگاه و ۴۸ تمرین)</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td>
-          </tr><tr>
+          </tr>
+          <tr><td>پیمانه‌ستان (مدرسه ریاضی)</td><td>ریاضی؛ اندازه‌گیری (محیط، مساحت، دایره، حجم و گنجایش)، ۱۰ ایستگاه و ۵۰ تمرین</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td></tr>
+          <tr><td>آمارستان (مدرسه ریاضی)</td><td>ریاضی؛ آمار و احتمال (نمودارها، میانگین و آزمایش احتمال)، ۹ ایستگاه و ۴۵ تمرین</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td></tr>
+          <tr>
             <td>واژه‌ستان فارسی پنجم</td>
             <td>فارسی (واژگان هر ۱۷ درس)</td>
             <td>پنجم</td>
             <td><span class="tag tag-fixed">محتوای ثابت</span></td>
           </tr>
+          <tr><td>هم‌آواستان</td><td>فارسی و نگارش (هم‌آواها و درست‌نویسی، ۶ فصل و ۳۶ تمرین)</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td></tr>
+          <tr><td>ایران‌گرد کوچک</td><td>مطالعات اجتماعی (جغرافیای ایران روی نقشهٔ تعاملی، ۶ مأموریت و ۳۶ تمرین)</td><td>پنجم</td><td><span class="tag tag-fixed">محتوای ثابت</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -749,6 +754,16 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
             <td>استودیوی ضبط تدریس از PDF (با ۸ کتاب درسی پایهٔ پنجم)، قلم روی صفحه و وب‌کم</td>
             <td>همه</td>
           </tr>
+          <tr>
+            <td>کلاس‌یار</td>
+            <td>دستیار تختهٔ هوشمند: گردونهٔ اسامی بدون تکرار متصل به دفتر معلم، گروه‌بند، زمان‌سنج، سنجش آرامش کلاس و دوئل دونفره با سؤال HQF</td>
+            <td>همه</td>
+          </tr>
+          <tr>
+            <td>گذرنامهٔ قهرمان و مسیر یادگیری</td>
+            <td>مهرهای پیشرفت ۲۱ بازی، نشان‌ها، لوح جامع چاپی A4 و تقویم یادگیری مهر تا اردیبهشت</td>
+            <td>پنجم</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -757,8 +772,8 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   <!-- ۴ب. مدرسه ریاضی -->
   <section id="school" class="hk-card reveal">
     <h2 class="section-title">🧮 مدرسه ریاضی</h2>
-    <p>«<a href="math-learning.html">مدرسه ریاضی</a>» بخش ویژهٔ ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم. اکنون <strong>هفت بازی</strong> دارد: از تقسیم و ساعت تا الگوهای هندسی و عددی، کسر‌ها با چهار عمل، نسبت و درصد، تقارن و چندضلعی، و عددهای اعشاری. هر بازی یک کارت اختصاصی در صفحهٔ مدرسه دارد.</p>
-    <p><strong>هفت بازی فعلی:</strong></p>
+    <p>«<a href="math-learning.html">مدرسه ریاضی</a>» بخش ویژهٔ ریاضی حکیمستان است؛ مجموعه‌ای در حال رشد از بازی‌های آموزشی ریاضی پایهٔ پنجم. اکنون <strong>نُه بازی</strong> دارد و هر ۷ فصل کتاب ریاضی پنجم را پوشش می‌دهد: از تقسیم و ساعت تا الگوهای هندسی و عددی، کسر‌ها با چهار عمل، نسبت و درصد، تقارن و چندضلعی، عددهای اعشاری، اندازه‌گیری و آمار و احتمال. هر بازی یک کارت اختصاصی در صفحهٔ مدرسه دارد.</p>
+    <p><strong>نُه بازی فعلی:</strong></p>
     <ul class="feature-list">
       <li>🔨 <strong>تقسیم چکشی</strong> — یادگیری تقسیم، قدم‌به‌قدم و مرحله‌به‌مرحله با راهنمایی حکیم؛ ۵ مرحله، ۱۵ ستاره و گواهی‌نامه در پایان</li>
       <li>⏰ <strong>ماموریت زمان</strong> — خواندن ساعت، جمع و تفریق زمان و تبدیل واحدها در ۸ مرحلهٔ ماجراجویی، به‌همراه چالش ترکیبی، نشان‌ها و گواهی‌نامه</li>
@@ -767,6 +782,8 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
       <li>🍋 <strong>نسبتستان</strong> — نسبت، تناسب و درصد در ۵ سرزمین و ۶۷ فعالیت؛ جدول تناسب دوسویه، فعالیت‌های دست‌ورزی، کمبوی پاسخ‌های پیاپی با رکورد در گواهی و گواهی‌نامهٔ قهرمانی</li>
       <li>٫ <strong>ممیزستان</strong> — عددهای اعشاری تا هزارم، محور، جمع، تفریق و ضرب؛ ۱۱ ایستگاه و ۷۶ تمرین همراه با سنجش تشخیصی ۱۲سؤالی و گزارش محلی معلم. <a href="games/math-decimals.html">ورود به کارگاه</a></li>
       <li>✧ <strong>نقشستان</strong> — تقارن محوری و مرکزی، نیمساز و چندضلعی‌ها؛ ۱۲ ایستگاه و ۴۸ تمرین با کارگاه آزاد رسم و گواهیِ فهرست‌دار. <a href="games/math-geometry.html">ورود به کارگاه</a></li>
+      <li>📐 <strong>پیمانه‌ستان</strong> — محیط و مساحت لوزی، ذوزنقه و شکل‌های مرکب، محیط دایره، حجم مکعب‌واحدی و گنجایش؛ ۱۰ ایستگاه و ۵۰ تمرین با درسنامهٔ تصویری و گواهی‌نامه. <a href="games/math-measurement.html">ورود به کارگاه</a></li>
+      <li>📊 <strong>آمارستان</strong> — جدول داده، نمودار ستونی، دایره‌ای و خط شکسته، میانگین با هم‌ترازی برج‌ها و آزمایش‌های احتمال؛ ۹ ایستگاه و ۴۵ تمرین. <a href="games/math-stats.html">ورود به کارگاه</a></li>
     </ul>
     <div class="ks-spotlight">
       <h3>🥧 کارت اختصاصی «کسرستان» — یکی از بازی‌های شاخص این بخش</h3>
@@ -852,8 +869,8 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
   <section id="technology" class="hk-card reveal">
     <h2 class="section-title">🛠️ ویژگی‌های فنی</h2>
     <div class="tech-grid">
-      <div class="tech-item"><span class="num">۱۷</span><span class="label">بازی تعاملی</span></div>
-      <div class="tech-item"><span class="num">۷</span><span class="label">ابزار معلم و دانش‌آموز</span></div>
+      <div class="tech-item"><span class="num">۲۱</span><span class="label">بازی تعاملی</span></div>
+      <div class="tech-item"><span class="num">۸</span><span class="label">ابزار معلم و دانش‌آموز</span></div>
       <div class="tech-item"><span class="num">۳</span><span class="label">تم رنگی هماهنگ در همهٔ صفحه‌ها</span></div>
       <div class="tech-item"><span class="num">۳۰۰+</span><span class="label">سؤال و فعالیت تعاملی آماده</span></div>
       <div class="tech-item"><span class="num">۱۶</span><span class="label">فیلم منتشرشده · ۱۱ عنوان علوم در برنامه</span></div>

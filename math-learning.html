@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="css/fonts.css">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>مدرسه ریاضی | حکیمستان</title>
-<meta name="description" content="مدرسهٔ ریاضی حکیمستان — هفت بازی آموزشی ریاضی پایهٔ پنجم: تقسیم چکشی، مأموریت زمان، الگوستان، کسرستان (کسر‌ها و چهار عمل) نسبتستان (نسبت، تناسب و درصد)، نقشستان و ممیزستان (عددهای اعشاری).">
+<meta name="description" content="مدرسهٔ ریاضی حکیمستان — نُه بازی آموزشی برای هر ۷ فصل ریاضی پایهٔ پنجم: تقسیم چکشی، مأموریت زمان، الگوستان، کسرستان، نسبتستان، نقشستان، ممیزستان، پیمانه‌ستان (اندازه‌گیری) و آمارستان (آمار و احتمال).">
 
 <!-- PWA Meta -->
 <meta name="theme-color" content="#fbf8f1">
@@ -169,6 +169,8 @@ body {
 .nesbat-card { --chalk:#106e65; --pastel:#89dfd0; }
 .geometry-card { --chalk:#335d94; --pastel:#a9c6ff; }
 .decimals-card { --chalk:#536b2e; --pastel:#d0e998; }
+.measurement-card { --chalk:#0b6460; --pastel:#93e5db; }
+.stats-card { --chalk:#51389e; --pastel:#d5c4ff; }
 .game-card {
   position:relative; overflow:hidden; --lesson-ink:var(--chalk);
   background:radial-gradient(ellipse at 5% 0%,color-mix(in srgb,var(--pastel) 23%,transparent),transparent 65%),var(--surface);
@@ -657,7 +659,7 @@ body[data-theme="kashi"] .tag.educational{
       <div class="board-copy">
         <span class="board-label"><svg class="class-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 17h14l-2-4v-3a5 5 0 0 0-10 0v3zm5 2a2 2 0 0 0 4 0M12 3V1M3 6l-2-2m20 2 2-2"/></svg> زنگ بازی · پایهٔ پنجم</span>
         <h1 class="page-title"><span class="board-title-ink">مدرسه ریاضی</span></h1>
-        <p class="page-subtitle">زنگ ریاضی است! از میان هفت بازی، درس امروزت را انتخاب کن.</p>
+        <p class="page-subtitle">زنگ ریاضی است! از میان نُه بازی و هر هفت فصل کتاب پنجم، درس امروزت را انتخاب کن.</p>
         <svg class="board-axis" viewBox="0 0 182 25" fill="none" aria-hidden="true" focusable="false">
           <path d="M5 17h170l-5-3m5 3-5 3M13 13v8m32-8v8m32-8v8m32-8v8m32-8v8" stroke="#a5daca" stroke-width="1.5" stroke-linecap="round"/>
           <path d="M13 14q16-21 32 0m0 0q16-21 32 0m0 0q16-21 32 0" stroke="#ffda84" stroke-dasharray="3 2"/><circle cx="109" cy="17" r="3" fill="#ffda84"/>
@@ -837,6 +839,22 @@ body[data-theme="kashi"] .tag.educational{
           <div class="topic-row"><span class="topic">اعشار</span><span class="topic">محور اعداد</span></div>
           <span class="tag">۱۱ ایستگاه · ۷۶ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
         <span class="card-cta">ورود به ممیزستان <span class="arrow" aria-hidden="true">←</span></span>
+      </a>
+      <!-- Game 8: پیمانه‌ستان — فصل ششم (اندازه‌گیری: مساحت، محیط دایره، حجم و گنجایش) -->
+      <a href="games/math-measurement.html" class="game-card measurement-card" data-game="math-measurement" aria-label="ورود به پیمانه‌ستان؛ مساحت، محیط دایره، حجم و گنجایش ریاضی پنجم">
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="24,8 42,23 24,38 6,23"/><rect x="49" y="10" width="22" height="28" rx="3"/><path d="M49 24h22"/><path d="M53 17h6M53 31h6"/></svg></div><span class="lesson-stamp" aria-hidden="true">۱ L</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><polygon points="24,6 40,20 24,34 8,20"/><path d="M14 38h20M18 43h12"/></svg></div><div class="card-info"><h2 class="card-name">پیمانه‌ستان</h2><p class="card-desc">مساحت لوزی و ذوزنقه را با برش و چسباندن شکل‌ها کشف کن، محیط دایره را با عدد پی اندازه بگیر و در کارگاه سه‌بعدی حجم مکعب‌مستطیل و گنجایش لیتر و سی‌سی را بساز.</p></div></div>
+        <div class="card-tags">
+          <div class="topic-row"><span class="topic">مساحت و حجم</span><span class="topic">گنجایش</span></div>
+          <span class="tag">✨ ۱۰ ایستگاه · ۵۰ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
+        <span class="card-cta">ورود به پیمانه‌ستان <span class="arrow" aria-hidden="true">←</span></span>
+      </a>
+      <!-- Game 9: آمارستان — فصل هفتم (آمار، نمودار خط شکسته، میانگین و احتمال) -->
+      <a href="games/math-stats.html" class="game-card stats-card" data-game="math-stats" aria-label="ورود به آمارستان؛ نمودار خط شکسته، میانگین و احتمال ریاضی پنجم">
+        <div class="card-top"><div class="lesson-cover" aria-hidden="true"><svg viewBox="0 0 80 46" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 38V10M10 38h60"/><polyline points="16,32 30,20 44,20 62,11"/><circle cx="16" cy="32" r="2.5" fill="currentColor"/><circle cx="30" cy="20" r="2.5" fill="currentColor"/><circle cx="44" cy="20" r="2.5" fill="currentColor"/><circle cx="62" cy="11" r="2.5" fill="currentColor"/></svg></div><span class="lesson-stamp" aria-hidden="true">میانگین</span><div class="card-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 40V10M8 40h32"/><polyline points="14,32 23,21 31,25 39,13"/><circle cx="39" cy="13" r="3"/></svg></div><div class="card-info"><h2 class="card-name">آمارستان</h2><p class="card-desc">جدول داده‌ها و نمودار خط شکسته را گام‌به‌گام رسم کن، برج‌های نابرابر را هم‌قد کن تا راز میانگین را بیابی و با چرخندهٔ شانس و دو تاس احتمال را آزمایش کن.</p></div></div>
+        <div class="card-tags">
+          <div class="topic-row"><span class="topic">میانگین</span><span class="topic">نمودار و احتمال</span></div>
+          <span class="tag">✨ ۹ ایستگاه · ۴۵ تمرین</span><span class="tag">🔗 پنل معلم</span></div>
+        <span class="card-cta">ورود به آمارستان <span class="arrow" aria-hidden="true">←</span></span>
       </a>
     </main>
 

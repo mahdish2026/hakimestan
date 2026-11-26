@@ -1,0 +1,1172 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<!-- hakim-csp:start -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
+<!-- hakim-csp:end -->
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f5a57">
+<meta name="description" content="کلاس‌یار — دستیار تختهٔ هوشمند معلم در حکیمستان: گردونهٔ اسامی متصل به دفتر معلم، گروه‌بند قابل چاپ، زمان‌سنج و آرامش‌سنج کلاس، و دوئل دونفرهٔ پای تخته با پشتیبانی از فایل HQF.">
+<title>کلاس‌یار | دستیار تختهٔ هوشمند و مدیریت پویای کلاس — حکیمستان</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<!-- hakim-core:start -->
+<link rel="stylesheet" href="css/a11y.css">
+<!-- hakim-core:end -->
+<style>
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('assets/fonts/vazirmatn-100-900.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root {
+  --bg: #f4f7f7;
+  --bg-2: #e7efef;
+  --surface: #ffffff;
+  --surface-soft: #eef5f4;
+  --ink: #142625;
+  --muted: #4b6361;
+  --line: #cadcdb;
+  --primary: #0f5a57;
+  --primary-2: #0a4240;
+  --primary-soft: #dff1ef;
+  --on-primary: #ffffff;
+  --gold: #eab338;
+  --gold-ink: #241700;
+  --gold-soft: #fff5d9;
+  --ok: #13683b;
+  --ok-soft: #e3f6ec;
+  --coral: #b33232;
+  --coral-soft: #fdeaea;
+  --blue: #1d4ed8;
+  --blue-soft: #e0eaff;
+  --shadow: 0 10px 28px rgba(15, 55, 52, 0.08);
+  --radius: 18px;
+  color-scheme: light;
+}
+html[data-theme="night"] {
+  --bg: #0e1919;
+  --bg-2: #152525;
+  --surface: #1b2e2e;
+  --surface-soft: #233b3b;
+  --ink: #edf7f6;
+  --muted: #b5cecc;
+  --line: #335453;
+  --primary: #5eead4;
+  --primary-2: #99f6e4;
+  --primary-soft: #17423f;
+  --on-primary: #062421;
+  --gold: #f5c76a;
+  --gold-ink: #241700;
+  --gold-soft: #3b3018;
+  --ok: #6ee7a8;
+  --ok-soft: #163b2b;
+  --coral: #ff9494;
+  --coral-soft: #422026;
+  --blue: #93c5fd;
+  --blue-soft: #1e3a5f;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.42);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0;
+  font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.85;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.ltr, [dir="ltr"] { direction: ltr; unicode-bidi: isolate; }
+.skip-link {
+  position: absolute;
+  top: -100px;
+  right: 12px;
+  z-index: 200;
+  background: var(--primary);
+  color: var(--on-primary);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button {
+  cursor: pointer;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 8px 14px;
+  font-weight: 700;
+}
+button:hover:not(:disabled) { border-color: var(--primary); }
+button:disabled { opacity: 0.52; cursor: not-allowed; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+.btn-primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+.btn-gold { background: var(--gold); border-color: #c59122; color: var(--gold-ink); }
+.btn-soft { background: var(--primary-soft); border-color: transparent; color: var(--primary); }
+html[data-theme="night"] .btn-soft { color: var(--primary-2); }
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.topbar-inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--primary);
+  color: var(--on-primary);
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+}
+.top-nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.top-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.roster-strip {
+  max-width: 1220px;
+  margin: 12px auto 0;
+  padding: 0 16px;
+  width: 100%;
+}
+.roster-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+main#main {
+  flex: 1;
+  max-width: 1220px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 14px 16px 36px;
+}
+
+.tool-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.tool-tab[aria-selected="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.wheel-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: center;
+}
+.wheel-stage {
+  text-align: center;
+  position: relative;
+}
+.wheel-svg {
+  width: 100%;
+  max-width: 370px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transition: transform 2.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.winner-banner {
+  background: var(--gold-soft);
+  border: 2px solid var(--gold);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.winner-name {
+  font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+  font-weight: 900;
+  color: var(--primary);
+}
+html[data-theme="night"] .winner-name { color: var(--primary-2); }
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.group-box {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+}
+.group-box h3 { margin: 0 0 8px; font-size: 1rem; color: var(--primary); }
+html[data-theme="night"] .group-box h3 { color: var(--primary-2); }
+.group-box ol { margin: 0; padding-right: 20px; }
+
+.timer-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+}
+.timer-face {
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  font-weight: 900;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  margin: 10px 0;
+}
+.noise-meter-bar {
+  height: 24px;
+  border-radius: 999px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  margin: 12px 0;
+}
+.noise-meter-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #16a34a, #eab308, #dc2626);
+  transition: width 0.12s linear;
+}
+
+.duel-arena {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+.duel-side {
+  border-radius: 18px;
+  padding: 18px;
+  border: 2px solid var(--line);
+  background: var(--surface-soft);
+}
+.duel-side.p1 { border-color: var(--blue); }
+.duel-side.p2 { border-color: var(--gold); }
+.duel-opt {
+  width: 100%;
+  text-align: right;
+  margin-top: 8px;
+  padding: 12px 14px;
+  font-size: 1rem;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.82rem;
+  background: var(--surface);
+}
+
+dialog {
+  max-width: min(640px, 94vw);
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 20px;
+}
+dialog::backdrop { background: rgba(10, 24, 24, 0.58); }
+
+@media (max-width: 860px) {
+  .tool-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wheel-layout, .timer-grid, .duel-arena { grid-template-columns: 1fr; }
+}
+@media (max-width: 390px) {
+  .topbar-inner, .roster-strip, main#main { padding-inline: 10px; }
+  .panel-card { padding: 14px; }
+  .tool-tabs { grid-template-columns: 1fr; }
+}
+
+@page { size: A4 portrait; margin: 12mm; }
+@media print {
+  body { background: #ffffff !important; color: #000000 !important; }
+  .topbar, .roster-strip, .tool-tabs, .no-print, .site-footer, #a11y-toolbar { display: none !important; }
+  main#main { max-width: 100%; padding: 0; margin: 0; }
+  .panel-card { box-shadow: none !important; border: 1px solid #444 !important; }
+  .group-box { break-inside: avoid; border: 1px solid #555 !important; background: #fff !important; }
+}
+
+/* احترام به تنظیم «کاهش حرکت» سیستم‌عامل */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+</style>
+<!-- hakim-meta:start -->
+<link rel="canonical" href="https://hakimistan.ir/kelasyar.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="حکیمستان">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="کلاس‌یار | دستیار تختهٔ هوشمند و مدیریت پویای کلاس — حکیمستان">
+<meta property="og:description" content="کلاس‌یار — دستیار تختهٔ هوشمند معلم در حکیمستان: گردونهٔ اسامی متصل به دفتر معلم، گروه‌بند قابل چاپ، زمان‌سنج و آرامش‌سنج کلاس، و دوئل دونفرهٔ پای تخته با پشتیبانی از فایل HQF.">
+<meta property="og:url" content="https://hakimistan.ir/kelasyar.html">
+<meta property="og:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="نمایی از حکیمستان — دیار حکیم، سرزمین یادگیری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="کلاس‌یار | دستیار تختهٔ هوشمند و مدیریت پویای کلاس — حکیمستان">
+<meta name="twitter:description" content="کلاس‌یار — دستیار تختهٔ هوشمند معلم در حکیمستان: گردونهٔ اسامی متصل به دفتر معلم، گروه‌بند قابل چاپ، زمان‌سنج و آرامش‌سنج کلاس، و دوئل دونفرهٔ پای تخته با پشتیبانی از فایل HQF.">
+<meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
+<!-- hakim-meta:end -->
+</head>
+<body>
+<a class="skip-link" href="#main">پرش به ابزارهای کلاس‌یار</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-badge" aria-hidden="true">🖥️</span>
+      <span>
+        <h1 style="margin:0;font-size:1.08rem;line-height:1.3;font-weight:900">کلاس‌یار هوشمند حکیمستان</h1>
+        <small style="color:var(--muted);font-size:0.76rem">دستیار تختهٔ هوشمند کلاس · متصل به دفتر معلم و HQF</small>
+      </span>
+    </a>
+    <nav class="top-nav" aria-label="پیوندهای ابزار معلم">
+      <a class="top-link" href="index.html">← صفحهٔ اصلی</a>
+      <a class="top-link" href="daftar.html">📒 دفتر معلم</a>
+      <a class="top-link" href="hqf-converter.html">🔄 مبدل HQF</a>
+      <button type="button" id="btnFullscreen">⛶ تمام‌صفحه</button>
+      <button type="button" id="btnTheme" aria-pressed="false">☾ شب</button>
+    </nav>
+  </div>
+</header>
+
+<section class="roster-strip" aria-label="انتخاب کلاس و فهرست دانش‌آموزان">
+  <div class="roster-card">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <label for="classSelect"><b>🏫 فهرست فعال کلاس:</b></label>
+      <select id="classSelect" style="min-height:44px;padding:6px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg)"></select>
+      <button type="button" class="btn-soft" id="btnEditRoster">✏️ ویرایش / افزودن اسامی</button>
+      <span id="rosterCountBadge" style="font-size:0.84rem;color:var(--muted)"></span>
+    </div>
+    <small id="saveIndicator" role="status" style="color:var(--ok);font-weight:700">✓ ذخیرهٔ آفلاین مرورگر فعال است</small>
+  </div>
+</section>
+
+<main id="main" tabindex="-1">
+  <div class="tool-tabs" role="tablist" aria-label="چهار ابزار کلاس‌یار">
+    <button type="button" role="tab" class="tool-tab" data-tab="wheel" aria-selected="true">🎡 ۱. گردونهٔ اسامی (بدون تکرار)</button>
+    <button type="button" role="tab" class="tool-tab" data-tab="groups" aria-selected="false">👥 ۲. گروه‌بند هوشمند و چاپ</button>
+    <button type="button" role="tab" class="tool-tab" data-tab="timer" aria-selected="false">⏱️ ۳. زمان‌سنج و آرامش‌سنج</button>
+    <button type="button" role="tab" class="tool-tab" data-tab="duel" aria-selected="false">⚔️ ۴. دوئل دونفرهٔ پای تخته</button>
+  </div>
+
+  <section id="tabPanel" class="panel-card" aria-live="polite"></section>
+</main>
+
+<footer class="site-footer">
+  طراحی و توسعه: مهدی شریفیان · سامانهٔ آموزشی حکیمستان · تمام داده‌ها صددرصد خصوصی روی دستگاه شما ذخیره می‌شوند
+</footer>
+
+<dialog id="rosterDialog" aria-labelledby="rosterDialogTitle">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <h2 id="rosterDialogTitle" style="margin:0;font-size:1.15rem">فهرست دانش‌آموزان کلاس سفارشی</h2>
+    <button type="button" id="btnCloseRosterDialog" aria-label="بستن پنجره">✕</button>
+  </div>
+  <p style="margin-top:0;font-size:0.88rem;color:var(--muted)">نام هر دانش‌آموز را در یک خط بنویسید (اگر در «دفتر معلم» کلاس ساخته باشید، آن کلاس‌ها هم به طور خودکار در منوی بالا قابل انتخاب هستند):</p>
+  <label for="rosterTextarea" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">نام دانش‌آموزان</label>
+  <textarea id="rosterTextarea" rows="9" style="width:100%;border-radius:14px;border:1px solid var(--line);padding:12px;background:var(--bg)"></textarea>
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px">
+    <button type="button" class="btn-soft" id="btnLoadSampleRoster">نمونهٔ کلاس ۱۶ نفرهٔ پنجم</button>
+    <button type="button" class="btn-primary" id="btnSaveCustomRoster">✓ ذخیرهٔ فهرست</button>
+  </div>
+</dialog>
+
+<script src="hakim-core.js"></script>
+<script src="js/hakim-companion.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const KEY_LS = 'hakimestan_kelasyar_v1';
+  const KEY_DAFTAR = 'hakimestan_daftar_v1';
+  const IDB_NAME = 'hakimestan_kelasyar_idb_v1';
+  const IDB_STORE = 'kv';
+  const $ = (id) => document.getElementById(id);
+
+  const fa = (v) => String(v ?? '').replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  const esc = (v) =>
+    String(v ?? '').replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[c]));
+
+  const SAMPLE_STUDENTS = [
+    'امیرعلی رضایی', 'زهرا محمدی', 'پارسا کریمی', 'فاطمه حسینی',
+    'کیان مرادی', 'ریحانه احمدی', 'ماهان صادقی', 'نرگس جعفری',
+    'آرتین قاسمی', 'سارا حیدری', 'سینا عباسی', 'کوثر اکبری',
+    'دانیال موسوی', 'هلیا رحیمی', 'محمدطاها زارع', 'تینا کاظمی'
+  ];
+
+  const BUILTIN_BANKS = {
+    math5: {
+      title: 'بانک جامع ریاضی پنجم (۲۰ سؤال)',
+      questions: [
+        { text: 'مساحت لوزی با قطرهای ۸ و ۶ سانتی‌متر چند سانتی‌متر مربع است؟', options: ['۲۴', '۴۸', '۱۴', '۲۸'], answer: 0 },
+        { text: 'گنجایش ۱ لیتر برابر با چند سانتی‌متر مکعب (سی‌سی) است؟', options: ['۱۰۰۰', '۱۰۰', '۱۰', '۱۰۰۰۰'], answer: 0 },
+        { text: 'میانگین سه عدد ۱۵، ۱۸ و ۲۷ چند است؟', options: ['۲۰', '۶۰', '۱۸', '۲۲'], answer: 0 },
+        { text: 'با تقریب پی = ۳٫۱۴، محیط دایره‌ای به قطر ۱۰ سانتی‌متر چند است؟', options: ['۳۱٫۴', '۱۵٫۷', '۶۲٫۸', '۳۱۴'], answer: 0 },
+        { text: 'در پرتاب هم‌زمان دو تاس، احتمال آمدن کدام مجموع از همه بیشتر است؟', options: ['۷', '۱۲', '۲', '۱'], answer: 0 },
+        { text: 'حجم مکعب‌مستطیلی با ابعاد ۵، ۴ و ۳ سانتی‌متر چند سانتی‌متر مکعب است؟', options: ['۶۰', '۱۲', '۴۷', '۲۰'], answer: 0 },
+        { text: 'کسر ۳/۴ برابر با چند درصد است؟', options: ['۷۵٪', '۲۵٪', '۳۴٪', '۸۰٪'], answer: 0 },
+        { text: 'متمم زاویهٔ ۵۵ درجه چند درجه است؟', options: ['۳۵ درجه', '۱۲۵ درجه', '۴۵ درجه', '۱۴۵ درجه'], answer: 0 },
+        { text: 'مساحت ذوزنقه‌ای با قاعده‌های ۷ و ۵ و ارتفاع ۴ چند است؟', options: ['۲۴', '۴۸', '۳۵', '۱۶'], answer: 0 },
+        { text: 'مکمل زاویهٔ ۱۱۰ درجه چند درجه است؟', options: ['۷۰ درجه', '۸۰ درجه', '۲۰ درجه', '۹۰ درجه'], answer: 0 }
+      ]
+    },
+    farsi_social: {
+      title: 'فارسی و مطالعات اجتماعی پنجم',
+      questions: [
+        { text: 'کدام املا برای «کسی که نماز را به جا می‌آورد» درست است؟', options: ['نمازگزار', 'نمازگذار', 'نمازگضار', 'نمازگظار'], answer: 0 },
+        { text: 'پرآب‌ترین، طویل‌ترین و تنها رود قابل کشتیرانی ایران کدام است؟', options: ['کارون', 'زاینده‌رود', 'سفیدرود', 'اترک'], answer: 0 },
+        { text: 'تنها بندر اقیانوسی ایران در کنار دریای عمان کدام است؟', options: ['بندر چابهار', 'بندر انزلی', 'بندر ترکمن', 'آبادان'], answer: 0 },
+        { text: 'کدام کشور طولانی‌ترین مرز خشکی مشترک را در غرب با ایران دارد؟', options: ['عراق', 'ارمنستان', 'ترکیه', 'پاکستان'], answer: 0 },
+        { text: 'در جملهٔ «پدر وسایل و ___ خانه را جابه‌جا کرد» کدام واژه درست است؟', options: ['اثاث', 'اساس', 'اصاص', 'اثاس'], answer: 0 },
+        { text: 'کشور ایران به چند استان تقسیم شده است؟', options: ['۳۱ استان', '۲۸ استان', '۳۵ استان', '۲۴ استان'], answer: 0 }
+      ]
+    }
+  };
+
+  function defaultState() {
+    return {
+      version: 1,
+      theme: 'light',
+      selectedClassId: 'custom',
+      customStudents: SAMPLE_STUDENTS.slice(),
+      noRepeatWheel: true,
+      pickedInRound: [],
+      scores: {},
+      lastWinner: null,
+      groupMode: 'size',
+      groupVal: 4,
+      groups: [],
+      timerTotalSec: 180,
+      duelBankKey: 'math5',
+      importedHqf: null
+    };
+  }
+
+  let state = (function () {
+    try {
+      const raw = JSON.parse(localStorage.getItem(KEY_LS) || 'null');
+      if (!raw || typeof raw !== 'object') return defaultState();
+      return { ...defaultState(), ...raw };
+    } catch {
+      return defaultState();
+    }
+  })();
+
+  let activeTab = 'wheel';
+  let wheelAngle = 0;
+  let spinning = false;
+  let timerRem = state.timerTotalSec || 180;
+  let timerInterval = null;
+  let micStream = null;
+  let micRaf = null;
+
+  let duelState = {
+    p1Name: 'قهرمان آبی',
+    p2Name: 'قهرمان طلایی',
+    p1Score: 0,
+    p2Score: 0,
+    qIdx: 0,
+    locked: false,
+    roundMsg: 'دکمهٔ «سؤال بعدی» یا یکی از گزینه‌ها را لمس کنید!'
+  };
+
+  function idbWrite(payload) {
+    try {
+      if (!window.indexedDB) return;
+      const req = indexedDB.open(IDB_NAME, 1);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains(IDB_STORE)) db.createObjectStore(IDB_STORE);
+      };
+      req.onsuccess = () => {
+        const db = req.result;
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).put(payload, 'state');
+      };
+    } catch {}
+  }
+
+  function persist() {
+    try {
+      localStorage.setItem(KEY_LS, JSON.stringify(state));
+      idbWrite(state);
+      if ($('saveIndicator')) $('saveIndicator').textContent = '✓ ذخیره شد (' + new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }) + ')';
+    } catch {}
+  }
+
+  function readDaftarClasses() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(KEY_DAFTAR) || 'null');
+      if (!raw || !Array.isArray(raw.classes) || !Array.isArray(raw.students)) return [];
+      return raw.classes.map((c) => ({
+        id: 'daftar:' + c.id,
+        name: `دفتر معلم: ${c.name}`,
+        students: raw.students
+          .filter((s) => s.classId === c.id)
+          .map((s) => `${s.first || ''} ${s.last || ''}`.trim())
+          .filter(Boolean)
+      })).filter((c) => c.students.length > 0);
+    } catch {
+      return [];
+    }
+  }
+
+  function getActiveStudents() {
+    const daftarList = readDaftarClasses();
+    const match = daftarList.find((c) => c.id === state.selectedClassId);
+    if (match) return match.students;
+    return state.customStudents.length ? state.customStudents : SAMPLE_STUDENTS;
+  }
+
+  function refreshClassDropdown() {
+    const daftarList = readDaftarClasses();
+    const sel = $('classSelect');
+    const options = [
+      { id: 'custom', name: 'کلاس سفارشی کلاس‌یار' },
+      ...daftarList
+    ];
+    if (!options.some((o) => o.id === state.selectedClassId)) state.selectedClassId = 'custom';
+    sel.innerHTML = options
+      .map((o) => `<option value="${esc(o.id)}" ${o.id === state.selectedClassId ? 'selected' : ''}>${esc(o.name)}</option>`)
+      .join('');
+    const list = getActiveStudents();
+    $('rosterCountBadge').textContent = `(${fa(list.length)} دانش‌آموز فعال)`;
+  }
+
+  function playChime() {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    try {
+      const ctx = playChime._ctx || (playChime._ctx = new Ctx());
+      const now = ctx.currentTime;
+      [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.frequency.value = f;
+        g.gain.setValueAtTime(0.08, now + i * 0.1);
+        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.25);
+        osc.connect(g);
+        g.connect(ctx.destination);
+        osc.start(now + i * 0.1);
+        osc.stop(now + i * 0.1 + 0.26);
+      });
+    } catch {}
+  }
+
+  function applyTheme() {
+    if (state.theme === 'night') document.documentElement.setAttribute('data-theme', 'night');
+    else document.documentElement.removeAttribute('data-theme');
+    $('btnTheme').setAttribute('aria-pressed', String(state.theme === 'night'));
+    $('btnTheme').textContent = state.theme === 'night' ? '☀ روز' : '☾ شب';
+  }
+
+  /* ── Tab 1: Wheel of Names ── */
+  function renderWheelTab() {
+    const all = getActiveStudents();
+    const available = state.noRepeatWheel
+      ? all.filter((n) => !state.pickedInRound.includes(n))
+      : all.slice();
+    const wheelItems = available.length ? available : all.slice();
+    const palette = ['#0f766e', '#2563eb', '#7c3aed', '#b45309', '#be123c', '#15803d', '#4338ca', '#0369a1'];
+    const n = Math.max(1, wheelItems.length);
+    const cx = 180, cy = 180, r = 162;
+
+    const slicesSvg = n === 1
+      ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0f766e"/><text x="${cx}" y="${cy}" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">${esc(wheelItems[0])}</text>`
+      : wheelItems.map((name, i) => {
+          const a0 = ((i * 360) / n - 90) * (Math.PI / 180);
+          const a1 = (((i + 1) * 360) / n - 90) * (Math.PI / 180);
+          const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+          const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+          const midDeg = ((i + 0.5) * 360) / n;
+          const midRad = (midDeg - 90) * (Math.PI / 180);
+          const tx = cx + r * 0.62 * Math.cos(midRad);
+          const ty = cy + r * 0.62 * Math.sin(midRad);
+          const shortName = name.length > 14 ? name.slice(0, 13) + '…' : name;
+          return `<path d="M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 0,1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="${palette[i % palette.length]}" stroke="#ffffff" stroke-width="2"/>
+            <text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="${n > 14 ? 9.5 : 11.5}" font-weight="800" transform="rotate(${midDeg - 90}, ${tx.toFixed(1)}, ${ty.toFixed(1)})">${esc(shortName)}</text>`;
+        }).join('');
+
+    $('tabPanel').innerHTML = `
+      <div class="wheel-layout">
+        <div class="wheel-stage">
+          <div style="font-size:1.6rem;line-height:1;margin-bottom:-6px" aria-hidden="true">🔻</div>
+          <svg id="wheelSvgEl" class="wheel-svg" viewBox="0 0 360 360" style="transform:rotate(${wheelAngle}deg)" role="img" aria-label="گردونهٔ قرعه‌کشی اسامی دانش‌آموزان">
+            ${slicesSvg}
+            <circle cx="180" cy="180" r="22" fill="#ffffff" stroke="#142625" stroke-width="4"/>
+          </svg>
+          <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px">
+            <button type="button" class="btn-primary" id="btnSpinWheel" style="font-size:1.08rem;padding:10px 24px" ${spinning ? 'disabled' : ''}>🎡 چرخاندن گردونه!</button>
+            <button type="button" id="btnResetWheelRound">↺ بازگرداندن همهٔ اسامی (${fa(available.length)}/${fa(all.length)})</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="winner-banner" role="status">
+            <small style="font-weight:800">دانش‌آموز انتخاب‌شده برای پاسخ پای تخته:</small>
+            <div class="winner-name">${state.lastWinner ? esc(state.lastWinner) : 'آمادهٔ چرخش!'}</div>
+            ${state.lastWinner ? `<div style="margin-top:8px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+              <button type="button" class="btn-gold" id="btnGiveStar">⭐ ثبت +۱ امتیاز تشویقی (${fa(state.scores[state.lastWinner] || 0)})</button>
+            </div>` : ''}
+          </div>
+
+          <label style="display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer;margin-bottom:12px">
+            <input type="checkbox" id="chkNoRepeat" ${state.noRepeatWheel ? 'checked' : ''} style="width:20px;height:20px">
+            حالت عادلانهٔ بدون تکرار (تا وقتی همه یک‌بار صدا زده نشوند، کسی تکرار نمی‌شود)
+          </label>
+
+          <h2 style="font-size:1rem;margin:10px 0 6px">🏅 جدول امتیاز تشویقی جلسه:</h2>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            ${all.map((st) => `<span style="padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:${state.pickedInRound.includes(st) ? 'var(--surface-soft)' : 'var(--bg)'};font-size:0.82rem">${state.pickedInRound.includes(st) ? '✓ ' : ''}${esc(st)} <b>(${fa(state.scores[st] || 0)})</b></span>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    $('chkNoRepeat').onchange = (e) => {
+      state.noRepeatWheel = e.target.checked;
+      persist();
+      renderWheelTab();
+    };
+    $('btnResetWheelRound').onclick = () => {
+      state.pickedInRound = [];
+      state.lastWinner = null;
+      persist();
+      renderWheelTab();
+    };
+    if ($('btnGiveStar')) {
+      $('btnGiveStar').onclick = () => {
+        const w = state.lastWinner;
+        state.scores[w] = (state.scores[w] || 0) + 1;
+        playChime();
+        persist();
+        renderWheelTab();
+      };
+    }
+    $('btnSpinWheel').onclick = () => {
+      if (spinning) return;
+      if (state.noRepeatWheel && available.length === 0) {
+        state.pickedInRound = [];
+      }
+      const pool = state.noRepeatWheel
+        ? all.filter(( nm ) => !state.pickedInRound.includes(nm))
+        : all.slice();
+      const chosen = pool[Math.floor(Math.random() * pool.length)];
+      spinning = true;
+      wheelAngle += 1080 + Math.floor(Math.random() * 360);
+      const svgEl = $('wheelSvgEl');
+      if (svgEl) svgEl.style.transform = `rotate(${wheelAngle}deg)`;
+      setTimeout(() => {
+        spinning = false;
+        state.lastWinner = chosen;
+        if (state.noRepeatWheel && !state.pickedInRound.includes(chosen)) {
+          state.pickedInRound.push(chosen);
+        }
+        playChime();
+        persist();
+        if (activeTab === 'wheel') renderWheelTab();
+        try { window.HakimCompanion && window.HakimCompanion.say(`نوبت «${chosen}» است! با آرامش فکر کن و جواب بده.`, 'happy'); } catch (e) {}
+      }, 2450);
+    };
+  }
+
+  /* ── Tab 2: Smart Group Maker ── */
+  function generateGroups() {
+    const list = getActiveStudents().slice();
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]];
+    }
+    const val = Math.max(2, Math.min(12, Number(state.groupVal) || 4));
+    const numGroups = state.groupMode === 'count' ? Math.min(list.length, val) : Math.max(1, Math.ceil(list.length / val));
+    const buckets = Array.from({ length: numGroups }, () => []);
+    list.forEach((student, idx) => {
+      buckets[idx % numGroups].push(student);
+    });
+    state.groups = buckets;
+    persist();
+  }
+
+  function renderGroupsTab() {
+    if (!state.groups || !state.groups.length) generateGroups();
+    const titles = ['کاوشگران خرد', 'ستارگان دانش', 'پیشگامان فردا', 'اندیشمندان جوان', 'سفیران امید', 'معماران علم', 'پژوهشگران برتر', 'یاران حکیم'];
+    const roles = ['سرگروه', 'نگارنده', 'سخنگو', 'پژوهشگر', 'زمان‌نگهدار'];
+
+    $('tabPanel').innerHTML = `
+      <div class="no-print" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <label for="grpMode"><b>روش تقسیم:</b></label>
+          <select id="grpMode" style="min-height:44px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg)">
+            <option value="size" ${state.groupMode === 'size' ? 'selected' : ''}>بر اساس تعداد اعضای هر گروه</option>
+            <option value="count" ${state.groupMode === 'count' ? 'selected' : ''}>بر اساس تعداد کل گروه‌ها</option>
+          </select>
+          <label for="grpVal"><b>تعداد:</b></label>
+          <input id="grpVal" type="number" min="2" max="12" value="${state.groupVal}" style="width:76px;min-height:44px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg);text-align:center">
+          <button type="button" class="btn-primary" id="btnBuildGroups">🎲 چیدن تصادفی جدید</button>
+        </div>
+        <button type="button" class="btn-gold" id="btnPrintGroups">🖨️ چاپ برگهٔ گروه‌بندی A4</button>
+      </div>
+
+      <h2 style="margin:14px 0 4px;font-size:1.15rem">فهرست گروه‌های کارگاهی کلاس (${fa(state.groups.length)} گروه)</h2>
+      <div class="groups-grid">
+        ${state.groups.map((members, idx) => `
+          <article class="group-box">
+            <h3>گروه ${fa(idx + 1)}: ${titles[idx % titles.length]}</h3>
+            <ol>
+              ${members.map((m, mi) => `<li><b>${esc(m)}</b> <small style="color:var(--muted)">(${roles[mi % roles.length]})</small></li>`).join('')}
+            </ol>
+          </article>
+        `).join('')}
+      </div>
+    `;
+
+    $('btnBuildGroups').onclick = () => {
+      state.groupMode = $('grpMode').value;
+      state.groupVal = Number($('grpVal').value) || 4;
+      generateGroups();
+      renderGroupsTab();
+    };
+    $('btnPrintGroups').onclick = () => window.print();
+  }
+
+  /* ── Tab 3: Visual Timer & Classroom Calm Meter ── */
+  function stopMic() {
+    if (micRaf) cancelAnimationFrame(micRaf);
+    micRaf = null;
+    if (micStream) {
+      micStream.getTracks().forEach((t) => t.stop());
+      micStream = null;
+    }
+  }
+
+  function renderTimerTab() {
+    const mm = String(Math.floor(timerRem / 60)).padStart(2, '0');
+    const ss = String(timerRem % 60).padStart(2, '0');
+
+    $('tabPanel').innerHTML = `
+      <div class="timer-grid">
+        <div style="background:var(--surface-soft);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center">
+          <h2 style="margin:0;font-size:1.15rem">⏱️ زمان‌سنج دیداری فعالیت کلاسی</h2>
+          <div class="timer-face" id="timerFaceDisplay">${fa(mm)}:${fa(ss)}</div>
+          <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+            ${[60, 180, 300, 600, 900].map((sec) => `<button type="button" class="btn-soft" data-preset="${sec}">${fa(sec / 60)} دقیقه</button>`).join('')}
+          </div>
+          <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+            <button type="button" class="btn-primary" id="btnToggleTimer">${timerInterval ? '⏸ توقف موقت' : '▶ شروع شمارش معکوس'}</button>
+            <button type="button" id="btnResetTimer">↺ بازنشانی</button>
+          </div>
+        </div>
+
+        <div style="background:var(--surface-soft);border:1px solid var(--line);border-radius:18px;padding:20px">
+          <h2 style="margin:0 0 6px;font-size:1.15rem">🌿 آرامش‌سنج هوشمند کلاس (اختیاری)</h2>
+          <p style="margin:0 0 12px;font-size:0.86rem;color:var(--muted)">با زدن دکمهٔ زیر، سطح بلندی صدای محیط فقط در مرورگر همین دستگاه سنجیده می‌شود (هیچ صدایی ضبط یا ارسال نمی‌شود):</p>
+          <div class="noise-meter-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="noiseBarWrap" aria-label="سطح سر و صدای کلاس">
+            <div class="noise-meter-fill" id="noiseFill"></div>
+          </div>
+          <p id="noiseStatusText" style="font-weight:800;margin:8px 0 14px">میکروفون غیرفعال است.</p>
+          <button type="button" class="btn-soft" id="btnToggleMic">${micStream ? '⏹ خاموش کردن میکروفون' : '🎙️ فعال‌سازی سنجش آرامش کلاس'}</button>
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll('[data-preset]').forEach((b) => {
+      b.onclick = () => {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        state.timerTotalSec = Number(b.dataset.preset);
+        timerRem = state.timerTotalSec;
+        persist();
+        renderTimerTab();
+      };
+    });
+
+    $('btnToggleTimer').onclick = () => {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        renderTimerTab();
+      } else {
+        timerInterval = setInterval(() => {
+          if (timerRem > 0) {
+            timerRem--;
+            const el = $('timerFaceDisplay');
+            if (el) {
+              const m2 = String(Math.floor(timerRem / 60)).padStart(2, '0');
+              const s2 = String(timerRem % 60).padStart(2, '0');
+              el.textContent = `${fa(m2)}:${fa(s2)}`;
+            }
+            if (timerRem === 0) {
+              clearInterval(timerInterval);
+              timerInterval = null;
+              playChime();
+              if (activeTab === 'timer') renderTimerTab();
+              try { window.HakimCompanion && window.HakimCompanion.say('زمان تمام شد! حالا وقت جمع‌بندی و گفت‌وگوی کلاسی است.', 'thinking'); } catch (e) {}
+            }
+          }
+        }, 1000);
+        renderTimerTab();
+      }
+    };
+
+    $('btnResetTimer').onclick = () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerRem = state.timerTotalSec || 180;
+      renderTimerTab();
+    };
+
+    $('btnToggleMic').onclick = async () => {
+      if (micStream) {
+        stopMic();
+        renderTimerTab();
+        return;
+      }
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        $('noiseStatusText').textContent = 'مرورگر فعلی از دسترسی میکروفون پشتیبانی نمی‌کند.';
+        return;
+      }
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new Ctx();
+        const src = ctx.createMediaStreamSource(micStream);
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 256;
+        src.connect(analyser);
+        const buf = new Uint8Array(analyser.frequencyBinCount);
+        renderTimerTab();
+        const tick = () => {
+          if (!micStream || activeTab !== 'timer') return;
+          analyser.getByteFrequencyData(buf);
+          const avg = buf.reduce((a, b) => a + b, 0) / buf.length;
+          const pct = Math.min(100, Math.round((avg / 95) * 100));
+          const fill = $('noiseFill');
+          const txt = $('noiseStatusText');
+          const wrap = $('noiseBarWrap');
+          if (fill) fill.style.width = pct + '%';
+          if (wrap) wrap.setAttribute('aria-valuenow', String(pct));
+          if (txt) {
+            txt.textContent = pct < 35 ? `🌿 کلاس آرام و متمرکز است (${fa(pct)}٪)` : pct < 70 ? `💬 همهمهٔ کار گروهی ملایم (${fa(pct)}٪)` : `🔔 صدا بالاست! لطفاً آرام‌تر (${fa(pct)}٪)`;
+          }
+          micRaf = requestAnimationFrame(tick);
+        };
+        tick();
+      } catch {
+        if ($('noiseStatusText')) $('noiseStatusText').textContent = 'اجازهٔ میکروفون داده نشد.';
+      }
+    };
+  }
+
+  /* ── Tab 4: 2-Player Smartboard Duel + HQF Import ── */
+  function getDuelQuestions() {
+    if (state.duelBankKey === 'hqf' && state.importedHqf && Array.isArray(state.importedHqf.questions) && state.importedHqf.questions.length) {
+      return state.importedHqf.questions;
+    }
+    return (BUILTIN_BANKS[state.duelBankKey] || BUILTIN_BANKS.math5).questions;
+  }
+
+  function orderedDuelOpts(q, idxSeed) {
+    const opts = Array.isArray(q.options) ? q.options.slice(0, 4) : [];
+    const ansIdx = Array.isArray(q.answer) ? q.answer[0] : Number(q.answer) || 0;
+    const items = opts.map((txt, idx) => ({ txt: String(txt), ok: idx === ansIdx }));
+    const shift = (idxSeed * 3 + 1) % Math.max(1, items.length);
+    return items.slice(shift).concat(items.slice(0, shift));
+  }
+
+  function renderDuelTab() {
+    const qList = getDuelQuestions();
+    const q = qList[duelState.qIdx % qList.length];
+    const opts = orderedDuelOpts(q, duelState.qIdx);
+
+    $('tabPanel').innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <label for="duelBankSelect"><b>📚 بانک سؤال دوئل:</b></label>
+          <select id="duelBankSelect" style="min-height:44px;padding:6px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg)">
+            <option value="math5" ${state.duelBankKey === 'math5' ? 'selected' : ''}>${esc(BUILTIN_BANKS.math5.title)}</option>
+            <option value="farsi_social" ${state.duelBankKey === 'farsi_social' ? 'selected' : ''}>${esc(BUILTIN_BANKS.farsi_social.title)}</option>
+            ${state.importedHqf ? `<option value="hqf" ${state.duelBankKey === 'hqf' ? 'selected' : ''}>فایل HQF بارگذاری‌شده (${fa(state.importedHqf.questions.length)} سؤال)</option>` : ''}
+          </select>
+          <label class="top-link" style="cursor:pointer">
+            📂 بارگذاری فایل JSON / HQF
+            <input id="hqfFileInput" type="file" accept=".json,application/json" style="display:none">
+          </label>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn-soft" id="btnPickDuelists">🎲 قرعه‌کشی ۲ بازیکن از کلاس</button>
+          <button type="button" class="btn-primary" id="btnNextDuelQ">سؤال بعدی ←</button>
+        </div>
+      </div>
+
+      <div style="background:var(--primary-soft);border-radius:16px;padding:16px;text-align:center;margin-top:14px">
+        <small style="font-weight:800">سؤال ${fa((duelState.qIdx % qList.length) + 1)} از ${fa(qList.length)} · هر بازیکن که زودتر گزینهٔ درستِ ستون خودش را لمس کند امتیاز می‌گیرد!</small>
+        <h2 style="margin:6px 0 4px;font-size:1.25rem">${esc(q.text || q.prompt || '')}</h2>
+        <div style="font-weight:800;color:var(--primary)">${esc(duelState.roundMsg)}</div>
+      </div>
+
+      <div class="duel-arena">
+        <div class="duel-side p1">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3 style="margin:0">🔵 ${esc(duelState.p1Name)}</h3>
+            <b style="font-size:1.3rem">امتیاز: ${fa(duelState.p1Score)}</b>
+          </div>
+          ${opts.map((o, idx) => `<button type="button" class="duel-opt" data-p1-opt="${idx}" ${duelState.locked ? 'disabled' : ''}>${fa(idx + 1)}) ${esc(o.txt)}</button>`).join('')}
+        </div>
+
+        <div class="duel-side p2">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3 style="margin:0">🟡 ${esc(duelState.p2Name)}</h3>
+            <b style="font-size:1.3rem">امتیاز: ${fa(duelState.p2Score)}</b>
+          </div>
+          ${opts.map((o, idx) => `<button type="button" class="duel-opt" data-p2-opt="${idx}" ${duelState.locked ? 'disabled' : ''}>${fa(idx + 1)}) ${esc(o.txt)}</button>`).join('')}
+        </div>
+      </div>
+    `;
+
+    $('duelBankSelect').onchange = (e) => {
+      state.duelBankKey = e.target.value;
+      duelState.qIdx = 0;
+      duelState.locked = false;
+      persist();
+      renderDuelTab();
+    };
+
+    $('hqfFileInput').onchange = (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || '{}'));
+          const qs = (Array.isArray(parsed.questions) ? parsed.questions : [])
+            .filter((item) => item && (item.text || item.prompt) && Array.isArray(item.options) && item.options.length >= 2);
+          if (!qs.length) {
+            duelState.roundMsg = 'در این فایل سؤال چندگزینه‌ای معتبر پیدا نشد.';
+            renderDuelTab();
+            return;
+          }
+          state.importedHqf = { questions: qs };
+          state.duelBankKey = 'hqf';
+          duelState.qIdx = 0;
+          duelState.locked = false;
+          duelState.roundMsg = `✓ ${fa(qs.length)} سؤال HQF با موفقیت بارگذاری شد!`;
+          persist();
+          renderDuelTab();
+        } catch {
+          duelState.roundMsg = 'ساختار فایل JSON معتبر نیست.';
+          renderDuelTab();
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    $('btnPickDuelists').onclick = () => {
+      const st = getActiveStudents();
+      if (st.length >= 2) {
+        const i1 = Math.floor(Math.random() * st.length);
+        let i2 = Math.floor(Math.random() * (st.length - 1));
+        if (i2 >= i1) i2++;
+        duelState.p1Name = st[i1];
+        duelState.p2Name = st[i2];
+        duelState.p1Score = 0;
+        duelState.p2Score = 0;
+        duelState.locked = false;
+        duelState.roundMsg = `مسابقه بین «${duelState.p1Name}» و «${duelState.p2Name}» آغاز شد!`;
+        playChime();
+        renderDuelTab();
+      }
+    };
+
+    $('btnNextDuelQ').onclick = () => {
+      duelState.qIdx = (duelState.qIdx + 1) % qList.length;
+      duelState.locked = false;
+      duelState.roundMsg = 'هرکس زودتر پاسخ درست را لمس کند برندهٔ این امتیاز است!';
+      renderDuelTab();
+    };
+
+    const answerDuel = (player, optIdx) => {
+      if (duelState.locked) return;
+      const chosen = opts[optIdx];
+      const pName = player === 1 ? duelState.p1Name : duelState.p2Name;
+      if (chosen.ok) {
+        if (player === 1) duelState.p1Score += 10;
+        else duelState.p2Score += 10;
+        duelState.locked = true;
+        duelState.roundMsg = `🎉 آفرین به «${pName}»! پاسخ «${chosen.txt}» کاملاً درست بود (+۱۰ امتیاز)!`;
+        playChime();
+      } else {
+        if (player === 1) duelState.p2Score += 5;
+        else duelState.p1Score += 5;
+        duelState.locked = true;
+        const right = opts.find((x) => x.ok);
+        duelState.roundMsg = `⚠️ پاسخ «${pName}» نادرست بود؛ پاسخ درست: «${right ? right.txt : ''}» (+۵ امتیاز برای رقیب).`;
+      }
+      renderDuelTab();
+    };
+
+    document.querySelectorAll('[data-p1-opt]').forEach((b) => {
+      b.onclick = () => answerDuel(1, Number(b.dataset.p1Opt));
+    });
+    document.querySelectorAll('[data-p2-opt]').forEach((b) => {
+      b.onclick = () => answerDuel(2, Number(b.dataset.p2Opt));
+    });
+  }
+
+  function renderActiveTab() {
+    if (activeTab !== 'timer') stopMic();
+    if (activeTab === 'wheel') renderWheelTab();
+    else if (activeTab === 'groups') renderGroupsTab();
+    else if (activeTab === 'timer') renderTimerTab();
+    else renderDuelTab();
+  }
+
+  document.querySelectorAll('.tool-tab').forEach((btn) => {
+    btn.onclick = () => {
+      activeTab = btn.dataset.tab;
+      document.querySelectorAll('.tool-tab').forEach((t) => {
+        t.setAttribute('aria-selected', String(t === btn));
+      });
+      renderActiveTab();
+    };
+  });
+
+  $('classSelect').onchange = (e) => {
+    state.selectedClassId = e.target.value;
+    state.pickedInRound = [];
+    state.groups = [];
+    persist();
+    refreshClassDropdown();
+    renderActiveTab();
+  };
+
+  $('btnEditRoster').onclick = () => {
+    $('rosterTextarea').value = state.customStudents.join('\n');
+    $('rosterDialog').showModal?.();
+  };
+  $('btnCloseRosterDialog').onclick = () => $('rosterDialog').close?.();
+  $('btnLoadSampleRoster').onclick = () => {
+    $('rosterTextarea').value = SAMPLE_STUDENTS.join('\n');
+  };
+  $('btnSaveCustomRoster').onclick = () => {
+    const lines = $('rosterTextarea').value
+      .split(/\r?\n/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .slice(0, 60);
+    if (lines.length >= 2) {
+      state.customStudents = lines;
+      state.selectedClassId = 'custom';
+      state.pickedInRound = [];
+      state.groups = [];
+      persist();
+      refreshClassDropdown();
+      renderActiveTab();
+    }
+    $('rosterDialog').close?.();
+  };
+
+  $('btnTheme').onclick = () => {
+    state.theme = state.theme === 'night' ? 'light' : 'night';
+    applyTheme();
+    persist();
+  };
+
+  $('btnFullscreen').onclick = () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
+    else document.exitFullscreen?.().catch(() => {});
+  };
+
+  window.addEventListener('pagehide', persist);
+  applyTheme();
+  refreshClassDropdown();
+  renderActiveTab();
+  try { window.HakimCompanion && window.HakimCompanion.mount({ gameId: 'kelasyar', intro: 'سلام همکار گرامی! من حکیمم. با گردونهٔ شانس، گروه‌بندی، زمان‌سنج و دوئل، کلاس را پرنشاط‌تر می‌کنیم.' }); } catch (e) {}
+
+  window.KelasyarApp = {
+    getState: () => state,
+    switchTab: (t) => {
+      activeTab = t;
+      renderActiveTab();
+    }
+  };
+})();
+</script>
+<!-- hakim-core:start -->
+<script src="js/hakim-read-aloud.js" defer></script>
+<script src="js/hakim-security.js" defer></script>
+<script src="js/hakim-a11y.js" defer></script>
+<script src="js/hakim-sw-register.js" defer></script>
+<!-- hakim-core:end -->
+</body>
+</html>

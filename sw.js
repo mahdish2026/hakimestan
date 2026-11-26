@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.73';
+const VERSION = 'hakim-v1.5.79';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -67,6 +67,9 @@ const SHELL_ASSETS = [
   './css/lobby.css?v=1405-07-kashi-light',
   './css/hakim-ui.css?v=1405-08-kashi-light',
   './js/hakim-a11y.js',
+  './js/hakim-companion.js',
+  './js/hakim-worlds.js',
+  './css/hakim-worlds.css',
   './js/hakim-security.js',
   './js/hakim-theme.js',
   './js/hakim-sw-register.js',
@@ -116,6 +119,40 @@ const PREFETCH_PAGES = [
   './games/mancheh-online.html',
   './games/lab2d.html',
   './games/farsi5-vocab.html',
+  './games/math-measurement.html',
+  './games/math-measurement/style.css',
+  './games/math-measurement/data.js',
+  './games/math-measurement/app.js',
+  './games/math-stats.html',
+  './games/math-stats/style.css',
+  './games/math-stats/data.js',
+  './games/math-stats/app.js',
+  './games/farsi5-hamava.html',
+  './games/farsi5-hamava/style.css',
+  './games/farsi5-hamava/data.js',
+  './games/farsi5-hamava/lessons.js',
+  './games/farsi5-hamava/audio/ch1-kh-vav.mp3',
+  './games/farsi5-hamava/audio/ch2-sin-sad-se.mp3',
+  './games/farsi5-hamava/audio/ch3-te-ta.mp3',
+  './games/farsi5-hamava/audio/ch4-ze-group.mp3',
+  './games/farsi5-hamava/audio/ch5-he-ayn.mp3',
+  './games/farsi5-hamava/audio/ch6-editor.mp3',
+  './games/farsi5-hamava/app.js',
+  './games/iran-geography.html',
+  './games/iran-geography/style.css',
+  './games/iran-geography/map-geo.js',
+  './games/iran-geography/data.js',
+  './games/iran-geography/lessons.js',
+  './games/iran-geography/lesson-view.js',
+  './games/iran-geography/audio/m1-population.mp3',
+  './games/iran-geography/audio/m2-water.mp3',
+  './games/iran-geography/audio/m3-industry.mp3',
+  './games/iran-geography/audio/m4-roads.mp3',
+  './games/iran-geography/audio/m5-governance.mp3',
+  './games/iran-geography/audio/m6-neighbors.mp3',
+  './games/iran-geography/app.js',
+  './kelasyar.html',
+  './masir-yadgiri.html',
   './azmoon-saz.html',
   './daftar.html',
   './tarh-dars.html',
@@ -418,6 +455,13 @@ function isExtractedAudio(url) {
   const prefix=new URL('assets/audio/',self.registration.scope);
   return url.origin===prefix.origin&&url.pathname.startsWith(prefix.pathname)&&/^games-lab2d-voice-[1-5]\.mp3$/.test(url.pathname.slice(prefix.pathname.length));
 }
+// گفتار فارسی حکیم در درسنامه‌های هم‌آواستان و ایران‌گرد کوچک
+function isPhase5Audio(url) {
+  const scope = new URL(self.registration.scope);
+  if (url.origin !== scope.origin || !url.pathname.startsWith(scope.pathname)) return false;
+  const rel = url.pathname.slice(scope.pathname.length);
+  return /^games\/iran-geography\/audio\/m[1-6]-[a-z]+\.mp3$/.test(rel) || /^games\/farsi5-hamava\/audio\/ch[1-6]-[a-z-]+\.mp3$/.test(rel);
+}
 async function handleGeometryAudio(request) {
   let full = await matchSafe(request.url);
   if (!full || full.status !== 200) {
@@ -459,7 +503,7 @@ self.addEventListener('fetch', (event) => {
   // External APIs and explicitly private requests must never use app storage.
   if (url.origin !== new URL(self.registration.scope).origin || request.cache === 'no-store' || request.headers.has('authorization')) return;
 
-  if (isGeometryAudio(url) || isDecimalAudio(url) || isTimeMissionAudio(url) || isExtractedAudio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
+  if (isGeometryAudio(url) || isDecimalAudio(url) || isTimeMissionAudio(url) || isExtractedAudio(url) || isPhase5Audio(url)) { event.respondWith(handleGeometryAudio(request).catch(() => new Response('', {status:503}))); return; }
   // سایر Rangeها بدون تغییر به شبکه می‌روند.
   if (request.headers.get('range')) return;
 
