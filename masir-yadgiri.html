@@ -385,7 +385,7 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
       </div>
       <form id="heroNameForm" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <label for="heroNameInput"><b>نام قهرمان:</b></label>
-        <input id="heroNameInput" type="text" maxlength="36" style="min-height:44px;padding:6px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);width:185px">
+        <input id="heroNameInput" type="text" maxlength="36" placeholder="نام خودت را بنویس" autocomplete="off" style="min-height:44px;padding:6px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);width:185px">
         <button type="submit" class="btn-soft">ثبت نام</button>
       </form>
     </div>
@@ -437,7 +437,7 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
     { id: 'iran-geography', title: 'ایران‌گرد کوچک (جغرافیای ایران)', cat: 'مطالعات اجتماعی', icon: '🧭', href: 'games/iran-geography.html', keys: ['hakim.irangeo.v1'] },
     { id: 'kohan-diyar', title: 'فتح کهن دیار ایران', cat: 'مطالعات اجتماعی', icon: '🏛️', href: 'games/kohan-diyar.html', keys: ['ftah_iran_progress_v1', 'ftah_iran_highscore'] },
     { id: 'hakim-quest', title: 'ماجرای حکیم (پنج وادی دانش)', cat: 'هوش و رقابت', icon: '🧙', href: 'games/hakim-quest.html', keys: ['hakimestan-hakimquest-save'] },
-    { id: 'hakim-treasure', title: 'راز گنج حکیم', cat: 'هوش و رقابت', icon: '💎', href: 'games/hakim-treasure.html', prefix: 'hakim_t' },
+    { id: 'hakim-treasure', title: 'راز گنج حکیم', cat: 'هوش و رقابت', icon: '💎', href: 'games/hakim-treasure.html', prefix: 'hakim_treasure_' },
     { id: 'jadval-hekmat', title: 'جدول حکمت', cat: 'هوش و رقابت', icon: '🧩', href: 'games/jadval-hekmat.html', keys: ['hakim_jadval_best_v1'] },
     { id: 'hakim-cards', title: 'کارت‌های حکیم (حافظهٔ تصویری)', cat: 'هوش و رقابت', icon: '🃏', href: 'games/hakim-cards.html', keys: ['hakim_cards_best_v1'] },
     { id: 'snake-ladder', title: 'مار و پلهٔ دانش', cat: 'هوش و رقابت', icon: '🎲', href: 'games/snake-ladder.html', prefix: 'hakim_snake' },
@@ -615,7 +615,7 @@ html[data-theme="night"] .month-tag { color: var(--primary-2); }
   }
 
   function renderAll() {
-    $('heroNameInput').value = state.name;
+    $('heroNameInput').value = state.name === 'پژوهشگر حکیمستان' ? '' : state.name;
     const prog = scanProgress();
     const unlockedBadges = prog.badges.filter((b) => b.ok).length;
 
