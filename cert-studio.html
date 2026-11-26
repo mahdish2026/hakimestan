@@ -291,6 +291,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 .cert .clickable.mv-drag{cursor:grabbing;outline-style:dashed}
 .cert.measuring [data-mv]:not(.xt){transform:none!important}
 .cert .xt{position:absolute;white-space:pre-line;overflow-wrap:anywhere;z-index:3}
+.cert .c-dev{position:absolute;z-index:2;text-align:center;font-size:calc(var(--mm)*2.2);line-height:1.3;font-weight:600;color:var(--ink);opacity:.62;white-space:nowrap;overflow:hidden;pointer-events:none}
 .cert .aimg{position:absolute;height:auto;display:block;z-index:4}
 .cert .c-photo{position:absolute;box-sizing:border-box;background:#fff center/cover no-repeat;z-index:4}
 .cert .c-photo.empty{background:repeating-linear-gradient(45deg,#f6efdd 0 7px,#fffdf7 7px 14px);display:flex;align-items:center;justify-content:center;color:#a8925a;font-size:calc(var(--mm) * 3.6);line-height:1.5;border-style:dashed!important}
@@ -1857,6 +1858,9 @@ function pageHTML(o){
       extras += `<div class="c-photo${ph ? '' : ' empty'}${cl}" data-mv="photo" data-imgkey="photo" style="${css}${posCSS('photo')}">${ph ? '' : '<span>🧑‍🎓<br>عکس</span>'}</div>`;
     }
   }
+  // نام طراح لوح‌نگار: سطری کوچک در حاشیهٔ پایین، زیر کادر متن و درون قاب
+  { const dy = b >= 5 ? H - b + .7 : H - 4.2;
+    extras += `<div class="c-dev" style="top:calc(var(--mm)*${dy + ody});right:calc(var(--mm)*${r - odx});left:calc(var(--mm)*${l + odx})">ساخته‌شده با لوح‌نگار حکیمستان · طراحی و توسعه: مهدی شریفیان</div>`; }
   for (const ex of (S.extras || [])){
     if (ex.hidden) continue;
     const w = num(ex.w, 120), kx = 'x:' + ex.id;
