@@ -1386,4 +1386,4 @@ body[data-theme="kashi"] textarea{color-scheme:light !important}
   .hero-stage{min-height:0;padding-block:28px;margin:8px 0 0}
   .hero-rest{padding-bottom:0}.hero-stats{margin-top:6px}
 }
-@media(max-width:550px){.hero-stats li{flex-direction:column;gap:2px}.hero-actions .btn{height:auto;min-height:46px;padding:9px 10px}.hero-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-actions svg{flex-shrink:0}}
+@media(max-width:550px){.hero-stats li{flex-direction:column;gap:2px}.hero-actions .btn{height:auto;min-height:46px;padding:9px 10px;white-space:normal;text-align:center;line-height:1.45;overflow-wrap:anywhere}.hero-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-actions svg{flex-shrink:0}}

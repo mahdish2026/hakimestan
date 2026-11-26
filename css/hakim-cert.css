@@ -197,6 +197,7 @@
 .hk-a4-sign .hk-logo { width: 5.6em; height: auto; display: block; margin: .2em 0 .1em; position: relative; }
 .hk-a4-sign b { font-size: .82em; font-weight: 900; color: var(--hk-ink); line-height: 1.5; }
 .hk-a4-sign small { font-size: .7em; color: #6b5a3a; line-height: 1.5; }
+.hk-a4-sign .hk-a4-dev { margin-top: .1em; font-weight: 800; color: var(--hk-accent, #4b3a8f); white-space: nowrap; }
 .hk-a4-sign::before {
   /* round stamp ring around the logo, like an ink stamp */
   content: ""; position: absolute; top: .55em; left: 50%; width: 7.4em; height: 7.4em;

@@ -1,0 +1,193 @@
+/* 🐎 لشکرکشی فتح کهن — نقشهٔ مسیر با سپاه سواره */
+.km-overlay {
+  position: fixed; inset: 0; z-index: 10050;
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px;
+  background: radial-gradient(ellipse at center, rgba(40, 20, 4, .78), rgba(8, 4, 0, .92));
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  opacity: 0; transition: opacity .3s ease;
+  font-family: var(--font-sans, 'Vazirmatn', Tahoma, sans-serif);
+  direction: rtl;
+}
+.km-overlay[hidden] { display: none; }
+.km-overlay.show { opacity: 1; }
+body.km-open { overflow: hidden; }
+
+.km-box {
+  width: min(760px, 100%);
+  max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px);
+  overflow: auto;
+  background: var(--card-bg, linear-gradient(145deg, #2a1506, #1b0c03));
+  border: 2px solid var(--gold-dark, #c9941a);
+  border-radius: 20px;
+  box-shadow: 0 0 0 4px rgba(245, 200, 66, .12), 0 24px 60px rgba(0, 0, 0, .7);
+  padding: 12px 12px 14px;
+  color: var(--text-light, #f5edd6);
+  transform: translateY(14px) scale(.98); transition: transform .35s cubic-bezier(.2, .8, .3, 1);
+}
+.km-overlay.show .km-box { transform: none; }
+
+.km-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 4px 8px; }
+.km-title { margin: 0; font-size: clamp(1rem, 3.6vw, 1.3rem); color: var(--gold, #f5c842); font-weight: 900; text-shadow: 0 2px 8px rgba(0, 0, 0, .5); }
+.km-sound {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--gold-dark, #c9941a); background: rgba(0, 0, 0, .25);
+  color: inherit; font-size: 1.1rem; cursor: pointer;
+}
+.km-sound:focus-visible, .km-btn:focus-visible { outline: 3px solid var(--gold-light, #fff3b0); outline-offset: 2px; }
+
+.km-stage {
+  position: relative; overflow: hidden;
+  aspect-ratio: 410 / 330;
+  border-radius: 14px;
+  border: 2px solid rgba(201, 148, 26, .7);
+  background: #1d4c63;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, .45);
+}
+.km-svg { display: block; width: 100%; height: 100%; transform-origin: 0 0; will-change: transform; }
+
+/* نقشه — پوست‌نوشتهٔ کهن */
+.km-sea { fill: url(#kmSea); }
+.km-neighbors { fill: #cdb27a; stroke: #a88a4f; stroke-width: .5; opacity: .85; }
+.km-land-shadow { fill: rgba(40, 20, 0, .35); }
+.km-land { fill: url(#kmLandG); stroke: #8a5a14; stroke-width: 1.1; }
+.km-desert { fill: #e4c47e; opacity: .55; }
+.km-river { fill: none; stroke: #4f93b0; stroke-width: 1; stroke-linecap: round; opacity: .8; }
+.km-mt { fill: #a7824a; stroke: #7a5a2c; stroke-width: .35; }
+.km-mt-snow { fill: #b48f57; }
+.km-sea-label { font-size: 7.5px; fill: #cfe8f2; font-weight: 700; letter-spacing: .3px; opacity: .85; }
+.km-area { font-size: 6.5px; fill: #7a5a2c; font-weight: 700; opacity: .75; }
+.km-tent { fill: #8b1a1a; stroke: #f5c842; stroke-width: .4; }
+.km-compass circle { fill: rgba(253, 246, 227, .85); stroke: #8a5a14; stroke-width: .8; }
+.km-compass-n { fill: #8b1a1a; }
+.km-compass text { font-size: 7px; fill: #fdf6e3; font-weight: 800; }
+
+/* جاده‌ها */
+.km-road-bed { fill: none; stroke: rgba(90, 55, 15, .35); stroke-width: 5.5; stroke-linecap: round; }
+.km-road { fill: none; stroke: #8a5a14; stroke-width: 1.6; stroke-dasharray: 2.5 3; stroke-linecap: round; opacity: .45; }
+.km-road.is-open { opacity: .95; }
+.km-road-done { fill: none; stroke: #f5c842; stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 0 2px rgba(255, 220, 120, .85)); }
+
+/* شهرها */
+.km-stop-glow { fill: url(#kmGlowG); opacity: 0; }
+.km-stop-ring { fill: none; stroke: #fdf6e3; stroke-width: 1.4; }
+.km-stop-dot { fill: #6b4a1f; stroke: #3b2508; stroke-width: 1; }
+.km-stop-icon { font-size: 10px; }
+.km-stop-lock, .km-stop-crown { display: none; }
+.km-stop-lock circle { fill: #3b2508; stroke: #fdf6e3; stroke-width: .6; }
+.km-lock-shackle { fill: none; stroke: #fdf6e3; stroke-width: .8; }
+.km-lock-body { fill: #f5c842; }
+.km-stop-crown path, .km-stop-crown circle { fill: #f5c842; stroke: #7a4f06; stroke-width: .45; }
+.km-stop-num circle { fill: #8b1a1a; stroke: #fdf6e3; stroke-width: .6; }
+.km-stop-num text { font-size: 5px; fill: #fff; font-weight: 800; }
+.km-tag rect { fill: rgba(43, 22, 4, .86); stroke: rgba(245, 200, 66, .7); stroke-width: .6; }
+.km-tag text { font-size: 7px; fill: #fdf6e3; font-weight: 800; }
+
+.km-stop.is-locked .km-stop-dot { fill: #7d725f; }
+.km-stop.is-locked .km-stop-icon { opacity: .45; filter: grayscale(1); }
+.km-stop.is-locked .km-stop-lock { display: inline; }
+.km-stop.is-locked .km-tag text { fill: #d8ccb2; }
+.km-stop.is-passed .km-stop-dot { fill: #8a7f6b; }
+.km-stop.is-passed .km-stop-icon { opacity: .7; }
+.km-stop.is-conquered .km-stop-dot { fill: #c9941a; stroke: #fff3b0; }
+.km-stop.is-conquered .km-stop-crown { display: inline; }
+.km-stop.is-current .km-stop-glow { opacity: 1; animation: kmGlow 1.6s ease-in-out infinite; }
+.km-stop.is-current .km-stop-ring { stroke: #f5c842; stroke-width: 2; }
+.km-stop.is-current .km-stop-dot { fill: #8b1a1a; stroke: #f5c842; }
+.km-stop.is-unlocking .km-stop-dot,
+.km-stop.is-unlocking .km-stop-icon { transform-box: fill-box; transform-origin: center; animation: kmPop .7s cubic-bezier(.2, 1.6, .4, 1); }
+@keyframes kmGlow { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes kmPop { 0% { transform: scale(.5); } 60% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+/* سپاه */
+.km-army { pointer-events: none; }
+.km-army-shadow { fill: rgba(30, 15, 0, .35); }
+.km-horse-body { fill: #6b3f17; stroke: #2e1704; stroke-width: .45; stroke-linejoin: round; }
+.km-r2 .km-horse-body, .km-r3 .km-horse-body { fill: #4a2a0e; }
+.km-mane, .km-tail { fill: #2a1404; }
+.km-leg { stroke: #3b1f07; stroke-width: 1.25; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 0; }
+.km-saddle { fill: #8b1a1a; stroke: #f5c842; stroke-width: .35; }
+.km-tunic { fill: #8b1a1a; stroke: #3b0a0a; stroke-width: .3; }
+.km-cloak { fill: #c9941a; }
+.km-face-skin { fill: #e9bf8f; stroke: #5a3511; stroke-width: .3; }
+.km-helmet { fill: #b8bcc2; stroke: #3a3a3a; stroke-width: .3; }
+.km-lance { stroke: #4a2e0b; stroke-width: .7; stroke-linecap: round; }
+.km-lance-tip { fill: #d8dde3; }
+.km-pole { stroke: #4a2e0b; stroke-width: 1.1; stroke-linecap: round; }
+.km-pole-top { fill: #f5c842; }
+.km-banner { fill: #8b1a1a; stroke: #f5c842; stroke-width: .6; stroke-linejoin: round; transform-box: fill-box; transform-origin: 100% 50%; animation: kmWave 1.2s ease-in-out infinite; }
+.km-banner-stripe { fill: #f5c842; transform-box: fill-box; transform-origin: 100% 50%; animation: kmWave 1.2s ease-in-out infinite; }
+.km-bob { transform-box: fill-box; transform-origin: 50% 100%; }
+.km-army.is-marching .km-bob { animation: kmGallop .36s ease-in-out infinite; }
+.km-army.is-marching .km-r2 .km-bob { animation-delay: -.12s; }
+.km-army.is-marching .km-r3 .km-bob { animation-delay: -.24s; }
+.km-army.is-marching .km-banner, .km-army.is-marching .km-banner-stripe { animation-duration: .5s; }
+.km-army.is-marching .km-leg-f1, .km-army.is-marching .km-leg-b2 { animation: kmLegA .36s ease-in-out infinite; }
+.km-army.is-marching .km-leg-f2, .km-army.is-marching .km-leg-b1 { animation: kmLegB .36s ease-in-out infinite; }
+@keyframes kmLegA { 0%, 100% { transform: rotate(-28deg); } 50% { transform: rotate(24deg); } }
+@keyframes kmLegB { 0%, 100% { transform: rotate(24deg); } 50% { transform: rotate(-28deg); } }
+.km-army.is-parked .km-bob { animation: kmIdle 2.4s ease-in-out infinite; }
+@keyframes kmGallop { 0%, 100% { transform: translateY(0) rotate(0); } 30% { transform: translateY(-1.8px) rotate(-4deg); } 65% { transform: translateY(-.5px) rotate(3deg); } }
+@keyframes kmIdle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-.8px); } }
+@keyframes kmWave { 0%, 100% { transform: skewY(0) scaleX(1); } 50% { transform: skewY(-8deg) scaleX(.86); } }
+
+.km-puff { fill: #c9a56a; opacity: .75; animation: kmPuff 1s ease-out forwards; transform-box: fill-box; transform-origin: center; }
+@keyframes kmPuff { to { opacity: 0; transform: scale(3.2) translateY(-2px); } }
+
+.km-burst-ring { fill: none; stroke: #f5c842; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: kmRing 1s ease-out forwards; }
+.km-burst-ring2 { stroke: #fff3b0; animation-delay: .15s; opacity: 0; }
+.km-burst.is-final .km-burst-ring { stroke: #e74c3c; }
+.km-spark { fill: var(--c); animation: kmSpark 1s ease-out forwards; }
+@keyframes kmRing { 0% { transform: scale(.3); opacity: 1; } 100% { transform: scale(2.4); opacity: 0; } }
+@keyframes kmSpark { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+
+/* بنر رسیدن */
+.km-arrive {
+  position: absolute; left: 50%; top: 12%;
+  transform: translate(-50%, -10px) scale(.9); opacity: 0;
+  padding: 8px 18px; border-radius: 999px;
+  background: linear-gradient(135deg, #8b1a1a, #5c0f0f);
+  border: 2px solid #f5c842; color: #fff3b0;
+  font-weight: 900; font-size: clamp(.85rem, 3.2vw, 1.05rem);
+  white-space: nowrap; pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+}
+.km-arrive.show { animation: kmBanner 2.6s ease forwards; }
+@keyframes kmBanner { 0% { opacity: 0; transform: translate(-50%, -14px) scale(.85); } 14% { opacity: 1; transform: translate(-50%, 0) scale(1.05); } 22% { transform: translate(-50%, 0) scale(1); } 82% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -6px); } }
+
+.km-caption { margin: 10px 4px 6px; line-height: 1.9; font-size: clamp(.85rem, 3vw, 1rem); color: var(--text-light, #f5edd6); text-align: center; min-height: 1.9em; }
+
+.km-legs { display: flex; align-items: center; justify-content: center; gap: 2px; margin: 4px 0 10px; }
+.km-legs i { width: 14px; height: 2px; background: rgba(201, 148, 26, .45); border-radius: 2px; }
+.km-leg { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: .9rem; background: rgba(0, 0, 0, .3); border: 1.5px solid rgba(201, 148, 26, .4); filter: grayscale(.8); opacity: .7; }
+.km-leg.is-done { filter: none; opacity: 1; border-color: #f5c842; background: rgba(201, 148, 26, .35); }
+.km-leg.is-now { filter: none; opacity: 1; border-color: #e74c3c; box-shadow: 0 0 0 3px rgba(231, 76, 60, .3); }
+
+.km-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.km-btn {
+  min-height: 46px; padding: 10px 22px; border-radius: 14px; cursor: pointer;
+  font: inherit; font-weight: 900; font-size: 1rem;
+  border: 2px solid var(--gold-dark, #c9941a);
+}
+.km-btn[hidden] { display: none; }
+.km-skip { background: rgba(0, 0, 0, .3); color: var(--text-light, #f5edd6); }
+.km-go { background: linear-gradient(135deg, #f5c842, #c9941a); color: #2a1506; box-shadow: 0 6px 18px rgba(201, 148, 26, .35); }
+.km-go:hover { filter: brightness(1.08); }
+
+.game-march-link { margin-inline-start: 6px; }
+
+body[data-theme="light"] .km-overlay { background: radial-gradient(ellipse at center, rgba(60, 40, 12, .55), rgba(30, 18, 4, .75)); }
+
+@media (max-width: 480px) {
+  .km-box { padding: 10px 8px 12px; border-radius: 16px; }
+  .km-btn { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .km-overlay, .km-box { transition: none; }
+  .km-banner, .km-banner-stripe, .km-bob, .km-stop-glow, .km-puff, .km-arrive.show,
+  .km-army.is-marching .km-bob, .km-army.is-parked .km-bob, .km-leg,
+  .km-stop.is-unlocking .km-stop-dot, .km-stop.is-unlocking .km-stop-icon { animation: none !important; }
+  .km-arrive.show { opacity: 1; transform: translate(-50%, 0); }
+  .km-burst { display: none; }
+}

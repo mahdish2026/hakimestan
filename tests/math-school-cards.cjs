@@ -89,11 +89,12 @@ assert.equal(features.length, 9, 'math-school section must list nine games');
 assert.ok(features.some(li => li.textContent.includes('پیمانه‌ستان')));
 assert.ok(features.some(li => li.textContent.includes('آمارستان')));
 assert.ok(features.some(li => li.textContent.includes('کسرستان')));
-assert.ok(schoolSection.querySelector('.ks-spotlight'), 'dedicated spotlight block missing');
-assert.ok(schoolSection.querySelector('.ks-chips'), 'feature chips missing');
+// کسرستان کارت ویژه‌ای جدا از بقیهٔ بازی‌ها ندارد؛ معرفی «کارت اختصاصی» حذف شد.
+assert.equal(schoolSection.querySelector('.ks-spotlight'), null, 'stale Kasrestan spotlight must stay removed');
+assert.doesNotMatch(judgesSource, /کارت اختصاصی «کسرستان»/);
 assert.ok(schoolSection.querySelector('a[href="math-learning.html"]'), 'link to school page missing');
 assert.ok(schoolSection.querySelector('a[href="games/math-fasl2.html"]'), 'link to game missing');
-assert.match(judgesSource, /\.ks-spotlight\s*\{/);
+assert.doesNotMatch(judgesSource, /\.ks-spotlight\s*\{/);
 
 // Stale, contradictory counts used to say ۱۳ / ۱۲ / ۱۳ / ۱۷.
 assert.match(judgesSource, /<strong>۲۱ بازی آموزشی<\/strong>/);
@@ -110,7 +111,7 @@ assert.ok(schoolBento, 'lobby link to math school missing');
 assert.match(schoolBento.textContent, /نُه بازی/);
 
 const sw = read('sw.js');
-assert.match(sw, /const VERSION = 'hakim-v1\.5\.88'/);
+assert.match(sw, /const VERSION = 'hakim-v1\.5\.91'/);
 assert.match(sw, /'\.\/math-learning\.html'/);
 assert.match(sw, /'\.\/judges\.html'/);
 assert.match(sw, /'\.\/games\/math-fasl2\.html'/);
@@ -143,7 +144,7 @@ console.log(JSON.stringify({
   mathSchoolGamesListed: features.length,
   spotlight: true,
   gameCountsFixedTo: 21,
-  cacheVersion: 'hakim-v1.5.88',
+  cacheVersion: 'hakim-v1.5.91',
   schoolPagePrefetched: true,
   docsUpdated: true
 }, null, 2));

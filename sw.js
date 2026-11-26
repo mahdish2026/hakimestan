@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.88';
+const VERSION = 'hakim-v1.5.91';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -64,7 +64,7 @@ const SHELL_ASSETS = [
   './css/azmoon-fonts.css',
   './css/a11y.css',
   './css/folio.css',
-  './css/lobby.css?v=1405-07-kashi-light',
+  './css/lobby.css?v=1405-09-hero-wrap',
   './css/hakim-ui.css?v=1405-08-kashi-light',
   './js/hakim-a11y.js',
   './js/hakim-companion.js',
@@ -123,6 +123,8 @@ const PREFETCH_PAGES = [
   './games/math-learning-1.html',
   './games/math-time-mission.html',
   './games/kohan-diyar.html',
+  './games/kohan-diyar/march.js',
+  './games/kohan-diyar/march.css',
   './games/hakim-quest.html',
   './games/hakim-cards.html',
   './games/hakim-treasure.html',

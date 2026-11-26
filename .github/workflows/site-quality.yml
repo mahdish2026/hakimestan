@@ -28,6 +28,7 @@ jobs:
           node tests/teacher-panel-wiring.cjs
           node tests/phase4-teacher-showcase.cjs
           node tests/phase5-curriculum-expansion.cjs
+          node tests/cert-credit.cjs
       - name: Check public pages on Chromium
         env:
           SITE_AXE: '1'
@@ -39,3 +40,4 @@ jobs:
           trap 'kill $!' EXIT
           curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
           node tests/site-pages-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
+          node tests/teacher-dashboard-security.cjs

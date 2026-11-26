@@ -14,7 +14,8 @@
      world, kind ('cert' | 'taqdir'), subtitle, name, grade, learnerCode,
      number, date, attachment, course, achievement, bodyHtml,
      stats[{icon,value,label}], skillsTitle, skills[{title,sub,done}],
-     quote, seal{label,sub}, accent, accent2, note, ariaLabel
+     quote, seal{label,sub}, accent, accent2, note, ariaLabel,
+     program, credit (default: «طراحی و توسعه: مهدی شریفیان»)
    ============================================================ */
 (function (g) {
   'use strict';
@@ -26,6 +27,8 @@
     });
   };
   var PAL = ['#4b3a8f', '#1f8a6e', '#d9822b', '#c2416b', '#2f6fb3'];
+  /* نام طراح روی همهٔ گواهی‌های استاندارد حکیمستان */
+  var CREDIT = 'طراحی و توسعه: مهدی شریفیان';
 
   function hash(s) {
     var h = 2166136261;
@@ -128,7 +131,8 @@
           seal((o.seal && o.seal.label) || o.world || 'حکیمستان', (o.seal && o.seal.sub) || '', id + 's') +
           '<div class="hk-a4-sign"><span class="hk-a4-sign-t">مهر و امضا</span>' +
             (L ? L.stacked({ label: 'لوگوی حکیمستان — مهر و امضای سامانه' }) : '') +
-            '<b>سامانهٔ آموزشی حکیمستان</b><small>' + esc(o.program || 'سرزمین یادگیری') + '</small></div>' +
+            '<b>سامانهٔ آموزشی حکیمستان</b><small>' + esc(o.program || 'سرزمین یادگیری') + '</small>' +
+            '<small class="hk-a4-dev">' + esc(o.credit || CREDIT) + '</small></div>' +
         '</footer>' +
         '<p class="hk-a4-note">' + esc(o.note || 'این گواهی بر پایهٔ پیشرفت ذخیره‌شده در همین دستگاه صادر شده و جنبهٔ تشویقی دارد؛ مدرک رسمی نیست.') + '</p>' +
       '</div></article></div>';

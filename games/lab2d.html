@@ -601,7 +601,7 @@ table.res tr:last-child td{border-bottom:0}
       <div class="cert-sign">
         <div>حکیم آزمایشگاه<b>حکیم</b></div>
         <div>راهنمای آزمایش‌ها<b>چراغک 🔥</b></div>
-        <div>طراح و سازنده<b>مهدی شریفیان</b></div>
+        <div>طراحی و توسعه<b>مهدی شریفیان</b></div>
       </div>
       <p class="cert-foot">گواهی صادرشده در <span id="cert-date2">—</span> · ساعت <span id="cert-time">—</span> — آزمایشگاه حکیمستان · علوم پایهٔ پنجم دبستان</p>
     </div>
@@ -2070,7 +2070,7 @@ function certPlainText(){
            (ok ? '   ستاره: ' + fa(st) + ' از ۳' + (when ? '   تاریخ تکمیل: ' + faDate(new Date(when)) : '') : '   — در انتظار تکمیل'));
   });
   L.push('');
-  L.push('طراح: مهدی شریفیان — حکیم و چراغک 🔥');
+  L.push('طراحی و توسعه: مهدی شریفیان — حکیم و چراغک 🔥');
   return L.join('\n');
 }
 
@@ -2500,7 +2500,12 @@ $('intro2-next').onclick = ()=>{ SND.click(); stopSpeech(); show('screen-lobby')
 $('lab-back').onclick = ()=>{ SND.click(); cancelAnimationFrame(LAB.raf); show('screen-lobby'); };
 $('hakim-gosh-back').onclick = ()=>{ SND.click(); if($('hakim-gosh-frame')) $('hakim-gosh-frame').src = 'about:blank'; show('screen-lobby'); renderLobby(); };
 window.addEventListener('message', (event)=>{
-  const data = event.data || {};
+  // فقط پیام‌های بازیِ درون همین قاب و از همین مبدأ پذیرفته می‌شود؛ وگرنه هر پنجرهٔ دیگری
+  // می‌توانست نتیجهٔ ساختگی برای پنل معلم بفرستد.
+  const appFrame = $('hakim-gosh-frame');
+  if(!appFrame || event.source !== appFrame.contentWindow) return;
+  if(event.origin !== location.origin && !(location.protocol === 'file:' && event.origin === 'null')) return;
+  const data = (event.data && typeof event.data === 'object') ? event.data : {};
   if(data.type === 'hakim-gosh-back'){
     if($('hakim-gosh-frame')) $('hakim-gosh-frame').src = 'about:blank';
     show('screen-lobby');
@@ -2512,7 +2517,7 @@ window.addEventListener('message', (event)=>{
                 (data.game === 'hakim-goosh' ? 'hakim-goosh' :
                 (data.game === 'pulley' ? 'pulley' :
                 (data.game === 'incline' ? 'incline' : data.game)));
-  if(!expId) return;
+  if(!expId || !EXPS.some(function(e){ return e.id === expId; })) return;
   const score = Math.max(0, Math.min(100, Number(data.score) || 0));
   const stars = Math.max(0, Math.min(3, Number(data.stars) || 0));
   PROGRESS.done[expId] = true;
@@ -2522,7 +2527,8 @@ window.addEventListener('message', (event)=>{
   PROGRESS.attempts[expId] = (PROGRESS.attempts[expId] || 0) + 1;
   
   if(Array.isArray(data.answers)){
-    data.answers.forEach(function(a, idx){
+    data.answers.slice(0, 50).forEach(function(a, idx){
+      if(!a || typeof a !== 'object') return;
       const exists = PROGRESS.answers.find(function(x){ return x.expId === a.expId && x.q === a.q && x.chosen === a.chosen; });
       if(!exists){
         PROGRESS.answers.push(a);

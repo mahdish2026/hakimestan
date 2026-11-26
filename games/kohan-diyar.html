@@ -3288,6 +3288,7 @@ html { scrollbar-gutter: stable; }
 }
 </style>
 <script src="../hakim-core.js"></script>
+<link rel="stylesheet" href="kohan-diyar/march.css"><script src="iran-geography/map-geo.js"></script><script src="kohan-diyar/march.js"></script>
 <link rel="stylesheet" href="../css/hakim-cert.css"><script src="../js/hakim-logo.js"></script><script src="../js/hakim-cert.js"></script>
 </head>
 <body>
@@ -3334,6 +3335,7 @@ html { scrollbar-gutter: stable; }
 <div class="progress-title">
 <span>🏹 پیشروی شهر به شهر</span>
 <button aria-label="باز و بسته کردن نقشه فتوحات" class="game-map-link" onclick="toggleMapModal()" title="باز و بسته کردن نقشه فتوحات" type="button">🗺️ نقشه فتوحات</button>
+<button aria-label="دیدن مسیر لشکرکشی سپاه" class="game-map-link game-march-link" onclick="openMarchMap()" title="مسیر لشکرکشی سپاه" type="button">🐎 مسیر لشکرکشی</button>
 <span id="progressText">۰ / ۶ شهر</span>
 </div>
 <div class="progress-bar">
@@ -3815,7 +3817,7 @@ html { scrollbar-gutter: stable; }
 <text fill="#8b5e0a" font-family="sans-serif" font-size="7" text-anchor="middle" x="26" y="36">ایران کهن</text>
 </svg>
 </div>
-<div style="font-size:.45rem;color:#a08050;margin-top:6px;letter-spacing:1px">✍️ مهدی شریفیان — طراح بازی</div>
+<div style="font-size:.45rem;color:#a08050;margin-top:6px;letter-spacing:1px">✍️ طراحی و توسعه: مهدی شریفیان</div>
 </div>
 </div>
 </div>
@@ -3825,7 +3827,7 @@ html { scrollbar-gutter: stable; }
 <button aria-label="دریافت گواهی" class="btn-cert" onclick="downloadCertificate()">🏆 دریافت گواهی</button>
 <button aria-label="اشتراک گواهی" class="btn-share" onclick="shareCertificate()">📤 اشتراک گواهی</button>
 <button aria-label="بازی دوباره" class="btn-replay-end" onclick="replayGame()">🔄 بازی دوباره</button>
-<button aria-label="بازگشت به صفحه اصلی" class="btn-home" onclick="goToHome()">🏠 صفحه اصلی</button>
+<button aria-label="بازگشت به لابی حکیمستان" class="btn-home" onclick="goToLobby()" type="button">🏠 بازگشت به لابی</button>
 </div>
 </div>
 </div>
@@ -6015,7 +6017,49 @@ function animateTravelDot(fromIndex, toIndex) {
 
     function showNextButton() { isWaitingForNext = true; document.getElementById('nextBtnWrap').classList.add('show'); }
 
-    function goToNextQuestion() { if (!isWaitingForNext || isDecisionOpen) return; isWaitingForNext = false; state.currentQ++; if (state.currentQ < QUESTIONS.length) { const nextCity = QUESTIONS[state.currentQ].city; if (nextCity !== state.currentCity) { state.currentCity = nextCity; state.cityCorrect = 0; state.cityTotal = 0; updateMap(); } showQuestion(); if (window.innerWidth < 768) { setTimeout(() => { document.getElementById('game-area').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150); } } else { endGame(); } }
+    function goToNextQuestion() {
+      if (!isWaitingForNext || isDecisionOpen || isMarching) return;
+      isWaitingForNext = false;
+      state.currentQ++;
+      if (state.currentQ >= QUESTIONS.length) { endGame(); return; }
+      const proceed = () => {
+        showQuestion();
+        if (window.innerWidth < 768) { setTimeout(() => { document.getElementById('game-area').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150); }
+      };
+      const nextCity = QUESTIONS[state.currentQ].city;
+      if (nextCity !== state.currentCity) {
+        const fromCity = state.currentCity;
+        state.currentCity = nextCity; state.cityCorrect = 0; state.cityTotal = 0;
+        updateMap();
+        // 🐎 لشکرکشی: سپاه از شهر قبلی به شهر بعدی می‌تازد؛ تایمر سوال بعد از ورود به شهر شروع می‌شود.
+        if (window.KohanMarch) {
+          isMarching = true;
+          document.getElementById('nextBtnWrap').classList.remove('show');
+          window.KohanMarch.march(fromCity, nextCity, marchOptions()).then(() => { isMarching = false; proceed(); });
+          return;
+        }
+      }
+      proceed();
+    }
+    let isMarching = false;
+    function marchOptions() {
+      return {
+        conquered: (state && state.conqueredCities) ? state.conqueredCities.slice() : [],
+        getAudioCtx: getAudioCtx,
+        duck: function(on) { try { if (bgMusicAudio) bgMusicAudio.volume = on ? 0.12 : 0.45; } catch (e) {} }
+      };
+    }
+    function openMarchMap() {
+      if (!window.KohanMarch || !state) return;
+      // ⏸️ هنگام دیدن نقشه، تایمر سوال متوقف می‌شود (مثل نقشهٔ فتوحات)
+      const pausedTimer = !!(state.timerInterval && !state.answered);
+      if (pausedTimer) { window._savedTimeLeft = state.timeLeft; clearInterval(state.timerInterval); state.timerInterval = null; }
+      window.KohanMarch.view(state.currentCity || 0, marchOptions()).then(() => {
+        if (pausedTimer && typeof window._savedTimeLeft === 'number' && !state.answered && state.hearts > 0) {
+          state.timeLeft = window._savedTimeLeft; window._savedTimeLeft = null; state._resumeExactTime = true; startTimer();
+        }
+      });
+    }
     document.getElementById('nextQuestionBtn').addEventListener('click', goToNextQuestion);
 
     function conquestCity(cityIndex) {
@@ -6372,6 +6416,33 @@ function animateTravelDot(fromIndex, toIndex) {
   // تابع حرفه‌ای Canvas برای گواهی دانلودی (با فونت و مدال اصلاح‌شده)
   // ============================================================
 
+  // بارگذاری تصویر برای Canvas (با سقف زمانی تا دانلود هرگز گیر نکند)
+  function loadCertImage(src, timeout) {
+    return new Promise(resolve => {
+      const im = new Image();
+      let done = false;
+      const end = v => { if (!done) { done = true; resolve(v); } };
+      im.onload = () => end(im);
+      im.onerror = () => end(null);
+      setTimeout(() => end(im.complete && im.naturalWidth ? im : null), timeout || 4000);
+      im.src = src;
+    });
+  }
+  // SVG بدون width/height در بعضی مرورگرها (فایرفاکس) روی Canvas کشیده نمی‌شود؛ اندازه را صریح می‌کنیم
+  async function loadCertSvg(src, size) {
+    try {
+      const res = await fetch(src);
+      if (!res.ok) throw new Error(res.status);
+      let txt = await res.text();
+      txt = txt.replace(/<svg\b/, `<svg width="${size}" height="${size}"`);
+      const url = URL.createObjectURL(new Blob([txt], { type: 'image/svg+xml' }));
+      const im = await loadCertImage(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      if (im) return im;
+    } catch (e) { /* ادامه با بارگذاری مستقیم */ }
+    return loadCertImage(src);
+  }
+
   async function drawCertificateCanvas() {
     const W = 1100, H = 1400;
 
@@ -6393,122 +6464,82 @@ function animateTravelDot(fromIndex, toIndex) {
       console.warn('بارگذاری فونت با مشکل مواجه شد:', e);
     }
 
-    const canvas = document.createElement('canvas');
-    canvas.width = W;
-    canvas.height = H;
-    const ctx = canvas.getContext('2d');
+    // 🖼️ قاب تذهیب: همان تصویر و شمسه‌ای که پیش‌نمایش گواهی (css/hakim-tazhib.css) نشان می‌دهد.
+    // CSS border-image در خروجی Canvas ثبت نمی‌شود، پس قاب نُه‌تکه این‌جا دستی کشیده می‌شود
+    // (همان الگوریتم استودیو گواهی). متن گواهی با فاصله‌ای امن داخل قاب جا می‌گیرد.
+    const OX = 110, OY = 140;               // فاصلهٔ محتوای ۱۱۰۰×۱۴۰۰ از لبهٔ برگه
+    const CW = W + OX * 2, CH = H + OY * 2;  // ۱۳۲۰ × ۱۶۸۰
+    const [frameImg, shamsehImg] = await Promise.all([
+      loadCertImage('../assets/img/tazhib-cert-frame.webp'),
+      loadCertSvg('../assets/img/tazhib-shamseh.svg', 800)
+    ]);
 
+    const canvas = document.createElement('canvas');
+    canvas.width = CW;
+    canvas.height = CH;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+
+    // --- کاغذ ---
+    ctx.fillStyle = '#fdf6e3';
+    ctx.fillRect(0, 0, CW, CH);
+    const glowTop = ctx.createRadialGradient(CW / 2, 0, 0, CW / 2, 0, CH * 0.62);
+    glowTop.addColorStop(0, 'rgba(255,219,128,0.22)');
+    glowTop.addColorStop(1, 'rgba(255,219,128,0)');
+    ctx.fillStyle = glowTop; ctx.fillRect(0, 0, CW, CH);
+    const glowBot = ctx.createRadialGradient(CW / 2, CH * 1.1, 0, CW / 2, CH * 1.1, CH * 0.7);
+    glowBot.addColorStop(0, 'rgba(196,150,70,0.14)');
+    glowBot.addColorStop(1, 'rgba(196,150,70,0)');
+    ctx.fillStyle = glowBot; ctx.fillRect(0, 0, CW, CH);
+
+    // --- شمسهٔ مرکزی (کم‌رنگ، پشت متن) ---
+    if (shamsehImg) {
+      const sz = Math.min(CW * 0.78, 880);
+      ctx.drawImage(shamsehImg, (CW - sz) / 2, CH * 0.46 - sz / 2, sz, sz);
+    }
+
+    // --- قاب نُه‌تکهٔ تذهیب ---
+    let bandH = 64;
+    if (frameImg) {
+      const SZ = frameImg.naturalWidth || 684, S0 = Math.round(SZ * 214 / 684);
+      const B = Math.round(SZ * 118 / 684), P = Math.round(SZ * 4 / 684), E2 = SZ - 2 * S0 - 2 * P;
+      const cs = 250, kk = cs / S0, bh = B * kk;
+      bandH = bh;
+      const spanX = CW - 2 * cs, nX = Math.max(1, Math.round(spanX / (E2 * kk))), tw = spanX / nX;
+      for (let i = 0; i < nX; i++) {
+        ctx.drawImage(frameImg, S0 + P, 0, E2, B, cs + i * tw, 0, tw + 0.8, bh);
+        ctx.drawImage(frameImg, S0 + P, SZ - B, E2, B, cs + i * tw, CH - bh, tw + 0.8, bh);
+      }
+      const spanY = CH - 2 * cs, nY = Math.max(1, Math.round(spanY / (E2 * kk))), th = spanY / nY;
+      for (let j = 0; j < nY; j++) {
+        ctx.drawImage(frameImg, 0, S0 + P, B, E2, 0, cs + j * th, bh, th + 0.8);
+        ctx.drawImage(frameImg, SZ - B, S0 + P, B, E2, CW - bh, cs + j * th, bh, th + 0.8);
+      }
+      ctx.drawImage(frameImg, 0, 0, S0, S0, 0, 0, cs, cs);
+      ctx.drawImage(frameImg, SZ - S0, 0, S0, S0, CW - cs, 0, cs, cs);
+      ctx.drawImage(frameImg, 0, SZ - S0, S0, S0, 0, CH - cs, cs, cs);
+      ctx.drawImage(frameImg, SZ - S0, SZ - S0, S0, S0, CW - cs, CH - cs, cs, cs);
+    } else {
+      // پشتیبان: اگر تصویر قاب بارگذاری نشد، حاشیهٔ طلایی ساده
+      [[14, '#5a3000', 10], [30, '#c9941a', 6], [44, '#e8c060', 3]].forEach(([ins, col, lw]) => {
+        ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.strokeRect(ins, ins, CW - ins * 2, CH - ins * 2);
+      });
+    }
+
+    // --- خط طلایی ظریف داخل قاب (جدول) ---
+    const jin = Math.round(bandH + 16);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(184,134,43,0.55)'; ctx.lineWidth = 2;
+    ctx.strokeRect(jin, jin, CW - jin * 2, CH - jin * 2);
+    ctx.strokeStyle = 'rgba(184,134,43,0.35)'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(jin + 7, jin + 7, CW - (jin + 7) * 2, CH - (jin + 7) * 2);
+    ctx.restore();
+
+    // از این‌جا به بعد محتوای گواهی در همان مختصات ۱۱۰۰×۱۴۰۰ کشیده می‌شود
+    ctx.translate(OX, OY);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.direction = 'rtl';
-
-    // --- پس‌زمینه ---
-    const bg = ctx.createLinearGradient(0, 0, W, H);
-    bg.addColorStop(0, '#fdf6e3');
-    bg.addColorStop(0.35, '#f7e8c0');
-    bg.addColorStop(0.65, '#fdf0d0');
-    bg.addColorStop(1, '#fdf6e3');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.fillStyle = 'rgba(197,148,26,0.025)';
-    for (let y = 0; y < H; y += 4) {
-      ctx.fillRect(0, y, W, 2);
-    }
-
-    // --- حاشیه‌ها (پررنگ‌تر) ---
-    const frames = [
-      { inset: 12, color: '#5a3000', lw: 8 },
-      { inset: 22, color: '#c9941a', lw: 5 },
-      { inset: 32, color: '#e8c060', lw: 3 },
-      { inset: 40, color: '#c9941a', lw: 2.5 },
-      { inset: 48, color: 'rgba(197,148,26,0.7)', lw: 2, dash: [6, 5] },
-    ];
-    frames.forEach(f => {
-      ctx.save();
-      ctx.strokeStyle = f.color;
-      ctx.lineWidth = f.lw;
-      if (f.dash) ctx.setLineDash(f.dash);
-      else ctx.setLineDash([]);
-      ctx.strokeRect(f.inset, f.inset, W - f.inset * 2, H - f.inset * 2);
-      ctx.restore();
-    });
-
-    ctx.save();
-    ctx.strokeStyle = '#c9941a';
-    ctx.globalAlpha = 0.6;
-    ctx.lineWidth = 2.5;
-    ctx.setLineDash([]);
-    ctx.strokeRect(50, 50, W - 100, H - 100);
-    ctx.strokeStyle = 'rgba(197,148,26,0.4)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([5, 4]);
-    ctx.strokeRect(65, 65, W - 130, H - 130);
-    ctx.restore();
-
-    // --- گوشه‌ها (همانند قبل) ---
-    function drawCorner(cx, cy, flipX, flipY) {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.scale(flipX, flipY);
-      ctx.globalAlpha = 0.8;
-      ctx.setLineDash([]);
-      ctx.strokeStyle = '#c9941a';
-
-      ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(60, 0, 60, 60); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, 16); ctx.quadraticCurveTo(44, 16, 44, 60); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(16, 0); ctx.quadraticCurveTo(16, 44, 60, 44); ctx.stroke();
-
-      ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.arc(0, 0, 38, 0, Math.PI * 2); ctx.stroke();
-
-      ctx.beginPath(); ctx.arc(56, 56, 12, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(197,148,26,0.25)';
-      ctx.fill();
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(44, 56);
-      ctx.quadraticCurveTo(50, 44, 56, 44);
-      ctx.quadraticCurveTo(62, 44, 68, 56);
-      ctx.quadraticCurveTo(62, 68, 56, 68);
-      ctx.quadraticCurveTo(50, 68, 44, 56);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(197,148,26,0.3)';
-      ctx.lineWidth = 2.5;
-      ctx.fill(); ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(56, 44);
-      ctx.quadraticCurveTo(44, 50, 44, 56);
-      ctx.quadraticCurveTo(44, 62, 56, 68);
-      ctx.quadraticCurveTo(68, 62, 68, 56);
-      ctx.quadraticCurveTo(68, 50, 56, 44);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(197,148,26,0.15)';
-      ctx.fill();
-
-      ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.moveTo(68, 56); ctx.quadraticCurveTo(100, 40, 120, 28); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(56, 68); ctx.quadraticCurveTo(40, 100, 28, 120); ctx.stroke();
-      ctx.fillStyle = 'rgba(197,148,26,0.4)';
-      ctx.beginPath(); ctx.arc(120, 28, 8, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(28, 120, 8, 0, Math.PI * 2); ctx.fill();
-
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(120, 28); ctx.quadraticCurveTo(140, 16, 160, 12); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(28, 120); ctx.quadraticCurveTo(16, 140, 12, 160); ctx.stroke();
-      ctx.beginPath(); ctx.arc(160, 12, 6, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(12, 160, 6, 0, Math.PI * 2); ctx.fill();
-
-      ctx.restore();
-    }
-    drawCorner(0, 0, 1, 1);
-    drawCorner(W, 0, -1, 1);
-    drawCorner(0, H, 1, -1);
-    drawCorner(W, H, -1, -1);
 
     // --- بسم‌الله ---
     ctx.fillStyle = '#7a4e00';
@@ -6733,7 +6764,7 @@ function animateTravelDot(fromIndex, toIndex) {
     ctx.fillText(starsDisplay, W / 2, 1150);
     ctx.shadowBlur = 0;
 
-    divLine(1200);
+    divLine(1192);
 
     // --- مهر و نشان پایین ---
     function drawSeal(x, y) {
@@ -6768,11 +6799,11 @@ function animateTravelDot(fromIndex, toIndex) {
       ctx.fillText('تأیید', 0, 18);
       ctx.restore();
     }
-    drawSeal(170, 1240);
+    drawSeal(150, 1262);
 
     // حلقه تزیینی سمت راست
     ctx.save();
-    ctx.translate(W - 170, 1240);
+    ctx.translate(W - 150, 1262);
     ctx.beginPath();
     ctx.arc(0, 0, 52, 0, Math.PI * 2);
     ctx.strokeStyle = 'rgba(197,148,26,0.7)';
@@ -6793,12 +6824,12 @@ function animateTravelDot(fromIndex, toIndex) {
     ctx.restore();
 
     ctx.fillStyle = '#7a5010';
-    ctx.font = '500 28px "Vazirmatn", Tahoma, sans-serif';
-    ctx.fillText('این گواهی به پاس حضور فعال و تلاش ارزشمند صادر گردید.', W / 2, 1220);
+    ctx.font = '500 25px "Vazirmatn", Tahoma, sans-serif';
+    ctx.fillText('این گواهی به پاس حضور فعال و تلاش ارزشمند صادر گردید.', W / 2, 1232, W - 460);
 
     ctx.fillStyle = '#a08050';
     ctx.font = '400 24px "Vazirmatn", Tahoma, sans-serif';
-    ctx.fillText('✍️  مهدی شریفیان — طراح بازی', W / 2, 1280);
+    ctx.fillText('✍️  طراحی و توسعه: مهدی شریفیان', W / 2, 1280);
 
     divLine(1330);
     ctx.fillStyle = 'rgba(197,148,26,0.5)';
@@ -6886,6 +6917,14 @@ function animateTravelDot(fromIndex, toIndex) {
 
     function goToHome() {
       showCredits(doGoToHome);
+    }
+    // 🏠 بازگشت به لابی حکیمستان (پس از نمایش تیتراژ پایانی)
+    function goToLobby() {
+      showCredits(function() {
+        stopVictoryMusic();
+        stopBgMusic();
+        location.href = '../index.html';
+      });
     }
 
     function doGoToHome() {
