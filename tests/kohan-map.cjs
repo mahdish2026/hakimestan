@@ -19,7 +19,8 @@ window.__atlasTest = {
   view: () => atlasView,
   province: showProvincePopup,
   start: () => { state = {}; buildMap(); },
-  result: () => toggleMapAccordion()
+  result: () => toggleMapAccordion(),
+  winSamarkand: () => { state.conqueredCities.push(4); state.badges.push({city:4}); buildMapMarkers('modal', 'modalCityMarkers'); colorProvinces(); atlasDrawRoute('modal'); updateSamarkandState(); }
 };
 // بستن مودال با کلیک روی پس‌زمینه یا کلید Escape`);
 const errors = [];
@@ -44,28 +45,36 @@ assert.equal(data.cityCount,6);
 assert.equal(data.samarkandProvinces.length,0);
 for (const info of Object.values(data.provinces)) for (const key of ['name','center','historicalCity','era','landmarks','famous','souvenir','didYouKnow']) assert.ok(info[key], `${info.name}: ${key}`);
 api.start();
-assert.equal(doc.querySelectorAll('#startCityMarkers .city-marker').length,5, 'five markers inside Iran; Samarkand is separate');
+assert.equal(doc.querySelectorAll('#startCityMarkers .city-marker').length,6, 'all six stages appear on the map');
+assert.equal(doc.querySelector('#start-city-4').dataset.mapLocation,'outside-iran');
+assert.match(doc.querySelector('#start-city-4').textContent,/سمرقند/);
 assert.ok(doc.querySelector('#startCityMarkers .atlas-route polyline'), 'the start map previews the journey');
 assert.ok(doc.querySelector('.start-map-wrapper .atlas-samarkand'));
 api.seed(); api.open();
 assert.ok(doc.querySelector('#mapModalOverlay').classList.contains('show'));
 assert.equal(doc.querySelectorAll('#modalMapContainer path.conquered-province').length,2);
 assert.equal(doc.querySelectorAll('#atlasTimeline li').length,2);
-assert.equal(doc.querySelectorAll('#modalCityMarkers .city-marker').length,5);
+assert.equal(doc.querySelectorAll('#modalCityMarkers .city-marker').length,6);
+assert.equal(doc.querySelector('#modal-city-4').dataset.mapLocation,'outside-iran');
 assert.ok(doc.querySelector('#modalCityMarkers .atlas-route polyline'));
 assert.equal(doc.querySelectorAll('#modalCityMarkers .flag-banner').length,2, 'conquered cities have flags');
 assert.match(doc.querySelector('#modal-city-0').getAttribute('aria-label'), /فتح‌شده/);
+api.winSamarkand();
+assert.equal(doc.querySelectorAll('#modalMapContainer path.conquered-province').length,2, 'Samarkand must not color any Iranian province');
+assert.ok(doc.querySelector('#modal-city-4 .flag-banner'), 'conquering Samarkand raises its flag');
+assert.match(doc.querySelector('#modalCityMarkers .atlas-route polyline').getAttribute('points'),/88,20$/, 'route reaches Samarkand');
 api.zoom(1.25); assert.equal(api.view().scale,1.25);
 api.city(4,doc.querySelector('#modalMapContainer'));
 assert.match(doc.querySelector('#provincePopup').textContent,/ازبکستان/);
-assert.match(doc.querySelector('#provincePopup').textContent,/ثبت نشده|در انتظار فتح/);
+assert.match(doc.querySelector('#provincePopup').textContent,/ثبت نشده/);
 w.document.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
 assert.equal(doc.querySelector('#provincePopup'),null);
 assert.ok(doc.querySelector('#mapModalOverlay').classList.contains('show'));
 w.document.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
 assert.ok(!doc.querySelector('#mapModalOverlay').classList.contains('show'));
 api.result();
-assert.equal(doc.querySelectorAll('#finalCityMarkers .flag-banner').length,2, 'results map has the same flags');
+assert.equal(doc.querySelectorAll('#finalCityMarkers .flag-banner').length,3, 'results map has the same flags');
+assert.ok(doc.querySelector('#final-city-4 .flag-banner'));
 assert.match(doc.querySelector('#finalAtlasSummary').textContent, /از ۶ مرحله/);
 assert.ok(doc.querySelector('#finalCityMarkers .atlas-route polyline'));
 assert.deepEqual(errors,[]);

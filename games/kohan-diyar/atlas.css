@@ -138,7 +138,6 @@ body[data-theme="light"] #mapModalOverlay .map-modal-box { background:linear-gra
 /* قاب سمرقند بیرون از صفحهٔ نقشه است تا روی استان یا پرچم نیفتد. */
 .atlas-samarkand { position:relative; inset:auto; display:flex; flex-direction:row; justify-content:space-between; align-items:center; gap:8px; width:100%; max-width:none; margin:8px auto 0; padding:8px 12px; text-align:right; }
 .atlas-samarkand span,.atlas-samarkand small { font-size:.65rem; }
-#startMapContainer::after,#modalMapContainer::after,#finalMapContainer::after { content:'↗'; position:absolute; z-index:2; top:8%; right:7%; color:#80532e; font-weight:bold; pointer-events:none; }
 
 @media(max-width:600px) { .journey-seal { flex:0 0 48px; min-width:48px; }.journey-seal .bismillah { display:none; } #start-screen .start-title { font-size:clamp(1.55rem,7vw,2rem); } }
 
@@ -182,3 +181,17 @@ body[data-theme="light"] #sticky-header { background:linear-gradient(180deg,#fff
 body[data-theme="light"] #sticky-header .avatar-box,body[data-theme="light"] #sticky-header .score-box { color:#3d2400; border-color:#98713d; background:#e9d6ae; }
 body[data-theme="light"] #map-section .game-progress { background:#f5ead3; border-color:#bc9c6e; }
 body[data-theme="light"] #map-section .game-map-link { color:#573300; border-color:#98713d; background:#e7d3a9; }
+
+/* سمرقند: مقصد شمارهٔ پنج در حاشیهٔ بیرون از ایران؛ موقعیت نمادین است. */
+#startMapContainer .samarkand-marker .city-label,
+#modalMapContainer .samarkand-marker .city-label,
+#finalMapContainer .samarkand-marker .city-label {
+  display:block!important; position:absolute; top:auto!important; bottom:31px!important;
+  left:auto!important; right:-9px!important; transform:none!important;
+  min-width:64px; max-width:90px; padding:3px 6px!important; border:1px solid #8d6037!important;
+  border-radius:7px!important; background:#faedcf!important; color:#542f1c!important;
+  font:800 .65rem/1.35 Vazirmatn,Tahoma,sans-serif!important; text-shadow:none!important;
+  text-align:center; white-space:nowrap; opacity:1!important; box-shadow:0 2px 6px #6c452d44;
+}
+.samarkand-marker .city-label small { display:block; font-size:.56rem; font-weight:600; }
+.iran-map-container .samarkand-marker:focus-visible { outline:3px solid #693317; outline-offset:3px; }
