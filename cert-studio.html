@@ -311,6 +311,105 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 .sel-bar .sep{width:1px;height:22px;background:#ffffff30;margin:0 3px}
 .drag-tip{font-size:12px;color:#3f4b5e;background:#fffbea;border:1px solid #f1e2a6;border-radius:12px;padding:6px 12px}
 .xcard .grid2{margin-top:6px}
+/* ═════ لوح‌نگار ۶ ═════ */
+.cert .snap.v{left:50%;top:0;bottom:0;width:0;border-left:1px dashed #e03131;background:none}
+.cert .snap.h{top:50%;left:0;right:0;height:0;border-top:1px dashed #e03131;background:none}
+.cert .gridov{position:absolute;inset:0;pointer-events:none;z-index:8}
+.cert .gridov i{position:absolute;display:block}
+.cert .gridov .g-c.v{left:50%;top:0;bottom:0;border-left:1px dashed #0e7c86b0}
+.cert .gridov .g-c.h{top:50%;left:0;right:0;border-top:1px dashed #0e7c86b0}
+.cert .gridov .g-t.v{top:0;bottom:0;border-left:1px dotted #7a8aa080}
+.cert .gridov .g-t.h{left:0;right:0;border-top:1px dotted #7a8aa080}
+.cert .gridov .g-m{position:absolute;border:1px dashed #d9480f90;border-radius:2px}
+.cert .xs{display:block}
+.cert .xs.xl{display:flex;align-items:center}
+.cert .xb{display:block}
+.cert .xb .b-svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block;overflow:visible}
+.cert .xb .b-tx{position:absolute;left:50%;transform:translate(-50%,-50%);text-align:center;line-height:1.25;white-space:pre-line;display:flex;flex-direction:column;align-items:center;gap:.08em;z-index:1}
+.cert .xb .b-t1{display:block}
+.cert .xb .b-t2{display:block;font-size:.62em;opacity:.92;font-family:Vazirmatn,sans-serif;font-weight:700}
+.cert .xq{display:flex;flex-direction:column;align-items:center}
+.cert .xq img{display:block;width:100%;height:auto;image-rendering:pixelated}
+.cert .xq .q-l{font-family:Vazirmatn,sans-serif;font-size:calc(var(--mm)*2.3);line-height:1.4;margin-top:calc(var(--mm)*.6);white-space:nowrap;font-weight:700}
+.cert .xq .q-err{display:block;padding:calc(var(--mm)*2);font-size:calc(var(--mm)*2.6);background:#fff1f1;color:#9b2222;border-radius:4px}
+.pal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:7px}
+.pal{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:6px 8px;font-size:12px;font-weight:600;text-align:start;transition:border-color .15s,transform .15s,box-shadow .15s}
+.pal:hover{border-color:#c9a03a;transform:translateY(-1px);box-shadow:0 6px 16px #1b2c4014}
+.pal .sw{display:inline-flex;flex:0 0 auto;border-radius:999px;overflow:hidden;box-shadow:0 0 0 1px #0002}
+.pal .sw i{width:12px;height:22px;display:block}
+.orient-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px;padding:8px 10px;border-radius:14px;background:linear-gradient(135deg,#f3f9f9,#fbf6ea);border:1px solid #e6e0cc}
+.orient-row b{font-size:12.5px}
+.orient-row .small{flex:1 1 180px}
+.seg.orient button{display:inline-flex;align-items:center;gap:6px}
+.seg.orient .oi{display:inline-block;border:2px solid currentColor;border-radius:3px}
+.seg.orient [data-orient=portrait] .oi{width:10px;height:14px}
+.seg.orient [data-orient=landscape] .oi{width:15px;height:10px}
+.dz{margin-bottom:12px;padding:0;overflow:hidden}
+.dz>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 12px;font-weight:800;font-size:13.5px}
+.dz>summary::-webkit-details-marker{display:none}
+.dz>summary::after{content:'▾';margin-inline-start:auto;color:var(--muted);transition:transform .2s}
+.dz:not([open])>summary::after{transform:rotate(90deg)}
+.dz .cnt{background:#fff3d6;color:#6b4a0c;border-radius:999px;padding:0 8px;font-size:11.5px;min-width:22px;text-align:center}
+.dz .cnt:empty{display:none}
+.dz-body{padding:0 12px 12px}
+.dz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px;margin-top:8px;max-height:430px;overflow:auto;padding:2px}
+.dz-card{border:1px solid var(--line);border-radius:13px;background:#fff;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.dz-card:hover{border-color:#c9a03a;box-shadow:0 8px 22px #1b2c4018}
+.dz-open{border:0;background:linear-gradient(45deg,#f1f3f6 25%,#fafbfc 25%,#fafbfc 75%,#f1f3f6 75%) 0 0/14px 14px;padding:8px;display:flex;justify-content:center;min-height:124px;align-items:center}
+.dz-open .thumb{display:block;width:auto;height:auto;background:none;border-radius:2px;overflow:visible;pointer-events:none;box-shadow:0 6px 16px #1b2c4026;line-height:0}
+.dz-meta{padding:6px 9px 0;display:flex;flex-direction:column;line-height:1.5;min-width:0}
+.dz-meta b{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dz-meta span{font-size:10.5px;color:var(--muted)}
+.dz-act{display:flex;gap:3px;padding:6px 7px 8px}
+.dz-act button{flex:1;border:1px solid var(--line);background:#f7f9fb;border-radius:8px;min-height:30px;font-size:13px;padding:0}
+.dz-act button:hover{background:#eef6f6}
+.dz-act button.danger:hover{background:#fff1f1;border-color:#efcaca}
+.dz-empty{padding:4px 2px}
+.ctx-menu{position:fixed;z-index:100;min-width:236px;max-width:min(300px,94vw);max-height:min(560px,90vh);overflow:auto;background:#1f2d3df7;color:#fff;border-radius:14px;padding:6px;box-shadow:0 18px 50px #0006,0 0 0 1px #ffffff14;direction:rtl;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:cmIn .12s ease-out}
+@keyframes cmIn{from{opacity:0;transform:translateY(-4px) scale(.98)}to{opacity:1;transform:none}}
+.ctx-menu .cm-h{font-size:11px;color:#b9c6d6;padding:4px 10px 6px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctx-menu hr{border:0;border-top:1px solid #ffffff1c;margin:4px 6px}
+.ctx-menu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;color:inherit;text-align:start;padding:7px 10px;border-radius:9px;font-size:13px;min-height:36px}
+.ctx-menu button:hover,.ctx-menu button:focus-visible{background:#ffffff1f;outline:none}
+.ctx-menu .ic{width:20px;text-align:center;flex:0 0 auto}
+.ctx-menu .tx{flex:1}
+.ctx-menu kbd{font-family:inherit;font-size:10.5px;color:#b9c6d6;background:#ffffff14;border-radius:5px;padding:0 6px;direction:ltr}
+.keys-dlg{border:0;border-radius:18px;padding:0;width:min(620px,94vw);max-height:90vh;box-shadow:0 30px 80px #0005;direction:rtl}
+.keys-dlg::backdrop{background:#1b1f2acc}
+.keys-dlg .kh{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#f3f9f9,#fbf6ea)}
+.keys-dlg .kh b{font-size:15px;flex:1}
+.keys-dlg .kb{padding:12px 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;overflow:auto}
+.keys-dlg .kb div{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12.5px;padding:5px 0;border-bottom:1px dashed #e6ebf0}
+.keys-dlg kbd{font-family:inherit;font-size:11.5px;background:#f2f5f8;border:1px solid #d7dee6;border-bottom-width:2px;border-radius:6px;padding:0 7px;direction:ltr;white-space:nowrap}
+@media(max-width:560px){.keys-dlg .kb{grid-template-columns:1fr}}
+.chips.xk{margin:2px 0 6px}
+.chips.xk button{font-size:11.5px;padding:3px 9px}
+.stage-bar .tool-sep{width:1px;height:24px;background:var(--line);margin:0 2px}
+.btn[aria-pressed=true]{background:#e8f4f4;border-color:#9fd1d4;color:#0a5f68}
+body.focus-mode .studio{grid-template-columns:minmax(0,1fr)}
+body.focus-mode .panel,body.focus-mode .drag-tip,body.focus-mode .app-footer{display:none}
+body.focus-mode .stage-view{max-height:calc(100dvh - 150px)}
+/* زیباسازی */
+body{background:radial-gradient(1200px 600px at 100% -10%,#e9f5f5 0,transparent 60%),radial-gradient(900px 500px at -10% 10%,#fbf3df 0,transparent 55%),var(--cream)}
+.brand-mark{box-shadow:inset 0 0 0 1px #0e7c8622,0 4px 12px #a8761a1f}
+.brand-title{background:linear-gradient(135deg,#0a5f68,#a8761a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stage-bar{background:#fffffff2;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.panel{box-shadow:0 18px 46px #1b2c4014}
+.tabs{background:linear-gradient(#fbfcfd,#fff)}
+.tab{border-radius:10px 10px 0 0;transition:color .15s,background .15s}
+.tab:hover{background:#f3f7f8;color:#0a5f68}
+.card{transition:box-shadow .2s,border-color .2s}
+.card:hover{border-color:#d3dde6}
+.theme-card{box-shadow:0 2px 8px #1b2c400a}
+.theme-card:hover{border-color:#c9a03a;box-shadow:0 10px 24px #1b2c401c}
+.theme-card .thumb{transition:transform .2s}
+.theme-card:hover .thumb{transform:scale(1.03)}
+.stage-view{box-shadow:inset 0 2px 10px #1b2c400d}
+.xcard{border-inline-start:4px solid #c9a03a55}
+.xcard[data-xt=shape]{border-inline-start-color:#0e7c8666}
+.xcard[data-xt=badge]{border-inline-start-color:#d4af37}
+.xcard[data-xt=qr]{border-inline-start-color:#24324a66}
+.add-more{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:6px}
 
 @media(max-width:1200px){.studio{grid-template-columns:minmax(0,1fr)}.stage{position:static}.stage-view{max-height:none}}
 @media(max-width:640px){.header-in{padding:8px 12px}.brand-title{font-size:18px}.studio{padding:12px 10px}.grid2,.export-grid{grid-template-columns:1fr}.mm-grid,.grid4{grid-template-columns:1fr 1fr}.pane{padding:12px}.stage-view{padding:14px 8px}.row-nav .who{max-width:110px}}
@@ -356,6 +455,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       <button class="btn sm" id="btnRedo" type="button" title="ازنو (Ctrl+Y)" aria-label="ازنو">↷ ازنو</button>
       <button class="btn sm soft" id="btnSaveFile" type="button">💾 ذخیرهٔ طرح</button>
       <button class="btn sm" id="btnOpenFile" type="button">📂 باز کردن طرح</button>
+      <button class="btn sm" id="btnKeys" type="button" title="میان‌برهای صفحه‌کلید (?)" aria-label="میان‌برهای صفحه‌کلید">⌨️</button>
       <a class="btn sm" href="index.html">🏠 خانه</a>
     </div>
   </div>
@@ -371,6 +471,12 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       <button class="btn sm gold" id="btnAddExtra" type="button" title="یک متن تازه که هرجای برگه می‌توانی بگذاری">➕ متن</button>
       <button class="btn sm soft" id="btnAddOrn" type="button" title="شمسه، ترنج، ستاره، لچک یا جداکننده هرجای برگه">✳️ نقش</button>
       <button class="btn sm soft" id="btnAddImg" type="button" title="عکس دانش‌آموز، لوگوی دوم یا هر تصویری">🖼️ تصویر</button>
+      <button class="btn sm soft" id="btnAddMore" type="button" aria-haspopup="menu" title="شکل، نشان و مهر طلایی، روبان، کد QR و…">✨ بیشتر</button>
+      <span class="tool-sep" aria-hidden="true"></span>
+      <div class="seg orient" role="group" aria-label="جهت برگه">
+        <button type="button" data-orient="portrait" aria-pressed="true" title="برگهٔ عمودی"><i class="oi" aria-hidden="true"></i>عمودی</button>
+        <button type="button" data-orient="landscape" aria-pressed="false" title="برگهٔ افقی"><i class="oi" aria-hidden="true"></i>افقی</button>
+      </div>
       <span class="spacer"></span>
       <div class="row-nav" id="rowNav" hidden>
         <button class="btn sm" id="rowPrev" type="button" aria-label="نفر قبلی">‹</button>
@@ -382,6 +488,8 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <output id="zoomVal" aria-live="polite">جا</output>
         <button class="btn sm" id="zoomIn" type="button" aria-label="بزرگ‌نمایی">+</button>
         <button class="btn sm" id="zoomFit" type="button">اندازهٔ صفحه</button>
+        <button class="btn sm" id="btnGrid" type="button" aria-pressed="false" title="خطوط راهنما و حاشیهٔ امن (G)" aria-label="خطوط راهنما">📐</button>
+        <button class="btn sm" id="btnFocus" type="button" aria-pressed="false" title="نمایش بزرگ بدون پنل (F)">⛶ بزرگ</button>
       </div>
     </div>
     <div class="row" id="stagePills" aria-live="polite"></div>
@@ -436,6 +544,21 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
     <!-- الگوها -->
     <div class="pane active" id="pane-theme" role="tabpanel" aria-labelledby="tab-theme">
       <div class="pane-head"><h2>الگوهای آماده</h2><p>قاب‌های نگارگری تذهیب و اسلیمی (برخی با میانهٔ سفید و فقط حاشیهٔ اسلیمی)، تذهیب خطی، مدرن، کودکانه و رسمی. با عوض کردن الگو <b>متن‌هایت حفظ می‌شود.</b></p></div>
+      <div class="orient-row">
+        <b>جهت برگه:</b>
+        <div class="seg orient" role="group" aria-label="جهت برگه برای همهٔ الگوها">
+          <button type="button" data-orient="portrait" aria-pressed="true"><i class="oi" aria-hidden="true"></i>عمودی</button>
+          <button type="button" data-orient="landscape" aria-pressed="false"><i class="oi" aria-hidden="true"></i>افقی</button>
+        </div>
+        <span class="small muted">همهٔ الگوها در هر دو جهت؛ جای بخش‌ها و حاشیه‌ها خودکار متناسب می‌شود.</span>
+      </div>
+      <details class="card dz" id="dzBox">
+        <summary>📚 طرح‌های من <span class="cnt" id="dzCount"></span></summary>
+        <div class="dz-body">
+          <div class="row"><button class="btn sm gold" id="btnSaveDesign" type="button">＋ ذخیرهٔ طرح فعلی</button><span class="small muted">در همین مرورگر نگه داشته می‌شود.</span></div>
+          <div class="dz-grid" id="myDesigns"></div>
+        </div>
+      </details>
       <div class="seg theme-filter" role="group" aria-label="دسته‌بندی الگوها" id="themeFilter">
         <button type="button" data-cat="all" aria-pressed="true">همه</button>
         <button type="button" data-cat="حاشیهٔ اسلیمی" aria-pressed="false">حاشیهٔ اسلیمی (میانه سفید)</button>
@@ -466,7 +589,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       </div>
       <button type="button" class="go-img" data-goimg="1">🖼️ <b>لوگوها، عکس، مهرها و هر تصویر دیگر</b><span>در زبانهٔ «تصویرها» ←</span></button>
       <div class="fld" id="extrasBox">
-        <div class="fld-head"><span class="t">📝 متن، تصویر و نقش آزاد (هرجای برگه)</span></div>
+        <div class="fld-head"><span class="t">📝 متن، تصویر، نقش، شکل، نشان و کد QR (هرجای برگه)</span></div>
         <p class="small muted">بیت، جمله، عکس دانش‌آموز، لوگوی دوم، شمسه، ترنج، ستاره یا لچک؛ بعد از افزودن روی پیش‌نمایش بکشش، بچرخانش و اندازه‌اش را عوض کن.</p>
         <div id="extraList" class="stack" style="margin-top:8px"></div>
         <div class="row" style="margin-top:8px">
@@ -474,6 +597,9 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
           <button class="btn soft" id="btnAddImg2" type="button">🖼️ تصویر (عکس، لوگوی دوم…)</button>
         </div>
         <div class="row" style="margin-top:6px;flex-wrap:nowrap"><label class="sr-only" for="ornKindNew">نوع نقش تزئینی</label><select id="ornKindNew"></select><button class="btn soft" id="btnAddOrn2" type="button" style="white-space:nowrap">✳️ افزودن نقش</button></div>
+        <div class="add-more"><label class="sr-only" for="shapeKindNew">نوع شکل</label><select id="shapeKindNew"></select><button class="btn soft" id="btnAddShape2" type="button" style="white-space:nowrap">⬛ افزودن شکل</button></div>
+        <div class="add-more"><label class="sr-only" for="badgeKindNew">نوع نشان</label><select id="badgeKindNew"></select><button class="btn soft" id="btnAddBadge2" type="button" style="white-space:nowrap">🏅 افزودن نشان</button></div>
+        <div class="row" style="margin-top:6px"><button class="btn soft" id="btnAddQR2" type="button">▦ کد QR (برای هر نفر جدا)</button></div>
       </div>
     </div>
 
@@ -539,6 +665,12 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
     <div class="pane" id="pane-look" role="tabpanel" aria-labelledby="tab-look">
       <div class="pane-head"><h2>ظاهر و چیدمان</h2><p>برگه، قاب، پس‌زمینه، رنگ‌ها، فونت و اندازهٔ هر بخش.</p></div>
       <div class="stack">
+        <div class="card">
+          <h3>🎨 پالت‌های رنگ آماده</h3>
+          <p class="small muted" style="margin-bottom:8px">با یک کلیک رنگ متن، عنوان و قاب با هم هماهنگ می‌شود.</p>
+          <div class="pal-grid" id="paletteGrid"></div>
+          <label class="check" style="margin-top:6px"><input type="checkbox" id="palFrame"> رنگ قاب‌های نگارگری (تصویری) را هم تک‌رنگ کن</label>
+        </div>
         <div class="card">
           <h3>📄 برگه</h3>
           <div class="grid2">
@@ -781,6 +913,10 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <div class="guide-step"><b class="n">✳</b><p><b>همه‌چیز قابل ویرایش:</b> روی هر متن <b>دو بار بزن</b> و همان‌جا روی برگه بنویس. با یک بار زدن، نوار ابزار باز می‌شود: چرخش (⟲ ⟳ یا کلیدهای [ و ])، شفافیت ◐، اندازه، و ⚙ برای فونت و رنگ همان بخش. با «✳️ نقش» و «🖼️ تصویر» شمسه، ترنج، ستاره، لچک، عکس یا لوگوی دوم را هرجا خواستی بگذار.</p></div>
         <div class="guide-step"><b class="n">🎨</b><p><b>قاب دلخواه:</b> در «ظاهر»، رنگ هر قاب نگارگری را عوض کن (تک‌رنگ لاجوردی، طلایی، کم‌رنگ، کاغذ کرم…) یا «قاب اسلیمی برداری» را انتخاب کن و نقش، پهنا، لچک، ترنج و همهٔ رنگ‌هایش را خودت بساز. میانهٔ برگه همیشه سفید می‌ماند.</p></div>
         <div class="guide-step"><b class="n">🖼</b><p><b>تصویر، هر جا:</b> در زبانهٔ «تصویرها» لوگوی راست/وسط/چپ، عکس دریافت‌کننده (دایره، بیضی، محرابی، ۳×۴)، امضا و مهر جدا برای هر امضاکننده، نقش‌مایهٔ کم‌رنگ و تصویر زمینهٔ کل برگه را بگذار. ساده‌تر: فایل را <b>روی برگه بکش و رها کن</b> یا <b>Ctrl+V</b> بزن؛ روی لوگو یا امضا رها کنی جایگزینش می‌شود. با <b>✂️ ویرایش</b> برش بزن، دایره کن، بچرخان، روشن کن و قاب بده. برای عکس هر نفر، عکس‌ها را با نام همان افراد (مثلاً «سارا محمدی.jpg») یکجا بده. از «🗂 لایه‌ها» هر بخش را پنهان، قفل یا جلو/عقب کن.</p></div>
+        <div class="guide-step"><b class="n">▭</b><p><b>عمودی یا افقی:</b> با دکمهٔ «عمودی / افقی» بالای برگه (یا در زبانهٔ «الگو») <b>همهٔ الگوها</b> افقی می‌شوند؛ حاشیه‌ها، جای بخش‌ها و اندازهٔ متن خودکار متناسب می‌شود.</p></div>
+        <div class="guide-step"><b class="n">✨</b><p><b>شکل، نشان و QR:</b> با «✨ بیشتر» یا راست‌کلیک روی برگه: کادر و خط و دایره، <b>مهر طلایی، مدال، روزت، روبان، سپر و تاج برگ بو</b> با متن دلخواه، و <b>کد QR</b> که برای هر نفر جدا ساخته می‌شود (مثلاً با {شماره}).</p></div>
+        <div class="guide-step"><b class="n">🖱</b><p><b>منوی هر بخش:</b> روی هر بخش <b>راست‌کلیک</b> کن (در گوشی: انگشت را نگه دار): تکثیر، کپی و چسباندن، کپی سبک متن، جلو/عقب بردن، وسط‌چین روی برگه، قفل جا. هنگام کشیدن، خطوط قرمز راهنما بخش را با لبه و وسط بخش‌های دیگر هم‌تراز می‌کند (Alt = آزاد). همهٔ میان‌برها با کلید <b>?</b>.</p></div>
+        <div class="guide-step"><b class="n">📚</b><p><b>طرح‌های من و پالت‌ها:</b> هر طرح را در «طرح‌های من» (زبانهٔ الگو) نگه دار و هر وقت خواستی با یک کلیک برگرد. در «ظاهر»، پالت‌های رنگ آماده همه‌چیز را هماهنگ می‌کنند.</p></div>
         <div class="guide-step"><b class="n">۴</b><p><b>امضا و مهر:</b> عکس امضا و مهر را بده؛ با گزینهٔ «حذف زمینهٔ سفید» مثل امضای واقعی روی برگه می‌نشیند.</p></div>
         <div class="guide-step"><b class="n">۵</b><p><b>برگهٔ تذهیب آماده:</b> اگر کاغذ گلاسهٔ تذهیب داری، حالت «فقط متن» را روشن کن، حاشیه‌ها را با خط‌کش اندازه بگیر و یک چاپ آزمایشی روی کاغذ معمولی بگیر.</p></div>
         <div class="guide-step"><b class="n">۶</b><p><b>فهرست افراد:</b> نام‌ها را هر کدام در یک خط بنویس یا از اکسل کپی کن. هر ستون (مثلاً «رتبه») را با <b>{رتبه}</b> در متن بیاور.</p></div>
@@ -798,6 +934,30 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 <div id="printRoot" aria-hidden="true"></div>
 <input type="file" id="designFile" accept=".json,application/json" hidden>
 <input type="file" id="imgFile" accept="image/*" hidden>
+<div id="ctxMenu" class="ctx-menu" role="menu" aria-label="منوی بخش" hidden></div>
+<dialog id="keysDlg" class="keys-dlg" aria-labelledby="keysTitle">
+  <div class="kh"><b id="keysTitle">⌨️ میان‌برهای صفحه‌کلید</b><button type="button" class="btn sm" data-kclose="1">بستن</button></div>
+  <div class="kb">
+    <div><span>جابه‌جایی بخش انتخاب‌شده</span><kbd>← → ↑ ↓</kbd></div>
+    <div><span>جابه‌جایی ۵ میلی‌متری / ریز</span><kbd>Shift / Alt + ←</kbd></div>
+    <div><span>بزرگ‌تر / کوچک‌تر</span><kbd>+ / −</kbd></div>
+    <div><span>چرخش</span><kbd>[ / ]</kbd></div>
+    <div><span>تکثیر</span><kbd>Ctrl+D</kbd></div>
+    <div><span>کپی / چسباندن</span><kbd>Ctrl+C / Ctrl+V</kbd></div>
+    <div><span>قفل جای بخش</span><kbd>Ctrl+L</kbd></div>
+    <div><span>جلو آوردن / عقب بردن</span><kbd>PgUp / PgDn</kbd></div>
+    <div><span>پنهان کردن / حذف</span><kbd>Delete</kbd></div>
+    <div><span>تنظیمات بخش</span><kbd>Enter</kbd></div>
+    <div><span>واگرد / ازنو</span><kbd>Ctrl+Z / Ctrl+Y</kbd></div>
+    <div><span>ذخیرهٔ فایل طرح</span><kbd>Ctrl+S</kbd></div>
+    <div><span>چاپ</span><kbd>Ctrl+P</kbd></div>
+    <div><span>خطوط راهنما</span><kbd>G</kbd></div>
+    <div><span>نمایش بزرگ</span><kbd>F</kbd></div>
+    <div><span>کشیدن بدون چسبیدن به راهنما</span><kbd>Alt + کشیدن</kbd></div>
+    <div><span>منوی بخش (راست‌کلیک یا نگه‌داشتن انگشت)</span><kbd>🖱 راست</kbd></div>
+    <div><span>همین راهنما</span><kbd>?</kbd></div>
+  </div>
+</dialog>
 <dialog id="imgEd" class="img-ed" aria-labelledby="edTitle">
   <div class="ed-head"><b id="edTitle">✂️ ویرایش تصویر</b><span id="edTarget" class="muted"></span><button type="button" class="btn sm" data-ed="close" aria-label="بستن">✕</button></div>
   <div class="ed-body">
@@ -826,6 +986,110 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 <div class="toast-area" id="toastArea" role="status" aria-live="polite"></div>
 
 <script>
+/* ── لوح‌نگار ۶: داده‌های پایه (بالای اسکریپت تا پیش از نخستین رسم آماده باشند) ── */
+let IMG_PASTE_T = 0, orientPref = null, CLIP = null, STYLE_CLIP = null, showGrid = false, ctxAt = null, imgAt = null, DESIGNS = [];
+const SHAPES = [['round','کادر گوشه‌گرد'],['rect','مستطیل'],['pill','کپسولی'],['circle','دایره / بیضی'],['frame','کادر دوخطی'],['line','خط'],['dline','خط دوتایی'],['dots','نقطه‌چین']];
+const BADGES = [['seal','مهر طلایی کنگره‌دار'],['medal','مدال با روبان'],['rosette','روزت روبانی'],['ribbon','نوار روبان'],['burst','ستارهٔ درخشان'],['shield','سپر افتخار'],['laurel','تاج برگ بو']];
+const BADGE_RATIO = {seal:1, medal:1.42, rosette:1.45, ribbon:.3, burst:1, shield:1.15, laurel:.92};
+const BADGE_TXT = {seal:{cy:50, w:58}, medal:{cy:35.2, w:54}, rosette:{cy:34.5, w:46}, ribbon:{cy:41, w:70}, burst:{cy:50, w:54}, shield:{cy:44, w:62}, laurel:{cy:47, w:56}};
+const PALETTES = [
+  ['لاجورد و طلا', '#1f2f5a', '#1f3a7a', '#1f3a7a', '#c9a03a'],
+  ['فیروزه و زعفران', '#1f3236', '#0b5a62', '#0e6f78', '#d9a521'],
+  ['زرشکی و طلا', '#2b1d1d', '#8a1c1c', '#8a1c1c', '#c9a03a'],
+  ['زمردی', '#1d2b22', '#1f6b45', '#1f6b45', '#c9a03a'],
+  ['بنفش شاهانه', '#241a33', '#5b2a86', '#5b2a86', '#d4af37'],
+  ['مشکی و طلا', '#1a1a1a', '#111111', '#222222', '#c9a03a'],
+  ['قهوه‌ای سنتی', '#33270f', '#7a4e0c', '#7a5410', '#c9a03a'],
+  ['آبی روشن', '#1d2741', '#2a46b8', '#2f4fd1', '#15aabf'],
+  ['صورتی کودکانه', '#3a2233', '#c2185b', '#e75a8c', '#ffb74d'],
+  ['نارنجی شاد', '#3a2a14', '#d9480f', '#f08c00', '#2b8a3e']
+];
+const FX_MORE = {
+  emboss:'0 -.02em 0 rgba(255,255,255,.9),0 .035em .025em rgba(0,0,0,.35)',
+  deep:'.014em .014em 0 rgba(0,0,0,.2),.028em .028em 0 rgba(0,0,0,.17),.042em .042em 0 rgba(0,0,0,.14),.06em .07em .05em rgba(0,0,0,.22)',
+  goldglow:'0 0 .12em rgba(255,214,90,.95),0 0 .32em rgba(255,186,0,.55)',
+  engrave:'0 .025em 0 rgba(255,255,255,.75),0 -.02em .012em rgba(0,0,0,.4)',
+  soft:'0 .1em .35em rgba(0,0,0,.22)'
+};
+/* QR (حالت بایت، تصحیح خطای M، نسخهٔ ۱ تا ۲۶) — بی‌نیاز از اینترنت */
+const QR = (() => {
+  const ECC = [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26,26,28,28,28,28,28];
+  const NB  = [-1,1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16,17,17,18,20,21,23];
+  const mul = (x, y) => { let z = 0; for (let i = 7; i >= 0; i--){ z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z & 255; };
+  const divisor = deg => { const r = new Array(deg).fill(0); r[deg - 1] = 1; let root = 1; for (let i = 0; i < deg; i++){ for (let j = 0; j < deg; j++){ r[j] = mul(r[j], root); if (j + 1 < deg) r[j] ^= r[j + 1]; } root = mul(root, 2); } return r; };
+  const remainder = (data, dv) => { const r = dv.map(() => 0); for (const b of data){ const f = b ^ r.shift(); r.push(0); dv.forEach((c, i) => { r[i] ^= mul(c, f); }); } return r; };
+  const rawModules = v => { let r = (16 * v + 128) * v + 64; if (v >= 2){ const na = Math.floor(v / 7) + 2; r -= (25 * na - 10) * na - 55; if (v >= 7) r -= 36; } return r; };
+  const dataCap = v => Math.floor(rawModules(v) / 8) - ECC[v] * NB[v];
+  const alignPos = v => { if (v === 1) return []; const na = Math.floor(v / 7) + 2, size = v * 4 + 17, step = Math.ceil((v * 4 + 4) / (na * 2 - 2)) * 2, r = [6]; for (let p = size - 7; r.length < na; p -= step) r.splice(1, 0, p); return r; };
+  const MASKS = [(x,y)=>(x+y)%2===0,(x,y)=>y%2===0,(x,y)=>x%3===0,(x,y)=>(x+y)%3===0,(x,y)=>(Math.floor(x/3)+Math.floor(y/2))%2===0,(x,y)=>x*y%2+x*y%3===0,(x,y)=>(x*y%2+x*y%3)%2===0,(x,y)=>((x+y)%2+x*y%3)%2===0];
+  function encode(text){
+    const bytes = Array.from(new TextEncoder().encode(String(text)));
+    let v = 1; for (; v <= 26; v++) if (4 + (v <= 9 ? 8 : 16) + bytes.length * 8 <= dataCap(v) * 8) break;
+    if (v > 26) throw new Error('too long');
+    const bits = [], put = (val, n) => { for (let i = n - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    put(4, 4); put(bytes.length, v <= 9 ? 8 : 16); bytes.forEach(b => put(b, 8));
+    const cap = dataCap(v) * 8;
+    put(0, Math.min(4, cap - bits.length)); put(0, (8 - bits.length % 8) % 8);
+    for (let p = 0xEC; bits.length < cap; p ^= 0xEC ^ 0x11) put(p, 8);
+    const data = []; for (let i = 0; i < bits.length; i += 8){ let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; data.push(b); }
+    const nb = NB[v], el = ECC[v], raw = Math.floor(rawModules(v) / 8), nShort = nb - raw % nb, shortLen = Math.floor(raw / nb), dv = divisor(el), blocks = [];
+    for (let i = 0, k = 0; i < nb; i++){ const dat = data.slice(k, k + shortLen - el + (i < nShort ? 0 : 1)); k += dat.length; const ecc = remainder(dat, dv); if (i < nShort) dat.push(0); blocks.push(dat.concat(ecc)); }
+    const cw = []; for (let i = 0; i < blocks[0].length; i++) blocks.forEach((b, j) => { if (i !== shortLen - el || j >= nShort) cw.push(b[i]); });
+    const size = v * 4 + 17, M = [], F = [];
+    for (let i = 0; i < size; i++){ M.push(new Array(size).fill(false)); F.push(new Array(size).fill(false)); }
+    const setF = (x, y, d) => { M[y][x] = d; F[y][x] = true; };
+    for (let i = 0; i < size; i++){ setF(6, i, i % 2 === 0); setF(i, 6, i % 2 === 0); }
+    const finder = (x, y) => { for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++){ const d = Math.max(Math.abs(dx), Math.abs(dy)), xx = x + dx, yy = y + dy; if (xx >= 0 && xx < size && yy >= 0 && yy < size) setF(xx, yy, d !== 2 && d !== 4); } };
+    finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+    const ap = alignPos(v), na = ap.length;
+    for (let i = 0; i < na; i++) for (let j = 0; j < na; j++){
+      if ((i === 0 && j === 0) || (i === 0 && j === na - 1) || (i === na - 1 && j === 0)) continue;
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) setF(ap[i] + dx, ap[j] + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+    }
+    const drawFormat = mask => {
+      const dat = mask; let rem = dat; for (let i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+      const b = ((dat << 10) | rem) ^ 0x5412, g = i => ((b >>> i) & 1) === 1;
+      for (let i = 0; i <= 5; i++) setF(8, i, g(i));
+      setF(8, 7, g(6)); setF(8, 8, g(7)); setF(7, 8, g(8));
+      for (let i = 9; i < 15; i++) setF(14 - i, 8, g(i));
+      for (let i = 0; i < 8; i++) setF(size - 1 - i, 8, g(i));
+      for (let i = 8; i < 15; i++) setF(8, size - 15 + i, g(i));
+      setF(8, size - 8, true);
+    };
+    drawFormat(0);
+    if (v >= 7){ let rem = v; for (let i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25); const b = (v << 12) | rem; for (let i = 0; i < 18; i++){ const c = ((b >>> i) & 1) === 1, a = size - 11 + i % 3, bb = Math.floor(i / 3); setF(a, bb, c); setF(bb, a, c); } }
+    let bi = 0;
+    for (let right = size - 1; right >= 1; right -= 2){
+      if (right === 6) right = 5;
+      for (let vert = 0; vert < size; vert++) for (let j = 0; j < 2; j++){
+        const x = right - j, up = ((right + 1) & 2) === 0, y = up ? size - 1 - vert : vert;
+        if (!F[y][x] && bi < cw.length * 8){ M[y][x] = ((cw[bi >>> 3] >>> (7 - (bi & 7))) & 1) === 1; bi++; }
+      }
+    }
+    const applyMask = m => { for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) if (!F[y][x] && MASKS[m](x, y)) M[y][x] = !M[y][x]; };
+    const penalty = () => {
+      let p = 0;
+      for (let y = 0; y < size; y++){ let run = 1; for (let x = 1; x < size; x++){ if (M[y][x] === M[y][x - 1]){ run++; if (run === 5) p += 3; else if (run > 5) p++; } else run = 1; } }
+      for (let x = 0; x < size; x++){ let run = 1; for (let y = 1; y < size; y++){ if (M[y][x] === M[y - 1][x]){ run++; if (run === 5) p += 3; else if (run > 5) p++; } else run = 1; } }
+      for (let y = 0; y < size - 1; y++) for (let x = 0; x < size - 1; x++){ const c = M[y][x]; if (c === M[y][x + 1] && c === M[y + 1][x] && c === M[y + 1][x + 1]) p += 3; }
+      const A = [1,0,1,1,1,0,1,0,0,0,0], B = [0,0,0,0,1,0,1,1,1,0,1];
+      for (let y = 0; y < size; y++) for (let x = 0; x + 11 <= size; x++){
+        let a = 1, b = 1, c = 1, d = 1;
+        for (let k = 0; k < 11; k++){ const h = M[y][x + k] ? 1 : 0, w = M[x + k][y] ? 1 : 0; if (h !== A[k]) a = 0; if (h !== B[k]) b = 0; if (w !== A[k]) c = 0; if (w !== B[k]) d = 0; }
+        p += 40 * (a + b + c + d);
+      }
+      let dark = 0; for (const row of M) for (const c of row) if (c) dark++;
+      const tot = size * size; p += Math.floor(Math.abs(dark * 20 - tot * 10) / tot) * 10;
+      return p;
+    };
+    let best = 0, bp = Infinity;
+    for (let m = 0; m < 8; m++){ applyMask(m); drawFormat(m); const pp = penalty(); if (pp < bp){ bp = pp; best = m; } applyMask(m); }
+    applyMask(best); drawFormat(best);
+    return M;
+  }
+  return {encode};
+})();
+
 const VEC_DEFAULT = {pattern:'eslimi', corner:'lachak', rules:'double', toranj:false, band:13, inset:9, density:2.4, lachak:2.4, c1:'#1f3a7a', c2:'#c9a03a', ground:''};
 const ADJ0 = {hue:0, sat:100, light:0, fade:0, mono:'', paper:''};
 
@@ -1598,6 +1862,9 @@ function pageHTML(o){
     const box = `data-mv="${esc(kx)}" data-x="${esc(ex.id)}" style="left:calc(var(--mm)*${num(ex.x, W/2) - w/2 + odx});top:calc(var(--mm)*${num(ex.y, H/2) + ody});width:calc(var(--mm)*${w});`;
     if (ex.type === 'img'){ if (ex.src) extras += `<img class="xt xi${cl}" alt="" data-imgkey="${esc(kx)}" src="${ex.src}" ${box}${posCSS(kx)}">`; continue; }
     if (ex.type === 'orn'){ extras += `<div class="xt xo${cl}" ${box}${posCSS(kx)}">${ornHTML(ex.kind, ex.color || accent, ex.color2 || '#ffffff')}</div>`; continue; }
+    if (ex.type === 'shape'){ extras += shapeHTML(ex, box, cl, kx); continue; }
+    if (ex.type === 'badge'){ extras += badgeHTML(ex, box, cl, kx, ctx); continue; }
+    if (ex.type === 'qr'){ extras += qrHTML(ex, box, cl, kx, ctx); continue; }
     if (!String(ex.text || '').trim()) continue;
     extras += `<div class="cf xt${cl}" ${box}--fit:1;--gs:${S.gScale/100};${textStyle(Object.assign({}, ex, {w:100}), ex.color || accent, fontLH(ex.font))}${posCSS(kx)}">${fieldHTML(ex.text, ctx)}</div>`;
   }
@@ -1613,6 +1880,7 @@ const FX = {
   gold:'0 .03em 0 #fff6d5,0 .06em .1em rgba(120,80,10,.45)',
   outline:'-.03em -.03em 0 #fff,.03em -.03em 0 #fff,-.03em .03em 0 #fff,.03em .03em 0 #fff,0 0 .12em #fff'
 };
+Object.assign(FX, FX_MORE);
 function textStyle(s, col, defLH){
   let css = `font-family:'${s.font}',Vazirmatn,sans-serif;--sz:${s.size};font-weight:${s.bold ? 700 : 400};color:${col};line-height:${num(s.lh, 0) > 0 ? s.lh : defLH};`;
   if (num(s.ls, 0)) css += `word-spacing:${s.ls}em;`;
@@ -1680,6 +1948,8 @@ function render(){
   wrap.innerHTML = pageHTML({row, idx, mm:PX_PER_MM + 'px', screen:true, pxmm:4});
   const cert = wrap.firstElementChild;
   const fit = autofit(cert);
+  addGridOverlay();
+  { const o = S.page.orient === 'landscape' ? 'landscape' : 'portrait'; if (orientPref && orientPref !== o) thumbsDirty = true; orientPref = o; syncOrientUI(); }
   fitStage();
   markSel();
   // نشانگرها
@@ -1721,7 +1991,7 @@ function renderThumbs(){
   const keep = JSON.stringify(S);
   const grid = $('themeGrid'); grid.innerHTML = '';
   const CATS = ['حاشیهٔ اسلیمی','تذهیب و اسلیمی','تذهیب خطی','مدرن','کودکانه','رسمی'];
-  const list = THEMES.filter(th => themeCat === 'all' || th.cat === themeCat).sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
+  const list = THEMES.filter(th => !landBase(th) && (themeCat === 'all' || th.cat === themeCat)).sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
   let lastCat = '';
   for (const th of list){
     if (themeCat === 'all' && th.cat !== lastCat){ lastCat = th.cat; const h = document.createElement('div'); h.className = 'theme-sec'; h.textContent = th.cat; grid.appendChild(h); }
@@ -1732,7 +2002,7 @@ function renderThumbs(){
     const mm = Math.min(118 / W, 140 / H);
     const btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'theme-card'; btn.dataset.theme = th.id;
-    btn.setAttribute('aria-pressed', String(JSON.parse(keep).theme === th.id));
+    btn.setAttribute('aria-pressed', String(baseThemeId(JSON.parse(keep).theme) === th.id));
     btn.setAttribute('aria-label', 'الگوی ' + th.name);
     btn.innerHTML = `<span class="thumb" aria-hidden="true">${pageHTML({row:null, idx:0, mm:mm + 'px', screen:!!th.paper, thumb:true, pxmm:Math.max(.8, mm * 1.5)})}</span><span class="theme-name">${esc(th.name)}</span><span class="theme-cat">${esc(th.cat)}</span>`;
     grid.appendChild(btn);
@@ -1741,17 +2011,19 @@ function renderThumbs(){
   }
 }
 function applyTheme(th, quiet){
+  if (orientPref && (th.orient || 'portrait') !== orientPref){ const tw = orientPref === 'landscape' ? landTwin(th) : landBase(th); if (tw) th = tw; }
   S.theme = th.id;
   S.colors = {ink:th.ink, accent:th.accent};
   S.frame = {style:th.frame, color:th.fc, color2:th.fc2, size:100, adj:Object.assign({}, ADJ0)};
   S.vec = Object.assign({}, VEC_DEFAULT, th.vec || {c1:th.fc, c2:th.fc2});
   S.bg = Object.assign({}, S.bg, {type:'theme'});
   S.watermark = !!th.wm;
-  S.page.orient = th.orient || 'portrait';
+  S.page.orient = orientPref || th.orient || 'portrait';
   const {W, H} = pageDims();
   S.margins = autoMargins(th.frame, W, H, 1);
   const old = S.styles || {};
   S.styles = makeFieldStyles(th);
+  if (S.page.orient !== (th.orient || 'portrait') && S.styles.body) S.styles.body.w = S.page.orient === 'landscape' ? 82 : 100;
   if (quiet) for (const k in S.styles) if (old[k]) S.styles[k].bold = old[k].bold && !NO_BOLD.has(S.styles[k].font);
   S.mode = th.paper ? 'paper' : (quiet ? S.mode : 'design');
   if (th.paper){ S.paper.ink = th.ink; S.paper.accent = th.accent; }
@@ -2102,7 +2374,7 @@ function layerItems(){
     if (String(s.text || '').trim() || s.img) add('sign' + i, 'امضای ' + ['اول','دوم','سوم'][i], !!s.on, 'sign');
     if (stampSrc(i)) add(stampKey(i), 'مهر ' + ['اول','دوم','سوم'][i], !S.hide[stampKey(i)], 'hide');
   });
-  (S.extras || []).forEach(ex => add('x:' + ex.id, mvName('x:' + ex.id) + (ex.type !== 'img' && ex.type !== 'orn' ? ': ' + String(ex.text || '').replace(/\s+/g, ' ').slice(0, 16) : ''), !ex.hidden, 'extra'));
+  (S.extras || []).forEach(ex => add('x:' + ex.id, mvName('x:' + ex.id) + (!ex.type || ex.type === 'text' || ex.type === 'badge' ? ': ' + String(ex.text || '').replace(/\s+/g, ' ').slice(0, 16) : ''), !ex.hidden, 'extra'));
   return L;
 }
 function setShown(it, v){
@@ -2284,7 +2556,8 @@ document.addEventListener('click', e => {
 });
 $('imgFile').addEventListener('change', async () => {
   const f = $('imgFile').files[0]; if (!f || !imgTarget) return;
-  await ingestImage(f, imgTarget);
+  const at = imgTarget === 'newx' ? imgAt : null; imgAt = null;
+  await ingestImage(f, imgTarget, at ? {at} : undefined);
   if (imgTarget === 'guide'){ syncUI(); render(); }
 });
 function fileToDataURL(file, max){
@@ -2326,7 +2599,8 @@ function removeWhite(url){
 // ظاهر
 function syncPageField(el){
   const k = el.dataset.sync;
-  if (k === 'pageSize') S.page.size = el.value; else if (k === 'pageOrient') S.page.orient = el.value;
+  if (k === 'pageOrient'){ setOrient(el.value); return; }
+  if (k === 'pageSize') S.page.size = el.value;
   else if (k === 'pageW') S.page.w = num(el.value, 210); else if (k === 'pageH') S.page.h = num(el.value, 297);
   if (k === 'pageSize' || k === 'pageOrient'){ const {W, H} = pageDims(); S.margins = autoMargins(S.frame.style, W, H, S.frame.size / 100); }
 }
@@ -2486,7 +2760,7 @@ $('btnCalib').addEventListener('click', printCalibration);
 /* ── جابه‌جایی آزاد: کشیدن، انتخاب، نوار ابزار و کلیدهای جهت ── */
 let sel = null, drag = null;
 const MV_NAMES = {logoR:'لوگوی راست', logoL:'لوگوی چپ', photo:'عکس دریافت‌کننده', stamp1:'مهر دوم', stamp2:'مهر سوم', logo:'لوگو', divider:'نقش جداکننده', stamp:'مهر', sign0:'امضای اول', sign1:'امضای دوم', sign2:'امضای سوم'};
-function mvName(k){ if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return !ex ? '' : ex.type === 'img' ? 'تصویر' : ex.type === 'orn' ? 'نقش تزئینی' : 'متن آزاد'; } return MV_NAMES[k] || FIELD_LABEL[k] || k; }
+function mvName(k){ if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return !ex ? '' : ex.type === 'img' ? 'تصویر' : ex.type === 'orn' ? 'نقش تزئینی' : ex.type === 'shape' ? 'شکل' : ex.type === 'badge' ? 'نشان' : ex.type === 'qr' ? 'کد QR' : 'متن آزاد'; } return MV_NAMES[k] || FIELD_LABEL[k] || k; }
 function mvEl(k){ return k ? $('pageWrap').querySelector(`[data-mv="${CSS.escape(k)}"]`) : null; }
 function extraById(id){ return (S.extras || []).find(x => x.id === id); }
 function getOff(k){
@@ -2549,19 +2823,20 @@ $('stageView').addEventListener('pointermove', e => {
   const f = mmPerPx();
   let dx = (e.clientX - drag.x0) * f, dy = (e.clientY - drag.y0) * f;
   if (drag.locked || (!drag.moved && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 4)) return;
-  if (!drag.moved){ drag.moved = true; drag.el.classList.add('mv-drag'); $('selBar').hidden = true; }
-  // چسبیدن به خط وسط برگه (با Alt غیرفعال می‌شود)
-  let sv = false, sh = false;
-  if (!e.altKey){
-    if (Math.abs(drag.cx + dx) < 1.5){ dx = -drag.cx; sv = true; }
-    if (Math.abs(drag.cy + dy) < 1.5){ dy = -drag.cy; sh = true; }
+  if (!drag.moved){ drag.moved = true; drag.el.classList.add('mv-drag'); $('selBar').hidden = true; try { drag.G = guideTargets(drag.cert, drag.el); } catch(_){ drag.G = null; } }
+  // چسبیدن به وسط برگه، حاشیه‌ها و لبه/وسط بخش‌های دیگر (با Alt غیرفعال می‌شود)
+  let sv = false, sh = false, gx = null, gy = null;
+  if (!e.altKey && drag.G){
+    const thr = clamp(6 * f, .6, 2.5), g = guideSnap(drag.G, dx, dy, thr);
+    if (g.gx != null){ dx = g.dx; sv = true; gx = g.gx; }
+    if (g.gy != null){ dy = g.dy; sh = true; gy = g.gy; }
   }
   const g = num(S.snap, 0);
   if (g > 0){ if (!sv) dx = Math.round((drag.base.x + dx) / g) * g - drag.base.x; if (!sh) dy = Math.round((drag.base.y + dy) / g) * g - drag.base.y; }
   drag.dx = dx; drag.dy = dy;
   const bx = drag.base.x + dx, by = drag.base.y + dy;
   drag.el.style.transform = `translate(calc(var(--mm)*${bx.toFixed(2)}),calc(var(--mm)*${by.toFixed(2)}))${drag.base.r ? ` rotate(${drag.base.r}deg)` : ''}`;
-  snapLines(drag.cert, sv, sh);
+  drawGuides(drag.cert, gx, gy);
 });
 function snapLines(cert, v, h){
   cert.querySelectorAll('.snap').forEach(x => x.remove());
@@ -2572,6 +2847,7 @@ function endDrag(e){
   if (!drag || (e && e.pointerId !== drag.pid)) return;
   const d = drag; drag = null;
   try { $('stageView').releasePointerCapture(d.pid); } catch(_){}
+  if (d.cert) d.cert.querySelectorAll('.snap').forEach(x => x.remove());
   if (d.moved){ moveBy(d.k, d.dx, d.dy); sel = d.k; changed({now:true}); lastTap = null; return; }
   // دو بار زدن (موس یا لمس) ← ویرایش
   const now = Date.now();
@@ -2587,7 +2863,7 @@ let editing = null;
 function inlineEdit(k){
   let el = mvEl(k); if (!el) return false;
   let raw, commit, multi = true;
-  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (!ex || (ex.type && ex.type !== 'text')) return false; raw = ex.text; commit = v => { ex.text = v; }; }
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex && ex.type === 'badge'){ el = el.querySelector('.b-t1'); if (!el) return false; raw = ex.text || ''; commit = v => { ex.text = v; }; multi = false; } else { if (!ex || (ex.type && ex.type !== 'text')) return false; raw = ex.text; commit = v => { ex.text = v; }; } }
   else if (/^sign\d$/.test(k)){ const i = +k[4]; el = el.querySelector('.sig-txt'); if (!el) return false; raw = S.signers[i].text; commit = v => { S.signers[i].text = v; }; }
   else if (S.fields[k]){ raw = S.fields[k].text; commit = v => { S.fields[k].text = v; }; multi = ['body','verse'].includes(k); }
   else return false;
@@ -2634,7 +2910,7 @@ function openStyle(k){
 }
 function openEditor(k){
   let target;
-  if (k.startsWith('x:')){ activateTab('tab-text'); renderExtras(); target = document.querySelector(`[data-xtext="${CSS.escape(k.slice(2))}"]`); }
+  if (k.startsWith('x:')){ activateTab('tab-text'); renderExtras(); const q = CSS.escape(k.slice(2)); target = document.querySelector(`[data-xtext="${q}"]`) || document.querySelector(`.xcard[data-xid="${q}"] textarea, .xcard[data-xid="${q}"] input[type=text], .xcard[data-xid="${q}"] input`); }
   else if (k === 'divider'){ activateTab('tab-look'); target = $('divStyle'); }
   else {
     activateTab('tab-text');
@@ -2647,7 +2923,7 @@ function openEditor(k){
 function growSel(dir){
   const k = sel; if (!k) return;
   const f = dir > 0 ? 1.08 : 1 / 1.08, r = v => Math.round(v * 2) / 2;
-  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex){ if (ex.type === 'img' || ex.type === 'orn') ex.w = clamp(Math.round(num(ex.w, 40) * f), 5, 400); else ex.size = clamp(r(ex.size * f), 7, 120); } renderExtras(); }
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex){ if (ex.type === 'shape'){ ex.w = clamp(r(num(ex.w, 60) * f), 3, 600); if (!/line|dots/.test(ex.kind)) ex.h = clamp(r(num(ex.h, 24) * f), 3, 600); } else if (['img', 'orn', 'badge', 'qr'].includes(ex.type)) ex.w = clamp(Math.round(num(ex.w, 40) * f), 5, 400); else ex.size = clamp(r(ex.size * f), 7, 120); } renderExtras(); }
   else if (k === 'logo') S.logoSize = clamp(S.logoSize + dir * 2, 10, 60);
   else if (/^stamp\d?$/.test(k)) S.stampSize = clamp((S.stampSize || 27) + dir * 2, 15, 50);
   else if (k === 'logoR' || k === 'logoL'){ const sk = k + 'Size'; S[sk] = clamp(num(S[sk], 20) + dir * 2, 8, 80); }
@@ -2739,11 +3015,12 @@ $('btnAddImg2').addEventListener('click', () => { imgTarget = 'newx'; $('imgFile
 function renderExtras(){
   const box = $('extraList'); if (!box) return;
   const {W} = pageDims();
-  const kindLabel = {text:'متن آزاد', img:'تصویر', orn:'نقش تزئینی'};
+  const kindLabel = {text:'متن آزاد', img:'تصویر', orn:'نقش تزئینی', shape:'⬛ شکل', badge:'🏅 نشان', qr:'▦ کد QR'};
   box.innerHTML = (S.extras || []).map((ex, i) => {
     const id = esc(ex.id), t = ex.type || 'text';
-    let body = '';
-    if (t === 'img'){
+    let body = extraCardBody(ex) || '';
+    if (body){}
+    else if (t === 'img'){
       body = `<div class="img-slot" id="slot-x-${id}">${ex.src ? `<img src="${ex.src}" alt="تصویر">` : ''}<button type="button" class="btn sm soft" data-img="x:${id}">تعویض تصویر</button>${ex.src ? `<button type="button" class="btn sm" data-imgclean="x:${id}">حذف زمینهٔ سفید</button>` : ''}</div>
         <div class="grid2"><div><label class="lbl">پهنا (میلی‌متر)</label><input type="number" min="5" max="${W}" step="1" value="${ex.w}" data-xw="${id}"></div></div>`;
     } else if (t === 'orn'){
@@ -2762,7 +3039,7 @@ function renderExtras(){
       </div>
       ${styleExtraHTML('x:' + ex.id, ex)}`;
     }
-    return `<div class="card xcard" data-xid="${id}">
+    return `<div class="card xcard" data-xid="${id}" data-xt="${esc(t)}">
       <div class="fld-head"><label class="t"${t === 'text' ? ` for="xt-${id}"` : ''}>${kindLabel[t]} ${faDigits(i + 1)}</label><span class="row"><button type="button" class="btn sm" data-xsel="${id}">نشان بده</button><button type="button" class="btn sm" data-xdup="${id}" title="یک نسخهٔ دیگر">⧉</button><button type="button" class="btn sm danger" data-xdel="${id}">حذف</button></span></div>
       ${body}</div>`;
   }).join('') || '<p class="small muted">هنوز چیزی اضافه نکرده‌ای.</p>';
@@ -2913,7 +3190,8 @@ document.addEventListener('paste', e => {
   const a = document.activeElement;
   if (a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable)) return;
   const it = [...((e.clipboardData && e.clipboardData.items) || [])].find(i => i.type && i.type.startsWith('image/'));
-  if (!it) return;
+  if (!it || (CLIP && CLIP.t > IMG_PASTE_T)){ if (CLIP && !editing){ e.preventDefault(); pasteClip(); } return; }
+  IMG_PASTE_T = Date.now();
   e.preventDefault();
   const f = it.getAsFile(); if (f) ingestImage(f, imgKeyOf(sel) || 'newx');
 });
@@ -3357,6 +3635,466 @@ function init(){
   loadFrameImg().finally(() => { frameCache.clear(); render(); thumbsDirty = true; idle(() => renderThumbs()); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => render());
 }
+/* ═════════════ لوح‌نگار ۶ ═════════════ */
+function rgba(hex, a){ const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return hex || 'transparent'; const n = parseInt(m[1], 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${(+a).toFixed(3)})`; }
+function shade(hex, p){
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '')); if (!m) return hex;
+  const n = parseInt(m[1], 16), t = p < 0 ? 0 : 255, a = Math.abs(p), f = c => Math.round(c + (t - c) * a);
+  return '#' + ((1 << 24) | (f(n >> 16) << 16) | (f((n >> 8) & 255) << 8) | f(n & 255)).toString(16).slice(1);
+}
+function plainText(text, ctx){ return String(text || '').replace(/\{([^{}\n]{1,40})\}/g, (m, k) => { const v = resolveToken(k, ctx); return v == null ? m : v; }); }
+
+/* ── جهت برگه: عمودی / افقی برای همهٔ الگوها ── */
+function landTwin(th){ return th && THEMES.find(t => t.id === th.id + '-l'); }
+function landBase(th){ return th && /-l$/.test(th.id) ? THEMES.find(t => t.id === baseThemeId(th.id)) || null : null; }
+function baseThemeId(id){ return String(id || '').replace(/-l$/, ''); }
+function syncOrientUI(){ const o = S.page.orient === 'landscape' ? 'landscape' : 'portrait'; document.querySelectorAll('button[data-orient]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.orient === o))); document.body.dataset.pageOrient = o; }
+function setOrient(o, quiet){
+  o = o === 'landscape' ? 'landscape' : 'portrait';
+  orientPref = o;
+  if ((S.page.orient === 'landscape' ? 'landscape' : 'portrait') === o){ syncOrientUI(); return; }
+  const a = pageDims(); S.page.orient = o; const b = pageDims();
+  const sx = b.W / a.W, sy = b.H / a.H, r1 = v => Math.round(v * 10) / 10;
+  (S.extras || []).forEach(ex => { ex.x = r1(num(ex.x, a.W / 2) * sx); ex.y = r1(num(ex.y, a.H / 2) * sy); });
+  for (const k in S.pos){ const p = S.pos[k]; if (p.x) p.x = r1(p.x * sx); if (p.y) p.y = r1(p.y * sy); }
+  if (S.photo.x != null) S.photo.x = r1(S.photo.x * sx);
+  if (S.photo.y != null) S.photo.y = r1(S.photo.y * sy);
+  if (isPaper()){ const m = S.paper.margins; S.paper.margins = {t:m.l, r:m.t, b:m.r, l:m.b}; }
+  else S.margins = autoMargins(S.frame.style, b.W, b.H, num(S.frame.size, 100) / 100);
+  // اندازهٔ قلم‌ها: اگر کاربر دست نزده، اندازه‌های ویژهٔ همان جهت
+  const th = THEMES.find(t => t.id === baseThemeId(S.theme)), tw = landTwin(th);
+  if (th && tw){
+    const from = o === 'landscape' ? (th.sizes || {}) : (tw.sizes || {}), to = o === 'landscape' ? (tw.sizes || {}) : (th.sizes || {});
+    for (const k in S.styles){ const f = from[k] || DEFAULT_SIZE[k], t = to[k] || DEFAULT_SIZE[k]; if (f && t && S.styles[k].size === f) S.styles[k].size = t; }
+  }
+  const bs = S.styles.body; if (bs){ if (o === 'landscape' && num(bs.w, 100) >= 100) bs.w = 82; else if (o === 'portrait' && num(bs.w, 100) === 82) bs.w = 100; }
+  if (/-l$/.test(S.theme || '')) S.theme = baseThemeId(S.theme);
+  thumbsDirty = true;
+  syncUI(); changed({now:true, thumbs:true});
+  if ($('tab-theme').getAttribute('aria-selected') === 'true') renderThumbs();
+  if (!quiet) toast(o === 'landscape' ? '▭ برگه افقی شد؛ حاشیه‌ها و جای بخش‌ها خودکار متناسب شد. همهٔ الگوها هم افقی نشان داده می‌شوند.' : '▯ برگه عمودی شد.');
+}
+document.addEventListener('click', e => { const b = e.target.closest('button[data-orient]'); if (b){ e.preventDefault(); setOrient(b.dataset.orient); } });
+
+/* ── راهنماهای هوشمند هنگام کشیدن ── */
+function guideTargets(cert, el){
+  const f = mmPerPx(), cr = cert.getBoundingClientRect();
+  const R = r => ({l:(r.left - cr.left) * f, r:(r.right - cr.left) * f, t:(r.top - cr.top) * f, b:(r.bottom - cr.top) * f});
+  const me = R(el.getBoundingClientRect()), {W, H} = pageDims(), M = isPaper() ? S.paper.margins : S.margins;
+  const xs = [{v:W / 2, c:1}, {v:num(M.l, 0)}, {v:W - num(M.r, 0)}], ys = [{v:H / 2, c:1}, {v:num(M.t, 0)}, {v:H - num(M.b, 0)}];
+  cert.querySelectorAll('[data-mv]').forEach(o => {
+    if (o === el || el.contains(o) || o.contains(el)) return;
+    const r = R(o.getBoundingClientRect()); if (r.r - r.l < .5 || r.b - r.t < .5) return;
+    xs.push({v:r.l}, {v:(r.l + r.r) / 2}, {v:r.r}); ys.push({v:r.t}, {v:(r.t + r.b) / 2}, {v:r.b});
+  });
+  return {me, xs, ys};
+}
+function guideSnap(G, dx, dy, thr){
+  const best = (cands, tg, d) => { let bd = thr, bv = null; for (const c of cands) for (const t of tg){ const dd = t.v - (c + d); if (Math.abs(dd) < Math.abs(bd)){ bd = dd; bv = t.v; } } return bv == null ? null : {d:d + bd, v:bv}; };
+  const me = G.me, sx = best([me.l, (me.l + me.r) / 2, me.r], G.xs, dx), sy = best([me.t, (me.t + me.b) / 2, me.b], G.ys, dy);
+  return {dx:sx ? sx.d : dx, dy:sy ? sy.d : dy, gx:sx ? sx.v : null, gy:sy ? sy.v : null};
+}
+function drawGuides(cert, gx, gy){
+  cert.querySelectorAll('.snap').forEach(x => x.remove());
+  let h = '';
+  if (gx != null) h += `<i class="snap v" style="left:calc(var(--mm)*${gx.toFixed(2)})"></i>`;
+  if (gy != null) h += `<i class="snap h" style="top:calc(var(--mm)*${gy.toFixed(2)})"></i>`;
+  if (h) cert.insertAdjacentHTML('beforeend', h);
+}
+
+/* ── خطوط راهنمای برگه و حالت تمرکز ── */
+function addGridOverlay(){
+  const cert = $('pageWrap').querySelector('.cert'); if (!cert) return;
+  cert.querySelectorAll('.gridov').forEach(x => x.remove());
+  if (!showGrid) return;
+  const M = isPaper() ? S.paper.margins : S.margins;
+  cert.insertAdjacentHTML('beforeend', `<div class="gridov" aria-hidden="true"><i class="g-c v"></i><i class="g-c h"></i><i class="g-t v" style="left:33.333%"></i><i class="g-t v" style="left:66.667%"></i><i class="g-t h" style="top:33.333%"></i><i class="g-t h" style="top:66.667%"></i><b class="g-m" style="top:calc(var(--mm)*${num(M.t, 0)});right:calc(var(--mm)*${num(M.r, 0)});bottom:calc(var(--mm)*${num(M.b, 0)});left:calc(var(--mm)*${num(M.l, 0)})"></b></div>`);
+}
+function toggleGrid(on){ showGrid = on == null ? !showGrid : !!on; try { localStorage.setItem('lohnegar-grid', showGrid ? '1' : ''); } catch(e){} $('btnGrid').setAttribute('aria-pressed', String(showGrid)); addGridOverlay(); }
+function toggleFocus(on){ const v = on == null ? !document.body.classList.contains('focus-mode') : !!on; document.body.classList.toggle('focus-mode', v); $('btnFocus').setAttribute('aria-pressed', String(v)); $('btnFocus').textContent = v ? '⤡ پنل' : '⛶ بزرگ'; setTimeout(fitStage, 30); }
+
+/* ── عمل‌های بخش‌ها (منوی راست‌کلیک، میان‌برها) ── */
+const TEXT_KEYS = ['font', 'size', 'bold', 'color', 'lh', 'ls', 'align', 'fx'];
+function isTextKey(k){ if (!k) return false; if (k.startsWith('x:')){ const ex = exOf(k); return !!ex && (!ex.type || ex.type === 'text'); } return !!(S.fields[k] && S.styles[k]); }
+function styleObj(k){ return k.startsWith('x:') ? exOf(k) : S.styles[k]; }
+function rectMM(el){ const cert = el.closest('.cert'), cr = cert.getBoundingClientRect(), r = el.getBoundingClientRect(), f = mmPerPx(); return {l:(r.left - cr.left) * f, t:(r.top - cr.top) * f, w:r.width * f, h:r.height * f, cx:(r.left + r.width / 2 - cr.left) * f, cy:(r.top + r.height / 2 - cr.top) * f}; }
+function exAbs(ex, k){ const p = S.pos[k] || {}; const {W, H} = pageDims(); return {x:num(ex.x, W / 2) + num(p.x, 0), y:num(ex.y, H / 2) + num(p.y, 0)}; }
+function cloneExtra(ex, k, at){
+  const c = JSON.parse(JSON.stringify(ex)); c.id = newExtraId(); delete c.hidden;
+  const a = exAbs(ex, k); c.x = at ? at.x : a.x + 6; c.y = at ? at.y : a.y + 6;
+  const p = S.pos[k]; if (p && (p.r || p.o != null || p.z)){ const q = {x:0, y:0}; if (p.r) q.r = p.r; if (p.o != null) q.o = p.o; if (p.z) q.z = p.z; S.pos['x:' + c.id] = q; }
+  return c;
+}
+function dupSel(k, at){
+  k = k || sel; if (!k) return;
+  const {W, H} = pageDims();
+  if (k.startsWith('x:')){ const ex = exOf(k); if (ex) pushExtra(cloneExtra(ex, k, at), '⧉ یک نسخهٔ دیگر ساخته شد؛ بکشش هرجا خواستی.'); return; }
+  const el = mvEl(k), r = el ? rectMM(el) : null;
+  if (S.fields[k] && S.styles[k]){
+    const s = S.styles[k], col = s.color || (['title', 'name', 'basmala'].includes(k) ? S.colors.accent : S.colors.ink);
+    pushExtra({id:newExtraId(), type:'text', text:S.fields[k].text, font:s.font, size:s.size, bold:s.bold, color:col, lh:s.lh, ls:s.ls, align:s.align, fx:s.fx,
+      x:at ? at.x : (r ? r.cx + 6 : W / 2), y:at ? at.y : (r ? r.t + 6 : H * .3), w:r ? Math.max(30, Math.round(r.w + 4)) : Math.round(W * .6)}, '⧉ یک نسخهٔ آزاد از این متن ساخته شد؛ هرجا خواستی بکشش.');
+    return;
+  }
+  const ik = imgKeyOf(k), src = ik && getImg(ik);
+  if (src){ pushExtra({id:newExtraId(), type:'img', src, x:at ? at.x : (r ? r.cx + 6 : W / 2), y:at ? at.y : (r ? r.t + 6 : H * .3), w:r ? Math.max(8, Math.round(r.w)) : 30}, '⧉ یک نسخهٔ آزاد از این تصویر ساخته شد.'); return; }
+  toast('این بخش را نمی‌شود تکثیر کرد.', true);
+}
+function copySel(k){
+  k = k || sel; if (!k) return;
+  if (k.startsWith('x:')){ const ex = exOf(k); if (!ex) return; CLIP = {ex:JSON.parse(JSON.stringify(ex)), k, t:Date.now()}; }
+  else CLIP = {k, t:Date.now()};
+  toast('📋 کپی شد؛ Ctrl+V بزن یا روی برگه راست‌کلیک ← «چسباندن».');
+}
+function pasteClip(at){
+  if (!CLIP) return false;
+  if (!CLIP.ex){ dupSel(CLIP.k, at); return true; }
+  const c = cloneExtra(CLIP.ex, CLIP.k, at);
+  if (!at){ CLIP.ex.x = c.x - num((S.pos[CLIP.k] || {}).x, 0); CLIP.ex.y = c.y - num((S.pos[CLIP.k] || {}).y, 0); }
+  pushExtra(c, '📌 چسبانده شد.');
+  return true;
+}
+function zOrder(k, d){ const p = S.pos[k] || {x:0, y:0}; p.z = clamp(num(p.z, 0) + d, -1, 6); if (!p.z) delete p.z; S.pos[k] = p; cleanPos(k); changed({now:true}); toast(d > 0 ? '⬆️ آمد جلو.' : '⬇️ رفت عقب (پشت متن‌ها).'); }
+function toggleLock(k){ const p = S.pos[k] || {x:0, y:0}; if (p.lk) delete p.lk; else p.lk = true; const on = !!p.lk; S.pos[k] = p; cleanPos(k); changed({now:true}); toast(on ? '🔒 جای این بخش قفل شد.' : '🔓 قفل باز شد.'); }
+function centerOn(k, axis){
+  const el = mvEl(k); if (!el) return;
+  if (isLocked(k)){ toast('🔒 جای این بخش قفل است.'); return; }
+  const r = rectMM(el), {W, H} = pageDims();
+  moveBy(k, axis === 'x' ? W / 2 - r.cx : 0, axis === 'y' ? H / 2 - r.cy : 0); changed({now:true});
+}
+function deleteExtra(k){ const id = k.slice(2); S.extras = (S.extras || []).filter(x => x.id !== id); delete S.pos[k]; if (sel === k) sel = null; renderExtras(); changed({now:true}); toast('🗑️ حذف شد (Ctrl+Z برمی‌گرداند).'); }
+
+/* ── شکل‌ها ── */
+function addShape(kind, at){
+  const {W, H} = pageDims(); kind = kind || 'round';
+  const line = /line|dots/.test(kind), circ = kind === 'circle';
+  pushExtra({id:newExtraId(), type:'shape', kind, x:at ? at.x : W / 2, y:at ? at.y : Math.round(H * .48),
+    w:line ? Math.round(W * .5) : circ ? 40 : Math.round(W * .62), h:line ? 2 : circ ? 40 : 24, stroke:S.colors.accent, fill:S.colors.accent, fill2:'#ffffff',
+    fo:line || kind === 'frame' ? 0 : 10, sw:line ? .6 : .5, rad:4, ang:90, grad:false, shadow:false},
+    '⬛ شکل اضافه شد؛ بکشش، اندازه و رنگش را در کارت همین شکل (زبانهٔ «متن») عوض کن. برای پشت متن بردن: راست‌کلیک ← «ببر عقب».');
+}
+function shapeHTML(ex, box, cl, kx){
+  const k = ex.kind || 'round', sw = num(ex.sw, .5), st = ex.stroke || S.colors.accent;
+  if (/line|dots/.test(k)){
+    const inner = k === 'line' ? `height:calc(var(--mm)*${Math.max(sw, .2)});background:${st};border-radius:calc(var(--mm)*${sw / 2})`
+      : k === 'dline' ? `height:calc(var(--mm)*${Math.max(sw * 3.4, .9)});border-top:calc(var(--mm)*${sw}) solid ${st};border-bottom:calc(var(--mm)*${sw}) solid ${st};box-sizing:border-box`
+      : `height:0;border-top:calc(var(--mm)*${Math.max(sw * 1.8, .5)}) dotted ${st}`;
+    return `<div class="xt xs xl${cl}" ${box}height:calc(var(--mm)*4);${posCSS(kx)}"><i style="display:block;width:100%;${inner}"></i></div>`;
+  }
+  const h = num(ex.h, 24), fo = num(ex.fo, 10) / 100;
+  let css = `height:calc(var(--mm)*${h});box-sizing:border-box;`;
+  if (fo > 0) css += `background:${ex.grad ? `linear-gradient(${num(ex.ang, 90)}deg,${rgba(ex.fill || st, fo)},${rgba(ex.fill2 || '#ffffff', fo)})` : rgba(ex.fill || st, fo)};`;
+  if (sw > 0) css += k === 'frame' ? `border:calc(var(--mm)*${Math.max(sw * 3, 1)}) double ${st};` : `border:calc(var(--mm)*${sw}) solid ${st};`;
+  css += 'border-radius:' + (k === 'circle' ? '50%' : k === 'pill' ? `calc(var(--mm)*${h / 2})` : k === 'rect' ? '0' : `calc(var(--mm)*${num(ex.rad, 4)})`) + ';';
+  if (ex.shadow) css += 'box-shadow:0 calc(var(--mm)*.8) calc(var(--mm)*2.6) rgba(0,0,0,.2);';
+  return `<div class="xt xs${cl}" ${box}${css}${posCSS(kx)}"></div>`;
+}
+
+/* ── نشان‌ها، مهرها و روبان‌ها ── */
+function addBadge(kind, at){
+  const {W, H} = pageDims(); kind = kind || 'seal';
+  const rib = kind === 'ribbon';
+  pushExtra({id:newExtraId(), type:'badge', kind, x:at ? at.x : (rib ? W / 2 : Math.round(W * .2)), y:at ? at.y : Math.round(H * (rib ? .2 : .64)),
+    w:rib ? Math.round(W * .48) : kind === 'laurel' ? 46 : 34, color:'#c9a03a', color2:S.colors.accent, tcolor:'', text:rib ? 'برگزیدهٔ سال' : 'رتبهٔ اول', text2:'', font:'Lalezar', size:rib ? 15 : 12},
+    '🏅 نشان اضافه شد؛ دو بار بزن تا متنش را همان‌جا بنویسی. شکل و رنگ در کارت همین نشان.');
+}
+function starPts(n, cx, cy, ro, ri, rot){ const p = []; for (let i = 0; i < n * 2; i++){ const a = (i / (n * 2)) * Math.PI * 2 + (rot || 0) - Math.PI / 2, r = i % 2 ? ri : ro; p.push((cx + r * Math.cos(a)).toFixed(2) + ',' + (cy + r * Math.sin(a)).toFixed(2)); } return p.join(' '); }
+function badgeSVG(kind, c1, c2, uid){
+  const L = shade(c1, .55), D = shade(c1, -.42), DD = shade(c1, -.6), R2 = shade(c2, -.3), RL = shade(c2, .25);
+  const defs = `<defs><radialGradient id="${uid}g" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="${L}"/><stop offset=".55" stop-color="${c1}"/><stop offset="1" stop-color="${D}"/></radialGradient><linearGradient id="${uid}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L}"/><stop offset="1" stop-color="${c1}"/></linearGradient><linearGradient id="${uid}r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${RL}"/><stop offset="1" stop-color="${R2}"/></linearGradient></defs>`;
+  const disc = (cx, cy, r) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${uid}l)" stroke="${DD}" stroke-width="1.1"/><circle cx="${cx}" cy="${cy}" r="${(r - 3.6).toFixed(2)}" fill="none" stroke="${D}" stroke-width="1.3" stroke-dasharray=".1 2.3" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="${(r - 6.4).toFixed(2)}" fill="none" stroke="${D}" stroke-width=".5"/>`;
+  const tails = (cy, len, spread) => `<polygon points="${50 - spread - 4},${cy} ${50 - 3},${cy + 4} ${50 - spread + 9},${cy + len} ${50 - spread + 1},${cy + len - 9} ${50 - spread - 8},${cy + len - 1}" fill="url(#${uid}r)"/><polygon points="${50 + 3},${cy + 4} ${50 + spread + 4},${cy} ${50 + spread + 8},${cy + len - 1} ${50 + spread - 1},${cy + len - 9} ${50 + spread - 9},${cy + len}" fill="url(#${uid}r)"/><polygon points="${50 - spread + 2},${cy + 2} ${50 - spread + 5},${cy + 3} ${50 - spread + 11},${cy + len - 4} ${50 - spread + 8},${cy + len - 3}" fill="${RL}" opacity=".45"/>`;
+  let body = '', vb = '0 0 100 100';
+  if (kind === 'seal'){ body = `<polygon points="${starPts(30, 50, 50, 49, 44.5)}" fill="url(#${uid}g)" stroke="${D}" stroke-width=".5"/>` + disc(50, 50, 39); }
+  else if (kind === 'burst'){ body = `<polygon points="${starPts(16, 50, 50, 49.5, 37)}" fill="url(#${uid}g)" stroke="${D}" stroke-width=".6"/>` + disc(50, 50, 33); }
+  else if (kind === 'medal'){ vb = '0 0 100 142'; body = tails(66, 74, 22) + `<polygon points="${starPts(26, 50, 50, 47, 43)}" fill="url(#${uid}g)" stroke="${D}" stroke-width=".5"/>` + disc(50, 50, 38); }
+  else if (kind === 'rosette'){
+    vb = '0 0 100 145';
+    let pl = ''; for (let i = 0; i < 28; i++){ const a = i / 28 * Math.PI * 2; pl += `<ellipse cx="${(50 + 38 * Math.cos(a)).toFixed(2)}" cy="${(50 + 38 * Math.sin(a)).toFixed(2)}" rx="10.5" ry="5.2" transform="rotate(${(a * 180 / Math.PI).toFixed(1)} ${(50 + 38 * Math.cos(a)).toFixed(2)} ${(50 + 38 * Math.sin(a)).toFixed(2)})" fill="${i % 2 ? c2 : RL}" stroke="${R2}" stroke-width=".4"/>`; }
+    body = tails(70, 74, 20) + pl + disc(50, 50, 31);
+  }
+  else if (kind === 'ribbon'){
+    vb = '0 0 100 30';
+    body = `<polygon points="0,9 16,9 16,27 0,27 6,18" fill="${R2}"/><polygon points="100,9 84,9 84,27 100,27 94,18" fill="${R2}"/><polygon points="10,22 16,22 16,27" fill="${shade(c2, -.55)}"/><polygon points="90,22 84,22 84,27" fill="${shade(c2, -.55)}"/><rect x="10" y="3" width="80" height="19" rx=".6" fill="url(#${uid}r)"/><rect x="11.4" y="4.3" width="77.2" height="16.4" fill="none" stroke="${c1}" stroke-width=".55"/><rect x="12.6" y="5.4" width="74.8" height="14.2" fill="none" stroke="${c1}" stroke-width=".25" stroke-dasharray=".1 .9" stroke-linecap="round"/>`;
+  }
+  else if (kind === 'shield'){
+    vb = '0 0 100 115';
+    const P = 'M50 3 L94 14 V52 C94 82 72 102 50 112 C28 102 6 82 6 52 V14 Z';
+    body = `<path d="${P}" fill="url(#${uid}r)" stroke="${D}" stroke-width="1"/><path d="${P}" transform="translate(7 7.2) scale(.86)" fill="none" stroke="${c1}" stroke-width="2.4"/><path d="${P}" transform="translate(11.5 11.6) scale(.77)" fill="none" stroke="${c1}" stroke-width=".7" stroke-dasharray=".1 2" stroke-linecap="round"/>`;
+  }
+  else if (kind === 'laurel'){
+    vb = '0 0 100 92';
+    let lv = '';
+    for (const side of [-1, 1]) for (let i = 0; i < 11; i++){
+      const t = 104 + i * 13.2, a = (side < 0 ? t : 180 - t) * Math.PI / 180, cx = 50 + 40 * Math.cos(a), cy = 47 + 40 * Math.sin(a), rot = (a * 180 / Math.PI) + 90 * side * -1;
+      for (const off of [-1, 1]){ const ox = cx + off * 4.2 * Math.cos(a), oy = cy + off * 4.2 * Math.sin(a); lv += `<ellipse cx="${ox.toFixed(2)}" cy="${oy.toFixed(2)}" rx="6.4" ry="2.5" transform="rotate(${(rot + off * 32 * side).toFixed(1)} ${ox.toFixed(2)} ${oy.toFixed(2)})" fill="url(#${uid}l)" stroke="${D}" stroke-width=".35"/>`; }
+    }
+    body = `<path d="M50 87 C30 86 12 70 10 47 C9 33 14 20 22 11" fill="none" stroke="${D}" stroke-width="1.1"/><path d="M50 87 C70 86 88 70 90 47 C91 33 86 20 78 11" fill="none" stroke="${D}" stroke-width="1.1"/>` + lv + `<path d="M40 84 L50 90 L60 84 L58 91 L50 88 L42 91 Z" fill="url(#${uid}r)"/>`;
+  }
+  return `<svg class="b-svg" viewBox="${vb}" preserveAspectRatio="none" aria-hidden="true">${defs}${body}</svg>`;
+}
+function badgeHTML(ex, box, cl, kx, ctx){
+  const kind = BADGE_RATIO[ex.kind] ? ex.kind : 'seal', w = num(ex.w, 34), h = w * BADGE_RATIO[kind], T = BADGE_TXT[kind];
+  const c1 = ex.color || '#c9a03a', c2 = ex.color2 || S.colors.accent;
+  const tc = ex.tcolor || (kind === 'ribbon' || kind === 'shield' ? '#ffffff' : shade(c1, -.62));
+  const uid = ('b' + ex.id + (c1 + c2).replace(/#/g, '')).replace(/[^a-z0-9]/gi, '');
+  const sz = num(ex.size, 12), t2 = ex.text2 ? `<span class="b-t2">${fieldHTML(String(ex.text2), ctx)}</span>` : '';
+  return `<div class="xt xb${cl}" ${box}height:calc(var(--mm)*${h.toFixed(2)});${posCSS(kx)}">${badgeSVG(kind, c1, c2, uid)}<div class="b-tx" style="top:${T.cy}%;width:${T.w}%;color:${tc};font-family:'${ex.font || 'Lalezar'}',Vazirmatn,sans-serif;font-size:calc(var(--mm)*${(sz * .3528).toFixed(3)})"><span class="b-t1">${fieldHTML(String(ex.text || ''), ctx)}</span>${t2}</div></div>`;
+}
+
+/* ── کد QR ── */
+const qrCache = new Map();
+function qrDataURL(text, dark, light){
+  const key = text + '|' + dark + '|' + light; if (qrCache.has(key)) return qrCache.get(key);
+  let q; try { q = QR.encode(text); } catch(e){ return ''; }
+  const n = q.length, quiet = 3, px = 12, c = document.createElement('canvas'); c.width = c.height = (n + quiet * 2) * px;
+  const x = c.getContext('2d');
+  if (light && light !== 'transparent'){ x.fillStyle = light; x.fillRect(0, 0, c.width, c.height); }
+  x.fillStyle = dark || '#000';
+  for (let y = 0; y < n; y++) for (let xx = 0; xx < n; xx++) if (q[y][xx]) x.fillRect((xx + quiet) * px, (y + quiet) * px, px, px);
+  const u = c.toDataURL('image/png'); if (qrCache.size > 400) qrCache.clear(); qrCache.set(key, u); return u;
+}
+function addQR(at){
+  const {W, H} = pageDims();
+  pushExtra({id:newExtraId(), type:'qr', text:'گواهی شمارهٔ {شماره} — {نام} — صادرشده با لوح‌نگار حکیمستان', label:'شمارهٔ {شماره}', color:'#1a1a1a', bg:'#ffffff', nobg:false,
+    x:at ? at.x : Math.round(W * .82), y:at ? at.y : Math.round(H * .74), w:22}, '▦ کد QR اضافه شد؛ برای هر نفر جدا ساخته می‌شود. متن یا نشانی داخلش را در کارت همین کد عوض کن.');
+}
+function qrHTML(ex, box, cl, kx, ctx){
+  const col = ex.color || '#1a1a1a', src = qrDataURL(plainText(ex.text || ' ', ctx) || ' ', col, ex.nobg ? 'transparent' : (ex.bg || '#ffffff'));
+  const lab = ex.label ? `<div class="q-l" style="color:${col}">${fieldHTML(String(ex.label), ctx)}</div>` : '';
+  return `<div class="xt xq${cl}" ${box}${posCSS(kx)}">${src ? `<img src="${src}" alt="">` : '<span class="q-err">متن کد خیلی بلند است</span>'}${lab}</div>`;
+}
+
+/* ── کارت‌های ویرایش شکل، نشان و QR ── */
+function extraCardBody(ex){
+  const t = ex.type; if (t !== 'shape' && t !== 'badge' && t !== 'qr') return null;
+  const id = esc(ex.id), {W} = pageDims();
+  const P = (prop, more) => `data-xp="${prop}" data-xpid="${id}"${more || ''}`;
+  const col = (prop, label, def) => `<label class="check"><input type="color" value="${esc(ex[prop] || def)}" ${P(prop)}> ${label}</label>`;
+  const rng = (prop, label, min, max, step, def, unit) => `<div><label class="lbl">${label}: <output>${faDigits(num(ex[prop], def))}</output>${unit || ''}</label><input type="range" min="${min}" max="${max}" step="${step}" value="${num(ex[prop], def)}" ${P(prop, ' data-num="1"')}></div>`;
+  const chk = (prop, label) => `<label class="check"><input type="checkbox"${ex[prop] ? ' checked' : ''} ${P(prop)}> ${label}</label>`;
+  const kinds = list => `<div class="chips xk">${list.map(([k, n]) => `<button type="button" data-xpset="kind" data-xpid="${id}" data-v="${k}" aria-pressed="${ex.kind === k}">${esc(n)}</button>`).join('')}</div>`;
+  if (t === 'shape'){
+    const line = /line|dots/.test(ex.kind);
+    return kinds(SHAPES) + `<div class="grid2">${rng('w', 'پهنا', 3, W, 1, 60, ' mm')}${line ? '' : rng('h', 'بلندی', 3, 300, 1, 24, ' mm')}${rng('sw', line ? 'ضخامت خط' : 'ضخامت دور', 0, 4, .1, .5)}${line || /circle|rect|pill/.test(ex.kind) ? '' : rng('rad', 'گردی گوشه', 0, 30, .5, 4)}</div>
+      <div class="row">${col('stroke', line ? 'رنگ خط' : 'رنگ دور', S.colors.accent)}${line ? '' : col('fill', 'رنگ پر', S.colors.accent) + col('fill2', 'رنگ دوم', '#ffffff')}</div>
+      ${line ? '' : `<div class="grid2">${rng('fo', 'پررنگی پر', 0, 100, 1, 10, '٪')}${rng('ang', 'زاویهٔ شیب', 0, 360, 5, 90, '°')}</div><div class="row">${chk('grad', 'شیب دو رنگ')}${chk('shadow', 'سایه')}</div>`}`;
+  }
+  if (t === 'badge'){
+    return kinds(BADGES) + `<div class="grid2"><div><label class="lbl">متن اصلی</label><input type="text" value="${esc(ex.text || '')}" ${P('text')}></div><div><label class="lbl">متن دوم (کوچک)</label><input type="text" value="${esc(ex.text2 || '')}" ${P('text2')}></div>
+      <div><label class="lbl">فونت</label><select ${P('font')}>${fontOptions(ex.font || 'Lalezar')}</select></div>${rng('size', 'اندازهٔ متن', 5, 60, .5, 12, ' pt')}${rng('w', 'اندازهٔ نشان', 10, W, 1, 34, ' mm')}</div>
+      <div class="row">${col('color', 'طلایی', '#c9a03a')}${col('color2', 'روبان/زمینه', S.colors.accent)}${col('tcolor', 'رنگ متن', ex.kind === 'ribbon' || ex.kind === 'shield' ? '#ffffff' : '#5a3d07')}</div>
+      <p class="small muted">در متن نشان می‌توانی {نام}، {رتبه} یا نام هر ستون فهرست را بنویسی تا برای هر نفر جدا پر شود.</p>`;
+  }
+  return `<div><label class="lbl">متن یا نشانی داخل کد</label><textarea rows="2" ${P('text')}>${esc(ex.text || '')}</textarea><p class="small muted">مثلاً نشانی سایت مدرسه یا «https://…/verify?id={شماره}». {نام}، {شماره} و ستون‌های فهرست برای هر نفر جدا ساخته می‌شود.</p></div>
+    <div class="grid2">${rng('w', 'اندازه', 10, 80, 1, 22, ' mm')}<div><label class="lbl">نوشتهٔ زیر کد</label><input type="text" value="${esc(ex.label || '')}" ${P('label')}></div></div>
+    <div class="row">${col('color', 'رنگ کد', '#1a1a1a')}${col('bg', 'زمینه', '#ffffff')}${chk('nobg', 'زمینهٔ شفاف')}</div>`;
+}
+$('extraList').addEventListener('input', e => {
+  const el = e.target, p = el.dataset.xp; if (!p) return;
+  const ex = extraById(el.dataset.xpid); if (!ex) return;
+  ex[p] = el.type === 'checkbox' ? el.checked : el.dataset.num ? +el.value : el.value;
+  const o = el.type === 'range' && el.parentElement.querySelector('output'); if (o) o.textContent = faDigits(el.value);
+  changed();
+});
+$('extraList').addEventListener('click', e => {
+  const b = e.target.closest('[data-xpset]'); if (!b) return;
+  const ex = extraById(b.dataset.xpid); if (!ex) return;
+  const was = ex.kind; ex[b.dataset.xpset] = b.dataset.v;
+  if (ex.type === 'shape'){ const L = k => /line|dots/.test(k); if (L(ex.kind) && !L(was)){ ex.fo = 0; ex.sw = Math.max(num(ex.sw, .5), .5); } else if (!L(ex.kind) && L(was)){ ex.h = 24; ex.fo = 10; ex.sw = .5; } if (ex.kind === 'circle' && was !== 'circle') ex.h = ex.w = Math.min(num(ex.w, 40), 60); if (ex.kind === 'frame') ex.fo = 0; }
+  if (ex.type === 'badge'){ const rib = ex.kind === 'ribbon'; if (rib !== (was === 'ribbon')){ const {W} = pageDims(); ex.w = rib ? Math.round(W * .48) : 34; ex.size = rib ? 15 : 12; } }
+  renderExtras(); changed({now:true});
+});
+
+/* ── منوی راست‌کلیک / نگه‌داشتن ── */
+function ctxItems(k){
+  const it = [], ex = k.startsWith('x:') ? exOf(k) : null, txt = isTextKey(k) || /^sign\d$/.test(k) || (ex && ex.type === 'badge'), img = !!imgKeyOf(k);
+  if (txt) it.push(['edit', '✏️', 'نوشتن روی برگه', 'دو بار زدن']);
+  it.push(['style', '⚙️', ex && ex.type !== 'text' ? 'تنظیمات این بخش' : 'فونت، رنگ و تنظیمات', '']);
+  if (img) it.push(['imgrep', '🖼️', 'تعویض تصویر', ''], ['imged', '✂️', 'ویرایش تصویر (برش، دایره…)', '']);
+  it.push('-', ['dup', '⧉', ex ? 'تکثیر' : 'تکثیر به‌صورت بخش آزاد', 'Ctrl+D'], ['copy', '📋', 'کپی', 'Ctrl+C']);
+  if (isTextKey(k)){ it.push(['cstyle', '🎨', 'کپی سبک متن', '']); if (STYLE_CLIP) it.push(['pstyle', '🖌️', 'چسباندن سبک', '']); }
+  it.push('-', ['front', '⬆️', 'بیاور جلو', 'PgUp'], ['back', '⬇️', 'ببر عقب', 'PgDn'], ['ch', '↔️', 'وسط افقی برگه', ''], ['cv', '↕️', 'وسط عمودی برگه', '']);
+  const lk = !!(S.pos[k] && S.pos[k].lk);
+  it.push([ 'lock', lk ? '🔓' : '🔒', lk ? 'باز کردن قفل جا' : 'قفل کردن جا', 'Ctrl+L'], ['reset', '↺', 'برگرداندن به جای اول', ''], '-', ['del', '🗑️', ex ? 'حذف' : 'پنهان کردن', 'Delete']);
+  return it;
+}
+function pageItems(){
+  const it = [['add-text', '📝', 'متن تازه همین‌جا', ''], ['add-img', '🖼️', 'تصویر همین‌جا', ''], ['add-orn', '✳️', 'نقش تزئینی', ''], ['add-shape', '⬛', 'شکل (کادر، دایره، خط)', ''], ['add-badge', '🏅', 'نشان، مهر طلایی یا روبان', ''], ['add-qr', '▦', 'کد QR', '']];
+  if (CLIP) it.push(['paste', '📌', 'چسباندن', 'Ctrl+V']);
+  it.push('-', ['orient', '🔄', S.page.orient === 'landscape' ? 'برگه را عمودی کن' : 'برگه را افقی کن', ''], ['grid', '📐', showGrid ? 'پنهان کردن خطوط راهنما' : 'نمایش خطوط راهنما', 'G'], ['keys', '⌨️', 'میان‌برهای صفحه‌کلید', '?']);
+  return it;
+}
+function openCtx(x, y, k, at, title){
+  const m = $('ctxMenu'); ctxAt = {k, at};
+  const items = k ? ctxItems(k) : pageItems();
+  m.innerHTML = `<div class="cm-h">${esc(title || (k ? mvName(k) : 'افزودن به برگه'))}</div>` + items.map(i => i === '-' ? '<hr>' : `<button type="button" role="menuitem" data-cm="${i[0]}"><span class="ic" aria-hidden="true">${i[1]}</span><span class="tx">${esc(i[2])}</span>${i[3] ? `<kbd>${esc(i[3])}</kbd>` : ''}</button>`).join('');
+  m.hidden = false;
+  const r = m.getBoundingClientRect(), vw = innerWidth, vh = innerHeight;
+  m.style.left = clamp(x - r.width, 6, Math.max(6, vw - r.width - 6)) + 'px';
+  m.style.top = clamp(y, 6, Math.max(6, vh - r.height - 6)) + 'px';
+  const f = m.querySelector('button'); if (f) f.focus({preventScroll:true});
+}
+function closeCtx(){ const m = $('ctxMenu'); if (m && !m.hidden){ m.hidden = true; ctxAt = null; } }
+function certPoint(cert, cx, cy){ if (!cert) return null; const r = cert.getBoundingClientRect(), f = mmPerPx(); return {x:Math.round((cx - r.left) * f * 10) / 10, y:Math.round((cy - r.top) * f * 10) / 10}; }
+function runAction(a, k, at){
+  const {W, H} = pageDims();
+  switch (a){
+    case 'edit': if (!inlineEdit(k)) openEditor(k); break;
+    case 'style': openStyle(k); break;
+    case 'imgrep': { const ik = imgKeyOf(k); if (ik){ imgTarget = ik; $('imgFile').value = ''; $('imgFile').click(); } break; }
+    case 'imged': openImgEditor(imgKeyOf(k)); break;
+    case 'dup': dupSel(k); break;
+    case 'copy': copySel(k); break;
+    case 'cstyle': { const s = styleObj(k); STYLE_CLIP = {}; TEXT_KEYS.forEach(x => { STYLE_CLIP[x] = s[x]; }); toast('🎨 سبک کپی شد؛ روی متن دیگری راست‌کلیک کن ← «چسباندن سبک».'); break; }
+    case 'pstyle': { const s = styleObj(k); if (s && STYLE_CLIP){ Object.assign(s, STYLE_CLIP); if (k.startsWith('x:')) renderExtras(); syncUI(); changed({now:true}); toast('🖌️ سبک چسبانده شد.'); } break; }
+    case 'front': zOrder(k, 1); break;
+    case 'back': zOrder(k, -1); break;
+    case 'ch': centerOn(k, 'x'); break;
+    case 'cv': centerOn(k, 'y'); break;
+    case 'lock': toggleLock(k); break;
+    case 'reset': sel = k; resetSel(); break;
+    case 'del': if (k.startsWith('x:')) deleteExtra(k); else { sel = k; hideSel(); } break;
+    case 'add-text': { addExtra(); const ex = S.extras[S.extras.length - 1]; if (ex && at){ ex.x = at.x; ex.y = at.y; changed({now:true}); } break; }
+    case 'add-img': imgTarget = 'newx'; imgAt = at || null; $('imgFile').value = ''; $('imgFile').click(); break;
+    case 'add-orn': { addOrn(); const ex = S.extras[S.extras.length - 1]; if (ex && at){ ex.x = at.x; ex.y = at.y; changed({now:true}); } break; }
+    case 'add-shape': addShape('round', at); break;
+    case 'add-badge': addBadge('seal', at); break;
+    case 'add-qr': addQR(at); break;
+    case 'paste': pasteClip(at); break;
+    case 'orient': setOrient(S.page.orient === 'landscape' ? 'portrait' : 'landscape'); break;
+    case 'grid': toggleGrid(); break;
+    case 'keys': openKeys(); break;
+  }
+  void W; void H;
+}
+$('ctxMenu').addEventListener('click', e => { const b = e.target.closest('[data-cm]'); if (!b) return; const c = ctxAt || {}; closeCtx(); runAction(b.dataset.cm, c.k, c.at); });
+$('ctxMenu').addEventListener('keydown', e => {
+  const bs = [...$('ctxMenu').querySelectorAll('button')], i = bs.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){ e.preventDefault(); const n = bs[(i + (e.key === 'ArrowDown' ? 1 : -1) + bs.length) % bs.length]; if (n) n.focus(); }
+  else if (e.key === 'Escape' || e.key === 'Tab'){ e.preventDefault(); closeCtx(); $('stageView').focus({preventScroll:true}); }
+});
+document.addEventListener('pointerdown', e => { if (!e.target.closest('#ctxMenu')) closeCtx(); }, true);
+window.addEventListener('resize', closeCtx);
+document.addEventListener('scroll', closeCtx, true);
+$('stageView').addEventListener('contextmenu', e => {
+  const el = e.target.closest('[data-mv]'), cert = e.target.closest('.cert');
+  if (!cert) return;
+  e.preventDefault();
+  const at = certPoint(cert, e.clientX, e.clientY);
+  if (el && $('pageWrap').contains(el)){ select(el.dataset.mv); openCtx(e.clientX, e.clientY, el.dataset.mv, at); }
+  else openCtx(e.clientX, e.clientY, null, at);
+});
+// نگه‌داشتن انگشت روی برگه (لمسی) ← همان منو
+(() => {
+  let lp = null;
+  $('stageView').addEventListener('pointerdown', e => {
+    clearTimeout(lp && lp.t); lp = null;
+    if (e.pointerType !== 'touch' || editing) return;
+    const cert = e.target.closest('.cert'); if (!cert || !$('pageWrap').contains(cert)) return;
+    const el = e.target.closest('[data-mv]'), x = e.clientX, y = e.clientY;
+    lp = {x, y, t:setTimeout(() => {
+      if (!lp) return;
+      if (el){ if (drag && drag.moved) return; const d = drag; drag = null; if (d){ try { $('stageView').releasePointerCapture(d.pid); } catch(_){} } lastTap = null; select(el.dataset.mv); openCtx(x, y, el.dataset.mv, certPoint(cert, x, y)); }
+      else openCtx(x, y, null, certPoint(cert, x, y));
+      if (navigator.vibrate) try { navigator.vibrate(12); } catch(_){}
+      lp = null;
+    }, 560)};
+  });
+  const cancel = () => { if (lp){ clearTimeout(lp.t); lp = null; } };
+  $('stageView').addEventListener('pointermove', e => { if (lp && Math.hypot(e.clientX - lp.x, e.clientY - lp.y) > 9) cancel(); });
+  $('stageView').addEventListener('pointerup', cancel);
+  $('stageView').addEventListener('pointercancel', cancel);
+})();
+$('btnAddMore').addEventListener('click', e => { e.stopPropagation(); const r = $('btnAddMore').getBoundingClientRect(); openCtx(r.right, r.bottom + 6, null, null, 'افزودن به برگه'); });
+
+/* ── میان‌برهای صفحه‌کلید ── */
+function openKeys(){ const d = $('keysDlg'); if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
+$('keysDlg').addEventListener('click', e => { if (e.target === $('keysDlg') || e.target.closest('[data-kclose]')) $('keysDlg').close(); });
+$('btnKeys').addEventListener('click', openKeys);
+document.addEventListener('keydown', e => {
+  const mod = e.ctrlKey || e.metaKey, k = e.key.toLowerCase();
+  if (mod && k === 's'){ e.preventDefault(); $('btnSaveFile').click(); return; }
+  const a = document.activeElement, inField = a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable);
+  if (inField || editing || document.querySelector('dialog[open]')) return;
+  if (mod && k === 'd' && sel){ e.preventDefault(); dupSel(sel); }
+  else if (mod && k === 'c' && sel && !String(getSelection() || '')){ copySel(sel); }
+  else if (mod && k === 'l' && sel){ e.preventDefault(); toggleLock(sel); }
+  else if (!mod && (e.key === 'PageUp' || e.key === 'PageDown') && sel){ e.preventDefault(); zOrder(sel, e.key === 'PageUp' ? 1 : -1); }
+  else if (!mod && e.key === '?'){ e.preventDefault(); openKeys(); }
+  else if (!mod && !e.altKey && k === 'g' && !e.shiftKey){ toggleGrid(); }
+  else if (!mod && !e.altKey && k === 'f' && !e.shiftKey){ toggleFocus(); }
+});
+$('btnGrid').addEventListener('click', () => toggleGrid());
+$('btnFocus').addEventListener('click', () => toggleFocus());
+
+/* ── پالت‌های رنگ آماده ── */
+function renderPalettes(){
+  const g = $('paletteGrid'); if (!g) return;
+  g.innerHTML = PALETTES.map((p, i) => `<button type="button" class="pal" data-pal="${i}" title="${esc(p[0])}"><span class="sw"><i style="background:${p[2]}"></i><i style="background:${p[4]}"></i><i style="background:${p[1]}"></i></span><span>${esc(p[0])}</span></button>`).join('');
+}
+$('paletteGrid') && $('paletteGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-pal]'); if (!b) return;
+  const p = PALETTES[+b.dataset.pal];
+  S.colors.ink = p[1]; S.colors.accent = p[2]; S.frame.color = p[3]; S.frame.color2 = p[4];
+  if (S.frame.style === 'vec'){ S.vec.c1 = p[3]; S.vec.c2 = p[4]; }
+  if ($('palFrame') && $('palFrame').checked && /^img:/.test(S.frame.style || '')) S.frame.adj = Object.assign({}, S.frame.adj || ADJ0, {mono:p[3]});
+  for (const k in S.styles) if (S.styles[k].color) S.styles[k].color = '';
+  syncUI(); changed({now:true, thumbs:true}); toast('🎨 پالت «' + p[0] + '» گذاشته شد.');
+});
+
+/* ── طرح‌های من (ذخیره در همین مرورگر) ── */
+async function loadDesigns(){ try { const d = await IDB.get('designs'); if (Array.isArray(d)) DESIGNS = d; } catch(e){} renderDesigns(); }
+function saveDesigns(){ return IDB.set('designs', DESIGNS); }
+function designThumb(state){
+  const keep = S; hist.lock = true;
+  try {
+    S = fixState(deepMerge(baseState(), JSON.parse(JSON.stringify(state))));
+    const {W, H} = pageDims(), mm = Math.min(150 / W, 118 / H);
+    return pageHTML({row:null, idx:0, mm:mm + 'px', screen:false, thumb:true, pxmm:Math.max(.8, mm * 1.5)});
+  } catch(e){ return ''; }
+  finally { S = keep; hist.lock = false; }
+}
+function renderDesigns(){
+  const g = $('myDesigns'); if (!g) return;
+  $('dzCount').textContent = DESIGNS.length ? faDigits(DESIGNS.length) : '';
+  if (!DESIGNS.length){ g.innerHTML = '<p class="small muted dz-empty">هنوز طرحی ذخیره نکرده‌ای. هر طرحی را که دوست داری با «＋ ذخیرهٔ طرح فعلی» اینجا نگه دار تا هر وقت خواستی با یک کلیک برگردی.</p>'; return; }
+  g.innerHTML = DESIGNS.slice(0, 60).map(d => `<div class="dz-card"><button type="button" class="dz-open" data-dzopen="${esc(d.id)}" aria-label="باز کردن طرح ${esc(d.name)}"><span class="thumb">${designThumb(d.state)}</span></button>
+    <div class="dz-meta"><b title="${esc(d.name)}">${esc(d.name)}</b><span>${esc(d.date || '')}</span></div>
+    <div class="dz-act"><button type="button" data-dzsave="${esc(d.id)}" title="جایگزینی با طرح فعلی" aria-label="جایگزینی با طرح فعلی">💾</button><button type="button" data-dzren="${esc(d.id)}" title="تغییر نام" aria-label="تغییر نام">✎</button><button type="button" data-dzdup="${esc(d.id)}" title="نسخهٔ دیگر" aria-label="نسخهٔ دیگر">⧉</button><button type="button" class="danger" data-dzdel="${esc(d.id)}" title="حذف" aria-label="حذف">🗑</button></div></div>`).join('');
+}
+function snapshotState(){ return JSON.parse(JSON.stringify(S)); }
+$('btnSaveDesign').addEventListener('click', async () => {
+  const def = (S.fields.title && S.fields.title.text ? S.fields.title.text.replace(/\s+/g, ' ').slice(0, 30) : 'طرح من') + ' — ' + jalali(false);
+  const name = prompt('نام این طرح:', def); if (name == null) return;
+  DESIGNS.unshift({id:newExtraId(), name:name.trim() || def, date:jalali(false), state:snapshotState()});
+  await saveDesigns(); renderDesigns(); toast('📚 در «طرح‌های من» ذخیره شد.');
+});
+$('myDesigns').addEventListener('click', async e => {
+  const b = e.target.closest('[data-dzopen],[data-dzsave],[data-dzren],[data-dzdup],[data-dzdel]'); if (!b) return;
+  const id = b.dataset.dzopen || b.dataset.dzsave || b.dataset.dzren || b.dataset.dzdup || b.dataset.dzdel, i = DESIGNS.findIndex(d => d.id === id); if (i < 0) return;
+  const d = DESIGNS[i];
+  if (b.dataset.dzopen){
+    S = fixState(deepMerge(baseState(), JSON.parse(JSON.stringify(d.state)))); orientPref = S.page.orient; sel = null;
+    syncUI(); changed({now:true, thumbs:true}); toast('📂 «' + d.name + '» باز شد؛ با واگرد (Ctrl+Z) به طرح قبلی برمی‌گردی.'); return;
+  }
+  if (b.dataset.dzsave){ if (!confirm('طرح «' + d.name + '» با طرح فعلی جایگزین شود؟')) return; d.state = snapshotState(); d.date = jalali(false); }
+  else if (b.dataset.dzren){ const n = prompt('نام تازه:', d.name); if (n == null || !n.trim()) return; d.name = n.trim(); }
+  else if (b.dataset.dzdup){ DESIGNS.splice(i + 1, 0, {id:newExtraId(), name:d.name + ' (نسخهٔ دیگر)', date:jalali(false), state:JSON.parse(JSON.stringify(d.state))}); }
+  else if (b.dataset.dzdel){ if (!confirm('طرح «' + d.name + '» حذف شود؟')) return; DESIGNS.splice(i, 1); }
+  await saveDesigns(); renderDesigns();
+});
+
+/* ── راه‌اندازی ── */
+orientPref = S.page.orient === 'landscape' ? 'landscape' : 'portrait';
+try { showGrid = localStorage.getItem('lohnegar-grid') === '1'; } catch(e){}
+$('btnGrid').setAttribute('aria-pressed', String(showGrid));
+renderPalettes(); syncOrientUI(); loadDesigns();
+['shapeKindNew', 'badgeKindNew'].forEach(id => { const s = $(id); if (s) s.innerHTML = (id === 'shapeKindNew' ? SHAPES : BADGES).map(([k, n]) => `<option value="${k}">${esc(n)}</option>`).join(''); });
+$('btnAddShape2').addEventListener('click', () => addShape($('shapeKindNew').value));
+$('btnAddBadge2').addEventListener('click', () => addBadge($('badgeKindNew').value));
+$('btnAddQR2').addEventListener('click', () => addQR());
+
 init();
 </script>
 <!-- hakim-core:start -->
