@@ -30,6 +30,7 @@ jobs:
           node tests/phase5-curriculum-expansion.cjs
           node tests/cert-credit.cjs
           node tests/site-review-fixes.cjs
+          node tests/csp-hardening.cjs
       - name: Check public pages on Chromium
         env:
           SITE_AXE: '1'
