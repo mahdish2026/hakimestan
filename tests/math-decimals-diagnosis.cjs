@@ -39,7 +39,7 @@ await p.click('[data-choice="1"]');await p.click('#check');assert(await p.$('#fe
 // a slash is rejected with a teaching message, not treated as a decimal
 await p.click('[data-task="3"]');await p.type('#answer','7/10');await p.click('#check');assert.match(await p.$eval('#feedback',e=>e.textContent),/این نوشته عدد نیست/);
 // the error diary returns on the map and the certificate counts recovery
-await p.click('#mapBtn');assert(await p.$('.error-diary'));assert.match(await p.$eval('.error-diary',e=>e.textContent),/دفتر خطاهای من/);await p.click('#certBtn');assert.match(await p.$eval('.certificate',e=>e.textContent),/خطای تشخیص‌شده/);
+await p.click('#mapBtn');assert(await p.$('.error-diary'));assert.match(await p.$eval('.error-diary',e=>e.textContent),/دفتر خطاهای من/);await p.click('#certBtn');assert.match(await p.$eval('.hk-a4',e=>e.textContent),/خطای تشخیص/);
 assert.deepEqual(errors,[]);
 await p.addScriptTag({content:fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8')});const r=await p.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.equal(r.violations.length,0,JSON.stringify(r.violations.map(v=>({id:v.id,h:v.nodes[0].html}))));
 const out=fs.readFileSync('exports/memizestan.html','utf8');assert.match(out,/DecimalDiagnose/);assert.match(fs.readFileSync('sw.js','utf8'),/diagnose\.js/);
