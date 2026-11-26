@@ -295,7 +295,7 @@ for (const [appJs, track] of [['games/math-measurement/app.js', 'music9.mp3'], [
   assert.ok(exists('games/' + track), 'missing music file games/' + track);
 }
 const swSrc = read('sw.js');
-for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/farsi5-hamava/lessons.js']) {
+for (const asset of ['./js/hakim-companion.js', './js/hakim-worlds.js', './css/hakim-worlds.css', './games/iran-geography/map-geo.js', './games/iran-geography/lessons.js', './games/iran-geography/lesson-view.js', './games/iran-geography/roadtrip.js', './games/farsi5-hamava/lessons.js']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);
 }
 for (const L of [...Object.values(loadData('games/iran-geography/lessons.js', 'IranGeoLessons')), ...Object.values(loadData('games/farsi5-hamava/lessons.js', 'HamavaLessons'))]) {
@@ -331,7 +331,31 @@ for (const g of GAMES) {
     assert.ok(L.narration.length > 400 && /^farsi5-hamava\/audio\/ch[1-6]-[a-z-]+\.mp3$/.test(L.audio), 'hamava lesson ' + ch.id + ' needs narration + audio path');
     assert.ok(L.check.length >= 2 && L.check.every((q) => q.o[q.a] && q.why), 'hamava lesson ' + ch.id + ' needs a valid self-check');
   }
-  for (const [html, files] of [['games/iran-geography.html', ['iran-geography/data.js', 'iran-geography/lessons.js', 'iran-geography/lesson-view.js', 'iran-geography/app.js']], ['games/farsi5-hamava.html', ['farsi5-hamava/data.js', 'farsi5-hamava/lessons.js', 'farsi5-hamava/app.js']]]) {
+  // Road-trip home map: every mission is a station on a drivable road and stations/roads stay lock-aware.
+  {
+    const sandbox = { window: { matchMedia: () => ({ matches: false }) } };
+    sandbox.globalThis = sandbox;
+    vm.createContext(sandbox);
+    vm.runInContext(read('games/iran-geography/roadtrip.js'), sandbox, { filename: 'roadtrip.js' });
+    const R = sandbox.window.IranGeoRoad;
+    assert.ok(R && typeof R.render === 'function' && typeof R.mount === 'function' && typeof R.goNext === 'function', 'roadtrip.js must expose IranGeoRoad.render/mount/goNext');
+    assert.equal(R.STOPS.length, geo.missions.length + 1, 'road trip needs a start node plus one station per mission');
+    assert.equal(R.ROADS.length, geo.missions.length, 'road trip needs one road between consecutive stations');
+    for (const st of R.STOPS) assert.ok(geo.mapPins.some((p) => p.id === st.pin), 'road-trip station must sit on a real map pin: ' + st.pin);
+    const lockedAt = 3;
+    const html = R.render({
+      missions: geo.missions, pins: geo.mapPins, map: loadData('games/iran-geography/map-geo.js', 'IranGeoMap'), trip: { at: 0, km: 0, paved: 1 },
+      solved: (i) => (i < lockedAt - 1 ? geo.missions[i].tasks.length : 0), stars: () => 0, seen: (i) => i < lockedAt - 1,
+      locked: (i) => i >= lockedAt, openLesson() {}, openTask() {}, lockedNotice() {}, save() {}, sound: () => false
+    });
+    assert.equal((html.match(/data-rt-stop="/g) || []).length, R.STOPS.length, 'every station must be rendered as a tappable stop');
+    assert.equal((html.match(/role="button" tabindex="0"/g) || []).length, R.STOPS.length, 'stations must be keyboard-focusable buttons');
+    assert.equal((html.match(/class="rt-stop is-locked/g) || []).length, geo.missions.length - lockedAt, 'locked missions must render as locked stations');
+    assert.equal((html.match(/class="rt-road is-locked"/g) || []).length, geo.missions.length - lockedAt, 'roads to locked stations must stay closed');
+  }
+  const geoApp = read('games/iran-geography/app.js');
+  assert.ok(/IranGeoRoad\.render\(roadCtx\(\)\)/.test(geoApp) && /IranGeoRoad\?\.mount\(main, roadCtx\(\)\)/.test(geoApp), 'geo home must mount the road-trip map');
+  for (const [html, files] of [['games/iran-geography.html', ['iran-geography/data.js', 'iran-geography/lessons.js', 'iran-geography/lesson-view.js', 'iran-geography/roadtrip.js', 'iran-geography/app.js']], ['games/farsi5-hamava.html', ['farsi5-hamava/data.js', 'farsi5-hamava/lessons.js', 'farsi5-hamava/app.js']]]) {
     const page = read(html);
     const at = files.map((f) => page.indexOf('src="' + f + '"'));
     assert.ok(at.every((x, i) => x > 0 && (i === 0 || x > at[i - 1])), html + ' must load ' + files.join(' → '));

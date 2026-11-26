@@ -76,7 +76,8 @@
       bestCombo: 0,
       sound: false,
       theme: 'light',
-      scale: 1
+      scale: 1,
+      trip: { at: 0, km: 0, paved: 1 }
     };
   }
 
@@ -101,6 +102,14 @@
       base.sound = Boolean(raw.sound);
       base.theme = raw.theme === 'night' ? 'night' : 'light';
       base.scale = [0.92, 1, 1.1, 1.2].includes(raw.scale) ? raw.scale : 1;
+      if (raw.trip && typeof raw.trip === 'object') {
+        const at = Number(raw.trip.at), km = Number(raw.trip.km), paved = Number(raw.trip.paved);
+        base.trip = {
+          at: Number.isInteger(at) && at >= 0 && at <= D.missions.length ? at : 0,
+          km: Number.isFinite(km) && km >= 0 ? Math.min(km, 1e6) : 0,
+          paved: Number.isInteger(paved) && paved >= 1 && paved <= D.missions.length ? paved : 1
+        };
+      }
       return base;
     } catch {
       return defaultState();
@@ -259,18 +268,18 @@
     const nextIdx = Math.max(0, D.missions.findIndex((m) => missionSolved(m) < m.tasks.length));
 
     main.innerHTML = `
-      <section class="hero-card">
+      <section class="hero-card${window.IranGeoRoad ? ' ig-hero-road' : ''}">
         <div>
           <span class="hero-kicker">مطالعات اجتماعی پایهٔ پنجم · فصل‌های ۲ و ۳ (درس‌های ۵ تا ۱۱)</span>
           <h2 class="hero-title">به <span class="hw-accent">«ایران‌گرد کوچک»</span> خوش آمدی!</h2>
           <p class="hero-sub">روی نقشهٔ زندهٔ ایران سفر کن! جمعیت و اقلیم، دریای خزر و خلیج فارس، رود کارون و زاینده‌رود، قطب‌های صنعتی، بندر چابهار و کشورهای همسایهٔ ایران را با بازی و کاوش یاد بگیر.</p>
           <div class="hero-actions">
-            <button type="button" class="btn-primary" id="btnStartNext">🧭 ${done === 0 ? 'شروع مأموریت اول' : 'ادامهٔ ایران‌گردی'}</button>
+            <button type="button" class="btn-primary" id="btnStartNext">🚗 ${done === 0 ? 'سوار شو؛ شروع سفر!' : done === allTasks.length ? 'گشت دوباره در ایران' : 'ادامهٔ سفر جاده‌ای'}</button>
             <button type="button" class="btn-soft" id="btnOpenAtlas">🗺️ اطلس آزاد ایران‌شناسی</button>
             <button type="button" class="btn-gold" id="btnOpenCert">🏆 گواهی‌نامهٔ من</button>
           </div>
         </div>
-        ${W() ? W().art('geo', { chips: ['🧭 ' + fa(D.missions.length) + ' مأموریت', '📍 ' + fa(D.mapPins.length) + ' نقطه روی نقشه', '🏅 ' + fa(allTasks.length) + ' سؤال'], mapHtml: renderIranSvg('tehran', false) }) : ''}
+        ${W() && !window.IranGeoRoad ? W().art('geo', { chips: ['🧭 ' + fa(D.missions.length) + ' مأموریت', '📍 ' + fa(D.mapPins.length) + ' نقطه روی نقشه', '🏅 ' + fa(allTasks.length) + ' سؤال'], mapHtml: renderIranSvg('tehran', false) }) : ''}
       </section>
 
       <section class="profile-bar" aria-label="پروفایل ایران‌گرد کوچک">
@@ -290,7 +299,7 @@
         </div>
       </section>
 
-      ${W() ? W().journey(D.missions.map((u, i) => ({ title: u.title, solved: missionSolved(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'مأموریت', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
+      ${window.IranGeoRoad ? window.IranGeoRoad.render(roadCtx()) : W() ? W().journey(D.missions.map((u, i) => ({ title: u.title, solved: missionSolved(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'مأموریت', attr: 'data-lesson', nextIdx, done, total: allTasks.length }) : ''}
 
       <section aria-labelledby="missionsHeading">
         <h2 id="missionsHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">🗺️ شش مأموریت جغرافیای ایران (درس‌های ۵ تا ۱۱ کتاب)</h2>
@@ -328,8 +337,9 @@
       ${W() ? W().certBanner({ done, total: allTasks.length, word: 'مأموریت', taskWord: 'سؤال', attr: 'data-lesson', nextIdx }) : ''}
     `;
 
-    $('btnStartNext').onclick = () => openLesson(nextIdx);
+    $('btnStartNext').onclick = () => (window.IranGeoRoad ? window.IranGeoRoad.goNext() : openLesson(nextIdx));
     $('btnOpenAtlas').onclick = renderAtlas;
+    window.IranGeoRoad?.mount(main, roadCtx());
     $('btnOpenCert').onclick = renderCertificate;
     W()?.bind(main, { cert: renderCertificate });
     $('nameForm').onsubmit = (e) => {
@@ -345,6 +355,28 @@
     main.querySelectorAll('[data-play]').forEach((b) => {
       b.onclick = () => openTask(Number(b.dataset.play), 0);
     });
+  }
+
+  // پیوند نقشهٔ سفر جاده‌ای با وضعیت بازی
+  function roadCtx() {
+    return {
+      missions: D.missions,
+      pins: D.mapPins,
+      map: window.IranGeoMap,
+      trip: profile.trip,
+      solved: (i) => missionSolved(D.missions[i]),
+      stars: (i) => missionStars(D.missions[i]),
+      seen: (i) => Boolean(profile.lessons[D.missions[i].id]),
+      locked: (i) => isLocked(i),
+      openLesson: (i) => openLesson(i, 0),
+      openTask: (i) => openTask(i, Math.max(0, D.missions[i].tasks.findIndex((t) => !profile.done[t.id]?.ok))),
+      lockedNotice: (i) => lockedNotice(i),
+      save: saveState,
+      sound: () => profile.sound,
+      tone: playTone,
+      toast: (m) => W()?.toast?.(m),
+      say: (m) => HC()?.say?.(m, 'happy')
+    };
   }
 
   function unitsInfo() {

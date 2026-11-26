@@ -428,3 +428,217 @@ dialog::backdrop { background: rgba(10, 28, 24, 0.55); }
 .ig-popbar { display: inline-block; width: var(--w); max-width: 90px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #a78bfa, #7c3aed); margin-inline-end: 6px; vertical-align: middle; }
 html[data-theme="night"] .ig-ntable thead th { background: #2e1f57; color: #ede9fe; }
 html[data-theme="night"] .ig-ntable tbody th { color: #c4b5fd; }
+
+/* ═════════ سفر جاده‌ای ایران‌گرد (نقشهٔ زنده با ماشین) ═════════ */
+body[data-world] .hero-card.ig-hero-road { grid-template-columns: 1fr; min-height: 0; padding-block: 26px; }
+.rt-wrap { position: relative; margin: 0 0 22px; padding: 18px; border-radius: 30px; background: linear-gradient(160deg, #0f5e52 0%, #0b4a6e 100%); color: #fff; box-shadow: 0 30px 60px -30px rgba(8, 60, 70, .75); overflow: hidden; isolation: isolate; }
+.rt-wrap::before { content: ""; position: absolute; inset: -40% -10% auto auto; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(253, 230, 138, .22), transparent 65%); z-index: -1; }
+.rt-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.rt-eyebrow { display: inline-block; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .14); color: #fde68a; font-size: .82rem; font-weight: 800; }
+.rt-title { margin: 6px 0 2px; font-size: 1.45rem; line-height: 1.5; color: #fff; }
+.rt-sub { margin: 0; max-width: 62ch; color: rgba(255, 255, 255, .86); font-size: .9rem; }
+.rt-dash { display: flex; gap: 10px; }
+.rt-gauge { display: grid; justify-items: center; min-width: 108px; padding: 8px 12px; border-radius: 18px; background: rgba(0, 0, 0, .22); border: 1px solid rgba(255, 255, 255, .16); }
+.rt-gauge span { font-size: 1.2rem; line-height: 1; }
+.rt-gauge b { font-size: 1.25rem; font-variant-numeric: tabular-nums; color: #fde68a; }
+.rt-gauge small { font-size: .72rem; color: rgba(255, 255, 255, .85); }
+.rt-body { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(250px, 1fr); gap: 16px; align-items: stretch; }
+.rt-stage { position: relative; border-radius: 24px; overflow: hidden; background: #7cc8ee; box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .25), 0 18px 30px -18px rgba(0, 0, 0, .6); touch-action: manipulation; }
+.rt-svg { display: block; width: 100%; height: auto; aspect-ratio: 336 / 346; user-select: none; -webkit-tap-highlight-color: transparent; }
+.rt-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* لایه‌های نقشه */
+.rt-sea { fill: url(#rtSeaG); }
+.rt-neighbors { fill: #efe6cf; stroke: #c9b78f; stroke-width: .7; stroke-linejoin: round; }
+.rt-land { fill: url(#rtLandG); stroke: #0d6859; stroke-width: 2; stroke-linejoin: round; }
+.rt-desert { fill: url(#rtSand); opacity: .9; }
+.rt-dune { fill: none; stroke: #c2830f; stroke-width: .8; stroke-linecap: round; opacity: .6; }
+.rt-area { font-size: 6.5px; font-weight: 800; fill: #8a5a12; paint-order: stroke; stroke: rgba(255, 255, 255, .8); stroke-width: 2px; }
+.rt-area-mt { fill: #6b3d0c; font-size: 7px; letter-spacing: .5px; }
+.rt-sea-label { font-size: 7.5px; font-weight: 800; fill: #075985; opacity: .8; font-style: italic; }
+.rt-river { fill: none; stroke: #0ea5e9; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 4 3; animation: rtFlow 1.6s linear infinite; }
+@keyframes rtFlow { to { stroke-dashoffset: -14; } }
+.rt-mt-a { fill: #b7834a; } .rt-mt-b { fill: #8f5f2e; } .rt-snow { fill: #fff; }
+.rt-trunk { fill: #7c4a1e; } .rt-leaf { fill: #2f9e55; } .rt-leaf-hi { fill: #6fd38f; }
+.rt-palm-trunk { fill: none; stroke: #8a5a2b; stroke-width: 1.1; } .rt-palm-leaf { fill: none; stroke: #2f9e55; stroke-width: 1.3; stroke-linecap: round; }
+.rt-factory { fill: #64748b; } .rt-chimney { fill: #475569; }
+.rt-smoke { fill: #cbd5e1; opacity: 0; animation: rtSmoke 2.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+.rt-smoke-2 { animation-delay: 1.3s; }
+@keyframes rtSmoke { 0% { opacity: .85; transform: translate(0, 0) scale(.6); } 100% { opacity: 0; transform: translate(4px, -12px) scale(2.2); } }
+.rt-derrick { fill: none; stroke: #334155; stroke-width: 1; stroke-linecap: round; }
+.rt-wave { fill: none; stroke: #fff; stroke-width: .9; stroke-linecap: round; opacity: .7; animation: rtWave 4s ease-in-out infinite; }
+.rt-wave-1 { animation-delay: -1.3s; } .rt-wave-2 { animation-delay: -2.6s; }
+@keyframes rtWave { 0%, 100% { transform: translateX(0); opacity: .25; } 50% { transform: translateX(4px); opacity: .85; } }
+.rt-ship-track { transform: translate(226px, 312px); }
+.rt-ship { animation: rtShip 22s ease-in-out infinite alternate; }
+.rt-hull { fill: #b91c1c; } .rt-cabin { fill: #f8fafc; }
+@keyframes rtShip { from { transform: translate(0, 0); } to { transform: translate(58px, 16px); } }
+.rt-cloud { fill: rgba(255, 255, 255, .78); animation: rtCloud 70s linear infinite; }
+.rt-cloud-1 { animation-duration: 95s; animation-delay: -30s; } .rt-cloud-2 { animation-duration: 80s; animation-delay: -55s; }
+@keyframes rtCloud { from { translate: -60px 0; } to { translate: 360px 0; } }
+.rt-compass circle { fill: rgba(255, 255, 255, .85); stroke: #0d6859; stroke-width: 1; }
+.rt-compass-n { fill: #dc2626; }
+.rt-compass text { font-size: 7px; font-weight: 900; fill: #0d6859; }
+
+/* جاده‌ها */
+.rt-road path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.rt-road-edge { stroke: #1f2937; stroke-width: 7.4; opacity: .55; }
+.rt-road-base { stroke: #4b5563; stroke-width: 5.6; }
+.rt-road-line { stroke: #fde68a; stroke-width: .9; stroke-dasharray: 3 3; }
+.rt-road.is-locked .rt-road-edge { stroke: #fff; opacity: .55; stroke-width: 4.6; }
+.rt-road.is-locked .rt-road-base { stroke: #94a3b8; stroke-width: 2.6; stroke-dasharray: 2 4; }
+.rt-road.is-locked .rt-road-line { display: none; }
+.rt-road.is-flash .rt-road-base { animation: rtFlash .4s ease-in-out 3; }
+@keyframes rtFlash { 50% { stroke: #ef4444; } }
+.rt-road.is-paving path { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: rtPave 1.6s cubic-bezier(.4, 0, .2, 1) forwards; }
+.rt-road.is-paving .rt-road-line { animation-delay: .9s; }
+@keyframes rtPave { to { stroke-dashoffset: 0; } }
+.rt-road.is-paving .rt-road-line { stroke-dasharray: 3 3; animation: rtFadeIn .5s 1.4s both; }
+@keyframes rtFadeIn { from { opacity: 0; } }
+.rt-km rect { fill: rgba(255, 255, 255, .92); stroke: #0d6859; stroke-width: .6; }
+.rt-km text { font-size: 5.4px; font-weight: 800; fill: #0d4038; }
+.rt-km.is-locked rect { fill: rgba(241, 245, 249, .9); stroke: #94a3b8; }
+.rt-km.is-locked text { fill: #475569; }
+
+/* ایستگاه‌ها */
+.rt-stop { cursor: pointer; outline: none; }
+.rt-hit { fill: transparent; }
+.rt-ring { fill: #fff; stroke: #0d6859; stroke-width: 2.4; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .3)); transition: stroke .2s; }
+.rt-disc { fill: #ecfdf5; }
+.rt-ico { font-size: 11.5px; }
+.rt-stop.is-done .rt-ring { stroke: #d4a017; stroke-width: 3; }
+.rt-stop.is-done .rt-disc { fill: #fff7d6; }
+.rt-stop.is-locked .rt-ring { stroke: #94a3b8; stroke-dasharray: 2.5 2; }
+.rt-stop.is-locked .rt-disc { fill: #f1f5f9; }
+.rt-stop.is-locked .rt-ico { opacity: .55; filter: grayscale(1); }
+.rt-stop.is-start .rt-ring { stroke: #b91c1c; }
+.rt-stop.is-start .rt-disc { fill: #fff1f2; }
+.rt-stop.is-selected .rt-ring { stroke: #f59e0b; stroke-width: 3.4; }
+.rt-stop:focus-visible .rt-ring { stroke: #1d4ed8; stroke-width: 3.6; }
+.rt-stop:hover .rt-ring { stroke-width: 3.4; }
+.rt-stop > :not(.rt-pulse):not(.rt-hit) { transition: transform .2s; }
+.rt-stop:hover .rt-disc, .rt-stop:hover .rt-ring { transform: scale(1.08); }
+.rt-lock circle { fill: #334155; } .rt-lock text { font-size: 5.6px; }
+.rt-medal circle { fill: #f59e0b; stroke: #fff; stroke-width: 1; } .rt-medal text { font-size: 7px; fill: #fff; font-weight: 900; }
+.rt-num circle { fill: #0d6859; stroke: #fff; stroke-width: 1; } .rt-num text { font-size: 5.6px; font-weight: 900; fill: #fff; }
+.rt-stop.is-locked .rt-num circle { fill: #64748b; }
+.rt-tag rect { fill: #0f3d36; opacity: .92; }
+.rt-tag text { font-size: 7px; font-weight: 900; fill: #fff; }
+.rt-stop.is-locked .rt-tag rect { fill: #475569; }
+.rt-stars { font-size: 6.5px; fill: #f59e0b; paint-order: stroke; stroke: #fff; stroke-width: 1.6px; letter-spacing: -.5px; }
+.rt-pulse { fill: none; stroke: #fde047; stroke-width: 2.4; transform-box: fill-box; transform-origin: center; animation: rtPulse 1.8s ease-out infinite; }
+.rt-pulse-2 { animation-delay: .9s; }
+@keyframes rtPulse { from { transform: scale(1); opacity: .95; } to { transform: scale(2.1); opacity: 0; } }
+.rt-stop.is-shake { animation: rtShake .5s; }
+@keyframes rtShake { 20%, 60% { translate: -2px 0; } 40%, 80% { translate: 2px 0; } }
+.rt-finger { pointer-events: none; animation: rtFinger 1s ease-in-out infinite alternate; }
+.rt-finger text { font-size: 13px; }
+@keyframes rtFinger { from { translate: 0 -2px; } to { translate: 0 3px; } }
+.rt-wrap.is-driving .rt-finger { display: none; }
+
+/* ماشین */
+.rt-car { pointer-events: none; }
+.rt-car-body { animation: rtBob .32s ease-in-out infinite alternate; animation-play-state: paused; }
+.rt-wrap.is-driving .rt-car-body { animation-play-state: running; }
+@keyframes rtBob { from { translate: 0 -.25px; } to { translate: 0 .25px; } }
+.rt-car-shadow { fill: rgba(0, 0, 0, .28); }
+.rt-paint { fill: #e11d48; stroke: #881337; stroke-width: .7; }
+.rt-roof { fill: #be123c; }
+.rt-glass { fill: #bae6fd; } .rt-glass-back { fill: #7dd3fc; }
+.rt-light { fill: #fef08a; } .rt-tail { fill: #fca5a5; }
+.rt-wheel { fill: #111827; }
+.rt-arrow { fill: #fff; opacity: .9; }
+.rt-beam { fill: url(#rtGlow); opacity: 0; transition: opacity .4s; }
+.rt-car.is-parked .rt-car-body { animation: rtIdle 2.4s ease-in-out infinite; }
+@keyframes rtIdle { 0%, 100% { translate: 0 0; } 50% { translate: 0 -.4px; } }
+.rt-puff { fill: rgba(255, 255, 255, .9); animation: rtPuff .9s ease-out forwards; transform-box: fill-box; transform-origin: center; }
+@keyframes rtPuff { to { transform: scale(3.2); opacity: 0; } }
+.rt-burst-ring { fill: none; stroke: #fde047; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: rtRing .9s ease-out forwards; }
+@keyframes rtRing { from { transform: scale(.4); opacity: 1; } to { transform: scale(2.6); opacity: 0; } }
+.rt-spark { fill: var(--c); animation: rtSpark 1s ease-out forwards; }
+@keyframes rtSpark { from { transform: translate(0, 0) scale(1); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) scale(.3); opacity: 0; } }
+.rt-burst.is-pass .rt-spark { display: none; }
+.rt-burst.is-unlock .rt-burst-ring { stroke: #34d399; }
+
+/* بنر رسیدن و نوار مسیر */
+.rt-arrive { position: absolute; left: 50%; top: 14px; translate: -50% 0; display: grid; justify-items: center; gap: 2px; min-width: 220px; padding: 12px 20px 14px; border-radius: 22px; background: linear-gradient(135deg, #fff7d6, #fde68a); color: #3b2a00; text-align: center; box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .6); animation: rtArrive .6s cubic-bezier(.2, 1.4, .4, 1) both; }
+.rt-arrive.is-out { animation: rtArriveOut .4s ease forwards; }
+.rt-arrive-land { font-size: 2rem; line-height: 1; }
+.rt-arrive b { font-size: 1.15rem; }
+.rt-arrive small { font-size: .82rem; color: #5b4300; }
+.rt-arrive em { font-style: normal; font-size: .78rem; font-weight: 800; color: #0d6859; animation: rtBlink 1s ease-in-out infinite; }
+@keyframes rtArrive { from { opacity: 0; transform: translateY(-16px) scale(.8); } }
+@keyframes rtArriveOut { to { opacity: 0; transform: translateY(-12px) scale(.9); } }
+@keyframes rtBlink { 50% { opacity: .45; } }
+.rt-ticker { position: absolute; inset: auto 12px 12px auto; padding: 6px 14px; border-radius: 999px; background: rgba(15, 23, 42, .78); color: #fff; font-size: .84rem; font-weight: 800; backdrop-filter: blur(4px); }
+
+/* کارت پستال ایستگاه */
+.rt-card { display: flex; }
+.rt-pc { position: relative; flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 18px 16px 16px; border-radius: 24px; background: #fffdf5; color: #1f2a28; box-shadow: 0 18px 30px -18px rgba(0, 0, 0, .6); background-image: repeating-linear-gradient(135deg, transparent 0 10px, rgba(13, 104, 89, .04) 10px 20px); border: 2px dashed #e7d7a8; animation: rtCardIn .45s cubic-bezier(.2, 1.2, .4, 1); }
+@keyframes rtCardIn { from { opacity: 0; transform: translateY(10px) rotate(-1deg); } }
+.rt-pc.is-arrived { border-color: #f59e0b; border-style: solid; }
+.rt-pc.is-locked { background-color: #f8fafc; border-color: #cbd5e1; }
+.rt-pc-stamp { position: absolute; top: 10px; inset-inline-end: 10px; padding: 6px 8px; border: 2px solid #b91c1c; border-radius: 10px; color: #b91c1c; font-size: .7rem; font-weight: 900; transform: rotate(8deg); opacity: .85; }
+.rt-pc-top { display: flex; align-items: center; gap: 12px; padding-inline-end: 70px; }
+.rt-pc-land { flex: none; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: linear-gradient(145deg, #d1fae5, #a7f3d0); font-size: 2rem; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .08); }
+.rt-pc-top small { display: block; color: #46615e; font-size: .78rem; font-weight: 700; }
+.rt-pc-top h3 { margin: 2px 0 0; font-size: 1.12rem; line-height: 1.6; color: #0d3d36; }
+.rt-pc-sub { margin: 0; color: #46615e; font-size: .88rem; }
+.rt-pc-why { margin: 0; padding: 10px 12px; border-radius: 14px; background: #ecfdf5; color: #134e45; font-size: .88rem; line-height: 1.9; }
+.rt-pc-lock { margin: 0; padding: 10px 12px; border-radius: 14px; background: #f1f5f9; color: #334155; font-size: .88rem; font-weight: 700; }
+.rt-pc-prog { display: grid; gap: 4px; margin-top: auto; }
+.rt-pc-prog small { color: #46615e; font-size: .8rem; }
+.rt-pc-bar { display: block; height: 10px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+.rt-pc-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #10b981, #f59e0b); transition: width .2s; }
+.rt-pc-stars { color: #d97706; letter-spacing: 1px; }
+.rt-pc-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.rt-pc .btn-primary, .rt-pc .btn-soft { min-height: 46px; }
+.rt-pc .rt-go { animation: rtGo 1.6s ease-in-out infinite; }
+@keyframes rtGo { 50% { box-shadow: 0 0 0 6px rgba(245, 158, 11, .25); } }
+.rt-pc-travel .rt-pc-land { background: linear-gradient(145deg, #fef3c7, #fde68a); }
+.rt-wheel-spin { animation: rtBob .3s ease-in-out infinite alternate; }
+
+/* شب: نقشهٔ شبانه با چراغ‌های روشن ماشین */
+html[data-theme="night"] .rt-sea { fill: url(#rtSeaN); }
+html[data-theme="night"] .rt-land { fill: url(#rtLandN); stroke: #34d399; }
+html[data-theme="night"] .rt-neighbors { fill: #1e293b; stroke: #334155; }
+html[data-theme="night"] .rt-stage { background: #06192c; }
+html[data-theme="night"] .rt-beam { opacity: .85; }
+html[data-theme="night"] .rt-area { fill: #fde68a; stroke: rgba(0, 0, 0, .6); }
+html[data-theme="night"] .rt-sea-label { fill: #7dd3fc; }
+html[data-theme="night"] .rt-cloud { fill: rgba(148, 163, 184, .35); }
+html[data-theme="night"] .rt-wave { stroke: #7dd3fc; }
+html[data-theme="night"] .rt-road-line { stroke: #fef08a; filter: drop-shadow(0 0 1px #fde047); }
+html[data-theme="night"] .rt-pc { background-color: #f8f5ea; }
+html[data-theme="night"] .rt-wrap { background: linear-gradient(160deg, #052e2a 0%, #0b2440 100%); }
+
+@media (max-width: 900px) { .rt-body { grid-template-columns: 1fr; } .rt-card { min-height: 0; } }
+@media (max-width: 560px) {
+  .rt-wrap { padding: 12px; border-radius: 22px; margin-inline: -4px; }
+  .rt-title { font-size: 1.15rem; } .rt-sub { font-size: .84rem; }
+  .rt-dash { width: 100%; } .rt-gauge { flex: 1; min-width: 0; }
+  .rt-stage { border-radius: 18px; }
+  .rt-arrive { min-width: 180px; padding: 10px 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rt-river, .rt-wave, .rt-ship, .rt-cloud, .rt-smoke, .rt-pulse, .rt-finger, .rt-car-body, .rt-pc, .rt-arrive, .rt-pc .rt-go { animation: none !important; }
+}
+@media print { .rt-wrap { display: none !important; } }
+.rt-arrive[hidden], .rt-ticker[hidden] { display: none; }
+.rt-river { stroke-width: 1.4; }
+.rt-tree { opacity: .95; }
+.rt-svg { transform-origin: 0 0; }
+.rt-svg.is-cam { will-change: transform; }
+.rt-land-shadow { fill: rgba(11, 59, 51, .28); }
+.rt-ring { filter: none; }
+.rt-ring-shadow { fill: rgba(0, 0, 0, .28); }
+html[data-theme="night"] .rt-land-shadow { fill: rgba(0, 0, 0, .5); }
+@media (max-width: 560px) {
+  .rt-stop-in { transform: scale(1.3); }
+  .rt-km text { font-size: 6.4px; }
+  .rt-km { transform-box: fill-box; }
+  .rt-car-body, .rt-car-shadow { transform: scale(1.25); }
+}
+html[data-theme="night"] .rt-road.is-locked .rt-road-edge { opacity: .18; }
+html[data-theme="night"] .rt-road.is-locked .rt-road-base { stroke: #64748b; }
+html[data-theme="night"] .rt-road-base { stroke: #6b7280; }

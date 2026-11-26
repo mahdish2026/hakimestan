@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.79';
+const VERSION = 'hakim-v1.5.80';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -144,6 +144,7 @@ const PREFETCH_PAGES = [
   './games/iran-geography/data.js',
   './games/iran-geography/lessons.js',
   './games/iran-geography/lesson-view.js',
+  './games/iran-geography/roadtrip.js',
   './games/iran-geography/audio/m1-population.mp3',
   './games/iran-geography/audio/m2-water.mp3',
   './games/iran-geography/audio/m3-industry.mp3',
