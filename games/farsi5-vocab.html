@@ -69,23 +69,23 @@
       --bg-glass: rgba(106, 53, 194, 0.06);
       --text-primary: #23183b;
       --text-secondary: #4e3f70;
-      --text-muted: #7b6c9c;
-      --accent-primary: #d98200;
+      --text-muted: #665789;
+      --accent-primary: #9a5200; /* ۵٫۵:۱ روی زمینهٔ کرم؛ #d98200 فقط ۲٫۸:۱ بود */
       --accent-secondary: #6a35c2;
-      --accent-tertiary: #0284c7;
+      --accent-tertiary: #0369a1;
       --accent-glow: rgba(217, 130, 0, 0.25);
       --border-color: rgba(106, 53, 194, 0.18);
       --border-highlight: rgba(217, 130, 0, 0.55);
-      --success: #16a34a;
+      --success: #166534;
       --success-bg: rgba(22, 163, 74, 0.12);
-      --warning: #d97706;
+      --warning: #b45309;
       --warning-bg: rgba(217, 119, 6, 0.12);
-      --danger: #dc2626;
+      --danger: #b91c1c;
       --danger-bg: rgba(220, 38, 38, 0.12);
       --shadow-main: 0 10px 28px rgba(62, 40, 110, 0.1);
       --shadow-glow: 0 4px 20px rgba(217, 130, 0, 0.2);
       --gradient-hero: linear-gradient(135deg, #fff7e0 0%, #f1e6ff 55%, #ffeccc 100%);
-      --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --gradient-accent: linear-gradient(135deg, #b45309 0%, #92400e 100%); /* متن سفید روی آن ≥ ۵:۱ */
       --gradient-purple: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
       --btn-text-on-accent: #ffffff;
     }
@@ -1949,6 +1949,11 @@
         color: transparent; -webkit-text-fill-color: transparent;
         animation: brandShimmer 7s linear infinite;
       }
+      /* در تم‌های روشن، درخشش به سمت سفید تیتر را کم‌رنگ و ناخوانا می‌کرد؛ به رنگ دوم تم می‌رود */
+      [data-theme="day"] .brand-title > span:first-child,
+      [data-theme="rose"] .brand-title > span:first-child {
+        background-image: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-primary) 100%);
+      }
     }
     @keyframes brandShimmer { to { background-position: -200% center; } }
     .brand-logo svg { animation: logoFloat 4.5s ease-in-out infinite; }
@@ -2011,6 +2016,8 @@
         background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
         backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       }
+      /* مقصدهای پرش (ادامهٔ درس، بازی سریع، واژهٔ روز) زیر نوار تب چسبان پنهان نشوند */
+      html [id^="lesson-card-"], html #gameActiveView, html #wordOfDayCard { scroll-margin-top: calc(72px + env(safe-area-inset-top, 0px)); }
     }
 
     /* --- 🖐️ دستگاه‌های لمسی: حذف هاور چسبان --- */
@@ -2205,6 +2212,8 @@
     @media (max-width: 640px) {
       .vz-hero { grid-template-columns: 1fr; padding: 16px; gap: 14px; border-radius: 20px; }
       .vz-hero-ring { grid-template-columns: 100px auto; justify-content: start; }
+      .vz-ring-txt b { font-size: 1.28rem; }
+      .vz-ring-txt small { font-size: .64rem; }
       .vz-hero-ring svg { width: 100px; height: 100px; }
       .vz-hero-cta .vz-cta { flex: 1 1 calc(50% - 8px); }
       .vz-wod-word { font-size: 1.7rem; }
@@ -2216,6 +2225,20 @@
     }
     [data-motion="reduced"] .vz-ring-fg, [data-motion="reduced"] .vz-lesson-bar i { transition: none; }
     @media print { .vz-hero { display: none !important; } }
+
+    [id^="lesson-card-"], #gameActiveView, #wordOfDayCard { scroll-margin-top: 12px; }
+    /* 🏷️ لوگوی رسمی حکیمستان در سربرگ (HakimLogo.horizontal) — رنگ نوشتار با تم عوض می‌شود */
+    :root { --vz-logo-ink: #fff6dc; --vz-logo-tag: #f3c45a; --vz-logo-bg: rgba(255, 255, 255, .07); }
+    [data-theme="day"], [data-theme="rose"] { --vz-logo-ink: #2a1f52; --vz-logo-tag: #8a6420; --vz-logo-bg: rgba(255, 255, 255, .78); }
+    [data-theme="rose"] { --vz-logo-ink: #3b1229; --vz-logo-tag: #8a4a20; }
+    .vz-hk-logo { display: inline-flex; align-items: center; height: 56px; padding: 2px 12px; border-radius: 999px;
+      background: var(--vz-logo-bg); border: 1px solid var(--border-color); flex: none; line-height: 1; }
+    .vz-hk-logo svg { height: 100%; width: auto; display: block; overflow: visible; }
+    .vz-hk-logo path[fill="#2a1f52"] { fill: var(--vz-logo-ink); }
+    .vz-hk-logo path[fill="#8a6420"] { fill: var(--vz-logo-tag); }
+    .vz-hk-logo-fallback { font: 800 .85rem 'Vazirmatn', sans-serif; color: var(--text-primary); }
+    @media (max-width: 480px) { .vz-hk-logo { height: 48px; padding: 2px 10px; } }
+    @media (forced-colors: active) { .vz-hk-logo path[fill="#2a1f52"], .vz-hk-logo path[fill="#8a6420"] { fill: CanvasText; } }
   </style>
 <link rel="stylesheet" href="../css/hakim-cert.css"><script src="../js/hakim-logo.js"></script><script src="../js/hakim-cert.js"></script>
 </head>
@@ -2268,7 +2291,8 @@
           <div>
             <h1 class="brand-title">
               <span>واژه‌ستان فارسی پنجم</span>
-              <span style="font-size:0.82rem; background:var(--bg-glass); color:var(--text-primary); padding:2px 10px; border-radius:999px; font-family:'Vazirmatn',sans-serif; border:1px solid var(--border-color);">حکیمستان ✨</span>
+              <span class="vz-hk-logo" id="vzHakimLogo"><span class="vz-hk-logo-fallback">حکیمستان</span></span>
+              <script>(function () { var m = document.getElementById('vzHakimLogo'); if (m && window.HakimLogo) m.innerHTML = window.HakimLogo.horizontal({ label: 'حکیمستان', className: 'vz-hk-logo-svg' }); })();</script>
             </h1>
             <div class="brand-subtitle">
               <span>آموزش، مرور، فلش‌کارت و ۸ بازی هوشمند واژگان</span>
@@ -5614,6 +5638,16 @@
         updateMusicVolume();
         document.getElementById('gamesLobbyView').style.display = 'none';
         document.getElementById('gameActiveView').style.display = 'block';
+        // بازی تازه را جلوی چشم دانش‌آموز بیاور؛ وقتی از بخش بالای صفحه («بازی سریع») شروع شود، صحنهٔ بازی بیرون از دید بود
+        requestAnimationFrame(() => {
+          const view = document.getElementById('gameActiveView');
+          if (!view) return;
+          const r = view.getBoundingClientRect();
+          if (r.top < 0 || r.top > window.innerHeight * 0.45) {
+            const reduce = document.documentElement.getAttribute('data-motion') === 'reduced' || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+            view.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+          }
+        });
         document.getElementById('hudGameTitle').textContent = '🎮 ' + activeGame.gameName;
 
         // پیام شروع بازی توسط حکیم (طبق بخش ۹)
@@ -6587,12 +6621,17 @@
             new Promise(r => setTimeout(r, 1500))
           ]); } catch (e) {}
 
-          let canvas;
+          let canvas = null;
           if (typeof window.html2canvas === 'function') {
-            canvas = await window.html2canvas(target, { scale: 2, useCORS: true, backgroundColor: null });
-          } else {
-            canvas = renderCertificateFallbackCanvas();
+            // خروجی همیشه حدود ۱۶۰۰ پیکسل عرض دارد؛ حتی وقتی گواهی در گوشی ۳۹۰ پیکسلی کوچک نمایش داده می‌شود
+            const w = target.getBoundingClientRect().width || 760;
+            const scale = Math.max(2, Math.min(5, 1600 / w));
+            try {
+              canvas = await window.html2canvas(target, { scale: scale, useCORS: true, backgroundColor: '#fffcf3', logging: false });
+              if (!canvas || !canvas.width || !canvas.height) canvas = null;
+            } catch (err) { canvas = null; }
           }
+          if (!canvas) canvas = renderCertificateFallbackCanvas();
           triggerCanvasDownload(canvas, 'hakimistan-certificate.png');
           showToast('✅ تصویر گواهی‌نامه دانلود شد.');
         } catch (e) {
