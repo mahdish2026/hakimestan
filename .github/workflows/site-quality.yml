@@ -43,4 +43,5 @@ jobs:
           trap 'kill $!' EXIT
           curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
           node tests/site-pages-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
+          node tests/kohan-start-browser.cjs
           node tests/teacher-dashboard-security.cjs

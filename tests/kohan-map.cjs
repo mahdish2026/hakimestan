@@ -31,6 +31,13 @@ const dom = new JSDOM(html, {url:'https://hakimestan.ir/games/kohan-diyar.html',
 }});
 const w = dom.window, doc = w.document, api = w.__atlasTest;
 assert.ok(api, 'game script and atlas hook initialized');
+const film = doc.getElementById('startVideo');
+assert.equal(doc.querySelectorAll('#startVideo').length, 1, 'only one introduction video');
+assert.equal(film.querySelector('source').getAttribute('src'), 'video.mp4');
+assert.equal(film.hasAttribute('autoplay'), false, 'the film is optional');
+assert.ok(film.compareDocumentPosition(doc.querySelector('.journey-setup')) & w.Node.DOCUMENT_POSITION_FOLLOWING, 'film comes before game setup');
+assert.ok(doc.querySelector('a[href="#journeySetupHeading"]'), 'the film can be skipped');
+assert.ok(doc.getElementById('introVideoError'), 'unavailable film has an accessible fallback');
 const data = api.data();
 assert.equal(Object.keys(data.provinces).length,31);
 assert.equal(data.cityCount,6);
