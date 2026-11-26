@@ -80,7 +80,8 @@
       bestCombo: 0,
       sound: false,
       theme: 'light',
-      scale: 1
+      scale: 1,
+      city: { shown: [] }
     };
   }
 
@@ -107,6 +108,12 @@
       base.sound = Boolean(raw.sound);
       base.theme = raw.theme === 'night' ? 'night' : 'light';
       base.scale = [0.92, 1, 1.1, 1.2].includes(raw.scale) ? raw.scale : 1;
+      if (raw.city && Array.isArray(raw.city.shown)) {
+        base.city.shown = D.stages.map((s, i) => {
+          const v = Number(raw.city.shown[i]);
+          return Number.isInteger(v) && v >= 0 && v <= s.tasks.length ? v : 0;
+        });
+      }
       return base;
     } catch {
       return defaultState();
@@ -341,18 +348,18 @@
     const nextIdx = Math.max(0, D.stages.findIndex((s) => stageSolvedCount(s) < s.tasks.length));
 
     main.innerHTML = `
-      <section class="hero-card">
+      <section class="hero-card${window.PeymanCity ? ' hs-hero' : ''}">
         <div>
           <span class="hero-kicker">فصل ششم ریاضی پنجم · پوشش ۱۰۰٪ کتاب درسی</span>
           <h2 class="hero-title">به سرزمین <span class="hw-accent">«پیمانه‌ستان»</span> خوش آمدی!</h2>
           <p class="hero-sub">در ۱۰ ایستگاه داستانی، اول با درسنامهٔ تصویری و تعاملی راز هر شکل و حجم را کشف کن، بعد مرحله‌به‌مرحله تمرین‌های کتاب را حل کن، کمبو بزن و گواهی‌نامهٔ استادی بگیر!</p>
           <div class="hero-actions">
-            <button type="button" class="btn-primary" id="btnStartNext">🚀 ${done === 0 ? 'شروع از ایستگاه اول' : done === allTasks.length ? 'مرور ایستگاه‌ها' : 'ادامهٔ مسیر یادگیری'}</button>
+            <button type="button" class="btn-primary" id="btnStartNext">${window.PeymanCity ? '🏗️' : '🚀'} ${done === 0 ? 'شروع از ایستگاه اول' : done === allTasks.length ? 'مرور ایستگاه‌ها' : window.PeymanCity ? 'ادامهٔ ساخت شهرک' : 'ادامهٔ مسیر یادگیری'}</button>
             <button type="button" class="btn-soft" id="btnOpenStudio">🛠️ کارگاه آزاد ساخت و کشف</button>
             <button type="button" class="btn-gold" id="btnOpenCert">🏆 گواهی‌نامهٔ من</button>
           </div>
         </div>
-        ${W() ? W().art('measure', { chips: ['📐 ' + fa(D.stages.length) + ' ایستگاه', '🧊 ' + fa(allTasks.length) + ' تمرین', '🏅 ' + fa(D.stages.length) + ' نشان'] }) : ''}
+        ${W() && !window.PeymanCity ? W().art('measure', { chips: ['📐 ' + fa(D.stages.length) + ' ایستگاه', '🧊 ' + fa(allTasks.length) + ' تمرین', '🏅 ' + fa(D.stages.length) + ' نشان'] }) : ''}
       </section>
 
       <section class="profile-bar" aria-label="پروفایل و پیشرفت قهرمان">
@@ -372,7 +379,7 @@
         </div>
       </section>
 
-      ${W() ? W().journey(D.stages.map((u, i) => ({ title: u.title, solved: stageSolvedCount(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'ایستگاه', attr: 'data-open-lesson', nextIdx, done, total: allTasks.length }) : ''}
+      ${window.PeymanCity ? window.PeymanCity.render(cityCtx()) : W() ? W().journey(D.stages.map((u, i) => ({ title: u.title, solved: stageSolvedCount(u), total: u.tasks.length, locked: isLocked(i) })), { word: 'ایستگاه', attr: 'data-open-lesson', nextIdx, done, total: allTasks.length }) : ''}
 
       <section aria-labelledby="stationsHeading">
         <h2 id="stationsHeading" class="hw-section-title" style="margin:0 0 12px;font-size:1.2rem">🗺️ نقشهٔ ۱۰ ایستگاه فصل ششم (از مساحت تا حجم و گنجایش)</h2>
@@ -411,7 +418,8 @@
       ${W() ? W().certBanner({ done, total: allTasks.length, word: 'ایستگاه', taskWord: 'تمرین', attr: 'data-open-lesson', nextIdx }) : ''}
     `;
 
-    $('btnStartNext').onclick = () => openLesson(nextIdx);
+    $('btnStartNext').onclick = () => (window.PeymanCity ? window.PeymanCity.goNext() : openLesson(nextIdx));
+    window.PeymanCity?.mount(main, cityCtx());
     $('btnOpenStudio').onclick = renderStudio;
     $('btnOpenCert').onclick = renderCertificate;
     W()?.bind(main, { cert: renderCertificate });
@@ -465,6 +473,24 @@
         </section>
       </div>
     `;
+  }
+
+  // پیوند شهرک معمارها با وضعیت بازی
+  function cityCtx() {
+    return {
+      stages: D.stages,
+      city: profile.city,
+      solved: (i) => stageSolvedCount(D.stages[i]),
+      stars: (i) => stageStars(D.stages[i]),
+      seen: (i) => Boolean(profile.lessons[D.stages[i].id]),
+      locked: (i) => isLocked(i),
+      openLesson: (i) => openLesson(i),
+      openTask: (i) => openTask(i, Math.max(0, D.stages[i].tasks.findIndex((t) => !profile.done[t.id]?.ok))),
+      lockedNotice: (i) => lockedNotice(i),
+      save: saveState,
+      sound: () => profile.sound,
+      say: (m) => HC()?.say?.(m, 'happy')
+    };
   }
 
   function unitsInfo() {

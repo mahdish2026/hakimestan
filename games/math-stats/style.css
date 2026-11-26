@@ -741,3 +741,104 @@ dialog::backdrop { background: rgba(16, 12, 32, 0.58); }
 @media (max-width: 1024px) {
   .topbar { position: static; }
 }
+
+/* ═════════ چرخندهٔ شانس و داشبورد (wheel.js) ═════════ */
+.aw-wrap { --hs-g1: #51389e; --hs-g2: #1e1b4b; }
+.aw-wrap .hs-stage { background: radial-gradient(circle at 50% 45%, #fdf4ff 0%, #ede9fe 55%, #c4b5fd 100%); }
+.aw-wrap .hs-body { grid-template-columns: minmax(0, 1.25fr) minmax(250px, 1fr); }
+.aw-svg { max-width: 520px; margin: 0 auto; aspect-ratio: 420 / 430; }
+.aw-shadow { fill: rgba(30, 27, 75, .25); }
+.aw-rim { fill: #4c1d95; stroke: #fbbf24; stroke-width: 4; }
+.aw-bulb { fill: #fde68a; }
+.aw-bulb.a { animation: awBulb 1.2s steps(1) infinite; }
+.aw-bulb.b { animation: awBulb 1.2s steps(1) infinite .6s; }
+@keyframes awBulb { 0% { fill: #fef08a; filter: drop-shadow(0 0 3px #fde047); } 50% { fill: #a16207; filter: none; } }
+.aw-wrap.is-busy .aw-bulb.a, .aw-wrap.is-busy .aw-bulb.b { animation-duration: .3s; }
+.aw-face { fill: #fff; }
+.aw-bg { stroke: #fff; stroke-width: 2; }
+.aw-fill { stroke: rgba(255, 255, 255, .7); stroke-width: 1.5; transform-box: view-box; transform-origin: 210px 222px; }
+.aw-ring { fill: none; stroke: rgba(76, 29, 149, .18); stroke-width: 1; stroke-dasharray: 3 4; pointer-events: none; }
+.aw-icon { font-size: 20px; pointer-events: none; }
+.aw-num { font-size: 13px; font-weight: 900; fill: #1e1b4b; pointer-events: none; }
+.aw-star { font-size: 11px; fill: #a16207; pointer-events: none; letter-spacing: 1px; }
+.aw-slice.is-full .aw-num, .aw-slice.is-full .aw-star { fill: #fff; paint-order: stroke; stroke: rgba(0, 0, 0, .35); stroke-width: 2px; }
+.aw-peg { fill: #fbbf24; stroke: #78350f; stroke-width: 1.5; }
+.aw-slice:not(.is-locked):hover .aw-bg { filter: brightness(.94); }
+.aw-slice.is-selected .aw-bg { stroke: #1e1b4b; stroke-width: 3; }
+.aw-slice.is-landed { animation: awLand .8s ease; transform-box: view-box; transform-origin: 210px 222px; }
+@keyframes awLand { 30% { transform: scale(1.04); } }
+.aw-slice.is-shake { animation: awShake .45s ease; transform-box: view-box; transform-origin: 210px 222px; }
+@keyframes awShake { 25%, 75% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.aw-slice.is-next .aw-bg { animation: awPulse 1.6s ease-in-out infinite; }
+@keyframes awPulse { 50% { filter: brightness(1.08) drop-shadow(0 0 6px rgba(250, 204, 21, .9)); } }
+.aw-hub-c { stroke: #78350f; stroke-width: 3; filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .3)); }
+.aw-hub { transition: transform .2s; transform-box: fill-box; transform-origin: center; }
+.aw-hub:hover { transform: scale(1.06); }
+.aw-hub-t { font-size: 12px; font-weight: 900; fill: #78350f; pointer-events: none; }
+.aw-hub-i { font-size: 14px; pointer-events: none; }
+.aw-flap { transition: transform .07s; }
+.aw-flap-p { fill: #dc2626; stroke: #7f1d1d; stroke-width: 2.5; stroke-linejoin: round; filter: drop-shadow(0 3px 2px rgba(0, 0, 0, .3)); }
+.aw-flap-c { fill: #fbbf24; stroke: #78350f; stroke-width: 2; }
+.aw-caption { font-size: 11px; font-weight: 700; fill: #4c1d95; }
+.aw-card .hs-card-icon { background: color-mix(in srgb, var(--aw-c, #51389e) 18%, #fff); }
+/* داشبورد */
+.aw-dash { margin-top: 16px; }
+.aw-dash-title { margin: 0 0 10px; font-size: 1.05rem; color: #fff; }
+.aw-dash-title small { font-weight: 600; color: rgba(255, 255, 255, .85); font-size: .8rem; }
+.aw-dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.aw-chart { margin: 0; padding: 12px; border-radius: 18px; background: #fffdf7; color: #1e1b4b; box-shadow: 0 12px 24px -16px rgba(0, 0, 0, .6); }
+.aw-chart figcaption { display: grid; gap: 2px; margin-bottom: 6px; }
+.aw-chart figcaption b { font-size: .9rem; }
+.aw-chart figcaption small { font-size: .74rem; color: #5b21b6; font-weight: 700; }
+.aw-chart svg { display: block; width: 100%; height: auto; }
+.aw-grid { stroke: #e2e8f0; stroke-width: 1; }
+.aw-ax { font-size: 10px; fill: #475569; font-weight: 700; }
+.aw-val { font-size: 10px; fill: #312e81; font-weight: 900; }
+.aw-bar { transform-box: fill-box; transform-origin: center bottom; }
+.aw-mean { stroke: #dc2626; stroke-width: 2; stroke-dasharray: 6 4; }
+.aw-mean-t { font-size: 11px; font-weight: 900; fill: #b91c1c; paint-order: stroke; stroke: #fffdf7; stroke-width: 3px; }
+.aw-line { fill: none; stroke: #6d28d9; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.aw-dot { fill: #fff; stroke: #6d28d9; stroke-width: 2.5; transform-box: fill-box; transform-origin: center; }
+.aw-trend { font-size: 11px; font-weight: 900; fill: #047857; }
+.aw-ghost { fill: none; stroke: #c4b5fd; stroke-width: 2.5; stroke-dasharray: 6 5; }
+.aw-empty { font-size: 12px; font-weight: 800; fill: #5b21b6; }
+.aw-pie-bg { fill: none; stroke: #e2e8f0; stroke-width: 30; }
+.aw-pie { fill: none; stroke-width: 30; }
+.aw-pie.p1 { stroke: #7c3aed; } .aw-pie.p2 { stroke: #f59e0b; }
+.p1f { fill: #7c3aed; } .p2f { fill: #f59e0b; } .p3f { fill: #e2e8f0; stroke: #94a3b8; }
+.aw-pct { font-size: 20px; font-weight: 900; fill: #312e81; }
+.aw-legend text { font-size: 12px; font-weight: 700; fill: #1e1b4b; }
+.aw-tally { stroke: #1e1b4b; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; }
+.aw-tally-x { stroke: #dc2626; }
+/* انیمیشن کشیدن نمودارها وقتی دیده می‌شوند */
+.aw-dash:not(.is-drawn) .aw-bar { transform: scaleY(0); }
+.aw-dash:not(.is-drawn) .aw-line, .aw-dash:not(.is-drawn) .aw-tally { stroke-dashoffset: 1; }
+.aw-dash:not(.is-drawn) .aw-dot { transform: scale(0); }
+.aw-dash:not(.is-drawn) .aw-pie { stroke-dasharray: 0 400; }
+.aw-dash.is-drawn .aw-bar { animation: awGrow .8s cubic-bezier(.2, 1.3, .4, 1) var(--d, 0s) both; }
+.aw-dash.is-drawn .aw-line { animation: awDraw 1.4s ease .1s both; }
+.aw-dash.is-drawn .aw-tally { animation: awDraw .35s ease var(--d, 0s) both; }
+.aw-dash.is-drawn .aw-dot { animation: awDot .4s cubic-bezier(.2, 1.6, .4, 1) var(--d, 0s) both; }
+.aw-dash.is-drawn .aw-pie { animation: awPie 1.2s ease both; }
+@keyframes awGrow { from { transform: scaleY(0); } }
+@keyframes awDraw { from { stroke-dashoffset: 1; } }
+@keyframes awDot { from { transform: scale(0); } }
+@keyframes awPie { from { stroke-dasharray: 0 400; } }
+html[data-theme="night"] .aw-wrap { --hs-g1: #2e1065; --hs-g2: #0f0a2e; }
+html[data-theme="night"] .aw-wrap .hs-stage { background: radial-gradient(circle at 50% 45%, #312e81 0%, #1e1b4b 60%, #0f0a2e 100%); }
+html[data-theme="night"] .aw-face { fill: #1e1b4b; }
+html[data-theme="night"] .aw-bg { stroke: #1e1b4b; }
+html[data-theme="night"] .aw-caption { fill: #ddd6fe; }
+html[data-theme="night"] .aw-chart { background: #111827; color: #e5e7eb; }
+html[data-theme="night"] .aw-chart figcaption small { color: #c4b5fd; }
+html[data-theme="night"] .aw-ax, html[data-theme="night"] .aw-legend text { fill: #cbd5e1; }
+html[data-theme="night"] .aw-val, html[data-theme="night"] .aw-pct { fill: #e0e7ff; }
+html[data-theme="night"] .aw-grid, html[data-theme="night"] .aw-pie-bg { stroke: #334155; }
+html[data-theme="night"] .aw-mean-t { stroke: #111827; fill: #fca5a5; }
+html[data-theme="night"] .aw-tally { stroke: #e5e7eb; }
+html[data-theme="night"] .aw-empty { fill: #c4b5fd; }
+html[data-theme="night"] .aw-trend { fill: #6ee7b7; }
+html[data-theme="night"] .aw-line { stroke: #a78bfa; }
+html[data-theme="night"] .aw-dot { fill: #111827; stroke: #a78bfa; }
+.aw-ax-day { font-size: 8.5px; }
+@media (max-width: 900px) { .aw-wrap .hs-body { grid-template-columns: 1fr; } }

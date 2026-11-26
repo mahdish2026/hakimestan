@@ -70,6 +70,8 @@ const SHELL_ASSETS = [
   './js/hakim-companion.js',
   './js/hakim-worlds.js',
   './css/hakim-worlds.css',
+  './js/hakim-scene-kit.js',
+  './css/hakim-scenes.css',
   './js/hakim-security.js',
   './js/hakim-theme.js',
   './js/hakim-sw-register.js',
@@ -123,14 +125,17 @@ const PREFETCH_PAGES = [
   './games/math-measurement/style.css',
   './games/math-measurement/data.js',
   './games/math-measurement/app.js',
+  './games/math-measurement/city.js',
   './games/math-stats.html',
   './games/math-stats/style.css',
   './games/math-stats/data.js',
   './games/math-stats/app.js',
+  './games/math-stats/wheel.js',
   './games/farsi5-hamava.html',
   './games/farsi5-hamava/style.css',
   './games/farsi5-hamava/data.js',
   './games/farsi5-hamava/lessons.js',
+  './games/farsi5-hamava/book.js',
   './games/farsi5-hamava/audio/ch1-kh-vav.mp3',
   './games/farsi5-hamava/audio/ch2-sin-sad-se.mp3',
   './games/farsi5-hamava/audio/ch3-te-ta.mp3',
@@ -223,7 +228,9 @@ const EXTRACTED_IMAGES = [
   './assets/img/games-math-time-mission-art.jpeg',
   './assets/img/mission-time-history-sundial.jpg',
   './assets/img/mission-time-history-waterclock.jpg',
-  './assets/img/mission-time-history-maragha.jpg'
+  './assets/img/mission-time-history-maragha.jpg',
+  './assets/img/hamava-page-tazhib.webp',
+  './assets/img/hamava-cover.webp'
 ];
 
 /** پیش‌بارگذاری آرام در زمان بی‌کاری مرورگر */
