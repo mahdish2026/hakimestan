@@ -253,7 +253,7 @@ html[data-theme="night"] .board-rank { color: var(--primary-2); }
 .group-box h3 { margin: 0 0 8px; font-size: 1.02rem; color: var(--g, var(--primary)); display: flex; align-items: center; gap: 8px; }
 .group-box h3 i { font-style: normal; width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--g) 16%, transparent); font-size: 1.1rem; }
 html[data-theme="night"] .group-box h3 { color: color-mix(in srgb, var(--g) 55%, #fff); }
-.group-box ol { margin: 0; padding-right: 22px; }
+.group-box ol { margin: 0; padding-right: 22px; list-style-type: persian; }
 .group-box li { padding: 2px 0; }
 .group-box li small { color: var(--muted); }
 .group-meta { font-size: .74rem; color: var(--muted); margin-top: 6px; }
@@ -469,7 +469,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px)
 
 <footer class="site-footer">
   طراحی و توسعه: <b>مهدی شریفیان</b> · سامانهٔ آموزشی حکیمستان · تمام داده‌ها صددرصد خصوصی روی دستگاه شما ذخیره می‌شوند
-  <div class="ky-shortcuts" aria-hidden="true"><span><kbd>1</kbd>…<kbd>6</kbd> تعویض ابزار</span><span><kbd>Space</kbd> چرخش گردونه / شروع زمان</span><span><kbd>F</kbd> تمام‌صفحه</span></div>
+  <div class="ky-shortcuts" aria-hidden="true"><span><kbd>1</kbd>…<kbd>6</kbd> تعویض ابزار (در دوئل فقط <kbd>5</kbd> و <kbd>6</kbd>)</span><span><kbd>Space</kbd> چرخش گردونه / شروع زمان</span><span><kbd>F</kbd> تمام‌صفحه</span></div>
 </footer>
 
 <dialog id="rosterDialog" aria-labelledby="rosterDialogTitle">
@@ -1136,6 +1136,14 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px)
     if (activeTab === 'timer') renderTimerTab();
     if (boardMode) renderBoardMode();
   }
+  /* بستن نمای تخته (دکمه یا Esc): زمان‌سنج ادامه می‌دهد و فوکوس به دکمهٔ بازکننده برمی‌گردد */
+  function closeBoardMode() {
+    boardMode = false;
+    renderBoardMode();
+    if (activeTab === 'timer') renderTimerTab();
+    const b = $('btnBoardMode');
+    if (b) b.focus();
+  }
   function renderBoardMode() {
     let el = $('kyBoard');
     if (!boardMode) { if (el) el.remove(); return; }
@@ -1156,7 +1164,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px)
       </div>`;
     $('btnBoardToggle').onclick = toggleTimer;
     $('btnBoardPlus').onclick = () => { timerRem += 60; state.timerTotalSec = Math.max(state.timerTotalSec, timerRem); persist(); paintTimer(); };
-    $('btnBoardClose').onclick = () => { boardMode = false; renderBoardMode(); if (activeTab === 'timer') renderTimerTab(); const b = $('btnBoardMode'); if (b) b.focus(); };
+    $('btnBoardClose').onclick = closeBoardMode;
     $('btnBoardToggle').focus();
   }
 
@@ -1355,6 +1363,44 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px)
     return (BUILTIN_BANKS[state.duelBankKey] || BUILTIN_BANKS.math5).questions;
   }
 
+  /* HQF (خروجی مبدل: {hqf, meta, questions}) و قالب منبع حکیمستان ({hakimestan, exams:[{questions}]}) را
+     به سؤال‌های تک‌پاسخی دوئل تبدیل می‌کند. سؤال چندپاسخی، بی‌گزینه یا با پاسخ نامعتبر کنار گذاشته می‌شود؛
+     اگر بیش از ۴ گزینه باشد، گزینهٔ درست حتماً میان ۴ گزینهٔ نمایش‌داده‌شده می‌ماند. */
+  function normalizeDuelQuestions(parsed) {
+    const toIdx = (v) => (typeof v === 'string' && /^\s*[0-9۰-۹]+\s*$/.test(v) ? Number(v.trim().replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))) : v);
+    const pool = [];
+    const collect = (qs) => (Array.isArray(qs) ? qs : []).forEach((q) => {
+      if (!q || typeof q !== 'object') return;
+      if (Array.isArray(q.subQuestions) && q.subQuestions.length) { collect(q.subQuestions.map((sq) => Object.assign({}, sq, { text: [q.text, sq && sq.text].filter(Boolean).join(' — ') }))); return; }
+      pool.push(q);
+    });
+    if (Array.isArray(parsed)) collect(parsed);
+    else if (parsed && typeof parsed === 'object') {
+      collect(parsed.questions);
+      (Array.isArray(parsed.exams) ? parsed.exams : []).forEach((ex) => collect(ex && ex.questions));
+    }
+    let skipped = 0;
+    const out = [];
+    pool.forEach((q) => {
+      const text = String(q.text || q.prompt || '').trim();
+      const type = String(q.type || '').trim();
+      let options = Array.isArray(q.options) ? q.options : Array.isArray(q.dropdownOptions) ? q.dropdownOptions : null;
+      let answer = toIdx(Array.isArray(q.answer) && q.answer.length === 1 ? q.answer[0] : q.answer);
+      if (type === 'tf' && (!options || options.length < 2)) { options = ['درست', 'نادرست']; if (typeof answer === 'boolean') answer = answer ? 0 : 1; }
+      if (!Number.isInteger(answer) && options && q.dropdownAnswer != null) answer = options.map((o) => String(o).trim()).indexOf(String(q.dropdownAnswer).trim());
+      options = (options || []).map((o) => String(o == null ? '' : o).trim());
+      if (!text || type === 'multi' || options.length < 2 || options.some((o) => !o) || !Number.isInteger(answer) || answer < 0 || answer >= options.length) { skipped++; return; }
+      if (options.length > 4) {
+        const others = options.map((o, i) => i).filter((i) => i !== answer).slice(0, 3);
+        const keep = others.concat(answer).sort((a, b) => a - b);
+        answer = keep.indexOf(answer);
+        options = keep.map((i) => options[i]);
+      }
+      out.push({ text, options, answer });
+    });
+    return { questions: out, skipped };
+  }
+
   function orderedDuelOpts(q, idxSeed) {
     const opts = Array.isArray(q.options) ? q.options.slice(0, 4) : [];
     const ansIdx = Array.isArray(q.answer) ? q.answer[0] : Number(q.answer) || 0;
@@ -1448,11 +1494,13 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px)
       const reader = new FileReader();
       reader.onload = () => {
         try {
-          const parsed = JSON.parse(String(reader.result || '{}'));
-          const qs = (Array.isArray(parsed.questions) ? parsed.questions : [])
-            .filter((item) => item && (item.text || item.prompt) && Array.isArray(item.options) && item.options.length >= 2);
+          // مبدل HQF فایل را با BOM ذخیره می‌کند؛ پیش از JSON.parse حذفش کن
+          const parsed = JSON.parse(String(reader.result || '{}').replace(/^\uFEFF/, ''));
+          const norm = normalizeDuelQuestions(parsed);
+          const qs = norm.questions;
           if (!qs.length) {
-            duelState.roundMsg = 'در این فایل سؤال چندگزینه‌ای معتبر پیدا نشد.';
+            duelState.roundMsg = 'در این فایل سؤال تک‌پاسخیِ گزینه‌دار (تستی، درست/نادرست یا کشویی) پیدا نشد.';
+            e.target.value = '';
             renderDuelTab();
             return;
           }
@@ -1461,7 +1509,7 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px)
           duelState.qIdx = 0;
           duelState.locked = false;
           duelState.picked = null;
-          duelState.roundMsg = `✓ ${fa(qs.length)} سؤال HQF با موفقیت بارگذاری شد!`;
+          duelState.roundMsg = `✓ ${fa(qs.length)} سؤال HQF با موفقیت بارگذاری شد!` + (norm.skipped ? ` (${fa(norm.skipped)} سؤال تشریحی، چندپاسخی یا ناقص برای دوئل کنار گذاشته شد.)` : '');
           persist();
           renderDuelTab();
         } catch {
@@ -1659,12 +1707,23 @@ dialog::backdrop { background: rgba(10, 24, 24, 0.6); backdrop-filter: blur(3px)
     if (tg && (tg.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName))) return;
     if ($('rosterDialog') && $('rosterDialog').open) return;
     const k = e.key.replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)));
-    if (e.key === 'Escape' && boardMode) { boardMode = false; renderBoardMode(); if (activeTab === 'timer') renderTimerTab(); return; }
+    if (e.key === 'Escape' && boardMode) { e.preventDefault(); closeBoardMode(); return; }
+    if (boardMode && e.key === 'Tab') {
+      // پنجرهٔ تخته aria-modal است؛ فوکوس نباید به صفحهٔ پشت آن برود
+      const f = Array.from(document.querySelectorAll('#kyBoard button'));
+      if (f.length) {
+        const i = f.indexOf(document.activeElement);
+        const n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i === -1 || i === f.length - 1 ? 0 : i + 1);
+        e.preventDefault(); f[n].focus();
+      }
+      return;
+    }
     if (activeTab === 'duel' && duelAnswer && !duelState.locked) {
       if (P1_KEYS.includes(k)) { e.preventDefault(); duelAnswer(1, P1_KEYS.indexOf(k)); return; }
       if (P2_KEYS.includes(k)) { e.preventDefault(); duelAnswer(2, P2_KEYS.indexOf(k)); return; }
     }
-    if (/^[1-6]$/.test(k) && !(activeTab === 'duel')) { e.preventDefault(); selectTab(TOOLS[Number(k) - 1]); return; }
+    // در دوئل ۱–۴ و ۷–۰ کلید پاسخ بازیکن‌هاست؛ ۵ و ۶ آزادند تا معلم در دوئل گیر نیفتد
+    if (/^[1-6]$/.test(k) && !boardMode && (activeTab !== 'duel' || /^[56]$/.test(k))) { e.preventDefault(); selectTab(TOOLS[Number(k) - 1]); return; }
     if ((e.key === ' ' || e.code === 'Space') && !(tg && /^(BUTTON|A)$/.test(tg.tagName))) {
       if (activeTab === 'wheel' && renderWheelTab.spin) { e.preventDefault(); renderWheelTab.spin(); }
       else if (activeTab === 'timer' || boardMode) { e.preventDefault(); toggleTimer(); }

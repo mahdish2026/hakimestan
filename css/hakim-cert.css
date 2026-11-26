@@ -46,6 +46,10 @@
   print-color-adjust: exact;
 }
 .hk-a4 *, .hk-a4 *::before, .hk-a4 *::after { box-sizing: border-box; }
+/* سبک‌های سراسری صفحهٔ میزبان (مثل h3 با letter-spacing) نباید به برگه نشت کند؛
+   فاصلهٔ حروف در html2canvas حروف فارسی را از هم جدا و نوشته را در PNG خراب می‌کند. */
+.hk-a4, .hk-a4 * { letter-spacing: 0; word-spacing: normal; text-transform: none; }
+.hk-a4 h1, .hk-a4 h2, .hk-a4 h3, .hk-a4 h4 { font-family: inherit; }
 
 /* Frame: thick outer line, thin inner line and four corner ornaments */
 .hk-a4-frame { position: absolute; inset: 0; pointer-events: none; }
@@ -118,11 +122,16 @@
   letter-spacing: 0;
 }
 
-.hk-a4-rule {
-  height: .9em; margin: .55em 0 .35em;
-  background:
-    radial-gradient(circle, var(--hk-gold) 0 .2em, transparent .22em) center / 1.2em 100% no-repeat,
-    linear-gradient(var(--hk-gold), var(--hk-gold)) center / 100% .07em no-repeat;
+/* خط و نقطهٔ میانی با شبه‌عنصر رسم می‌شوند، نه با گرادیان: لایهٔ گرادیانِ زیر ۱ پیکسل
+   در html2canvas به بوم صفر پیکسلی گرد می‌شد و ساخت تصویر PNG گواهی را کامل از کار می‌انداخت. */
+.hk-a4-rule { position: relative; height: .9em; margin: .55em 0 .35em; }
+.hk-a4-rule::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 50%;
+  height: 0; border-top: max(1px, .07em) solid var(--hk-gold); transform: translateY(-50%);
+}
+.hk-a4-rule::after {
+  content: ''; position: absolute; left: 50%; top: 50%; width: .42em; height: .42em;
+  border-radius: 50%; background: var(--hk-gold); transform: translate(-50%, -50%);
 }
 
 .hk-a4-body { text-align: justify; font-size: 1.04em; line-height: 2.05; }
