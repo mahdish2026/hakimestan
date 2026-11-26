@@ -1046,7 +1046,7 @@
     HC()?.taskStart();
     baseOpenTask(a, b);
   };
-  HC()?.mount({ gameId: GAME_ID, name: profile.name, intro: "سلام! من حکیمم. در آمارستان یاد می‌گیریم داده‌ها را بخوانیم، نمودار بکشیم، میانگین بگیریم و شانس را بسنجیم. آماده‌ای؟" });
+  HC()?.mount({ gameId: GAME_ID, music: 'music7.mp3', name: profile.name, intro: "سلام! من حکیمم. در آمارستان یاد می‌گیریم داده‌ها را بخوانیم، نمودار بکشیم، میانگین بگیریم و شانس را بسنجیم. آماده‌ای؟" });
   renderMap();
 
   window.AmarestanApp = {

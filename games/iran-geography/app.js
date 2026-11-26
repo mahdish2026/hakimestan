@@ -648,7 +648,7 @@
     HC()?.taskStart();
     baseOpenTask(a, b);
   };
-  HC()?.mount({ gameId: GAME_ID, name: profile.name, intro: "سلام ایران‌گرد کوچک! من حکیمم. روی نقشهٔ واقعی ایران سفر می‌کنیم؛ اول درسنامهٔ هر مأموریت را بخوان، بعد نقطهٔ درست را روی نقشه پیدا کن." });
+  HC()?.mount({ gameId: GAME_ID, music: 'music8.mp3', name: profile.name, intro: "سلام ایران‌گرد کوچک! من حکیمم. روی نقشهٔ واقعی ایران سفر می‌کنیم؛ اول درسنامهٔ هر مأموریت را بخوان، بعد نقطهٔ درست را روی نقشه پیدا کن." });
   renderHome();
 
   window.IranGeoApp = {

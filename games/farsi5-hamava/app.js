@@ -588,7 +588,7 @@
     HC()?.taskStart();
     baseOpenTask(a, b);
   };
-  HC()?.mount({ gameId: GAME_ID, name: profile.name, intro: "سلام ادیب جوان! من حکیمم. هر جفت هم‌آوا یک «رمز یادیار» دارد؛ اول رمز را بخوان، بعد واژهٔ درست را در جمله پیدا کن." });
+  HC()?.mount({ gameId: GAME_ID, music: 'music6.mp3', name: profile.name, intro: "سلام ادیب جوان! من حکیمم. هر جفت هم‌آوا یک «رمز یادیار» دارد؛ اول رمز را بخوان، بعد واژهٔ درست را در جمله پیدا کن." });
   renderMap();
 
   window.HamavaApp = {

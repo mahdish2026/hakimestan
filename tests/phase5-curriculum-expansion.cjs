@@ -285,6 +285,11 @@ for (const field of ['game_id', 'student_name', 'is_correct', 'experiment_id']) 
   assert.ok(companion.includes(field), 'companion telemetry must use snake_case field ' + field);
 }
 assert.ok(/pointer-events\s*:\s*none/.test(companion), 'companion panel must not block game buttons');
+assert.ok(/function mountMusic/.test(companion) && /preload = 'none'/.test(companion), 'companion must offer opt-in background music without preloading');
+for (const [appJs, track] of [['games/math-measurement/app.js', 'music9.mp3'], ['games/math-stats/app.js', 'music7.mp3'], ['games/farsi5-hamava/app.js', 'music6.mp3'], ['games/iran-geography/app.js', 'music8.mp3']]) {
+  assert.ok(read(appJs).includes("music: '" + track + "'"), appJs + ' must mount background music ' + track);
+  assert.ok(exists('games/' + track), 'missing music file games/' + track);
+}
 const swSrc = read('sw.js');
 for (const asset of ['./js/hakim-companion.js', './games/iran-geography/map-geo.js']) {
   assert.ok(swSrc.includes(asset), 'sw.js must precache ' + asset);

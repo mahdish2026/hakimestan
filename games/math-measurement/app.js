@@ -1071,7 +1071,7 @@
     HC()?.taskStart();
     baseOpenTask(a, b);
   };
-  HC()?.mount({ gameId: GAME_ID, name: profile.name, intro: "سلام! من حکیمم. در پیمانه‌ستان با هم راز مساحت لوزی و ذوزنقه، محیط دایره و حجم را کشف می‌کنیم. اول درسنامهٔ هر ایستگاه را ببین، بعد سراغ تمرین برو!" });
+  HC()?.mount({ gameId: GAME_ID, music: 'music9.mp3', name: profile.name, intro: "سلام! من حکیمم. در پیمانه‌ستان با هم راز مساحت لوزی و ذوزنقه، محیط دایره و حجم را کشف می‌کنیم. اول درسنامهٔ هر ایستگاه را ببین، بعد سراغ تمرین برو!" });
   renderMap();
 
   window.PeymanestanApp = {

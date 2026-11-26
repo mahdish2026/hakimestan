@@ -84,9 +84,71 @@
     paintFaces(container);
   }
 
+  // موسیقی بی‌کلام پس‌زمینه: پیش‌فرض خاموش، دکمه کنار «صدا»، ترجیح هر بازی جدا ذخیره می‌شود.
+  function mountMusic(src, gameId) {
+    if (!src || typeof document === 'undefined' || document.getElementById('hkMusicBtn')) return null;
+    var anchor = document.getElementById('soundBtn');
+    if (!anchor || typeof Audio === 'undefined') return null;
+    var audio = new Audio();
+    audio.loop = true;
+    audio.preload = 'none';
+    audio.volume = 0.3;
+    audio.src = src;
+    var key = 'hakim.music.' + (gameId || 'game');
+    var on = false, broken = false;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'hkMusicBtn';
+    btn.className = anchor.className;
+    btn.title = 'موسیقی بی‌کلام پس‌زمینه';
+    function label() {
+      btn.setAttribute('aria-pressed', String(on && !broken));
+      btn.textContent = broken ? '🎵 موسیقی: در دسترس نیست' : (on ? '🎶 موسیقی: روشن' : '🎵 موسیقی: خاموش');
+    }
+    function play() {
+      try {
+        var p = audio.play();
+        if (p && typeof p.catch === 'function') p.catch(function () { on = false; label(); });
+      } catch (_) { on = false; label(); }
+    }
+    function remember() { try { localStorage.setItem(key, on ? '1' : '0'); } catch (_) {} }
+    btn.addEventListener('click', function () {
+      if (broken) return;
+      if (on && audio.paused) { play(); return; } // ترجیح ذخیره‌شده هنوز با لمس کاربر شروع نشده بود
+      on = !on;
+      remember();
+      if (on) { audio.preload = 'auto'; play(); } else { audio.pause(); }
+      label();
+    });
+    audio.addEventListener('error', function () { broken = true; on = false; btn.disabled = true; label(); });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) audio.pause(); else if (on && !broken && audio.dataset.started === '1') play();
+    });
+    audio.addEventListener('playing', function () { audio.dataset.started = '1'; });
+    var saved = false;
+    try { saved = localStorage.getItem(key) === '1'; } catch (_) {}
+    if (saved) {
+      on = true;
+      // مرورگرها پخش خودکار را بدون لمس کاربر اجازه نمی‌دهند؛ با اولین لمس صفحه ادامه می‌دهیم.
+      var resume = function (e) {
+        if (e && e.target === btn) return;
+        document.removeEventListener('pointerdown', resume, true);
+        document.removeEventListener('keydown', resume, true);
+        if (on && audio.paused) play();
+      };
+      document.addEventListener('pointerdown', resume, true);
+      document.addEventListener('keydown', resume, true);
+    }
+    label();
+    anchor.insertAdjacentElement('afterend', btn);
+    state.music = { audio: audio, button: btn };
+    return state.music;
+  }
+
   function mount(opts) {
     opts = opts || {};
     state.gameId = opts.gameId || state.gameId;
+    if (opts.music) { try { mountMusic(opts.music, state.gameId); } catch (_) {} }
     var h = H();
     if (!h || typeof h.init !== 'function' || typeof document === 'undefined') return false;
     injectStyles();
@@ -258,6 +320,7 @@
 
   global.HakimCompanion = {
     mount: mount,
+    mountMusic: mountMusic,
     say: say,
     setName: setName,
     taskStart: taskStart,
