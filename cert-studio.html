@@ -129,6 +129,52 @@ label{font-size:12.5px;font-weight:600}
 .pane-head h2{font-family:Lalezar,Vazirmatn,sans-serif;font-weight:400;font-size:20px;line-height:1.5}
 .pane-head p{font-size:12px;color:var(--muted)}
 .theme-filter{margin-bottom:10px}
+.go-img{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;width:100%;margin:12px 0;padding:12px 14px;border:1px dashed #c9a03a;border-radius:14px;background:linear-gradient(135deg,#fffaf0,#fff);font:inherit;color:#5a3d07;cursor:pointer;text-align:start}
+.go-img span{margin-inline-start:auto;font-size:12.5px;color:#8a6a2a}
+.go-img:hover{background:#fff5dc}
+.drop-hint{font-size:12.5px;line-height:1.9;background:#f3f8ff;border:1px solid #d6e4fb;color:#24426e;border-radius:12px;padding:8px 12px;margin:0 0 10px}
+.slot-block{padding:9px 0;border-top:1px solid #eee5cf;display:grid;gap:6px}
+.slot-block:first-of-type{border-top:0}
+.slot-t{font-size:13px;font-weight:700;color:#3f3423}
+.slot-empty{width:58px;height:42px;display:inline-flex;align-items:center;justify-content:center;border:1.5px dashed #d8c89d;border-radius:8px;color:#bda56a;font-size:20px}
+.img-slot.drop-on,#stageView.drop-on{outline:3px dashed #c9a03a;outline-offset:3px;background-color:#fffbea}
+.cert .drop-tgt{outline:3px solid #2f7de1!important;outline-offset:2px}
+.chips.shapes button{padding:4px 10px 4px 8px}
+.chips button[aria-pressed="true"]{background:#fff3d6;border-color:#c9a03a;color:#6b4a0c;font-weight:700}
+.ps{width:13px;height:13px;border:1.6px solid currentColor;display:inline-block;background:#f6ecd2}
+.ps-circle,.ps-oval{border-radius:50%}.ps-oval{height:16px;width:12px}.ps-arch{border-radius:50% 50% 2px 2px/40% 40% 2px 2px;height:16px;width:12px}.ps-rounded{border-radius:3px;height:16px;width:12px}.ps-rect{height:16px;width:12px}.ps-square{border-radius:2px}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;margin-top:6px}
+.lib-it{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:10px;background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0 0/10px 10px;cursor:pointer;overflow:hidden}
+.lib-it img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
+.lib-it:hover{border-color:#c9a03a;box-shadow:0 2px 8px #c9a03a40}
+.lib-x{position:absolute;top:2px;inset-inline-end:2px;width:20px;height:20px;border-radius:50%;border:0;background:#0009;color:#fff;font-size:13px;line-height:1;cursor:pointer;opacity:0}
+.lib-it:hover .lib-x,.lib-it:focus-within .lib-x{opacity:1}
+@media (hover:none){.lib-x{opacity:.85}}
+.lib-menu{margin-top:10px;padding:10px;border:1px solid #e1d3ae;border-radius:12px;background:#fffdf6}
+.lib-menu .hl{background:#fff3d6;border-color:#c9a03a;font-weight:700}
+.layers{position:relative}
+.layers summary{cursor:pointer;list-style:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:#fff;font-weight:600}
+.layers summary::-webkit-details-marker{display:none}
+.layers[open] summary{background:#fff3d6;border-color:#c9a03a}
+.layer-list{position:absolute;z-index:40;top:calc(100% + 6px);inset-inline-start:0;width:min(330px,86vw);max-height:min(60vh,460px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 34px #0002;padding:6px}
+.ly-it{display:flex;align-items:center;gap:2px;border-radius:9px;padding:1px 2px}
+.ly-it.on{background:#fff3d6}
+.ly-it.off .ly-name{opacity:.45;text-decoration:line-through}
+.ly-it button{border:0;background:none;min-width:30px;height:32px;border-radius:7px;cursor:pointer;font:inherit;font-size:14px}
+.ly-it button:hover{background:#f2ece0}
+.ly-it .ly-name{flex:1;text-align:start;font-size:13px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.img-ed{border:0;border-radius:18px;padding:0;width:min(940px,96vw);max-height:94vh;box-shadow:0 30px 80px #0005;direction:rtl}
+.img-ed::backdrop{background:#1b1f2acc}
+.ed-head,.ed-foot{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.ed-foot{border-bottom:0;border-top:1px solid var(--line)}
+.ed-head #edTarget{font-size:13px}
+.ed-head .btn{margin-inline-start:auto}
+.ed-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;padding:14px;max-height:calc(94vh - 120px);overflow:auto}
+.ed-view{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:repeating-conic-gradient(#e9e9e9 0 25%,#fff 0 50%) 0 0/16px 16px;border-radius:12px;padding:12px;min-height:260px}
+#edCanvas{max-width:100%;max-height:min(56vh,520px);cursor:grab;touch-action:none;box-shadow:0 4px 16px #0003}
+.ed-ctrls{display:flex;flex-direction:column;gap:6px}
+.ed-ctrls input[type=range]{width:100%}
+@media (max-width:760px){.ed-body{grid-template-columns:1fr}.ed-view{min-height:180px}#edCanvas{max-height:38vh}}
 .sub-card{margin-top:10px;padding:10px 12px;border:1px dashed #d9c79a;border-radius:14px;background:#fffdf6}
 .sub-card h4{margin:0 0 4px;font-size:14px;color:#6b4a0c}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 8px}
@@ -161,7 +207,10 @@ details.style-box[open] summary::before{transform:rotate(-90deg)}
 details.style-box summary .sum{margin-inline-start:auto;font-size:11px;color:var(--muted);font-weight:500}
 details.style-box .in{padding:4px 12px 12px;display:grid;gap:8px}
 .mini-row{display:grid;grid-template-columns:1fr 84px;gap:8px;align-items:end}
-.img-slot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.img-slot{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px;border-radius:12px;border:1px solid transparent;transition:background .15s}
+.img-slot:hover{background:#fcf8ee;border-color:#efe4c8}
+.img-slot .btn.sm{padding-inline:9px}
+.img-slot>img,.img-slot>.slot-empty{margin-inline-end:4px}
 .img-slot img{width:58px;height:42px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0 0/10px 10px}
 .swatches{display:flex;gap:6px;flex-wrap:wrap}
 .swatch{width:32px;height:32px;border-radius:9px;border:2px solid #fff;box-shadow:0 0 0 1px #c9d3dd;min-height:0;padding:0}
@@ -202,6 +251,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 
 /* ═══ خود گواهی (مشترک برای نمایش، خروجی و چاپ) ═══ */
 .cert{position:relative;overflow:hidden;direction:rtl;color:var(--ink);--pt:calc(var(--mm) * .3528);flex:0 0 auto;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:Vazirmatn,sans-serif}
+.cert [data-mv]{position:relative}
 .cert .lyr{position:absolute;inset:0;pointer-events:none}
 .cert .lyr svg,.cert .lyr>img{position:absolute;inset:0;width:100%;height:100%;display:block}
 .cert .wm img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62%;height:auto;opacity:.9}
@@ -240,6 +290,11 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 .cert .clickable.mv-drag{cursor:grabbing;outline-style:dashed}
 .cert.measuring [data-mv]:not(.xt){transform:none!important}
 .cert .xt{position:absolute;white-space:pre-line;overflow-wrap:anywhere;z-index:3}
+.cert .aimg{position:absolute;height:auto;display:block;z-index:4}
+.cert .c-photo{position:absolute;box-sizing:border-box;background:#fff center/cover no-repeat;z-index:4}
+.cert .c-photo.empty{background:repeating-linear-gradient(45deg,#f6efdd 0 7px,#fffdf7 7px 14px);display:flex;align-items:center;justify-content:center;color:#a8925a;font-size:calc(var(--mm) * 3.6);line-height:1.5;border-style:dashed!important}
+.cert .lyr.wmi{display:flex;align-items:center;justify-content:center}
+.cert .lyr.wmi>img{position:static;inset:auto;height:auto;max-width:96%;max-height:96%}
 .cert img.xt{height:auto;display:block}
 .cert .xo svg,.cert .xo img{display:block;width:100%;height:auto;overflow:visible}
 .cert .inline-edit{-webkit-user-select:text!important;user-select:text!important;cursor:text!important;outline:2px solid #d4af37!important;outline-offset:3px;background:#fffbe6d9!important;min-width:3em;touch-action:auto!important;text-overflow:clip!important}
@@ -332,6 +387,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
     <div class="row" id="stagePills" aria-live="polite"></div>
     <div class="stage-opts">
       <label class="check"><input type="checkbox" id="lockMove"> 🔒 قفل جابه‌جایی</label>
+      <details class="layers" id="layersBox"><summary>🗂 لایه‌ها</summary><div class="layer-list" id="layerList"></div></details>
       <label>چسبیدن به گام: <select id="snapGrid" aria-label="گام جابه‌جایی"><option value="0">آزاد</option><option value="1">۱ میلی‌متر</option><option value="2.5">۲٫۵ میلی‌متر</option><option value="5">۵ میلی‌متر</option></select></label>
     </div>
     <p class="drag-tip" id="dragTip">✋ هر بخش را <b>بکش</b> و هرجا خواستی بگذار. یک بار زدن ← نوار ابزار (جابه‌جایی، اندازه، چرخش، شفافیت، تنظیمات). <b>دو بار زدن ← نوشتن مستقیم روی برگه</b> (Enter یا کلیک بیرون = ثبت، Esc = لغو).</p>
@@ -355,6 +411,9 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
           <button type="button" data-selact="reset" aria-label="برگرداندن به جای اول" title="برگرداندن جا، چرخش و شفافیت">↺</button>
           <button type="button" data-selact="edit" aria-label="نوشتن روی برگه" title="نوشتن مستقیم روی برگه">✎</button>
           <button type="button" data-selact="style" aria-label="تنظیمات این بخش" title="فونت، رنگ، اندازه و همهٔ تنظیمات این بخش">⚙</button>
+          <button type="button" data-selact="imgrep" class="img-only" aria-label="تعویض تصویر" title="تعویض تصویر (یا فایل را رویش بکش)">🖼</button>
+          <button type="button" data-selact="imged" class="img-only" aria-label="ویرایش تصویر" title="برش، دایره، چرخش، روشنی، حذف زمینه، قاب">✂️</button>
+          <button type="button" data-selact="lock" aria-label="قفل جای این بخش" title="قفل/باز کردن جای این بخش">🔒</button>
           <button type="button" data-selact="hide" aria-label="پنهان کردن" title="پنهان کن">⊘</button>
           <button type="button" data-selact="close" aria-label="بستن نوار ابزار" title="بستن">✕</button>
         </div>
@@ -366,6 +425,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
     <div class="tabs" role="tablist" aria-label="بخش‌های تنظیمات">
       <button class="tab" role="tab" id="tab-theme" aria-controls="pane-theme" aria-selected="true">🖼️ الگو</button>
       <button class="tab" role="tab" id="tab-text" aria-controls="pane-text" aria-selected="false" tabindex="-1">✍️ متن</button>
+      <button class="tab" role="tab" id="tab-img" aria-controls="pane-img" aria-selected="false" tabindex="-1">🖼️ تصویرها</button>
       <button class="tab" role="tab" id="tab-look" aria-controls="pane-look" aria-selected="false" tabindex="-1">🎨 ظاهر</button>
       <button class="tab paper-tab" role="tab" id="tab-paper" aria-controls="pane-paper" aria-selected="false" tabindex="-1">📜 برگهٔ تذهیب</button>
       <button class="tab" role="tab" id="tab-data" aria-controls="pane-data" aria-selected="false" tabindex="-1">👥 فهرست افراد</button>
@@ -403,16 +463,8 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
       <div class="fld" id="signersBox">
         <div class="fld-head"><span class="t">✒️ امضاکنندگان</span></div>
         <div id="signerFields" class="stack"></div>
-        <div class="card" style="margin-top:10px">
-          <h3>مهر (روی امضای اول)</h3>
-          <div class="img-slot" id="slot-stamp"></div>
-        </div>
       </div>
-      <div class="fld">
-        <div class="fld-head"><span class="t">🏫 نشان / لوگو (بالای عنوان)</span></div>
-        <div class="img-slot" id="slot-logo"></div>
-        <div class="mini-row" style="margin-top:8px"><div><label class="lbl" for="logoSize">اندازهٔ لوگو (میلی‌متر)</label><input id="logoSize" type="range" min="10" max="60" step="1"></div><output id="logoSizeVal" class="small muted"></output></div>
-      </div>
+      <button type="button" class="go-img" data-goimg="1">🖼️ <b>لوگوها، عکس، مهرها و هر تصویر دیگر</b><span>در زبانهٔ «تصویرها» ←</span></button>
       <div class="fld" id="extrasBox">
         <div class="fld-head"><span class="t">📝 متن، تصویر و نقش آزاد (هرجای برگه)</span></div>
         <p class="small muted">بیت، جمله، عکس دانش‌آموز، لوگوی دوم، شمسه، ترنج، ستاره یا لچک؛ بعد از افزودن روی پیش‌نمایش بکشش، بچرخانش و اندازه‌اش را عوض کن.</p>
@@ -426,6 +478,64 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
     </div>
 
     <!-- ظاهر -->
+    <div class="pane" id="pane-img" role="tabpanel" aria-labelledby="tab-img">
+      <div class="pane-head"><h2>تصویرها</h2><p>هر تصویری، هر جای برگه — لوگو، عکس، امضا، مهر، زمینه.</p></div>
+      <div class="drop-hint">💡 تصویر را از رایانه <b>بکش و روی برگه یا روی هر خانهٔ زیر رها کن</b>، یا کپی کن و <b>Ctrl+V</b> بزن. روی لوگو، عکس، امضا یا مهرِ برگه رها کنی، همان عوض می‌شود. با <b>✂️ ویرایش</b> هر تصویر را برش بزن، دایره کن، بچرخان یا قاب بگیر.</div>
+      <div class="card">
+        <h3>🏫 نشان‌ها و لوگوها</h3>
+        <div class="slot-block"><span class="slot-t">لوگوی راست</span><div class="img-slot" id="slot-logoR"></div><label class="lbl" for="logoRSize">اندازه</label><input id="logoRSize" type="range" min="8" max="80" step="1"></div>
+        <div class="slot-block"><span class="slot-t">لوگوی وسط (بالای عنوان)</span><div class="img-slot" id="slot-logo"></div>
+          <div class="mini-row"><div><label class="lbl" for="logoSize">اندازه (میلی‌متر)</label><input id="logoSize" type="range" min="10" max="60" step="1"></div><output id="logoSizeVal" class="small muted"></output></div></div>
+        <div class="slot-block"><span class="slot-t">لوگوی چپ</span><div class="img-slot" id="slot-logoL"></div><label class="lbl" for="logoLSize">اندازه</label><input id="logoLSize" type="range" min="8" max="80" step="1"></div>
+      </div>
+      <div class="card">
+        <h3>🧑‍🎓 عکس دریافت‌کننده</h3>
+        <label class="check"><input type="checkbox" id="photoOn"> عکس روی لوح باشد</label>
+        <div class="img-slot" id="slot-photo" style="margin-top:6px"></div>
+        <div class="lbl" style="margin-top:8px">شکل قاب عکس</div>
+        <div class="chips shapes" id="photoShapes"></div>
+        <div class="grid2">
+          <div><label class="lbl" for="photoW">اندازه: <output id="photoWV"></output> mm</label><input id="photoW" type="range" min="12" max="100" step="1"></div>
+          <div><label class="lbl" for="photoBw">ضخامت قاب دور</label><input id="photoBw" type="range" min="0" max="3" step="0.1"></div>
+          <div class="row" style="align-self:end"><label class="check"><input type="color" id="photoBc"> رنگ قاب</label><label class="check"><input type="checkbox" id="photoShadow"> سایه</label></div>
+        </div>
+        <div class="sub-card">
+          <h4>👥 عکس جداگانهٔ هر نفر</h4>
+          <p class="small muted">چند عکس را با هم انتخاب کن. نام هر فایل یکی از این‌ها باشد: <b>نام و نام خانوادگی</b> («سارا محمدی.jpg»)، <b>شمارهٔ ردیف</b> («۳.jpg») یا مقدار ستون «عکس» در فهرست. عکس‌ها فقط در همین مرورگر می‌مانند و در «ذخیرهٔ طرح» هم همراه فایل ذخیره می‌شوند.</p>
+          <div class="row"><button type="button" class="btn soft" id="btnPhotos">📁 انتخاب عکس‌ها</button><button type="button" class="btn sm danger" id="btnPhotosClear">پاک کردن عکس‌ها</button></div>
+          <input type="file" id="photosFile" accept="image/*" multiple hidden>
+          <label class="check" style="margin-top:6px"><input type="checkbox" id="photoPerRow"> هر نفر عکس خودش (اگر نبود، عکس بالا)</label>
+          <p class="small" id="photoInfo" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>✒️ امضاها و مهرها</h3>
+        <p class="small muted">زمینهٔ سفید امضا و مهر خودکار شفاف می‌شود. اندازهٔ مهر: در «ظاهر» یا با A+ و A− روی خود مهر.</p>
+        <div class="slot-block"><span class="slot-t">امضاکنندهٔ اول</span><div class="img-slot" id="slot2-sig0"></div><div class="img-slot" id="slot-stamp"></div></div>
+        <div class="slot-block"><span class="slot-t">امضاکنندهٔ دوم</span><div class="img-slot" id="slot2-sig1"></div><div class="img-slot" id="slot-stamp1"></div></div>
+        <div class="slot-block"><span class="slot-t">امضاکنندهٔ سوم</span><div class="img-slot" id="slot2-sig2"></div><div class="img-slot" id="slot-stamp2"></div></div>
+      </div>
+      <div class="card">
+        <h3>🌫️ زمینه و نقش‌مایه</h3>
+        <div class="slot-block"><span class="slot-t">نقش‌مایهٔ کم‌رنگ وسط برگه (مثلاً نشان مدرسه)</span><div class="img-slot" id="slot-wm"></div>
+          <div class="grid2"><div><label class="lbl" for="wmImgSize">اندازه</label><input id="wmImgSize" type="range" min="30" max="220" step="2"></div><div><label class="lbl" for="wmImgOp">پررنگی</label><input id="wmImgOp" type="range" min="3" max="45" step="1"></div></div></div>
+        <div class="slot-block"><span class="slot-t">تصویر زمینهٔ کل برگه (یا اسکن قاب خودت)</span><div class="img-slot" id="slot-bgimg"></div>
+          <div class="grid2"><div><label class="lbl" for="bgFit">چیدن تصویر</label><select id="bgFit"><option value="fill">کشیده روی کل برگه</option><option value="cover">پر کردن برگه (با برش)</option><option value="contain">کامل در برگه</option></select></div><div><label class="lbl" for="bgOp">پررنگی</label><input id="bgOp" type="range" min="10" max="100" step="5"></div></div>
+          <button type="button" class="btn sm soft" id="btnMyFrame" style="margin-top:6px">⬜ این تصویر قابِ من است (قاب الگو را بردار)</button></div>
+      </div>
+      <div class="card">
+        <h3>🖼️ تصویرهای آزاد</h3>
+        <p class="small muted">هر تعداد تصویر — عکس گروهی، نشان دوم، برچسب — هرجای برگه؛ بکش، بچرخان، شفافش کن.</p>
+        <button type="button" class="btn soft" id="btnAddImg3">➕ افزودن تصویر آزاد</button>
+      </div>
+      <div class="card">
+        <h3>🗃️ کتابخانهٔ تصویرهای من</h3>
+        <p class="small muted">هر تصویری که گذاشته‌ای اینجا می‌ماند (فقط روی همین مرورگر). بزن تا جایش را انتخاب کنی، یا بکشش روی برگه.</p>
+        <div class="lib-grid" id="libGrid"></div>
+        <div class="lib-menu" id="libMenu" hidden></div>
+      </div>
+    </div>
+
     <div class="pane" id="pane-look" role="tabpanel" aria-labelledby="tab-look">
       <div class="pane-head"><h2>ظاهر و چیدمان</h2><p>برگه، قاب، پس‌زمینه، رنگ‌ها، فونت و اندازهٔ هر بخش.</p></div>
       <div class="stack">
@@ -670,6 +780,7 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
         <div class="guide-step"><b class="n">۳</b><p><b>متن:</b> از «متن‌های آماده» شروع کن یا خودت بنویس. روی هر بخش پیش‌نمایش دو بار بزنی، کادر ویرایشش باز می‌شود. برای حال‌وهوای سنتی، فونت «ایران نستعلیق» را برای عنوان و نام انتخاب کن. <b>{نام}</b>، <b>{امروز}</b>، <b>{شماره}</b> و <b>{ردیف}</b> خودکار پر می‌شوند.</p></div>
         <div class="guide-step"><b class="n">✳</b><p><b>همه‌چیز قابل ویرایش:</b> روی هر متن <b>دو بار بزن</b> و همان‌جا روی برگه بنویس. با یک بار زدن، نوار ابزار باز می‌شود: چرخش (⟲ ⟳ یا کلیدهای [ و ])، شفافیت ◐، اندازه، و ⚙ برای فونت و رنگ همان بخش. با «✳️ نقش» و «🖼️ تصویر» شمسه، ترنج، ستاره، لچک، عکس یا لوگوی دوم را هرجا خواستی بگذار.</p></div>
         <div class="guide-step"><b class="n">🎨</b><p><b>قاب دلخواه:</b> در «ظاهر»، رنگ هر قاب نگارگری را عوض کن (تک‌رنگ لاجوردی، طلایی، کم‌رنگ، کاغذ کرم…) یا «قاب اسلیمی برداری» را انتخاب کن و نقش، پهنا، لچک، ترنج و همهٔ رنگ‌هایش را خودت بساز. میانهٔ برگه همیشه سفید می‌ماند.</p></div>
+        <div class="guide-step"><b class="n">🖼</b><p><b>تصویر، هر جا:</b> در زبانهٔ «تصویرها» لوگوی راست/وسط/چپ، عکس دریافت‌کننده (دایره، بیضی، محرابی، ۳×۴)، امضا و مهر جدا برای هر امضاکننده، نقش‌مایهٔ کم‌رنگ و تصویر زمینهٔ کل برگه را بگذار. ساده‌تر: فایل را <b>روی برگه بکش و رها کن</b> یا <b>Ctrl+V</b> بزن؛ روی لوگو یا امضا رها کنی جایگزینش می‌شود. با <b>✂️ ویرایش</b> برش بزن، دایره کن، بچرخان، روشن کن و قاب بده. برای عکس هر نفر، عکس‌ها را با نام همان افراد (مثلاً «سارا محمدی.jpg») یکجا بده. از «🗂 لایه‌ها» هر بخش را پنهان، قفل یا جلو/عقب کن.</p></div>
         <div class="guide-step"><b class="n">۴</b><p><b>امضا و مهر:</b> عکس امضا و مهر را بده؛ با گزینهٔ «حذف زمینهٔ سفید» مثل امضای واقعی روی برگه می‌نشیند.</p></div>
         <div class="guide-step"><b class="n">۵</b><p><b>برگهٔ تذهیب آماده:</b> اگر کاغذ گلاسهٔ تذهیب داری، حالت «فقط متن» را روشن کن، حاشیه‌ها را با خط‌کش اندازه بگیر و یک چاپ آزمایشی روی کاغذ معمولی بگیر.</p></div>
         <div class="guide-step"><b class="n">۶</b><p><b>فهرست افراد:</b> نام‌ها را هر کدام در یک خط بنویس یا از اکسل کپی کن. هر ستون (مثلاً «رتبه») را با <b>{رتبه}</b> در متن بیاور.</p></div>
@@ -687,6 +798,30 @@ ul.tips{margin:0;padding-inline-start:18px;font-size:12.5px;line-height:2.1}
 <div id="printRoot" aria-hidden="true"></div>
 <input type="file" id="designFile" accept=".json,application/json" hidden>
 <input type="file" id="imgFile" accept="image/*" hidden>
+<dialog id="imgEd" class="img-ed" aria-labelledby="edTitle">
+  <div class="ed-head"><b id="edTitle">✂️ ویرایش تصویر</b><span id="edTarget" class="muted"></span><button type="button" class="btn sm" data-ed="close" aria-label="بستن">✕</button></div>
+  <div class="ed-body">
+    <div class="ed-view"><canvas id="edCanvas" aria-label="پیش‌نمایش تصویر؛ برای جابه‌جا کردن برش بکش"></canvas><p class="small muted">برای جابه‌جا کردن برش، روی تصویر بکش؛ با چرخ موس بزرگ‌نمایی کن.</p></div>
+    <div class="ed-ctrls">
+      <div class="lbl">آماده</div>
+      <div class="chips"><button type="button" data-edpre="photo">🧑‍🎓 عکس دایره با قاب</button><button type="button" data-edpre="sign">✒️ امضا/مهر شفاف</button><button type="button" data-edpre="bw">⚫ سیاه‌وسفید</button></div>
+      <div class="lbl">برش و شکل</div>
+      <div class="chips" id="edCrops"></div>
+      <label class="lbl" for="edZoom">بزرگ‌نمایی برش</label><input id="edZoom" type="range" min="1" max="5" step="0.02">
+      <div class="row"><button type="button" class="btn sm" data-ed="rotr">⟳ ۹۰°</button><button type="button" class="btn sm" data-ed="rotl">⟲ ۹۰°</button><button type="button" class="btn sm" data-ed="flip">⇋ قرینه</button></div>
+      <div class="grid2">
+        <div><label class="lbl" for="edBri">روشنی</label><input id="edBri" type="range" min="-60" max="60" step="1"></div>
+        <div><label class="lbl" for="edCon">کنتراست</label><input id="edCon" type="range" min="-60" max="60" step="1"></div>
+        <div><label class="lbl" for="edSat">رنگ (۰ = سیاه‌وسفید)</label><input id="edSat" type="range" min="0" max="200" step="5"></div>
+        <div><label class="lbl" for="edRound">گوشهٔ گرد</label><input id="edRound" type="range" min="0" max="50" step="1"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="edWhite"> حذف زمینهٔ سفید</label>
+      <label class="lbl" for="edThr">حساسیت حذف زمینه</label><input id="edThr" type="range" min="170" max="252" step="1">
+      <div class="grid2"><div><label class="lbl" for="edBw">قاب دور تصویر</label><input id="edBw" type="range" min="0" max="12" step="0.5"></div><div><label class="lbl" for="edBc">رنگ قاب</label><input id="edBc" type="color"></div></div>
+    </div>
+  </div>
+  <div class="ed-foot"><button type="button" class="btn" data-ed="reset">↺ بازگشت به اصل</button><span class="spacer"></span><button type="button" class="btn" data-ed="close">انصراف</button><button type="button" class="btn gold" data-ed="apply">✔ اعمال</button></div>
+</dialog>
 <input type="file" id="fontFile" accept=".woff2,.woff,.ttf,.otf" hidden>
 <div class="toast-area" id="toastArea" role="status" aria-live="polite"></div>
 
@@ -889,18 +1024,20 @@ function baseState(){
   const fields = {};
   for (const f of FIELDS) if (f.type !== 'none') fields[f.k] = { on: !['verse','serial'].includes(f.k), text: DEFAULT_TEXT[f.k] || '' };
   return {
-    v:4, theme:th.id, mode:'design',
+    v:5, theme:th.id, mode:'design',
     page:{size:'A4', orient:'portrait', w:210, h:297},
     margins:autoMargins(th.frame, 210, 297, 1),
     frame:{style:th.frame, color:th.fc, color2:th.fc2, size:100, adj:Object.assign({}, ADJ0)},
     vec:Object.assign({}, VEC_DEFAULT), snap:0, lock:false,
-    bg:{type:'theme', c1:'#fffdf6', c2:'#f3e5c3', angle:160},
+    bg:{type:'theme', c1:'#fffdf6', c2:'#f3e5c3', angle:160, img:null, fit:'fill', op:100},
     colors:{ink:th.ink, accent:th.accent},
     watermark:!!th.wm,
     layout:'spread', bodyAlign:'center', signAlign:'end', metaPos:'foot', nameLine:'none', gScale:100, digitsFa:true, autoFit:true,
     fields, styles:makeFieldStyles(th),
-    signers:[{on:true,text:'نام مدیر\nمدیر آموزشگاه',img:null},{on:false,text:'نام آموزگار\nآموزگار پایه',img:null},{on:false,text:'',img:null}],
+    signers:[{on:true,text:'نام مدیر\nمدیر آموزشگاه',img:null,stamp:null},{on:false,text:'نام آموزگار\nآموزگار پایه',img:null,stamp:null},{on:false,text:'',img:null,stamp:null}],
     stamp:null, logo:null, logoSize:22, stampSize:27, divider:'classic', divW:62,
+    logoR:null, logoL:null, logoRSize:20, logoLSize:20, wmImg:null, wmImgSize:110, wmImgOp:10, hide:{},
+    photo:{on:false, src:null, shape:'circle', w:30, bw:.8, bc:'', shadow:true, perRow:true},
     pos:{}, extras:[],
     serialStart:1,
     paper:{margins:{t:40,r:33,b:38,l:33}, offX:0, offY:0, guide:true, guideImg:null, guideFrame:'img:lajvard', guideOpacity:45, ink:'#1f1f1f', accent:'#1e3a5f', link:true},
@@ -927,7 +1064,11 @@ function fixState(st){
   if (!Array.isArray(st.extras)) st.extras = [];
   if (!st.frame.adj) st.frame.adj = Object.assign({}, ADJ0);
   st.vec = Object.assign({}, VEC_DEFAULT, st.vec || {});
-  st.v = 4;
+  if (!st.hide || typeof st.hide !== 'object' || Array.isArray(st.hide)) st.hide = {};
+  if (!Array.isArray(st.signers)) st.signers = baseState().signers;
+  while (st.signers.length < 3) st.signers.push({on:false, text:'', img:null, stamp:null});
+  st.signers.forEach(x => { if (x.stamp === undefined) x.stamp = null; });
+  st.v = 5;
   return st;
 }
 let saveTimer = 0, quotaWarned = false;
@@ -976,7 +1117,7 @@ function toast(msg, err){
   const t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : '');
   const sp = document.createElement('span'); sp.textContent = msg; t.appendChild(sp);
   const b = document.createElement('button'); b.type = 'button'; b.textContent = '✕'; b.setAttribute('aria-label','بستن پیام'); b.onclick = () => t.remove(); t.appendChild(b);
-  $('toastArea').appendChild(t); setTimeout(() => t.remove(), 5500);
+  const area = $('toastArea'); area.appendChild(t); while (area.children.length > 2) area.firstElementChild.remove(); setTimeout(() => t.remove(), 5500);
 }
 function download(blob, name){
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
@@ -1371,11 +1512,13 @@ function pageHTML(o){
   else if (S.bg.type === 'white') bg = '#ffffff';
   else if (S.bg.type === 'solid') bg = S.bg.c1;
   else if (S.bg.type === 'gradient') bg = `linear-gradient(${S.bg.angle}deg,${S.bg.c1},${S.bg.c2})`;
+  else if (S.bg.type === 'image') bg = '#ffffff';
   else bg = BG[th.bg] || '#fff';
   const ctx = {row: o.row, idx: o.idx || 0, screen: !!o.screen};
   const fk = S.frame.size / 100;
   let layers = '';
   if (!paper){
+    if (S.bg.type === 'image' && S.bg.img) layers += `<div class="lyr bgimg" style="opacity:${num(S.bg.op, 100) / 100}"><img src="${S.bg.img}" alt="" style="object-fit:${S.bg.fit || 'fill'}"></div>`;
     if (S.watermark){
       if (th.wm === 'shamseh') layers += `<div class="lyr wm"><img src="${ASSET_SHAMSEH}" alt=""></div>`;
       else layers += `<div class="lyr wm">${watermarkSVG(W, H, S.frame.color)}</div>`;
@@ -1385,6 +1528,7 @@ function pageHTML(o){
     else if (S.frame.style === 'vec') layers += `<div class="lyr fr">${vecFrameSVG(W, H, S.vec)}</div>`;
     else if (S.frame.style === 'image'){ const u = imageFrameURL(W, H, fk, o.pxmm || 3); if (u) layers += `<div class="lyr fr"><img src="${u}" alt=""></div>`; }
     else if (S.frame.style !== 'none') layers += `<div class="lyr fr">${frameSVG(S.frame.style, W, H, S.frame.color, S.frame.color2, fk)}</div>`;
+    if (S.wmImg && !S.hide.wm) layers += `<div class="lyr wmi"><img src="${S.wmImg}" alt="" style="width:calc(var(--mm)*${num(S.wmImgSize, 110)});opacity:${num(S.wmImgOp, 10) / 100}"></div>`;
   } else if (o.screen && S.paper.guide){
     const op = S.paper.guideOpacity / 100;
     if (S.paper.guideImg) layers += `<div class="lyr" style="opacity:${op}"><img src="${S.paper.guideImg}" alt="" style="object-fit:fill"></div>`;
@@ -1404,7 +1548,7 @@ function pageHTML(o){
   // سر
   let head = '';
   head += fdiv('basmala', '', accent);
-  if (S.logo) head += `<img class="c-logo${cl}" data-f="logo" data-mv="logo" src="${S.logo}" alt="" style="--lg:${S.logoSize};${posCSS('logo')}">`;
+  if (S.logo && !S.hide.logo) head += `<img class="c-logo${cl}" data-f="logo" data-mv="logo" data-imgkey="logo" src="${S.logo}" alt="" style="--lg:${S.logoSize};${posCSS('logo')}">`;
   head += fdiv('verse', '', accent);
   head += fdiv('title', '', accent);
   head += fdiv('subtitle');
@@ -1414,13 +1558,14 @@ function pageHTML(o){
   if (on('name')) mid += `<div class="cf f-name${S.nameLine !== 'none' ? ' line-' + S.nameLine : ''}${cl}" data-f="name" data-mv="name" style="${fstyle('name', accent)}">${fieldHTML(F.name.text, ctx)}</div>`;
   mid += fdiv('body', 'al-' + S.bodyAlign);
   // پا
-  const sigs = S.signers.filter(s => s.on && (String(s.text).trim() || s.img));
+  const sigs = S.signers.filter(s => s.on && (String(s.text).trim() || s.img || s.stamp));
   let signers = '';
   sigs.forEach((s, i) => {
     const lines = String(s.text || '').split('\n').map(x => x.trim()).filter(Boolean);
     const txt = lines.map((ln, j) => j === 0 && lines.length > 1 ? `<b>${fieldHTML(ln, ctx)}</b>` : fieldHTML(ln, ctx)).join('<br>');
     const si = S.signers.indexOf(s);
-    signers += `<div class="signer${cl}" data-f="sign" data-mv="sign${si}" style="${posCSS('sign' + si)}">${i === 0 && S.stamp ? `<img class="stamp${cl}" data-f="stamp" data-mv="stamp" src="${S.stamp}" alt="" style="--st:${S.stampSize || 27};${posCSS('stamp')}">` : ''}${s.img ? `<img class="sig-img" src="${s.img}" alt="">` : ''}<div class="cf sig-txt" style="${textStyle(st.sign, st.sign.color || ink, fontLH(st.sign.font))}">${txt}</div></div>`;
+    const sk = stampKey(si), ss = stampSrc(si);
+    signers += `<div class="signer${cl}" data-f="sign" data-mv="sign${si}" data-imgkey="sig${si}" style="${posCSS('sign' + si)}">${ss && !S.hide[sk] ? `<img class="stamp${cl}" data-f="stamp" data-mv="${sk}" data-imgkey="${sk}" src="${ss}" alt="" style="--st:${S.stampSize || 27};${posCSS(sk)}">` : ''}${s.img ? `<img class="sig-img" src="${s.img}" alt="">` : ''}<div class="cf sig-txt" style="${textStyle(st.sign, st.sign.color || ink, fontLH(st.sign.font))}">${txt}</div></div>`;
   });
   const metaItems = fdiv('date') + fdiv('serial');
   let foot = '';
@@ -1435,10 +1580,23 @@ function pageHTML(o){
   // متن‌های آزاد: جایشان مستقیماً روی برگه (میلی‌متر از چپ و بالا) است
   const odx = paper && o.offsets ? num(S.paper.offX,0) : 0, ody = paper && o.offsets ? num(S.paper.offY,0) : 0;
   let extras = '';
+  const aimg = (k, src, css) => `<img class="aimg${cl}" data-mv="${k}" data-imgkey="${k}" src="${src}" alt="" style="${css}${posCSS(k)}">`;
+  if (S.logoR && !S.hide.logoR) extras += aimg('logoR', S.logoR, `top:calc(var(--mm)*${t + 1});right:calc(var(--mm)*${r + 1});width:calc(var(--mm)*${num(S.logoRSize, 20)});`);
+  if (S.logoL && !S.hide.logoL) extras += aimg('logoL', S.logoL, `top:calc(var(--mm)*${t + 1});left:calc(var(--mm)*${l + 1});width:calc(var(--mm)*${num(S.logoLSize, 20)});`);
+  if (S.photo.on && !S.hide.photo){
+    const P = S.photo, ph = photoSrc(ctx), sh = PHOTO_SHAPES[P.shape] || PHOTO_SHAPES.circle, pw = num(P.w, 30), phh = pw * sh.ratio, bw = num(P.bw, .8);
+    if (ph || o.screen){
+      const px = P.x != null ? num(P.x, 0) : l + pw / 2 + 3, py = P.y != null ? num(P.y, 0) : Math.round(H * .34);
+      const css = `left:calc(var(--mm)*${px - pw / 2 + odx});top:calc(var(--mm)*${py + ody});width:calc(var(--mm)*${pw});height:calc(var(--mm)*${phh});border-radius:${sh.rad};`
+        + (bw > 0 ? `border:calc(var(--mm)*${bw}) solid ${P.bc || accent};` : '') + (P.shadow ? 'box-shadow:0 calc(var(--mm)*.7) calc(var(--mm)*2.2) rgba(0,0,0,.26);' : '') + (ph ? `background-image:url('${ph}');` : '');
+      extras += `<div class="c-photo${ph ? '' : ' empty'}${cl}" data-mv="photo" data-imgkey="photo" style="${css}${posCSS('photo')}">${ph ? '' : '<span>🧑‍🎓<br>عکس</span>'}</div>`;
+    }
+  }
   for (const ex of (S.extras || [])){
+    if (ex.hidden) continue;
     const w = num(ex.w, 120), kx = 'x:' + ex.id;
     const box = `data-mv="${esc(kx)}" data-x="${esc(ex.id)}" style="left:calc(var(--mm)*${num(ex.x, W/2) - w/2 + odx});top:calc(var(--mm)*${num(ex.y, H/2) + ody});width:calc(var(--mm)*${w});`;
-    if (ex.type === 'img'){ if (ex.src) extras += `<img class="xt xi${cl}" alt="" src="${ex.src}" ${box}${posCSS(kx)}">`; continue; }
+    if (ex.type === 'img'){ if (ex.src) extras += `<img class="xt xi${cl}" alt="" data-imgkey="${esc(kx)}" src="${ex.src}" ${box}${posCSS(kx)}">`; continue; }
     if (ex.type === 'orn'){ extras += `<div class="xt xo${cl}" ${box}${posCSS(kx)}">${ornHTML(ex.kind, ex.color || accent, ex.color2 || '#ffffff')}</div>`; continue; }
     if (!String(ex.text || '').trim()) continue;
     extras += `<div class="cf xt${cl}" ${box}--fit:1;--gs:${S.gScale/100};${textStyle(Object.assign({}, ex, {w:100}), ex.color || accent, fontLH(ex.font))}${posCSS(kx)}">${fieldHTML(ex.text, ctx)}</div>`;
@@ -1470,6 +1628,7 @@ function posCSS(k){
   let css = '';
   if (p.x || p.y || p.r) css += `transform:translate(calc(var(--mm)*${p.x || 0}),calc(var(--mm)*${p.y || 0}))${p.r ? ` rotate(${p.r}deg)` : ''};`;
   if (p.o != null && p.o < 1) css += `opacity:${p.o};`;
+  if (p.z) css += `z-index:${5 + p.z};`;
   return css;
 }
 // نقش‌های تزئینی آزاد (برداری و رنگ‌پذیر)
@@ -1536,6 +1695,7 @@ function render(){
   $('rowNav').hidden = !n;
   if (n) $('rowWho').textContent = faDigits(idx + 1) + ' از ' + faDigits(n) + ' — ' + (personName(row) || '—');
   updateBatchInfo();
+  renderLayers();
   $('paperNotice').hidden = !isPaper();
   document.querySelectorAll('.seg.mode button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === S.mode)));
   $('areaInfo').textContent = (() => { const {W, H} = pageDims(), m = S.paper.margins; return 'ناحیهٔ متن: ' + faDigits(Math.round(W - num(m.l,0) - num(m.r,0))) + ' × ' + faDigits(Math.round(H - num(m.t,0) - num(m.b,0))) + ' میلی‌متر'; })();
@@ -1623,18 +1783,358 @@ function buildTextFields(){
       <textarea id="sg-${i}" data-sg="${i}" rows="2" placeholder="سطر اول: نام — سطر دوم: سمت"></textarea>
       <div class="img-slot" id="slot-sig${i}" style="margin-top:6px"></div></div>`).join('');
 }
+/* ══ تصویرها: لوگوها، عکس، امضا و مهر، زمینه، کتابخانه، ویرایشگر، کشیدن‌ورهاکردن ══ */
+// انبارهٔ مرورگر برای عکس‌های افراد، کتابخانه و اصل تصویرها (برای «بازگشت به اصل» در ویرایشگر)
+const IDB = (() => {
+  let dbp = null; const mem = new Map();
+  function db(){
+    if (!dbp) dbp = new Promise((res, rej) => {
+      try { const r = indexedDB.open('lohnegar', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }
+      catch(e){ rej(e); }
+    });
+    return dbp;
+  }
+  async function op(mode, fn){
+    const d = await db();
+    return new Promise((res, rej) => { const tx = d.transaction('kv', mode), rq = fn(tx.objectStore('kv')); tx.oncomplete = () => res(rq && rq.result); tx.onerror = () => rej(tx.error); tx.onabort = () => rej(tx.error); });
+  }
+  return {
+    async get(k){ try { return await op('readonly', s => s.get(k)); } catch(e){ return mem.get(k); } },
+    async set(k, v){ mem.set(k, v); try { await op('readwrite', s => s.put(v, k)); } catch(e){} },
+    async del(k){ mem.delete(k); try { await op('readwrite', s => s.delete(k)); } catch(e){} }
+  };
+})();
+const IMG_SLOTS = [
+  ['logo','لوگوی وسط'],['logoR','لوگوی راست'],['logoL','لوگوی چپ'],['photo','عکس دریافت‌کننده'],
+  ['sig0','امضای اول'],['sig1','امضای دوم'],['sig2','امضای سوم'],['stamp','مهر اول'],['stamp1','مهر دوم'],['stamp2','مهر سوم'],
+  ['wm','نقش‌مایهٔ کم‌رنگ وسط برگه'],['bgimg','تصویر زمینهٔ کل برگه'],['newx','تصویر آزاد (هرجای برگه)']
+];
+const IMG_LABEL = Object.fromEntries(IMG_SLOTS);
+const PHOTO_SHAPES = {
+  circle:{n:'دایره', ratio:1, rad:'50%'}, oval:{n:'بیضی', ratio:1.28, rad:'50%'}, arch:{n:'محرابی', ratio:1.3, rad:'50% 50% 7% 7% / 36% 36% 6% 6%'},
+  rounded:{n:'۳×۴ گوشه‌گرد', ratio:4/3, rad:'9%'}, rect:{n:'۳×۴ ساده', ratio:4/3, rad:'0'}, square:{n:'مربع', ratio:1, rad:'7%'}
+};
+function stampKey(si){ return si === 0 ? 'stamp' : 'stamp' + si; }
+function stampSrc(si){ return si === 0 ? S.stamp : (S.signers[si] && S.signers[si].stamp) || null; }
+function imgKeyOf(k){
+  if (!k) return null;
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return ex && ex.type === 'img' ? k : null; }
+  if (/^sign\d$/.test(k)) return 'sig' + k[4];
+  return /^(logo|logoR|logoL|photo|stamp\d?)$/.test(k) ? k : null;
+}
+function mvKeyOfImg(key){ const m = /^sig(\d)$/.exec(key); return m ? 'sign' + m[1] : key; }
+function getImg(key){
+  key = String(key);
+  if (key.startsWith('x:')){ const ex = extraById(key.slice(2)); return ex ? ex.src : null; }
+  let m;
+  if ((m = /^sig(\d)$/.exec(key))) return S.signers[+m[1]] ? S.signers[+m[1]].img : null;
+  if ((m = /^stamp(\d?)$/.exec(key))) return stampSrc(+(m[1] || 0));
+  switch (key){
+    case 'logo': return S.logo; case 'logoR': return S.logoR; case 'logoL': return S.logoL;
+    case 'photo': return S.photo.src; case 'wm': return S.wmImg; case 'bgimg': return S.bg.img; case 'guide': return S.paper.guideImg;
+  }
+  return null;
+}
+// تصویر را در جای خودش می‌گذارد (v=null یعنی حذف)؛ کلید واقعی را برمی‌گرداند
+function setImg(key, v, opts){
+  opts = opts || {}; key = String(key);
+  if (key === 'newx'){
+    if (!v) return null;
+    const {W, H} = pageDims(), w = opts.w || 40;
+    const ex = {id:newExtraId(), type:'img', src:v, x:opts.at ? clamp(opts.at.x, 0, W) : W / 2, y:opts.at ? clamp(opts.at.y - w * .35, -5, H) : Math.round(H * .3), w};
+    S.extras = (S.extras || []).concat(ex); sel = 'x:' + ex.id; renderExtras();
+    return 'x:' + ex.id;
+  }
+  if (key.startsWith('x:')){ const ex = extraById(key.slice(2)); if (ex){ if (v) ex.src = v; else { S.extras = S.extras.filter(x => x !== ex); if (sel === key) sel = null; } renderExtras(); } return key; }
+  let m;
+  if ((m = /^sig(\d)$/.exec(key))){ const s = S.signers[+m[1]]; if (s){ s.img = v; if (v) s.on = true; } return key; }
+  if ((m = /^stamp(\d?)$/.exec(key))){ const i = +(m[1] || 0); if (i === 0) S.stamp = v; else if (S.signers[i]){ S.signers[i].stamp = v; if (v) S.signers[i].on = true; } }
+  else if (key === 'logo') S.logo = v; else if (key === 'logoR') S.logoR = v; else if (key === 'logoL') S.logoL = v;
+  else if (key === 'photo'){ S.photo.src = v; if (v) S.photo.on = true; }
+  else if (key === 'wm') S.wmImg = v;
+  else if (key === 'bgimg'){ S.bg.img = v; if (v) S.bg.type = 'image'; else if (S.bg.type === 'image') S.bg.type = 'theme'; }
+  else if (key === 'guide') S.paper.guideImg = v;
+  if (v && S.hide) delete S.hide[key];
+  return key;
+}
+const IMG_MAX = k => k === 'guide' || k === 'bgimg' ? 1700 : k === 'wm' ? 1100 : k === 'photo' ? 800 : /^(newx|x:)/.test(k) ? 1100 : 760;
+function loadImg(src){ return new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = src; }); }
+async function urlResize(url, max){
+  const im = await loadImg(url);
+  if (Math.max(im.naturalWidth, im.naturalHeight) <= max) return url;
+  const sc = max / Math.max(im.naturalWidth, im.naturalHeight), c = document.createElement('canvas');
+  c.width = Math.round(im.naturalWidth * sc); c.height = Math.round(im.naturalHeight * sc);
+  c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+  return encodeCanvas(c);
+}
+function encodeCanvas(c, opaque){
+  if (opaque){ const j = c.toDataURL('image/jpeg', .9); if (j.startsWith('data:image/jpeg')) return j; }
+  const w = c.toDataURL('image/webp', .92);
+  return w.startsWith('data:image/webp') ? w : c.toDataURL('image/png');
+}
+// ورود هر تصویر (فایل، کلیپ‌بورد، کتابخانه) به هر جای برگه
+async function ingestImage(src, key, opts){
+  opts = opts || {};
+  try {
+    let url = typeof src === 'string' ? await urlResize(src, IMG_MAX(key)) : await fileToDataURL(src, IMG_MAX(key));
+    if (!opts.fromLib) libAdd(url, opts.name || (src && src.name) || '');
+    const white = /^(sig|stamp)/.test(key) && !opts.noClean;
+    const shown = white ? await removeWhite(url) : url;
+    const real = setImg(key, shown, opts);
+    if (real) IDB.set('orig:' + real, {src:url, ed:white ? {white:true} : null});
+    if (key === 'guide'){ S.paper.guide = true; }
+    if (real && real !== 'guide' && mvEl(mvKeyOfImg(real)) !== undefined) sel = mvKeyOfImg(real);
+    syncUI(); changed({now:true});
+    if (!opts.quiet) toast(key === 'newx' ? '🖼️ تصویر اضافه شد؛ بکشش، بچرخانش و با A+ و A− اندازه‌اش را عوض کن.' : '🖼️ ' + (IMG_LABEL[key] || 'تصویر') + ' گذاشته شد.' + (white ? ' (زمینهٔ سفیدش شفاف شد)' : ''));
+    return real;
+  } catch(e){ toast('خواندن تصویر ممکن نشد.', true); return null; }
+}
+
+/* کتابخانهٔ تصویرهای من */
+let LIB = [];
+function libAdd(url, name){
+  if (!url) return;
+  LIB = [{src:url, name:String(name || '').slice(0, 40), t:Date.now()}].concat(LIB.filter(x => x.src !== url)).slice(0, 36);
+  IDB.set('lib', LIB); renderLib();
+}
+function renderLib(){
+  const g = $('libGrid'); if (!g) return;
+  g.innerHTML = LIB.length ? LIB.map((x, i) => `<div class="lib-it" draggable="true" data-libi="${i}" title="${esc(x.name || 'تصویر')} — بزن یا بکشش روی برگه"><img src="${x.src}" alt="${esc(x.name || 'تصویر')}"><button type="button" class="lib-x" data-libdel="${i}" aria-label="حذف از کتابخانه">×</button></div>`).join('')
+    : '<p class="small muted">هنوز تصویری نگذاشته‌ای. هر تصویری بگذاری، اینجا هم می‌ماند تا دوباره به کارش ببری.</p>';
+}
+function openLibMenu(i){
+  const m = $('libMenu'); if (!LIB[i]){ m.hidden = true; return; }
+  m.dataset.libi = i; m.hidden = false;
+  const si = imgKeyOf(sel);
+  m.innerHTML = `<b>این تصویر را کجا بگذارم؟</b><div class="chips">${si ? `<button type="button" class="hl" data-libto="${esc(si)}">جای بخش انتخاب‌شده</button>` : ''}${IMG_SLOTS.map(([k, n]) => `<button type="button" data-libto="${k}">${esc(n)}</button>`).join('')}</div>`;
+  m.scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+/* عکس جداگانهٔ هر نفر */
+let PHOTOS = {};
+function photoKey(s){
+  return String(s == null ? '' : s).replace(/\.[a-z0-9]{2,5}$/i, '').replace(/[يى]/g, 'ی').replace(/ك/g, 'ک').replace(/[ۀة]/g, 'ه')
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    .replace(/[\s\u200c\u200f\u200e_\-–—.()،,]+/g, '').toLowerCase();
+}
+function photoCol(){ if (!S.data || !Array.isArray(S.data.columns)) return -1; return S.data.columns.findIndex(c => /عکس|تصویر|photo|image|pic/i.test(String(c))); }
+function photoForRow(row, idx){
+  if (!row || !S.data) return null;
+  const keys = [], pc = photoCol();
+  if (pc >= 0) keys.push(row[pc]);
+  keys.push(personName(row));
+  if (S.map.name >= 0) keys.push(row[S.map.name]);
+  keys.push(String(idx + 1));
+  for (const k of keys){ const n = photoKey(k); if (n && PHOTOS[n]) return PHOTOS[n]; }
+  return null;
+}
+function photoSrc(ctx){ return (S.photo.perRow && photoForRow(ctx.row, ctx.idx)) || S.photo.src || null; }
+function updatePhotoInfo(){
+  const el = $('photoInfo'); if (!el) return;
+  const n = Object.keys(PHOTOS).length;
+  if (!n){ el.textContent = 'هنوز عکسی برای افراد نگذاشته‌ای.'; return; }
+  const rows = rowCount();
+  if (!rows){ el.textContent = `${faDigits(n)} عکس آماده است؛ فهرست افراد را در زبانهٔ «فهرست افراد» بگذار تا هر عکس به صاحبش برسد.`; return; }
+  const miss = [];
+  let ok = 0;
+  S.data.rows.forEach((r, i) => { if (photoForRow(r, i)) ok++; else if (miss.length < 4) miss.push(personName(r) || faDigits(i + 1)); });
+  el.innerHTML = `✅ ${faDigits(n)} عکس؛ <b>${faDigits(ok)} نفر از ${faDigits(rows)} نفر</b> عکس خودشان را دارند.` + (miss.length ? `<br><span class="muted">بی‌عکس: ${esc(miss.join('، '))}${rows - ok > miss.length ? ' و…' : ''} — نام فایل را مثل نام همین افراد کن.</span>` : '');
+}
+
+/* ویرایشگر تصویر: برش، شکل، چرخش، قرینه، روشنی، رنگ، حذف زمینهٔ سفید، گوشهٔ گرد، قاب */
+const ED0 = {crop:'orig', zoom:1, cx:.5, cy:.5, rot:0, flip:false, bri:0, con:0, sat:100, white:false, thr:235, round:0, bw:0, bc:'#c9a03a'};
+const ED_CROPS = [['orig','اصلی'],['square','مربع'],['circle','دایره'],['oval','بیضی'],['p34','۳×۴ ایستاده'],['l43','۴×۳ خوابیده'],['wide','پهن ۲×۱']];
+const ED = {key:null, img:null, src:null, st:null, meta:null};
+function roundRectPath(x, a, b, w, h, r){
+  r = Math.max(0, Math.min(r, w / 2, h / 2));
+  x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath();
+}
+function edCompose(st, img, maxOut){
+  const r = ((st.rot % 360) + 360) % 360, sw = img.naturalWidth, sh = img.naturalHeight;
+  const ow = r % 180 ? sh : sw, oh = r % 180 ? sw : sh;
+  const A = {square:1, circle:1, oval:3 / 4, p34:3 / 4, l43:4 / 3, wide:2}[st.crop] || ow / oh;
+  let cw = ow, ch = ow / A; if (ch > oh){ ch = oh; cw = oh * A; }
+  cw /= st.zoom; ch /= st.zoom;
+  const cx = clamp(st.cx * ow, cw / 2, ow - cw / 2), cy = clamp(st.cy * oh, ch / 2, oh - ch / 2);
+  const sc = Math.min(1, maxOut / Math.max(cw, ch)), W = Math.max(1, Math.round(cw * sc)), H = Math.max(1, Math.round(ch * sc));
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.imageSmoothingQuality = 'high';
+  x.save(); x.scale(sc, sc); x.translate(-(cx - cw / 2), -(cy - ch / 2)); x.translate(ow / 2, oh / 2);
+  if (st.flip) x.scale(-1, 1);
+  x.rotate(r * Math.PI / 180); x.drawImage(img, -sw / 2, -sh / 2); x.restore();
+  if (st.bri || st.con || +st.sat !== 100 || st.white){
+    const d = x.getImageData(0, 0, W, H), p = d.data, b = st.bri * 2.55, cc = st.con * 2.55, cf = (259 * (cc + 255)) / (255 * (259 - cc)), s = st.sat / 100, thr = +st.thr;
+    for (let i = 0; i < p.length; i += 4){
+      let R = p[i], G = p[i+1], B = p[i+2];
+      if (st.white){
+        const l = (R + G + B) / 3, sa = Math.max(R, G, B) - Math.min(R, G, B);
+        if (l > thr && sa < 40){ p[i+3] = 0; continue; }
+        if (l > thr - 35 && sa < 50) p[i+3] = Math.round(p[i+3] * (thr - l) / 35);
+      }
+      R = cf * (R - 128) + 128 + b; G = cf * (G - 128) + 128 + b; B = cf * (B - 128) + 128 + b;
+      if (s !== 1){ const L = .299 * R + .587 * G + .114 * B; R = L + (R - L) * s; G = L + (G - L) * s; B = L + (B - L) * s; }
+      p[i] = R; p[i+1] = G; p[i+2] = B;
+    }
+    x.putImageData(d, 0, 0);
+  }
+  ED.meta = {cw, ch, ow, oh, W, H};
+  const shape = st.crop === 'circle' || st.crop === 'oval' ? 'ellipse' : (+st.round > 0 ? 'round' : 'rect');
+  if (shape === 'rect' && !(+st.bw > 0)) return c;
+  const out = document.createElement('canvas'); out.width = W; out.height = H;
+  const y = out.getContext('2d'), bw = +st.bw / 100 * Math.min(W, H);
+  const path = inset => {
+    y.beginPath();
+    if (shape === 'ellipse') y.ellipse(W / 2, H / 2, Math.max(1, W / 2 - inset), Math.max(1, H / 2 - inset), 0, 0, Math.PI * 2);
+    else if (shape === 'round') roundRectPath(y, inset, inset, W - 2 * inset, H - 2 * inset, +st.round / 100 * Math.min(W, H) - inset);
+    else y.rect(inset, inset, W - 2 * inset, H - 2 * inset);
+  };
+  y.save(); path(0); y.clip(); y.drawImage(c, 0, 0); y.restore();
+  if (bw > 0){ y.lineWidth = bw; y.strokeStyle = st.bc; path(bw / 2); y.stroke(); }
+  return out;
+}
+function edIsOpaque(st){ return !st.white && st.crop !== 'circle' && st.crop !== 'oval' && !(+st.round > 0) && /^data:image\/jpeg/.test(ED.src || ''); }
+function edDraw(){
+  if (!ED.img) return;
+  const c = edCompose(ED.st, ED.img, 560), cv = $('edCanvas');
+  cv.width = c.width; cv.height = c.height; cv.getContext('2d').drawImage(c, 0, 0);
+}
+function edSync(){
+  const st = ED.st;
+  $('edCrops').innerHTML = ED_CROPS.map(([k, n]) => `<button type="button" data-edcrop="${k}" aria-pressed="${st.crop === k}">${n}</button>`).join('');
+  for (const [id, k] of [['edZoom','zoom'],['edBri','bri'],['edCon','con'],['edSat','sat'],['edThr','thr'],['edRound','round'],['edBw','bw']]) $(id).value = st[k];
+  $('edWhite').checked = !!st.white; $('edBc').value = st.bc; $('edThr').disabled = !st.white;
+  $('edRound').disabled = st.crop === 'circle' || st.crop === 'oval';
+}
+async function openImgEditor(key){
+  if (!key) return;
+  const cur = getImg(key);
+  if (!cur){ toast('اول یک تصویر برای «' + (IMG_LABEL[key] || 'این بخش') + '» بگذار.', true); return; }
+  let o = null; try { o = await IDB.get('orig:' + key); } catch(e){}
+  ED.key = key; ED.src = (o && o.src) || cur;
+  ED.st = Object.assign({}, ED0, (o && o.ed) || {});
+  try { ED.img = await loadImg(ED.src); } catch(e){ toast('این تصویر باز نشد.', true); return; }
+  $('edTarget').textContent = IMG_LABEL[key] || (key.startsWith('x:') ? 'تصویر آزاد' : '');
+  edSync(); edDraw();
+  const d = $('imgEd'); if (typeof d.showModal === 'function') d.showModal(); else d.setAttribute('open', '');
+}
+function closeImgEditor(){ const d = $('imgEd'); if (d.open){ if (typeof d.close === 'function') d.close(); else d.removeAttribute('open'); } }
+function edApply(){
+  if (!ED.img || !ED.key) return;
+  const c = edCompose(ED.st, ED.img, IMG_MAX(ED.key));
+  setImg(ED.key, encodeCanvas(c, edIsOpaque(ED.st)));
+  IDB.set('orig:' + ED.key, {src:ED.src, ed:Object.assign({}, ED.st)});
+  closeImgEditor(); syncUI(); changed({now:true}); toast('✂️ تصویر ویرایش شد.');
+}
+
+/* عکس‌های <img> با object-fit را برای html2canvas به اندازهٔ واقعی درمی‌آورد */
+function fixFit(root){
+  root.querySelectorAll('img').forEach(im => {
+    const cs = getComputedStyle(im), fit = cs.objectFit;
+    if (fit !== 'contain' && fit !== 'cover') return;
+    const bw = parseFloat(cs.width), bh = parseFloat(cs.height), nw = im.naturalWidth, nh = im.naturalHeight;
+    if (!(bw > 0 && bh > 0 && nw && nh)) return;
+    const s = fit === 'contain' ? Math.min(bw / nw, bh / nh) : Math.max(bw / nw, bh / nh), w = nw * s, h = nh * s;
+    if (Math.abs(w - bw) < .6 && Math.abs(h - bh) < .6) return;
+    const box = document.createElement('div');
+    for (const at of im.attributes) if (!/^(src|alt|srcset)$/.test(at.name)) box.setAttribute(at.name, at.value);
+    const pos = cs.position === 'static' ? 'relative' : cs.position;
+    box.style.cssText += `;width:${bw}px;height:${bh}px;overflow:hidden;position:${pos};display:${cs.display === 'inline' ? 'inline-block' : cs.display};margin:${cs.margin}`;
+    if (pos === 'absolute'){ box.style.left = cs.left; box.style.top = cs.top; box.style.right = 'auto'; box.style.bottom = 'auto'; }
+    const inner = new Image(); inner.alt = ''; inner.src = im.src;
+    inner.style.cssText = `position:absolute;left:${(bw - w) / 2}px;top:${(bh - h) / 2}px;width:${w}px;height:${h}px;max-width:none;max-height:none;object-fit:fill;transform:none;margin:0;border:0;opacity:1`;
+    box.appendChild(inner); im.replaceWith(box);
+  });
+}
+
+/* عکس شکل‌دار برای خروجی: html2canvas قاب گرد/محرابی با حاشیه و سایه را درست نمی‌کشد، پس روی بوم می‌کشیمش */
+const PHOTO_RADII = {circle:[.5,.5,.5,.5,.5,.5,.5,.5], oval:[.5,.5,.5,.5,.5,.5,.5,.5], arch:[.5,.36,.5,.36,.07,.06,.07,.06], rounded:[.09,.09,.09,.09,.09,.09,.09,.09], rect:[0,0,0,0,0,0,0,0], square:[.07,.07,.07,.07,.07,.07,.07,.07]};
+function shapePath(c, x, y, w, h, R, ins){
+  // R: [tlx,tly,trx,try,brx,bry,blx,bly] نسبت به پهنا/بلندی بیرونی؛ ins = فرورفتگی (ضخامت حاشیه)
+  const W0 = w + 2 * ins, H0 = h + 2 * ins, k = (v, d) => Math.max(0, v * d - ins);
+  let [a, b, cc, d, e, f, g, hh] = [k(R[0], W0), k(R[1], H0), k(R[2], W0), k(R[3], H0), k(R[4], W0), k(R[5], H0), k(R[6], W0), k(R[7], H0)];
+  const sx = Math.min(1, w / Math.max(a + cc, g + e, 1e-6)), sy = Math.min(1, h / Math.max(b + hh, d + f, 1e-6)), sc = Math.min(sx, sy);
+  [a, b, cc, d, e, f, g, hh] = [a, b, cc, d, e, f, g, hh].map(v => v * sc);
+  c.beginPath();
+  c.moveTo(x + a, y);
+  c.lineTo(x + w - cc, y); if (cc && d) c.ellipse(x + w - cc, y + d, cc, d, 0, -Math.PI / 2, 0); else c.lineTo(x + w, y);
+  c.lineTo(x + w, y + h - f); if (e && f) c.ellipse(x + w - e, y + h - f, e, f, 0, 0, Math.PI / 2); else c.lineTo(x + w, y + h);
+  c.lineTo(x + g, y + h); if (g && hh) c.ellipse(x + g, y + h - hh, g, hh, 0, Math.PI / 2, Math.PI); else c.lineTo(x, y + h);
+  c.lineTo(x, y + b); if (a && b) c.ellipse(x + a, y + b, a, b, 0, Math.PI, Math.PI * 1.5); else c.lineTo(x, y);
+  c.closePath();
+}
+async function fixPhoto(root){
+  for (const el of root.querySelectorAll('.c-photo')){
+    const m = /url\((['"]?)(.*?)\1\)/.exec(el.style.backgroundImage || ''); if (!m) continue;
+    let im; try { im = await loadImg(m[2]); } catch(e){ continue; }
+    const cs = getComputedStyle(el), w = el.offsetWidth, h = el.offsetHeight; if (!(w > 0 && h > 0)) continue;
+    const P = S.photo, R = PHOTO_RADII[P.shape] || PHOTO_RADII.circle, bw = parseFloat(cs.borderTopWidth) || 0, bc = cs.borderTopColor;
+    const sh = P.shadow ? Math.max(2, w * .09) : 0, pad = Math.ceil(sh * 1.6), q = Math.max(2, Math.min(6, 900 / w));
+    const cv = document.createElement('canvas'); cv.width = Math.round((w + 2 * pad) * q); cv.height = Math.round((h + 2 * pad) * q);
+    const c = cv.getContext('2d'); c.scale(q, q); c.translate(pad, pad);
+    if (sh){ c.save(); c.shadowColor = 'rgba(0,0,0,.28)'; c.shadowBlur = sh; c.shadowOffsetY = sh * .3; shapePath(c, 0, 0, w, h, R, 0); c.fillStyle = bw ? bc : '#fff'; c.fill(); c.restore(); }
+    if (bw){ shapePath(c, 0, 0, w, h, R, 0); c.fillStyle = bc; c.fill(); }
+    c.save(); shapePath(c, bw, bw, w - 2 * bw, h - 2 * bw, R, bw); c.clip();
+    const iw = w - 2 * bw, ih = h - 2 * bw, s = Math.max(iw / im.naturalWidth, ih / im.naturalHeight), dw = im.naturalWidth * s, dh = im.naturalHeight * s;
+    c.fillStyle = '#fff'; c.fillRect(bw, bw, iw, ih); c.drawImage(im, bw + (iw - dw) / 2, bw + (ih - dh) / 2, dw, dh); c.restore();
+    const img = new Image(); img.alt = ''; img.src = cv.toDataURL('image/png');
+    try { await img.decode(); } catch(e){}
+    img.className = el.className; img.setAttribute('style', el.getAttribute('style'));
+    img.style.backgroundImage = 'none'; img.style.border = '0'; img.style.boxShadow = 'none'; img.style.borderRadius = '0'; img.style.background = 'none';
+    img.style.width = (w + 2 * pad) + 'px'; img.style.height = (h + 2 * pad) + 'px'; img.style.margin = `${-pad}px 0 0 ${-pad}px`; img.style.maxWidth = 'none';
+    el.replaceWith(img);
+  }
+}
+
+/* لایه‌ها */
+function isLocked(k){ return !!S.lock || !!(S.pos[k] && S.pos[k].lk); }
+function layerItems(){
+  const L = [], F = S.fields, add = (k, name, shown, kind) => L.push({k, name, shown, kind});
+  for (const f of FIELDS){
+    if (F[f.k] && String(F[f.k].text || '').trim()) add(f.k, FIELD_LABEL[f.k] || f.k, !!F[f.k].on, 'field');
+    if (f.k === 'basmala' && S.logo) add('logo', 'لوگوی وسط', !S.hide.logo, 'hide');
+    if (f.k === 'subtitle') add('divider', 'نقش جداکننده', S.divider !== 'none', 'div');
+  }
+  if (S.logoR) add('logoR', 'لوگوی راست', !S.hide.logoR, 'hide');
+  if (S.logoL) add('logoL', 'لوگوی چپ', !S.hide.logoL, 'hide');
+  if (S.photo.on || S.photo.src || Object.keys(PHOTOS).length) add('photo', 'عکس دریافت‌کننده', !!S.photo.on && !S.hide.photo, 'photo');
+  S.signers.forEach((s, i) => {
+    if (String(s.text || '').trim() || s.img) add('sign' + i, 'امضای ' + ['اول','دوم','سوم'][i], !!s.on, 'sign');
+    if (stampSrc(i)) add(stampKey(i), 'مهر ' + ['اول','دوم','سوم'][i], !S.hide[stampKey(i)], 'hide');
+  });
+  (S.extras || []).forEach(ex => add('x:' + ex.id, mvName('x:' + ex.id) + (ex.type !== 'img' && ex.type !== 'orn' ? ': ' + String(ex.text || '').replace(/\s+/g, ' ').slice(0, 16) : ''), !ex.hidden, 'extra'));
+  return L;
+}
+function setShown(it, v){
+  switch (it.kind){
+    case 'field': S.fields[it.k].on = v; break;
+    case 'hide': if (v) delete S.hide[it.k]; else S.hide[it.k] = true; break;
+    case 'div': if (v) S.divider = S.divPrev || 'classic'; else { S.divPrev = S.divider; S.divider = 'none'; } break;
+    case 'photo': S.photo.on = v; if (v) delete S.hide.photo; break;
+    case 'sign': S.signers[+it.k[4]].on = v; break;
+    case 'extra': { const ex = extraById(it.k.slice(2)); if (ex) ex.hidden = !v; break; }
+  }
+}
+function renderLayers(){
+  const box = $('layersBox'); if (!box || !box.open) return;
+  $('layerList').innerHTML = layerItems().map(it => {
+    const p = S.pos[it.k] || {}, z = num(p.z, 0);
+    return `<div class="ly-it${sel === it.k ? ' on' : ''}${it.shown ? '' : ' off'}" data-ly="${esc(it.k)}">
+      <button type="button" data-lyact="eye" aria-label="${it.shown ? 'پنهان کن' : 'نمایان کن'}" title="${it.shown ? 'پنهان کن' : 'نمایان کن'}">${it.shown ? '👁' : '◌'}</button>
+      <button type="button" class="ly-name" data-lyact="sel">${esc(it.name)}${z ? ` <small>(${z > 0 ? '+' : ''}${faDigits(z)})</small>` : ''}</button>
+      <button type="button" data-lyact="lock" aria-pressed="${!!p.lk}" title="${p.lk ? 'باز کردن قفل' : 'قفل کردن جای این بخش'}">${p.lk ? '🔒' : '🔓'}</button>
+      <button type="button" data-lyact="up" title="بیاور رو">⬆</button><button type="button" data-lyact="down" title="بفرست زیر">⬇</button></div>`;
+  }).join('') || '<p class="small muted">چیزی روی برگه نیست.</p>';
+}
+
 function imgSlot(slotId, key, label){
   const el = $(slotId); if (!el) return;
   const val = getImg(key);
-  el.innerHTML = (val ? `<img src="${val}" alt="${esc(label)}">` : '')
+  if (!el.dataset.drop && key !== 'guide') el.dataset.drop = key;
+  el.innerHTML = (val ? `<img src="${val}" alt="${esc(label)}">` : `<span class="slot-empty" aria-hidden="true">＋</span>`)
     + `<button type="button" class="btn sm soft" data-img="${key}">${val ? 'تعویض' : 'افزودن'} ${esc(label)}</button>`
-    + (val ? `<button type="button" class="btn sm" data-imgclean="${key}" title="زمینهٔ سفید عکس را شفاف می‌کند">حذف زمینهٔ سفید</button><button type="button" class="btn sm danger" data-imgdel="${key}">حذف</button>` : '');
+    + (val ? `<button type="button" class="btn sm" data-imged="${key}" title="برش، دایره، چرخش، روشنی، حذف زمینه، قاب دور">✂️ ویرایش</button>${key === 'photo' || key === 'bgimg' ? '' : `<button type="button" class="btn sm" data-imgclean="${key}" title="زمینهٔ سفید عکس را شفاف می‌کند">زمینهٔ سفید ✕</button>`}<button type="button" class="btn sm danger" data-imgdel="${key}" aria-label="حذف ${esc(label)}">حذف</button>` : '');
 }
-function getImg(key){ if (String(key).startsWith('x:')){ const ex = extraById(key.slice(2)); return ex ? ex.src : null; } if (key === 'logo') return S.logo; if (key === 'stamp') return S.stamp; if (key === 'guide') return S.paper.guideImg; const m = /^sig(\d)$/.exec(key); return m ? S.signers[+m[1]].img : null; }
-function setImg(key, v){
-  if (key === 'newx'){ if (!v) return; const {W, H} = pageDims(); const ex = {id:newExtraId(), type:'img', src:v, x:W / 2, y:Math.round(H * .3), w:40}; S.extras = (S.extras || []).concat(ex); sel = 'x:' + ex.id; renderExtras(); toast('تصویر اضافه شد؛ بکشش و با A+ و A− اندازه‌اش را عوض کن.'); return; }
-  if (String(key).startsWith('x:')){ const ex = extraById(key.slice(2)); if (ex){ if (v) ex.src = v; else S.extras = S.extras.filter(x => x !== ex); renderExtras(); } return; }
-  if (key === 'logo') S.logo = v; else if (key === 'stamp') S.stamp = v; else if (key === 'guide') S.paper.guideImg = v; else { const m = /^sig(\d)$/.exec(key); if (m) S.signers[+m[1]].img = v; } }
 function buildStyleBoxes(){
   $('styleBoxes').innerHTML = FIELDS.map(f => {
     const s = S.styles[f.k]; if (!s) return '';
@@ -1670,8 +2170,8 @@ function syncUI(){
   document.querySelectorAll('[data-sg]').forEach(el => { if (document.activeElement !== el) el.value = S.signers[+el.dataset.sg].text; });
   document.querySelectorAll('[data-sgon]').forEach(el => { el.checked = !!S.signers[+el.dataset.sgon].on; });
   if ($('serialStart')) $('serialStart').value = S.serialStart;
-  imgSlot('slot-logo', 'logo', 'لوگو'); imgSlot('slot-stamp', 'stamp', 'مهر'); imgSlot('slot-guide', 'guide', 'عکس برگهٔ من');
-  S.signers.forEach((s, i) => imgSlot('slot-sig' + i, 'sig' + i, 'امضا'));
+  imgSlot('slot-guide', 'guide', 'عکس برگهٔ من');
+  slotsSync();
   $('logoSize').value = S.logoSize; $('logoSizeVal').textContent = faDigits(S.logoSize) + ' mm';
   // ظاهر
   document.querySelectorAll('[data-sync=pageSize]').forEach(el => el.value = S.page.size);
@@ -1776,20 +2276,16 @@ $('btnApplyPreset').addEventListener('click', () => {
 // تصاویر
 let imgTarget = null;
 document.addEventListener('click', e => {
-  const a = e.target.closest('[data-img]'), d = e.target.closest('[data-imgdel]'), c = e.target.closest('[data-imgclean]');
+  const a = e.target.closest('[data-img]'), d = e.target.closest('[data-imgdel]'), c = e.target.closest('[data-imgclean]'), ed = e.target.closest('[data-imged]');
+  if (ed){ openImgEditor(ed.dataset.imged); return; }
   if (a){ imgTarget = a.dataset.img; $('imgFile').value = ''; $('imgFile').click(); }
-  else if (d){ setImg(d.dataset.imgdel, null); syncUI(); changed({now:true}); }
+  else if (d){ setImg(d.dataset.imgdel, null); IDB.del('orig:' + d.dataset.imgdel); syncUI(); changed({now:true}); }
   else if (c){ const k = c.dataset.imgclean; removeWhite(getImg(k)).then(u => { setImg(k, u); syncUI(); changed({now:true}); toast('زمینهٔ سفید حذف شد.'); }); }
 });
 $('imgFile').addEventListener('change', async () => {
   const f = $('imgFile').files[0]; if (!f || !imgTarget) return;
-  try {
-    const max = imgTarget === 'guide' ? 1400 : /^(newx|x:)/.test(imgTarget) ? 1000 : 700;
-    let url = await fileToDataURL(f, max);
-    if (/^sig|stamp/.test(imgTarget)) url = await removeWhite(url);
-    setImg(imgTarget, url); syncUI(); changed({now:true});
-    if (imgTarget === 'guide'){ S.paper.guide = true; syncUI(); render(); }
-  } catch(err){ toast('خواندن تصویر ممکن نشد.', true); }
+  await ingestImage(f, imgTarget);
+  if (imgTarget === 'guide'){ syncUI(); render(); }
 });
 function fileToDataURL(file, max){
   return new Promise((res, rej) => {
@@ -1989,7 +2485,7 @@ $('pane-paper').addEventListener('click', e => {
 $('btnCalib').addEventListener('click', printCalibration);
 /* ── جابه‌جایی آزاد: کشیدن، انتخاب، نوار ابزار و کلیدهای جهت ── */
 let sel = null, drag = null;
-const MV_NAMES = {logo:'لوگو', divider:'نقش جداکننده', stamp:'مهر', sign0:'امضای اول', sign1:'امضای دوم', sign2:'امضای سوم'};
+const MV_NAMES = {logoR:'لوگوی راست', logoL:'لوگوی چپ', photo:'عکس دریافت‌کننده', stamp1:'مهر دوم', stamp2:'مهر سوم', logo:'لوگو', divider:'نقش جداکننده', stamp:'مهر', sign0:'امضای اول', sign1:'امضای دوم', sign2:'امضای سوم'};
 function mvName(k){ if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return !ex ? '' : ex.type === 'img' ? 'تصویر' : ex.type === 'orn' ? 'نقش تزئینی' : 'متن آزاد'; } return MV_NAMES[k] || FIELD_LABEL[k] || k; }
 function mvEl(k){ return k ? $('pageWrap').querySelector(`[data-mv="${CSS.escape(k)}"]`) : null; }
 function extraById(id){ return (S.extras || []).find(x => x.id === id); }
@@ -1998,9 +2494,10 @@ function getOff(k){
   if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); return ex ? {x:0, y:0, r:num(p.r, 0)} : null; }
   return {x:num(p.x, 0), y:num(p.y, 0), r:num(p.r, 0)};
 }
-function cleanPos(k){ const p = S.pos[k]; if (p && !p.x && !p.y && !p.r && (p.o == null || p.o >= 1)) delete S.pos[k]; }
+function cleanPos(k){ const p = S.pos[k]; if (p && !p.x && !p.y && !p.r && !p.z && !p.lk && (p.o == null || p.o >= 1)) delete S.pos[k]; }
 // جابه‌جایی نهایی را در وضعیت ثبت می‌کند
 function moveBy(k, dx, dy){
+  if (isLocked(k)){ toast('🔒 جای این بخش قفل است؛ از «لایه‌ها» یا نوار ابزار بازش کن.'); return; }
   const r1 = v => Math.round(v * 10) / 10;
   if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (!ex) return; const {W, H} = pageDims(); ex.x = r1(clamp(num(ex.x, W/2) + dx, 0, W)); ex.y = r1(clamp(num(ex.y, H/2) + dy, -10, H)); return; }
   const p = S.pos[k] || {x:0, y:0};
@@ -2010,6 +2507,7 @@ function moveBy(k, dx, dy){
 function rotateSel(d){ const k = sel; if (!k) return; const p = S.pos[k] || {x:0, y:0}; let r = num(p.r, 0) + d; r = ((r + 180) % 360 + 360) % 360 - 180; p.r = Math.round(r * 10) / 10; S.pos[k] = p; cleanPos(k); changed(); }
 function opacitySel(){ const k = sel; if (!k) return; const p = S.pos[k] || {x:0, y:0}; const steps = [1, .75, .5, .25]; const i = steps.indexOf(p.o == null ? 1 : p.o); p.o = steps[(i + 1) % steps.length]; if (p.o === 1) delete p.o; S.pos[k] = p; cleanPos(k); changed({now:true}); toast('شفافیت: ' + faDigits(Math.round((p.o == null ? 1 : p.o) * 100)) + '٪'); }
 function markSel(){
+  if ($('layersBox') && $('layersBox').open) $('layerList').querySelectorAll('.ly-it').forEach(r => r.classList.toggle('on', r.dataset.ly === sel));
   const wrap = $('pageWrap');
   wrap.querySelectorAll('.mv-sel').forEach(e => e.classList.remove('mv-sel'));
   const el = mvEl(sel);
@@ -2021,6 +2519,9 @@ function placeSelBar(){
   const bar = $('selBar'), el = mvEl(sel);
   if (!el){ bar.hidden = true; return; }
   bar.hidden = false; $('selName').textContent = mvName(sel);
+  const isImg = !!imgKeyOf(sel); bar.querySelectorAll('.img-only').forEach(b => b.hidden = !isImg);
+  const lk = bar.querySelector('[data-selact="lock"]'); if (lk){ const on = !!(S.pos[sel] && S.pos[sel].lk); lk.textContent = on ? '🔒' : '🔓'; lk.setAttribute('aria-pressed', String(on)); }
+  bar.querySelector('[data-selact="edit"]').hidden = isImg || /^(logo|logoR|logoL|photo|stamp\d?|divider)$/.test(sel) || (sel.startsWith('x:') && (extraById(sel.slice(2)) || {}).type === 'orn');
   const hr = $('pageHolder').getBoundingClientRect(), er = el.getBoundingClientRect();
   let top = er.top - hr.top - bar.offsetHeight - 8;
   if (top < 0) top = er.bottom - hr.top + 8;
@@ -2039,7 +2540,7 @@ $('stageView').addEventListener('pointerdown', e => {
   try { $('stageView').focus({preventScroll:true}); } catch(_){}
   const k = el.dataset.mv, cert = el.closest('.cert');
   const er = el.getBoundingClientRect(), cr = cert.getBoundingClientRect(), f = mmPerPx();
-  drag = { k, el, x0:e.clientX, y0:e.clientY, moved:false, base:getOff(k) || {x:0, y:0, r:0}, dx:0, dy:0, locked:!!S.lock,
+  drag = { k, el, x0:e.clientX, y0:e.clientY, moved:false, base:getOff(k) || {x:0, y:0, r:0}, dx:0, dy:0, locked:isLocked(k),
     cx:(er.left + er.width / 2 - (cr.left + cr.width / 2)) * f, cy:(er.top + er.height / 2 - (cr.top + cr.height / 2)) * f, cert, pid:e.pointerId };
   try { $('stageView').setPointerCapture(e.pointerId); } catch(_){}
 });
@@ -2074,7 +2575,7 @@ function endDrag(e){
   if (d.moved){ moveBy(d.k, d.dx, d.dy); sel = d.k; changed({now:true}); lastTap = null; return; }
   // دو بار زدن (موس یا لمس) ← ویرایش
   const now = Date.now();
-  if (lastTap && lastTap.k === d.k && now - lastTap.t < 450){ lastTap = null; select(d.k); if (!inlineEdit(d.k)) openEditor(d.k); return; }
+  if (lastTap && lastTap.k === d.k && now - lastTap.t < 450){ lastTap = null; select(d.k); const ik = imgKeyOf(d.k); if (ik && !/^sign/.test(d.k)){ if (getImg(ik)) openImgEditor(ik); else { imgTarget = ik; $('imgFile').value = ''; $('imgFile').click(); } } else if (!inlineEdit(d.k)) openEditor(d.k); return; }
   lastTap = {k:d.k, t:now};
   select(d.k);
 }
@@ -2121,7 +2622,7 @@ function inlineEdit(k){
 function openStyle(k){
   let target;
   if (k.startsWith('x:')){ activateTab('tab-text'); renderExtras(); target = document.querySelector(`.xcard[data-xid="${CSS.escape(k.slice(2))}"]`); }
-  else if (k === 'logo' || k === 'stamp'){ activateTab('tab-text'); target = $(k === 'logo' ? 'slot-logo' : 'slot-stamp'); }
+  else if (/^(logo|logoR|logoL|photo|stamp\d?)$/.test(k)){ activateTab('tab-img'); target = $('slot-' + k); }
   else if (k === 'divider'){ activateTab('tab-look'); target = $('divStyle'); }
   else {
     activateTab('tab-look');
@@ -2138,7 +2639,8 @@ function openEditor(k){
   else {
     activateTab('tab-text');
     const m = /^sign(\d)$/.exec(k);
-    target = m ? $('sg-' + m[1]) : k === 'logo' ? document.querySelector('#slot-logo button') : k === 'stamp' ? document.querySelector('#slot-stamp button') : $('tx-' + k);
+    if (!m && /^(logo|logoR|logoL|photo|stamp\d?)$/.test(k)){ activateTab('tab-img'); }
+    target = m ? $('sg-' + m[1]) : /^(logo|logoR|logoL|photo|stamp\d?)$/.test(k) ? document.querySelector('#slot-' + k + ' button') : $('tx-' + k);
   }
   if (target){ target.scrollIntoView({block:'center', behavior:'smooth'}); setTimeout(() => target.focus({preventScroll:true}), 250); const box = target.closest('.fld, .card, .xcard'); if (box){ box.style.boxShadow = '0 0 0 3px #d4af3780'; setTimeout(() => box.style.boxShadow = '', 1400); } }
 }
@@ -2147,7 +2649,9 @@ function growSel(dir){
   const f = dir > 0 ? 1.08 : 1 / 1.08, r = v => Math.round(v * 2) / 2;
   if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex){ if (ex.type === 'img' || ex.type === 'orn') ex.w = clamp(Math.round(num(ex.w, 40) * f), 5, 400); else ex.size = clamp(r(ex.size * f), 7, 120); } renderExtras(); }
   else if (k === 'logo') S.logoSize = clamp(S.logoSize + dir * 2, 10, 60);
-  else if (k === 'stamp') S.stampSize = clamp((S.stampSize || 27) + dir * 2, 15, 50);
+  else if (/^stamp\d?$/.test(k)) S.stampSize = clamp((S.stampSize || 27) + dir * 2, 15, 50);
+  else if (k === 'logoR' || k === 'logoL'){ const sk = k + 'Size'; S[sk] = clamp(num(S[sk], 20) + dir * 2, 8, 80); }
+  else if (k === 'photo') S.photo.w = clamp(Math.round(num(S.photo.w, 30) * f), 12, 100);
   else if (k === 'divider') S.divW = clamp((S.divW || 62) + dir * 6, 20, 150);
   else { const sk = /^sign\d$/.test(k) ? 'sign' : k; if (S.styles[sk]) S.styles[sk].size = clamp(r(S.styles[sk].size * f), 7, 120); }
   syncUI(); changed();
@@ -2159,17 +2663,17 @@ function centerSel(){
 }
 function hideSel(){
   const k = sel; if (!k) return;
-  if (k.startsWith('x:')){ S.extras = S.extras.filter(x => x.id !== k.slice(2)); renderExtras(); }
-  else if (k === 'logo'){ if (!confirm('لوگو حذف شود؟')) return; S.logo = null; }
-  else if (k === 'stamp'){ if (!confirm('مهر حذف شود؟')) return; S.stamp = null; }
-  else if (k === 'divider') S.divider = 'none';
+  if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); if (ex) ex.hidden = true; renderExtras(); }
+  else if (/^(logo|logoR|logoL|photo|stamp\d?)$/.test(k)) S.hide[k] = true;
+  else if (k === 'divider'){ S.divPrev = S.divider; S.divider = 'none'; }
   else if (/^sign\d$/.test(k)) S.signers[+k[4]].on = false;
   else if (S.fields[k]) S.fields[k].on = false;
-  sel = null; syncUI(); changed({now:true}); toast('پنهان شد؛ از زبانهٔ «متن» یا «ظاهر» دوباره روشنش کن.');
+  sel = null; syncUI(); changed({now:true}); toast('پنهان شد؛ از «🗂 لایه‌ها» بالای برگه دوباره نمایانش کن.');
 }
 function resetSel(){
   const k = sel; if (!k) return;
   if (k.startsWith('x:')){ const ex = extraById(k.slice(2)); const {W, H} = pageDims(); if (ex){ ex.x = W / 2; ex.y = H / 2; } }
+  if (k === 'photo'){ delete S.photo.x; delete S.photo.y; }
   delete S.pos[k];
   changed({now:true});
 }
@@ -2182,6 +2686,9 @@ $('selBar').addEventListener('click', e => {
   else if (b.dataset.rot) rotateSel(+b.dataset.rot * (e.shiftKey ? 15 : 3));
   else if (b.dataset.selact === 'opacity') opacitySel();
   else if (b.dataset.selact === 'style') openStyle(sel);
+  else if (b.dataset.selact === 'imgrep'){ const k = imgKeyOf(sel); if (k){ imgTarget = k; $('imgFile').value = ''; $('imgFile').click(); } }
+  else if (b.dataset.selact === 'imged') openImgEditor(imgKeyOf(sel));
+  else if (b.dataset.selact === 'lock'){ const p = S.pos[sel] || {x:0, y:0}; if (p.lk) delete p.lk; else p.lk = true; S.pos[sel] = p; const on = !!p.lk; cleanPos(sel); changed({now:true}); toast(on ? '🔒 جای این بخش قفل شد.' : '🔓 قفل باز شد.'); }
   else if (b.dataset.selact === 'edit'){ if (!inlineEdit(sel)) openEditor(sel); }
   else if (b.dataset.selact === 'hide') hideSel();
   else if (b.dataset.selact === 'close'){ sel = null; markSel(); }
@@ -2226,7 +2733,8 @@ $('btnAddExtra').addEventListener('click', addExtra);
 $('btnAddExtra2').addEventListener('click', addExtra);
 $('btnAddOrn').addEventListener('click', () => addOrn());
 $('btnAddOrn2').addEventListener('click', () => addOrn($('ornKindNew').value));
-$('btnAddImg').addEventListener('click', () => { imgTarget = 'newx'; $('imgFile').value = ''; $('imgFile').click(); });
+$('btnAddImg').addEventListener('click', () => { const k = imgKeyOf(sel); if (k){ activateTab('tab-img'); } imgTarget = 'newx'; $('imgFile').value = ''; $('imgFile').click(); });
+document.addEventListener('click', e => { if (e.target.closest('[data-goimg]')) activateTab('tab-img'); });
 $('btnAddImg2').addEventListener('click', () => { imgTarget = 'newx'; $('imgFile').value = ''; $('imgFile').click(); });
 function renderExtras(){
   const box = $('extraList'); if (!box) return;
@@ -2283,6 +2791,150 @@ $('extraList').addEventListener('click', e => {
 });
 $('lockMove').addEventListener('change', e => { S.lock = e.target.checked; persist(); toast(S.lock ? '🔒 جابه‌جایی قفل شد؛ فقط انتخاب و ویرایش ممکن است.' : 'جابه‌جایی آزاد شد.'); });
 $('snapGrid').addEventListener('change', e => { S.snap = +e.target.value; persist(); });
+/* ── رویدادهای تصویرها ── */
+function slotsSync(){
+  for (const [k, n] of IMG_SLOTS) if (k !== 'newx') imgSlot('slot-' + k, k, n);
+  S.signers.forEach((s, i) => { imgSlot('slot-sig' + i, 'sig' + i, 'امضا'); imgSlot('slot2-sig' + i, 'sig' + i, 'امضای ' + ['اول','دوم','سوم'][i]); });
+  const P = S.photo;
+  $('photoOn').checked = !!P.on; $('photoPerRow').checked = !!P.perRow;
+  $('photoW').value = P.w; $('photoWV').textContent = faDigits(P.w);
+  $('photoBw').value = P.bw; $('photoBc').value = P.bc || S.colors.accent; $('photoShadow').checked = !!P.shadow;
+  $('photoShapes').innerHTML = Object.entries(PHOTO_SHAPES).map(([k, v]) => `<button type="button" data-pshape="${k}" aria-pressed="${P.shape === k}"><i class="ps ps-${k}"></i>${v.n}</button>`).join('');
+  $('logoRSize').value = S.logoRSize; $('logoLSize').value = S.logoLSize;
+  $('wmImgSize').value = S.wmImgSize; $('wmImgOp').value = S.wmImgOp;
+  $('bgFit').value = S.bg.fit || 'fill'; $('bgOp').value = S.bg.op == null ? 100 : S.bg.op;
+  updatePhotoInfo();
+}
+$('pane-img').addEventListener('input', e => {
+  const el = e.target, id = el.id, P = S.photo;
+  const m = {logoRSize:v => S.logoRSize = v, logoLSize:v => S.logoLSize = v, wmImgSize:v => S.wmImgSize = v, wmImgOp:v => S.wmImgOp = v, bgOp:v => S.bg.op = v,
+    photoW:v => { P.w = v; $('photoWV').textContent = faDigits(v); }, photoBw:v => P.bw = v};
+  if (m[id]){ m[id](+el.value); changed(); }
+  else if (id === 'photoBc'){ P.bc = el.value; changed(); }
+});
+$('pane-img').addEventListener('change', e => {
+  const el = e.target, id = el.id, P = S.photo;
+  if (id === 'photoOn'){ P.on = el.checked; if (el.checked) delete S.hide.photo; changed({now:true}); }
+  else if (id === 'photoPerRow'){ P.perRow = el.checked; changed({now:true}); updatePhotoInfo(); }
+  else if (id === 'photoShadow'){ P.shadow = el.checked; changed({now:true}); }
+  else if (id === 'bgFit'){ S.bg.fit = el.value; changed({now:true}); }
+  else if (id === 'photosFile'){ addPersonPhotos([...el.files]); el.value = ''; }
+});
+$('pane-img').addEventListener('click', e => {
+  const ps = e.target.closest('[data-pshape]'); if (ps){ S.photo.shape = ps.dataset.pshape; S.photo.on = true; syncUI(); changed({now:true}); return; }
+  if (e.target.closest('#btnPhotos')){ $('photosFile').click(); return; }
+  if (e.target.closest('#btnPhotosClear')){ if (!Object.keys(PHOTOS).length || !confirm('عکس‌های همهٔ افراد پاک شود؟')) return; PHOTOS = {}; IDB.set('photos', PHOTOS); updatePhotoInfo(); render(); return; }
+  if (e.target.closest('#btnAddImg3')){ imgTarget = 'newx'; $('imgFile').value = ''; $('imgFile').click(); return; }
+  if (e.target.closest('#btnMyFrame')){ if (!S.bg.img){ toast('اول تصویر زمینه را بگذار.', true); return; } S.frame.style = 'none'; S.bg.fit = 'fill'; S.bg.op = 100; syncUI(); changed({now:true}); toast('قاب الگو برداشته شد و تصویر تو قاب لوح شد؛ حاشیهٔ متن را در «ظاهر» تنظیم کن.'); return; }
+  const ld = e.target.closest('[data-libdel]'); if (ld){ e.stopPropagation(); LIB.splice(+ld.dataset.libdel, 1); IDB.set('lib', LIB); renderLib(); $('libMenu').hidden = true; return; }
+  const li = e.target.closest('[data-libi]'); if (li){ openLibMenu(+li.dataset.libi); return; }
+  const lt = e.target.closest('[data-libto]'); if (lt){ const it = LIB[+$('libMenu').dataset.libi]; $('libMenu').hidden = true; if (it) ingestImage(it.src, lt.dataset.libto, {fromLib:true}); return; }
+});
+$('pane-img').addEventListener('dragstart', e => { const li = e.target.closest('[data-libi]'); if (li){ e.dataTransfer.setData('text/x-lohnegar-lib', li.dataset.libi); e.dataTransfer.effectAllowed = 'copy'; } });
+async function addPersonPhotos(files){
+  files = files.filter(f => /^image\//.test(f.type)); if (!files.length) return;
+  toast('⏳ آماده‌سازی ' + faDigits(files.length) + ' عکس…');
+  for (const f of files){ try { PHOTOS[photoKey(f.name)] = await fileToDataURL(f, 700); } catch(e){} }
+  await IDB.set('photos', PHOTOS);
+  S.photo.on = true; S.photo.perRow = true; delete S.hide.photo;
+  syncUI(); changed({now:true}); updatePhotoInfo();
+  toast('👥 ' + faDigits(files.length) + ' عکس گذاشته شد؛ با دکمه‌های ‹ › در پیش‌نمایش افراد را ببین.');
+}
+// ویرایشگر
+$('imgEd').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) { if (e.target === $('imgEd')) closeImgEditor(); return; }
+  const st = ED.st; if (!st) return;
+  if (b.dataset.edcrop){ st.crop = b.dataset.edcrop; st.cx = st.cy = .5; if (st.crop !== 'orig' && st.zoom < 1) st.zoom = 1; }
+  else if (b.dataset.ed === 'rotl') st.rot -= 90; else if (b.dataset.ed === 'rotr') st.rot += 90;
+  else if (b.dataset.ed === 'flip') st.flip = !st.flip;
+  else if (b.dataset.ed === 'reset'){ ED.st = Object.assign({}, ED0, /^(sig|stamp)/.test(ED.key) ? {white:true} : {}); }
+  else if (b.dataset.ed === 'apply'){ edApply(); return; }
+  else if (b.dataset.ed === 'close'){ closeImgEditor(); return; }
+  else if (b.dataset.edpre === 'photo'){ Object.assign(st, {crop:'circle', bw:3, bc:S.colors.accent, white:false}); }
+  else if (b.dataset.edpre === 'sign'){ Object.assign(st, {white:true, thr:225, con:25, sat:100}); }
+  else if (b.dataset.edpre === 'bw'){ Object.assign(st, {sat:0, con:15}); }
+  else return;
+  edSync(); edDraw();
+});
+$('imgEd').addEventListener('input', e => {
+  const st = ED.st, el = e.target; if (!st) return;
+  const m = {edZoom:'zoom', edBri:'bri', edCon:'con', edSat:'sat', edThr:'thr', edRound:'round', edBw:'bw'};
+  if (m[el.id]) st[m[el.id]] = +el.value; else if (el.id === 'edBc') st.bc = el.value; else if (el.id === 'edWhite'){ st.white = el.checked; edSync(); } else return;
+  edDraw();
+});
+$('imgEd').addEventListener('cancel', () => {});
+(() => {
+  const cv = $('edCanvas'); let pd = null;
+  cv.addEventListener('pointerdown', e => { if (!ED.meta) return; pd = {x:e.clientX, y:e.clientY, cx:ED.st.cx, cy:ED.st.cy}; cv.setPointerCapture(e.pointerId); e.preventDefault(); });
+  cv.addEventListener('pointermove', e => {
+    if (!pd) return;
+    const r = cv.getBoundingClientRect(), M = ED.meta, rot = ((ED.st.rot % 360) + 360) % 360;
+    let dx = (e.clientX - pd.x) / r.width * M.cw / M.ow, dy = (e.clientY - pd.y) / r.height * M.ch / M.oh;
+    ED.st.cx = clamp(pd.cx - dx, 0, 1); ED.st.cy = clamp(pd.cy - dy, 0, 1); edDraw();
+    void rot;
+  });
+  cv.addEventListener('pointerup', () => { pd = null; }); cv.addEventListener('pointercancel', () => { pd = null; });
+  cv.addEventListener('wheel', e => { if (!ED.st) return; e.preventDefault(); ED.st.zoom = clamp(ED.st.zoom * (e.deltaY < 0 ? 1.08 : 1 / 1.08), 1, 5); $('edZoom').value = ED.st.zoom; edDraw(); }, {passive:false});
+})();
+// کشیدن و رها کردن فایل روی برگه یا خانه‌های تصویر
+function dtImage(dt){
+  if (!dt) return null;
+  const f = [...(dt.files || [])].find(f => /^image\//.test(f.type)); if (f) return f;
+  let li = ''; try { li = dt.getData('text/x-lohnegar-lib'); } catch(e){}
+  return li !== '' && LIB[+li] ? LIB[+li].src : null;
+}
+const dtHasImg = dt => dt && [...(dt.types || [])].some(t => t === 'Files' || t === 'text/x-lohnegar-lib');
+document.addEventListener('dragover', e => {
+  if (!dtHasImg(e.dataTransfer)) return;
+  const t = e.target.closest && e.target.closest('#stageView, [data-drop]');
+  if (!t) return;
+  e.preventDefault(); e.dataTransfer.dropEffect = 'copy';
+  document.querySelectorAll('.drop-on').forEach(x => x !== t && x.classList.remove('drop-on')); t.classList.add('drop-on');
+  const hit = t.id === 'stageView' ? document.elementFromPoint(e.clientX, e.clientY) : null, ik = hit && hit.closest('[data-imgkey]');
+  $('pageWrap').querySelectorAll('.drop-tgt').forEach(x => x !== ik && x.classList.remove('drop-tgt')); if (ik) ik.classList.add('drop-tgt');
+});
+document.addEventListener('dragleave', e => { if (e.target.classList && e.target.classList.contains('drop-on') && !e.target.contains(e.relatedTarget)) e.target.classList.remove('drop-on'); });
+document.addEventListener('drop', e => {
+  const t = e.target.closest && e.target.closest('#stageView, [data-drop]');
+  document.querySelectorAll('.drop-on, .drop-tgt').forEach(x => x.classList.remove('drop-on', 'drop-tgt'));
+  if (!t || !dtHasImg(e.dataTransfer)) return;
+  e.preventDefault();
+  const src = dtImage(e.dataTransfer); if (!src) return;
+  const fromLib = typeof src === 'string';
+  if (t.dataset.drop){ ingestImage(src, t.dataset.drop, {fromLib}); return; }
+  const hit = document.elementFromPoint(e.clientX, e.clientY), ik = hit && hit.closest('#pageWrap [data-imgkey]');
+  if (ik){ ingestImage(src, ik.dataset.imgkey, {fromLib}); return; }
+  const cert = $('pageWrap').querySelector('.cert'); if (!cert) return;
+  const cr = cert.getBoundingClientRect(), f = mmPerPx();
+  ingestImage(src, 'newx', {fromLib, at:{x:(e.clientX - cr.left) * f, y:(e.clientY - cr.top) * f}});
+});
+// چسباندن تصویر (Ctrl+V)
+document.addEventListener('paste', e => {
+  const a = document.activeElement;
+  if (a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable)) return;
+  const it = [...((e.clipboardData && e.clipboardData.items) || [])].find(i => i.type && i.type.startsWith('image/'));
+  if (!it) return;
+  e.preventDefault();
+  const f = it.getAsFile(); if (f) ingestImage(f, imgKeyOf(sel) || 'newx');
+});
+// لایه‌ها
+$('layersBox').addEventListener('toggle', renderLayers);
+$('layerList').addEventListener('click', e => {
+  const b = e.target.closest('[data-lyact]'), row = e.target.closest('[data-ly]'); if (!b || !row) return;
+  const k = row.dataset.ly, it = layerItems().find(x => x.k === k); if (!it) return;
+  const act = b.dataset.lyact, p = S.pos[k] || {x:0, y:0};
+  if (act === 'eye'){ setShown(it, !it.shown); if (!it.shown) sel = k; syncUI(); changed({now:true}); }
+  else if (act === 'sel'){ if (!it.shown){ toast('این بخش پنهان است؛ اول 👁 را بزن.'); return; } select(k); const el = mvEl(k); if (el) el.scrollIntoView({block:'nearest', behavior:'smooth'}); renderLayers(); }
+  else if (act === 'lock'){ p.lk = !p.lk || undefined; if (!p.lk) delete p.lk; S.pos[k] = p; cleanPos(k); changed({now:true}); }
+  else if (act === 'up' || act === 'down'){ p.z = clamp(num(p.z, 0) + (act === 'up' ? 1 : -1), -4, 4); if (!p.z) delete p.z; S.pos[k] = p; cleanPos(k); changed({now:true}); }
+});
+// بارگذاری داده‌های ذخیره‌شده در مرورگر
+(async () => {
+  try { const ph = await IDB.get('photos'); if (ph && typeof ph === 'object') PHOTOS = ph; } catch(e){}
+  try { const lb = await IDB.get('lib'); if (Array.isArray(lb)) LIB = lb; } catch(e){}
+  renderLib(); updatePhotoInfo(); if (Object.keys(PHOTOS).length) render();
+})();
+
 // زوم
 $('zoomIn').addEventListener('click', () => { zoom = clamp((zoom || currentScale()) + .1, .2, 2.5); fitStage(); });
 $('zoomOut').addEventListener('click', () => { zoom = clamp((zoom || currentScale()) - .1, .2, 2.5); fitStage(); });
@@ -2293,11 +2945,13 @@ if ('ResizeObserver' in window) new ResizeObserver(() => fitStage()).observe($('
 $('rowPrev').addEventListener('click', () => { const n = rowCount(); if (!n) return; S.preview = (S.preview - 1 + n) % n; persist(); render(); highlightRow(); });
 $('rowNext').addEventListener('click', () => { const n = rowCount(); if (!n) return; S.preview = (S.preview + 1) % n; persist(); render(); highlightRow(); });
 // ذخیره / باز کردن
-$('btnSaveFile').addEventListener('click', () => { download(new Blob([JSON.stringify(S, null, 1)], {type:'application/json'}), 'طرح-گواهی-' + safeName(S.fields.title.text) + '.json'); toast('💾 طرح در فایل ذخیره شد.'); });
+$('btnSaveFile').addEventListener('click', () => { const np = Object.keys(PHOTOS).length; download(new Blob([JSON.stringify(np ? Object.assign({}, S, {_photos:PHOTOS}) : S, null, 1)], {type:'application/json'}), 'طرح-گواهی-' + safeName(S.fields.title.text) + '.json'); toast('💾 طرح در فایل ذخیره شد.'); });
 $('btnOpenFile').addEventListener('click', () => { $('designFile').value = ''; $('designFile').click(); });
 $('designFile').addEventListener('change', async () => {
   const f = $('designFile').files[0]; if (!f) return;
-  try { const d = JSON.parse(await f.text()); if (!d || (d.v !== 2 && d.v !== 3)) throw 0; S = fixState(deepMerge(baseState(), d)); sel = null; buildTextFields(); syncUI(); renderExtras(); changed({now:true, thumbs:true}); toast('✅ طرح باز شد.'); }
+  try { const d = JSON.parse(await f.text()); if (!d || !(d.v >= 2 && d.v <= 5)) throw 0;
+    if (d._photos && typeof d._photos === 'object'){ PHOTOS = d._photos; IDB.set('photos', PHOTOS); }
+    delete d._photos; S = fixState(deepMerge(baseState(), d)); sel = null; buildTextFields(); syncUI(); renderExtras(); changed({now:true, thumbs:true}); toast('✅ طرح باز شد.'); }
   catch(e){ toast('این فایل، طرح معتبر این ابزار نیست.', true); }
 });
 $('btnUndo').addEventListener('click', () => undoRedo(-1));
@@ -2513,6 +3167,8 @@ async function renderCanvas(idx, opts){
   await whenImagesReady(stage);
   // html2canvas اندازهٔ SVG بی‌ابعاد را درست نمی‌فهمد؛ ابعاد واقعی را صریح می‌کنیم
   await svgToImgs(el);
+  fixFit(el);
+  await fixPhoto(el);
   const canvas = await window.html2canvas(el, {scale:q, backgroundColor: transparent ? null : '#ffffff', useCORS:true, logging:false});
   stage.innerHTML = '';
   return canvas;
