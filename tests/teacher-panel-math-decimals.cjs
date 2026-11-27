@@ -35,7 +35,7 @@ for (const snippet of ["api('tpGetResults'", "api('tpGetAnalytics'", 'function r
 assert.ok(panel.includes("'math-decimals':'ممیزستان'"), 'GAME_NAMES has no ممیزستان entry');
 assert.ok(panel.includes('<option value="math-decimals">ممیزستان</option>'), 'the results filter has no ممیزستان option');
 assert.ok(panel.includes("'games/math-decimals.html':'ممیزستان'"), 'PAGE_NAMES has no ممیزستان entry');
-assert.ok(panel.includes('GAME_NAMES[g.game]'), 'dashboard chart still shows raw game ids');
+assert.ok(panel.includes('mappedName(GAME_NAMES,g.game)'), 'dashboard chart must resolve game IDs with a safe lookup');
 
 // ---- runtime rendering with a mocked endpoint ----------------------------
 const today = new Date().toISOString().slice(0, 10).replace(/-/g, '/');
