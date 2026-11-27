@@ -117,109 +117,153 @@ body[data-theme="lavender"]{
   --shadow:0 10px 30px rgba(60,40,120,.12);--shadow-sm:0 3px 10px rgba(60,40,120,.08);color-scheme:light;
 }
 
+/* ============ توکن‌های متریال استودیو (تکمیل تم‌ها؛ کنتراست ≥ ۴٫۵) ============ */
+body{--hi:rgba(255,255,255,.10);--lo:rgba(0,0,0,.42);--well:rgba(0,0,0,.28);--glass:color-mix(in srgb,var(--card) 74%,transparent);--glass-line:rgba(255,255,255,.08);--grid-dot:rgba(255,255,255,.045);--desk:#0000002e;--ring-track:rgba(255,255,255,.08)}
+body[data-theme="dark"]{--muted:#c9b398;--accent-text:#f5c842;--ok-text:#5ad889;--warn-text:#f7bd55;--bad-text:#ff8f92}
+body[data-theme="ocean"]{--muted:#a3c3df;--accent-text:#6cc8ff;--ok-text:#4fe0a1;--warn-text:#ffc766;--bad-text:#ff9494}
+body[data-theme="forest"]{--muted:#aac8a5;--accent-text:#97e475;--ok-text:#86e391;--warn-text:#f2c96b;--bad-text:#ff9a9a}
+body[data-theme="sunset"]{--muted:#ddb79b;--accent-text:#ffad5e;--ok-text:#72de9e;--warn-text:#ffd27a;--bad-text:#ff9a9a}
+body[data-theme="royal"]{--muted:#c4b3e3;--accent-text:#dcbcff;--ok-text:#7ae8ad;--warn-text:#ffd27a;--bad-text:#ffa3b3}
+body[data-theme="light"],body[data-theme="mint"],body[data-theme="sky"],body[data-theme="rose"],body[data-theme="lavender"]{--hi:rgba(255,255,255,.95);--lo:rgba(60,40,10,.16);--well:rgba(40,30,10,.07);--glass:color-mix(in srgb,var(--card) 80%,transparent);--glass-line:rgba(255,255,255,.7);--grid-dot:rgba(0,0,0,.05);--desk:#00000012;--ring-track:rgba(0,0,0,.08)}
+body[data-theme="light"]{--muted:#665640;--accent-text:#7a520a;--ok-text:#17763f;--warn-text:#875200;--bad-text:#a32e2e}
+body[data-theme="mint"]{--accent:#0b7a55;--accent-2:#086645;--muted:#4b6656;--accent-text:#09694a;--ok-text:#157a43;--warn-text:#875200;--bad-text:#ad2828}
+body[data-theme="sky"]{--muted:#4a6078;--accent-text:#215688;--ok-text:#17763f;--warn-text:#875200;--bad-text:#ad2828}
+body[data-theme="rose"]{--accent:#b8335f;--muted:#76505a;--accent-text:#97294e;--ok-text:#17763f;--warn-text:#875200;--bad-text:#ad2828}
+body[data-theme="lavender"]{--accent:#6c4bc8;--accent-2:#5a3bb0;--muted:#5e5277;--accent-text:#5838ae;--ok-text:#17763f;--warn-text:#875200;--bad-text:#ad2828}
+:root{--bevel:inset 0 1px 0 var(--hi),inset 0 -2px 0 var(--lo),0 1px 2px rgba(0,0,0,.18),0 6px 14px -8px rgba(0,0,0,.45);--bevel-press:inset 0 2px 5px var(--lo),inset 0 0 0 1px var(--lo);--lift:0 18px 40px -22px rgba(0,0,0,.55),0 2px 6px -2px rgba(0,0,0,.22)}
+
 /* ============ پایه ============ */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;min-height:100dvh;background:var(--bg-grad);background-attachment:fixed;color:var(--text);font-family:var(--ui-font);font-size:14.5px;line-height:1.7;overflow-x:hidden;min-width:320px;transition:background .3s,color .3s}
+body{margin:0;min-height:100dvh;background:radial-gradient(var(--grid-dot) 1px,transparent 1.2px) 0 0/22px 22px,var(--bg-grad);background-attachment:fixed;color:var(--text);font-family:var(--ui-font);font-size:14.5px;line-height:1.7;overflow-x:hidden;min-width:320px}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;-webkit-tap-highlight-color:transparent}
-h1,h2,h3,h4{margin:0;color:var(--accent);line-height:1.4;font-weight:800}
-h2{font-size:1.2rem}h3{font-size:1.05rem}h4{font-size:.95rem}
-a{color:var(--accent)}
+h1,h2,h3,h4{margin:0;color:var(--text);line-height:1.4;font-weight:800}
+h2{font-size:1.08rem}h3{font-size:1rem}h4{font-size:.9rem;color:var(--accent-text)}
+a{color:var(--accent-text)}
 .ic{width:1.15em;height:1.15em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.22em;flex:none}
 .hide{display:none!important}
 .muted{color:var(--muted);font-size:.82rem}
 .small{font-size:.8rem}
 .mt{margin-top:12px}.mb{margin-bottom:12px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 ::selection{background:var(--accent);color:var(--accent-ink)}
 ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px;border:2px solid transparent;background-clip:padding-box}::-webkit-scrollbar-track{background:transparent}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-/* ============ هدر ============ */
-.top{position:sticky;top:0;z-index:40;background:var(--top);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--border)}
-.topin{max-width:1320px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.15rem;color:var(--accent);white-space:nowrap}
-.brand h1{font:inherit;color:inherit;margin:0;line-height:1.25}
-.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);display:grid;place-items:center;box-shadow:var(--shadow-sm);flex:none}
-.logo .ic{width:22px;height:22px;stroke-width:2.2}
-.brand small{display:block;font-size:.68rem;font-weight:600;color:var(--muted);line-height:1.2}
-.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;padding:2px}
+/* ============ نوار بالایی شیشه‌ای ============ */
+.top{position:sticky;top:0;z-index:40;background:var(--top);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);border-bottom:1px solid var(--border);box-shadow:inset 0 -1px 0 var(--glass-line),0 10px 30px -24px rgba(0,0,0,.7)}
+.topin{max-width:1640px;margin:auto;padding:8px 18px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;white-space:nowrap;min-width:0}
+.brand h1{font-size:1.06rem;font-weight:900;color:var(--text);margin:0;line-height:1.25;letter-spacing:-.2px}
+.brand small{display:block;font-size:.68rem;font-weight:600;color:var(--muted);line-height:1.3}
+.emblem{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:none;background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 78%,white) 0%,var(--accent) 38%,var(--accent-2) 100%);color:var(--accent-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.22),0 6px 16px -6px color-mix(in srgb,var(--accent) 70%,transparent);position:relative;overflow:hidden}
+.emblem::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.35),transparent 46%);pointer-events:none}
+.emblem svg{width:26px;height:26px;position:relative;z-index:1}
+.tabs{display:flex;gap:3px;overflow-x:auto;scrollbar-width:none;min-width:0;padding:4px;justify-self:center;max-width:100%;background:var(--well);border-radius:15px;box-shadow:inset 0 1px 3px var(--lo),inset 0 -1px 0 var(--hi)}
 .tabs::-webkit-scrollbar{display:none}
-.tab{border:1px solid transparent;background:transparent;color:var(--muted);border-radius:12px;padding:8px 13px;font-weight:700;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:all .2s var(--ease);min-height:40px}
-.tab:hover{background:var(--card-2);color:var(--text)}
-.tab.active{background:var(--accent);color:var(--accent-ink);box-shadow:0 4px 14px var(--accent-soft)}
-.hdr-actions{display:flex;align-items:center;gap:8px;margin-inline-start:auto}
-.savebadge{font-size:.72rem;color:var(--muted);display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:99px;border:1px solid var(--border);background:var(--card);white-space:nowrap;transition:all .3s}
-.savebadge.on{color:var(--success);border-color:var(--success)}
-.iconbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;transition:all .2s var(--ease);flex:none}
-.iconbtn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.tab{border:0;background:transparent;color:var(--muted);border-radius:11px;padding:7px 13px;font-weight:800;font-size:.86rem;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .18s var(--ease),color .18s,box-shadow .18s,transform .12s;min-height:38px;position:relative}
+.tab:hover{color:var(--text);background:color-mix(in srgb,var(--card) 60%,transparent)}
+.tab:active{transform:translateY(1px)}
+.tab.active{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 88%,white),var(--accent) 45%,var(--accent-2));color:var(--accent-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -2px 0 rgba(0,0,0,.2),0 4px 12px -4px color-mix(in srgb,var(--accent) 60%,transparent)}
+.tab .tk{font-size:.62rem;font-weight:800;opacity:.75;font-family:monospace;padding:0 4px;border-radius:5px;border:1px solid currentColor;line-height:1.3;display:none}
+@media(min-width:1500px){.tab .tk{display:inline}}
+.hdr-actions{display:flex;align-items:center;gap:8px}
+.cmdk-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 10px 0 12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-weight:700;font-size:.8rem;box-shadow:var(--bevel);transition:transform .12s,border-color .2s}
+.cmdk-btn:hover{border-color:var(--accent);color:var(--text)}
+.cmdk-btn:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.cmdk-btn .kbd{margin-inline-start:4px}
+.savebadge{font-size:.72rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:99px;border:1px solid var(--border);background:var(--card);white-space:nowrap;transition:color .3s,border-color .3s;font-weight:700}
+.savebadge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--warn-text);box-shadow:0 0 0 3px color-mix(in srgb,var(--warn-text) 22%,transparent);flex:none}
+.savebadge .ic{display:none}
+.savebadge.on{color:var(--ok-text);border-color:color-mix(in srgb,var(--ok-text) 55%,var(--border))}
+.savebadge.on::before{background:var(--ok-text);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok-text) 22%,transparent)}
+.iconbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--accent-text);display:inline-flex;align-items:center;justify-content:center;transition:transform .12s var(--ease),border-color .2s,box-shadow .15s;flex:none;box-shadow:var(--bevel);position:relative}
+.iconbtn:hover{border-color:var(--accent)}
+.iconbtn:active,.iconbtn[aria-pressed="true"]{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.iconbtn[aria-pressed="false"]{color:var(--muted)}
 .iconbtn .ic{width:20px;height:20px}
-.lobby-link{height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-size:.8rem;font-weight:800;white-space:nowrap;transition:all .2s var(--ease);flex:none}
-.lobby-link:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
-.menu{position:absolute;top:calc(100% + 8px);left:0;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:8px;min-width:220px;box-shadow:var(--shadow);z-index:60;display:grid;gap:3px;animation:pop .18s var(--ease)}
+.iconbtn .dot{position:absolute;top:7px;left:7px;width:7px;height:7px;border-radius:50%;background:var(--ok-text);box-shadow:0 0 0 2px var(--card)}
+.iconbtn[aria-pressed="false"] .dot{background:var(--border-2)}
+.top .hdr-actions .btl-lobby-btn{margin:0!important;padding:0 14px!important;height:40px!important;min-height:40px!important;font-size:.8rem!important;gap:7px!important;border-radius:12px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -2px 0 rgba(0,0,0,.35),0 6px 14px -6px rgba(16,57,70,.7)!important}
+.top .hdr-actions .btl-lobby-btn:hover{transform:translateY(-1px)!important}
+.top .hdr-actions .btl-lobby-btn:active{transform:translateY(1px)!important;box-shadow:inset 0 2px 5px rgba(0,0,0,.45)!important}
+.top .hdr-actions .btl-lobby-btn .btl-icon{width:20px;height:20px}
+.menu{position:absolute;top:calc(100% + 10px);left:0;background:var(--card);border:1px solid var(--border-2);border-radius:16px;padding:10px;min-width:250px;box-shadow:var(--lift);z-index:60;display:grid;grid-template-columns:1fr 1fr;gap:6px;animation:pop .18s var(--ease)}
 @keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
-.menu-title{font-size:.72rem;color:var(--muted);font-weight:800;padding:4px 8px 8px;border-bottom:1px dashed var(--border);margin-bottom:3px}
-.menu button{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;border:1px solid transparent;background:transparent;color:var(--text);font-size:.85rem;font-weight:700;text-align:right;width:100%;transition:all .15s}
-.menu button:hover{background:var(--card-2);border-color:var(--border)}
-.menu button.active{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.swatch{width:22px;height:22px;border-radius:50%;border:2px solid var(--border-2);flex:none}
+.menu-title{grid-column:1/-1;font-size:.74rem;color:var(--muted);font-weight:800;padding:2px 6px 8px;border-bottom:1px dashed var(--border);margin-bottom:2px}
+.menu button{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px;border-radius:12px;border:1px solid var(--border);background:var(--card-2);color:var(--text);font-size:.78rem;font-weight:700;text-align:right;width:100%;transition:transform .12s,border-color .15s;box-shadow:var(--bevel)}
+.menu button:hover{border-color:var(--accent)}
+.menu button:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.menu button.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft),var(--bevel)}
+.swatch{width:100%;height:26px;border-radius:8px;border:1px solid rgba(0,0,0,.2);flex:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
 
-/* ============ چیدمان ============ */
-.wrap{max-width:1320px;margin:auto;padding:18px 16px 60px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:16px;box-shadow:var(--shadow-sm);animation:fade .25s var(--ease)}
+/* ============ چیدمان پایه ============ */
+.wrap{max-width:1640px;margin:auto;padding:14px 18px 130px}
+.panel,.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:inset 0 1px 0 var(--hi),var(--lift);position:relative}
+.card{margin-bottom:14px}
+.view-enter{animation:fade .24s var(--ease)}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .card-head .desc{color:var(--muted);font-size:.8rem;margin-top:2px}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:800;color:var(--muted);letter-spacing:.2px}
 .grid{display:grid;gap:12px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .auto{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .auto-sm{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-.split{display:grid;grid-template-columns:minmax(280px,1fr) minmax(0,2fr);gap:16px;align-items:start}
-.sticky{position:sticky;top:72px}
-label{display:block;color:var(--muted);font-size:.8rem;margin:8px 0 4px;font-weight:600}
+.grid>*{min-width:0}
+label{display:block;color:var(--muted);font-size:.78rem;margin:8px 0 4px;font-weight:700}
 label.row{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--text);font-weight:600;margin:6px 0}
 label.row input{width:auto;margin:0;accent-color:var(--accent)}
-input,select,textarea{width:100%;background:var(--input);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;outline:0;transition:border-color .2s,box-shadow .2s;min-height:42px}
-input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+input,select,textarea{width:100%;background:var(--input);color:var(--text);border:1px solid var(--border);border-radius:11px;padding:9px 12px;outline:0;transition:border-color .2s,box-shadow .2s;min-height:42px;box-shadow:inset 0 1px 2px var(--lo)}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft),inset 0 1px 2px var(--lo)}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.85}
 input[type="color"]{padding:3px;height:42px;cursor:pointer}
-input[type="range"]{padding:0;min-height:auto;height:28px;accent-color:var(--accent);background:transparent;border:0}
+input[type="range"]{padding:0;min-height:auto;height:28px;accent-color:var(--accent);background:transparent;border:0;box-shadow:none}
 input[type="range"]:focus{box-shadow:none}
-input[type="checkbox"],input[type="radio"]{width:18px;height:18px;min-height:auto;accent-color:var(--accent);cursor:pointer;flex:none}
+input[type="checkbox"],input[type="radio"]{width:18px;height:18px;min-height:auto;accent-color:var(--accent);cursor:pointer;flex:none;box-shadow:none}
 input[type="file"]{padding:8px;font-size:.8rem}
-textarea{min-height:96px;resize:vertical;line-height:1.7}
+textarea{min-height:96px;resize:vertical;line-height:1.8}
 select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center;padding-left:32px}
-.btn{border:1px solid var(--border-2);background:var(--card-2);color:var(--text);border-radius:12px;padding:9px 14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;transition:all .2s var(--ease);white-space:nowrap;text-decoration:none}
-.btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
-.btn:active{transform:translateY(0)}
+
+/* دکمه‌های حجمی */
+.btn{border:1px solid var(--border-2);background:linear-gradient(180deg,color-mix(in srgb,var(--card-2) 70%,var(--card)),var(--card-2));color:var(--text);border-radius:12px;padding:8px 14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;transition:transform .12s var(--ease),border-color .18s,box-shadow .15s,filter .15s;white-space:nowrap;text-decoration:none;box-shadow:var(--bevel)}
+.btn:hover{border-color:var(--accent)}
+.btn:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);border-color:transparent;font-weight:800}
-.btn.primary:hover{filter:brightness(1.06)}
-.btn.danger{background:var(--danger-soft);color:var(--danger);border-color:transparent}
-.btn.danger:hover{background:var(--danger);color:#fff}
-.btn.success{background:var(--success);color:#062a12;border-color:transparent;font-weight:800}
-.btn.ghost{background:transparent}
-.btn.sm{padding:5px 10px;min-height:32px;font-size:.8rem;border-radius:9px}
+.btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 86%,white),var(--accent) 40%,var(--accent-2));color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent-2) 80%,black);font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -2px 0 rgba(0,0,0,.22),0 8px 18px -10px color-mix(in srgb,var(--accent) 80%,transparent)}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn.primary:active{box-shadow:inset 0 2px 6px rgba(0,0,0,.3)}
+.btn.danger{background:var(--card-2);color:var(--bad-text);border-color:color-mix(in srgb,var(--bad-text) 40%,var(--border))}
+.btn.danger:hover{border-color:var(--bad-text)}
+.btn.success{background:linear-gradient(180deg,#43d97a,#1f9d55);color:#04210f;border-color:#17803f;font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -2px 0 rgba(0,0,0,.2),0 8px 18px -10px rgba(31,157,85,.8)}
+.btn.ghost{background:transparent;box-shadow:none}
+.btn.sm{padding:5px 10px;min-height:34px;font-size:.8rem;border-radius:10px}
 .btn.xs{padding:3px 8px;min-height:28px;font-size:.75rem;border-radius:8px}
 .btn.block{width:100%}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;padding:2px 9px;border:1px solid var(--border);border-radius:99px;color:var(--accent-2);background:var(--accent-soft);font-weight:700;white-space:nowrap}
-.badge.warn{color:#f0a020;background:rgba(240,160,32,.14);border-color:transparent}
-.badge.ok{color:var(--success);background:var(--success-soft);border-color:transparent}
-.badge.gray{color:var(--muted);background:var(--card-2)}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;border:1px solid var(--border);background:var(--card-2);font-size:.82rem;font-weight:700;cursor:pointer;transition:all .18s}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;padding:1px 8px;border:1px solid var(--border);border-radius:99px;color:var(--accent-text);background:var(--card-2);font-weight:800;white-space:nowrap}
+.badge.warn{color:var(--warn-text);border-color:color-mix(in srgb,var(--warn-text) 40%,var(--border))}
+.badge.ok{color:var(--ok-text);border-color:color-mix(in srgb,var(--ok-text) 40%,var(--border))}
+.badge.gray{color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;border:1px solid var(--border);background:var(--card-2);font-size:.8rem;font-weight:700;cursor:pointer;transition:transform .12s,border-color .18s;color:var(--text);box-shadow:var(--bevel)}
 .chip:hover{border-color:var(--accent)}
-.chip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.note{padding:10px 14px;border-radius:12px;font-size:.82rem;display:flex;gap:10px;align-items:flex-start;line-height:1.7}
-.note.info{background:var(--info-soft);color:var(--text);border:1px solid transparent}
-.note.warn{background:rgba(240,160,32,.12);color:var(--text)}
-.note .ic{color:var(--info);margin-top:3px}
+.chip:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.chip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent-2);box-shadow:var(--bevel-press)}
+.note{padding:10px 14px;border-radius:12px;font-size:.82rem;display:flex;gap:10px;align-items:flex-start;line-height:1.75;border:1px solid var(--border);background:var(--card-2);color:var(--text)}
+.note.warn{border-color:color-mix(in srgb,var(--warn-text) 45%,var(--border))}
+.note .ic{color:var(--accent-text);margin-top:3px}
 .empty{text-align:center;padding:40px 16px;color:var(--muted)}
-.empty .ic{width:44px;height:44px;color:var(--accent);opacity:.7;margin-bottom:10px}
-details.acc{border:1px solid var(--border);border-radius:14px;background:var(--card-2);margin-bottom:10px;overflow:hidden}
-details.acc>summary{list-style:none;cursor:pointer;padding:12px 16px;font-weight:800;color:var(--accent);display:flex;align-items:center;gap:10px;user-select:none}
+.empty .ic{width:44px;height:44px;color:var(--accent-text);opacity:.8;margin-bottom:10px}
+.kbd{font-family:ui-monospace,monospace;font-size:.7rem;padding:1px 6px;border:1px solid var(--border-2);border-bottom-width:2px;border-radius:6px;background:var(--card-2);color:var(--muted);direction:ltr;display:inline-block;line-height:1.5}
+details.acc{border:1px solid var(--border);border-radius:14px;background:var(--card-2);margin-bottom:10px;overflow:hidden;scroll-margin-top:90px}
+details.acc>summary{list-style:none;cursor:pointer;padding:11px 14px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:10px;user-select:none;min-height:46px}
+details.acc>summary .ic{color:var(--accent-text)}
 details.acc>summary::-webkit-details-marker{display:none}
 details.acc>summary::after{content:'';width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin-inline-start:auto;transition:transform .2s}
 details.acc[open]>summary::after{transform:rotate(-135deg)}
-details.acc>.acc-body{padding:4px 16px 16px;border-top:1px dashed var(--border)}
+details.acc[open]>summary{border-bottom:1px dashed var(--border)}
+details.acc>.acc-body{padding:6px 14px 14px;background:var(--card)}
 .ctl{margin-bottom:6px}
 .ctl .rng{display:grid;grid-template-columns:1fr 64px;gap:8px;align-items:center}
 .ctl .rng input[type=number]{padding:5px 8px;min-height:34px;text-align:center}
@@ -227,138 +271,402 @@ details.acc>.acc-body{padding:4px 16px 16px;border-top:1px dashed var(--border)}
 .colorctl input[type=color]{width:46px;flex:none}
 .colorctl input[type=text]{direction:ltr;text-align:left;font-family:monospace;font-size:.82rem}
 .tip{font-size:.72rem;color:var(--muted);margin-top:3px}
+.seg{display:inline-flex;gap:3px;padding:3px;border-radius:12px;background:var(--well);box-shadow:inset 0 1px 3px var(--lo)}
+.seg button{border:0;background:transparent;color:var(--muted);font-weight:800;font-size:.78rem;padding:5px 11px;border-radius:9px;min-height:32px;display:inline-flex;align-items:center;gap:6px;transition:background .15s,color .15s}
+.seg button:hover{color:var(--text)}
+.seg button.on{background:var(--card);color:var(--text);box-shadow:var(--bevel)}
 
-/* ============ لیست سوالات ============ */
-.qlist{display:flex;flex-direction:column;gap:6px;max-height:70vh;overflow:auto;padding:2px}
-.qitem{border:1px solid var(--border);background:var(--card-2);border-radius:12px;padding:8px 10px;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;transition:all .18s var(--ease);position:relative}
+/* ============ عرشهٔ کنترل استودیو ============ */
+.deck{display:grid;grid-template-columns:minmax(260px,1.25fr) minmax(0,2fr) auto auto;gap:10px;align-items:stretch;margin-bottom:12px}
+.deck>*{min-width:0}
+.deck-cell{background:var(--glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:9px 12px;display:flex;align-items:center;gap:10px;box-shadow:inset 0 1px 0 var(--glass-line),0 10px 24px -20px rgba(0,0,0,.7)}
+.deck-exam select{min-height:38px;padding-block:6px;font-weight:800;background-color:var(--input)}
+.deck-exam .stack{flex:1;min-width:0}
+.deck-exam .eyebrow{margin-bottom:2px}
+.keyset{display:flex;gap:4px;flex:none}
+.keyset .iconbtn{width:36px;height:36px;border-radius:10px}
+.keyset .iconbtn .ic{width:17px;height:17px}
+.iconbtn.danger{color:var(--bad-text)}
+.deck-meta{cursor:pointer;text-align:right;color:var(--text);font:inherit;width:100%;transition:border-color .2s}
+.deck-meta:hover{border-color:var(--accent)}
+.deck-meta .mtitle{font-weight:900;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deck-meta .mline{display:flex;gap:6px;flex-wrap:nowrap;overflow:hidden;margin-top:2px}
+.deck-meta .mline span{font-size:.72rem;color:var(--muted);white-space:nowrap;padding:0 8px;border-radius:99px;border:1px solid var(--border);background:var(--card)}
+.deck-meta .mline span.empty-meta{color:var(--warn-text)}
+.deck-meta .chev{margin-inline-start:auto;color:var(--muted);transition:transform .2s}
+.deck-meta[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.ring{width:46px;height:46px;flex:none;position:relative}
+.ring svg{width:46px;height:46px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .trk{stroke:var(--ring-track)}
+.ring .val{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .5s var(--ease)}
+.ring.over .val{stroke:var(--bad-text)}
+.ring.full .val{stroke:var(--ok-text)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:.72rem;font-weight:900;color:var(--text)}
+.deck-score .lbl{font-size:.7rem;color:var(--muted);font-weight:800;line-height:1.3}
+.deck-score .num{font-weight:900;font-size:.95rem;white-space:nowrap}
+.deck-score .num input{width:56px;min-height:28px;padding:2px 6px;text-align:center;font-weight:800;border-radius:8px;display:inline-block}
+.deck-health{cursor:pointer;font:inherit;color:var(--text);transition:border-color .2s}
+.deck-health:hover{border-color:var(--accent)}
+.health-orb{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--card-2);border:1px solid var(--border);box-shadow:var(--bevel)}
+.health-orb .ic{width:20px;height:20px}
+.health-orb.ok{color:var(--ok-text)}.health-orb.warn{color:var(--warn-text)}.health-orb.bad{color:var(--bad-text)}
+.deck-health b{display:block;font-size:.85rem;line-height:1.3;white-space:nowrap}
+.deck-health span{font-size:.7rem;color:var(--muted);white-space:nowrap}
+.meta-drawer{margin-bottom:12px;padding:14px 16px 16px;animation:fade .2s var(--ease)}
+.meta-drawer .grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+.meta-drawer .wide{grid-column:span 2}
+.meta-drawer label{margin-top:2px}
+
+/* ============ میز کار سه‌ناحیه‌ای ============ */
+.bench{display:grid;grid-template-columns:300px minmax(0,1fr) 330px;gap:12px;align-items:start}
+.bench.insp-off{grid-template-columns:300px minmax(0,1fr)}
+.bench.insp-off .inspector{display:none}
+.rail,.inspector{position:sticky;top:calc(var(--toph,64px) + 12px);max-height:calc(100dvh - var(--toph,64px) - 24px);display:flex;flex-direction:column;padding:12px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:18px;border:1px solid var(--border);box-shadow:inset 0 1px 0 var(--glass-line),var(--lift)}
+.rail-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.rail-head h2{font-size:.95rem;display:flex;align-items:center;gap:8px}
+.rail-search{position:relative;margin-bottom:8px}
+.rail-search input{padding-inline-start:34px;min-height:38px;font-size:.84rem}
+.rail-search .ic{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.rail-filters{display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap}
+.rail-filters .chip{padding:3px 10px;font-size:.72rem}
+.qlist{display:flex;flex-direction:column;gap:5px;overflow:auto;padding:2px 2px 6px;flex:1;min-height:120px;overscroll-behavior:contain}
+.qitem{border:1px solid var(--border);background:var(--card);border-radius:13px;padding:8px 9px;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;transition:transform .14s var(--ease),border-color .15s,box-shadow .15s;position:relative;box-shadow:inset 0 1px 0 var(--hi)}
 .qitem:hover{border-color:var(--border-2);transform:translateX(-2px)}
-.qitem.active{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent)}
+.qitem.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),inset 0 1px 0 var(--hi),0 10px 22px -16px color-mix(in srgb,var(--accent) 90%,transparent)}
+.qitem.active::before{content:'';position:absolute;inset-inline-start:-1px;top:10px;bottom:10px;width:4px;border-radius:4px;background:var(--accent)}
 .qitem.dragging{opacity:.4}
 .qitem.over{border-top:3px solid var(--accent)}
-.qnum{width:30px;height:30px;border-radius:9px;background:var(--card);border:1px solid var(--border);display:grid;place-items:center;font-weight:900;font-size:.85rem;color:var(--accent)}
-.qitem .qtxt{font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-.qitem .qmeta{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.qitem .acts{display:flex;flex-direction:column;gap:2px;opacity:.55;transition:opacity .2s}
+.qitem.filtered{display:none}
+.qnum{width:30px;height:30px;border-radius:10px;background:var(--card-2);border:1px solid var(--border);display:grid;place-items:center;font-weight:900;font-size:.82rem;color:var(--accent-text);box-shadow:var(--bevel)}
+.qitem.active .qnum{background:var(--accent);color:var(--accent-ink);border-color:var(--accent-2)}
+.qitem .qtxt{font-size:.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.qitem .qmeta{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.qitem .acts{display:flex;flex-direction:column;gap:1px;opacity:.6;transition:opacity .2s}
 .qitem:hover .acts,.qitem.active .acts{opacity:1}
-.qitem .acts button{border:0;background:transparent;color:var(--muted);padding:2px;border-radius:6px;line-height:0}
-.qitem .acts button:hover{color:var(--accent);background:var(--card)}
+.qitem .acts button{border:0;background:transparent;color:var(--muted);padding:2px;border-radius:6px;line-height:0;min-width:24px;min-height:22px}
+.qitem .acts button:hover{color:var(--accent-text);background:var(--card-2)}
+.qitem .acts button:disabled{opacity:.3}
 .grip{color:var(--muted);cursor:grab;display:none}
 @media(hover:hover){.grip{display:block}.qitem{grid-template-columns:auto auto 1fr auto}}
-.insert{display:flex;justify-content:center;height:14px;position:relative}
-.insert button{position:absolute;top:-3px;width:22px;height:22px;border-radius:50%;border:1px solid var(--border-2);background:var(--card);color:var(--accent);font-size:15px;line-height:1;padding:0;opacity:0;transition:opacity .2s}
-.insert:hover button,.qlist:has(.qitem.active)+.insert button{opacity:1}
-@media(hover:none){.insert button{opacity:.7}}
+.insert{display:flex;justify-content:center;height:6px;position:relative}
+.insert button{position:absolute;top:-8px;width:22px;height:22px;border-radius:50%;border:1px solid var(--border-2);background:var(--card);color:var(--accent-text);font-size:15px;line-height:1;padding:0;opacity:0;transition:opacity .2s;z-index:2;box-shadow:var(--bevel)}
+.insert:hover button,.insert button:focus-visible{opacity:1}
+@media(hover:none){.insert{display:none}}
+.rail-foot{display:grid;grid-template-columns:1fr auto auto;gap:6px;padding-top:10px;border-top:1px dashed var(--border);margin-top:6px}
+.rail-empty{font-size:.78rem;color:var(--muted);text-align:center;padding:16px 8px}
+
+/* بوم ویرایش */
+.canvas{padding:0;overflow:hidden;min-width:0}
+.canvas-head{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--card-2),var(--card));flex-wrap:wrap}
+.qbadge{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-weight:900;font-size:1.25rem;flex:none;background:linear-gradient(150deg,color-mix(in srgb,var(--accent) 80%,white),var(--accent) 45%,var(--accent-2));color:var(--accent-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -3px 0 rgba(0,0,0,.2),0 8px 18px -10px color-mix(in srgb,var(--accent) 90%,transparent)}
+.canvas-head .ttl{flex:1;min-width:150px}
+.canvas-head .ttl h2{font-size:1.02rem}
+.canvas-head .ttl .muted{display:flex;gap:8px;flex-wrap:wrap}
+.canvas-body{padding:14px 16px 16px}
+.typebar{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin-bottom:12px}
+.tkey{border:1px solid var(--border);background:var(--card-2);border-radius:12px;padding:7px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.68rem;font-weight:800;color:var(--muted);box-shadow:var(--bevel);transition:transform .12s,border-color .15s,color .15s;min-height:58px;line-height:1.25;text-align:center}
+.tkey svg{width:26px;height:26px}
+.tkey:hover{color:var(--text);border-color:var(--border-2)}
+.tkey:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.tkey.on{color:var(--accent-ink);background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 85%,white),var(--accent) 45%,var(--accent-2));border-color:var(--accent-2);box-shadow:inset 0 2px 5px rgba(0,0,0,.25),0 0 0 2px var(--accent-soft)}
+.gl{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.gl .f{fill:currentColor;stroke:none}
+.gl .s{opacity:.45}
+.propbar{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:12px;align-items:end;margin-bottom:6px}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:12px;background:var(--well);padding:3px;gap:3px;box-shadow:inset 0 1px 3px var(--lo)}
+.stepper button{width:32px;height:32px;border-radius:9px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:900;box-shadow:var(--bevel);display:grid;place-items:center;padding:0}
+.stepper button:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.stepper input{width:62px;min-height:32px;padding:2px 4px;text-align:center;border:0;background:transparent;box-shadow:none;font-weight:900}
+.diffseg button[data-v="آسان"].on{color:var(--ok-text)}
+.diffseg button[data-v="دشوار"].on{color:var(--bad-text)}
+.diffseg button[data-v="متوسط"].on{color:var(--accent-text)}
+.writer{border:1px solid var(--border);border-radius:14px;background:var(--input);overflow:hidden;box-shadow:inset 0 1px 3px var(--lo)}
+.writer:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.writer .tools{display:flex;gap:4px;flex-wrap:wrap;padding:6px 8px;border-bottom:1px dashed var(--border);background:var(--card-2);margin:0}
+.writer textarea{border:0;border-radius:0;box-shadow:none;background:transparent;min-height:120px;font-size:1rem;padding:12px 14px}
+.writer textarea:focus{box-shadow:none}
+.writer .wfoot{display:flex;justify-content:space-between;gap:8px;padding:4px 10px 6px;font-size:.7rem;color:var(--muted)}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.tools .btn.xs{box-shadow:var(--bevel)}
+.sectitle{display:flex;align-items:center;gap:8px;margin:16px 0 8px;font-size:.82rem;font-weight:800;color:var(--text)}
+.sectitle::after{content:'';flex:1;height:1px;background:var(--border)}
+.sectitle .muted{font-weight:600}
 .options{display:grid;gap:8px}
-.option{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:6px;border-radius:12px;border:1px solid transparent;transition:all .2s}
-.option.correct{border-color:var(--success);background:var(--success-soft)}
-.option .olabel{width:30px;height:30px;border-radius:8px;background:var(--card-2);display:grid;place-items:center;font-weight:900;font-size:.8rem;border:1px solid var(--border)}
+.option{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:6px 8px;border-radius:14px;border:1px solid var(--border);background:var(--card-2);transition:border-color .2s,background .2s,box-shadow .2s}
+.option.correct{border-color:var(--ok-text);box-shadow:0 0 0 1px var(--ok-text) inset}
+.option .olabel{width:32px;height:32px;border-radius:10px;background:var(--card);display:grid;place-items:center;font-weight:900;font-size:.8rem;border:1px solid var(--border);box-shadow:var(--bevel);flex:none}
+.option.correct .olabel{background:var(--ok-text);color:var(--card);border-color:var(--ok-text)}
+.option input[data-opt],.option input[data-dd]{background:var(--input)}
+.pad{position:relative;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--border-2);background:var(--card);box-shadow:var(--bevel);cursor:pointer;flex:none}
+.pad input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
+.pad .ic{width:18px;height:18px;color:transparent;transition:color .15s,transform .15s}
+.pad:has(input:checked){background:var(--ok-text);border-color:var(--ok-text);box-shadow:var(--bevel-press)}
+.pad:has(input:checked) .ic{color:var(--card);transform:scale(1.05)}
+.pad:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
 .pair{display:grid;grid-template-columns:1fr auto 1fr auto;gap:8px;align-items:center}
 .pair .arrow{color:var(--muted)}
 .subq{margin-bottom:8px;padding:10px;background:var(--card-2);border-radius:12px;border:1px solid var(--border)}
-.tfbtn{flex:1;padding:14px;font-size:1rem}
-.tfbtn.on{background:var(--success);color:#062a12;border-color:transparent}
-.tfbtn.off{background:var(--danger);color:#fff;border-color:transparent}
-.tools{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.tfbtn{flex:1;padding:14px;font-size:1rem;min-height:52px}
+.tfbtn.on{background:linear-gradient(180deg,#43d97a,#1f9d55);color:#04210f;border-color:#17803f;box-shadow:inset 0 2px 6px rgba(0,0,0,.25)}
+.tfbtn.off{background:linear-gradient(180deg,#f06a6e,#c43237);color:#fff;border-color:#a3262b;box-shadow:inset 0 2px 6px rgba(0,0,0,.25)}
 .fieldrow{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:end}
 .fieldrow .btn{min-height:42px}
-.kbd{font-family:monospace;font-size:.75rem;padding:1px 6px;border:1px solid var(--border-2);border-radius:5px;background:var(--card-2)}
+.canvas-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--card-2);flex-wrap:wrap}
+.canvas-foot .hint{font-size:.72rem;color:var(--muted);display:flex;gap:6px;align-items:center}
 
-/* ============ طراحی ============ */
-.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-.tpl{border:2px solid var(--border);background:var(--card-2);border-radius:14px;padding:10px;cursor:pointer;text-align:center;transition:all .22s var(--ease);position:relative;overflow:hidden}
-.tpl:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-sm)}
-.tpl.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+/* بازرس */
+.insp-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:10px}
+.insp-head .seg{flex:1}
+.insp-head .seg button{flex:1;justify-content:center}
+.insp-body{overflow:auto;flex:1;min-height:0;overscroll-behavior:contain;padding:2px}
+.meter{margin-bottom:14px}
+.meter h3{font-size:.8rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;color:var(--text)}
+.meter h3 span{color:var(--muted);font-weight:700;font-size:.72rem}
+.stack-bar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:var(--well);box-shadow:inset 0 1px 2px var(--lo)}
+.stack-bar i{display:block;height:100%;transition:width .4s var(--ease);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;margin-top:7px}
+.legend span{font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.legend span b{color:var(--text);margin-inline-start:auto;font-weight:800}
+.legend i{width:9px;height:9px;border-radius:3px;flex:none}
+.diffbars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:end;min-height:104px;padding:8px 4px 0;border-radius:12px;background:var(--well)}
+.diffbars div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;align-self:stretch;gap:3px}
+.diffbars i{width:60%;border-radius:7px 7px 3px 3px;min-height:4px;transition:height .4s var(--ease);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.2)}
+.diffbars span{font-size:.68rem;color:var(--muted);font-weight:700;padding-bottom:4px}
+.timecard{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--card)}
+.timecard .ic{width:22px;height:22px;color:var(--accent-text)}
+.timecard b{font-size:.92rem}
+.timecard span{font-size:.72rem;color:var(--muted);display:block}
+.issues{display:grid;gap:5px}
+.issue{display:flex;gap:8px;align-items:center;padding:7px 9px;border-radius:11px;border:1px solid var(--border);background:var(--card);font-size:.76rem;text-align:right;width:100%;color:var(--text);transition:border-color .15s}
+.issue:hover{border-color:var(--accent)}
+.issue .ic{flex:none}
+.issue.err .ic{color:var(--bad-text)}.issue.warn .ic{color:var(--warn-text)}
+.issue.allgood{color:var(--ok-text);cursor:default}
+.issue.allgood:hover{border-color:var(--border)}
+.insp-paper{background:var(--desk);border-radius:12px;padding:8px;border:1px solid var(--border);overflow:hidden;contain:inline-size}
+.insp-paper .scaler{transform-origin:top right;width:794px;max-width:none}
+
+/* ============ استودیوی طراحی ============ */
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:9px}
+.tpl{border:1px solid var(--border);background:var(--card);border-radius:14px;padding:8px;cursor:pointer;text-align:center;transition:transform .14s var(--ease),border-color .15s,box-shadow .15s;position:relative;overflow:hidden;box-shadow:var(--bevel)}
+.tpl:hover{transform:translateY(-2px);border-color:var(--accent)}
+.tpl:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.tpl.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft),var(--bevel)}
 .tpl.active::after{content:'✓';position:absolute;top:6px;left:6px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:900;font-size:.72rem}
-.tpl-thumb{height:64px;border-radius:8px;margin-bottom:8px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.15)}
+.tpl-thumb{height:62px;border-radius:8px;margin-bottom:7px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.15);box-shadow:0 4px 10px -6px rgba(0,0,0,.5)}
 .tpl-thumb i{position:absolute;left:10%;right:10%;height:4px;border-radius:2px;opacity:.85}
-.tpl b{font-size:.85rem;display:block}
-.tpl .muted{font-size:.68rem}
-.fontgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.fontbtn{border:1px solid var(--border);background:var(--card-2);border-radius:12px;padding:10px 8px;cursor:pointer;text-align:center;transition:all .2s;position:relative}
-.fontbtn:hover{border-color:var(--accent);transform:translateY(-2px)}
-.fontbtn.active{border-color:var(--accent);background:var(--accent-soft)}
-.fontbtn .sample{font-size:1.15rem;line-height:1.5;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.tpl b{font-size:.8rem;display:block}
+.tpl .muted{font-size:.66rem}
+.fontgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.fontbtn{border:1px solid var(--border);background:var(--card);border-radius:12px;padding:10px 8px 8px;cursor:pointer;text-align:center;transition:transform .12s,border-color .15s;position:relative;box-shadow:var(--bevel)}
+.fontbtn:hover{border-color:var(--accent)}
+.fontbtn:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.fontbtn.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft),var(--bevel)}
+.fontbtn .sample{font-size:1.1rem;line-height:1.5;display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:var(--text)}
 .fontbtn .fname{font-size:.68rem;color:var(--muted);display:block;direction:ltr}
 .fontbtn .tag{position:absolute;top:4px;left:6px;font-size:.6rem;color:var(--muted)}
-.design-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,420px);gap:16px;align-items:start}.design-layout>*{min-width:0}.split>*{min-width:0}.grid>*{min-width:0}
-.mini-preview{position:sticky;top:72px}
-.mini-preview .frame{background:#8a8a8a22;border:1px solid var(--border);border-radius:14px;padding:10px;overflow:hidden;max-height:calc(100dvh - 160px);overflow-y:auto}
-.mini-preview .scaler{transform-origin:top right;width:794px;max-width:none}.mini-preview .frame{contain:inline-size}
-@media(max-width:1100px){.design-layout{grid-template-columns:1fr}.mini-preview{position:static}.mini-preview .frame{max-height:none}}
+.easel{display:grid;grid-template-columns:minmax(380px,520px) minmax(0,1fr);gap:14px;align-items:start}
+.easel>*{min-width:0}
+.easel-controls{padding:12px}
+.jumpbar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border)}
+.jumpbar .chip{font-size:.72rem;padding:4px 10px}
+.easel-desk{position:sticky;top:calc(var(--toph,64px) + 12px)}
+.mini-preview .frame,.desk-frame{background:radial-gradient(var(--grid-dot) 1px,transparent 1.2px) 0 0/16px 16px,var(--desk);border:1px solid var(--border);border-radius:14px;padding:14px;overflow:hidden;max-height:calc(100dvh - var(--toph,64px) - 110px);overflow-y:auto;contain:inline-size;box-shadow:inset 0 2px 8px var(--lo)}
+.mini-preview .scaler{transform-origin:top right;width:794px;max-width:none}
+.mini-preview .scaler .paper{box-shadow:0 30px 60px -30px rgba(0,0,0,.6),0 2px 6px rgba(0,0,0,.18)!important}
+.desk-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.desk-bar h2{font-size:.95rem;display:flex;gap:8px;align-items:center}
 
-/* ============ پیش‌نمایش ============ */
-.paperwrap{width:100%;overflow:auto;padding:14px 0 30px;display:flex;justify-content:center;background:radial-gradient(circle at 50% 0,rgba(255,255,255,.06),transparent 60%);border-radius:14px}
-.paperwrap .paper{transform-origin:top center;margin:0!important;flex:none}
-.zoombar{display:flex;align-items:center;gap:6px}
-.zoombar span{min-width:44px;text-align:center;font-weight:700;font-size:.85rem}
+/* ============ میز نمونه‌خوانی (پیش‌نمایش) ============ */
+.proofbar{position:sticky;top:calc(var(--toph,64px) + 8px);z-index:20;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 12px;margin-bottom:12px;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;box-shadow:inset 0 1px 0 var(--glass-line),var(--lift)}
+.proofbar .ttl{display:flex;align-items:center;gap:8px;font-weight:900;margin-inline-end:auto}
+.proofbar .ttl small{font-weight:600;color:var(--muted);font-size:.72rem}
+.proofbar .sep{width:1px;height:26px;background:var(--border)}
+.paperwrap{width:100%;overflow:auto;padding:22px 0 30px;display:flex;justify-content:center;background:radial-gradient(var(--grid-dot) 1px,transparent 1.2px) 0 0/18px 18px,var(--desk);border-radius:18px;border:1px solid var(--border);box-shadow:inset 0 2px 10px var(--lo)}
+.paperwrap .paper{transform-origin:top center;margin:0!important;flex:none;box-shadow:0 40px 80px -40px rgba(0,0,0,.65),0 2px 8px rgba(0,0,0,.2)!important}
+.zoombar{display:flex;align-items:center;gap:4px}
+.zoombar span{min-width:46px;text-align:center;font-weight:800;font-size:.82rem}
 
-/* ============ خروجی ============ */
-.exports{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.exp{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 14px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .22s var(--ease);min-height:130px;justify-content:center}
-.exp:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:var(--shadow)}
-.exp .ic{width:32px;height:32px;color:var(--accent);stroke-width:1.6}
-.exp b{font-size:.9rem}.exp small{color:var(--muted);font-size:.72rem}
+/* ============ سکوهای خروجی ============ */
+.readiness{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;margin-bottom:12px}
+.readiness .facts{display:flex;gap:8px;flex-wrap:wrap}
+.fact{padding:6px 12px;border-radius:12px;border:1px solid var(--border);background:var(--card-2);font-size:.76rem;color:var(--muted)}
+.fact b{color:var(--text);font-size:.95rem;margin-inline-end:4px}
+.tracks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.track{padding:14px}
+.track-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.track-head .tile{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -3px 0 rgba(0,0,0,.25),0 8px 16px -8px rgba(0,0,0,.6)}
+.track-head .tile .ic{width:24px;height:24px}
+.track-head .tile.t1{background:linear-gradient(150deg,#3b82c4,#1d4f86)}
+.track-head .tile.t2{background:linear-gradient(150deg,#2f9c6c,#16603f)}
+.track-head .tile.t3{background:linear-gradient(150deg,#b27a1d,#7a4f0c)}
+.track-head p{margin:0;font-size:.74rem;color:var(--muted)}
+.exports{display:grid;gap:7px}
+.exp{background:var(--card-2);border:1px solid var(--border);border-radius:14px;padding:10px 12px;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;transition:transform .12s var(--ease),border-color .15s,box-shadow .15s;text-align:right;color:var(--text);font:inherit;width:100%;box-shadow:var(--bevel)}
+.exp:hover{border-color:var(--accent);transform:translateX(-2px)}
+.exp:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.exp .ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--card);border:1px solid var(--border);color:var(--accent-text);box-shadow:var(--bevel)}
+.exp .ico .ic{width:20px;height:20px}
+.exp b{font-size:.86rem;display:block;line-height:1.4}
+.exp small{color:var(--muted);font-size:.72rem;display:block;line-height:1.5}
+.exp .go{color:var(--muted);transform:rotate(90deg)}
 
-/* ============ تصحیح ============ */
-.drop{border:2px dashed var(--border-2);border-radius:16px;padding:34px 16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--card-2)}
+/* ============ آزمون آنلاین ============ */
+.online-studio{display:grid;grid-template-columns:minmax(340px,440px) minmax(0,1fr);gap:12px;align-items:start}
+.online-studio>*{min-width:0}
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.preset{border:1px solid var(--border);background:var(--card-2);border-radius:13px;padding:9px 8px;text-align:center;color:var(--text);font:inherit;box-shadow:var(--bevel);transition:transform .12s,border-color .15s}
+.preset:hover{border-color:var(--accent)}
+.preset:active{transform:translateY(1px);box-shadow:var(--bevel-press)}
+.preset .ic{width:22px;height:22px;color:var(--accent-text)}
+.preset b{display:block;font-size:.8rem;margin-top:2px}
+.preset small{display:block;font-size:.66rem;color:var(--muted);line-height:1.4}
+.fgroup{border:1px solid var(--border);border-radius:14px;padding:4px 12px 12px;margin:0 0 10px;background:var(--card-2)}
+.fgroup legend{font-size:.76rem;font-weight:800;color:var(--accent-text);padding:0 6px;display:flex;gap:6px;align-items:center}
+.fgroup .grid{gap:0 10px}
+.device-stage{padding:14px}
+.device-wrap{display:flex;justify-content:center;padding:18px;border-radius:16px;background:radial-gradient(var(--grid-dot) 1px,transparent 1.2px) 0 0/18px 18px,var(--desk);border:1px solid var(--border);box-shadow:inset 0 2px 10px var(--lo)}
+.device{width:100%;transition:width .3s var(--ease);background:#111;border-radius:16px;padding:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.12)}
+.device.phone{width:390px;max-width:100%;border-radius:38px;padding:14px 10px}
+.device.phone::before{content:'';display:block;width:90px;height:6px;border-radius:9px;background:#333;margin:0 auto 10px}
+iframe.online-frame{display:block;width:100%;height:min(720px,76dvh);border:0;border-radius:10px;background:#fff}
+.device.phone iframe.online-frame{border-radius:24px;height:min(740px,74dvh)}
+
+/* ============ تصحیح و نتایج ============ */
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.kpi{padding:12px 14px;display:flex;gap:12px;align-items:center}
+.kpi .tile{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:none;background:var(--card-2);border:1px solid var(--border);color:var(--accent-text);box-shadow:var(--bevel)}
+.kpi b{display:block;font-size:1.35rem;line-height:1.15;font-weight:900}
+.kpi span{font-size:.72rem;color:var(--muted)}
+.kpi b.bad{color:var(--bad-text)}
+.rank{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;font-weight:900;font-size:.8rem;color:#2a1a00;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 0 rgba(0,0,0,.25),0 3px 8px -3px rgba(0,0,0,.5)}
+.rank.r1{background:linear-gradient(150deg,#ffe58a,#e0a91c)}.rank.r2{background:linear-gradient(150deg,#f1f3f6,#aab2bf)}.rank.r3{background:linear-gradient(150deg,#f3c39a,#b9733c)}
+.drop{border:2px dashed var(--border-2);border-radius:16px;padding:18px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:var(--card-2);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.drop .ic{width:30px;height:30px;color:var(--accent-text)}
 .drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.grade-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);gap:12px;align-items:start}
+.grade-grid>*{min-width:0}
+.histo{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:end;height:170px;padding:10px 8px 0;border-radius:14px;background:var(--well)}
+.histo div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.histo i{width:70%;border-radius:9px 9px 3px 3px;min-height:4px;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 80%,white),var(--accent-2));box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -2px 0 rgba(0,0,0,.2);transition:height .5s var(--ease)}
+.histo b{font-size:.8rem}
+.histo span{font-size:.66rem;color:var(--muted);padding-bottom:6px}
 .stat{text-align:center;padding:16px 10px}
-.stat b{display:block;font-size:1.7rem;color:var(--accent);line-height:1.2}
+.stat b{display:block;font-size:1.7rem;color:var(--accent-text);line-height:1.2}
 .stat span{font-size:.78rem;color:var(--muted)}
-.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.tbl{width:100%;border-collapse:collapse;font-size:.86rem}
 .tbl th,.tbl td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:center}
-.tbl th{color:var(--accent);font-weight:800;background:var(--card-2);position:sticky;top:0}
+.tbl th{color:var(--text);font-weight:800;background:var(--card-2);position:sticky;top:0;font-size:.78rem}
 .tbl tr:hover td{background:var(--card-2)}
-.good{color:var(--success)}.mid{color:var(--info)}.bad{color:var(--danger)}
-.bar{height:8px;background:var(--card-2);border-radius:9px;overflow:hidden}
+.good{color:var(--ok-text)}.mid{color:var(--accent-text)}.bad{color:var(--bad-text)}
+.bar{height:8px;background:var(--well);border-radius:9px;overflow:hidden}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:9px}
 
-/* ============ فوتر / توست / راهنما ============ */
-.footer{max-width:1320px;margin:auto;padding:20px 16px 30px;text-align:center;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border)}
-.footer b{color:var(--accent)}
-.credit{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:99px;border:1px solid var(--border);background:var(--card);margin-bottom:8px;font-weight:700;color:var(--text)}
-.toast-wrap{position:fixed;right:50%;transform:translateX(50%);bottom:24px;z-index:100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(94vw,520px)}
-.toast{pointer-events:auto;background:var(--card);color:var(--text);border:1px solid var(--border-2);padding:11px 16px;border-radius:14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:600;animation:up .25s var(--ease);max-width:100%}
-.toast.err{border-color:var(--danger);background:var(--card)}.toast.err .ic{color:var(--danger)}
-.toast.ok .ic{color:var(--success)}.toast.info .ic{color:var(--info)}
+/* ============ فوتر / توست / مودال / فرمان ============ */
+.footer{max-width:1640px;margin:auto;padding:16px 18px 120px;text-align:center;color:var(--muted);font-size:.78rem;border-top:1px solid var(--border)}
+.footer b{color:var(--accent-text)}
+.credit{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--card);margin-bottom:8px;font-weight:700;color:var(--text);box-shadow:var(--bevel)}
+.toast-wrap{position:fixed;right:50%;transform:translateX(50%);bottom:24px;z-index:100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(calc(100vw - 32px),460px)}
+.toast{pointer-events:auto;background:var(--card);color:var(--text);border:1px solid var(--border-2);padding:10px 14px;border-radius:14px;box-shadow:var(--lift);display:flex;align-items:center;gap:10px;font-size:.86rem;font-weight:600;animation:up .25s var(--ease);max-width:100%}
+.toast.err{border-color:var(--bad-text)}.toast.err .ic{color:var(--bad-text)}
+.toast.ok .ic{color:var(--ok-text)}.toast.info .ic{color:var(--accent-text)}
 .toast button{border:0;background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:4px 10px;font-weight:800;font-size:.8rem}
 @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.hakim{position:fixed;inset-inline-start:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:flex-end;gap:8px;direction:rtl;width:min(352px,calc(100vw - 84px));max-width:min(352px,calc(100vw - 84px));opacity:1;transform:translate3d(0,0,0);will-change:opacity,transform;transition:opacity .3s var(--ease),transform .3s var(--ease);contain:layout style;cursor:pointer;pointer-events:auto}
+.hakim{position:fixed;inset-inline-start:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:flex-end;gap:8px;direction:rtl;width:min(320px,calc(100vw - 88px));max-width:min(320px,calc(100vw - 88px));opacity:1;transform:translate3d(0,0,0);will-change:opacity,transform;transition:opacity .3s var(--ease),transform .3s var(--ease);contain:layout style;cursor:pointer;pointer-events:auto}
 .hakim.off{opacity:0;transform:translate3d(0,10px,0);pointer-events:none}
 .hakim .av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);border:2px solid var(--card);box-shadow:var(--shadow-sm);flex:none}
-.hakim .bub{flex:1;min-width:0;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:14px 14px 4px 14px;padding:9px 12px;font-size:.8rem;box-shadow:var(--shadow);direction:rtl;line-height:1.6}
+.hakim .bub{flex:1;min-width:0;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:14px 14px 4px 14px;padding:9px 12px;font-size:.8rem;box-shadow:var(--lift);direction:rtl;line-height:1.6}
 #hakim .hakim-panel{display:flex!important;width:100%;margin:0;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;overflow:visible;gap:8px;align-items:flex-end;direction:rtl;animation:none!important}
 #hakim .hakim-panel::before{display:none}
 #hakim .hakim-avatar{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 30% 28%,color-mix(in srgb,var(--accent) 30%,white) 0%,var(--accent) 42%,var(--accent-2) 100%);box-shadow:0 0 16px color-mix(in srgb,var(--accent) 40%,transparent),inset 0 -3px 8px rgba(0,0,0,.35);flex:none}
 #hakim .hakim-face{background:radial-gradient(circle at 42% 30%,#2c2040 0%,#120a1e 100%);box-shadow:inset 0 0 8px rgba(0,0,0,.7)}
 #hakim .hakim-glow{inset:-5px;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 45%,transparent),transparent 70%)}
-#hakim .hakim-bubble{flex:1;min-width:0;background:var(--card);border:1px solid var(--border);border-radius:14px 14px 4px 14px;padding:8px 12px;box-shadow:var(--shadow);direction:rtl;text-align:right}
+#hakim .hakim-bubble{flex:1;min-width:0;background:var(--card);border:1px solid var(--border-2);border-radius:14px 14px 4px 14px;padding:8px 12px;box-shadow:var(--lift);direction:rtl;text-align:right}
 #hakim .hakim-bubble::after{display:none}
 #hakim .hakim-name{display:none}
 #hakim .hakim-text{font-size:.8rem;color:var(--text);line-height:1.6;font-weight:500;min-height:1.6em}
-@media(max-width:700px){#hakim{inset-inline-start:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(310px,calc(100vw - 76px));max-width:min(310px,calc(100vw - 76px))}#hakim .hakim-avatar{width:48px;height:48px}#hakim .hakim-text{font-size:.75rem}}
-
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;animation:fade .2s}
-.modal{background:var(--card);border:1px solid var(--border-2);border-radius:18px;padding:20px;width:min(640px,100%);max-height:90dvh;overflow:auto;box-shadow:var(--shadow)}
-.modal h3{margin-bottom:10px}
-iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px solid var(--border);border-radius:14px;background:#fff}
+@media(max-width:700px){#hakim{inset-inline-start:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px))}#hakim .hakim-avatar{width:48px;height:48px}#hakim .hakim-text{font-size:.75rem}}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;animation:fadein .2s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.modal{background:var(--card);border:1px solid var(--border-2);border-radius:20px;padding:20px;width:min(640px,100%);max-height:90dvh;overflow:auto;box-shadow:var(--lift),inset 0 1px 0 var(--hi);animation:pop .2s var(--ease)}
+.modal h3{margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.modal h3 .ic{color:var(--accent-text)}
+.cmdk{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:flex-start;padding:10vh 14px 14px;animation:fadein .15s}
+.cmdk-box{width:min(620px,100%);background:var(--card);border:1px solid var(--border-2);border-radius:20px;box-shadow:var(--lift),inset 0 1px 0 var(--hi);overflow:hidden;animation:pop .18s var(--ease)}
+.cmdk-in{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.cmdk-in .ic{color:var(--accent-text);width:20px;height:20px}
+.cmdk-in input{border:0;background:transparent;box-shadow:none;min-height:38px;font-size:1rem;padding:0}
+.cmdk-in input:focus{box-shadow:none}
+.cmdk-list{max-height:min(420px,60dvh);overflow:auto;padding:6px}
+.cmdk-group{font-size:.68rem;font-weight:800;color:var(--muted);padding:8px 10px 4px}
+.cmdk-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:11px;border:1px solid transparent;background:transparent;color:var(--text);font-size:.86rem;font-weight:600;text-align:right}
+.cmdk-item .ic{color:var(--muted);width:18px;height:18px}
+.cmdk-item small{margin-inline-start:auto;color:var(--muted);font-size:.7rem}
+.cmdk-item.sel,.cmdk-item:hover{background:var(--card-2);border-color:var(--border)}
+.cmdk-item.sel .ic{color:var(--accent-text)}
+.cmdk-foot{display:flex;gap:12px;justify-content:flex-start;padding:8px 14px;border-top:1px solid var(--border);font-size:.7rem;color:var(--muted);background:var(--card-2);flex-wrap:wrap}
 
 /* ============ واکنش‌گرایی ============ */
-@media(max-width:1000px){.split{grid-template-columns:1fr}.sticky{position:static}.qlist{max-height:40vh}.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){
-  body{font-size:14px}.wrap{padding:12px 10px 90px}.card{padding:14px;border-radius:14px}
-  .topin{padding:8px 10px;gap:8px}.brand{font-size:1rem}.brand small{display:none}.logo{width:34px;height:34px}
-  .tabs{order:3;width:100%;flex:none}.tab{padding:7px 11px;font-size:.82rem;min-height:36px}
-  .hdr-actions{margin-inline-start:auto}.savebadge span{display:none}.lobby-link{width:40px;padding:0}.lobby-link .lobby-txt{display:none}
-  .g2,.g3,.g4,.auto{grid-template-columns:1fr}
-  .card-head{flex-direction:column;align-items:stretch}.card-head .btnrow{width:100%}.card-head .btnrow .btn{flex:1}
-  .pair{grid-template-columns:1fr auto;grid-auto-rows:auto}.pair .arrow{display:none}
-  .exports{grid-template-columns:repeat(2,1fr)}.exp{min-height:110px;padding:14px 8px}
-  .tpl-grid{grid-template-columns:repeat(3,1fr)}.fontgrid{grid-template-columns:repeat(2,1fr)}
-  .hakim .bub{font-size:.75rem}
-  iframe.online-frame{height:70dvh}
+@media(max-width:1640px){.cmdk-btn .lbl{display:none}.brand small{display:none}.tab{padding:7px 11px}}
+@media(max-width:1380px){.bench{grid-template-columns:270px minmax(0,1fr) 300px}.bench.insp-off{grid-template-columns:270px minmax(0,1fr)}.deck{grid-template-columns:minmax(240px,1fr) minmax(0,1.4fr) auto auto}.cmdk-btn .lbl{display:none}.meta-drawer .grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1180px){
+  .topin{grid-template-columns:auto 1fr;row-gap:8px}.tabs{grid-column:1/-1;order:3;justify-self:stretch}.hdr-actions{justify-self:end}
+  .bench,.bench.insp-off{grid-template-columns:260px minmax(0,1fr)}
+  .inspector{grid-column:1/-1;position:static;max-height:none}
+  .bench.insp-off .inspector{display:none}
+  .deck{grid-template-columns:1fr 1fr}
+  .easel{grid-template-columns:1fr}.easel-desk{position:static}.mini-preview .frame{max-height:70dvh}
+  .tracks{grid-template-columns:1fr 1fr}.tracks .track:last-child{grid-column:1/-1}
+  .online-studio{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grade-grid{grid-template-columns:1fr}
+  .meta-drawer .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-@media(max-width:420px){.tpl-grid{grid-template-columns:repeat(2,1fr)}.tab .tl{display:none}.tab{padding:8px 10px}.tab.active .tl{display:inline}}
+@media(max-width:900px){
+  .bench,.bench.insp-off{grid-template-columns:minmax(0,1fr)}
+  .rail{position:static;max-height:none}
+  .qlist{flex-direction:row;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;min-height:0;padding-bottom:8px}
+  .qlist .qitem{flex:0 0 210px;scroll-snap-align:start;grid-template-columns:auto 1fr auto}
+  .qlist .grip{display:none}
+  .qlist .insert{display:none}
+  .qitem:hover{transform:none}
+  .typebar{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .readiness{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  body{font-size:14px}.wrap{padding:10px 10px 140px}.card,.panel{padding:13px;border-radius:16px}
+  .topin{padding:7px 10px;gap:8px}.brand small{display:none}.brand h1{font-size:.95rem}.emblem{width:36px;height:36px;border-radius:11px}.emblem svg{width:22px;height:22px}
+  .tab{padding:6px 10px;font-size:.78rem;min-height:36px}
+  .hdr-actions{gap:6px}
+  .savebadge{padding:0;width:12px;height:12px;border:0;background:transparent;justify-content:center}.savebadge span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .top .hdr-actions .btl-lobby-btn{width:44px!important;min-width:44px!important;height:44px!important;padding:0!important;border-radius:50%!important;gap:0!important}
+  .top .hdr-actions .btl-lobby-btn .btl-text{display:none!important}
+  .deck{grid-template-columns:1fr 1fr;gap:8px}.deck-exam,.deck-meta{grid-column:1/-1}
+  .deck-score,.deck-health{padding:8px;gap:7px}.deck-score .iconbtn{display:none}.deck-score .lbl{font-size:.64rem}.ring,.ring svg{width:40px;height:40px}.deck-health .health-orb{width:32px;height:32px}.deck-health b{font-size:.74rem;white-space:normal}.deck-health span span{display:none}
+  .cmdk-btn{display:none}.rail-search input{min-height:36px}
+  .g2,.g3,.g4,.auto{grid-template-columns:1fr}
+  .meta-drawer .grid{grid-template-columns:1fr 1fr}.meta-drawer .wide{grid-column:1/-1}
+  .card-head{flex-direction:column;align-items:stretch}.card-head .btnrow{width:100%}
+  .canvas-head{padding:10px 12px}.canvas-body{padding:12px}.canvas-foot{padding:10px 12px}
+  .qbadge{width:42px;height:42px;font-size:1.1rem}
+  .propbar{grid-template-columns:1fr 1fr}.propbar>:last-child{grid-column:1/-1}
+  .pair{grid-template-columns:1fr auto;grid-auto-rows:auto}.pair .arrow{display:none}
+  .tracks{grid-template-columns:1fr}.tracks .track:last-child{grid-column:auto}
+  .tpl-grid{grid-template-columns:repeat(3,1fr)}.fontgrid{grid-template-columns:repeat(2,1fr)}
+  .presets{grid-template-columns:repeat(3,1fr)}
+  .kpis{grid-template-columns:1fr 1fr}.kpis .kpi:first-child{grid-column:1/-1}
+  .proofbar{padding:8px}.proofbar .sep{display:none}.proofbar .ttl{width:100%}
+  .easel-controls{padding:10px}
+  .hakim .bub{font-size:.75rem}
+  .toast-wrap{bottom:84px}
+  iframe.online-frame{height:70dvh}
+  .device-wrap{padding:8px}.device{padding:6px;border-radius:12px}.device.phone{padding:10px 6px;border-radius:28px}
+}
+@media(max-width:420px){.tpl-grid{grid-template-columns:repeat(2,1fr)}.tab .tl{display:none}.tab{padding:8px 11px}.tab.active .tl{display:inline}.typebar{grid-template-columns:repeat(4,minmax(0,1fr))}.tkey{font-size:.6rem;min-height:54px}.keyset .iconbtn{width:34px;height:34px}.presets{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html.hk-reduce-motion *,html.hk-reduce-motion *::before,html.hk-reduce-motion *::after{animation:none!important;transition:none!important}
+
 #azmoonPrintArea{display:none}
 @page{size:A4 portrait;margin:8mm}
 @media print{
@@ -439,18 +747,39 @@ iframe.online-frame{display:block;width:100%;height:min(760px,80dvh);border:1px 
 <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
 <symbol id="i-shuffle" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><path d="M4 20L21 3"/><polyline points="21 16 21 21 16 21"/><path d="M15 15l6 6M4 4l5 5"/></symbol>
 <symbol id="i-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+<symbol id="i-emblem" viewBox="0 0 24 24"><rect x="4" y="2.8" width="12.5" height="17" rx="2.2"/><path d="M7.3 7.4h6M7.3 10.6h6"/><path d="M7.4 14.6l1.6 1.6 3.2-3.4"/><path d="M19.6 9.4l1.7 1.7-6.4 6.4-2.3.6.6-2.3z" fill="currentColor" fill-opacity=".25"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></symbol>
+<symbol id="i-hakim" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4h0A2.5 2.5 0 0 1 4 13.5z"/><path d="M12 6.4l.9 2 2 .9-2 .9-.9 2-.9-2-2-.9 2-.9z" fill="currentColor"/></symbol>
+<symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M9 4v16"/><path d="M4.8 8h2.4M4.8 11h2.4"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2" width="11" height="20" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 21h18"/><rect x="5" y="11" width="3.2" height="7" rx="1"/><rect x="10.4" y="6" width="3.2" height="12" rx="1"/><rect x="15.8" y="13" width="3.2" height="5" rx="1"/></symbol>
+<symbol id="t-mcq" viewBox="0 0 24 24"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3" fill="currentColor"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/></symbol>
+<symbol id="t-tf" viewBox="0 0 24 24"><path d="M2.8 12.2l2.8 2.8 4.6-5.6"/><path d="M14.5 9.2l5.8 5.8M20.3 9.2l-5.8 5.8"/><path d="M12 4v16" stroke-opacity=".4"/></symbol>
+<symbol id="t-multi" viewBox="0 0 24 24"><rect x="3" y="3.5" width="7" height="7" rx="1.6"/><path d="M4.8 7l1.4 1.4 2.4-2.6"/><rect x="3" y="13.5" width="7" height="7" rx="1.6"/><path d="M4.8 17l1.4 1.4 2.4-2.6"/><path d="M13.5 7h7.5M13.5 17h7.5"/></symbol>
+<symbol id="t-short" viewBox="0 0 24 24"><path d="M3.5 8h10M3.5 11.5h6"/><path d="M3 18h18" stroke-dasharray="2.2 2"/><path d="M17.5 5v9"/></symbol>
+<symbol id="t-blank" viewBox="0 0 24 24"><path d="M2.5 12h5M16.5 12h5"/><rect x="9" y="8.5" width="6" height="7" rx="1.4" stroke-dasharray="2 1.6"/></symbol>
+<symbol id="t-match" viewBox="0 0 24 24"><circle cx="4.5" cy="6" r="2"/><circle cx="4.5" cy="18" r="2"/><circle cx="19.5" cy="6" r="2" fill="currentColor"/><circle cx="19.5" cy="18" r="2" fill="currentColor"/><path d="M6.6 6.6l10.8 10.8M6.6 17.4L17.4 6.6"/></symbol>
+<symbol id="t-dropdown" viewBox="0 0 24 24"><rect x="2.5" y="6.5" width="19" height="11" rx="2.6"/><path d="M5.8 12h6.4"/><path d="M15.2 10.8l2 2 2-2"/></symbol>
+<symbol id="t-essay" viewBox="0 0 24 24"><path d="M4 5.5h16M4 9.5h16M4 13.5h16M4 17.5h9.5"/><path d="M17 16l3 3" stroke-opacity=".5"/></symbol>
 </svg>
 
 <header class="top"><div class="topin">
-  <div class="brand"><span class="logo"><svg class="ic"><use href="#i-cap"/></svg></span><div><h1>آزمون‌ساز حکیمستان</h1><small>طراح و توسعه‌دهنده: مهدی شریفیان</small></div></div>
-  <nav class="tabs" id="tabs" aria-label="بخش‌ها"></nav>
+  <div class="brand"><span class="emblem" aria-hidden="true"><svg viewBox="0 0 24 24" class="ic"><use href="#i-emblem"/></svg></span><div><h1>آزمون‌ساز حکیمستان</h1><small>استودیوی طراحی، چاپ و برگزاری آزمون · طراح: مهدی شریفیان</small></div></div>
+  <nav class="tabs" id="tabs" aria-label="بخش‌های آزمون‌ساز"></nav>
   <div class="hdr-actions">
-    <div class="savebadge" id="saveBadge"><svg class="ic"><use href="#i-check"/></svg><span>ذخیره شد</span></div>
+    <button type="button" class="cmdk-btn" id="cmdkBtn" aria-label="جستجو و فرمان‌ها" aria-keyshortcuts="Control+K" title="جستجو و فرمان‌ها (Ctrl+K)"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span class="lbl">جستجو و فرمان</span><span class="kbd">Ctrl K</span></button>
+    <div class="savebadge" id="saveBadge"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>ذخیره شد</span></div>
+    <button type="button" class="iconbtn" id="hakimBtn" aria-pressed="true" title="حکیم — راهنمای آزمون‌ساز (روشن/خاموش)" aria-label="راهنمای حکیم"><svg class="ic" aria-hidden="true"><use href="#i-hakim"/></svg><span class="dot" aria-hidden="true"></span></button>
     <div style="position:relative">
-      <button class="iconbtn" id="themeBtn" title="تغییر تم" aria-label="تغییر تم"><svg class="ic"><use href="#i-palette"/></svg></button>
+      <button type="button" class="iconbtn" id="themeBtn" title="پوستهٔ برنامه" aria-label="تغییر پوستهٔ برنامه" aria-haspopup="true"><svg class="ic" aria-hidden="true"><use href="#i-palette"/></svg></button>
       <div id="themeMenu" class="menu hide"></div>
     </div>
-    <a class="lobby-link no-print" href="index.html" title="بازگشت به لابی حکیمستان" aria-label="بازگشت به لابی حکیمستان"><span aria-hidden="true">🏠</span><span class="lobby-txt">لابی</span></a>
+    <a class="btl-lobby-btn no-print" data-lobby-link="index.html" href="index.html" aria-label="بازگشت به لابی حکیمستان" title="بازگشت به لابی"><svg class="btl-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 11 10-8 10 8M5 10v10h14V10M10 20v-5a2 2 0 0 1 4 0v5"/></svg><span class="btl-text">لابی</span></a>
   </div>
 </div></header>
 
@@ -710,7 +1039,7 @@ function normalizeStyle(){
   style=out;
 }
 function newQ(type='mcq'){return{id:uid(),type,text:'',image:'',imageWidth:60,options:['','','',''],answer:null,shortAnswers:[],blankAnswers:[],pairs:[['',''],['',''],['','']],dropdownOptions:['',''],dropdownAnswer:'',sampleAnswer:'',explanation:'',score:1,scoreText:'',difficulty:'متوسط',section:'',subQuestions:[],reference:'',pageBreakAfter:false,lines:3}}
-function newExam(title='آزمون جدید'){return{id:uid(),title,subject:'',grade:'',major:'',school:'',teacher:'',date:todayJalali(),startTime:'',duration:60,onlineDuration:30,random:false,shuffleOptions:false,showCorrect:'end',requireName:true,askClass:true,passPercent:50,showReview:true,allowRetry:true,created:Date.now(),questions:[newQ()]}}
+function newExam(title='آزمون جدید'){return{id:uid(),title,subject:'',grade:'',major:'',school:'',teacher:'',date:todayJalali(),startTime:'',duration:60,onlineDuration:30,random:false,shuffleOptions:false,showCorrect:'end',requireName:true,askClass:true,passPercent:50,targetScore:20,showReview:true,allowRetry:true,created:Date.now(),questions:[newQ()]}}
 function normalizeQuestion(x){const d=newQ();if(!x||typeof x!=='object')x={};for(const k in d)if(x[k]===undefined||x[k]===null)x[k]=Array.isArray(d[k])?d[k].slice():d[k];if(!TYPES[x.type])x.type='mcq';if(!Array.isArray(x.options)||x.options.length<2)x.options=['','','',''];if(!Array.isArray(x.pairs)||!x.pairs.length)x.pairs=[['','']];x.pairs=x.pairs.map(p=>Array.isArray(p)?[String(p[0]??''),String(p[1]??'')]:['','']);if(!Array.isArray(x.dropdownOptions)||x.dropdownOptions.length<2)x.dropdownOptions=['',''];if(!Array.isArray(x.subQuestions))x.subQuestions=[];if(!Array.isArray(x.shortAnswers))x.shortAnswers=[];if(!Array.isArray(x.blankAnswers))x.blankAnswers=[];if(x.type==='mcq'&&x.answer===0&&!has(x.options[0]))x.answer=x.answer;x.score=+x.score||0;if(x.scoreText===undefined)x.scoreText='';x.lines=clamp(x.lines||3,0,20);x.imageWidth=clamp(x.imageWidth||60,20,100);x.image=safeImgUrl(x.image);return x}
 function normalizeData(){
   if(!data||typeof data!=='object')data={exams:[],currentExamId:null};
@@ -742,7 +1071,7 @@ function idbMirrorSave(snapshot){
 })();
 let saveTimer=null,dirty=false;
 function persistNow(){
-  const snap={data,style,results:results.slice(0,500),ui:{tab,active,zoom:ui.zoom,previewAnswers:ui.previewAnswers,designOpen:ui.designOpen},savedAt:Date.now()};
+  const snap={data,style,results:results.slice(0,500),ui:{tab,active,zoom:ui.zoom,previewAnswers:ui.previewAnswers,designOpen:ui.designOpen,inspector:ui.inspector,inspMode:ui.inspMode,metaOpen:ui.metaOpen,railFilter:ui.railFilter,device:ui.device,hakimOff:!!ui.hakimOff},savedAt:Date.now()};
   idbMirrorSave(snap);
   try{localStorage.setItem(KEY,JSON.stringify(data));localStorage.setItem(STYLE_KEY,JSON.stringify(style));if(results.length>500&&!persistNow.capWarned){persistNow.capWarned=true;toast('بیش از ۵۰۰ نتیجه دارید؛ فقط ۵۰۰ نتیجهٔ جدیدتر در مرورگر ذخیره می‌شود. از نتایج پشتیبان JSON بگیرید.','err',{ms:8000})}localStorage.setItem(RESULTS_KEY,JSON.stringify(results.slice(0,500)));localStorage.setItem(UI_KEY,JSON.stringify(snap.ui));dirty=false;const b=$('#saveBadge');if(b){b.classList.add('on');b.querySelector('span').textContent='ذخیره شد'}}catch(e){dirty=false;const b=$('#saveBadge');if(b){b.classList.add('on');b.querySelector('span').textContent='ذخیره در پایگاه محلی'}persistNow.errs=(persistNow.errs||0)+1;if(persistNow.errs===1||persistNow.errs%5===0){toast('حافظهٔ localStorage پر است؛ اطلاعات در پایگاه محلی مرورگر (IndexedDB) ذخیره شد. پیشنهاد می‌شود پشتیبان JSON بگیرید.','info',{ms:7000})}}}
 function save(){dirty=true;const b=$('#saveBadge');if(b){b.classList.remove('on');b.querySelector('span').textContent='در حال ذخیره…'}clearTimeout(saveTimer);saveTimer=setTimeout(persistNow,350)}
@@ -771,20 +1100,24 @@ document.addEventListener('click',e=>{const p=e.target.closest('[data-theme-pick
 
 /* ---------- رندر اصلی ---------- */
 const TABS=[['questions','سؤالات','i-edit'],['design','طراحی برگه','i-palette'],['preview','پیش‌نمایش','i-eye'],['export','خروجی','i-download'],['online','آزمون آنلاین','i-play'],['grading','تصحیح و نتایج','i-check-circle']];
+function syncTopH(){const h=$('.top');if(h&&h.offsetHeight)document.documentElement.style.setProperty('--toph',h.offsetHeight+'px')}
 function render(){
-  $('#tabs').innerHTML=TABS.map(t=>`<button type="button" class="tab ${tab===t[0]?'active':''}" data-tab="${t[0]}" aria-label="${t[1]}">${icon(t[2])}<span class="tl">${t[1]}</span></button>`).join('');
+  $('#tabs').innerHTML=TABS.map((t,k)=>`<button type="button" class="tab ${tab===t[0]?'active':''}" data-tab="${t[0]}" aria-label="${t[1]}" ${tab===t[0]?'aria-current="page"':''} title="${t[1]} (Alt+${k+1})">${icon(t[2])}<span class="tl">${t[1]}</span><span class="tk" aria-hidden="true">${fa(k+1)}</span></button>`).join('');
   const views={questions:viewQuestions,design:viewDesign,preview:viewPreview,export:viewExport,online:viewOnline,grading:viewGrading};
   const app=$('#app');const sy=window.scrollY;app.innerHTML=(views[tab]||viewQuestions)();
-  if(tab==='questions'&&render._keepScroll){try{window.scrollTo(0,sy)}catch(e){}}
+  if(render._last!==tab){const first=render._last===undefined;render._last=tab;if(!first&&app.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches)app.animate([{opacity:0,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:220,easing:'cubic-bezier(.2,.7,.2,1)'})}
+  if(render._keepScroll){try{window.scrollTo(0,sy)}catch(e){}}
   render._keepScroll=false;
   afterRender();save();
 }
 function afterRender(){
+  syncTopH();
   if(tab==='preview')fitPreview();
   if(tab==='design')updateMiniPreview();
-  if(tab==='questions'){const a=$('.qitem.active');if(a)a.scrollIntoView({block:'nearest'})}
-  if(tab==='online'&&pendingOnlineRun){pendingOnlineRun=false;runOnlineHere()}
+  if(tab==='questions'){applyRailFilter();const a=$('.qitem.active'),ql=$('#qlist');if(a&&ql){const horiz=ql.scrollWidth>ql.clientWidth+4&&getComputedStyle(ql).flexDirection==='row';if(horiz)ql.scrollLeft=a.offsetLeft-(ql.clientWidth-a.offsetWidth)/2;else if(a.offsetTop<ql.scrollTop||a.offsetTop+a.offsetHeight>ql.scrollTop+ql.clientHeight)ql.scrollTop=a.offsetTop-ql.clientHeight/3}if(ui.inspMode==='paper')updateInspPaper()}
+  if(tab==='online'){if(pendingOnlineRun){pendingOnlineRun=false;runOnlineHere()}else{const f=$('#onlineFrame');if(f)f.srcdoc=onlinePlaceholder()}}
 }
+function onlinePlaceholder(){const e=exam();return `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><style>html,body{height:100%;margin:0}body{display:grid;place-items:center;font-family:Vazirmatn,Tahoma,sans-serif;background:#f4f6fb;color:#1d2433;text-align:center;padding:20px;box-sizing:border-box}.c{max-width:340px}.o{width:72px;height:72px;border-radius:22px;margin:0 auto 14px;background:linear-gradient(150deg,#5b8def,#2f5fc4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.2),0 12px 24px -12px #2f5fc4;display:grid;place-items:center}h2{margin:0 0 6px;font-size:18px}p{margin:0;color:#4a5468;font-size:13px;line-height:1.9}</style></head><body><div class="c"><div class="o"><svg width="34" height="34" viewBox="0 0 24 24" fill="#fff"><polygon points="7 4 20 12 7 20 7 4"/></svg></div><h2>${esc(e.title||'آزمون')}</h2><p>${fa(e.questions.length)} سؤال · ${fa(e.onlineDuration||30)} دقیقه<br>برای دیدن تجربهٔ دانش‌آموز، «اجرای آزمایشی» را بزنید.</p></div></body></html>`}
 function go(t){tab=t;ui.tab=t;window.scrollTo({top:0});render()}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t)go(t.dataset.tab)});
 let pendingOnlineRun=false;
@@ -799,83 +1132,139 @@ function sel(label,key,val,opts,attr='data-e'){return `<div><label>${label}</lab
 function hasAnswer(x){switch(x.type){case 'mcq':return Number.isInteger(x.answer)&&x.answer>=0&&x.answer<x.options.length;case 'tf':return typeof x.answer==='boolean';case 'multi':return Array.isArray(x.answer)&&x.answer.length>0;case 'short':return x.shortAnswers.length>0;case 'blank':return x.blankAnswers.length>0;case 'match':return x.pairs.some(p=>has(p[0])&&has(p[1]));case 'dropdown':return has(x.dropdownAnswer);case 'essay':return true}return true}
 function autoGradable(t){return ['mcq','tf','multi','short','blank','match','dropdown'].includes(t)}
 
+/* ---------- ابزارهای میز کار استودیو ---------- */
+const TYPE_GLYPH={mcq:'t-mcq',tf:'t-tf',multi:'t-multi',short:'t-short',blank:'t-blank',match:'t-match',dropdown:'t-dropdown',essay:'t-essay'};
+const TYPE_SHORT={mcq:'چهارگزینه‌ای',tf:'صحیح/غلط',multi:'چندپاسخی',short:'پاسخ کوتاه',blank:'جای خالی',match:'تطبیقی',dropdown:'لیستی',essay:'تشریحی'};
+const TYPE_COLOR={mcq:'#4f8ef7',tf:'#22b07d',multi:'#a970f0',short:'#f0a43a',blank:'#e2577e',match:'#2bb5c9',dropdown:'#9aab3c',essay:'#c9804e'};
+const TYPE_MIN={mcq:.75,tf:.5,multi:1.25,short:1.5,blank:1,match:2,dropdown:.75,essay:4};
+function glyph(t){return `<svg class="ic" aria-hidden="true"><use href="#${TYPE_GLYPH[t]||'t-essay'}"/></svg>`}
+function qIssue(x){if(!has(x.text)&&!x.image&&!(x.subQuestions&&x.subQuestions.length))return 'err';if((x.type==='mcq'||x.type==='multi')&&x.options.some(o=>!has(o)))return 'err';if(x.type==='blank'&&!/__+/.test(x.text))return 'err';if(autoGradable(x.type)&&!hasAnswer(x))return 'warn';return ''}
+function examIssues(e=exam()){const out=[];e.questions.forEach((x,i)=>{const n=fa(i+1);
+  if(!has(x.text)&&!x.image&&!x.subQuestions.length)out.push({i,l:'err',m:`سؤال ${n} متن ندارد`});
+  if((x.type==='mcq'||x.type==='multi')&&x.options.some(o=>!has(o)))out.push({i,l:'err',m:`سؤال ${n} گزینهٔ خالی دارد`});
+  if(x.type==='dropdown'&&x.dropdownOptions.some(o=>!has(o)))out.push({i,l:'err',m:`سؤال ${n} گزینهٔ خالی در لیست دارد`});
+  if(x.type==='match'&&!x.pairs.some(p=>has(p[0])&&has(p[1])))out.push({i,l:'err',m:`سؤال ${n} هیچ جفت کاملی ندارد`});
+  if(x.type==='blank'&&!/__+/.test(x.text))out.push({i,l:'err',m:`سؤال ${n} در متن «__» ندارد`});
+  if(autoGradable(x.type)&&!hasAnswer(x))out.push({i,l:'warn',m:`پاسخ درست سؤال ${n} ثبت نشده`});
+  if(!(+x.score>0)&&!has(x.scoreText))out.push({i,l:'warn',m:`بارم سؤال ${n} صفر است`});
+});return out}
+function estMinutes(e=exam()){return Math.max(1,Math.round(e.questions.reduce((s,x)=>s+(TYPE_MIN[x.type]||1)+(x.subQuestions||[]).length*.75,0)))}
+function scoreRingHTML(e){const t=totalScore(e),T=+e.targetScore||20;const p=T?t/T:0;const C=119.38;const off=C*(1-Math.min(1,p));return `<div class="ring ${Math.abs(t-T)<.001?'full':t>T?'over':''}" id="scoreRing"><svg viewBox="0 0 46 46" aria-hidden="true"><circle class="trk" cx="23" cy="23" r="19"/><circle class="val" id="ringVal" cx="23" cy="23" r="19" stroke-dasharray="${C}" stroke-dashoffset="${off.toFixed(2)}"/></svg><b id="ringTxt">${fa(Math.round(p*100))}٪</b></div>`}
+function healthHTML(e){const is=examIssues(e);const errs=is.filter(x=>x.l==='err').length;const cls=errs?'bad':is.length?'warn':'ok';return `<span class="health-orb ${cls}">${icon(errs?'i-alert':is.length?'i-info':'i-check-circle')}</span><span style="min-width:0"><b>${is.length?`${fa(is.length)} مورد نیازمند بررسی`:'آمادهٔ چاپ و برگزاری'}</b><span>${fa(e.questions.length)} سؤال · حدود ${fa(estMinutes(e))} دقیقه پاسخ‌گویی</span></span>`}
+function inspectorBody(e=exam()){
+  if(ui.inspMode==='paper')return `<div class="insp-paper" id="inspFrame" tabindex="0" role="region" aria-label="نمای کوچک برگه"><div class="scaler" id="inspScaler"></div></div><div class="tip" style="margin-top:6px">${icon('i-info')} نمای کوچک همان برگهٔ چاپی؛ برای جزئیات به «پیش‌نمایش» بروید.</div>`;
+  const total=totalScore(e),n=e.questions.length;const byT={};e.questions.forEach(x=>{byT[x.type]=(byT[x.type]||0)+(+x.score||0)});const cnt={};e.questions.forEach(x=>{cnt[x.type]=(cnt[x.type]||0)+1});
+  const types=Object.keys(TYPES).filter(t=>cnt[t]);
+  const dd=DIFF.map(d=>e.questions.filter(x=>x.difficulty===d).length);const dmax=Math.max(1,...dd);const dcol=['var(--ok-text)','var(--accent)','var(--bad-text)'];
+  const mins=estMinutes(e),dur=+e.duration||0;const verdict=!dur?'مدت آزمون تعیین نشده':mins>dur?'زمان کم است؛ سؤال یا مدت را تنظیم کنید':mins<dur*.45?'زمان بیش از نیاز است':'تناسب زمان مناسب است';
+  const is=examIssues(e);const T=+e.targetScore||20;
+  return `<div class="meter"><h3>توزیع بارم بر اساس نوع <span>جمع ${faNum(total)} از ${faNum(T)}</span></h3><div class="stack-bar" role="img" aria-label="سهم بارم هر نوع سؤال">${types.map(t=>`<i style="width:${total?(byT[t]/total*100):(cnt[t]/n*100)}%;background:${TYPE_COLOR[t]}"></i>`).join('')}</div><div class="legend">${types.map(t=>`<span><i style="background:${TYPE_COLOR[t]}"></i>${esc(TYPE_SHORT[t])}<b>${fa(cnt[t])}</b></span>`).join('')}</div></div>
+  <div class="meter"><h3>سطح دشواری <span>${fa(n)} سؤال</span></h3><div class="diffbars">${DIFF.map((d,k)=>`<div><b style="font-size:.74rem">${fa(dd[k])}</b><i style="height:${Math.max(4,dd[k]/dmax*52)}px;background:${dcol[k]}"></i><span>${d}</span></div>`).join('')}</div></div>
+  <div class="meter"><h3>زمان تخمینی پاسخ‌گویی</h3><div class="timecard">${icon('i-clock')}<div><b>حدود ${fa(mins)} دقیقه</b><span>مدت آزمون: ${dur?fa(dur)+' دقیقه':'—'} · ${verdict}</span></div></div></div>
+  <div class="meter"><h3>فهرست بررسی <span>${fa(is.length)} مورد</span></h3><div class="issues">${is.length?is.slice(0,40).map(x=>`<button type="button" class="issue ${x.l}" data-act="gotoQ" data-i="${x.i}">${icon(x.l==='err'?'i-alert':'i-info')}<span>${esc(x.m)}</span></button>`).join(''):`<div class="issue allgood">${icon('i-check-circle')}<span>همه‌چیز مرتب است؛ آزمون آمادهٔ خروجی است.</span></div>`}</div></div>
+  <button type="button" class="btn sm block" data-act="balance">${icon('i-scale')} متعادل‌سازی بارم‌ها تا ${faNum(T)} نمره</button>`;
+}
+function updateInspPaper(){const sc=$('#inspScaler'),fr=$('#inspFrame');if(!sc||!fr)return;ensurePaperStyle();sc.innerHTML=paper(false);const p=sc.firstElementChild;if(!p)return;const pw=p.offsetWidth||794;const k=Math.min(1,(fr.clientWidth-16)/pw);sc.style.transform=`scale(${k})`;sc.style.width=pw+'px';sc.style.height=p.offsetHeight+'px';fr.style.height=(p.offsetHeight*k+16)+'px'}
+function refreshBench(){if(tab!=='questions')return;const e=exam();const r=$('#scoreRing');if(r)r.outerHTML=scoreRingHTML(e);const sn=$('#scoreNow');if(sn)sn.textContent=faNum(totalScore(e));const h=$('#deckHealth');if(h)h.innerHTML=healthHTML(e);const ib=$('#inspBody');if(ib){if(ui.inspMode==='paper')updateInspPaper();else ib.innerHTML=inspectorBody(e)}const qc=$('#qCount');const ta=$('#qText');if(qc&&ta)qc.textContent=`${fa(ta.value.length)} نویسه`}
+const refreshBenchDebounced=debounce(refreshBench,260);
+function applyRailFilter(){const f=ui.railFilter||'all',s=norm(ui.railQuery||'');const e=exam();let shown=0;$$('.qitem').forEach(el=>{const i=+el.dataset.qi,x=e.questions[i];if(!x)return;let ok=true;if(f==='issues')ok=!!qIssue(x);else if(f==='essay')ok=!autoGradable(x.type);if(ok&&s)ok=norm(x.text+' '+(x.section||'')+' '+TYPES[x.type]).includes(s)||norm(fa(i+1))===s||String(i+1)===en(s);el.classList.toggle('filtered',!ok);const ins=el.nextElementSibling;if(ins&&ins.classList.contains('insert'))ins.classList.toggle('hide',f!=='all'||!!s);if(ok)shown++});const em=$('#railEmpty');if(em)em.classList.toggle('hide',shown>0)}
+
 function viewQuestions(){
-  /* اسکرول فهرست سؤال‌ها پس از رندر حفظ می‌شود */
   const e=exam();if(active>=e.questions.length)active=e.questions.length-1;
-  const total=totalScore(e);
+  const total=totalScore(e),T=+e.targetScore||20;
   const examOpts=data.exams.map(x=>`<option value="${escAttr(x.id)}" ${x.id===e.id?'selected':''}>${esc(x.title||'بدون عنوان')} (${fa(x.questions.length)} سؤال)</option>`).join('');
+  const metaOpen=ui.metaOpen!==undefined?!!ui.metaOpen:!has(e.subject)&&!has(e.grade);
+  const mchips=[['درس',e.subject],['پایه',e.grade],['تاریخ',e.date],['مدت',has(e.duration)?fa(e.duration)+' دقیقه':''],['دبیر',e.teacher],['آموزشگاه',e.school]].map(([k,v])=>has(v)?`<span>${esc(k)}: ${esc(v)}</span>`:`<span class="empty-meta">${esc(k)}: —</span>`).join('');
+  const f=ui.railFilter||'all';const inspOn=ui.inspector!==false;
   return `
-  <div class="card">
-    <div class="card-head"><div><h2>${icon('i-folder')} آزمون‌های من</h2><div class="desc">می‌توانید چند آزمون جداگانه داشته باشید و بین آن‌ها جابه‌جا شوید.</div></div>
-      <div class="btnrow"><button class="btn primary" data-act="newExam">${icon('i-plus')} آزمون جدید</button><button class="btn" data-act="dupExam">${icon('i-copy')} کپی</button><button class="btn" data-act="sampleExam">${icon('i-wand')} نمونه آماده</button><button class="btn danger" data-act="delExam">${icon('i-trash')} حذف</button></div></div>
-    <select id="examPicker" aria-label="انتخاب آزمون">${examOpts}</select>
-  </div>
-  <div class="card">
-    <div class="card-head"><div><h2>${icon('i-info')} اطلاعات آزمون</h2><div class="desc">این اطلاعات در سربرگ برگه چاپ می‌شود؛ هر فیلد خالی باشد، خودکار حذف می‌شود.</div></div><span class="badge">${icon('i-award')} جمع بارم: ${faNum(total)}</span></div>
-    <div class="grid g3">
-      ${inp('عنوان آزمون','title',e.title,'text','placeholder="مثال: آزمون نوبت اول ریاضی"')}
-      ${inp('نام درس','subject',e.subject)}
-      ${inp('پایه / کلاس','grade',e.grade,'text','placeholder="مثال: نهم"')}
-      ${inp('رشته تحصیلی','major',e.major)}
-      ${inp('نام آموزشگاه','school',e.school)}
-      ${inp('نام دبیر','teacher',e.teacher)}
-      <div><label>تاریخ آزمون</label><div class="fieldrow"><input data-e="date" value="${escAttr(e.date)}" placeholder="۱۴۰۴/۰۸/۱۵"><button class="btn" data-act="today" title="تاریخ امروز">${icon('i-calendar')}</button></div></div>
-      ${inp('ساعت شروع','startTime',e.startTime,'text','placeholder="۸:۳۰"')}
-      ${inp('مدت آزمون (دقیقه)','duration',e.duration,'number','min="1"')}
+  <section class="deck" aria-label="عرشهٔ کنترل آزمون">
+    <div class="deck-cell deck-exam">
+      <div class="stack"><div class="eyebrow">${icon('i-folder')} آزمون فعال · ${fa(data.exams.length)} آزمون ذخیره‌شده</div><select id="examPicker" aria-label="انتخاب آزمون">${examOpts}</select></div>
+      <div class="keyset"><button type="button" class="iconbtn" data-act="newExam" title="آزمون جدید" aria-label="آزمون جدید">${icon('i-plus')}</button><button type="button" class="iconbtn" data-act="dupExam" title="کپی این آزمون" aria-label="کپی این آزمون">${icon('i-copy')}</button><button type="button" class="iconbtn" data-act="sampleExam" title="بارگذاری نمونهٔ آماده" aria-label="بارگذاری نمونهٔ آماده">${icon('i-wand')}</button><button type="button" class="iconbtn danger" data-act="delExam" title="حذف این آزمون" aria-label="حذف این آزمون">${icon('i-trash')}</button></div>
     </div>
-  </div>
-  <div class="split">
-    <div class="card sticky">
-      <div class="card-head"><h3>${icon('i-list')} سؤالات <span class="badge gray">${fa(e.questions.length)}</span></h3>
-        <div class="btnrow"><button class="btn sm" data-act="bulkImport" title="افزودن سریع چند سؤال از متن">${icon('i-clipboard')} افزودن گروهی</button></div></div>
-      <div class="tools"><button class="btn primary sm" data-act="addQ">${icon('i-plus')} سؤال جدید</button><button class="btn sm" data-act="addQType" title="انتخاب نوع سؤال جدید">${icon('i-chevron')} نوع…</button></div>
+    <button type="button" class="deck-cell deck-meta" data-act="toggleMeta" aria-expanded="${metaOpen}" aria-controls="metaDrawer">
+      <span class="health-orb">${icon('i-book')}</span>
+      <span style="min-width:0;flex:1"><span class="eyebrow">شناسنامهٔ آزمون · سربرگ برگه</span><span class="mtitle" style="display:block">${esc(e.title||'بدون عنوان')}</span><span class="mline">${mchips}</span></span>
+      ${icon('i-chevron','chev')}
+    </button>
+    <div class="deck-cell deck-score">${scoreRingHTML(e)}<div><div class="lbl">جمع بارم / نمرهٔ هدف</div><div class="num"><span id="scoreNow">${faNum(total)}</span> / <input type="number" min="1" max="200" step=".5" data-e="targetScore" value="${T}" aria-label="نمرهٔ هدف آزمون"></div></div><button type="button" class="iconbtn" data-act="balance" title="متعادل‌سازی بارم‌ها تا نمرهٔ هدف" aria-label="متعادل‌سازی بارم‌ها تا نمرهٔ هدف">${icon('i-scale')}</button></div>
+    <button type="button" class="deck-cell deck-health" id="deckHealth" data-act="showHealth" aria-label="نمایش سلامت آزمون">${healthHTML(e)}</button>
+  </section>
+  ${metaOpen?`<section class="panel meta-drawer" id="metaDrawer" aria-label="اطلاعات سربرگ آزمون">
+    <div class="card-head" style="margin-bottom:6px"><div><h2>${icon('i-book')} شناسنامهٔ آزمون</h2><div class="desc">این اطلاعات در سربرگ برگه چاپ می‌شود؛ هر فیلد خالی خودکار حذف می‌شود.</div></div><button type="button" class="btn sm ghost" data-act="toggleMeta">${icon('i-up')} جمع کردن</button></div>
+    <div class="grid">
+      <div class="wide">${inp('عنوان آزمون','title',e.title,'text','placeholder="مثال: آزمون نوبت اول ریاضی" aria-label="عنوان آزمون"')}</div>
+      ${inp('نام درس','subject',e.subject,'text','aria-label="نام درس"')}
+      ${inp('پایه / کلاس','grade',e.grade,'text','placeholder="مثال: نهم" aria-label="پایه / کلاس"')}
+      ${inp('رشته تحصیلی','major',e.major,'text','aria-label="رشته تحصیلی"')}
+      ${inp('نام آموزشگاه','school',e.school,'text','aria-label="نام آموزشگاه"')}
+      ${inp('نام دبیر','teacher',e.teacher,'text','aria-label="نام دبیر"')}
+      <div><label>تاریخ آزمون</label><div class="fieldrow"><input data-e="date" value="${escAttr(e.date)}" placeholder="۱۴۰۴/۰۸/۱۵" aria-label="تاریخ آزمون"><button type="button" class="btn" data-act="today" title="تاریخ امروز" aria-label="درج تاریخ امروز">${icon('i-calendar')}</button></div></div>
+      ${inp('ساعت شروع','startTime',e.startTime,'text','placeholder="۸:۳۰" aria-label="ساعت شروع"')}
+      ${inp('مدت آزمون (دقیقه)','duration',e.duration,'number','min="1" aria-label="مدت آزمون به دقیقه"')}
+    </div></section>`:''}
+  <div class="bench ${inspOn?'':'insp-off'}">
+    <aside class="rail" aria-label="فهرست سؤال‌ها">
+      <div class="rail-head"><h2>${icon('i-list')} سؤال‌ها <span class="badge gray">${fa(e.questions.length)}</span></h2><button type="button" class="btn xs" data-act="bulkImport" title="افزودن سریع چند سؤال از متن">${icon('i-clipboard')} گروهی</button></div>
+      <div class="rail-search">${icon('i-search')}<input id="railSearch" type="search" value="${escAttr(ui.railQuery||'')}" placeholder="جستجو در متن، بخش یا شماره…" aria-label="جستجو در سؤال‌ها"></div>
+      <div class="rail-filters" role="group" aria-label="صافی فهرست">${[['all','همه'],['issues','نیازمند بررسی'],['essay','تصحیح دستی']].map(([k,v])=>`<button type="button" class="chip ${f===k?'active':''}" data-act="railFilter" data-v="${k}" aria-pressed="${f===k}">${v}</button>`).join('')}</div>
       <div class="qlist" id="qlist">${e.questions.map((x,i)=>qItem(x,i)).join('')}</div>
-      <div class="muted" style="margin-top:8px">${icon('i-info')} با کشیدن (در دسکتاپ) یا دکمه‌های ↑↓ ترتیب سؤال‌ها را عوض کنید.</div>
-    </div>
-    <div class="card" id="editorCard">${editor(q(),active)}</div>
+      <div class="rail-empty hide" id="railEmpty">سؤالی با این صافی پیدا نشد.</div>
+      <div class="rail-foot"><button type="button" class="btn primary sm" data-act="addQ">${icon('i-plus')} سؤال جدید</button><button type="button" class="btn sm" data-act="addQType" title="انتخاب نوع سؤال جدید" aria-label="سؤال جدید با انتخاب نوع">${icon('i-layers')}</button><button type="button" class="btn sm" data-act="cmdk" title="جستجو و فرمان‌ها (Ctrl+K)" aria-label="جستجو و فرمان‌ها">${icon('i-bolt')}</button></div>
+    </aside>
+    <section class="panel canvas" id="editorCard" aria-label="ویرایشگر سؤال">${editor(q(),active)}</section>
+    <aside class="inspector" aria-label="بازرس آزمون">
+      <div class="insp-head"><div class="seg" role="group" aria-label="حالت بازرس"><button type="button" class="${ui.inspMode!=='paper'?'on':''}" data-act="inspMode" data-v="health" aria-pressed="${ui.inspMode!=='paper'}">${icon('i-chart')} نقشهٔ آزمون</button><button type="button" class="${ui.inspMode==='paper'?'on':''}" data-act="inspMode" data-v="paper" aria-pressed="${ui.inspMode==='paper'}">${icon('i-eye')} برگهٔ زنده</button></div><button type="button" class="iconbtn" data-act="toggleInsp" title="بستن بازرس" aria-label="بستن بازرس" style="width:34px;height:34px">${icon('i-x')}</button></div>
+      <div class="insp-body" id="inspBody">${inspectorBody(e)}</div>
+    </aside>
   </div>`;
 }
-function qItem(x,i){const warn=!hasAnswer(x)&&autoGradable(x.type);const t=(x.text||'').trim();return `<div class="qitem ${i===active?'active':''}" data-qi="${i}" draggable="true"><span class="grip">${icon('i-grip')}</span><span class="qnum">${fa(i+1)}</span><div style="min-width:0"><div class="qmeta"><span class="badge">${icon(TYPE_ICON[x.type])} ${TYPES[x.type]}</span><span class="badge gray">${has(x.scoreText)?esc(x.scoreText):faNum(x.score)+' نمره'}</span>${x.section?`<span class="badge gray">${esc(x.section)}</span>`:''}${warn?`<span class="badge warn" title="پاسخ صحیح ثبت نشده">${icon('i-alert')}</span>`:''}${(!t&&!(x.subQuestions&&x.subQuestions.length))?`<span class="badge warn" title="متن سؤال خالی است">${icon('i-alert')} بدون متن</span>`:''}</div><div class="qtxt">${esc(t.slice(0,90))||'—'}</div></div><div class="acts"><button type="button" data-act="moveUp" data-i="${i}" title="بالا" ${i===0?'disabled':''}>${icon('i-up')}</button><button type="button" data-act="moveDown" data-i="${i}" title="پایین" ${i===exam().questions.length-1?'disabled':''}>${icon('i-down')}</button></div></div>${i<exam().questions.length-1?`<div class="insert"><button type="button" data-act="insertAfter" data-i="${i}" title="درج سؤال اینجا">+</button></div>`:''}`}
+function qItem(x,i){const st=qIssue(x);const t=(x.text||'').trim();const n=exam().questions.length;return `<div class="qitem ${i===active?'active':''}" data-qi="${i}" draggable="true" title="${escAttr(TYPES[x.type])}${st==='err'?' — ناقص':st==='warn'?' — پاسخ درست ثبت نشده':''}"><span class="grip">${icon('i-grip')}</span><span class="qnum">${fa(i+1)}</span><div style="min-width:0"><div class="qmeta"><span class="badge">${glyph(x.type)} ${TYPE_SHORT[x.type]}</span><span class="badge gray">${has(x.scoreText)?esc(x.scoreText):faNum(x.score)+' نمره'}</span>${x.section?`<span class="badge gray">${esc(x.section)}</span>`:''}${st?`<span class="badge warn" title="${st==='err'?'سؤال ناقص است':'پاسخ صحیح ثبت نشده'}">${icon('i-alert')}${st==='err'?' ناقص':''}</span>`:''}</div><div class="qtxt">${esc(t.slice(0,90))||'—'}</div></div><div class="acts"><button type="button" data-act="moveUp" data-i="${i}" title="بالا" aria-label="انتقال سؤال ${fa(i+1)} به بالا" ${i===0?'disabled':''}>${icon('i-up')}</button><button type="button" data-act="moveDown" data-i="${i}" title="پایین" aria-label="انتقال سؤال ${fa(i+1)} به پایین" ${i===n-1?'disabled':''}>${icon('i-down')}</button></div></div>${i<n-1?`<div class="insert"><button type="button" data-act="insertAfter" data-i="${i}" title="درج سؤال اینجا" aria-label="درج سؤال بعد از سؤال ${fa(i+1)}">+</button></div>`:''}`}
 
 function editor(x,i){
   if(!x)return `<div class="empty">${icon('i-edit')}<div>سؤالی برای ویرایش انتخاب نشده</div></div>`;
   const optionLetters=j=>style.optionLabels==='num'?fa(j+1):style.optionLabels==='latin'?String.fromCharCode(65+j):ABJAD[j];
-  let extra='';
+  const n=exam().questions.length;let extra='';
   if(x.type==='mcq'||x.type==='multi'){
-    extra=`<label>گزینه‌ها <span class="muted">(${x.type==='mcq'?'گزینه‌ی درست را با دایره‌ی کنارش مشخص کنید':'می‌توانید چند گزینه‌ی درست انتخاب کنید'})</span></label>
-    <div class="options">${x.options.map((o,j)=>{const on=x.type==='multi'?(x.answer||[]).includes(j):x.answer===j;return `<div class="option ${on?'correct':''}"><input type="${x.type==='multi'?'checkbox':'radio'}" name="correct" data-correct="${j}" ${on?'checked':''} title="پاسخ درست"><div style="display:flex;gap:6px;align-items:center;min-width:0"><span class="olabel">${optionLetters(j)}</span><input data-opt="${j}" value="${escAttr(o)}" placeholder="متن گزینه ${fa(j+1)}"></div><button class="btn danger xs" data-act="delOpt" data-i="${j}" title="حذف گزینه" ${x.options.length<=2?'disabled':''}>${icon('i-x')}</button></div>`}).join('')}</div>
-    <div class="btnrow mt"><button class="btn sm" data-act="addOpt" ${x.options.length>=8?'disabled':''}>${icon('i-plus')} افزودن گزینه</button><button class="btn sm ghost" data-act="shuffleOpts" title="به‌هم‌ریختن ترتیب گزینه‌ها">${icon('i-shuffle')} به‌هم‌ریختن</button></div>`;
+    extra=`<div class="sectitle">گزینه‌ها <span class="muted">(${x.type==='mcq'?'روی دایرهٔ کنار گزینهٔ درست بزنید':'می‌توانید چند گزینهٔ درست انتخاب کنید'})</span></div>
+    <div class="options">${x.options.map((o,j)=>{const on=x.type==='multi'?(x.answer||[]).includes(j):x.answer===j;return `<div class="option ${on?'correct':''}"><span class="pad" title="پاسخ درست"><input type="${x.type==='multi'?'checkbox':'radio'}" name="correct" data-correct="${j}" ${on?'checked':''} aria-label="گزینهٔ ${optionLetters(j)} پاسخ درست است">${icon('i-check')}</span><div style="display:flex;gap:8px;align-items:center;min-width:0"><span class="olabel">${optionLetters(j)}</span><input data-opt="${j}" value="${escAttr(o)}" placeholder="متن گزینه ${fa(j+1)}" aria-label="متن گزینهٔ ${optionLetters(j)}"></div><button type="button" class="btn danger xs" data-act="delOpt" data-i="${j}" title="حذف گزینه" aria-label="حذف گزینهٔ ${optionLetters(j)}" ${x.options.length<=2?'disabled':''}>${icon('i-x')}</button></div>`}).join('')}</div>
+    <div class="btnrow mt"><button type="button" class="btn sm" data-act="addOpt" ${x.options.length>=8?'disabled':''}>${icon('i-plus')} افزودن گزینه</button><button type="button" class="btn sm ghost" data-act="shuffleOpts" title="به‌هم‌ریختن ترتیب گزینه‌ها">${icon('i-shuffle')} به‌هم‌ریختن</button></div>`;
   }
-  if(x.type==='tf')extra=`<label>پاسخ درست</label><div class="btnrow"><button class="btn tfbtn ${x.answer===true?'on':''}" data-act="tf" data-v="1">${icon('i-check')} صحیح</button><button class="btn tfbtn ${x.answer===false?'off':''}" data-act="tf" data-v="0">${icon('i-x')} غلط</button></div>`;
-  if(x.type==='short')extra=`<label>پاسخ‌های قابل‌قبول <span class="muted">(چند پاسخ را با «،» یا «,» جدا کنید)</span></label><input data-q="shortAnswers" value="${escAttr(x.shortAnswers.join('، '))}" placeholder="مثال: تهران، Tehran"><label>تعداد خط پاسخ روی برگه</label><input type="number" min="0" max="20" data-q="lines" value="${x.lines}">`;
-  if(x.type==='blank'){const n=(x.text.match(/__+/g)||[]).length;extra=`<div class="note info">${icon('i-info')}<div>در متن سؤال، جای خالی را با دو خط زیر <span class="kbd">__</span> مشخص کنید. اکنون <b>${fa(n)}</b> جای خالی در متن هست.</div></div><label>پاسخ جاهای خالی به ترتیب <span class="muted">(با «،» جدا کنید)</span></label><input data-q="blankAnswers" value="${escAttr(x.blankAnswers.join('، '))}" placeholder="مثال: فردوسی، توس">`}
-  if(x.type==='match')extra=`<label>جفت‌های تطبیقی <span class="muted">(ستون «ب» روی برگه به‌صورت درهم چاپ می‌شود)</span></label><div class="grid" style="gap:8px">${x.pairs.map((p,j)=>`<div class="pair"><input data-pair="${j},0" value="${escAttr(p[0])}" placeholder="ستون الف — مورد ${fa(j+1)}"><span class="arrow">⟵</span><input data-pair="${j},1" value="${escAttr(p[1])}" placeholder="ستون ب — پاسخ"><button class="btn danger xs" data-act="delPair" data-i="${j}" ${x.pairs.length<=1?'disabled':''}>${icon('i-x')}</button></div>`).join('')}</div><div class="btnrow mt"><button class="btn sm" data-act="addPair" ${x.pairs.length>=12?'disabled':''}>${icon('i-plus')} افزودن جفت</button></div><label>گزینه‌های اضافی ستون ب (انحرافی، اختیاری — با «،» جدا کنید)</label><input data-q="distractors" value="${escAttr((x.distractors||[]).join('، '))}">`;
-  if(x.type==='dropdown')extra=`<label>گزینه‌های لیست</label><div class="options">${x.dropdownOptions.map((o,j)=>`<div class="option"><span class="olabel">${fa(j+1)}</span><input data-dd="${j}" value="${escAttr(o)}" placeholder="گزینه ${fa(j+1)}"><button class="btn danger xs" data-act="delDD" data-i="${j}" ${x.dropdownOptions.length<=2?'disabled':''}>${icon('i-x')}</button></div>`).join('')}</div><div class="btnrow mt"><button class="btn sm" data-act="addDD" ${x.dropdownOptions.length>=8?'disabled':''}>${icon('i-plus')} افزودن گزینه</button></div><label>پاسخ درست</label><select data-q="dropdownAnswer" aria-label="پاسخ درست"><option value="">انتخاب کنید…</option>${x.dropdownOptions.map(o=>`<option value="${escAttr(o)}" ${x.dropdownAnswer===o&&has(o)?'selected':''}>${esc(o)||'(خالی)'}</option>`).join('')}</select>`;
-  if(x.type==='essay')extra=`<label>پاسخ نمونه / راهنمای تصحیح (در کلید پاسخ چاپ می‌شود)</label><textarea data-q="sampleAnswer">${esc(x.sampleAnswer)}</textarea><label>تعداد خط پاسخ روی برگه</label><input type="number" min="0" max="20" data-q="lines" value="${x.lines}">`;
-
-  return `<div class="card-head"><h2>ویرایش سؤال ${fa(i+1)}</h2><div class="btnrow"><button class="btn sm" data-act="dupQ">${icon('i-copy')} کپی سؤال</button><button class="btn danger sm" data-act="delQ">${icon('i-trash')} حذف</button></div></div>
-  <div class="grid g3">
-    ${sel('نوع سؤال','type',x.type,Object.entries(TYPES),'data-q')}
-    <div><label>بارم (نمره)</label><input type="number" min="0" step=".25" data-q="score" value="${x.score}"><label style="margin-top:8px">متن ستون بارم <span class="muted">(اختیاری)</span></label><input type="text" data-q="scoreText" value="${escAttr(x.scoreText||'')}" placeholder="مثلاً: خیلی خوب — خالی = عدد بارم"></div>
-    ${sel('سطح دشواری','difficulty',x.difficulty,DIFF.map(d=>[d,d]),'data-q')}
-  </div>
-  <label>متن سؤال</label>
-  <div class="tools"><button class="btn xs" data-act="insText" data-v="__" title="درج جای خالی">جای خالی __</button><button class="btn xs" data-act="insText" data-v="«»">« »</button><button class="btn xs" data-act="insText" data-v="؟">؟</button><button class="btn xs" data-act="insText" data-v="،">،</button><button class="btn xs" data-act="insText" data-v="\u200c" title="نیم‌فاصله">نیم‌فاصله</button><button class="btn xs" data-act="faDigits" title="تبدیل ارقام به فارسی">۱۲۳</button></div>
-  <textarea id="qText" data-q="text" placeholder="متن سؤال را بنویسید… (هر خط جدید روی برگه حفظ می‌شود)">${esc(x.text)}</textarea>
-  ${extra}
-  <details class="acc mt" ${x.image||x.subQuestions.length||x.section||x.reference||x.explanation?'open':''}><summary>${icon('i-settings')} تنظیمات بیشتر (تصویر، بخش‌بندی، زیرسؤال، مرجع، توضیح)</summary><div class="acc-body">
-    <div class="grid g2">
-      <div><label>تصویر سؤال</label><div class="fieldrow"><input data-q="image" value="${x.image&&x.image.startsWith('data:')?'':escAttr(x.image)}" placeholder="آدرس اینترنتی تصویر یا انتخاب فایل ←" ${x.image&&x.image.startsWith('data:')?'disabled':''}><label class="btn" style="margin:0;cursor:pointer">${icon('i-upload')}<input type="file" accept="image/*" data-act="imgFile" class="hide"></label></div>${x.image?`<div style="display:flex;gap:8px;align-items:center;margin-top:6px"><img src="${escAttr(x.image)}" style="height:56px;border-radius:8px;border:1px solid var(--border)" alt=""><button class="btn danger xs" data-act="delImg">${icon('i-x')} حذف تصویر</button></div><label>عرض تصویر روی برگه: <b id="imgWVal">${fa(x.imageWidth)}٪</b></label><input type="range" min="20" max="100" step="5" data-q="imageWidth" value="${x.imageWidth}">`:''}</div>
-      <div><label>گروه / بخش سؤال <span class="muted">(مثلاً: درک مطلب، قلمرو زبانی)</span></label><input data-q="section" value="${escAttr(x.section)}" list="sectionList" placeholder="اختیاری — سؤال‌های هم‌گروه پشت‌سرهم زیر یک عنوان چاپ می‌شوند"><datalist id="sectionList">${[...new Set(exam().questions.map(z=>z.section).filter(Boolean))].map(s=>`<option value="${escAttr(s)}">`).join('')}</datalist>
-      <label>مرجع سؤال <span class="muted">(مثلاً: درس ۹ ص ۷۵)</span></label><input data-q="reference" value="${escAttr(x.reference)}"></div>
+  if(x.type==='tf')extra=`<div class="sectitle">پاسخ درست</div><div class="btnrow"><button type="button" class="btn tfbtn ${x.answer===true?'on':''}" data-act="tf" data-v="1" aria-pressed="${x.answer===true}">${icon('i-check')} صحیح</button><button type="button" class="btn tfbtn ${x.answer===false?'off':''}" data-act="tf" data-v="0" aria-pressed="${x.answer===false}">${icon('i-x')} غلط</button></div>`;
+  if(x.type==='short')extra=`<div class="sectitle">پاسخ‌های قابل‌قبول <span class="muted">(با «،» یا «,» جدا کنید)</span></div><input data-q="shortAnswers" value="${escAttr(x.shortAnswers.join('، '))}" placeholder="مثال: تهران، Tehran" aria-label="پاسخ‌های قابل قبول"><label>تعداد خط پاسخ روی برگه</label><input type="number" min="0" max="20" data-q="lines" value="${x.lines}" aria-label="تعداد خط پاسخ روی برگه">`;
+  if(x.type==='blank'){const nb=(x.text.match(/__+/g)||[]).length;extra=`<div class="note mt">${icon('i-info')}<div>در متن سؤال، جای خالی را با دو خط زیر <span class="kbd">__</span> مشخص کنید. اکنون <b>${fa(nb)}</b> جای خالی در متن هست.</div></div><div class="sectitle">پاسخ جاهای خالی به ترتیب <span class="muted">(با «،» جدا کنید)</span></div><input data-q="blankAnswers" value="${escAttr(x.blankAnswers.join('، '))}" placeholder="مثال: فردوسی، توس" aria-label="پاسخ جاهای خالی">`}
+  if(x.type==='match')extra=`<div class="sectitle">جفت‌های تطبیقی <span class="muted">(ستون «ب» روی برگه درهم چاپ می‌شود)</span></div><div class="grid" style="gap:8px">${x.pairs.map((p,j)=>`<div class="pair"><input data-pair="${j},0" value="${escAttr(p[0])}" placeholder="ستون الف — مورد ${fa(j+1)}" aria-label="ستون الف مورد ${fa(j+1)}"><span class="arrow">⟵</span><input data-pair="${j},1" value="${escAttr(p[1])}" placeholder="ستون ب — پاسخ" aria-label="ستون ب پاسخ ${fa(j+1)}"><button type="button" class="btn danger xs" data-act="delPair" data-i="${j}" aria-label="حذف جفت ${fa(j+1)}" ${x.pairs.length<=1?'disabled':''}>${icon('i-x')}</button></div>`).join('')}</div><div class="btnrow mt"><button type="button" class="btn sm" data-act="addPair" ${x.pairs.length>=12?'disabled':''}>${icon('i-plus')} افزودن جفت</button></div><label>گزینه‌های اضافی ستون ب (انحرافی، اختیاری — با «،» جدا کنید)</label><input data-q="distractors" value="${escAttr((x.distractors||[]).join('، '))}" aria-label="گزینه‌های انحرافی ستون ب">`;
+  if(x.type==='dropdown')extra=`<div class="sectitle">گزینه‌های لیست</div><div class="options">${x.dropdownOptions.map((o,j)=>`<div class="option"><span class="olabel">${fa(j+1)}</span><input data-dd="${j}" value="${escAttr(o)}" placeholder="گزینه ${fa(j+1)}" aria-label="گزینهٔ ${fa(j+1)} لیست"><button type="button" class="btn danger xs" data-act="delDD" data-i="${j}" aria-label="حذف گزینهٔ ${fa(j+1)}" ${x.dropdownOptions.length<=2?'disabled':''}>${icon('i-x')}</button></div>`).join('')}</div><div class="btnrow mt"><button type="button" class="btn sm" data-act="addDD" ${x.dropdownOptions.length>=8?'disabled':''}>${icon('i-plus')} افزودن گزینه</button></div><label>پاسخ درست</label><select data-q="dropdownAnswer" aria-label="پاسخ درست"><option value="">انتخاب کنید…</option>${x.dropdownOptions.map(o=>`<option value="${escAttr(o)}" ${x.dropdownAnswer===o&&has(o)?'selected':''}>${esc(o)||'(خالی)'}</option>`).join('')}</select>`;
+  if(x.type==='essay')extra=`<div class="sectitle">پاسخ نمونه / راهنمای تصحیح <span class="muted">(در کلید پاسخ چاپ می‌شود)</span></div><textarea data-q="sampleAnswer" aria-label="پاسخ نمونه">${esc(x.sampleAnswer)}</textarea><label>تعداد خط پاسخ روی برگه</label><input type="number" min="0" max="20" data-q="lines" value="${x.lines}" aria-label="تعداد خط پاسخ روی برگه">`;
+  const st=qIssue(x);const inspOn=ui.inspector!==false;
+  return `<div class="canvas-head"><span class="qbadge" aria-hidden="true">${fa(i+1)}</span><div class="ttl"><h2>ویرایش سؤال ${fa(i+1)} <span class="muted">از ${fa(n)}</span></h2><div class="muted"><span>${esc(TYPES[x.type])}</span><span>·</span><span class="${st==='err'?'bad':st==='warn'?'mid':'good'}">${st==='err'?'ناقص':st==='warn'?'بدون پاسخ درست':'کامل'}</span></div></div>
+    <div class="btnrow"><button type="button" class="btn sm" data-act="dupQ">${icon('i-copy')} کپی</button><button type="button" class="btn danger sm" data-act="delQ">${icon('i-trash')} حذف</button><button type="button" class="iconbtn" data-act="toggleInsp" aria-pressed="${inspOn}" title="نمایش/پنهان بازرس آزمون" aria-label="نمایش یا پنهان‌کردن بازرس آزمون" style="width:36px;height:36px">${icon('i-panel')}</button></div></div>
+  <div class="canvas-body">
+    <div class="typebar" role="group" aria-label="نوع سؤال">${Object.keys(TYPES).map(t=>`<button type="button" class="tkey ${x.type===t?'on':''}" data-act="setType" data-v="${t}" aria-pressed="${x.type===t}" title="${escAttr(TYPES[t])}">${glyph(t)}<span>${TYPE_SHORT[t]}</span></button>`).join('')}</div>
+    <div class="propbar">
+      <div><label>بارم (نمره)</label><div class="stepper"><button type="button" data-act="scoreStep" data-v="-" aria-label="کاهش بارم">−</button><input type="number" min="0" step=".25" data-q="score" value="${x.score}" aria-label="بارم سؤال"><button type="button" data-act="scoreStep" data-v="+" aria-label="افزایش بارم">+</button></div></div>
+      <div><label>سطح دشواری</label><div class="seg diffseg" role="group" aria-label="سطح دشواری">${DIFF.map(d=>`<button type="button" class="${x.difficulty===d?'on':''}" data-act="setDiff" data-v="${d}" aria-pressed="${x.difficulty===d}">${d}</button>`).join('')}</div></div>
+      <div><label>متن ستون بارم <span class="muted">(اختیاری)</span></label><input type="text" data-q="scoreText" value="${escAttr(x.scoreText||'')}" placeholder="مثلاً: خیلی خوب — خالی = عدد بارم" aria-label="متن ستون بارم"></div>
     </div>
-    <label>زیرسؤال‌ها <span class="muted">(برای سؤال‌های چندقسمتی: الف) ب) ج) …)</span></label>
-    ${x.subQuestions.map((sq,j)=>`<div class="subq"><div class="grid" style="grid-template-columns:auto 1fr 90px auto;gap:8px;align-items:center"><b style="color:var(--accent)">${ABJAD[j]})</b><input data-sq="${j},text" value="${escAttr(sq.text||'')}" placeholder="متن زیرسؤال"><input type="number" min="0" step=".25" data-sq="${j},score" value="${sq.score??0.5}" title="بارم"><button class="btn danger xs" data-act="delSub" data-i="${j}">${icon('i-x')}</button></div><input data-sq="${j},answer" value="${escAttr(sq.answer||'')}" placeholder="پاسخ / راهنمای تصحیح (اختیاری)" style="margin-top:6px"></div>`).join('')}
-    <div class="btnrow"><button class="btn sm" data-act="addSub" ${x.subQuestions.length>=10?'disabled':''}>${icon('i-plus')} افزودن زیرسؤال</button>${x.subQuestions.length?`<span class="muted">جمع بارم زیرسؤال‌ها: ${faNum(x.subQuestions.reduce((s,z)=>s+(+z.score||0),0))} — <button class="btn xs ghost" data-act="sumSub">اعمال به بارم سؤال</button></span>`:''}</div>
-    <label>توضیح آموزشی / راه‌حل <span class="muted">(فقط در کلید پاسخ)</span></label><textarea data-q="explanation" style="min-height:70px">${esc(x.explanation)}</textarea>
-    <label class="row"><input type="checkbox" data-q="pageBreakAfter" ${x.pageBreakAfter?'checked':''}> بعد از این سؤال، صفحه‌ی جدید شروع شود (در چاپ)</label>
-  </div></details>
-  <div class="btnrow mt" style="justify-content:space-between"><button class="btn" data-act="prevQ" ${i===0?'disabled':''}>→ سؤال قبلی</button><button class="btn primary" data-act="nextOrAdd">${i===exam().questions.length-1?icon('i-plus')+' سؤال جدید':'سؤال بعدی ←'}</button></div>`;
+    <div class="sectitle">متن سؤال</div>
+    <div class="writer"><div class="tools" role="toolbar" aria-label="ابزار نگارش"><button type="button" class="btn xs" data-act="insText" data-v="__" title="درج جای خالی">جای خالی __</button><button type="button" class="btn xs" data-act="insText" data-v="«»" aria-label="درج گیومه">« »</button><button type="button" class="btn xs" data-act="insText" data-v="؟" aria-label="درج علامت سؤال">؟</button><button type="button" class="btn xs" data-act="insText" data-v="،" aria-label="درج ویرگول">،</button><button type="button" class="btn xs" data-act="insText" data-v="\u200c" title="نیم‌فاصله">نیم‌فاصله</button><button type="button" class="btn xs" data-act="insText" data-v="×" aria-label="درج علامت ضرب">×</button><button type="button" class="btn xs" data-act="insText" data-v="÷" aria-label="درج علامت تقسیم">÷</button><button type="button" class="btn xs" data-act="insText" data-v="√" aria-label="درج رادیکال">√</button><button type="button" class="btn xs" data-act="insText" data-v="²" aria-label="درج توان دو">x²</button><button type="button" class="btn xs" data-act="insText" data-v="≤" aria-label="درج کوچک‌تر یا مساوی">≤</button><button type="button" class="btn xs" data-act="insText" data-v="≥" aria-label="درج بزرگ‌تر یا مساوی">≥</button><button type="button" class="btn xs" data-act="faDigits" title="تبدیل ارقام به فارسی">۱۲۳</button></div>
+    <textarea id="qText" data-q="text" aria-label="متن سؤال" placeholder="متن سؤال را بنویسید… (هر خط جدید روی برگه حفظ می‌شود)">${esc(x.text)}</textarea>
+    <div class="wfoot"><span id="qCount">${fa((x.text||'').length)} نویسه</span><span><span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> سؤال بعدی</span></div></div>
+    ${extra}
+    <details class="acc mt" ${x.image||x.subQuestions.length||x.section||x.reference||x.explanation?'open':''}><summary>${icon('i-settings')} تنظیمات بیشتر (تصویر، بخش‌بندی، زیرسؤال، مرجع، توضیح)</summary><div class="acc-body">
+      <div class="grid g2">
+        <div><label>تصویر سؤال</label><div class="fieldrow"><input data-q="image" aria-label="آدرس تصویر سؤال" value="${x.image&&x.image.startsWith('data:')?'':escAttr(x.image)}" placeholder="آدرس اینترنتی تصویر یا انتخاب فایل ←" ${x.image&&x.image.startsWith('data:')?'disabled':''}><label class="btn" style="margin:0;cursor:pointer" title="انتخاب فایل تصویر">${icon('i-upload')}<input type="file" accept="image/*" data-act="imgFile" class="hide" aria-label="انتخاب فایل تصویر"></label></div>${x.image?`<div style="display:flex;gap:8px;align-items:center;margin-top:6px"><img src="${escAttr(x.image)}" style="height:56px;border-radius:8px;border:1px solid var(--border)" alt=""><button type="button" class="btn danger xs" data-act="delImg">${icon('i-x')} حذف تصویر</button></div><label>عرض تصویر روی برگه: <b id="imgWVal">${fa(x.imageWidth)}٪</b></label><input type="range" min="20" max="100" step="5" data-q="imageWidth" value="${x.imageWidth}" aria-label="عرض تصویر روی برگه">`:''}</div>
+        <div><label>گروه / بخش سؤال <span class="muted">(مثلاً: درک مطلب، قلمرو زبانی)</span></label><input data-q="section" aria-label="گروه یا بخش سؤال" value="${escAttr(x.section)}" list="sectionList" placeholder="اختیاری — سؤال‌های هم‌گروه پشت‌سرهم زیر یک عنوان چاپ می‌شوند"><datalist id="sectionList">${[...new Set(exam().questions.map(z=>z.section).filter(Boolean))].map(s=>`<option value="${escAttr(s)}">`).join('')}</datalist>
+        <label>مرجع سؤال <span class="muted">(مثلاً: درس ۹ ص ۷۵)</span></label><input data-q="reference" aria-label="مرجع سؤال" value="${escAttr(x.reference)}"></div>
+      </div>
+      <label>زیرسؤال‌ها <span class="muted">(برای سؤال‌های چندقسمتی: الف) ب) ج) …)</span></label>
+      ${x.subQuestions.map((sq,j)=>`<div class="subq"><div class="grid" style="grid-template-columns:auto 1fr 90px auto;gap:8px;align-items:center"><b style="color:var(--accent-text)">${ABJAD[j]})</b><input data-sq="${j},text" value="${escAttr(sq.text||'')}" placeholder="متن زیرسؤال" aria-label="متن زیرسؤال ${ABJAD[j]}"><input type="number" min="0" step=".25" data-sq="${j},score" value="${sq.score??0.5}" title="بارم" aria-label="بارم زیرسؤال ${ABJAD[j]}"><button type="button" class="btn danger xs" data-act="delSub" data-i="${j}" aria-label="حذف زیرسؤال ${ABJAD[j]}">${icon('i-x')}</button></div><input data-sq="${j},answer" value="${escAttr(sq.answer||'')}" placeholder="پاسخ / راهنمای تصحیح (اختیاری)" aria-label="پاسخ زیرسؤال ${ABJAD[j]}" style="margin-top:6px"></div>`).join('')}
+      <div class="btnrow"><button type="button" class="btn sm" data-act="addSub" ${x.subQuestions.length>=10?'disabled':''}>${icon('i-plus')} افزودن زیرسؤال</button>${x.subQuestions.length?`<span class="muted">جمع بارم زیرسؤال‌ها: ${faNum(x.subQuestions.reduce((s,z)=>s+(+z.score||0),0))} — <button type="button" class="btn xs ghost" data-act="sumSub">اعمال به بارم سؤال</button></span>`:''}</div>
+      <label>توضیح آموزشی / راه‌حل <span class="muted">(فقط در کلید پاسخ)</span></label><textarea data-q="explanation" aria-label="توضیح آموزشی یا راه‌حل" style="min-height:70px">${esc(x.explanation)}</textarea>
+      <label class="row"><input type="checkbox" data-q="pageBreakAfter" ${x.pageBreakAfter?'checked':''}> بعد از این سؤال، صفحهٔ جدید شروع شود (در چاپ)</label>
+    </div></details>
+  </div>
+  <div class="canvas-foot"><button type="button" class="btn" data-act="prevQ" ${i===0?'disabled':''}>→ سؤال قبلی</button><span class="hint"><span class="kbd">Alt</span>+<span class="kbd">N</span> سؤال تازه · <span class="kbd">Ctrl</span>+<span class="kbd">K</span> فرمان‌ها</span><button type="button" class="btn primary" data-act="nextOrAdd">${i===n-1?icon('i-plus')+' سؤال جدید':'سؤال بعدی ←'}</button></div>`;
 }
 
 /* --- رویدادهای تب سؤالات (نمایندگی) --- */
@@ -887,7 +1276,7 @@ async function readImageFile(file,max=1400){return new Promise((res,rej)=>{const
 
 $('#app').addEventListener('input',e=>{
   const el=e.target;
-  if(el.dataset.e!==undefined){const k=el.dataset.e;exam()[k]=el.type==='number'?+el.value:el.value;save();if(k==='title')$('#examPicker')&&($('#examPicker').selectedOptions[0].textContent=(el.value||'بدون عنوان')+` (${fa(exam().questions.length)} سؤال)`);return}
+  if(el.dataset.e!==undefined){const k=el.dataset.e;exam()[k]=el.type==='number'?+el.value:el.value;if(k==='targetScore'){const v=+el.value;exam()[k]=isFinite(v)&&v>0?Math.min(200,v):20}save();if(k==='title')$('#examPicker')&&($('#examPicker').selectedOptions[0].textContent=(el.value||'بدون عنوان')+` (${fa(exam().questions.length)} سؤال)`);return}
   if(el.dataset.q!==undefined){const k=el.dataset.q,x=q();if(!x)return;let v=el.type==='number'||el.type==='range'?+el.value:el.type==='checkbox'?el.checked:el.value;if(k==='shortAnswers'||k==='blankAnswers'||k==='distractors')v=splitList(v);if(k==='imageWidth'){$('#imgWVal')&&($('#imgWVal').textContent=fa(v)+'٪')}x[k]=v;save();if(k==='text'||k==='score'||k==='scoreText'||k==='section')updateQItem(active);return}
   if(el.dataset.opt!==undefined){q().options[+el.dataset.opt]=el.value;save();return}
   if(el.dataset.pair!==undefined){const [i,j]=el.dataset.pair.split(',').map(Number);q().pairs[i][j]=el.value;save();return}
@@ -946,6 +1335,17 @@ async function act(name,btn){
     case 'insText':{const ta=$('#qText');if(ta)insertAtCursor(ta,btn.dataset.v);break}
     case 'faDigits':{const ta=$('#qText');if(ta){ta.value=fa(ta.value);ta.dispatchEvent(new Event('input',{bubbles:true}))}break}
     case 'bulkImport':{bulkImportModal();break}
+    case 'setType':{const t=btn.dataset.v;if(!TYPES[t]||x.type===t)return true;x.type=t;if(t==='mcq')x.answer=Number.isInteger(x.answer)?x.answer:null;else if(t==='multi')x.answer=Array.isArray(x.answer)?x.answer:[];else if(t==='tf')x.answer=typeof x.answer==='boolean'?x.answer:null;render._keepScroll=true;save();render();break}
+    case 'scoreStep':{const v=Math.max(0,+((+x.score||0)+(btn.dataset.v==='+'?.25:-.25)).toFixed(2));x.score=v;const si=$('[data-q=score]');if(si)si.value=v;save();updateQItem(active);refreshBench();break}
+    case 'setDiff':{x.difficulty=btn.dataset.v;save();$$('.diffseg button').forEach(b=>{const on=b.dataset.v===x.difficulty;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});refreshBench();break}
+    case 'toggleMeta':{const cur=ui.metaOpen!==undefined?!!ui.metaOpen:!has(e.subject)&&!has(e.grade);ui.metaOpen=!cur;render._keepScroll=true;render();if(ui.metaOpen)$('[data-e=title]')?.focus();break}
+    case 'toggleInsp':{ui.inspector=ui.inspector===false;render._keepScroll=true;render();break}
+    case 'inspMode':{ui.inspMode=btn.dataset.v==='paper'?'paper':'health';ui.inspector=true;render._keepScroll=true;render();break}
+    case 'showHealth':{ui.inspector=true;ui.inspMode='health';render._keepScroll=true;render();const ins=$('.inspector');if(ins&&getComputedStyle(ins).position!=='sticky')ins.scrollIntoView({behavior:'smooth',block:'start'});break}
+    case 'gotoQ':{active=clamp(i,0,e.questions.length-1);render._keepScroll=true;render();$('#qText')?.focus({preventScroll:true});break}
+    case 'railFilter':{ui.railFilter=btn.dataset.v;$$('.rail-filters .chip').forEach(c=>{const on=c.dataset.v===ui.railFilter;c.classList.toggle('active',on);c.setAttribute('aria-pressed',on)});applyRailFilter();break}
+    case 'cmdk':{openCmdk();break}
+    case 'balance':{const T=+e.targetScore||20;const qs=e.questions;if(!qs.length)return true;const S=totalScore(e);const prev=qs.map(z=>z.score);const raw=S>0?qs.map(z=>(+z.score||0)*T/S):qs.map(()=>T/qs.length);const r=raw.map(v=>Math.round(v*4)/4);let diff=+(T-r.reduce((a,b)=>a+b,0)).toFixed(2);let guard=0;while(Math.abs(diff)>=.125&&guard++<800){const step=diff>0?.25:-.25;let best=-1,bv=-Infinity;r.forEach((v,k)=>{if(step<0&&v<.25)return;if(step>0&&raw[k]===0&&S>0)return;const gap=(raw[k]-v)*Math.sign(step);if(gap>bv){bv=gap;best=k}});if(best<0)break;r[best]=+(r[best]+step).toFixed(2);diff=+(diff-step).toFixed(2)}qs.forEach((z,k)=>z.score=r[k]);render._keepScroll=true;save();render();toast(`بارم‌ها متناسب شد؛ جمع = ${faNum(totalScore(e))} از ${faNum(T)}`,'ok',{action:'بازگردانی',onAction:()=>{qs.forEach((z,k)=>z.score=prev[k]);save();render()}});hakimSay('بارم‌ها را به نسبت قبلی تنظیم کردم تا جمع دقیقاً به نمرهٔ هدف برسد. اگر نپسندیدی، «بازگردانی» را بزن.',6000,'happy');break}
     default:return false;
   }
   return true;
@@ -969,6 +1369,52 @@ $('#app').addEventListener('dragover',e=>{const it=e.target.closest('.qitem');if
 $('#app').addEventListener('dragleave',e=>{if(e.target.id==='drop')e.target.classList.remove('over')});
 $('#app').addEventListener('drop',e=>{const d=e.target.closest('#drop');if(d){e.preventDefault();d.classList.remove('over');readResultFiles(e.dataTransfer.files);return}const it=e.target.closest('.qitem');if(!it||dragI===null)return;e.preventDefault();const to=+it.dataset.qi;if(to===dragI)return;const qs=exam().questions;const [m]=qs.splice(dragI,1);qs.splice(to,0,m);active=to;dragI=null;save();render()});
 $('#app').addEventListener('dragend',()=>{dragI=null;$$('.qitem.dragging,.qitem.over').forEach(x=>x.classList.remove('dragging','over'))});
+
+
+/* ---------- حکیم: روشن/خاموش و نکتهٔ متناسب با وضعیت ---------- */
+function hakimContextTip(){const e=exam();const is=examIssues(e);const T=+e.targetScore||20,t=totalScore(e);
+  if(tab==='questions'){if(is.length){const f=is[0];return `${f.m}. روی «${fa(is.length)} مورد نیازمند بررسی» بزن تا فهرست کامل را ببینی.`}if(Math.abs(t-T)>.001)return `جمع بارم ${faNum(t)} است ولی نمرهٔ هدف ${faNum(T)}. دکمهٔ ترازو بارم‌ها را متناسب می‌کند.`;return 'آزمون کامل است! حالا در «طراحی برگه» ظاهرش را بچین یا مستقیم چاپ کن.'}
+  if(tab==='design')return 'قالب فقط نقطهٔ شروع است؛ با برچسب‌های بالای ستون مستقیم به هر بخش بپر و تغییر را همان لحظه روی برگه ببین.';
+  if(tab==='preview')return 'برای جلوگیری از تقلب، «نسخهٔ ب» یک آزمون هم‌ارز با ترتیب جابه‌جای سؤال‌ها و گزینه‌ها می‌سازد.';
+  if(tab==='export')return 'برای PDF، «چاپ» را بزن و در پنجرهٔ مرورگر «Save as PDF» را انتخاب کن. پشتیبان JSON را هم فراموش نکن.';
+  if(tab==='online')return 'یکی از سه حالت آماده را بزن تا تنظیمات یکجا چیده شود؛ بعد با نمای گوشی، تجربهٔ دانش‌آموز را امتحان کن.';
+  return 'فایل‌های نتیجه را بکش و رها کن؛ سؤال‌های قرمزِ تحلیل احتمالاً دشوار یا مبهم بوده‌اند.'}
+function syncHakimBtn(){const b=$('#hakimBtn');if(b)b.setAttribute('aria-pressed',ui.hakimOff?'false':'true')}
+$('#hakimBtn').addEventListener('click',()=>{if(!ui.hakimOff&&$('#hakim')&&!$('#hakim').classList.contains('off')){ui.hakimOff=true;clearTimeout(hakimTimer);$('#hakim').classList.add('off');if(window.Hakim&&Hakim.hide)Hakim.hide();syncHakimBtn();save();toast('حکیم خاموش شد؛ هر وقت خواستی دوباره روشنش کن','info');return}ui.hakimOff=false;syncHakimBtn();save();hakimSay(hakimContextTip(),7000,'thinking')});
+syncHakimBtn();
+
+/* ---------- پالت فرمان (Ctrl+K) ---------- */
+function cmdkItems(){const e=exam();const L=[];
+  TABS.forEach((t,k)=>L.push({g:'رفتن به',ic:t[2],t:t[1],k:'Alt+'+fa(k+1),run:()=>go(t[0])}));
+  L.push({g:'ابزارها',ic:'i-scale',t:'متعادل‌سازی بارم‌ها تا نمرهٔ هدف',run:()=>{if(tab!=='questions')go('questions');act('balance')}});
+  L.push({g:'ابزارها',ic:'i-shuffle',t:'ساخت نسخهٔ ب (هم‌ارز با ترتیب جابه‌جا)',run:()=>exportAct('versionB')});
+  L.push({g:'ابزارها',ic:'i-check-circle',t:'بررسی آمادگی آزمون',run:()=>exportAct('checkReady')});
+  L.push({g:'ابزارها',ic:'i-clipboard',t:'افزودن گروهی سؤال از متن',run:()=>{if(tab!=='questions')go('questions');bulkImportModal()}});
+  L.push({g:'ابزارها',ic:'i-panel',t:'نمایش/پنهان بازرس آزمون',run:()=>{go('questions');act('toggleInsp')}});
+  L.push({g:'ابزارها',ic:'i-hakim',t:ui.hakimOff?'روشن‌کردن راهنمای حکیم':'خاموش‌کردن راهنمای حکیم',run:()=>$('#hakimBtn').click()});
+  Object.keys(TYPES).forEach(t=>L.push({g:'افزودن سؤال',ic:'i-plus',t:'سؤال '+TYPES[t],run:()=>{const ex=exam();ex.questions.push(newQ(t));active=ex.questions.length-1;save();go('questions');$('#qText')?.focus()}}));
+  [['print','i-print','چاپ / ذخیرهٔ PDF','Ctrl+P'],['printKey','i-key','چاپ کلید پاسخ'],['png','i-image','تصویر PNG برگه'],['word','i-file','خروجی Word'],['html','i-globe','فایل HTML برگه'],['keyTable','i-table','کلید پاسخ فشرده'],['csv','i-table','CSV / Excel'],['backup','i-save','پشتیبان کامل JSON','Ctrl+S']].forEach(a=>L.push({g:'خروجی',ic:a[1],t:a[2],k:a[3],run:()=>exportAct(a[0])}));
+  L.push({g:'خروجی',ic:'i-folder',t:'بازیابی از پشتیبان JSON',run:()=>{go('export');setTimeout(()=>exportAct('restore'),30)}});
+  L.push({g:'آزمون آنلاین',ic:'i-play',t:'اجرای آزمایشی آزمون آنلاین',run:()=>{pendingOnlineRun=true;go('online')}});
+  e.questions.forEach((x,i)=>L.push({g:'سؤال‌های این آزمون',ic:TYPE_ICON[x.type]||'i-edit',t:`سؤال ${fa(i+1)} — ${(x.text||'بدون متن').replace(/\s+/g,' ').slice(0,70)}`,run:()=>{active=i;go('questions');$('#qText')?.focus()}}));
+  data.exams.filter(z=>z.id!==e.id).forEach(z=>L.push({g:'آزمون‌های من',ic:'i-folder',t:z.title||'بدون عنوان',k:fa(z.questions.length)+' سؤال',run:()=>{data.currentExamId=z.id;active=0;save();go('questions')}}));
+  THEMES.forEach(th=>L.push({g:'پوستهٔ برنامه',ic:'i-palette',t:'پوستهٔ '+th[1],run:()=>setTheme(th[0])}));
+  return L}
+function openCmdk(){closeCmdk();const all=cmdkItems();let sel=0,shown=[];const w=document.createElement('div');w.className='cmdk';w.id='cmdk';
+  w.innerHTML=`<div class="cmdk-box" role="dialog" aria-modal="true" aria-label="جستجو و فرمان‌ها"><div class="cmdk-in">${icon('i-search')}<input id="cmdkIn" type="text" autocomplete="off" placeholder="چه کاری انجام دهم؟ (مثلاً: چاپ، سؤال ۳، نسخهٔ ب، پوسته)" aria-label="جستجوی فرمان" aria-controls="cmdkList"><span class="kbd">Esc</span></div><div class="cmdk-list" id="cmdkList" role="listbox"></div><div class="cmdk-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> جابه‌جایی</span><span><span class="kbd">Enter</span> اجرا</span><span><span class="kbd">/</span> یا <span class="kbd">Ctrl K</span> بازکردن</span></div></div>`;
+  document.body.appendChild(w);const inp=$('#cmdkIn'),list=$('#cmdkList');
+  const draw=()=>{const s=norm(en(inp.value));shown=(s?all.filter(it=>norm(en(it.t+' '+it.g)).includes(s)):all).slice(0,80);sel=Math.min(sel,Math.max(0,shown.length-1));let g='';list.innerHTML=shown.length?shown.map((it,k)=>{const head=it.g!==g?`<div class="cmdk-group">${esc(it.g)}</div>`:'';g=it.g;return head+`<button type="button" class="cmdk-item ${k===sel?'sel':''}" data-btl-processed="1" role="option" aria-selected="${k===sel}" data-k="${k}">${icon(it.ic||'i-bolt')}<span>${esc(it.t)}</span>${it.k?`<small>${esc(it.k)}</small>`:''}</button>`}).join(''):`<div class="empty" style="padding:24px">چیزی پیدا نشد</div>`;const cur=list.querySelector('.cmdk-item.sel');if(cur)cur.scrollIntoView({block:'nearest'})};
+  const run=k=>{const it=shown[k];if(!it)return;closeCmdk();try{it.run()}catch(err){}};
+  inp.addEventListener('input',()=>{sel=0;draw()});
+  inp.addEventListener('keydown',ev=>{if(ev.key==='ArrowDown'){ev.preventDefault();sel=Math.min(shown.length-1,sel+1);draw()}else if(ev.key==='ArrowUp'){ev.preventDefault();sel=Math.max(0,sel-1);draw()}else if(ev.key==='Enter'){ev.preventDefault();run(sel)}else if(ev.key==='Escape'){ev.preventDefault();closeCmdk()}});
+  list.addEventListener('click',ev=>{const b=ev.target.closest('.cmdk-item');if(b)run(+b.dataset.k)});
+  w.addEventListener('click',ev=>{if(ev.target===w)closeCmdk()});
+  draw();inp.focus();openCmdk._ret=document.activeElement}
+function closeCmdk(){const c=$('#cmdk');if(c)c.remove()}
+$('#cmdkBtn').addEventListener('click',()=>openCmdk());
+document.addEventListener('keydown',e=>{const inField=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.isContentEditable;if((e.ctrlKey||e.metaKey)&&!e.altKey&&e.key.toLowerCase()==='k'){e.preventDefault();$('#cmdk')?closeCmdk():openCmdk()}else if(e.key==='/'&&!inField&&!$('#cmdk')&&!$('#modalBg')){e.preventDefault();openCmdk()}});
+$('#app').addEventListener('input',e=>{const el=e.target;if(el.id==='railSearch'){ui.railQuery=el.value;applyRailFilter();return}if(tab==='questions')refreshBenchDebounced()});
+window.addEventListener('resize',debounce(()=>{syncTopH();if(tab==='questions'&&ui.inspMode==='paper')updateInspPaper()},150));
 
 /* افزودن گروهی */
 function bulkImportModal(){
@@ -1044,7 +1490,7 @@ document.addEventListener('keydown',e=>{
   const inField=/INPUT|TEXTAREA|SELECT/.test(e.target.tagName);
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();persistNow();backupJSON();}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='p'){e.preventDefault();printPaper(false)}
-  if(e.altKey&&!inField){const map={'1':'questions','2':'design','3':'preview','4':'export','5':'online','6':'grading'};if(map[e.key]){e.preventDefault();go(map[e.key])}if(e.key.toLowerCase()==='n'&&tab==='questions'){e.preventDefault();act('addQ')}}
+  if(e.altKey&&!e.ctrlKey&&!e.metaKey){const map={Digit1:'questions',Digit2:'design',Digit3:'preview',Digit4:'export',Digit5:'online',Digit6:'grading'};if(map[e.code]){e.preventDefault();go(map[e.code])}else if(e.code==='KeyN'&&tab==='questions'){e.preventDefault();act('addQ');setTimeout(()=>$('#qText')&&$('#qText').focus(),30)}}
 });
 /* =====================================================================
    موتور برگه (پیش‌نمایش، چاپ، PDF، Word، PNG همه از همین استفاده می‌کنند)
@@ -1224,21 +1670,22 @@ const WEIGHTS=[['400','معمولی'],['700','پررنگ'],['800','خیلی پر
 function fontOpts(v){const groups=[['فونت‌های وب (همه‌جا نمایش داده می‌شود)',FONTS.filter(f=>f[1]==='web')],['فونت‌های محلی (نیازمند نصب روی دستگاه: نازنین، تیتر…)',FONTS.filter(f=>f[1]==='local')],['فونت‌های سیستمی',FONTS.filter(f=>f[1]==='system')]];if(style.customFonts.length)groups.unshift(['فونت‌های من',style.customFonts.map(f=>[f.name,'custom','',''])]);return groups.map(g=>`<optgroup label="${escAttr(g[0])}">${g[1].map(f=>`<option value="${escAttr(f[0])}" ${v===f[0]?'selected':''}>${esc(f[0])}${f[1]==='local'&&!fontInstalled(f[0])?' (نصب نیست)':''}</option>`).join('')}</optgroup>`).join('')}
 function sCtl(key,label,type,extra={}){
   const v=style[key];
-  if(type==='range')return `<div class="ctl"><label>${label}</label><div class="rng"><input type="range" min="${extra.min}" max="${extra.max}" step="${extra.step||1}" value="${v}" data-s="${key}"><input type="number" min="${extra.min}" max="${extra.max}" step="${extra.step||1}" value="${v}" data-s="${key}"></div></div>`;
-  if(type==='color')return `<div class="ctl"><label>${label}</label><div class="colorctl"><input type="color" value="${v}" data-s="${key}"><input type="text" value="${v}" data-s="${key}" maxlength="7"></div></div>`;
-  if(type==='check')return `<label class="row"><input type="checkbox" data-s="${key}" ${v?'checked':''}> ${label}</label>`;
-  if(type==='select')return `<div class="ctl"><label>${label}</label><select data-s="${key}">${extra.opts.map(o=>`<option value="${escAttr(o[0])}" ${String(v)===String(o[0])?'selected':''}>${esc(o[1])}</option>`).join('')}</select></div>`;
-  if(type==='font')return `<div class="ctl"><label>${label}</label><select data-s="${key}">${extra.inherit?`<option value="" ${!v?'selected':''}>— مثل فونت اصلی —</option>`:''}${fontOpts(v)}</select></div>`;
-  if(type==='textarea')return `<div class="ctl"><label>${label}</label><textarea data-s="${key}" style="min-height:60px">${esc(v)}</textarea></div>`;
-  return `<div class="ctl"><label>${label}</label><input type="text" value="${escAttr(v)}" data-s="${key}" ${extra.placeholder?`placeholder="${escAttr(extra.placeholder)}"`:''}></div>`;
+  if(type==='range')return `<div class="ctl"><label>${label}</label><div class="rng"><input type="range" min="${extra.min}" max="${extra.max}" step="${extra.step||1}" value="${v}" data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}"><input type="number" min="${extra.min}" max="${extra.max}" step="${extra.step||1}" value="${v}" data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}"></div></div>`;
+  if(type==='color')return `<div class="ctl"><label>${label}</label><div class="colorctl"><input type="color" value="${v}" data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}"><input type="text" value="${v}" data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}" maxlength="7"></div></div>`;
+  if(type==='check')return `<label class="row"><input type="checkbox" data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}" ${v?'checked':''}> ${label}</label>`;
+  if(type==='select')return `<div class="ctl"><label>${label}</label><select data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}">${extra.opts.map(o=>`<option value="${escAttr(o[0])}" ${String(v)===String(o[0])?'selected':''}>${esc(o[1])}</option>`).join('')}</select></div>`;
+  if(type==='font')return `<div class="ctl"><label>${label}</label><select data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}">${extra.inherit?`<option value="" ${!v?'selected':''}>— مثل فونت اصلی —</option>`:''}${fontOpts(v)}</select></div>`;
+  if(type==='textarea')return `<div class="ctl"><label>${label}</label><textarea data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}" style="min-height:60px">${esc(v)}</textarea></div>`;
+  return `<div class="ctl"><label>${label}</label><input type="text" value="${escAttr(v)}" data-s="${key}" aria-label="${escAttr(String(label).replace(/<[^>]*>/g,''))}" ${extra.placeholder?`placeholder="${escAttr(extra.placeholder)}"`:''}></div>`;
 }
 function acc(id,title,ic,body){const open=ui.designOpen[id]!==undefined?ui.designOpen[id]:(id==='tpl'||id==='font');return `<details class="acc" data-acc="${id}" ${open?'open':''}><summary>${icon(ic)} ${title}</summary><div class="acc-body">${body}</div></details>`}
 function viewDesign(){
   const s=style;
   const tpls=Object.entries(TEMPLATES).map(([k,t])=>`<div class="tpl ${s.template===k?'active':''}" data-act="tpl" data-k="${k}"><div class="tpl-thumb" style="background:${t.colors[2]};border-color:${t.colors[0]}"><i style="top:8px;background:${t.colors[0]};height:6px"></i><i style="top:20px;background:${t.colors[1]};height:10px;border:1px solid ${t.colors[0]}44"></i><i style="top:36px;background:${t.colors[0]};opacity:.35"></i><i style="top:44px;background:${t.colors[0]};opacity:.35"></i><i style="top:52px;background:${t.colors[0]};opacity:.35"></i></div><b>${esc(t.title)}</b><span class="muted">${esc(t.s.font)}</span></div>`).join('');
   const fontCards=[...s.customFonts.map(f=>[f.name,'custom','','فونت من']),...FONTS].map(f=>{const inst=f[1]!=='local'||fontInstalled(f[0]);return `<div class="fontbtn ${s.font===f[0]?'active':''}" data-act="setFont" data-k="${escAttr(f[0])}" title="${escAttr(f[3])}"><span class="tag">${f[1]==='web'?'وب':f[1]==='local'?(inst?'نصب‌شده':'نصب نیست'):f[1]==='custom'?'شخصی':'سیستمی'}</span><span class="sample" style="font-family:${fontStack(f[0])}">آزمون نوبت اول ۱۴۰۴</span><span class="fname">${esc(f[0])}</span></div>`}).join('');
-  return `<div class="design-layout"><div>
-  <div class="card"><div class="card-head"><div><h2>${icon('i-palette')} استودیوی طراحی برگه</h2><div class="desc">همه‌چیز قابل تغییر است: قالب فقط نقطه‌ی شروع است. تغییرات همان لحظه در پیش‌نمایش کنار صفحه دیده می‌شود.</div></div><div class="btnrow"><button class="btn sm" data-act="exportStyle">${icon('i-download')} ذخیره‌ی طرح</button><label class="btn sm" style="margin:0;cursor:pointer">${icon('i-upload')} بارگذاری طرح<input type="file" accept=".json" class="hide" data-act="importStyleFile"></label><button class="btn sm danger" data-act="resetStyle">${icon('i-refresh')} بازنشانی</button></div></div>
+  return `<div class="easel"><section class="panel easel-controls" aria-label="تنظیمات طراحی برگه">
+  <div class="card-head"><div><h2>${icon('i-palette')} استودیوی طراحی برگه</h2><div class="desc">قالب فقط نقطهٔ شروع است؛ هر تغییر همان لحظه روی برگهٔ کنار صفحه دیده می‌شود.</div></div><div class="btnrow"><button type="button" class="btn sm" data-act="exportStyle">${icon('i-download')} ذخیرهٔ طرح</button><label class="btn sm" style="margin:0;cursor:pointer">${icon('i-upload')} بارگذاری<input type="file" accept=".json" class="hide" data-act="importStyleFile" aria-label="بارگذاری فایل طرح"></label><button type="button" class="btn sm danger" data-act="resetStyle">${icon('i-refresh')} بازنشانی</button></div></div>
+  <nav class="jumpbar" aria-label="پرش به بخش‌های طراحی"><button type="button" class="chip" data-act="jumpAcc" data-k="tpl">قالب‌ها</button><button type="button" class="chip" data-act="jumpAcc" data-k="font">فونت</button><button type="button" class="chip" data-act="jumpAcc" data-k="head">سربرگ</button><button type="button" class="chip" data-act="jumpAcc" data-k="meta">جدول اطلاعات</button><button type="button" class="chip" data-act="jumpAcc" data-k="q">سؤال‌ها</button><button type="button" class="chip" data-act="jumpAcc" data-k="color">رنگ و قاب</button><button type="button" class="chip" data-act="jumpAcc" data-k="wm">واترمارک</button><button type="button" class="chip" data-act="jumpAcc" data-k="tail">پایین برگه</button></nav>
   ${acc('tpl','قالب‌های آماده','i-layers',`<div class="tpl-grid">${tpls}</div>`)}
   ${acc('font','فونت و اندازه‌ی متن','i-type',`<div class="note info mb">${icon('i-info')}<div>فونت‌های <b>وب</b> روی هر دستگاهی نمایش داده می‌شوند. فونت‌های <b>محلی</b> مثل «B Nazanin» و «B Titr» فقط اگر روی همین دستگاه نصب باشند اعمال می‌شوند؛ در غیر این صورت به‌طور خودکار نزدیک‌ترین فونت مشابه (مثل Scheherazade برای نازنین و Lalezar برای تیتر) جایگزین می‌شود. برای اطمینان از یکسان بودن چاپ، می‌توانید فایل فونت (ttf/woff) را با دکمه‌ی زیر داخل برنامه بارگذاری کنید تا داخل خروجی هم جاسازی شود.</div></div>
     <div class="fontgrid">${fontCards}</div>
@@ -1250,7 +1697,7 @@ function viewDesign(){
     <div><h4>لوگو / آرم مدرسه</h4>${sCtl('showLogo','نمایش لوگو','check')}<label class="btn sm" style="cursor:pointer;margin:4px 0">${icon('i-upload')} انتخاب تصویر لوگو<input type="file" accept="image/*" class="hide" data-act="logoFile"></label>${s.logo?`<div style="display:flex;gap:8px;align-items:center"><img src="${escAttr(s.logo)}" style="height:44px;background:#fff;border-radius:6px;padding:2px" alt=""><button class="btn xs danger" data-act="delLogo">حذف</button></div>`:''}${sCtl('logoSize','اندازه (mm)','range',{min:8,max:45})}${sCtl('logoPosition','جایگاه','select',{opts:[['right','راست'],['left','چپ']]})}</div>
   </div>`)}
   ${acc('meta','جدول اطلاعات و خط دانش‌آموز','i-table',`${sCtl('showInfoTable','نمایش جدول اطلاعات','check')}<div class="grid g3">${sCtl('headerCols','تعداد ستون در هر ردیف','select',{opts:[[1,'۱'],[2,'۲'],[3,'۳'],[4,'۴']]})}${sCtl('headerAlign','تراز متن','select',{opts:ALIGNS})}${sCtl('headerFont','فونت سربرگ و جدول‌ها','font',{inherit:true})}${sCtl('headerSize','اندازه‌ی متن سربرگ','range',{min:8,max:20})}</div>
-    <h4 class="mt">برچسب‌ها (نام هر فیلد را خودتان تعیین کنید)</h4><div class="grid g3">${Object.entries(DEF_META_LABELS).map(([k,v])=>`<div class="ctl"><label>${esc(v)}</label><input value="${escAttr(s.metaLabels[k]||'')}" data-ml="${k}"></div>`).join('')}</div>
+    <h4 class="mt">برچسب‌ها (نام هر فیلد را خودتان تعیین کنید)</h4><div class="grid g3">${Object.entries(DEF_META_LABELS).map(([k,v])=>`<div class="ctl"><label>${esc(v)}</label><input value="${escAttr(s.metaLabels[k]||'')}" data-ml="${k}" aria-label="${escAttr(v)}"></div>`).join('')}</div>
     <h4 class="mt">خط مشخصات دانش‌آموز</h4>${sCtl('showStudentLine','نمایش','check')}<div class="btnrow">${['studentName','className','studentNo','date','grade','subject'].map(f=>`<label class="chip ${s.studentFields.includes(f)?'active':''}"><input type="checkbox" class="hide" data-sf="${f}" ${s.studentFields.includes(f)?'checked':''}>${esc(s.metaLabels[f]||f)}</label>`).join('')}</div>`)}
   ${acc('q','جدول سؤالات و گزینه‌ها','i-list',`<div class="grid g2">
     <div>${sCtl('showQuestionHeader','نمایش سرستون‌ها','check')}${sCtl('numHeaderText','عنوان ستون ردیف','text')}${sCtl('questionHeaderText','عنوان ستون سؤال','text')}${sCtl('scoreHeaderText','عنوان ستون بارم','text')}${sCtl('showScores','نمایش ستون بارم','check')}${sCtl('showTotal','نمایش ردیف جمع','check')}${sCtl('totalText','متن ردیف جمع','text')}</div>
@@ -1266,11 +1713,11 @@ function viewDesign(){
   ${acc('tail','پایین برگه: بازخورد، چک‌لیست، امضا، پانوشت','i-clipboard',`<div class="grid g2">
     <div><h4>بازخورد آموزگار</h4>${sCtl('teacherFeedback','نمایش کادر','check')}${sCtl('teacherFeedbackTitle','عنوان','text')}${sCtl('teacherFeedbackLines','تعداد خط','range',{min:1,max:10})}</div>
     <div><h4>نظر والدین</h4>${sCtl('parentFeedback','نمایش کادر','check')}${sCtl('parentFeedbackTitle','عنوان','text')}${sCtl('parentFeedbackLines','تعداد خط','range',{min:1,max:10})}</div>
-    <div><h4>چک‌لیست اهداف یادگیری (ویژه‌ی ابتدایی)</h4>${sCtl('checklist','نمایش','check')}${sCtl('checklistTitle','عنوان','text')}<label>سطوح ارزیابی (با «،» جدا کنید)</label><input value="${escAttr(s.checklistLevels.join('، '))}" data-list="checklistLevels"><label>موارد چک‌لیست (هر خط یک مورد)</label><textarea data-lines="checklistItems" style="min-height:90px">${esc(s.checklistItems.join('\n'))}</textarea></div>
+    <div><h4>چک‌لیست اهداف یادگیری (ویژه‌ی ابتدایی)</h4>${sCtl('checklist','نمایش','check')}${sCtl('checklistTitle','عنوان','text')}<label>سطوح ارزیابی (با «،» جدا کنید)</label><input value="${escAttr(s.checklistLevels.join('، '))}" data-list="checklistLevels" aria-label="سطوح ارزیابی"><label>موارد چک‌لیست (هر خط یک مورد)</label><textarea data-lines="checklistItems" aria-label="موارد چک‌لیست" style="min-height:90px">${esc(s.checklistItems.join('\n'))}</textarea></div>
     <div><h4>امضا و پانوشت</h4>${sCtl('showSignatures','نمایش خط امضا','check')}${sCtl('signatureText','متن امضا','text')}${sCtl('footerText','متن پایین برگه','text',{placeholder:'موفق باشید'})}${sCtl('footerAlign','تراز پانوشت','select',{opts:ALIGNS})}${sCtl('footerSize','اندازه‌ی پانوشت','range',{min:8,max:18})}</div></div>`)}
-  </div></div>
-  <div class="mini-preview no-print"><div class="card" style="padding:10px"><div class="card-head" style="margin-bottom:6px"><h4>${icon('i-eye')} پیش‌نمایش زنده</h4><div class="btnrow"><button class="btn xs ${!ui.previewAnswers?'primary':''}" data-act="pvMode" data-v="0">برگه</button><button class="btn xs ${ui.previewAnswers?'primary':''}" data-act="pvMode" data-v="1">کلید</button><button class="btn xs" data-act="goPreview">${icon('i-external')} بزرگ</button></div></div><div class="frame" id="miniFrame"><div class="scaler" id="miniScaler">${paper(!!ui.previewAnswers)}</div></div></div>
-  </div>`;
+  </section>
+  <section class="easel-desk mini-preview no-print" aria-label="پیش‌نمایش زندهٔ برگه"><div class="panel" style="padding:12px"><div class="desk-bar"><h2>${icon('i-eye')} برگهٔ زنده</h2><div class="btnrow"><div class="seg" role="group" aria-label="نوع برگه"><button type="button" class="${!ui.previewAnswers?'on':''}" data-act="pvMode" data-v="0" aria-pressed="${!ui.previewAnswers}">برگه</button><button type="button" class="${ui.previewAnswers?'on':''}" data-act="pvMode" data-v="1" aria-pressed="${!!ui.previewAnswers}">کلید</button></div><button type="button" class="btn sm" data-act="goPreview">${icon('i-external')} میز نمونه‌خوانی</button></div></div><div class="frame" id="miniFrame" tabindex="0" role="region" aria-label="برگهٔ زندهٔ طراحی"><div class="scaler" id="miniScaler">${paper(!!ui.previewAnswers)}</div></div></div>
+  </section></div>`;
 }
 function updateMiniPreview(){const sc=$('#miniScaler');if(!sc)return;ensurePaperStyle();sc.innerHTML=paper(!!ui.previewAnswers);const fr=$('#miniFrame');const pw=sc.firstElementChild.offsetWidth||794;const k=Math.min(1,(fr.clientWidth-20)/pw);sc.style.transform=`scale(${k})`;sc.style.width=pw+'px';fr.style.height='';const h=sc.firstElementChild.offsetHeight*k+24;sc.style.height=(sc.firstElementChild.offsetHeight)+'px';fr.style.minHeight=Math.min(h,window.innerHeight-160)+'px'}
 const updateMiniDebounced=debounce(updateMiniPreview,120);
@@ -1305,6 +1752,7 @@ async function designAct(n,b){
     case 'delWm':{style.watermarkImage='';if(style.watermarkType==='image')style.watermarkType='none';save();render();return true}
     case 'pvMode':{ui.previewAnswers=b.dataset.v==='1';save();render();return true}
     case 'goPreview':{go('preview');return true}
+    case 'jumpAcc':{const d=document.querySelector(`details.acc[data-acc="${b.dataset.k}"]`);if(d){d.open=true;ui.designOpen[b.dataset.k]=true;save();d.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}return true}
     case 'resetStyle':{if(!(await confirmBox('همه‌ی تنظیمات طراحی به حالت پیش‌فرض برگردد؟',{ok:'بازنشانی',danger:true})))return true;const cf=style.customFonts;style={...JSON.parse(JSON.stringify(DEF_STYLE)),customFonts:cf};save();render();toast('طراحی بازنشانی شد','info');return true}
     case 'exportStyle':{const s={...style};dl('tarh-'+safeName(exam().title)+'.json',JSON.stringify({hakimestanStyle:1,style:s},null,2),'application/json');return true}
     case 'importStyleFile':return true;
@@ -1316,31 +1764,33 @@ $('#app').addEventListener('change',e=>{const el=e.target;if(el.dataset.act==='i
 /* =====================================================================
    تب پیش‌نمایش
    ===================================================================== */
-function viewPreview(){return `<div class="card no-print"><div class="card-head"><div><h2>${icon('i-eye')} پیش‌نمایش واقعی برگه</h2><div class="desc">دقیقاً همان چیزی که چاپ می‌شود. برای تغییر ظاهر به تب «طراحی برگه» بروید.</div></div>
-  <div class="btnrow"><button class="btn ${!ui.previewAnswers?'primary':''}" data-act="pvMode" data-v="0">${icon('i-file')} برگه‌ی سؤال</button><button class="btn ${ui.previewAnswers?'primary':''}" data-act="pvMode" data-v="1">${icon('i-key')} کلید پاسخ</button><div class="zoombar"><button class="btn sm" data-act="zoom" data-v="-">${icon('i-zoom-out')}</button><span id="zoomVal">${fa(Math.round(ui.zoom*100))}٪</span><button class="btn sm" data-act="zoom" data-v="+">${icon('i-zoom-in')}</button><button class="btn sm" data-act="zoom" data-v="fit">اندازه‌ی صفحه</button></div><button class="btn" data-act="print">${icon('i-print')} چاپ / PDF</button><button class="btn" data-act="png">${icon('i-image')} PNG</button></div></div></div>
-  <div class="paperwrap" id="paperWrap">${paper(!!ui.previewAnswers)}</div>`}
+function viewPreview(){const e=exam();return `<div class="proofbar no-print" role="toolbar" aria-label="ابزار نمونه‌خوانی">
+  <div class="ttl">${icon('i-eye')} میز نمونه‌خوانی <small>${esc(e.title||'بدون عنوان')} · ${fa(e.questions.length)} سؤال · ${faNum(totalScore(e))} نمره</small></div>
+  <div class="seg" role="group" aria-label="نوع برگه"><button type="button" class="${!ui.previewAnswers?'on':''}" data-act="pvMode" data-v="0" aria-pressed="${!ui.previewAnswers}">${icon('i-file')} برگهٔ سؤال</button><button type="button" class="${ui.previewAnswers?'on':''}" data-act="pvMode" data-v="1" aria-pressed="${!!ui.previewAnswers}">${icon('i-key')} کلید پاسخ</button></div>
+  <span class="sep"></span>
+  <div class="zoombar"><button type="button" class="btn sm" data-act="zoom" data-v="-" aria-label="کوچک‌نمایی">${icon('i-zoom-out')}</button><span id="zoomVal">${fa(Math.round(ui.zoom*100))}٪</span><button type="button" class="btn sm" data-act="zoom" data-v="+" aria-label="بزرگ‌نمایی">${icon('i-zoom-in')}</button><button type="button" class="btn sm" data-act="zoom" data-v="fit">اندازهٔ صفحه</button></div>
+  <span class="sep"></span>
+  <button type="button" class="btn sm" data-act="checkReady">${icon('i-check-circle')} بررسی آمادگی</button>
+  <button type="button" class="btn sm" data-act="versionB" title="ساخت آزمون هم‌ارز با ترتیب جابه‌جای سؤال‌ها و گزینه‌ها">${icon('i-shuffle')} نسخهٔ ب</button>
+  <button type="button" class="btn sm" data-act="png">${icon('i-image')} PNG</button>
+  <button type="button" class="btn primary sm" data-act="print">${icon('i-print')} چاپ / PDF</button></div>
+  <div class="paperwrap" id="paperWrap" tabindex="0" role="region" aria-label="برگهٔ آزمون برای نمونه‌خوانی">${paper(!!ui.previewAnswers)}</div>`}
 function fitPreview(){const w=$('#paperWrap'),p=w?.querySelector('.paper');if(!p)return;ensurePaperStyle();const avail=w.clientWidth-16;const pw=p.offsetWidth;const base=Math.min(1,avail/pw);const k=base*ui.zoom;const wide=k*pw>w.clientWidth;p.style.transformOrigin=wide?'top right':'top center';p.style.transform=`scale(${k})`;w.style.height=(p.offsetHeight*k+40)+'px';w.style.alignItems='flex-start';w.style.justifyContent=wide?'flex-start':'center';w.style.overflowX=wide?'auto':'hidden';$('#zoomVal')&&($('#zoomVal').textContent=fa(Math.round(ui.zoom*100))+'٪')}
 window.addEventListener('resize',debounce(()=>{if(tab==='preview')fitPreview();if(tab==='design')updateMiniPreview()},150));
 
 /* =====================================================================
    تب خروجی
    ===================================================================== */
-function viewExport(){const e=exam();const items=[
- ['print','i-print','چاپ / ذخیره PDF','در پنجره‌ی چاپ، «Save as PDF» را انتخاب کنید'],
- ['printKey','i-key','چاپ کلید پاسخ','برگه با پاسخ‌های درست و توضیحات'],
- ['word','i-file','خروجی Word','فایل .doc قابل ویرایش در Word'],
- ['html','i-globe','فایل HTML برگه','باز شدن در هر مرورگری، بدون نیاز به برنامه'],
- ['png','i-image','تصویر PNG برگه','مناسب ارسال در پیام‌رسان‌ها'],
- ['pngKey','i-image','تصویر PNG کلید','کلید پاسخ به‌صورت تصویر'],
- ['keyTable','i-table','کلید پاسخ فشرده','جدول یک‌صفحه‌ای پاسخ‌ها برای تصحیح سریع'],
- ['csv','i-table','CSV / Excel','فهرست سؤال‌ها و پاسخ‌ها'],
- ['backup','i-save','پشتیبان کامل JSON','همه‌ی آزمون‌ها + طراحی — برای انتقال به دستگاه دیگر'],
- ['backupOne','i-save','پشتیبان همین آزمون','فقط آزمون فعلی'],
- ['restore','i-folder','بازیابی از JSON','بارگذاری پشتیبان قبلی'],
- ['shareText','i-share','متن ساده‌ی آزمون','کپی متن سؤالات برای پیام‌رسان یا ایمیل'],
-];return `<div class="card"><div class="card-head"><div><h2>${icon('i-download')} خروجی‌ها</h2><div class="desc">آزمون «${esc(e.title)}» با ${fa(e.questions.length)} سؤال و جمع بارم ${faNum(totalScore(e))}</div></div></div>
-  <div class="note info mb">${icon('i-info')}<div>برای <b>PDF</b> از «چاپ» استفاده کنید و در پنجره‌ی مرورگر گزینه‌ی <b>Save as PDF / ذخیره به‌صورت PDF</b> را بزنید. اگر پنجره باز نشد، مسدودکننده‌ی پاپ‌آپ را برای این صفحه خاموش کنید یا از «فایل HTML برگه» استفاده کنید و آن را باز و چاپ کنید.</div></div>
-  <div class="exports">${items.map(i=>`<div class="exp" data-act="${i[0]}" role="button" tabindex="0">${icon(i[1])}<b>${i[2]}</b><small>${i[3]}</small></div>`).join('')}</div><input id="jsonIn" class="hide" type="file" accept=".json,application/json"></div>`}
+function viewExport(){const e=exam();const is=examIssues(e);const errs=is.filter(x=>x.l==='err').length;
+ const T=[
+  ['t1','i-print','چاپ و کاغذ','برای کلاس حضوری، بایگانی و ارسال تصویری',[['print','i-print','چاپ / ذخیره PDF','در پنجرهٔ چاپ، «Save as PDF» را انتخاب کنید'],['printKey','i-key','چاپ کلید پاسخ','برگه با پاسخ‌های درست و توضیحات'],['keyTable','i-table','کلید پاسخ فشرده','جدول یک‌صفحه‌ای پاسخ‌ها برای تصحیح سریع'],['png','i-image','تصویر PNG برگه','مناسب ارسال در پیام‌رسان‌ها'],['pngKey','i-image','تصویر PNG کلید','کلید پاسخ به‌صورت تصویر']]],
+  ['t2','i-file','فایل‌های ویرایش و اشتراک','برای ویرایش در Word، مرورگر و صفحه‌گسترده',[['word','i-file','خروجی Word','فایل .doc قابل ویرایش در Word'],['html','i-globe','فایل HTML برگه','باز شدن در هر مرورگری، بدون نیاز به برنامه'],['csv','i-table','CSV / Excel','فهرست سؤال‌ها و پاسخ‌ها'],['shareText','i-share','متن سادهٔ آزمون','کپی متن سؤالات برای پیام‌رسان یا ایمیل'],['versionB','i-shuffle','ساخت نسخهٔ ب','آزمون هم‌ارز با ترتیب جابه‌جای سؤال و گزینه']]],
+  ['t3','i-save','پشتیبان و انتقال','همه‌چیز فقط روی همین دستگاه ذخیره می‌شود',[['backup','i-save','پشتیبان کامل JSON','همهٔ آزمون‌ها + طراحی — برای انتقال به دستگاه دیگر'],['backupOne','i-save','پشتیبان همین آزمون','فقط آزمون فعلی'],['restore','i-folder','بازیابی از JSON','بارگذاری پشتیبان قبلی']]]];
+ return `<section class="panel readiness"><span class="health-orb ${errs?'bad':is.length?'warn':'ok'}" style="width:52px;height:52px">${icon(errs?'i-alert':is.length?'i-info':'i-check-circle')}</span><div style="min-width:0"><h2>${errs?`${fa(errs)} مشکل پیش از خروجی باید برطرف شود`:is.length?`آمادهٔ خروجی، با ${fa(is.length)} هشدار`:'آزمون آمادهٔ خروجی است'}</h2><div class="facts" style="margin-top:6px"><span class="fact"><b>${fa(e.questions.length)}</b>سؤال</span><span class="fact"><b>${faNum(totalScore(e))}</b>نمره</span><span class="fact"><b>${fa(estMinutes(e))}</b>دقیقه (تخمینی)</span><span class="fact"><b>${esc(style.paperSize||'A4')}</b>کاغذ</span><span class="fact"><b>${esc(style.font||'Vazirmatn')}</b>فونت</span></div></div><button type="button" class="btn" data-act="checkReady">${icon('i-check-circle')} بررسی دقیق</button></section>
+  <div class="note mb">${icon('i-info')}<div>برای <b>PDF</b> از «چاپ» استفاده کنید و در پنجرهٔ مرورگر گزینهٔ <b>Save as PDF / ذخیره به‌صورت PDF</b> را بزنید. اگر پنجره باز نشد، مسدودکنندهٔ پاپ‌آپ را برای این صفحه خاموش کنید یا از «فایل HTML برگه» استفاده کنید.</div></div>
+  <div class="tracks">${T.map(([c,ic,t,d,items])=>`<section class="panel track" aria-label="${escAttr(t)}"><div class="track-head"><span class="tile ${c}">${icon(ic)}</span><div><h2>${t}</h2><p>${d}</p></div></div><div class="exports">${items.map(i=>`<button type="button" class="exp" data-act="${i[0]}"><span class="ico">${icon(i[1])}</span><span><b>${i[2]}</b><small>${i[3]}</small></span>${icon('i-chevron','go')}</button>`).join('')}</div></section>`).join('')}</div>
+  <input id="jsonIn" class="hide" type="file" accept=".json,application/json" aria-label="انتخاب فایل پشتیبان">`}
+
 function openWin(html){const w=window.open('','_blank');if(!w){/* جایگزین: iframe مخفی برای چاپ */return null}w.document.open();w.document.write(html);w.document.close();return w}
 function printViaFrame(html){let f=$('#printFrame');if(f)f.remove();f=document.createElement('iframe');f.id='printFrame';f.style.cssText='position:fixed;left:-10000px;top:0;width:210mm;height:297mm;border:0';document.body.appendChild(f);f.srcdoc=html;f.onload=()=>{setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){toast('چاپ ممکن نشد؛ از خروجی HTML استفاده کنید','err')}finally{setTimeout(()=>{try{f.remove()}catch(e){}},8000)}},900)}}
 async function printPaper(ans){if(!(await validateExam()))return;const html=exportPaperHTML(ans);const w=openWin(html);if(w){let done=false;const fire=()=>{if(done)return;done=true;try{w.focus();w.print()}catch(e){}};w.onload=()=>setTimeout(fire,700);setTimeout(()=>{try{if(w.document.readyState==='complete')fire()}catch(e){}},1800)}else{toast('پنجره مسدود شد؛ چاپ از داخل صفحه انجام می‌شود…','info');printViaFrame(html)}}
@@ -1384,6 +1834,8 @@ async function exportAct(n,b){
     case 'backupOne':backupJSON(true);return true;
     case 'restore':{const i=$('#jsonIn');i.value='';i.click();return true}
     case 'shareText':{const t=plainText();modal(`<h3>${icon('i-share')} متن ساده‌ی آزمون</h3><textarea style="min-height:280px;direction:rtl;font-size:.85rem">${esc(t)}</textarea><div class="btnrow mt"><button class="btn primary" id="cpTxt">${icon('i-copy')} کپی</button><button class="btn" id="dlTxt">${icon('i-download')} دانلود .txt</button><button class="btn ghost" id="clTxt">بستن</button></div>`);$('#cpTxt').onclick=()=>copyText(t);$('#dlTxt').onclick=()=>dl(safeName(exam().title)+'.txt',t);$('#clTxt').onclick=closeModal;return true}
+    case 'checkReady':{const r=await validateExam('online');if(r===true){toast('آزمون کامل است و آمادهٔ چاپ و برگزاری است','ok');hakimSay('همه‌چیز مرتب است! می‌توانی با خیال راحت چاپ کنی یا فایل آزمون آنلاین را بفرستی.',5000,'happy')}return true}
+    case 'versionB':{const e=exam();const c=JSON.parse(JSON.stringify(e));c.id=uid();c.title=(e.title||'آزمون')+' — نسخهٔ ب';c.created=Date.now();const sh=a=>{for(let k=a.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[a[k],a[r]]=[a[r],a[k]]}return a};const blocks=[];c.questions.forEach(z=>{const last=blocks[blocks.length-1];if(last&&last.s===(z.section||''))last.q.push(z);else blocks.push({s:z.section||'',q:[z]})});c.questions=blocks.flatMap(b=>sh(b.q));const fixed=/همه|هیچ|هر دو|موارد|گزینه/;c.questions.forEach(z=>{z.id=uid();if((z.type==='mcq'||z.type==='multi')&&!z.options.some(o=>fixed.test(o))){const idx=sh(z.options.map((_,k)=>k));z.options=idx.map(k=>z.options[k]);if(z.type==='multi')z.answer=(z.answer||[]).map(a=>idx.indexOf(a)).sort((p,q)=>p-q);else if(Number.isInteger(z.answer))z.answer=idx.indexOf(z.answer)}if(z.type==='match')z.pairs=sh(z.pairs)});data.exams.push(c);data.currentExamId=c.id;active=0;save();render();toast('نسخهٔ ب ساخته شد: ترتیب سؤال‌ها (درون هر بخش) و گزینه‌ها جابه‌جا شد و پاسخ‌ها هم‌گام ماند','ok',{action:'بازگشت به نسخهٔ الف',ms:8000,onAction:()=>{data.currentExamId=e.id;active=0;save();render()}});return true}
     case 'zoom':{const v=b.dataset.v;if(v==='fit')ui.zoom=1;else ui.zoom=clamp(ui.zoom+(v==='+'?.1:-.1),.3,2);save();fitPreview();return true}
   }
   return false;
@@ -1391,25 +1843,28 @@ async function exportAct(n,b){
 /* =====================================================================
    تب آزمون آنلاین
    ===================================================================== */
-function viewOnline(){const e=exam();return `<div class="card"><div class="card-head"><div><h2>${icon('i-play')} آزمون آنلاین</h2><div class="desc">یک فایل HTML مستقل ساخته می‌شود که دانش‌آموز روی هر گوشی یا رایانه‌ای بدون نیاز به اینترنت و نصب برنامه باز می‌کند. در پایان، فایل نتیجه (JSON) می‌گیرد که شما در تب «تصحیح» بارگذاری می‌کنید.</div></div></div>
-  <div class="grid g3">
-    <div><label>مدت آزمون (دقیقه)</label><input type="number" min="1" max="600" data-o="onlineDuration" value="${e.onlineDuration||30}"></div>
-    ${sel('ترتیب سؤال‌ها','random',e.random?'1':'0',[['0','به ترتیب'],['1','تصادفی برای هر دانش‌آموز']],'data-o')}
-    ${sel('ترتیب گزینه‌ها','shuffleOptions',e.shuffleOptions?'1':'0',[['0','ثابت'],['1','تصادفی']],'data-o')}
-    ${sel('نمایش درست/غلط بعد از هر پاسخ','showCorrect',e.showCorrect,[['end','خیر (فقط در پایان)'],['after','بله (بازخورد فوری)'],['never','هرگز (حتی در پایان)']],'data-o')}
-    ${sel('نام دانش‌آموز','requireName',e.requireName!==false?'1':'0',[['1','اجباری'],['0','اختیاری']],'data-o')}
-    ${sel('پرسیدن کلاس / شماره','askClass',e.askClass!==false?'1':'0',[['1','بله'],['0','خیر']],'data-o')}
-    <div><label>حد نصاب قبولی (درصد)</label><input type="number" min="0" max="100" data-o="passPercent" value="${e.passPercent??50}"></div>
-    ${sel('مرور پاسخ‌ها در پایان','showReview',e.showReview!==false?'1':'0',[['1','نمایش داده شود'],['0','نمایش داده نشود']],'data-o')}
-    ${sel('امکان تکرار آزمون','allowRetry',e.allowRetry!==false?'1':'0',[['1','مجاز'],['0','فقط یک بار']],'data-o')}
-  </div>
-  <div class="btnrow mt"><button class="btn success" data-act="runHere">${icon('i-play')} اجرای آزمایشی در همین صفحه</button><button class="btn primary" data-act="dlOnline">${icon('i-download')} دانلود فایل آزمون آنلاین</button><button class="btn" data-act="openOnline">${icon('i-external')} باز کردن در تب جدید</button></div>
-  <div class="note info mt">${icon('i-info')}<div>سؤال‌های <b>تشریحی</b> به‌صورت خودکار نمره نمی‌گیرند و در تب «تصحیح» می‌توانید دستی نمره بدهید. نتایج آزمایشی که همین‌جا اجرا می‌کنید، خودکار به تب «تصحیح» اضافه می‌شود.</div></div>
-  </div>
-  <div class="card"><div class="card-head"><h3>${icon('i-globe')} محیط اجرای آزمون</h3><span class="muted">همان چیزی که دانش‌آموز می‌بیند</span></div><iframe id="onlineFrame" class="online-frame" title="پیش‌نمایش آزمون آنلاین"></iframe></div>`}
+function viewOnline(){const e=exam();const dev=ui.device==='phone'?'phone':'desk';return `<div class="online-studio">
+  <section class="panel">
+    <div class="card-head"><div><h2>${icon('i-play')} آزمون آنلاین آفلاین</h2><div class="desc">یک فایل HTML مستقل ساخته می‌شود که دانش‌آموز روی هر گوشی یا رایانه‌ای بدون اینترنت باز می‌کند؛ پاسخ‌ها با کلید اختصاصی همین آزمون قفل می‌شوند.</div></div></div>
+    <div class="eyebrow" style="margin-bottom:6px">${icon('i-bolt')} حالت‌های آماده</div>
+    <div class="presets">${[['practice','i-refresh','تمرینی','بازخورد فوری، تکرار آزاد'],['class','i-users','کلاسی','ترتیب تصادفی، یک‌بار'],['formal','i-lock','رسمی','بدون نمایش پاسخ، نام اجباری']].map(p=>`<button type="button" class="preset" data-act="onPreset" data-v="${p[0]}">${icon(p[1])}<b>${p[2]}</b><small>${p[3]}</small></button>`).join('')}</div>
+    <fieldset class="fgroup"><legend>${icon('i-clock')} زمان و قبولی</legend><div class="grid g2"><div><label>مدت آزمون (دقیقه)</label><input type="number" min="1" max="600" data-o="onlineDuration" value="${e.onlineDuration||30}" aria-label="مدت آزمون آنلاین به دقیقه"></div><div><label>حد نصاب قبولی (درصد)</label><input type="number" min="0" max="100" data-o="passPercent" value="${e.passPercent??50}" aria-label="حد نصاب قبولی به درصد"></div></div></fieldset>
+    <fieldset class="fgroup"><legend>${icon('i-shuffle')} ترتیب</legend><div class="grid g2">${sel('ترتیب سؤال‌ها','random',e.random?'1':'0',[['0','به ترتیب'],['1','تصادفی برای هر دانش‌آموز']],'data-o')}${sel('ترتیب گزینه‌ها','shuffleOptions',e.shuffleOptions?'1':'0',[['0','ثابت'],['1','تصادفی']],'data-o')}</div></fieldset>
+    <fieldset class="fgroup"><legend>${icon('i-eye')} بازخورد و مرور</legend><div class="grid g2">${sel('نمایش درست/غلط','showCorrect',e.showCorrect,[['end','فقط در پایان'],['after','بازخورد فوری'],['never','هرگز']],'data-o')}${sel('مرور پاسخ‌ها در پایان','showReview',e.showReview!==false?'1':'0',[['1','نمایش داده شود'],['0','نمایش داده نشود']],'data-o')}${sel('امکان تکرار آزمون','allowRetry',e.allowRetry!==false?'1':'0',[['1','مجاز'],['0','فقط یک بار']],'data-o')}</div></fieldset>
+    <fieldset class="fgroup"><legend>${icon('i-users')} هویت دانش‌آموز</legend><div class="grid g2">${sel('نام دانش‌آموز','requireName',e.requireName!==false?'1':'0',[['1','اجباری'],['0','اختیاری']],'data-o')}${sel('پرسیدن کلاس / شماره','askClass',e.askClass!==false?'1':'0',[['1','بله'],['0','خیر']],'data-o')}</div></fieldset>
+    <div class="btnrow"><button type="button" class="btn success" data-act="runHere">${icon('i-play')} اجرای آزمایشی</button><button type="button" class="btn primary" data-act="dlOnline">${icon('i-download')} دانلود فایل آزمون</button><button type="button" class="btn" data-act="openOnline">${icon('i-external')} تب جدید</button></div>
+    <div class="note mt">${icon('i-info')}<div>سؤال‌های <b>تشریحی</b> خودکار نمره نمی‌گیرند و در «تصحیح و نتایج» دستی نمره می‌گیرند. نتیجهٔ اجرای آزمایشی خودکار به همان بخش اضافه می‌شود.</div></div>
+  </section>
+  <section class="panel device-stage"><div class="desk-bar"><h2>${icon('i-globe')} محیط دانش‌آموز</h2><div class="seg" role="group" aria-label="نوع دستگاه"><button type="button" class="${dev==='desk'?'on':''}" data-act="device" data-v="desk" aria-pressed="${dev==='desk'}">${icon('i-monitor')} رایانه</button><button type="button" class="${dev==='phone'?'on':''}" data-act="device" data-v="phone" aria-pressed="${dev==='phone'}">${icon('i-phone')} گوشی</button></div></div>
+  <div class="device-wrap"><div class="device ${dev}"><iframe id="onlineFrame" class="online-frame" title="پیش‌نمایش آزمون آنلاین"></iframe></div></div></section>
+  </div>`}
+
 function onlineInput(el){const k=el.dataset.o;let v=el.value;if(['random','shuffleOptions','requireName','askClass','showReview','allowRetry'].includes(k))v=v==='1';else if(el.type==='number')v=+v;exam()[k]=v;save()}
 async function runOnlineHere(){if(!(await validateExam('online')))return;const f=$('#onlineFrame');if(!f)return;f.srcdoc=onlineHTML({sameOrigin:true});f.scrollIntoView({behavior:'smooth',block:'start'})}
-async function onlineAct(n){switch(n){case 'runHere':runOnlineHere();return true;case 'dlOnline':if(await validateExam('online')){dl('azmoon-online-'+safeName(exam().title)+'.html',onlineHTML({sameOrigin:false}),'text/html;charset=utf-8');toast('فایل آزمون آنلاین دانلود شد؛ آن را برای دانش‌آموزان بفرستید','ok')}return true;case 'openOnline':if(await validateExam('online')){const w=openWin(onlineHTML({sameOrigin:true}));if(!w)toast('مرورگر پنجره را مسدود کرد؛ از اجرای درون صفحه استفاده کنید','err')}return true}return false}
+async function onlineAct(n,b){switch(n){
+  case 'onPreset':{const e=exam();const P={practice:{showCorrect:'after',random:false,shuffleOptions:false,allowRetry:true,showReview:true,requireName:false,askClass:false},class:{showCorrect:'end',random:true,shuffleOptions:true,allowRetry:false,showReview:true,requireName:true,askClass:true},formal:{showCorrect:'never',random:true,shuffleOptions:true,allowRetry:false,showReview:false,requireName:true,askClass:true}}[b.dataset.v];if(!P)return true;Object.assign(e,P);save();render();toast(`حالت «${b.querySelector('b')?.textContent||''}» اعمال شد؛ همهٔ گزینه‌ها همچنان قابل تغییرند`,'ok');return true}
+  case 'device':{ui.device=b.dataset.v==='phone'?'phone':'desk';save();const d=$('.device');if(d){d.classList.toggle('phone',ui.device==='phone');d.classList.toggle('desk',ui.device!=='phone')}$$('[data-act=device]').forEach(x=>{const on=x.dataset.v===ui.device;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on)});return true}
+case 'runHere':runOnlineHere();return true;case 'dlOnline':if(await validateExam('online')){dl('azmoon-online-'+safeName(exam().title)+'.html',onlineHTML({sameOrigin:false}),'text/html;charset=utf-8');toast('فایل آزمون آنلاین دانلود شد؛ آن را برای دانش‌آموزان بفرستید','ok')}return true;case 'openOnline':if(await validateExam('online')){const w=openWin(onlineHTML({sameOrigin:true}));if(!w)toast('مرورگر پنجره را مسدود کرد؛ از اجرای درون صفحه استفاده کنید','err')}return true}return false}
 window.addEventListener('message',e=>{const fr=$('#onlineFrame');if(!fr||!fr.contentWindow||e.source!==fr.contentWindow)return;const d=e.data;if(d&&d.type==='hakimestan_result'&&d.result){addResults([d.result]);toast(`نتیجه‌ی «${d.result.student||'دانش‌آموز'}» به تب تصحیح اضافه شد`,'ok')}});
 
 function onlineHTML({sameOrigin=false}={}){
@@ -1565,19 +2020,22 @@ function viewGrading(){
   const list=results.filter(r=>(!filter||r.exam_title===filter)&&(!kFilter||r.klass===kFilter)).slice().sort((a,b)=>finalPercent(b)-finalPercent(a));
   let body='';
   if(list.length){
-    const ps=list.map(finalPercent);const avg=ps.reduce((s,x)=>s+x,0)/ps.length;const passN=list.filter(r=>finalPercent(r)>=passOf(r)).length;const pend=list.reduce((s,r)=>s+pendingCount(r),0);
-    const dist=[0,0,0,0,0];ps.forEach(p=>dist[Math.min(4,Math.floor(p/20))]++);
-    /* تحلیل سؤال‌ها */
+    const ps=list.map(finalPercent);const avg=ps.reduce((s,x)=>s+x,0)/ps.length;const passN=list.filter(r=>finalPercent(r)>=passOf(r)).length;const pend=list.reduce((s,r)=>s+pendingCount(r),0);const best=Math.max(...ps);
+    const dist=[0,0,0,0,0];ps.forEach(p=>dist[Math.min(4,Math.floor(p/20))]++);const dmax=Math.max(1,...dist);
     const qstat={};list.forEach(r=>(r.details||[]).forEach((d,i)=>{const k=(r.exam_id||r.exam_title||'')+':'+(d.id||i);if(!qstat[k])qstat[k]={q:d.q,n:0,ok:0,wrong:0,blank:0,i};qstat[k].n++;if(d.status==='correct')qstat[k].ok++;else if(d.status==='wrong')qstat[k].wrong++;else if(d.status==='blank')qstat[k].blank++}));
     const qrows=Object.values(qstat).sort((a,b)=>a.i-b.i);
-    body=`<div class="grid g4 mb"><div class="card stat"><b>${fa(list.length)}</b><span>دانش‌آموز</span></div><div class="card stat"><b>${fa(avg.toFixed(1))}٪</b><span>میانگین</span></div><div class="card stat"><b>${fa(passN)}</b><span>قبول (≥${fa(list[0]&&typeof list[0].passPercent==='number'?list[0].passPercent:(exam().passPercent??50))}٪)</span></div><div class="card stat"><b class="${pend?'bad':''}">${fa(pend)}</b><span>پاسخ در انتظار تصحیح</span></div></div>
-    <div class="card"><div class="card-head"><h3>${icon('i-users')} فهرست نتایج</h3><div class="btnrow"><button class="btn sm" data-act="gCSV">${icon('i-table')} Excel</button><button class="btn sm" data-act="gPrint">${icon('i-print')} کارنامه‌ی کلاس</button><button class="btn sm" data-act="gCards">${icon('i-file')} کارنامه‌های فردی</button></div></div>
-    <div style="overflow:auto"><table class="tbl"><thead><tr><th>رتبه</th><th>نام</th><th>کلاس</th><th>نمره</th><th>درصد</th><th>درست</th><th>نادرست</th><th>بی‌پاسخ</th><th>تصحیح دستی</th><th>تاریخ</th><th></th></tr></thead><tbody>${list.map((r,i)=>{const p=finalPercent(r),pc=pendingCount(r);return `<tr><td>${i<3?['🥇','🥈','🥉'][i]:fa(i+1)}</td><td style="text-align:right;font-weight:700">${esc(r.student)}</td><td>${esc(r.klass||'')}</td><td>${faNum(finalScore(r))} / ${faNum(r.max_score)}</td><td class="${p>=80?'good':p>=50?'mid':'bad'}" style="font-weight:800">${fa(p)}٪</td><td>${fa(r.correct_count??'')}</td><td>${fa(r.wrong_count??'')}</td><td>${fa(r.blank_count??'')}</td><td>${pc?`<span class="badge warn">${fa(pc)} مانده</span>`:(r.details||[]).some(d=>d.type==='essay')?`<span class="badge ok">انجام شد</span>`:'—'}</td><td style="white-space:nowrap">${esc(new Date(r.date).toLocaleDateString('fa-IR'))}</td><td style="white-space:nowrap"><button class="btn xs" data-act="gView" data-id="${escAttr(r._id)}" title="جزئیات و تصحیح">${icon('i-eye')}</button> <button class="btn xs danger" data-act="gDel" data-id="${escAttr(r._id)}" title="حذف">${icon('i-trash')}</button></td></tr>`}).join('')}</tbody></table></div></div>
-    <div class="grid g2"><div class="card"><h3 class="mb">${icon('i-award')} توزیع نمرات</h3>${['۰–۱۹','۲۰–۳۹','۴۰–۵۹','۶۰–۷۹','۸۰–۱۰۰'].map((l,i)=>`<div style="display:grid;grid-template-columns:70px 1fr 40px;gap:8px;align-items:center;margin:6px 0"><span class="muted">${l}٪</span><div class="bar"><i style="width:${list.length?dist[i]/list.length*100:0}%"></i></div><b>${fa(dist[i])}</b></div>`).join('')}</div>
-    <div class="card"><h3 class="mb">${icon('i-list')} تحلیل سؤال‌ها <span class="muted">(درصد پاسخ درست)</span></h3><div style="max-height:320px;overflow:auto">${qrows.map((s,i)=>{const p=s.n?Math.round(s.ok/s.n*100):0;return `<div style="display:grid;grid-template-columns:28px 1fr 44px;gap:8px;align-items:center;margin:6px 0" title="${escAttr(s.q)}"><span class="qnum" style="width:26px;height:26px;font-size:.75rem">${fa(i+1)}</span><div><div class="muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.75rem">${esc(s.q)||'—'}</div><div class="bar"><i style="width:${p}%;background:${p<40?'var(--danger)':p<70?'var(--info)':'var(--success)'}"></i></div></div><b class="${p<40?'bad':p<70?'mid':'good'}">${fa(p)}٪</b></div>`}).join('')||'<div class="muted">جزئیات سؤال در نتایج موجود نیست</div>'}</div><div class="tip">سؤال‌های با درصد پایین (قرمز) احتمالاً دشوار یا مبهم بوده‌اند.</div></div></div>`;
+    const passPct=list[0]&&typeof list[0].passPercent==='number'?list[0].passPercent:(exam().passPercent??50);
+    body=`<div class="kpis">${[['i-users',fa(list.length),'دانش‌آموز',''],['i-chart',fa(avg.toFixed(1))+'٪','میانگین کلاس',''],['i-award',fa(passN),`قبول (≥${fa(passPct)}٪)`,''],['i-target',fa(best)+'٪','بالاترین درصد',''],['i-edit',fa(pend),'پاسخ در انتظار تصحیح',pend?'bad':'']].map(k=>`<div class="panel kpi"><span class="tile">${icon(k[0])}</span><div><b class="${k[3]}">${k[1]}</b><span>${k[2]}</span></div></div>`).join('')}</div>
+    <div class="grade-grid">
+    <section class="panel"><div class="card-head"><h2>${icon('i-users')} فهرست نتایج</h2><div class="btnrow"><button type="button" class="btn sm" data-act="gCSV">${icon('i-table')} Excel</button><button type="button" class="btn sm" data-act="gPrint">${icon('i-print')} کارنامهٔ کلاس</button><button type="button" class="btn sm" data-act="gCards">${icon('i-file')} کارنامه‌های فردی</button></div></div>
+    <div style="overflow:auto;max-height:70dvh"><table class="tbl"><thead><tr><th>رتبه</th><th>نام</th><th>کلاس</th><th>نمره</th><th>درصد</th><th>درست</th><th>نادرست</th><th>بی‌پاسخ</th><th>تصحیح دستی</th><th>تاریخ</th><th><span class="sr-only">عملیات</span></th></tr></thead><tbody>${list.map((r,i)=>{const p=finalPercent(r),pc=pendingCount(r);return `<tr><td>${i<3?`<span class="rank r${i+1}" title="رتبهٔ ${fa(i+1)}">${fa(i+1)}</span>`:fa(i+1)}</td><td style="text-align:right;font-weight:700">${esc(r.student)}</td><td>${esc(r.klass||'')}</td><td>${faNum(finalScore(r))} / ${faNum(r.max_score)}</td><td class="${p>=80?'good':p>=50?'mid':'bad'}" style="font-weight:800">${fa(p)}٪</td><td>${fa(r.correct_count??'')}</td><td>${fa(r.wrong_count??'')}</td><td>${fa(r.blank_count??'')}</td><td>${pc?`<span class="badge warn">${fa(pc)} مانده</span>`:(r.details||[]).some(d=>d.type==='essay')?`<span class="badge ok">انجام شد</span>`:'—'}</td><td style="white-space:nowrap">${esc(new Date(r.date).toLocaleDateString('fa-IR'))}</td><td style="white-space:nowrap"><button type="button" class="btn xs" data-act="gView" data-id="${escAttr(r._id)}" title="جزئیات و تصحیح" aria-label="جزئیات و تصحیح ${escAttr(r.student)}">${icon('i-eye')}</button> <button type="button" class="btn xs danger" data-act="gDel" data-id="${escAttr(r._id)}" title="حذف" aria-label="حذف نتیجهٔ ${escAttr(r.student)}">${icon('i-trash')}</button></td></tr>`}).join('')}</tbody></table></div></section>
+    <div style="display:grid;gap:12px;grid-template-columns:minmax(0,1fr)">
+    <section class="panel"><h2 class="mb">${icon('i-chart')} توزیع نمرات</h2><div class="histo" role="img" aria-label="نمودار توزیع درصد نمرات">${['۰–۱۹','۲۰–۳۹','۴۰–۵۹','۶۰–۷۹','۸۰–۱۰۰'].map((l,i)=>`<div><b>${fa(dist[i])}</b><i style="height:${Math.max(4,dist[i]/dmax*110)}px"></i><span>${l}٪</span></div>`).join('')}</div></section>
+    <section class="panel"><h2 class="mb">${icon('i-list')} تحلیل سؤال‌ها <span class="muted">(درصد پاسخ درست)</span></h2><div style="max-height:320px;overflow:auto">${qrows.map((s,i)=>{const p=s.n?Math.round(s.ok/s.n*100):0;return `<div style="display:grid;grid-template-columns:28px minmax(0,1fr) 44px;gap:8px;align-items:center;margin:6px 0" title="${escAttr(s.q)}"><span class="qnum" style="width:26px;height:26px;font-size:.75rem">${fa(i+1)}</span><div><div class="muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.75rem">${esc(s.q)||'—'}</div><div class="bar"><i style="width:${p}%;background:${p<40?'var(--bad-text)':p<70?'var(--accent)':'var(--ok-text)'}"></i></div></div><b class="${p<40?'bad':p<70?'mid':'good'}">${fa(p)}٪</b></div>`}).join('')||'<div class="muted">جزئیات سؤال در نتایج موجود نیست</div>'}</div><div class="tip">سؤال‌های با درصد پایین (قرمز) احتمالاً دشوار یا مبهم بوده‌اند.</div></section>
+    </div></div>`;
   }
-  return `<div class="card"><div class="card-head"><div><h2>${icon('i-check-circle')} تصحیح و نتایج</h2><div class="desc">فایل‌های نتیجه‌ی JSON که دانش‌آموزان از آزمون آنلاین گرفته‌اند را اینجا بیندازید. سؤال‌های تشریحی را می‌توانید دستی نمره دهید.</div></div><div class="btnrow">${titles.length>1?`<select id="gFilter" style="min-width:180px" aria-label="فیلتر آزمون"><option value="">همه‌ی آزمون‌ها</option>${titles.map(t=>`<option value="${escAttr(t)}" ${filter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}${klasses.length>1?`<select id="gKlass" style="min-width:150px" aria-label="فیلتر کلاس"><option value="">همه‌ی کلاس‌ها</option>${klasses.map(t=>`<option value="${escAttr(t)}" ${kFilter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}<button class="btn sm danger" data-act="gClear">${icon('i-trash')} پاک کردن همه</button></div></div>
-  <div id="drop" class="drop" data-act="gPick">${icon('i-upload','')} <div style="font-weight:800;margin-top:6px">فایل‌های نتیجه را اینجا بکشید یا کلیک کنید</div><div class="muted">می‌توانید چند فایل را هم‌زمان انتخاب کنید</div></div><input id="resultFiles" class="hide" type="file" accept=".json,application/json" multiple></div>${body||`<div class="card empty">${icon('i-users')}<div>هنوز نتیجه‌ای ثبت نشده. از تب «آزمون آنلاین» یک اجرای آزمایشی انجام دهید تا نتیجه‌اش همین‌جا ظاهر شود.</div></div>`}`;
+  return `<section class="panel" style="margin-bottom:12px"><div class="card-head"><div><h2>${icon('i-check-circle')} تصحیح و نتایج</h2><div class="desc">فایل‌های نتیجهٔ JSON دانش‌آموزان را اینجا بیندازید. سؤال‌های تشریحی را می‌توانید دستی نمره دهید.</div></div><div class="btnrow">${titles.length>1?`<select id="gFilter" style="min-width:180px" aria-label="فیلتر آزمون"><option value="">همهٔ آزمون‌ها</option>${titles.map(t=>`<option value="${escAttr(t)}" ${filter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}${klasses.length>1?`<select id="gKlass" style="min-width:150px" aria-label="فیلتر کلاس"><option value="">همهٔ کلاس‌ها</option>${klasses.map(t=>`<option value="${escAttr(t)}" ${kFilter===t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}<button type="button" class="btn sm danger" data-act="gClear">${icon('i-trash')} پاک کردن همه</button></div></div>
+  <div id="drop" class="drop" data-act="gPick" role="button" tabindex="0" aria-label="انتخاب فایل‌های نتیجه">${icon('i-upload','')}<div style="text-align:right"><div style="font-weight:800">فایل‌های نتیجه را اینجا بکشید یا کلیک کنید</div><div class="muted">می‌توانید چند فایل را هم‌زمان انتخاب کنید</div></div></div><input id="resultFiles" class="hide" type="file" accept=".json,application/json" multiple aria-label="انتخاب فایل‌های نتیجه"></section>${body||`<section class="panel empty">${icon('i-users')}<div>هنوز نتیجه‌ای ثبت نشده. از «آزمون آنلاین» یک اجرای آزمایشی انجام دهید تا نتیجه‌اش همین‌جا ظاهر شود.</div></section>`}`;
 }
 $('#app').addEventListener('change',e=>{if(e.target.id==='gFilter'){ui.gradeFilter=e.target.value;save();render()}if(e.target.id==='gKlass'){ui.klassFilter=e.target.value;save();render()}});
 function resultDetailModal(r){
