@@ -4919,7 +4919,7 @@ var App = (function(){
     var pollHTML = '';
     var pollData = m.meta && m.meta.poll;
     if(pollData && pollData.q){
-      pollHTML = Poll.render(pollData, m.from, S.role);
+      pollHTML = Survey.render(pollData, m.from, S.role);
     }
     if(String(txt||'').trim() || !att){
       body = '<div class="txt">'+ Md.render(txt, {mentions:true}) +'</div>';
@@ -5393,10 +5393,11 @@ var Sec = (function(){
   };
 })();
 
-/* ═════════════ ۱۶. نظرسنجی و آزمون (Poll) ═════════════
+/* ═════════════ ۱۶. نظرسنجی و آزمون (Survey) ═════════════
    پیام نظرسنجی/آزمون با متادیتا poll: { type, q, opts:[{id,t,n}], voted:[], answer }
-   نوع 'poll' = رأی‌گیری عادی، 'quiz' = آزمون (نفوذِ پاسخ درست فقط به معلم/سازنده). */
-var Poll = (function(){
+   نوع 'poll' = رأی‌گیری عادی، 'quiz' = آزمون (نفوذِ پاسخ درست فقط به معلم/سازنده).
+   نکته: نام Survey برای جلوگیری از تداخل با ماژول Poll (تیک‌رت‌کننده شبکه) انتخاب شد. */
+var Survey = (function(){
   function make(type, q, opts, answer){
     return {
       type: type || 'poll',
@@ -6249,7 +6250,7 @@ var Attach = (function(){
     U.on($('#attachPoll'),'click', function(){
       closeMenu();
       if(S.chat && (S.chat.type==='group' || S.chat.type==='pv')){
-        Poll.build(null, S.me);
+        Survey.build(null, S.me);
       } else { toast('ابتدا یک گفتگوی گروهی یا خصوصی انتخاب کن','err'); }
     });
     U.on($('#btnAttach'),'click', function(e){
@@ -7774,7 +7775,7 @@ var Sync = (function(){
 
 /* دسترسی برنامه برای اشکال‌زدایی (اختیاری) */
 window.HK = { CFG:CFG, S:S, U:U, DB:DB, Net:Net, Data:Data, App:App, Attach:Attach, Ui:Ui, Wire:Wire,
-              Notify:Notify, Outbox:Outbox, Poll:Poll, Teacher:Teacher, Settings:Settings, PWA:PWA, Profile:Profile,
+              Notify:Notify, Outbox:Outbox, Poll:Poll, Survey:Survey, Teacher:Teacher, Settings:Settings, PWA:PWA, Profile:Profile,
               Search:Search, Md:Md, Norm:Norm, Filter:Filter, Status:Status, Guard:Guard, Auth:Auth, Compose:Compose,
               Typing:Typing, Voice:Voice, Recorder:Recorder, Mention:Mention, Forward:Forward, Tomb:Tomb,
               Shortcuts:Shortcuts, Sync:Sync, Sheets:Sheets, Drawerx:Drawerx, InChatSearch:InChatSearch, Demo:Demo };
