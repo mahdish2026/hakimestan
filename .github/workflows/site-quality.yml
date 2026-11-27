@@ -32,6 +32,7 @@ jobs:
           node tests/site-review-fixes.cjs
           node tests/csp-hardening.cjs
           node tests/kohan-map.cjs
+          node tests/hakim-core.cjs
       - name: Check public pages on Chromium
         env:
           SITE_AXE: '1'
@@ -44,5 +45,6 @@ jobs:
           curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
           node tests/site-pages-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
           node tests/kohan-start-browser.cjs
+          node tests/hakim-core-browser.cjs
           node tests/cert-brand-browser.cjs
           node tests/teacher-dashboard-security.cjs
