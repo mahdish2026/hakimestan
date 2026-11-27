@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+<meta charset="utf-8">
 <!-- hakim-csp:start -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' https: wss: blob:; manifest-src 'self'; worker-src 'self' blob:">
 <!-- hakim-csp:end -->
@@ -11,7 +12,6 @@
 <link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0d0a1f">
 <title>پنل معلم — حکیمستان</title>
@@ -115,6 +115,7 @@ a{color:inherit}
 #hakimMount .hakim-panel{--hk-panel-bg:var(--card);--hk-border:var(--line);--hk-bubble-bg:var(--card-2);--hk-bubble-border:var(--line);--hk-text:var(--text);--hk-label:var(--text);--hk-label-bg:var(--card);--hk-ring:var(--accent);--hk-ring-light:color-mix(in srgb,var(--accent) 30%,white);--hk-ring-deep:color-mix(in srgb,var(--accent) 55%,#14202a);--hk-face-light:color-mix(in srgb,var(--accent) 28%,#172036);--hk-face-dark:#101827;--hk-glow:color-mix(in srgb,var(--accent) 45%,transparent);--hk-wash:color-mix(in srgb,var(--accent) 10%,transparent);}
 #hakimMount .hakim-panel.speaking{box-shadow:0 10px 32px var(--hk-glow),inset 0 1px 0 rgba(255,255,255,.08)}
 </style>
+<link rel="stylesheet" href="../css/teacher-workspace.css">
 <!-- hakim-meta:start -->
 <meta name="description" content="پنل معلم حکیمستان — مدیریت کلاس، دانش‌آموزان، تکالیف و گزارش پیشرفت، همه در یک صفحه.">
 <link rel="canonical" href="https://hakimistan.ir/panels/teacher.html">
@@ -134,7 +135,8 @@ a{color:inherit}
 <meta name="twitter:image" content="https://hakimistan.ir/screenshots/og-cover.jpg">
 <!-- hakim-meta:end -->
 </head>
-<body data-theme="indigo">
+<body data-theme="blue">
+<a class="skip-workspace" href="#workspaceMain">رفتن به محتوای پنل</a>
 <!-- نمادهای SVG داخلی -->
 <svg width="0" height="0" style="position:absolute"><defs>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
@@ -161,17 +163,17 @@ a{color:inherit}
 </defs></svg>
 
 <div id="loginView" class="login-wrap">
-  <div class="login-brand"><div class="brand-mark"><svg class="icon xl"><use href="#i-book"/></svg></div><h1>پنل معلم حکیمستان</h1><p>مدیریت بازی‌ها، سؤال‌ها و نتایج دانش‌آموزان</p></div>
+  <div class="login-brand"><a href="../index.html" class="login-wordmark" aria-label="بازگشت به حکیمستان"><div class="brand-mark"><svg class="icon xl"><use href="#i-book"/></svg></div><span>حکیمستان<small>فضای تدریس شما</small></span></a><span class="eyebrow">برای فردای روشنِ یک کلاس</span><h1>هر روز،<br>فرصتی برای <em>شکفتن.</em></h1><p>از پرورش یک ایده تا دیدن نتیجهٔ یادگیری؛<br>ابزارهای کلاس، اینجا کنار شما هستند.</p><img class="teacher-login-art" src="../assets/teacher/learning-garden.svg" width="520" height="430" alt="" aria-hidden="true"><div class="teacher-login-caption">پنل معلم حکیمستان <span aria-hidden="true">✦</span> آموزش، با نگاهی تازه</div></div>
   <div class="card login-card">
-    <h2><svg class="icon"><use href="#i-lock"/></svg> ورود معلم</h2>
-    <label class="field">رمز عبور<input id="passIn" type="password" autocomplete="current-password" placeholder="رمز عبور را وارد کنید"></label>
-    <div id="loginAlert" class="alert"></div>
-    <button id="btnLogin" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-check"/></svg> ورود به پنل</button>
+    <span class="teacher-login-badge"><svg class="icon"><use href="#i-lock"/></svg></span><p class="teacher-kicker">به اتاق کارتان خوش آمدید</p><h2>آغاز یک روز پُرایده</h2><p class="teacher-login-desc">برای ورود به پنل معلم، رمز عبورتان را وارد کنید.</p>
+    <label class="field">رمز عبور<span class="password-wrap"><input id="passIn" type="password" autocomplete="current-password" placeholder="رمز عبور را وارد کنید"><button id="togglePassword" class="password-toggle" type="button" aria-label="نمایش رمز عبور" aria-pressed="false"><svg class="icon"><use href="#i-eye"/></svg></button></span></label>
+    <p class="login-safety">توکن ورود فقط در حافظهٔ همین صفحه نگه‌داری می‌شود. در دستگاه مشترک، پس از پایان کار از پنل خارج شوید.</p><div id="loginAlert" class="alert" role="alert"></div>
+    <button id="btnLogin" data-btl-processed="1" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-check"/></svg> ورود به پنل</button>
   </div>
 </div>
 
 <div id="appShell" class="app-shell hidden">
-  <div id="hakimMount" style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;max-width:520px;width:calc(100% - 40px);pointer-events:none;"></div>
+  <div id="hakimMount" class="hidden" role="region" aria-label="راهنمای پنل"><button type="button" id="teacherGuideClose" class="icon-btn" aria-label="بستن راهنما"><svg class="icon sm"><use href="#i-close"/></svg></button></div>
   <aside class="sidebar">
     <div class="brand"><div class="brand-mark"><svg class="icon"><use href="#i-book"/></svg></div><div><span class="brand-title">حکیمستان</span><span class="brand-sub">پنل مدیریت معلم</span></div></div>
     <div class="user-mini"><div class="avatar"><svg class="icon"><use href="#i-users"/></svg></div><div><b id="userName">معلم</b><small>دسترسی مدیریت</small></div></div>
@@ -186,15 +188,32 @@ a{color:inherit}
       <button class="nav-btn" data-screen="settings"><svg class="icon"><use href="#i-settings"/></svg><span>تنظیمات پنل</span></button>
       <button class="nav-btn" id="btnLogout"><svg class="icon"><use href="#i-logout"/></svg><span>خروج</span></button>
     </nav>
+    <a class="teacher-nav-note" href="../tarh-dars.html"><svg class="icon"><use href="#i-star"/></svg><strong>ایده‌ای برای کلاس فردا؟</strong><span>از اینجا یک طرح درس بسازید <b aria-hidden="true">↖</b></span></a>
 <div class="sidebar-footer"><a href="../games/math-decimals-teacher.html" style="display:block;margin-bottom:6px;color:inherit;text-decoration:underline">گزارش محلی ممیزستان</a>حکیمستان · آموزش با بازی<br><span style="color:var(--gold);font-weight:700">طراحی و توسعه: مهدی شریفیان</span></div>  </aside>
-  <main class="main"><div class="main-inner">
-    <header class="topbar"><div class="topbar-title"><h2 id="pageTitle">داشبورد</h2><p id="pageSubtitle">نمای کلی فعالیت‌های آموزشی</p></div><div class="top-actions"><button id="btnTheme" class="icon-btn" title="انتخاب تم" aria-label="انتخاب تم"><svg class="icon"><use href="#i-settings"/></svg></button><button id="btnRefresh" class="icon-btn" title="بازخوانی" aria-label="بازخوانی"><svg class="icon"><use href="#i-refresh"/></svg></button></div></header>
+  <main class="main" id="workspaceMain" tabindex="-1"><div class="main-inner">
+    <header class="topbar"><div class="topbar-title"><span class="teacher-kicker"><a href="../index.html" class="teacher-home-link">حکیمستان</a> <span aria-hidden="true">/</span> فضای تدریس</span><h1 id="pageTitle" tabindex="-1">داشبورد</h1><p id="pageSubtitle">نمای کلی فعالیت‌های آموزشی</p></div><div class="top-actions"><time id="workspaceDate" class="workspace-date"></time><span id="connectionState" class="connection-pill" role="status">آمادهٔ اتصال</span><button id="btnTeacherGuide" class="icon-btn" aria-label="راهنمای پنل" title="راهنمای پنل" aria-controls="hakimMount" aria-expanded="false"><svg class="icon"><use href="#i-book"/></svg></button><button id="btnTheme" class="icon-btn" title="انتخاب تم" aria-label="انتخاب تم"><svg class="icon"><use href="#i-settings"/></svg></button><button id="btnRefresh" class="icon-btn" title="بازخوانی" aria-label="بازخوانی"><svg class="icon"><use href="#i-refresh"/></svg></button></div></header>
     <div id="themePanel" class="theme-panel hidden"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>ظاهر پنل</h3><button class="icon-btn" id="btnCloseTheme" style="width:30px;height:30px"><svg class="icon sm"><use href="#i-close"/></svg></button></div><div id="themeGrid" class="theme-grid"></div><p class="muted" style="font-size:.65rem;margin:10px 0 0">انتخاب شما در این دستگاه ذخیره می‌شود.</p></div>
 
-    <section id="scDashboard" class="screen">
+    <section id="scDashboard" class="screen" aria-label="داشبورد معلم">
+      <div class="workspace-hero">
+        <div class="teacher-hero-copy"><span class="eyebrow">اتاق کار معلم · حکیمستان</span><p class="teacher-greeting">سلام، <span id="heroTeacherName">معلم عزیز</span> <span aria-hidden="true">✦</span></p><h2>برای شکفتنِ<br><em>یک کلاس.</em></h2><p>هر سؤال، یک جرقه؛ هر بازی، یک فرصت یادگیری.<br>امروز کدام ایده را به کلاس می‌برید؟</p><div class="hero-actions"><button class="btn" data-go="results">مرور مسیر یادگیری <svg class="icon sm"><use href="#i-chart"/></svg></button><button class="btn ghost" data-go="games">بازی‌ها و سؤال‌ها <svg class="icon sm"><use href="#i-game"/></svg></button></div></div>
+        <div class="teacher-hero-visual" aria-hidden="true"><img src="../assets/teacher/learning-garden.svg" width="520" height="430" alt=""><span class="teacher-art-note">بذرِ امروز، داناییِ فردا <span>✦</span></span></div>
+      </div>
+      <div class="section-heading"><div><h2>نبض یادگیری</h2><p>خلاصهٔ گزارش‌های ثبت‌شده در سامانه</p></div><small id="dashboardUpdated" role="status">در انتظار دریافت اطلاعات</small></div><div id="dashboardAlert" class="alert" role="alert"></div>
       <div class="stats-grid"><div class="stat-card"><div class="stat-icon"><svg class="icon"><use href="#i-game"/></svg></div><div id="stTotal" class="stat-value">—</div><div class="stat-label">کل بازی‌ها</div><div class="stat-trend"><span class="trend-up">●</span> ثبت‌شده در سامانه</div></div><div class="stat-card green"><div class="stat-icon"><svg class="icon"><use href="#i-chart"/></svg></div><div id="stToday" class="stat-value">—</div><div class="stat-label">بازی‌های امروز</div><div class="stat-trend"><span class="trend-up">●</span> فعالیت امروز</div></div><div class="stat-card blue"><div class="stat-icon"><svg class="icon"><use href="#i-star"/></svg></div><div id="stWeek" class="stat-value">—</div><div class="stat-label">بازی‌های این هفته</div><div class="stat-trend"><span class="trend-up">●</span> هفت روز اخیر</div></div><div class="stat-card pink"><div class="stat-icon"><svg class="icon"><use href="#i-check"/></svg></div><div id="stAvg" class="stat-value">—</div><div class="stat-label">میانگین امتیاز</div><div class="stat-trend"><span class="trend-up">●</span> عملکرد کلی</div></div></div>
-      <div class="dashboard-grid"><div class="card"><div class="card-head"><div><h2><svg class="icon"><use href="#i-star"/></svg> برترین دانش‌آموزان</h2><p>بر اساس امتیاز و تعداد بازی</p></div></div><div id="topStudents"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div></div><div class="card"><div class="card-head"><div><h2><svg class="icon"><use href="#i-chart"/></svg> بازی‌های محبوب</h2><p>تعداد انجام بازی به تفکیک عنوان</p></div></div><div id="gamesChart"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div></div></div>
-    </section>
+      <div class="dashboard-grid"><div class="card"><div class="card-head"><div><h2><svg class="icon"><use href="#i-star"/></svg> ستاره‌های تلاش</h2><p>فهرست برترین‌ها، طبق گزارش سامانه</p></div><button class="teacher-card-link" data-go="results" type="button">همهٔ نتایج <span aria-hidden="true">↖</span></button></div><div id="topStudents"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div></div><div class="card"><div class="card-head"><div><h2><svg class="icon"><use href="#i-chart"/></svg> جریان بازی و یادگیری</h2><p>تعداد دفعات ثبت‌شده برای هر بازی</p></div></div><div id="gamesChart"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div></div></div>
+
+      <div class="section-heading"><div><h2>میز ابزار شما</h2><p>از برنامه‌ریزی تا اجرا؛ یک مسیر کوتاه‌تر برای هر کار</p></div></div>
+      <div class="workspace-tools">
+<a class="workspace-tool" href="../azmoon-saz.html"><span><svg class="icon"><use href="#i-file"/></svg></span><span><b>آزمون‌ساز</b><small>طراحی پرسش و برگهٔ آزمون</small></span></a>
+<a class="workspace-tool" href="../tarh-dars.html"><span><svg class="icon"><use href="#i-book"/></svg></span><span><b>طرح درس</b><small>برنامه‌ریزی تدریس خلاق</small></span></a>
+<a class="workspace-tool" href="../daftar.html"><span><svg class="icon"><use href="#i-users"/></svg></span><span><b>دفتر معلم</b><small>حضور، نمره و کارنامه</small></span></a>
+<a class="workspace-tool" href="../darsgah.html"><span><svg class="icon"><use href="#i-eye"/></svg></span><span><b>درسگاه</b><small>استودیوی ضبط تدریس</small></span></a>
+<a class="workspace-tool" href="../kelasyar.html"><span><svg class="icon"><use href="#i-grid"/></svg></span><span><b>کلاس‌یار</b><small>گروه‌بندی و ابزارهای کلاس</small></span></a>
+<a class="workspace-tool" href="../cert-studio.html"><span><svg class="icon"><use href="#i-star"/></svg></span><span><b>استودیو گواهی</b><small>تقدیر از تلاش دانش‌آموزان</small></span></a>
+<a class="workspace-tool" href="../games/math-decimals-teacher.html"><span><svg class="icon"><use href="#i-chart"/></svg></span><span><b>گزارش ممیزستان</b><small>تحلیل محلی و آفلاین</small></span></a>
+<a class="workspace-tool" href="../masir-yadgiri.html"><span><svg class="icon"><use href="#i-game"/></svg></span><span><b>گذرنامهٔ یادگیری</b><small>پیگیری مسیر بازی‌های آموزشی</small></span></a>
+</div><div class="workspace-note"><svg class="icon"><use href="#i-lock"/></svg><span>حریم خصوصی کلاس مهم است. پشتیبان‌ها شامل اطلاعات دانش‌آموزان هستند؛ آن‌ها را فقط در محل امن نگه دارید. گزارش ممیزستان روی همین دستگاه و بدون ارسال به شبکه قابل مشاهده است.</span></div>    </section>
 
     <section id="scGames" class="screen hidden"><div class="card"><div class="card-head"><div><h2><svg class="icon"><use href="#i-game"/></svg> بازی‌ها و سؤال‌ها</h2><p>برای مدیریت سؤال‌ها یک بازی را انتخاب کنید.</p></div></div><div id="gameList" class="game-list"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div></div></section>
 
@@ -204,7 +223,7 @@ a{color:inherit}
       <div id="tabList" class="tab-body"><div id="qList" class="q-list"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><button id="btnRestore" class="btn ghost" style="margin-top:12px"><svg class="icon sm"><use href="#i-refresh"/></svg> بازیابی سؤال‌های پیش‌فرض</button></div>
     </div></section>
 
-    <section id="scResults" class="screen hidden"><div class="card"><div class="toolbar"><div class="card-head" style="margin:0"><div><h2><svg class="icon"><use href="#i-chart"/></svg> نتایج بازی‌ها</h2><p>فیلتر، پشتیبان‌گیری، وارد کردن یا حذف نتایج</p></div></div><div class="toolbar-actions"><button id="btnExport" class="btn small"><svg class="icon sm"><use href="#i-download"/></svg> دانلود پشتیبان JSON</button><button id="btnExportCsv" class="btn ghost small"><svg class="icon sm"><use href="#i-download"/></svg> خروجی CSV</button><button id="btnImport" class="btn info small"><svg class="icon sm"><use href="#i-upload"/></svg> بازگردانی از فایل</button><button id="btnPrintResults" class="btn ghost small">🖨️ چاپ گزارش A4</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="btnDeleteAll" class="btn danger small"><svg class="icon sm"><use href="#i-trash"/></svg> پاک کردن همه</button></div></div><div class="filters"><div><label for="fGame">بازی</label><select id="fGame"><option value="">همه بازی‌ها</option><option value="snake-ladder">مار و پله</option><option value="snake-ladder-online">مار و پله آنلاین</option><option value="mancheh-online">منچ دانش آنلاین</option><option value="hakimestan-lab-2d">آزمایشگاه ۲بعدی</option><option value="hakim-action-cannon">بازی نامشخص (hakim-action-cannon)</option><option value="jadval-hekmat">جدول حکمت</option><option value="kohan-diyar">فتح کهن دیار ایران</option><option value="hakim-quest">ماجرای حکیم</option><option value="hakim-cards">کارت‌های حکیم</option><option value="hakim-treasure">گنج حکیم</option><option value="farsi5-vocab">واژه‌ستان فارسی پنجم</option><option value="math-learning-1">تقسیم چکشی</option><option value="math-time-mission">ماموریت زمان</option><option value="math-olgoha">الگوستان</option><option value="math-fasl2">کسرستان</option><option value="math-nesbat">نسبتستان</option><option value="math-geometry">نقشستان</option><option value="math-decimals">ممیزستان</option><option value="math-measurement">پیمانه‌ستان</option><option value="math-stats">آمارستان</option><option value="farsi5-hamava">هم‌آواستان</option><option value="iran-geography">ایران‌گرد کوچک</option></select></div><div class="filter-wide"><label for="fStudent">دانش‌آموز</label><input id="fStudent" type="search" placeholder="نام دانش‌آموز..."></div><div><label for="fDays">بازه زمانی</label><select id="fDays"><option value="0">همه</option><option value="1">امروز</option><option value="7">این هفته</option><option value="30">این ماه</option></select></div><div class="filter-btn"><button id="btnApplyFilter" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-search"/></svg> فیلتر</button></div></div><div id="resultsAlert" class="alert"></div><div id="resultsInfo" class="results-info"></div><div id="resultsTable"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><div id="resultCards" class="result-cards"></div></div></section>
+    <section id="scResults" class="screen hidden"><div class="card"><div class="toolbar"><div class="card-head" style="margin:0"><div><h2><svg class="icon"><use href="#i-chart"/></svg> نتایج بازی‌ها</h2><p>فیلتر، پشتیبان‌گیری، وارد کردن یا حذف نتایج</p></div></div><div class="toolbar-actions"><button id="btnExport" class="btn small"><svg class="icon sm"><use href="#i-download"/></svg> دانلود پشتیبان JSON</button><button id="btnExportCsv" class="btn ghost small"><svg class="icon sm"><use href="#i-download"/></svg> خروجی CSV</button><button id="btnImport" class="btn info small"><svg class="icon sm"><use href="#i-upload"/></svg> بازگردانی از فایل</button><button id="btnPrintResults" class="btn ghost small">🖨️ چاپ گزارش A4</button><input id="importFile" type="file" accept=".json,application/json" hidden><button id="btnDeleteAll" class="btn danger small"><svg class="icon sm"><use href="#i-trash"/></svg> حذف نتایج فیلترشده</button></div></div><div class="filters"><div><label for="fGame">بازی</label><select id="fGame"><option value="">همه بازی‌ها</option><option value="snake-ladder">مار و پله</option><option value="snake-ladder-online">مار و پله آنلاین</option><option value="mancheh-online">منچ دانش آنلاین</option><option value="hakimestan-lab-2d">آزمایشگاه ۲بعدی</option><option value="hakim-action-cannon">بازی نامشخص (hakim-action-cannon)</option><option value="jadval-hekmat">جدول حکمت</option><option value="kohan-diyar">فتح کهن دیار ایران</option><option value="hakim-quest">ماجرای حکیم</option><option value="hakim-cards">کارت‌های حکیم</option><option value="hakim-treasure">گنج حکیم</option><option value="farsi5-vocab">واژه‌ستان فارسی پنجم</option><option value="math-learning-1">تقسیم چکشی</option><option value="math-time-mission">ماموریت زمان</option><option value="math-olgoha">الگوستان</option><option value="math-fasl2">کسرستان</option><option value="math-nesbat">نسبتستان</option><option value="math-geometry">نقشستان</option><option value="math-decimals">ممیزستان</option><option value="math-measurement">پیمانه‌ستان</option><option value="math-stats">آمارستان</option><option value="farsi5-hamava">هم‌آواستان</option><option value="iran-geography">ایران‌گرد کوچک</option></select></div><div class="filter-wide"><label for="fStudent">دانش‌آموز</label><input id="fStudent" type="search" placeholder="نام دانش‌آموز..."></div><div><label for="fDays">بازه زمانی</label><select id="fDays"><option value="0">همه</option><option value="1">امروز</option><option value="7">این هفته</option><option value="30">این ماه</option></select></div><div class="filter-btn"><button id="btnApplyFilter" class="btn" style="width:100%"><svg class="icon sm"><use href="#i-search"/></svg> فیلتر</button></div></div><div id="resultsAlert" class="alert"></div><div class="results-controls"><label>وضعیت تکمیل<select id="resultCompletion"><option value="all">همهٔ وضعیت‌ها</option><option value="complete">تکمیل‌شده</option><option value="incomplete">ناتمام؛ برای پیگیری</option></select></label><label>مرتب‌سازی<select id="resultSort"><option value="received">ترتیب دریافت</option><option value="newest">جدیدترین</option><option value="oldest">قدیمی‌ترین</option><option value="student">نام دانش‌آموز</option><option value="score">بیشترین امتیاز</option></select></label><label>تعداد در صفحه<select id="resultPageSize"><option value="25">۲۵</option><option value="50" selected>۵۰</option><option value="100">۱۰۰</option></select></label><button id="btnClearFilters" class="btn ghost small">پاک‌کردن فیلترها</button></div><div id="resultsSummary" class="results-summary" aria-label="خلاصهٔ نتایج"></div><div id="resultsInfo" class="results-info" role="status" aria-live="polite"></div><div id="resultsTable"><div class="empty"><span class="spinner"></span> در حال بارگذاری...</div></div><div id="resultCards" class="result-cards"></div><div id="resultsPagination" class="pagination" aria-label="صفحه‌بندی نتایج"></div></div></section>
 
     <section id="scStats" class="screen hidden">
       <div class="stats-grid">
@@ -291,7 +310,7 @@ a{color:inherit}
     <div id="settingsAlert" class="alert"></div>
     <div style="max-width:520px">
       <label class="field">رمز فعلی پنل<input id="oldPanelPass" type="password" autocomplete="current-password"></label>
-      <label class="field">رمز جدید پنل (حداقل ۶ کاراکتر)<input id="newPanelPass" type="password" autocomplete="new-password"></label>
+      <label class="field">رمز جدید پنل (حداقل ۱۲ کاراکتر)<input id="newPanelPass" type="password" minlength="12" autocomplete="new-password"></label>
       <label class="field">تکرار رمز جدید<input id="newPanelPass2" type="password" autocomplete="new-password"></label>
       <div class="btn-row">
         <button id="btnChangePanelPass" class="btn"><svg class="icon sm"><use href="#i-check"/></svg> ذخیرهٔ رمز جدید</button>
@@ -319,7 +338,7 @@ let allVisits=[];let filteredVisits=[];let currentPage=1;const PER_PAGE=50;
 const $=id=>document.getElementById(id), $$=s=>Array.from(document.querySelectorAll(s));
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const attr=v=>esc(v).replace(/`/g,'&#96;');
-const fa=v=>String(v??'').replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+const fa=v=>esc(String(v??'').replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]));
 const icon=n=>`<svg class="icon sm"><use href="#i-${n}"></use></svg>`;
 const GAME_NAMES={'kohan-diyar':'فتح کهن دیار ایران','snake-ladder':'مار و پله دانش','snake-ladder-online':'مار و پله آنلاین','hakim-quest':'ماجرای حکیم','hakim-cards':'کارت‌های حکیم','jadval-hekmat':'جدول حکمت','hakim-treasure':'گنج حکیم','hakimestan-lab-2d':'آزمایشگاه ۲بعدی','lab2d':'آزمایشگاه ۲بعدی','lab2d-pro':'آزمایشگاه پیشرفته','hakim-goosh':'گوش حکیم','hakim-gosh':'چشم حکیم','hakim-eye':'چشم حکیم','hakim-incline':'سطح شیب‌دار','hakim-pulley':'قرقره','hakim-action-cannon':'بازی نامشخص (hakim-action-cannon)','incline':'سطح شیب‌دار','pulley':'قرقره','mancheh-online':'منچ دانش آنلاین','farsi5-vocab':'واژه‌ستان فارسی پنجم','math-learning-1':'تقسیم چکشی','math-time-mission':'ماموریت زمان','math-olgoha':'الگوستان','math-fasl2':'کسرستان','math-nesbat':'نسبتستان','math-geometry':'نقشستان','math-decimals':'ممیزستان','math-measurement':'پیمانه‌ستان','math-stats':'آمارستان','farsi5-hamava':'هم‌آواستان','iran-geography':'ایران‌گرد کوچک','kelasyar':'کلاس‌یار','masir-yadgiri':'گذرنامه و مسیر یادگیری','math-decimals-teacher':'گزارش محلی ممیزستان','decimals-check':'سنجش ممیزستان','math-learning':'مدرسه ریاضی'};
 // شناسهٔ ارسالی تغییر نمی‌کند؛ این نام‌ها فقط برای نمایش و گزارش خوانا هستند.
@@ -342,28 +361,69 @@ function displayRecordedName(raw,fallback='—'){
   const name=knownLabel(value);if(name)return name;
   return /^[a-z0-9_./?%#=&:-]+$/i.test(value)?'شناسهٔ ثبت‌شده: '+value:value;
 }
+const recordRows=value=>Array.isArray(value)?value.filter(row=>row&&typeof row==='object'&&!Array.isArray(row)):[];
+const finiteNumber=value=>Number.isFinite(Number(value))?Number(value):0;
 const THEMES=[
-  {id:'indigo',name:'نیلی ـ طلایی',desc:'تیره و رسمی',bg:'#0d0a1f',accent:'#f5c76a'},
+  {id:'indigo',name:'نیلی ـ طلایی',desc:'تیره و رسمی',bg:'#101426',accent:'#b6c4ff'},
   {id:'purple',name:'شب بنفش',desc:'بنفش و صورتی',bg:'#170b21',accent:'#ff73c8'},
   {id:'forest',name:'جنگل شب',desc:'سبز و فیروزه‌ای',bg:'#071b1a',accent:'#5eead4'},
   {id:'morning',name:'صبح طلایی',desc:'کرم و گرم',bg:'#fbf4e8',accent:'#b7791f'},
   {id:'pink',name:'صورتی ملایم',desc:'روشن و لطیف',bg:'#fff7fb',accent:'#d9468d'},
-  {id:'blue',name:'آبی آرام',desc:'روشن و حرفه‌ای',bg:'#f1f6fb',accent:'#2563a8'}
+  {id:'blue',name:'سپیدهٔ آبی',desc:'روشن، آرام و خلاق',bg:'#f5f4fa',accent:'#6c65ad'}
 ];
-function applyTheme(theme){const id=THEMES.some(t=>t.id===theme)?theme:'indigo';const selected=THEMES.find(t=>t.id===id)||THEMES[0];document.body.dataset.theme=id;try{localStorage.setItem(THEME_KEY,id)}catch(e){}const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=selected.bg;$$('.theme-choice').forEach(x=>x.classList.toggle('selected',x.dataset.theme===id));}
-function renderThemePicker(){ $('themeGrid').innerHTML=THEMES.map(t=>`<button class="theme-choice${document.body.dataset.theme===t.id?' selected':''}" data-theme="${t.id}"><span class="theme-preview" style="--tbg:${t.bg};--taccent:${t.accent}"><i></i></span><span><b>${t.name}</b><small>${t.desc}</small></span></button>`).join('');$$('.theme-choice').forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));}
-applyTheme((()=>{try{return localStorage.getItem(THEME_KEY)}catch(e){return null}})()||'indigo');
-function showAlert(el,type,msg,auto=true){if(!el)return;el.className='alert on '+type;el.innerHTML=`${icon(type==='ok'?'check':type==='err'?'close':'file')}<span></span><button class="alert-close" aria-label="بستن">${icon('close')}</button>`;el.querySelector('span').textContent=String(msg??'');el.querySelector('.alert-close').onclick=()=>hideAlert(el);if(auto)setTimeout(()=>hideAlert(el),3500)}
-function hideAlert(el){if(el)el.className='alert'}
+function applyTheme(theme){const id=THEMES.some(t=>t.id===theme)?theme:'blue';const selected=THEMES.find(t=>t.id===id)||THEMES[0];document.body.dataset.theme=id;try{localStorage.setItem(THEME_KEY,id)}catch(e){}const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=selected.bg;$$('.theme-choice').forEach(x=>{const selected=x.dataset.theme===id;x.classList.toggle('selected',selected);x.setAttribute('aria-pressed',String(selected))});}
+function renderThemePicker(){ $('themeGrid').innerHTML=THEMES.map(t=>`<button class="theme-choice${document.body.dataset.theme===t.id?' selected':''}" data-theme="${t.id}" aria-pressed="${document.body.dataset.theme===t.id}"><span class="theme-preview" style="--tbg:${t.bg};--taccent:${t.accent}"><i></i></span><span><b>${t.name}</b><small>${t.desc}</small></span></button>`).join('');$$('.theme-choice').forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));}
+applyTheme((()=>{try{return localStorage.getItem(THEME_KEY)}catch(e){return null}})()||'blue');
+function showAlert(el,type,msg,auto=true){if(!el)return;clearTimeout(el._alertTimer);el.setAttribute('role',type==='err'?'alert':'status');el.className='alert on '+type;el.innerHTML=`${icon(type==='ok'?'check':type==='err'?'close':'file')}<span></span><button class="alert-close" aria-label="بستن">${icon('close')}</button>`;el.querySelector('span').textContent=String(msg??'');el.querySelector('.alert-close').onclick=()=>hideAlert(el);if(auto&&type!=='err')el._alertTimer=setTimeout(()=>hideAlert(el),5000)}
+function hideAlert(el){if(el){clearTimeout(el._alertTimer);el.className='alert'}}
 function loading(el){el.innerHTML='<div class="empty"><span class="spinner"></span> در حال بارگذاری...</div>'}
-async function api(action,data={}){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,...data})});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}
+let panelSession=0;
+const panelRequests=new Set();
+async function api(action,data={}){
+  const controller=new AbortController(),session=panelSession;
+  panelRequests.add(controller);
+  let timedOut=false;
+  const timer=setTimeout(()=>{timedOut=true;controller.abort()},20000);
+  try{
+    const r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,...data}),signal:controller.signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer'});
+    if(!r.ok)throw new Error('ارتباط با سرویس برقرار نشد ('+r.status+')');
+    const res=await r.json();
+    if(controller.signal.aborted||session!==panelSession)throw new Error('درخواست لغو شد.');
+    if(!res||typeof res!=='object'||Array.isArray(res))throw new Error('پاسخ سرویس معتبر نیست.');
+    return res;
+  }catch(e){if(timedOut)throw new Error('پاسخ سرویس بیش از حد طول کشید. دوباره تلاش کنید.');throw e}
+  finally{clearTimeout(timer);panelRequests.delete(controller)}
+}
+window.teacherPanelRequest=api;
+function csvCell(value){let text=String(value??'');if(/^[\s\u0000-\u001f]*[=+@-]/.test(text)||/^[\t\r\n]/.test(text))text="'"+text;return '"'+text.replace(/"/g,'""')+'"'}
+function resetPrivateView(){
+  $('userName').textContent='معلم';$('heroTeacherName').textContent='معلم عزیز';setResultTools(false);resultsLoadedFilters=null;window.__resultsData=[];resultsSource=[];allVisits=[];filteredVisits=[];pendingImport=null;editingQ=null;currentGame=null;resultsRequest++;
+  ['resultsTable','resultCards','resultsSummary','resultsPagination','resultsInfo','topStudents','gamesChart','usersList','teachersList','qList','detailBody','importPreview','hqfPreview','gameList','visitsTable','statsPages','statsDevices','statsBrowsers','statsRefs','surveysList','visitsPagination','visitsInfo'].forEach(id=>{if($(id))$(id).replaceChildren()});
+  ['stTotal','stToday','stWeek','stAvg','svTotal','svToday','svUsers','svReturn'].forEach(id=>$(id).textContent='—');
+  ['oldPanelPass','newPanelPass','newPanelPass2','fStudent'].forEach(id=>$(id).value='');
+  $$('.modal-backdrop').forEach(el=>el.classList.add('hidden'));$('themePanel').classList.add('hidden');
+  try{localStorage.removeItem(FDRAFT_KEY)}catch(e){}
+  $('btnTheme').setAttribute('aria-expanded','false');$('passIn').type='password';$('togglePassword').setAttribute('aria-pressed','false');$('togglePassword').setAttribute('aria-label','نمایش رمز عبور');
+}
+$('togglePassword').onclick=()=>{const visible=$('passIn').type==='password';$('passIn').type=visible?'text':'password';$('togglePassword').setAttribute('aria-pressed',String(visible));$('togglePassword').setAttribute('aria-label',visible?'پنهان‌کردن رمز عبور':'نمایش رمز عبور')};
+function updateConnection(){const offline=navigator.onLine===false;const el=$('connectionState');el.textContent=offline?'دستگاه آفلاین است':'دستگاه آنلاین است';el.classList.toggle('offline',offline)}
+window.addEventListener('online',updateConnection);window.addEventListener('offline',updateConnection);updateConnection();
+$('workspaceDate').textContent=new Intl.DateTimeFormat('fa-IR',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+$('workspaceDate').dateTime=new Date().toISOString().slice(0,10);
+$$('[data-go]').forEach(b=>b.onclick=()=>showScreen(b.dataset.go));
 function setButtonBusy(btn,busy,label){if(!btn)return;if(busy){btn.dataset.oldLabel=btn.innerHTML;btn.disabled=true;btn.innerHTML='<span class="spinner"></span> در حال انجام...'}else{btn.disabled=false;btn.innerHTML=label||btn.dataset.oldLabel||'ذخیره'}}
 
 /* ورود و ناوبری */
-$('btnLogin').onclick=async function(){const pass=$('passIn').value.trim();if(!pass){showAlert($('loginAlert'),'err','رمز عبور را وارد کنید.');return}setButtonBusy(this,true);try{const res=await api('tpLogin',{password:pass});if(!res.ok){showAlert($('loginAlert'),'err',res.error||'رمز عبور نادرست است.');return}token=res.token;$('userName').textContent=res.username||res.name||'معلم';$('loginView').classList.add('hidden');$('appShell').classList.remove('hidden');showScreen('dashboard')}catch(e){showAlert($('loginAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(this,false,'<svg class="icon sm"><use href="#i-check"></use></svg> ورود به پنل')}};
-$('passIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('btnLogin').click()});
-$('btnLogout').onclick=()=>{token=null;['hakimestan_daftar_pass','hakimestan_daftar_auth'].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});try{sessionStorage.removeItem('hakimestan_daftar_auth')}catch(e){}$('appShell').classList.add('hidden');$('loginView').classList.remove('hidden');$('passIn').value='';$('passIn').focus()};
-$('btnTheme').onclick=()=>{$('themePanel').classList.toggle('hidden')};$('btnCloseTheme').onclick=()=>$('themePanel').classList.add('hidden');renderThemePicker();
+$('btnLogin').onclick=async function(){if(this.disabled)return;const pass=$('passIn').value;if(!pass){showAlert($('loginAlert'),'err','رمز عبور را وارد کنید.');return}setButtonBusy(this,true);try{const res=await api('tpLogin',{password:pass});if(!res.ok){showAlert($('loginAlert'),'err',res.error||'رمز عبور نادرست است.');return}if(typeof res.token!=='string'||!res.token)throw new Error('پاسخ ورود معتبر نیست.');token=res.token;$('passIn').value='';window.dispatchEvent(new Event('teacher-session-start'));$('userName').textContent=res.username||res.name||'معلم';$('heroTeacherName').textContent=res.name||res.username||'معلم عزیز';$('loginView').classList.add('hidden');$('appShell').classList.remove('hidden');showScreen('dashboard')}catch(e){showAlert($('loginAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(this,false,'<svg class="icon sm"><use href="#i-check"></use></svg> ورود به پنل')}};
+$('passIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('btnLogin').disabled)$('btnLogin').click()});
+$('btnLogout').onclick=()=>{token=null;panelSession++;panelRequests.forEach(c=>c.abort());panelRequests.clear();window.dispatchEvent(new Event('teacher-session-end'));resetPrivateView();['hakimestan_daftar_pass','hakimestan_daftar_auth'].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});try{sessionStorage.removeItem('hakimestan_daftar_auth')}catch(e){}$('appShell').classList.add('hidden');$('loginView').classList.remove('hidden');$('passIn').value='';$('passIn').focus()};
+function closeThemePicker(restoreFocus=false){$('themePanel').classList.add('hidden');$('btnTheme').setAttribute('aria-expanded','false');if(restoreFocus)$('btnTheme').focus()}
+$('btnTheme').setAttribute('aria-controls','themePanel');$('btnTheme').setAttribute('aria-expanded','false');
+$('btnTheme').onclick=()=>{const open=$('themePanel').classList.contains('hidden');if(!open){closeThemePicker(true);return}$('themePanel').classList.remove('hidden');$('btnTheme').setAttribute('aria-expanded','true');$('themePanel').querySelector('.theme-choice.selected')?.focus()};
+$('btnCloseTheme').setAttribute('aria-label','بستن انتخاب ظاهر');$('btnCloseTheme').onclick=()=>closeThemePicker(true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('themePanel').classList.contains('hidden')){e.preventDefault();closeThemePicker(true)}});
+document.addEventListener('pointerdown',e=>{if(!$('themePanel').contains(e.target)&&!$('btnTheme').contains(e.target))closeThemePicker()});
+renderThemePicker();
 $('btnRefresh').onclick=()=>{const active=$$('.screen').find(s=>!s.classList.contains('hidden'));if(active)showScreen(active.id.replace('sc','').toLowerCase())};
 const TITLES={
   dashboard:['داشبورد','نمای کلی فعالیت‌های آموزشی'],
@@ -374,23 +434,31 @@ const TITLES={
   users:['کاربران','مدیریت دسترسی کاربران'],
   teachers:['معلم‌های دفتر','مدیریت معلم‌های دفتر معلم'],
   settings:['تنظیمات پنل','تغییر رمز ورود به پنل']
-};function showScreen(name){$$('.screen').forEach(s=>s.classList.add('hidden'));const el=$('sc'+name.charAt(0).toUpperCase()+name.slice(1));if(el)el.classList.remove('hidden');$$('.nav-btn[data-screen]').forEach(b=>b.classList.toggle('on',b.dataset.screen===name));const t=TITLES[name]||TITLES.dashboard;$('pageTitle').textContent=t[0];$('pageSubtitle').textContent=t[1];try{if(name==='dashboard')loadDashboard();if(name==='games')loadGames();if(name==='results')loadResults();if(name==='stats')loadStats();if(name==='users')loadUsers();if(name==='teachers')loadTeachers();if(name==='settings'){ $('oldPanelPass').value=''; $('newPanelPass').value=''; $('newPanelPass2').value=''; hideAlert($('settingsAlert')); }}catch(e){console.error(e)}}
+};function showScreen(name){closeThemePicker();$$('.screen').forEach(s=>s.classList.add('hidden'));const el=$('sc'+name.charAt(0).toUpperCase()+name.slice(1));if(el)el.classList.remove('hidden');$$('.nav-btn[data-screen]').forEach(b=>b.classList.toggle('on',b.dataset.screen===name));$$('.nav-btn[data-screen]').forEach(b=>{if(b.dataset.screen===name)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});const t=TITLES[name]||TITLES.dashboard;$('pageTitle').textContent=t[0];$('pageSubtitle').textContent=t[1];try{if(name==='dashboard')loadDashboard();if(name==='games')loadGames();if(name==='results')loadResults();if(name==='stats')loadStats();if(name==='users')loadUsers();if(name==='teachers')loadTeachers();if(name==='settings'){ $('oldPanelPass').value=''; $('newPanelPass').value=''; $('newPanelPass2').value=''; hideAlert($('settingsAlert')); }}catch(e){console.error(e)}}
 $$('.nav-btn[data-screen]').forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
   /* داشبورد */
-async function loadDashboard(){try{const res=await api('tpGetStats',{token});if(!res.ok)return;const s=res.stats||{};$('stTotal').textContent=fa(s.total||0);$('stToday').textContent=fa(s.today||0);$('stWeek').textContent=fa(s.week||0);$('stAvg').textContent=fa(s.avgScore||0);const top=s.topStudents||[];$('topStudents').innerHTML=top.length?'<div class="rank-list">'+top.map((st,i)=>`<div class="rank-row"><div class="rank-no">${fa(i+1)}</div><div class="rank-main"><b>${esc(st.name||'بدون نام')}</b><small>${fa(st.count||0)} بازی · میانگین ${fa(st.avgScore||0)} · بهترین ${fa(st.best||0)}</small></div><div class="rank-score">${fa(st.best||0)}</div></div>`).join('')+'</div>':'<div class="empty">هنوز داده‌ای ثبت نشده است.</div>';renderGameChart(s.byGame||[])}catch(e){$('topStudents').innerHTML='<div class="empty">خطا در دریافت اطلاعات</div>';console.error(e)}}
-function renderGameChart(games){if(!games.length){$('gamesChart').innerHTML='<div class="empty">هنوز بازی‌ای انجام نشده است.</div>';return}const max=Math.max(1,...games.map(g=>Number(g.count)||0)),w=620,h=245,pad={t:24,r:15,b:45,l:18},innerW=w-pad.l-pad.r,innerH=h-pad.t-pad.b,step=innerW/games.length,barW=Math.min(42,step*.55);let svg=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="نمودار بازی‌های محبوب">`;[0,.5,1].forEach(n=>{const y=pad.t+innerH-(innerH*n);svg+=`<line class="chart-grid" x1="${pad.l}" x2="${w-pad.r}" y1="${y}" y2="${y}"/><text class="chart-label" x="${pad.l-5}" y="${y+4}" text-anchor="end">${fa(Math.round(max*n))}</text>`});games.slice(0,10).forEach((g,i)=>{const val=Number(g.count)||0,bh=Math.max(5,innerH*val/max),x=pad.l+i*step+(step-barW)/2,y=pad.t+innerH-bh,label=String(mappedName(GAME_NAMES,g.game)||displayRecordedName(g.game,''));svg+=`<rect class="chart-bar" x="${x}" y="${y}" width="${barW}" height="${bh}" rx="6"><title>${esc(mappedName(GAME_NAMES,g.game)||displayRecordedName(g.game,''))} · ${fa(val)}</title></rect><text class="chart-value" x="${x+barW/2}" y="${y-7}" text-anchor="middle">${fa(val)}</text><text class="chart-label" x="${x+barW/2}" y="${h-13}" text-anchor="middle">${esc(label)}</text>`});svg+='</svg>';$('gamesChart').innerHTML='<div class="chart-wrap">'+svg+'</div>'}
+async function loadDashboard(){hideAlert($('dashboardAlert'));loading($('topStudents'));loading($('gamesChart'));try{const res=await api('tpGetStats',{token});if(!res.ok)throw new Error(res.error||'دریافت آمار ناموفق بود.');const s=res.stats||{};$('stTotal').textContent=fa(s.total||0);$('stToday').textContent=fa(s.today||0);$('stWeek').textContent=fa(s.week||0);$('stAvg').textContent=fa(s.avgScore||0);const top=Array.isArray(s.topStudents)?s.topStudents.filter(st=>st&&typeof st==='object'):[];$('topStudents').innerHTML=top.length?'<div class="rank-list">'+top.map((st,i)=>`<div class="rank-row"><div class="rank-no">${fa(i+1)}</div><div class="rank-main"><b>${esc(st.name||'بدون نام')}</b><small>${fa(st.count||0)} بازی · میانگین ${fa(st.avgScore||0)} · بهترین ${fa(st.best||0)}</small></div><div class="rank-score">${fa(st.best||0)}</div></div>`).join('')+'</div>':'<div class="empty">هنوز داده‌ای ثبت نشده است.</div>';renderGameChart(Array.isArray(s.byGame)?s.byGame:[]);$('dashboardUpdated').textContent='به‌روز شد · '+new Date().toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}catch(e){$('topStudents').innerHTML='<div class="empty">اطلاعات دریافت نشد.</div>';$('gamesChart').innerHTML='<div class="empty">برای تلاش دوباره از دکمهٔ بازخوانی بالای صفحه استفاده کنید.</div>';showAlert($('dashboardAlert'),'err',e.message);$('dashboardUpdated').textContent='دریافت اطلاعات ناموفق بود.'}}
+function renderGameChart(games){
+  const rows=(Array.isArray(games)?games:[]).filter(g=>g&&typeof g==='object').map(g=>({game:g.game,count:Math.max(0,finiteNumber(g.count))})).sort((a,b)=>b.count-a.count).slice(0,10);
+  if(!rows.length){$('gamesChart').innerHTML='<div class="empty">هنوز بازی‌ای انجام نشده است.</div>';return}
+  const max=Math.max(1,...rows.map(g=>g.count));
+  $('gamesChart').innerHTML='<div class="teacher-game-bars">'+rows.map(g=>{
+    const label=String(mappedName(GAME_NAMES,g.game)||displayRecordedName(g.game,''));
+    return `<div class="teacher-game-row"><div class="teacher-game-label"><span>${esc(label)}</span><b>${fa(g.count)} <small>بار</small></b></div><div class="teacher-meter" role="meter" aria-label="${attr(label)}؛ تعداد دفعات بازی" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${g.count}"><span style="width:${Math.min(100,g.count/max*100)}%"></span></div></div>`;
+  }).join('')+'</div><p class="teacher-chart-note">طول نوارها نسبت به پرتکرارترین بازیِ این فهرست است.</p>';
+}
 
 /* بازی‌ها و سؤال‌ها */
-async function loadGames(){loading($('gameList'));try{const res=await api('tpGetGames',{});if(!res.ok){$('gameList').innerHTML='<div class="empty">خطا در دریافت بازی‌ها</div>';return}const games=res.games||[];$('gameList').innerHTML=games.length?games.map(g=>`<div class="game-item" data-id="${attr(g.id)}" data-name="${attr(g.name||'')}"><div class="game-icon">${icon('game')}</div><div class="game-meta"><b>${esc(gameTitle(g.name,g.id))}</b><small>${esc(g.desc||'مدیریت سؤال‌های بازی')}</small></div><span class="game-count">${fa(g.count||0)} سؤال</span></div>`).join(''):'<div class="empty">بازی‌ای پیدا نشد.</div>';$$('.game-item').forEach(el=>el.onclick=()=>openGame(el.dataset.id,el.dataset.name))}catch(e){$('gameList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
+async function loadGames(){loading($('gameList'));try{const res=await api('tpGetGames',{});if(!res.ok){$('gameList').innerHTML='<div class="empty">خطا در دریافت بازی‌ها</div>';return}const games=Array.isArray(res.games)?res.games.filter(g=>g&&typeof g==='object'):[];$('gameList').innerHTML=games.length?games.map(g=>`<button type="button" class="game-item" data-id="${attr(g.id)}" data-name="${attr(g.name||'')}"><div class="game-icon">${icon('game')}</div><div class="game-meta"><b>${esc(gameTitle(g.name,g.id))}</b><small>${esc(g.desc||'مدیریت سؤال‌های بازی')}</small></div><span class="game-count">${fa(g.count||0)} سؤال</span></button>`).join(''):'<div class="empty">بازی‌ای پیدا نشد.</div>';$$('.game-item').forEach(el=>el.onclick=()=>openGame(el.dataset.id,el.dataset.name))}catch(e){$('gameList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
 function gameTitle(name,id){const s=String(name||'').trim().replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u,'');return knownLabel(id)||knownLabel(s)||s||'بازی نامشخص'}
-function openGame(id,name){currentGame=id;currentGameName=gameTitle(name,id);$('qTitle').innerHTML=icon('book')+' '+esc(currentGameName);$('qSubtitle').textContent='افزودن، ویرایش و جایگزینی سؤال‌های '+currentGameName;showScreen('questions');switchTab('manual');loadQuestions()}
+function openGame(id,name){$('hqfPreview').replaceChildren();currentGame=id;currentGameName=gameTitle(name,id);$('qTitle').innerHTML=icon('book')+' '+esc(currentGameName);$('qSubtitle').textContent='افزودن، ویرایش و جایگزینی سؤال‌های '+currentGameName;showScreen('questions');switchTab('manual');loadQuestions()}
 $('btnBackGames').onclick=()=>showScreen('games');
 
 /* فرم انواع سؤال */
 function questionFields(prefix){return `<label class="field">متن سؤال<textarea id="${prefix}Text" placeholder="متن سؤال را بنویسید..." required></textarea></label><div id="${prefix}Help" class="type-help"></div><div id="${prefix}SectionMcq" class="question-section"><div class="section-title">گزینه‌ها <small class="muted">(یک پاسخ درست)</small></div>${[0,1,2,3].map(i=>`<div class="option-row"><input class="choice" type="radio" name="${prefix}Correct" value="${i}" ${i===0?'checked':''}><input id="${prefix}Opt${i}" type="text" placeholder="گزینه ${fa(i+1)}"></div>`).join('')}</div><div id="${prefix}SectionTf" class="question-section"><div class="section-title">پاسخ درست</div><div class="option-row"><input class="choice" type="radio" name="${prefix}TF" value="true" checked><span>درست</span></div><div class="option-row"><input class="choice" type="radio" name="${prefix}TF" value="false"><span>نادرست</span></div></div><div id="${prefix}SectionShort" class="question-section"><label class="field">پاسخ‌های قابل قبول<input id="${prefix}Answers" type="text" placeholder="مثلاً: تهران، پایتخت ایران"></label><div class="type-help">چند پاسخ را با کاما جدا کنید.</div></div><div id="${prefix}SectionBlank" class="question-section"><label class="field">پاسخ جای خالی<input id="${prefix}AnswersBlank" type="text" placeholder="پاسخ ۱، پاسخ ۲"></label><div class="type-help">در متن سؤال از __ برای جای خالی استفاده کنید.</div></div><div id="${prefix}SectionMulti" class="question-section"><div class="section-title">گزینه‌ها <small class="muted">(می‌توانید چند مورد را انتخاب کنید)</small></div>${[0,1,2,3].map(i=>`<div class="option-row"><input class="choice" type="checkbox" name="${prefix}Multi" value="${i}"><input id="${prefix}MultiOpt${i}" type="text" placeholder="گزینه ${fa(i+1)}"></div>`).join('')}</div><div id="${prefix}SectionMatch" class="question-section"><div class="section-title">جفت‌های تطبیقی</div>${[0,1,2,3].map(i=>`<div class="pair-row"><input id="${prefix}A${i}" type="text" placeholder="جفت A ${fa(i+1)}"><span>↔</span><input id="${prefix}B${i}" type="text" placeholder="جفت B ${fa(i+1)}"></div>`).join('')}</div><label class="field">توضیح پاسخ <span class="muted">(اختیاری)</span><input id="${prefix}Expl" type="text" placeholder="توضیح یا نکته آموزشی"></label><label class="field">بخش / فصل <span class="muted">(اختیاری)</span><input id="${prefix}Section" type="text" placeholder="مثلاً: درس اول"></label>`}
 $('mFields').innerHTML=questionFields('m');$('eFields').innerHTML=questionFields('e');
 const TYPE_HELP={mcq:'یک گزینه از چهار گزینه را به عنوان پاسخ درست انتخاب کنید.',tf:'برای سؤال‌های بله/خیر یا درست/نادرست مناسب است.',short:'پاسخ دانش‌آموز با یکی از پاسخ‌های قابل قبول مقایسه می‌شود.',blank:'متن سؤال را با دو زیرخط مشخص کنید؛ پاسخ‌ها را با کاما بنویسید.',multi:'برای سؤال‌هایی که بیش از یک گزینه پاسخ درست دارند.',match:'برای هر مورد سمت چپ، همتای درست در سمت راست را وارد کنید.'};
-function setQuestionType(prefix,type){['Mcq','Tf','Short','Blank','Multi','Match'].forEach(n=>$(prefix+'Section'+n).classList.remove('on'));const map={mcq:'Mcq',tf:'Tf',short:'Short',blank:'Blank',multi:'Multi',match:'Match'};$(prefix+'Section'+map[type]).classList.add('on');$(prefix+'Help').textContent=TYPE_HELP[type]||''}
+function setQuestionType(prefix,type){['Mcq','Tf','Short','Blank','Multi','Match'].forEach(n=>$(prefix+'Section'+n).classList.remove('on'));const map={mcq:'Mcq',tf:'Tf',short:'Short',blank:'Blank',multi:'Multi',match:'Match'};const section=mappedName(map,type)||'Mcq';$(prefix+'Section'+section).classList.add('on');$(prefix+'Help').textContent=TYPE_HELP[type]||''}
 $('mType').onchange=()=>setQuestionType('m',$('mType').value);$('eType').onchange=()=>setQuestionType('e',$('eType').value);setQuestionType('m','mcq');setQuestionType('e','mcq');
 function splitAnswers(v){return String(v||'').split(/[،,]/).map(s=>s.trim()).filter(Boolean)}
 function collectQuestion(prefix){const type=$(prefix+'Type').value,text=$(prefix+'Text').value.trim(),q={type,text,explanation:$(prefix+'Expl').value.trim(),section:$(prefix+'Section').value.trim()};if(type==='mcq'){q.options=[0,1,2,3].map(i=>$(prefix+'Opt'+i).value.trim());q.answer=Number(($(`input[name="${prefix}Correct"]:checked`)||{}).value??0)}else if(type==='tf'){q.options=['درست','نادرست'];q.answer=($(`input[name="${prefix}TF"]:checked`)||{}).value==='true'}else if(type==='short'){q.answers=splitAnswers($(prefix+'Answers').value);q.answer=q.answers}else if(type==='blank'){q.answers=splitAnswers($(prefix+'AnswersBlank').value);q.answer=q.answers}else if(type==='multi'){q.options=[0,1,2,3].map(i=>$(prefix+'MultiOpt'+i).value.trim());q.answer=$$(`input[name="${prefix}Multi"]:checked`).map(x=>Number(x.value))}else if(type==='match'){q.pairs=[0,1,2,3].map(i=>({a:$(prefix+'A'+i).value.trim(),b:$(prefix+'B'+i).value.trim()})).filter(p=>p.a||p.b);q.answer=q.pairs}return q}
@@ -408,50 +476,110 @@ restoreManualDraft();
 
 /* تب‌ها و فهرست سؤال */
 $$('.tab').forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));function switchTab(name){$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));$$('.tab-body').forEach(x=>x.classList.remove('on'));$('tab'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('on');if(name==='list')loadQuestions()}
-async function loadQuestions(){if(!currentGame)return;loading($('qList'));try{const res=await api('tpGetQuestions',{gameId:currentGame});if(!res.ok){$('qList').innerHTML='<div class="empty">خطا در دریافت سؤال‌ها</div>';return}renderQuestions(res.questions||[])}catch(e){$('qList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
+async function loadQuestions(){if(!currentGame)return;loading($('qList'));try{const res=await api('tpGetQuestions',{gameId:currentGame});if(!res.ok){$('qList').innerHTML='<div class="empty">خطا در دریافت سؤال‌ها</div>';return}renderQuestions(recordRows(res.questions))}catch(e){$('qList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
 function typeLabel(t){return({mcq:'چندگزینه‌ای',tf:'صحیح/غلط',short:'پاسخ کوتاه',blank:'جای خالی',multi:'چندپاسخی',match:'تطبیقی'})[t]||t||'نامشخص'}
-function answerSummary(q){if(q.type==='tf')return q.answer===true||String(q.answer)==='true'?'درست':'نادرست';if(q.type==='multi')return (Array.isArray(q.answer)?q.answer:[]).map(i=>q.options?.[i]||i).join('، ')||'—';if(q.type==='match')return (q.pairs||[]).map(p=>`${p.a} ↔ ${p.b}`).join('، ')||'—';if(q.type==='short'||q.type==='blank')return (q.answers||q.answer||[]).toString().replaceAll(',', '، ')||'—';const i=Number(q.answer);return q.options?.[i]??String(q.answer??'—')}
+function answerSummary(q){if(q.type==='tf')return q.answer===true||String(q.answer)==='true'?'درست':'نادرست';if(q.type==='multi')return (Array.isArray(q.answer)?q.answer:[]).map(i=>q.options?.[i]||i).join('، ')||'—';if(q.type==='match')return recordRows(q.pairs).map(p=>`${p.a} ↔ ${p.b}`).join('، ')||'—';if(q.type==='short'||q.type==='blank')return (q.answers||q.answer||[]).toString().replaceAll(',', '، ')||'—';const i=Number(q.answer);return q.options?.[i]??String(q.answer??'—')}
 function renderQuestions(list){if(!list.length){$('qList').innerHTML='<div class="empty">هنوز سؤالی نیست. از افزودن دستی یا آپلود HQF استفاده کنید.</div>';return}$('qList').innerHTML=list.map((q,i)=>`<div class="q-item"><div class="q-number">${fa(i+1)}</div><div class="q-content"><b>${esc(q.text||'بدون متن')}</b><small><span class="badge ok">${esc(typeLabel(q.type))}</span> پاسخ: ${esc(answerSummary(q))}</small></div><div class="q-actions"><button class="circle-btn edit" data-qid="${attr(q.id)}" title="ویرایش">${icon('edit')}</button><button class="circle-btn delete" data-qid="${attr(q.id)}" title="حذف">${icon('trash')}</button></div></div>`).join('');$$('.q-actions .edit').forEach(b=>b.onclick=()=>openEdit(b.dataset.qid));$$('.q-actions .delete').forEach(b=>b.onclick=()=>deleteQuestion(b.dataset.qid,b))}
 async function deleteQuestion(id,btn){if(!confirm('این سؤال حذف شود؟'))return;setButtonBusy(btn,true);try{const res=await api('tpDeleteQuestion',{token,gameId:currentGame,qId:id});if(res.ok){showAlert($('qAlert'),'ok','سؤال حذف شد.');loadQuestions()}else showAlert($('qAlert'),'err',res.error||'خطا')}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false)}}
-async function openEdit(id){try{const res=await api('tpGetQuestions',{gameId:currentGame});const q=(res.questions||[]).find(x=>String(x.id)===String(id));if(!q)return;editingQ=q;fillQuestion('e',q);hideAlert($('editAlert'));$('editModal').classList.remove('hidden')}catch(e){showAlert($('qAlert'),'err','خطا در باز کردن سؤال')}}
+async function openEdit(id){try{const res=await api('tpGetQuestions',{gameId:currentGame});const q=recordRows(res.questions).find(x=>String(x.id)===String(id));if(!q)return;editingQ=q;fillQuestion('e',q);hideAlert($('editAlert'));$('editModal').classList.remove('hidden')}catch(e){showAlert($('qAlert'),'err','خطا در باز کردن سؤال')}}
 async function saveEdit(){if(!editingQ)return;const q=collectQuestion('e'),err=validQuestion(q);if(err){showAlert($('editAlert'),'err',err);return}const btn=$('btnSaveEdit');setButtonBusy(btn,true);try{const res=await api('tpUpdateQuestion',{token,gameId:currentGame,qId:editingQ.id,question:q});if(!res.ok){showAlert($('editAlert'),'err',res.error||'خطا');return}$('editModal').classList.add('hidden');showAlert($('qAlert'),'ok','تغییرات سؤال ذخیره شد.');loadQuestions()}catch(e){showAlert($('editAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-check"></use></svg> ذخیره تغییرات')}}
 $('btnSaveEdit').onclick=saveEdit;$('btnCancelEdit').onclick=closeEdit;$('btnCancelEdit2').onclick=closeEdit;function closeEdit(){$('editModal').classList.add('hidden');editingQ=null}
 
 /* HQF */
 $('dropZone').onclick=()=>$('fileIn').click();$('dropZone').ondragover=e=>{e.preventDefault();$('dropZone').classList.add('drag')};$('dropZone').ondragleave=()=>$('dropZone').classList.remove('drag');$('dropZone').ondrop=e=>{e.preventDefault();$('dropZone').classList.remove('drag');if(e.dataTransfer.files[0])readHQF(e.dataTransfer.files[0])};$('fileIn').onchange=e=>{if(e.target.files[0])readHQF(e.target.files[0]);e.target.value=''};
-function extractQuestions(data){if(Array.isArray(data))return data;if(Array.isArray(data.questions))return data.questions;if(data?.hakimestan===2&&Array.isArray(data.exams)&&data.exams.length){const x=data.exams[0];return Array.isArray(x)?x:(x.questions||x.items||[])}return []}
+function extractQuestions(data){if(!data||typeof data!=='object')return [];if(Array.isArray(data))return data;if(Array.isArray(data.questions))return data.questions;if(data?.hakimestan===2&&Array.isArray(data.exams)&&data.exams.length){const x=data.exams[0];return Array.isArray(x)?x:(x.questions||x.items||[])}return []}
 function normalizeQuestion(q){const n={...q};n.text=n.text||q.question||'';n.options=n.options||q.choices;n.answer=n.answer??q.correct;if(!n.type){n.type=Array.isArray(n.options)&&n.options.length>=2?'mcq':'short'}if(n.type==='mcq'&&typeof n.answer==='string'&&Array.isArray(n.options)){const i=n.options.findIndex(o=>String(o)===String(n.answer));if(i>=0)n.answer=i}if((n.type==='short'||n.type==='blank')&&!n.answers)n.answers=Array.isArray(n.answer)?n.answer:splitAnswers(n.answer);if(n.type==='match'){const rawPairs=Array.isArray(n.pairs)?n.pairs:(Array.isArray(n.answer)?n.answer:[]);n.pairs=rawPairs.map(p=>({a:String(p.a??'').trim(),b:String(p.b??'').trim()}));n.answer=n.pairs}return n}
-function readHQF(file){const reader=new FileReader();reader.onload=e=>{try{const data=JSON.parse(e.target.result),items=extractQuestions(data).map(normalizeQuestion).filter(q=>q.text),valid=items.filter(q=>!validQuestion(q));showHQFPreview(valid,file.name,items.length)}catch(err){showAlert($('qAlert'),'err','فایل JSON معتبر نیست.')}};reader.readAsText(file)}
-function showHQFPreview(valid,filename,total){$('hqfPreview').innerHTML=`<div class="alert on info">${icon('file')}<span>فایل <b>${esc(filename)}</b> · ${fa(valid.length)} سؤال معتبر از ${fa(total)} سؤال</span></div><div class="q-list" style="max-height:250px;margin-top:10px">${valid.slice(0,15).map((q,i)=>`<div class="q-item"><div class="q-number">${fa(i+1)}</div><div class="q-content"><b>${esc(q.text)}</b><small>${esc(typeLabel(q.type))} · ${esc(answerSummary(q))}</small></div></div>`).join('')}</div><button id="btnConfirmReplace" class="btn danger" style="margin-top:13px;width:100%">${icon('upload')} جایگزینی ${fa(valid.length)} سؤال</button>`;$('btnConfirmReplace').onclick=async()=>{if(!confirm('همه سؤال‌های فعلی این بازی جایگزین شوند؟'))return;const btn=$('btnConfirmReplace');setButtonBusy(btn,true);try{const res=await api('tpReplaceQuestions',{token,gameId:currentGame,questions:valid});if(!res.ok){showAlert($('qAlert'),'err',res.error||'خطا');return}showAlert($('qAlert'),'ok',`${fa(res.added??valid.length)} سؤال جایگزین شد.`);$('hqfPreview').innerHTML='';loadQuestions()}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'جایگزینی سؤال‌ها')}}}
+function readHQF(file){const importSession=panelSession,game=currentGame;$('hqfPreview').replaceChildren();if(file.size>2*1024*1024){showAlert($('qAlert'),'err','حجم فایل سؤال نباید بیشتر از ۲ مگابایت باشد.');return}const reader=new FileReader();reader.onerror=()=>showAlert($('qAlert'),'err','خواندن فایل انجام نشد.');reader.onload=e=>{if(importSession!==panelSession||game!==currentGame)return;try{const data=JSON.parse(e.target.result),items=extractQuestions(data).filter(q=>q&&typeof q==='object'&&!Array.isArray(q)).slice(0,2001).map(normalizeQuestion).filter(q=>q.text),valid=items.filter(q=>!validQuestion(q));showHQFPreview(valid,file.name,items.length)}catch(err){showAlert($('qAlert'),'err','فایل JSON معتبر نیست.')}};reader.readAsText(file)}
+function showHQFPreview(valid,filename,total){if(!valid.length||total>2000){showAlert($('qAlert'),'err','فایل باید بین ۱ تا ۲۰۰۰ سؤال معتبر داشته باشد.');return}$('hqfPreview').innerHTML=`<div class="alert on info">${icon('file')}<span>فایل <b>${esc(filename)}</b> · ${fa(valid.length)} سؤال معتبر از ${fa(total)} سؤال</span></div><div class="q-list" style="max-height:250px;margin-top:10px">${valid.slice(0,15).map((q,i)=>`<div class="q-item"><div class="q-number">${fa(i+1)}</div><div class="q-content"><b>${esc(q.text)}</b><small>${esc(typeLabel(q.type))} · ${esc(answerSummary(q))}</small></div></div>`).join('')}</div><button id="btnConfirmReplace" class="btn danger" style="margin-top:13px;width:100%">${icon('upload')} جایگزینی ${fa(valid.length)} سؤال</button>`;$('btnConfirmReplace').onclick=async()=>{if(!confirm('همه سؤال‌های فعلی این بازی جایگزین شوند؟'))return;const btn=$('btnConfirmReplace');setButtonBusy(btn,true);try{const res=await api('tpReplaceQuestions',{token,gameId:currentGame,questions:valid});if(!res.ok){showAlert($('qAlert'),'err',res.error||'خطا');return}showAlert($('qAlert'),'ok',`${fa(res.added??valid.length)} سؤال جایگزین شد.`);$('hqfPreview').innerHTML='';loadQuestions()}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'جایگزینی سؤال‌ها')}}}
 $('btnRestore').onclick=async function(){if(!confirm('هشدار: همهٔ سؤال‌های فعلی این بازی حذف می‌شوند و با سؤال‌های پیش‌فرض جایگزین خواهند شد. ادامه می‌دهید؟'))return;const btn=this;setButtonBusy(btn,true);try{const res=await api('tpRestoreDefaults',{token,gameId:currentGame});if(res.ok){showAlert($('qAlert'),'ok',`${fa(res.restored||0)} سؤال بازیابی شد.`);loadQuestions()}else showAlert($('qAlert'),'err',res.error||'خطا')}catch(e){showAlert($('qAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false)}};
 
 /* نتایج */
 function filterPayload(){return{gameId:$('fGame').value,student:$('fStudent').value.trim(),days:$('fDays').value}}
-function saveFilterDraft(){try{localStorage.setItem(FDRAFT_KEY,JSON.stringify(filterPayload()))}catch(e){}}
-try{const fd=JSON.parse(localStorage.getItem(FDRAFT_KEY)||'null');if(fd){if(typeof fd.gameId==='string')$('fGame').value=fd.gameId;if(typeof fd.student==='string')$('fStudent').value=fd.student;if(typeof fd.days==='string')$('fDays').value=fd.days;}}catch(e){}
+function saveFilterDraft(){try{localStorage.setItem(FDRAFT_KEY,JSON.stringify({gameId:$('fGame').value,days:$('fDays').value}))}catch(e){}}
+try{const fd=JSON.parse(localStorage.getItem(FDRAFT_KEY)||'null');if(fd){if(typeof fd.gameId==='string')$('fGame').value=fd.gameId;if(typeof fd.days==='string')$('fDays').value=fd.days;}}catch(e){}
 ['fGame','fStudent','fDays'].forEach(id=>{$(id).addEventListener('change',saveFilterDraft);$(id).addEventListener('input',saveFilterDraft)});
-window.addEventListener('pagehide',()=>{saveManualDraftNow();saveFilterDraft()});
+saveFilterDraft();window.addEventListener('pagehide',()=>{saveManualDraftNow();saveFilterDraft()});
 $('btnApplyFilter').onclick=loadResults;$('fStudent').addEventListener('keydown',e=>{if(e.key==='Enter')loadResults()});
-async function loadResults(){loading($('resultsTable'));$('resultCards').innerHTML='';try{const res=await api('tpGetResults',{token,...filterPayload()});if(!res.ok){$('resultsTable').innerHTML='<div class="empty">خطا در دریافت نتایج</div>';return}renderResults(res.results||[])}catch(e){$('resultsTable').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
+let resultsSource=[],resultsPage=1,resultsRequest=0,resultsLoadedFilters=null;
+function setResultTools(enabled){['btnExport','btnExportCsv','btnPrintResults','btnDeleteAll'].forEach(id=>$(id).disabled=!enabled)}
+setResultTools(false);
+async function loadResults(){
+  const request=++resultsRequest,filters=filterPayload();
+  setResultTools(false);hideAlert($('resultsAlert'));resultsLoadedFilters=null;resultsSource=[];window.__resultsData=[];
+  loading($('resultsTable'));['resultCards','resultsSummary','resultsPagination'].forEach(id=>$(id).replaceChildren());$('resultsInfo').textContent='در حال دریافت نتایج…';
+  try{
+    const res=await api('tpGetResults',{token,...filters});
+    if(request!==resultsRequest)return;
+    if(!res.ok)throw new Error(res.error||'خطا در دریافت نتایج');
+    if(!Array.isArray(res.results))throw new Error('ساختار نتایج دریافتی معتبر نیست.');
+    resultsLoadedFilters=filters;resultsSource=res.results.filter(r=>r&&typeof r==='object'&&!Array.isArray(r));
+    applyResultView();
+  }catch(e){if(request!==resultsRequest)return;$('resultsTable').innerHTML='<div class="empty">نتایج دریافت نشد. اتصال را بررسی و دوباره فیلتر را اعمال کنید.</div>';$('resultsInfo').textContent='دریافت نتایج ناموفق بود.';showAlert($('resultsAlert'),'err',e.message)}
+}
+function isComplete(r){return r.completed===true||r.completed===1||r.completed==='true'||r.completed==='1'}
+function resultTime(r){const value=new Date(r.date||r.createdAt||'').getTime();return Number.isFinite(value)?value:0}
+function applyResultView(){
+  const completion=$('resultCompletion').value,sort=$('resultSort').value;
+  let list=resultsSource.filter(r=>completion==='all'||(completion==='complete'?isComplete(r):!isComplete(r)));
+  if(sort==='newest')list.sort((a,b)=>resultTime(b)-resultTime(a));
+  if(sort==='oldest')list.sort((a,b)=>resultTime(a)-resultTime(b));
+  if(sort==='student')list.sort((a,b)=>String(a.student||'').localeCompare(String(b.student||''),'fa'));
+  if(sort==='score')list.sort((a,b)=>(Number(b.score)||0)-(Number(a.score)||0));
+  renderResults(list);
+}
+['resultCompletion','resultSort','resultPageSize'].forEach(id=>$(id).onchange=applyResultView);
+['fGame','fStudent','fDays'].forEach(id=>$(id).addEventListener('input',()=>{$('btnDeleteAll').disabled=true}));
+$('btnClearFilters').onclick=()=>{$('fGame').value='';$('fStudent').value='';$('fDays').value='0';$('resultCompletion').value='all';$('resultSort').value='received';saveFilterDraft();loadResults()};
+
 function resultId(r){return r.id??r.ID??r.resultId??r.rowId??''}
 function resultDate(r){const d=new Date(r.date||r.createdAt||'');return isNaN(d)?'—':fa(d.toLocaleDateString('fa-IR'))}
-function resultRowHtml(r,idx){const id=resultId(r),canDelete=Boolean(id||r.date||r.createdAt||r.student||r.game||r.score!==undefined),detail=r.details&&String(r.details).length>2;return `<tr><td>${resultDate(r)}</td><td>${esc(r.student||'—')}</td><td>${esc(displayRecordedName(r.game))}</td><td>${esc(displayRecordedName(r.experiment))}</td><td><b>${fa(r.score??0)}</b></td><td>${r.completed?'<span class="badge ok">'+icon('check')+' کامل</span>':'<span class="badge bad">ناقص</span>'}</td><td><button class="btn ghost small detail-result" data-idx="${idx}" ${detail?'':'disabled'}>${icon('eye')}</button> <button class="btn danger small delete-result" data-id="${attr(id)}" data-idx="${idx}" ${canDelete?'':'disabled'}>${icon('trash')}</button></td></tr>`}
-function resultCardHtml(r,idx){const id=resultId(r),canDelete=Boolean(id||r.date||r.createdAt||r.student||r.game||r.score!==undefined),detail=r.details&&String(r.details).length>2;return `<div class="result-card"><div class="result-card-head"><b>${esc(r.student||'—')}</b><span>${r.completed?'<span class="badge ok">کامل</span>':'<span class="badge bad">ناقص</span>'}</span></div><div class="result-card-meta"><span>تاریخ<strong>${resultDate(r)}</strong></span><span>بازی<strong>${esc(displayRecordedName(r.game))}</strong></span><span>آزمایش<strong>${esc(displayRecordedName(r.experiment))}</strong></span><span>امتیاز<strong>${fa(r.score??0)}</strong></span><span>عملیات<strong>${detail?`<button class="btn ghost small detail-result" data-idx="${idx}">${icon('eye')} جزئیات</button>`:''} ${canDelete?`<button class="btn danger small delete-result" data-id="${attr(id)}" data-idx="${idx}">${icon('trash')}</button>`:''}</strong></span></div></div>`}
-function renderResults(list){window.__resultsData=list;$('resultsInfo').textContent=list.length?`${fa(list.length)} نتیجه پیدا شد`:'نتیجه‌ای پیدا نشد';if(!list.length){$('resultsTable').innerHTML='<div class="empty">نتیجه‌ای با این فیلتر پیدا نشد.</div>';return}const shown=list.slice(0,200);$('resultsTable').innerHTML='<div class="table-wrap"><table class="results-table"><thead><tr><th>تاریخ</th><th>دانش‌آموز</th><th>بازی</th><th>آزمایش</th><th>امتیاز</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>'+shown.map(resultRowHtml).join('')+'</tbody></table></div>'+(list.length>200?'<p class="muted" style="font-size:.68rem;margin:8px 0">فقط ۲۰۰ نتیجه اول نمایش داده شد.</p>':'');$('resultCards').innerHTML=shown.map(resultCardHtml).join('');bindResultActions()}
+function resultRowHtml(r,idx){const id=resultId(r),canDelete=Boolean(id||r.date||r.createdAt||r.student||r.game||r.score!==undefined),detail=r.details&&String(r.details).length>2;return `<tr><td>${resultDate(r)}</td><td>${esc(r.student||'—')}</td><td>${esc(displayRecordedName(r.game))}</td><td>${esc(displayRecordedName(r.experiment))}</td><td><b>${fa(r.score??0)}</b></td><td>${isComplete(r)?'<span class="badge ok">'+icon('check')+' کامل</span>':'<span class="badge bad">ناقص</span>'}</td><td><button class="btn ghost small detail-result" data-idx="${idx}" aria-label="جزئیات نتیجه" ${detail?'':'disabled'}>${icon('eye')}</button> <button class="btn danger small delete-result" data-id="${attr(id)}" data-idx="${idx}" aria-label="حذف نتیجه" ${canDelete?'':'disabled'}>${icon('trash')}</button></td></tr>`}
+function resultCardHtml(r,idx){const id=resultId(r),canDelete=Boolean(id||r.date||r.createdAt||r.student||r.game||r.score!==undefined),detail=r.details&&String(r.details).length>2;return `<div class="result-card"><div class="result-card-head"><b>${esc(r.student||'—')}</b><span>${isComplete(r)?'<span class="badge ok">کامل</span>':'<span class="badge bad">ناقص</span>'}</span></div><div class="result-card-meta"><span>تاریخ<strong>${resultDate(r)}</strong></span><span>بازی<strong>${esc(displayRecordedName(r.game))}</strong></span><span>آزمایش<strong>${esc(displayRecordedName(r.experiment))}</strong></span><span>امتیاز<strong>${fa(r.score??0)}</strong></span><span>عملیات<strong>${detail?`<button class="btn ghost small detail-result" data-idx="${idx}">${icon('eye')} جزئیات</button>`:''} ${canDelete?`<button class="btn danger small delete-result" data-id="${attr(id)}" data-idx="${idx}">${icon('trash')}</button>`:''}</strong></span></div></div>`}
+function renderResults(list){
+  list=Array.isArray(list)?list.filter(r=>r&&typeof r==='object'&&!Array.isArray(r)):[];
+  window.__resultsData=list;resultsPage=1;
+  const completed=list.filter(isComplete).length,students=new Set(list.map(r=>String(r.student||'').trim()).filter(Boolean)).size;
+  $('resultsSummary').innerHTML=[['رکورد',list.length],['نام دانش‌آموز یکتا',students],['تکمیل‌شده',completed],['ناتمام',list.length-completed]].map(([label,n])=>`<span class="summary-chip"><b>${fa(n)}</b>${label}</span>`).join('');
+  setResultTools(list.length>0);
+  // The destructive server operation follows only the server filters, not local completion/sort.
+  $('btnDeleteAll').disabled=!resultsLoadedFilters||!resultsSource.length||$('resultCompletion').value!=='all'||JSON.stringify(resultsLoadedFilters)!==JSON.stringify(filterPayload());
+  renderResultPage();
+}
+function renderResultPage(){
+  const list=window.__resultsData||[],size=Number($('resultPageSize').value)||50,pages=Math.max(1,Math.ceil(list.length/size));
+  resultsPage=Math.max(1,Math.min(resultsPage,pages));
+  const start=(resultsPage-1)*size,shown=list.slice(start,start+size);
+  $('resultsInfo').textContent=list.length?`${fa(list.length)} نتیجه · نمایش ${fa(start+1)} تا ${fa(start+shown.length)} · خروجی فایل شامل همهٔ نتایج این نماست`:'نتیجه‌ای پیدا نشد';
+  $('resultsTable').innerHTML=shown.length?'<div class="table-wrap"><table class="results-table"><caption>گزارش نتایج بازی‌ها — امتیاز بازی‌های متفاوت لزوماً هم‌مقیاس نیست.</caption><thead><tr><th scope="col">تاریخ</th><th scope="col">دانش‌آموز</th><th scope="col">بازی</th><th scope="col">آزمایش</th><th scope="col">امتیاز</th><th scope="col">وضعیت</th><th scope="col">عملیات</th></tr></thead><tbody>'+shown.map((r,i)=>resultRowHtml(r,start+i)).join('')+'</tbody></table></div>':'<div class="empty">نتیجه‌ای با این فیلتر پیدا نشد. بازه یا وضعیت را تغییر دهید.</div>';
+  $('resultCards').innerHTML=shown.map((r,i)=>resultCardHtml(r,start+i)).join('');
+  $('resultsPagination').innerHTML=list.length?`<button class="btn ghost small" id="resultsPrev" ${resultsPage===1?'disabled':''}>صفحهٔ قبل</button><span>صفحهٔ ${fa(resultsPage)} از ${fa(pages)}</span><button class="btn ghost small" id="resultsNext" ${resultsPage===pages?'disabled':''}>صفحهٔ بعد</button>`:'';
+  if($('resultsPrev'))$('resultsPrev').onclick=()=>{resultsPage--;renderResultPage()};
+  if($('resultsNext'))$('resultsNext').onclick=()=>{resultsPage++;renderResultPage()};
+  bindResultActions();
+}
+
 function bindResultActions(){$$('.detail-result').forEach(b=>b.onclick=()=>showDetails(Number(b.dataset.idx)));$$('.delete-result').forEach(b=>b.onclick=()=>deleteResult(b.dataset.id,Number(b.dataset.idx),b))}
 async function deleteResult(id,idx,btn){const r=window.__resultsData?.[idx]||{};if(!id&&!((r.date||r.createdAt||r.student||r.game)||r.score!==undefined))return;if(!confirm('این رکورد حذف شود؟'))return;setButtonBusy(btn,true);try{const res=await api('tpDeleteResult',{token,id,date:r.date||r.createdAt||'',student:r.student||'',game:r.game||'',score:r.score??'',experiment:r.experiment||''});if(res.ok){showAlert($('resultsAlert'),'ok','رکورد حذف شد.');loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false)}}
-$('btnDeleteAll').onclick=async()=>{const promptValue=prompt('برای حذف نتایج مطابق فیلتر فعلی، عبارت «پاک کن» را دقیق وارد کنید:');if(promptValue!=='پاک کن')return;const btn=$('btnDeleteAll');setButtonBusy(btn,true);try{const filters=filterPayload(),res=await api('tpDeleteAllResults',{token,...filters,filters});if(res.ok){showAlert($('resultsAlert'),'ok',`${fa(res.deleted||0)} رکورد حذف شد.`);loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-trash"></use></svg> پاک کردن همه')}};
+$('btnDeleteAll').onclick=async()=>{if($('btnDeleteAll').disabled||!resultsLoadedFilters)return;const filters={...resultsLoadedFilters};const promptValue=prompt('هشدار: همهٔ نتایج مطابق فیلتر سرور حذف می‌شوند، نه فقط صفحهٔ فعلی. ابتدا پشتیبان بگیرید. برای ادامه عبارت «پاک کن» را وارد کنید:');if(promptValue!=='پاک کن')return;const btn=$('btnDeleteAll');setButtonBusy(btn,true);try{const res=await api('tpDeleteAllResults',{token,...filters,filters});if(res.ok){showAlert($('resultsAlert'),'ok',`${fa(res.deleted||0)} رکورد حذف شد.`);loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-trash"></use></svg> حذف نتایج فیلترشده')}};
 $('btnExport').onclick=()=>{try{const data={version:'1.0',exported_at:new Date().toISOString(),count:(window.__resultsData||[]).length,results:window.__resultsData||[]};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),pad=n=>String(n).padStart(2,'0');a.href=url;a.download=`hakimestan-results-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showAlert($('resultsAlert'),'ok','پشتیبان نتایج دانلود شد.')}catch(e){showAlert($('resultsAlert'),'err','دانلود پشتیبان انجام نشد.')}};
-$('btnExportCsv').onclick=()=>{try{const list=window.__resultsData||[];const csvEsc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const rows=[['تاریخ','دانش‌آموز','بازی','آزمایش','امتیاز','وضعیت']];list.forEach(r=>rows.push([resultDate(r),r.student||'',displayRecordedName(r.game,''),displayRecordedName(r.experiment,''),r.score??0,r.completed?'کامل':'ناقص']));const csv='\uFEFF'+rows.map(r=>r.map(csvEsc).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),pad=n=>String(n).padStart(2,'0');a.href=url;a.download=`hakimestan-results-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showAlert($('resultsAlert'),'ok','خروجی CSV دانلود شد.')}catch(e){showAlert($('resultsAlert'),'err','دانلود CSV انجام نشد.')}};
+$('btnExportCsv').onclick=()=>{try{const list=window.__resultsData||[];const csvEsc=csvCell;const rows=[['تاریخ','دانش‌آموز','بازی','آزمایش','امتیاز','وضعیت']];list.forEach(r=>rows.push([resultDate(r),r.student||'',displayRecordedName(r.game,''),displayRecordedName(r.experiment,''),r.score??0,isComplete(r)?'کامل':'ناقص']));const csv='\uFEFF'+rows.map(r=>r.map(csvEsc).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a'),d=new Date(),pad=n=>String(n).padStart(2,'0');a.href=url;a.download=`hakimestan-results-${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showAlert($('resultsAlert'),'ok','خروجی CSV دانلود شد.')}catch(e){showAlert($('resultsAlert'),'err','دانلود CSV انجام نشد.')}};
+let resultsPrintPage=null;
+window.addEventListener('beforeprint',()=>{
+  if($('scResults').classList.contains('hidden')||!(window.__resultsData||[]).length)return;
+  resultsPrintPage=resultsPage;
+  const body=$('resultsTable').querySelector('tbody');
+  if(body)body.innerHTML=window.__resultsData.map(resultRowHtml).join('');
+});
+window.addEventListener('afterprint',()=>{if(resultsPrintPage!==null){resultsPage=resultsPrintPage;resultsPrintPage=null;renderResultPage()}});
 $('btnPrintResults').onclick=()=>window.print();
 $('btnImport').onclick=()=>$('importFile').click();$('importFile').onchange=e=>{if(e.target.files[0])readImport(e.target.files[0]);e.target.value=''};
-function readImport(file){const reader=new FileReader();reader.onload=e=>{try{const data=JSON.parse(e.target.result),results=Array.isArray(data)?data:data.results;if(!Array.isArray(results))throw new Error('results');pendingImport=results;const sample=results.slice(0,5).map(r=>`<div class="detail-card"><div class="detail-key">${esc(r.student||'بدون نام')}</div><div class="detail-val">${esc(displayRecordedName(r.game,'بدون بازی'))}${r.experiment?' · '+esc(displayRecordedName(r.experiment)):''} · ${esc(fa(r.score??0))}</div></div>`).join('');$('importPreview').innerHTML=`<div class="alert on info">${icon('file')}<span>${fa(results.length)} رکورد از فایل پیدا شد. رکوردهای تکراری در سمت سرور رد می‌شوند.</span></div><div class="detail-grid">${sample||'<div class="empty">رکوردی وجود ندارد.</div>'}</div>`;$('importModal').classList.remove('hidden')}catch(err){showAlert($('resultsAlert'),'err','ساختار فایل پشتیبان معتبر نیست.')}};reader.readAsText(file)}
+function readImport(file){const importSession=panelSession;pendingImport=null;$('importModal').classList.add('hidden');if(file.size>5*1024*1024){showAlert($('resultsAlert'),'err','حجم فایل پشتیبان نباید بیشتر از ۵ مگابایت باشد.');return}const reader=new FileReader();reader.onerror=()=>showAlert($('resultsAlert'),'err','خواندن فایل انجام نشد.');reader.onload=e=>{if(importSession!==panelSession)return;try{const data=JSON.parse(e.target.result),results=Array.isArray(data)?data:data?.results;if(!Array.isArray(results)||!results.length||results.length>10000||results.some(r=>!r||typeof r!=='object'||Array.isArray(r)||typeof r.student!=='string'||typeof r.game!=='string'||!Number.isFinite(Number(r.score??0))))throw new Error('results');pendingImport=results;const sample=results.slice(0,5).map(r=>`<div class="detail-card"><div class="detail-key">${esc(r.student||'بدون نام')}</div><div class="detail-val">${esc(displayRecordedName(r.game,'بدون بازی'))}${r.experiment?' · '+esc(displayRecordedName(r.experiment)):''} · ${esc(fa(r.score??0))}</div></div>`).join('');$('importPreview').innerHTML=`<div class="alert on info">${icon('file')}<span>${fa(results.length)} رکورد از فایل پیدا شد. رکوردهای تکراری در سمت سرور رد می‌شوند.</span></div><div class="detail-grid">${sample||'<div class="empty">رکوردی وجود ندارد.</div>'}</div>`;$('importModal').classList.remove('hidden')}catch(err){showAlert($('resultsAlert'),'err','ساختار فایل پشتیبان معتبر نیست.')}};reader.readAsText(file)}
 $('btnConfirmImport').onclick=async()=>{if(!pendingImport?.length)return;const btn=$('btnConfirmImport');setButtonBusy(btn,true);try{const res=await api('tpImportResults',{token,results:pendingImport});if(res.ok){showAlert($('resultsAlert'),'ok',`${fa(res.added??pendingImport.length)} رکورد وارد شد.`);closeImport();loadResults()}else showAlert($('resultsAlert'),'err',res.error||'خطا')}catch(e){showAlert($('resultsAlert'),'err','خطای شبکه: '+e.message)}finally{setButtonBusy(btn,false,'<svg class="icon sm"><use href="#i-check"></use></svg> وارد کردن رکوردها')}};
 function closeImport(){$('importModal').classList.add('hidden');pendingImport=null}$$('[data-close-import]').forEach(b=>b.onclick=closeImport);
 
 /* جزئیات نتیجه */
 const DETAIL_LABELS={game:'بازی',game_id:'بازی',gameId:'بازی',experiment:'آزمایش',experiment_id:'آزمایش',experimentId:'آزمایش',completedTasks:'تمرین‌های انجام‌شده',levelName:'نام مرحله',stageName:'نام مرحله',totalQuestions:'تعداد سؤال‌ها',mistakes:'اشتباه‌ها',passed:'قبولی',perfect:'بی‌نقص',type:'نوع',cities:'شهرهای فتح‌شده',totalCities:'کل شهرها',hearts:'قلب باقی‌مانده',combo:'بیشترین زنجیره',commander:'سردار',lessons:'آمار درس‌ها',correct:'پاسخ درست',wrong:'پاسخ غلط',questions:'کل سؤال‌ها',stars:'ستاره‌ها',roomCode:'کد اتاق',finalPosition:'خانه نهایی',totalRolls:'تعداد تاس‌ها',playerCount:'تعداد بازیکن‌ها',isWinner:'برنده',winnerName:'نام برنده',standings:'ترتیب بازیکن‌ها',online:'آنلاین',bestStreak:'بهترین زنجیره',accuracy:'دقت',firstTryAccuracy:'دقت در انتخاب اول',firstTryCorrect:'درست در انتخاب اول',retries:'تلاش‌های دوباره',hintsUsed:'راهنماهای استفاده‌شده',scorePercent:'درصد امتیاز',gameCompleted:'پایان کل بازی',recordChanged:'تغییر رکورد',kindness:'مهربانی',bonus:'جایزه',total:'امتیاز کل',maxScore:'بیشترین امتیاز',errors:'خطاها',attempts:'تلاش‌ها',pairs:'جفت‌ها',seconds:'زمان',base:'امتیاز پایه',speed:'سرعت',accuracyScore:'امتیاز دقت',level:'درجه',landName:'سرزمین',landsDone:'سرزمین‌های تمام‌شده',pagesDone:'سرزمین‌های تمام‌شده'};
-function showDetails(idx){const r=window.__resultsData?.[idx];if(!r)return;let details={};try{details=typeof r.details==='string'?JSON.parse(r.details):r.details||{}}catch(e){}const entries=Object.entries(details);const cards=entries.map(([k,v])=>{if(['game','game_id','gameId','experiment','experiment_id','experimentId'].includes(k)&&typeof v==='string')v=displayRecordedName(v);if(k==='lessons'&&typeof v==='object')v=Object.entries(v).map(([n,x])=>`درس ${fa(n)}: ${fa(x.c||0)}/${fa((x.c||0)+(x.w||0))}`).join(' · ');if(typeof v==='boolean')v=v?'بله':'خیر';if(typeof v==='object')v=JSON.stringify(v);return `<div class="detail-card"><div class="detail-key">${esc(DETAIL_LABELS[k]||k)}</div><div class="detail-val">${esc(v??'—')}</div></div>`}).join('');$('detailBody').innerHTML=`<div class="detail-grid" style="margin-bottom:12px"><div class="detail-card"><div class="detail-key">دانش‌آموز</div><div class="detail-val">${esc(r.student||'—')}</div></div><div class="detail-card"><div class="detail-key">بازی</div><div class="detail-val">${esc(displayRecordedName(r.game))}</div></div><div class="detail-card"><div class="detail-key">آزمایش</div><div class="detail-val">${esc(displayRecordedName(r.experiment))}</div></div><div class="detail-card"><div class="detail-key">تاریخ</div><div class="detail-val">${resultDate(r)}</div></div><div class="detail-card"><div class="detail-key">امتیاز</div><div class="detail-val">${fa(r.score??0)}</div></div></div>${cards?'<div class="detail-grid">'+cards+'</div>':'<div class="empty">جزئیاتی برای این رکورد موجود نیست.</div>'}`;$('detailModal').classList.remove('hidden')}
+function showDetails(idx){const r=window.__resultsData?.[idx];if(!r)return;let details={};try{details=typeof r.details==='string'?JSON.parse(r.details):r.details||{}}catch(e){}const entries=details&&typeof details==='object'?Object.entries(details):[];const cards=entries.map(([k,v])=>{if(['game','game_id','gameId','experiment','experiment_id','experimentId'].includes(k)&&typeof v==='string')v=displayRecordedName(v);if(k==='lessons'&&v&&typeof v==='object')v=Object.entries(v).map(([n,x])=>`درس ${fa(n)}: ${fa(x?.c||0)}/${fa((Number(x?.c)||0)+(Number(x?.w)||0))}`).join(' · ');if(typeof v==='boolean')v=v?'بله':'خیر';if(typeof v==='object')v=JSON.stringify(v);return `<div class="detail-card"><div class="detail-key">${esc(mappedName(DETAIL_LABELS,k)||k)}</div><div class="detail-val">${esc(v??'—')}</div></div>`}).join('');$('detailBody').innerHTML=`<div class="detail-grid" style="margin-bottom:12px"><div class="detail-card"><div class="detail-key">دانش‌آموز</div><div class="detail-val">${esc(r.student||'—')}</div></div><div class="detail-card"><div class="detail-key">بازی</div><div class="detail-val">${esc(displayRecordedName(r.game))}</div></div><div class="detail-card"><div class="detail-key">آزمایش</div><div class="detail-val">${esc(displayRecordedName(r.experiment))}</div></div><div class="detail-card"><div class="detail-key">تاریخ</div><div class="detail-val">${resultDate(r)}</div></div><div class="detail-card"><div class="detail-key">امتیاز</div><div class="detail-val">${fa(r.score??0)}</div></div></div>${cards?'<div class="detail-grid">'+cards+'</div>':'<div class="empty">جزئیاتی برای این رکورد موجود نیست.</div>'}`;$('detailModal').classList.remove('hidden')}
 $$('[data-close-detail]').forEach(b=>b.onclick=()=>$('detailModal').classList.add('hidden'));$('detailModal').onclick=e=>{if(e.target===$('detailModal'))$('detailModal').classList.add('hidden')};$('editModal').onclick=e=>{if(e.target===$('editModal'))closeEdit()};
 
   /* ═══════ معلم‌های دفتر ═══════ */
@@ -463,7 +591,7 @@ async function loadTeachers(){
       $('teachersList').innerHTML = '<div class="empty">خطا در دریافت معلم‌ها</div>';
       return;
     }
-    renderTeachers(res.teachers || []);
+    renderTeachers(recordRows(res.teachers));
   } catch(e) {
     $('teachersList').innerHTML = '<div class="empty">خطای شبکه</div>';
   }
@@ -561,7 +689,8 @@ async function changePanelPassword() {
     showAlert(alertEl, 'err', 'همهٔ فیلدها را پر کن.');
     return;
   }
-  if (newPass.length < 6) { showAlert(alertEl, 'err', 'رمز جدید حداقل ۶ کاراکتر.'); return; }
+  if (newPass.length < 12) { showAlert(alertEl, 'err', 'برای رمز جدید از عبارت عبور حداقل ۱۲ کاراکتری استفاده کنید.'); return; }
+  if(newPass===oldPass){showAlert(alertEl,'err','رمز جدید باید با رمز فعلی متفاوت باشد.');return;}
   if (newPass !== newPass2) { showAlert(alertEl, 'err', 'رمز جدید و تکرارش یکسان نیستند.'); return; }
   try {
     const res = await api('tpChangePanelPassword', {token, oldPassword: oldPass, newPassword: newPass});
@@ -574,7 +703,7 @@ async function changePanelPassword() {
 }
 
 /* کاربران */
-async function loadUsers(){loading($('usersList'));try{const res=await api('tpGetUsers',{token});if(!res.ok){$('usersList').innerHTML='<div class="empty">خطا در دریافت کاربران</div>';return}renderUsers(res.users||[])}catch(e){$('usersList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
+async function loadUsers(){loading($('usersList'));try{const res=await api('tpGetUsers',{token});if(!res.ok){$('usersList').innerHTML='<div class="empty">خطا در دریافت کاربران</div>';return}renderUsers(recordRows(res.users))}catch(e){$('usersList').innerHTML='<div class="empty">خطای شبکه</div>';console.error(e)}}
 
 /* ═══ آمار بازدید ═══ */
 async function loadStats(){
@@ -597,7 +726,7 @@ async function loadStats(){
     return;
   }
   const surveysOk=surveysResult.status==='fulfilled'&&surveysRes&&surveysRes.ok;
-  renderStats(analyticsRes.visits||[],surveysOk?(surveysRes.surveys||[]):[]);
+  renderStats(recordRows(analyticsRes.visits),surveysOk?recordRows(surveysRes.surveys):[]);
   if(!surveysOk){
     $('surveysList').innerHTML='<div class="empty">خطا در دریافت نظرات کاربران</div>';
     if(surveysResult.status==='rejected')console.error(surveysResult.reason);
@@ -608,7 +737,7 @@ function renderStats(visits,surveys){
   const d=new Date(),today=d.toISOString().slice(0,10).replace(/-/g,'/');
   let todayCount=0,returnCount=0;const users=new Set();
   visits.forEach(v=>{
-    if((v.time||'').indexOf(today)===0)todayCount++;
+    if(String(v.time||'').indexOf(today)===0)todayCount++;
     if(v.status==='برگشتی')returnCount++;
     if(v.user)users.add(v.user);
   });
@@ -625,7 +754,7 @@ function renderStats(visits,surveys){
   renderVisits(visits);
 }
 function countBy(arr,key){
-  const out={};
+  const out=Object.create(null);
   arr.forEach(item=>{const k=item[key]||'-';out[k]=(out[k]||0)+1});
   return Object.keys(out).map(k=>({key:k,val:out[k]})).sort((a,b)=>b.val-a.val);
 }
@@ -731,11 +860,12 @@ function renderBars(containerId,list,max){
 }
 function formatSurveyGame(raw){return displayRecordedName(raw,'')}
 function renderSurveys(list){
+  list=recordRows(list);
   const el=$('surveysList');
   if(!list.length){el.innerHTML='<div class="empty">هنوز نظری ثبت نشده</div>';return}
   el.innerHTML=list.slice().reverse().map(s=>{
     const isTeacher=s.type==='teacher';
-    const stars='⭐'.repeat(parseInt(s.rating)||0);
+    const stars='⭐'.repeat(Math.max(0,Math.min(5,Math.trunc(finiteNumber(s.rating)))));
     const gameLabel=formatSurveyGame(s.game);
     return '<div class="survey-item"><div class="survey-head"><div><span class="survey-type '+(isTeacher?'teacher':'student')+'">'+(isTeacher?'🧑‍🏫 معلم':'🧒 دانش‌آموز')+'</span> <span class="survey-name">'+esc(s.name||'ناشناس')+'</span></div><span class="survey-time">'+esc(s.time||'')+'</span></div>'+
       (gameLabel?'<div class="survey-game">🎮 '+esc(gameLabel)+'</div>':'')+
@@ -828,7 +958,7 @@ function exportVisitsCSV(){
   const rows=filteredVisits.map(v=>[v.time,v.user,getCleanPageInfo(v.page).name,v.page,v.device,v.browser,v.os,v.lang,v.ref,v.status]);
   let csv='\uFEFF';
   csv+=headers.join(',')+'\n';
-  rows.forEach(r=>{csv+=r.map(c=>'"'+String(c==null?'':c).replace(/"/g,'""')+'"').join(',')+'\n'});
+  rows.forEach(r=>{csv+=r.map(csvCell).join(',')+'\n'});
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
@@ -874,38 +1004,54 @@ document.addEventListener('click', e => {
   function renderUsers(list){if(!list.length){$('usersList').innerHTML='<div class="empty">هنوز کاربری ثبت نشده است.</div>';return}$('usersList').innerHTML='<div class="user-list">'+list.map(u=>{const teacher=u.role==='teacher',banned=u.status==='banned',badge=banned?'<span class="badge bad">مسدود</span>':teacher?'<span class="badge ok">معلم</span>':'<span class="badge ok">فعال</span>';return `<div class="user-row"><div class="avatar">${icon(teacher?'book':'users')}</div><div class="user-info"><b>${esc(u.username||'—')} ${badge}</b><small>${u.lastSeen?'آخرین بازدید: '+fa(new Date(u.lastSeen).toLocaleDateString('fa-IR')):'بدون بازدید'}</small></div>${teacher?'':`<div class="user-actions"><button class="circle-btn edit toggle-ban" data-user="${attr(u.username)}" title="مسدود/آزاد">${icon(banned?'check':'lock')}</button><button class="circle-btn delete delete-user" data-user="${attr(u.username)}" title="حذف">${icon('trash')}</button></div>`}</div>`}).join('')+'</div>';$$('.toggle-ban').forEach(b=>b.onclick=()=>toggleBan(b.dataset.user));$$('.delete-user').forEach(b=>b.onclick=()=>deleteUser(b.dataset.user))}
 async function toggleBan(username){try{const res=await api('tpToggleBan',{token,username});if(res.ok)loadUsers();else alert(res.error||'خطا')}catch(e){alert('خطای شبکه')}}async function deleteUser(username){if(!confirm(`کاربر «${username}» حذف شود؟`))return;try{const res=await api('tpDeleteUser',{token,username});if(res.ok)loadUsers();else alert(res.error||'خطا')}catch(e){alert('خطای شبکه')}}
 
-/* آغاز */
-  /* ═══════ حکیم، همراه معلم ═══════ */
-(function(){
-  function startHakim() {
-    if (typeof Hakim === 'undefined') {
-      console.log('hakim-core.js لود نشد');
-      return;
+/* Keyboard access for both static dialogs and the dynamically-mounted class book. */
+(function installDialogAccess(){
+  let active=null,returnFocus=null;
+  const selector='.modal-backdrop:not(.hidden),#dkOverlay';
+  function visibleDialog(){return document.querySelector('#dkOverlay')||document.querySelector('.modal-backdrop:not(.hidden)')}
+  const focusables=el=>Array.from(el.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),a[href],[tabindex="0"]')).filter(x=>!x.closest('.hidden')&&x.getClientRects().length);
+  const observer=new MutationObserver(()=>{
+    const next=visibleDialog();
+    if(next===active)return;
+    if(!next){active=null;if(returnFocus?.isConnected)returnFocus.focus();returnFocus=null;return}
+    if(!active)returnFocus=document.activeElement;
+    active=next;const box=next.querySelector('.modal-box,.dk-modal')||next;
+    box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('tabindex','-1');
+    const title=box.querySelector('h3,.dk-head-title');
+    if(title){if(!title.id)title.id=next.id+'Title';box.setAttribute('aria-labelledby',title.id)}
+    box.querySelectorAll('button.icon-btn').forEach(b=>{if(!b.hasAttribute('aria-label'))b.setAttribute('aria-label','بستن پنجره')});
+    (focusables(box)[0]||box).focus();
+  });
+  observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
+  document.addEventListener('keydown',e=>{
+    const dialog=visibleDialog();if(!dialog)return;
+    if(e.key==='Escape'){
+      if(dialog.id==='dkOverlay')return; // class book owns its close lifecycle
+      e.preventDefault();if(dialog.id==='editModal')closeEdit();else if(dialog.id==='importModal')closeImport();else dialog.classList.add('hidden');return;
     }
-    try {
-      Hakim.init({container:'#hakimMount', name:'معلم', font:false, autoHideMs:6000});
-      // موقع لود: سلام
-      Hakim.say('سلام معلم عزیز! به پنلت خوش آمدی. 😊', {mood:'happy'});
-      
-      // وقتی کاربر وارد پنل شد، دوباره سلام کن
-      const appShell = document.getElementById('appShell');
-      if (appShell) {
-        const observer = new MutationObserver(() => {
-          if (!appShell.classList.contains('hidden')) {
-            setTimeout(() => {
-              Hakim.say('چه خبر معلم؟ امروز چه کلاسی داری؟ 📚', {mood:'normal'});
-            }, 1500);
-          }
-        });
-        observer.observe(appShell, {attributes:true, attributeFilter:['class']});
-      }
-    } catch(e) { console.warn('Hakim init failed:', e); }
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startHakim);
-  } else {
-    startHakim();
-  }
+    if(e.key==='Tab'){
+      const items=focusables(dialog);if(!items.length){e.preventDefault();return}
+      const first=items[0],last=items[items.length-1];
+      if(e.shiftKey&&(document.activeElement===first||!dialog.contains(document.activeElement))){last.focus();e.preventDefault()}
+      else if(!e.shiftKey&&(document.activeElement===last||!dialog.contains(document.activeElement))){first.focus();e.preventDefault()}
+    }
+  });
+})();
+/* آغاز */
+  /* On-demand help: never cover reports with an automatic greeting. */
+(function(){
+  const host=$('hakimMount'),button=$('btnTeacherGuide');let ready=false;
+  function closeGuide(){host.classList.add('hidden');button.setAttribute('aria-expanded','false');if(window.Hakim&&ready)Hakim.hide()}
+  button.onclick=()=>{
+    if(button.getAttribute('aria-expanded')==='true'){closeGuide();return}
+    if(!window.Hakim)return;
+    if(!ready){Hakim.init({container:'#hakimMount',name:'معلم',font:false,autoHideMs:6000});ready=true}
+    host.classList.remove('hidden');button.setAttribute('aria-expanded','true');
+    Hakim.say('از بازی‌ها، سؤال‌های کلاس را مدیریت کنید؛ در نتایج، گزارش‌ها را فیلتر و دریافت کنید. برای حضور و نمره‌ها، دفتر معلم را باز کنید.',{mood:'normal',autoHide:false,speed:0});
+  };
+  $('teacherGuideClose').onclick=()=>{closeGuide();button.focus()};
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&button.getAttribute('aria-expanded')==='true'){closeGuide();button.focus()}});
+  window.addEventListener('teacher-session-end',closeGuide);
 })();
 </script>
   <script src="../hakim-core.js"></script>
@@ -918,33 +1064,18 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
 (function(){
   'use strict';
   
-  const API    = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
-  const K_PASS = 'hakimestan_daftar_pass';
-  const K_LAST = 'hakimestan_daftar_last_sync';
-  const K_DATA = 'hakimestan_daftar_v1';
-  
-  const ls = {
-    get: k => { try { return localStorage.getItem(k); } catch(e){ return null; } },
-    set: (k,v) => { try { v ? localStorage.setItem(k,v) : localStorage.removeItem(k); } catch(e){} }
+  // This privileged view intentionally does not share the personal دفتر localStorage.
+  let cache = null, cacheToken = null, busy = false, lastSync = null;
+  const api = async (action,payload) => {
+    const result = await window.teacherPanelRequest(action,payload);
+    if(result.ok!==true)throw new Error(result.error||'عملیات انجام نشد.');
+    return result;
   };
-  
-  let cache = null;
-  let cacheToken = null;
-  let busy = false;
-  
-  async function api(action, payload) {
-    const res = await fetch(API, {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain;charset=utf-8'},
-      body: JSON.stringify(Object.assign({action}, payload || {})),
-      redirect: 'follow'
-    });
-    if (!res.ok) throw new Error('ارتباط برقرار نشد (' + res.status + ')');
-    const data = await res.json();
-    if (data && data.ok === false) throw new Error(data.error || 'خطای نامشخص');
-    return data;
-  }
-  
+  window.addEventListener('teacher-session-end',()=>{
+    cache=null;cacheToken=null;lastSync=null;closeModal();
+    ui.tab='classes';ui.editingClass=null;ui.editingStudent=null;ui.editingGrade=null;ui.filterClass='';
+  });
+
   async function login() {
     // از همون توکن پنل استفاده کن — نیازی به لاگین جداگانه نیست
     if (typeof token === 'undefined' || !token) {
@@ -954,27 +1085,21 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
   }
   
   async function loadDB(force) {
-    if (cache && !force) return cache;
-    try {
-      const token = await login();
-      const r = await api('tpClassGetAll', {token});
-      cache = r.data || null;
-      if (cache) try { localStorage.setItem(K_DATA, JSON.stringify(cache)); } catch(e){}
-    } catch(netErr) {
-      const localRaw = ls.get(K_DATA);
-      if (localRaw) {
-        try { cache = JSON.parse(localRaw); } catch(_){ cache = null; }
-      }
-      if (!cache) throw netErr;
-    }
-    if (!cache || typeof cache !== 'object') cache = {version:1, settings:{}, classes:[], students:[], schedule:[], attendance:{}, grades:[], reminders:[]};
-    ['classes','students','grades','schedule','reminders'].forEach(k => {
-      if (!Array.isArray(cache[k])) cache[k] = [];
+    const tkn=await login();
+    if(cache&&cacheToken===tkn&&!force)return cache;
+    const r=await api('tpClassGetAll',{token:tkn});
+    if(tkn!==await login())throw new Error('نشست تغییر کرده است.');
+    const db=r.data??{version:1,settings:{},classes:[],students:[],schedule:[],attendance:{},grades:[],reminders:[]};
+    if(typeof db!=='object'||Array.isArray(db))throw new Error('ساختار دفتر معتبر نیست.');
+    ['classes','students','grades','schedule','reminders'].forEach(k=>{
+      if(!Array.isArray(db[k]))db[k]=[];
+      db[k]=db[k].filter(item=>item&&typeof item==='object'&&!Array.isArray(item));
     });
-    if (!cache.attendance || typeof cache.attendance !== 'object') cache.attendance = {};
-    return cache;
+    if(!db.attendance||typeof db.attendance!=='object'||Array.isArray(db.attendance))db.attendance={};
+    if(!db.settings||typeof db.settings!=='object')db.settings={};
+    cache=db;cacheToken=tkn;return cache;
   }
-  
+
   async function saveDB(db) {
     if (busy) throw new Error('در حال ذخیره...');
     busy = true;
@@ -994,19 +1119,16 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
       if (!db.attendance || typeof db.attendance !== 'object') db.attendance = {};
 
       db.updatedAt = new Date().toISOString();
-      cache = db;
-      try { localStorage.setItem(K_DATA, JSON.stringify(db)); } catch(e){}
-      try {
-        const tkn = await login();
-        await api('tpClassSaveAll', {token: tkn, data: db});
-        try { localStorage.setItem(K_LAST, new Date().toISOString()); } catch(e){}
-      } catch(syncErr) {
-        if (navigator.onLine !== false) notify('⚠️ در مرورگر ذخیره شد؛ همگام‌سازی ابری ناموفق بود.', true);
-      }
+      const tkn=await login();
+      await api('tpClassSaveAll',{token:tkn,data:db});
+      if(tkn!==await login())throw new Error('نشست تغییر کرده است.');
+      // Commit in-memory state only after acknowledged cloud persistence.
+      cache=db;cacheToken=tkn;lastSync=new Date().toISOString();
+      renderTabs();
     } finally { busy = false; }
   }
   
-  function fa(s) { return String(s).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[Number(c)]); }
+  function fa(s) { return esc(String(s).replace(/\d/g, c => '۰۱۲۳۴۵۶۷۸۹'[Number(c)])); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   function uid() { return window.crypto?.randomUUID ? crypto.randomUUID() : 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2); }
   function fmtDate(iso) { if (!iso) return '—'; try { return new Date(iso).toLocaleString('fa-IR'); } catch(e){ return iso; } }
@@ -1045,20 +1167,26 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     } catch(e){ return iso; }
   }
   function parseDateToISO(s) {
-    s = String(s||'').trim();
-    if (!s) return todayISO();
-    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
-    const norm = s.replace(/[۰-۹]/g, c => '۰۱۲۳۴۵۶۷۸۹'.indexOf(c));
-    const m = norm.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/);
-    if (!m) return todayISO();
-    let [y, mo, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
-    if (y < 1500) {
-      // شمسی به میلادی (تقریبی)
-      y += 621;
+    const norm=String(s||'').trim().replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c));
+    if(!norm)return todayISO();
+    const m=norm.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/);
+    if(!m)throw new Error('تاریخ را مانند ۱۴۰۵/۰۱/۰۱ یا 2026-03-21 وارد کنید.');
+    const [y,month,day]=m.slice(1).map(Number);
+    if(month<1||month>12||day<1||day>31)throw new Error('تاریخ معتبر نیست.');
+    if(y>=1700){
+      const date=new Date(Date.UTC(y,month-1,day));
+      if(date.getUTCFullYear()===y&&date.getUTCMonth()===month-1&&date.getUTCDate()===day)return date.toISOString().slice(0,10);
+    }else if(y>=1200&&y<=1600){
+      const formatter=new Intl.DateTimeFormat('en-US-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric',timeZone:'UTC'});
+      const start=Date.UTC(y+621,2,18);
+      for(let i=0;i<370;i++){
+        const date=new Date(start+i*86400000),parts=Object.fromEntries(formatter.formatToParts(date).map(p=>[p.type,p.value]));
+        if(Number(parts.year)===y&&Number(parts.month)===month&&Number(parts.day)===day)return date.toISOString().slice(0,10);
+      }
     }
-    return `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    throw new Error('تاریخ وجود ندارد یا خارج از بازهٔ پشتیبانی است.');
   }
-  
+
   const CSS = `
     .dk-overlay{position:fixed;inset:0;background:rgba(4,3,13,.78);backdrop-filter:blur(8px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;direction:rtl;font-family:var(--font,'Vazirmatn',Tahoma,sans-serif)}
     .dk-modal{background:var(--card,#17122f);border:1px solid var(--line,rgba(245,199,106,.24));border-radius:22px;max-width:960px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.5);color:var(--text,#f7f3ff);overflow:hidden}
@@ -1134,11 +1262,11 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     el.className = 'dk-overlay';
     el.id = 'dkOverlay';
     el.innerHTML = `
-      <div class="dk-modal" role="dialog" aria-modal="true">
+      <div class="dk-modal" role="dialog" aria-modal="true" aria-labelledby="dkDialogTitle">
         <div class="dk-head">
           <div class="dk-head-icon">📓</div>
           <div>
-            <div class="dk-head-title">دفتر معلم</div>
+            <div class="dk-head-title" id="dkDialogTitle">دفتر معلم</div>
             <div class="dk-head-sub" id="dkLastSync"></div>
           </div>
           <button class="dk-close" id="dkClose" aria-label="بستن">×</button>
@@ -1174,7 +1302,7 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
     document.querySelectorAll('#dkTabs .dk-tab').forEach(b => {
       b.classList.toggle('on', b.dataset.tab === ui.tab);
     });
-    const last = ls.get(K_LAST);
+    const last = lastSync;
     const el = document.getElementById('dkLastSync');
     if (el) el.textContent = 'آخرین همگام‌سازی: ' + (last ? fmtDate(last) : '—');
   }
@@ -1186,12 +1314,13 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
       await loadDB(!cache);
       renderBody();
     } catch(e) {
-      body.innerHTML = `<div class="dk-alert"><b>خطا:</b> ${esc(e.message)}</div>`;
+      if(body.isConnected)body.innerHTML = `<div class="dk-alert"><b>خطا:</b> ${esc(e.message)}<p>برای تلاش دوباره دفتر را ببندید و باز کنید.</p></div>`;
     }
   }
   
   function renderBody() {
     const body = document.getElementById('dkBody');
+    if(!body||!cache)return;
     if (ui.tab === 'classes') return renderClasses(body);
     if (ui.tab === 'students') return renderStudents(body);
     if (ui.tab === 'grades') return renderGrades(body);
@@ -1322,8 +1451,10 @@ async function toggleBan(username){try{const res=await api('tpToggleBan',{token,
       const f = e.target.files[0]; e.target.value = '';
       if (!f) return;
       try {
+        if(f.size>5*1024*1024)throw new Error('حجم پشتیبان دفتر نباید بیشتر از ۵ مگابایت باشد.');
+        if(!confirm('دفتر فعلی با محتوای پشتیبان جایگزین شود؟ ابتدا پشتیبان فعلی را دانلود کنید.'))return;
         const parsed = JSON.parse(await f.text());
-        if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.classes) || !Array.isArray(parsed.students)) {
+        if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.classes) || !Array.isArray(parsed.students) || ['classes','students','grades','schedule','reminders'].some(k=>parsed[k]!==undefined&&(!Array.isArray(parsed[k])||parsed[k].some(x=>!x||typeof x!=='object'||Array.isArray(x))))) {
           throw new Error('ساختار فایل پشتیبان دفتر معتبر نیست');
         }
         await saveDB(parsed);

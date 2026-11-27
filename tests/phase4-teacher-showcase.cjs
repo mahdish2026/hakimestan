@@ -536,13 +536,13 @@ function mountTeacherTool(rel, { seedStorage = {} } = {}) {
     assert.equal(t.errors.length, 0, `panels/teacher.html boot errors: ${t.errors.join('; ')}`);
     assert.equal(t.offlineFetches.length, 0, 'panels/teacher.html must not call visit tracker offline');
     assert.equal(t.document.getElementById('mText').value, 'سؤال پیش‌نویس آزمایشی پیش از رفرش');
-    assert.equal(t.document.getElementById('fStudent').value, 'زهرا');
+    assert.equal(t.document.getElementById('fStudent').value, '', 'student search names must not survive on shared devices');
 
     for (const id of ['btnExportCsv', 'btnPrintResults', 'btnDaftarNav']) {
       assert.ok(t.document.getElementById(id), `panels/teacher.html missing #${id}`);
     }
 
-    // Simulate login once, then go offline and open embedded daftar modal
+    // Simulate the authenticated class-book endpoint; personal local data must not be read.
     t.window.fetch = (url, opts) => {
       const body = opts && opts.body ? JSON.parse(opts.body) : {};
       if (body.action === 'tpLogin') {
@@ -551,6 +551,7 @@ function mountTeacherTool(rel, { seedStorage = {} } = {}) {
       if (body.action === 'tpGetStats') {
         return Promise.resolve({ ok: true, json: async () => ({ ok: true, stats: {} }) });
       }
+      if(body.action==='tpClassGetAll')return Promise.resolve({ok:true,json:async()=>({ok:true,data:JSON.parse(daftarKeep)})});
       return Promise.reject(new Error('OFFLINE_SYNC'));
     };
     t.document.getElementById('passIn').value = 'secret';

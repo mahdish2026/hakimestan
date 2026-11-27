@@ -50,3 +50,30 @@ jobs:
           node tests/darsgah-tools-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
           node tests/studio-dossier-layout-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
           node tests/teacher-dashboard-security.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
+  workspace-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Install workspace test dependencies
+        run: npm install --no-save --package-lock=false --ignore-scripts jsdom@26.1.0 puppeteer-core@24.43.1
+      - name: Test teacher and messenger behaviour with mocked APIs
+        run: |
+          node tests/teacher-workspace.cjs
+          node tests/teacher-panel-geometry.cjs
+          node tests/teacher-panel-math-decimals.cjs
+          node tests/payamresan-v4-features.cjs
+          node tests/messenger-workspace.cjs
+          node tests/payamresan-v5.cjs
+      - name: Test workspace layouts and real navigation on Chromium
+        run: |
+          export CHROME_PATH="$(command -v google-chrome)"
+          node tools/serve.cjs 8000 127.0.0.1 >/tmp/workspace-server.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
+          node tests/teacher-workspace-browser.cjs
+          node tests/messenger-studio-browser.cjs
+          node tests/messenger-workspace-browser.cjs

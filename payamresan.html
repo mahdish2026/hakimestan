@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+<meta charset="UTF-8">
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
 <!-- hakim-core:end -->
 
-<meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ff7d3b">
 <meta name="color-scheme" content="light dark">
@@ -14,7 +15,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="حکیمستان">
 <meta name="application-name" content="پیامرسان حکیمستان">
-<meta name="description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، برنامه‌ریزی ارسال، گفتگوی فشار-دهی‌شده، ۲۰ تم زیبا و میراثی، کاغذ دیواری‌های متنوع، نظرسنجی و آزمون، رمزنگاری انتهایی و کار آفلاین">
+<meta name="description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، برنامه‌ریزی ارسال، گفتگوی فشار-دهی‌شده، ۲۰ تم زیبا و میراثی، کاغذ دیواری‌های متنوع، نظرسنجی و آزمون، کار آفلاین و تنظیمات حریم خصوصی">
 <meta name="author" content="مهدی شریفیان">
 <meta name="referrer" content="no-referrer">
 <!-- سیاست امنیتی محتوا (جلوگیری از XSS و اسکریپت بیرونی ناشناس) -->
@@ -1110,62 +1111,62 @@ body[data-mode="dark"][data-theme="shabestan"]{--bg:#080a18;--bg2:#0d1024;--card
 .main::before{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:var(--wall,none);
-  background-size:22px 22px;
+  background-size:var(--wall-size,22px 22px);
   opacity:.85;
 }
-body[data-wall="none"] .main::before{background-image:none}
-body[data-wall="dots"] .main::before{background-image:radial-gradient(circle at 1px 1px, var(--line) 1.5px, transparent 0);background-size:20px 20px}
-body[data-wall="grid"] .main::before{background-image:linear-gradient(var(--line) 1px, transparent 1px),linear-gradient(90deg, var(--line) 1px, transparent 1px);background-size:28px 28px;opacity:.5}
-body[data-wall="waves"] .main::before{
-  background-image:radial-gradient(120px 60px at 20% 110%, var(--accent) 0%, transparent 60%),
-                   radial-gradient(160px 70px at 70% 115%, var(--accent2) 0%, transparent 60%),
-                   radial-gradient(140px 60px at 110% 108%, var(--accent) 0%, transparent 60%);
-  background-size:auto;opacity:.30;
+body[data-theme="forest"],body[data-theme="sunset"],body[data-theme="rose"],body[data-theme="paper"],body[data-theme="noir"]{--wall-size:auto}
+body[data-wall="none"] .main::before,body[data-wall="none"] .wallpaper-preview::before{background-image:none}
+body[data-wall="none"] #page-chat .main::after{content:none}
+body[data-wall="dots"] .main::before,body[data-wall="dots"] .wallpaper-preview::before{background-image:radial-gradient(circle at 1px 1px, var(--line) 1.5px, transparent 0);background-size:20px 20px}
+body[data-wall="grid"] .main::before,body[data-wall="grid"] .wallpaper-preview::before{background-image:linear-gradient(var(--line) 1px, transparent 1px),linear-gradient(90deg, var(--line) 1px, transparent 1px);background-size:28px 28px;opacity:.5}
+body[data-wall="waves"] .main::before,body[data-wall="waves"] .wallpaper-preview::before{
+  background-image:radial-gradient(ellipse at 50% 100%,transparent 51%,var(--accent) 52% 54%,transparent 55%),radial-gradient(ellipse at 50% 0%,transparent 51%,var(--accent2) 52% 54%,transparent 55%);
+  background-size:100px 44px;background-repeat:repeat;opacity:.18;
 }
-body[data-wall="hearts"] .main::before{
+body[data-wall="hearts"] .main::before,body[data-wall="hearts"] .wallpaper-preview::before{
   background-image:radial-gradient(circle at 30% 30%, var(--accent) 0 3px, transparent 4px),
                    radial-gradient(circle at 70% 70%, var(--accent2) 0 3px, transparent 4px);
   background-size:44px 44px;opacity:.30;
 }
-body[data-wall="stars"] .main::before{
-  background-image:radial-gradient(circle at 20% 30%, #fff 0 1.5px, transparent 2px),
-                   radial-gradient(circle at 75% 60%, #fff 0 1.2px, transparent 2px),
+body[data-wall="stars"] .main::before,body[data-wall="stars"] .wallpaper-preview::before{
+  background-image:radial-gradient(circle at 20% 30%, var(--accent2) 0 1.5px, transparent 2px),
+                   radial-gradient(circle at 75% 60%, var(--muted) 0 1.2px, transparent 2px),
                    radial-gradient(circle at 45% 80%, var(--accent) 0 1.6px, transparent 2.4px);
   background-size:120px 120px;opacity:.5;
 }
-body[data-wall="paper"] .main::before{
-  background-image:repeating-linear-gradient(0deg, rgba(0,0,0,.035) 0 1px, transparent 1px 26px);
+body[data-wall="paper"] .main::before,body[data-wall="paper"] .wallpaper-preview::before{
+  background-image:repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 26px);
   background-size:auto;opacity:.7;
 }
-body[data-wall="scan"] .main::before{
-  background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 4px);
+body[data-wall="scan"] .main::before,body[data-wall="scan"] .wallpaper-preview::before{
+  background-image:repeating-linear-gradient(0deg, var(--line) 0 1px, transparent 1px 4px);
   background-size:auto;opacity:1;
 }
-body[data-wall="mesh"] .main::before{
+body[data-wall="mesh"] .main::before,body[data-wall="mesh"] .wallpaper-preview::before{
   background-image:radial-gradient(at 20% 20%, var(--accent) 0%, transparent 50%),
                    radial-gradient(at 80% 25%, var(--accent2) 0%, transparent 50%),
                    radial-gradient(at 35% 80%, var(--accent) 0%, transparent 55%),
                    radial-gradient(at 90% 85%, var(--accent2) 0%, transparent 50%);
   background-size:150% 150%;background-repeat:no-repeat;opacity:.32;
 }
-body[data-wall="bokeh"] .main::before{
+body[data-wall="bokeh"] .main::before,body[data-wall="bokeh"] .wallpaper-preview::before{
   background-image:radial-gradient(circle at 15% 25%, var(--accent) 0 3px, transparent 4px),
                    radial-gradient(circle at 72% 15%, var(--accent2) 0 4px, transparent 5px),
                    radial-gradient(circle at 85% 62%, var(--accent) 0 3px, transparent 4px),
                    radial-gradient(circle at 28% 82%, var(--accent2) 0 4px, transparent 5px);
   background-size:64px 64px;opacity:.34;
 }
-body[data-wall="rings"] .main::before{
+body[data-wall="rings"] .main::before,body[data-wall="rings"] .wallpaper-preview::before{
   background-image:repeating-radial-gradient(circle at 30% 30%, var(--accent) 0 1px, transparent 1px 12px);
   background-size:auto;opacity:.34;
 }
-body[data-wall="leaf"] .main::before{
+body[data-wall="leaf"] .main::before,body[data-wall="leaf"] .wallpaper-preview::before{
   background-image:radial-gradient(circle at 20% 30%, var(--accent) 0 6px, transparent 7px),
                    radial-gradient(circle at 60% 50%, var(--accent2) 0 5px, transparent 6px),
                    radial-gradient(circle at 85% 75%, var(--accent) 0 7px, transparent 8px);
   background-size:64px 64px;opacity:.30;
 }
-body[data-wall="galaxy"] .main::before{
+body[data-wall="galaxy"] .main::before,body[data-wall="galaxy"] .wallpaper-preview::before{
   background-image:radial-gradient(90px 90px at 20% 30%, var(--accent) 0%, transparent 60%),
                    radial-gradient(130px 130px at 82% 62%, var(--accent2) 0%, transparent 60%),
                    radial-gradient(2px 2px at 50% 80%, #fff 0, transparent 3px);
@@ -1486,9 +1487,7 @@ body[data-density="compact"] .set-item{padding:9px 12px}
 body[data-density="cozy"] .bubble{padding:12px 16px;margin-bottom:12px}
 body[data-density="cozy"] .side-item{padding:16px 14px}
 /* ─── ۴-۸) والپیپر پس‌زمینهٔ کلاس (تصویر ملایم پشت گفتگو) ─── */
-body[data-bgimg="on"] #page-chat .main::before{
-  background-image:var(--wall,none);background-size:22px 22px
-}
+/* Wallpaper selection is authoritative, including restored legacy data-bgimg pages. */
 
 @page{size:A4 portrait;margin:14mm}
 @media print{
@@ -1736,6 +1735,7 @@ body[data-theme="mist"]{
 #outboxBar .sched-tag{font-size:.74rem;font-weight:800;color:#8a5a00;background:#fff4d6;padding:2px 10px;border-radius:99px}
 </style>
 <link rel="stylesheet" href="css/folio.css">
+<link rel="stylesheet" href="css/messenger-workspace.css">
 </head>
 <body data-theme="hakimستان" data-mode="light" data-font="medium">
 
@@ -1845,25 +1845,25 @@ body[data-theme="mist"]{
 
   <!-- ═════════ ۱. صفحه خوشآمد ═════════ -->
   <section id="page-welcome" class="page active">
-    <div class="wrap">
-      <div class="hero-mesh" aria-hidden="true"></div>
-      <div class="hero-art"><svg><use href="#mascot"/></svg></div>
-      <div class="center">
-        <p class="hk-folio">دفتر ارتباط کلاس</p>
-      <h1 class="hero-title">پیامرسان حکیمستان</h1>
-        <!-- اسم طراح — جای شماره ۱ -->
-        <div class="hero-designer">✦ طراحی و توسعه: مهدی شریفیان ✦</div>
-        <p class="hero-desc" style="margin-top:12px">گپ گروهی کلاس، چت خصوصی با هم‌کلاسی‌ها و معلم؛<br>ساده، سریع و فقط با متن — مخصوص کلاس درس ایرانی</p>
+    <div class="welcome-studio">
+      <div class="welcome-wordmark"><span class="studio-mark" aria-hidden="true"><svg class="ic"><use href="#i-chat"/></svg><i>✦</i></span><span>حکیمستان<small>فضای ارتباط کلاس</small></span></div>
+      <div class="welcome-layout">
+        <div class="welcome-copy">
+          <p class="studio-eyebrow"><span></span> هر گفت‌وگو، یک شروع تازه</p>
+          <h1 class="hero-title">اینجا، ایده‌ها<br><em>به هم می‌رسند.</em></h1>
+          <p class="welcome-product">پیام‌رسان حکیمستان</p>
+          <p class="hero-desc">جایی برای سؤال‌های کوچک، فکرهای بزرگ و یاد گرفتن کنار هم. کلاس را با یک سلام، نزدیک‌تر کن.</p>
+          <div class="welcome-actions"><button class="btn btn-primary" id="btnGoLogin">شروع گفت‌وگو <svg class="ic"><use href="#i-in"/></svg></button><button class="btn btn-ghost" id="btnGoRegister">ساخت حساب جدید <span aria-hidden="true">↖</span></button></div>
+          <div class="welcome-details"><span><svg class="ic-sm"><use href="#i-users"/></svg> کنار هم‌کلاسی‌ها</span><span><svg class="ic-sm"><use href="#i-palette"/></svg> به رنگ سلیقهٔ تو</span><span><svg class="ic-sm"><use href="#i-clip"/></svg> فراتر از متن</span></div>
+        </div>
+        <div class="welcome-visual" aria-hidden="true">
+          <span class="orbit-label">یک کلاس، هزار ایده</span>
+          <img src="assets/messenger/conversation-orbit.svg" alt="" width="640" height="640" fetchpriority="high">
+          <div class="orbit-note"><span>✦</span><div>با یک سلام شروع کن<small>شاید ایدهٔ بعدی، همین نزدیکی‌ست.</small></div></div>
+          <div class="orbit-palette"><i></i><i></i><i></i><span>دنیای تو، رنگ‌های تو</span></div>
+        </div>
       </div>
-      <div class="feat-chips">
-        <span class="chip"><svg class="ic-sm"><use href="#i-users"/></svg> چت گروهی</span>
-        <span class="chip"><svg class="ic-sm"><use href="#i-chat"/></svg> چت خصوصی</span>
-        <span class="chip"><svg class="ic-sm"><use href="#i-shield"/></svg> پنل معلم</span>
-        <span class="chip"><svg class="ic-sm"><use href="#i-bell"/></svg> اعلان هوشمند</span>
-      </div>
-      <button class="btn btn-accent" id="btnGoLogin"><svg class="ic"><use href="#i-in"/></svg> ورود</button>
-      <button class="btn btn-primary" id="btnGoRegister"><svg class="ic"><use href="#i-user"/></svg> ثبت‌نام جدید</button>
-      <div class="footer">© مهدی شریفیان — حکیمستان</div>
+      <div class="welcome-bottom"><span>برای ارتباط، برای یادگیری، برای با هم بودن.</span><span>طراحی و توسعه: مهدی شریفیان <b aria-hidden="true">✦</b></span></div>
     </div>
   </section>
 
@@ -1871,7 +1871,7 @@ body[data-theme="mist"]{
   <section id="page-register" class="page">
     <div class="wrap">
       <div class="center">
-        <div class="hero-art"><svg style="width:96px;height:96px"><use href="#mascot"/></svg></div>
+        <div class="auth-seal" aria-hidden="true"><span class="studio-mark"><svg class="ic"><use href="#i-chat"/></svg><i>✦</i></span><span class="auth-orbit"></span></div>
         <h2 class="hero-title" style="font-size:1.5rem">ساخت حساب جدید</h2>
         <p class="hero-desc">یه اسم قشنگ انتخاب کن و بیا تو کلاس!</p>
       </div>
@@ -1907,7 +1907,7 @@ body[data-theme="mist"]{
   <section id="page-login" class="page">
     <div class="wrap">
       <div class="center">
-        <div class="hero-art"><svg style="width:96px;height:96px"><use href="#mascot"/></svg></div>
+        <div class="auth-seal" aria-hidden="true"><span class="studio-mark"><svg class="ic"><use href="#i-chat"/></svg><i>✦</i></span><span class="auth-orbit"></span></div>
         <h2 class="hero-title" style="font-size:1.5rem">خوش برگشتی!</h2>
         <p class="hero-desc">اسمت رو بزن و برو سر کلاس</p>
       </div>
@@ -1934,23 +1934,10 @@ body[data-theme="mist"]{
 
   <!-- ═════════ ۴. صفحه اصلی (چت) ═════════ -->
   <section id="page-chat" class="page">
-    <div class="topbar">
-      <button class="icon-btn back-fab" id="btnBackToList" title="برگشت به لیست"><svg class="ic"><use href="#i-back"/></svg></button>
-      <div class="avatar sm" id="chatAvatar">ک<span class="on"></span></div>
-      <div class="grow">
-        <h2 id="chatTitle">کلاس</h2>
-        <div class="sub row" style="gap:8px">
-          <span id="chatStatus">در حال اتصال…</span>
-          <span class="conn" id="connBadge"><i></i><span id="connTxt">متصل</span></span>
-        </div>
-      </div>
-      <button class="icon-btn" id="btnInChatSearch" title="جستجو در این چت"><svg class="ic"><use href="#i-search"/></svg></button>
-      <button class="icon-btn" id="btnNotifQuick" title="اعلان"><svg class="ic"><use href="#i-bell"/></svg><span class="dot-alert"></span></button>
-      <button class="icon-btn is-hidden" id="btnToggleBan" title="بن کردن" aria-label="بن کردن کاربر"><svg class="ic"><use href="#i-ban"/></svg></button>
-      <button class="icon-btn pin-btn is-hidden" id="btnPinChat" title="فشار گفتگو" aria-label="فشار گفتگو"><svg class="ic"><use href="#i-pin"/></svg></button>
-      <button class="icon-btn" id="btnChatInfo" title="اطلاعات گفتگو" aria-label="اطلاعات گفتگو" aria-pressed="false"><svg class="ic"><use href="#i-info"/></svg></button>
-      <button class="icon-btn" id="btnChatMenu" title="گزینه‌های گفتگو" aria-label="گزینه‌های گفتگو"><svg class="ic"><use href="#i-more"/></svg></button>
-      <button class="icon-btn" id="btnMenu1" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
+    <div class="studio-masthead">
+      <div class="studio-brand"><span class="studio-mark" aria-hidden="true"><svg class="ic"><use href="#i-chat"/></svg><i>✦</i></span><div><strong>پیام‌رسان حکیمستان</strong><span>یک کلاس، هزار ایده</span></div></div>
+      <p class="studio-motto"><span aria-hidden="true">✦</span> گفت‌وگو، آغاز یادگیری‌ست</p>
+      <div class="studio-tools"><button type="button" class="studio-tool" id="studioAppearance" title="شخصی‌سازی ظاهر"><svg class="ic-sm"><use href="#i-palette"/></svg><span>رنگِ دنیای من</span></button><button type="button" class="studio-tool" id="studioMenu" title="منوی پیام‌رسان" aria-controls="drawer" aria-expanded="false"><svg class="ic-sm"><use href="#i-grid"/></svg><span>فضای من</span></button></div>
     </div>
     <div class="chat-shell" id="chatShell">
       <div class="inchat-search" id="inchatSearchBox">
@@ -1969,13 +1956,34 @@ body[data-theme="mist"]{
       </div>
       <div class="chat-body">
         <!-- لیست گروه‌ها و کاربران -->
-        <aside class="side" id="sideList">
-          <div class="side-search"><input class="input" id="sideSearch" placeholder="جستجوی گروه یا کاربر…" aria-label="جستجوی گروه یا کاربر"></div>
+        <aside class="side" id="sideList" aria-label="گفتگوهای شما">
+          <div class="studio-side-heading"><div><span class="studio-eyebrow">فضای ارتباط تو</span><h2>گفتگوها<span aria-hidden="true">.</span></h2></div><span class="studio-heading-art" aria-hidden="true"><svg class="ic"><use href="#i-spark"/></svg></span></div>
+          <div class="side-search"><svg class="ic-sm" aria-hidden="true"><use href="#i-search"/></svg><input class="input" id="sideSearch" placeholder="جستجوی گروه یا کاربر…" aria-label="جستجوی گروه یا کاربر"></div>
           <div class="side-tabs" id="sideTabs" role="group" aria-label="فیلتر گفتگوها"></div>
+          <div class="studio-collections" aria-label="دسترسی سریع"><button type="button" id="studioSaved" aria-pressed="false"><svg class="ic-sm"><use href="#i-book"/></svg> ذخیره‌ها</button><button type="button" id="studioStarred" aria-pressed="false"><svg class="ic-sm"><use href="#i-star"/></svg> ستاره‌دارها</button></div>
           <div id="sideContent"></div>
+          <button class="studio-person" id="studioProfile" type="button" aria-label="دیدن و ویرایش پروفایل من"><span class="studio-person-avatar" id="studioPersonAvatar" aria-hidden="true">م</span><span class="studio-person-copy"><strong id="studioPersonName">پروفایل من</strong><small>حال خوب، از خودت شروع می‌شه</small></span><svg class="ic-sm"><use href="#i-back"/></svg></button>
         </aside>
         <!-- پیام‌ها -->
         <main class="main">
+    <div class="topbar">
+      <button class="icon-btn back-fab" id="btnBackToList" title="برگشت به لیست"><svg class="ic"><use href="#i-back"/></svg></button>
+      <div class="avatar sm" id="chatAvatar">ک<span class="on"></span></div>
+      <div class="grow">
+        <h2 id="chatTitle">کلاس</h2>
+        <div class="sub row" style="gap:8px">
+          <span id="chatStatus">در حال اتصال…</span>
+          <span class="conn" id="connBadge"><i></i><span id="connTxt">متصل</span></span>
+        </div>
+      </div>
+      <button class="icon-btn" id="btnInChatSearch" title="جستجو در این چت"><svg class="ic"><use href="#i-search"/></svg></button>
+      <button class="icon-btn" id="btnNotifQuick" title="اعلان"><svg class="ic"><use href="#i-bell"/></svg><span class="dot-alert"></span></button>
+      <button class="icon-btn is-hidden" id="btnToggleBan" title="بن کردن" aria-label="بن کردن کاربر"><svg class="ic"><use href="#i-ban"/></svg></button>
+      <button class="icon-btn pin-btn is-hidden" id="btnPinChat" title="فشار گفتگو" aria-label="فشار گفتگو"><svg class="ic"><use href="#i-pin"/></svg></button>
+      <button class="icon-btn" id="btnChatInfo" title="اطلاعات گفتگو" aria-label="اطلاعات گفتگو" aria-pressed="false"><svg class="ic"><use href="#i-info"/></svg></button>
+      <button class="icon-btn" id="btnChatMenu" title="گزینه‌های گفتگو" aria-label="گزینه‌های گفتگو"><svg class="ic"><use href="#i-more"/></svg></button>
+      <button class="icon-btn" id="btnMenu1" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
+    </div>
           <div class="msgs" id="msgs" role="log" aria-live="off" aria-label="پیام‌های گفتگو" tabindex="-1"></div>
           <div class="typing" id="typingBubble"><span id="typingTxt">در حال تایپ…</span><span class="dots"><i></i><i></i><i></i></span></div>
           <button class="scroll-down" id="btnScrollDown">↓ پیام جدید</button>
@@ -2038,7 +2046,7 @@ body[data-theme="mist"]{
         <aside class="chat-info" id="chatInfo" aria-label="اطلاعات گفتگو">
           <div class="chat-info-inner">
             <div class="ci-card">
-              <h4>اطلاعات گفتگو</h4>
+              <div class="info-close-row"><h4>اطلاعات گفتگو</h4><button type="button" class="icon-btn" id="btnCloseChatInfo" aria-label="بستن اطلاعات گفتگو">×</button></div>
               <div id="chatInfoBody"></div>
             </div>
             <div class="ci-card">
@@ -2134,7 +2142,9 @@ body[data-theme="mist"]{
           <svg class="ic"><use href="#i-swatch"/></svg>
           <div class="meta"><div class="t">کاغذ دیواری گفتگو</div><div class="d">طرح پشت پیام‌ها (روی هر تمی کار می‌کند)</div></div>
         </div>
-        <div class="wall-grid" id="wallGrid"></div>
+        <div class="wall-grid" id="wallGrid" role="group" aria-label="انتخاب کاغذ دیواری گفتگو"></div>
+        <p id="wallpaperPreviewLabel" class="wallpaper-preview-label" role="status">پیش‌نمایش کاغذ دیواری</p>
+        <div id="wallpaperPreview" class="wallpaper-preview" aria-label="پیش‌نمایش گفتگو با پس‌زمینهٔ انتخاب‌شده"><span class="preview-message">سلام! تکلیف امروز را دیدی؟</span><span class="preview-message mine">بله، آمادهٔ یادگیری هستم 🌱</span></div>
       </div>
       <div class="set-item" style="flex-direction:column;align-items:stretch">
         <div class="row" style="align-items:center">
@@ -2194,11 +2204,11 @@ body[data-theme="mist"]{
         <label class="switch"><input type="checkbox" id="swLegacyDm"><span class="tr"></span></label>
       </div>
 
-      <!-- ═══ امنیت: رمزنگاری انتهایی و قفل رمز ═══ -->
+      <!-- ═══ حریم خصوصی و قفل محلی ═══ -->
       <div class="set-item">
         <svg class="ic"><use href="#i-shield"/></svg>
-        <div class="meta"><div class="t">رمزنگاری انتهایی (E2EE)</div><div class="d">متن پیام‌های Privat با رمز یک‌طرفه قبل از ذخیره/ارسال متراکم می‌شود</div></div>
-        <label class="switch"><input type="checkbox" id="swE2EE"><span class="tr"></span></label>
+        <div class="meta"><div class="t">کدگذاری قدیمی پیام‌ها (غیرفعال)</div><div class="d">روش قدیمی رمزنگاری امن یا سرتاسری نیست. ارسال جدید با آن متوقف شده؛ پیام‌های قدیمی همچنان خوانده می‌شوند. اطلاعات حساس را ارسال نکنید.</div></div>
+        <label class="switch"><input type="checkbox" id="swE2EE" disabled aria-label="کدگذاری قدیمی ناامن؛ غیرفعال"><span class="tr"></span></label>
       </div>
       <div class="set-item">
         <svg class="ic"><use href="#i-lock"/></svg>
@@ -2427,7 +2437,7 @@ var CFG = {
   DAY_MS: 24*3600*1000,
   REACTS: ['❤️','👍','😂','👏','😮','😍','🔥','🎉'],
   MENTION_RE: /@[A-Za-z0-9_\u0600-\u06FF‌]+/g,
-  VERSION: '5.0.0'          /* نسخه ۵: ۲۰ تم میراثی + حالت شب، نظرسنجی/آزمون، رمزنگاری انتهایی، عملکرد پنجره‌ای و امنیت سخت‌گیرانه */
+  VERSION: '5.2.0'          /* 5.1: wallpaper/viewport fixes, account-bound queues, safer imports and local PIN repair. */
 };
 
 /* ═════════════ ۲. ابزارهای عمومی (Util) ═════════════ */
@@ -2723,16 +2733,16 @@ var U = (function(){
     return t.charAt(0).toUpperCase();
   }
   function avatarBg(name){
-    var h=hue(name);
-    return 'linear-gradient(135deg,hsl('+h+',70%,55%),hsl('+((h+40)%360)+',70%,45%))';
+    var palette=[['#9b88c9','#7762a9'],['#ba937d','#9c725d'],['#79a99b','#588579'],['#8b9bb9','#697c9c'],['#b98fa8','#976b87'],['#b0a16f','#8e8158']];
+    var c=palette[hue(name)%palette.length];return 'linear-gradient(135deg,'+c[0]+','+c[1]+')';
   }
   function pct(a,b){ return b? Math.round(a/b*100) : 0; }
-  function uniq(arr){ var seen={}, out=[]; (arr||[]).forEach(function(x){ var k=String(x); if(!seen[k]){ seen[k]=1; out.push(x); } }); return out; }
+  function uniq(arr){ var seen=Object.create(null), out=[]; (arr||[]).forEach(function(x){ var k=String(x); if(!seen[k]){ seen[k]=1; out.push(x); } }); return out; }
   function range(n){ var a=[]; for(var i=0;i<n;i++) a.push(i); return a; }
 
   /* ── امنیت: زدودن نویسه‌های دوطرفه (BiDi Trojan / RLO) ──
      این نویسه‌ها می‌توانند نام پسوند فایل را در ظاهر جابه‌جا کنند (مثلاً «عکس.png.exe» را «عکs.exe.png» نشان دهند). */
-  var BIDI_RE = /[‪‫‬‮‎‏]/g;   // U+202A–U+202E و U+2066–U+2069
+  var BIDI_RE = /[\u202a-\u202e\u2066-\u2069\u200e\u200f]/g;   // U+202A–U+202E و U+2066–U+2069
   function stripBidi(s){ return String(s==null?'':s).replace(BIDI_RE, ''); }
   /* نرمال‌سازی یکسان‌ساز برای فیلترنویسی: ی/کِ فارسی، نیم‌فاصله، اعراب و کشیدگی */
   function norm(s){
@@ -2751,13 +2761,11 @@ var U = (function(){
   function obfuscate(val){ try{ return b64enc(xorMask(String(val))); }catch(e){ return ''; } }
   function deobfuscate(enc){ try{ return xorMask(b64dec(enc||'')); }catch(e){ return ''; } }
   /* تجزیهٔ JSON ایمن در برابر آلودگی پروتوتایپ (__proto__ / constructor / prototype) */
-  function safeParse(json, fallback){
-    var data;
-    try{ data = JSON.parse(json); }catch(e){ return fallback; }
-    if(data && typeof data === 'object' && !Array.isArray(data)){
-      if('__proto__' in data || 'constructor' in data || 'prototype' in data) return fallback;
-    }
-    return data;
+  function safeParse(json,fallback){
+    try{return JSON.parse(json,function(key,value){
+      if(key==='__proto__'||key==='constructor'||key==='prototype')throw new Error('Unsafe JSON key');
+      return value;
+    })}catch(e){return fallback}
   }
   /* ساخت نقشهٔ امن بدون پروتوتایپ (برای reactions / polls / واردات) */
   function safeMap(){ return Object.create(null); }
@@ -2782,21 +2790,22 @@ var $=U.$, $all=U.$all, esc=U.esc, fa=U.fa, el=U.el;
 var DB = {
   key: function(k){ return 'hk_'+k; },
   get: function(k, def){
-    try{ var r=localStorage.getItem('hk_'+k); return r==null? def : JSON.parse(r); }catch(e){ return def; }
+    try{ var r=localStorage.getItem('hk_'+k);if(r==null)return def;var value=JSON.parse(r);if(Array.isArray(def)&&!Array.isArray(value))return def;if(def&&typeof def==='object'&&!Array.isArray(def)&&(!value||typeof value!=='object'||Array.isArray(value)))return def;return value; }catch(e){ return def; }
   },
   set: function(k, v){ try{ localStorage.setItem('hk_'+k, JSON.stringify(v)); return true; }catch(e){ return false; } },
   del: function(k){ try{ localStorage.removeItem('hk_'+k); }catch(e){} },
   keys: function(){ var a=[]; try{ for(var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); if(k && k.indexOf('hk_')===0) a.push(k.slice(3)); } }catch(e){} return a; },
   // پاک کردن حافظه‌های برنامه (با حفظ نشست و تنظیمات)
   softClear: function(){
-    ['cache','outbox','typing','tomb'].forEach(function(k){ DB.del(k); });
+    ['cache','typing','tomb'].forEach(function(k){DB.del(k)});
+    if(typeof Outbox!=='undefined'&&Outbox&&S.me)Outbox.clear();
   }
 };
 
 /* ═════════════ ۴. وضعیت برنامه (State) ═════════════ */
 var DEFAULT_GROUP = 'عمومی';
 var S = {
-  me: null, role: 'student',
+  me:null,role:'student',authenticated:false,sessionVersion:0,
   profile: { display:'', bio:'', avatar:'' },     // پروفایل من
   users: [], groups: [], messages: [], words: [],
   chat: { type:'group', id: DEFAULT_GROUP },
@@ -3029,13 +3038,13 @@ var Drawerx = (function(){
     lastFocus=document.activeElement;
     var drawer=$('#drawer'); drawer.removeAttribute('inert'); drawer.setAttribute('aria-hidden','false');
     $('#drawerOv').classList.add('open'); drawer.classList.add('open');
-    $all('[id^=btnMenu]').forEach(function(b){ b.setAttribute('aria-expanded','true'); });
+    $all('[id^=btnMenu],#studioMenu').forEach(function(b){ b.setAttribute('aria-expanded','true'); });
     setTimeout(function(){ var f=$('#drawer .drawer-item:not([disabled])'); if(f) f.focus(); },80);
   }
   function close(){
     var drawer=$('#drawer'); $('#drawerOv').classList.remove('open'); drawer.classList.remove('open');
     drawer.setAttribute('aria-hidden','true'); drawer.setAttribute('inert','');
-    $all('[id^=btnMenu]').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+    $all('[id^=btnMenu],#studioMenu').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
     if(lastFocus && lastFocus.isConnected && lastFocus.focus) try{ lastFocus.focus(); }catch(e){}
     lastFocus=null;
   }
@@ -3045,10 +3054,12 @@ var Drawerx = (function(){
 var openDrawer=Drawerx.open, closeDrawer=Drawerx.close;
 
 /* ═════════════ ۶. شبکه (Net) ═════════════
-   نکته مهم: Apps Script برای POST هدر CORS نمی‌دهد؛ پس POST با no-cors فرستاده می‌شود
-   و نتیجه از راه GET تأیید می‌شود (همان الگوی نسخه قبل، منتها با تلاش مجدد). */
+   CORS-readable POST with explicit acknowledgement. An unreadable or uncertain
+   response is not success; queued messages can be reconciled using GET. */
 var Net = (function(){
-  var lastErr='';
+  var lastErr='',requests=new Set();
+  function sessionAbort(){var e=new Error('Session changed');e.name='AbortError';return e}
+  function abortAll(){S.sessionVersion++;requests.forEach(function(cancel){cancel()});requests.clear()}
   var stats={ ok:0, fail:0, lastOk:0 };
 
   function apiFailure(body, text){
@@ -3068,18 +3079,20 @@ var Net = (function(){
     timeout = Math.max(1, Number(timeout)||CFG.POST_TIMEOUT_MS||10000);
     var Controller = window.AbortController || (typeof AbortController!=='undefined'?AbortController:null);
     var controller = Controller? new Controller():null;
-    var timer=null, settled=false, onAbort=null;
+    var timer=null, settled=false, onAbort=null,epoch=S.sessionVersion;
     var config=Object.assign({},init||{});
     if(controller) config.signal=controller.signal;
     else if(externalSignal) config.signal=externalSignal;
     return new Promise(function(resolve,reject){
       function cleanup(){
         if(timer) clearTimeout(timer);
+        requests.delete(onAbort);
         if(externalSignal && onAbort) externalSignal.removeEventListener('abort',onAbort);
       }
       function finish(err,value){
         if(settled) return;
         settled=true; cleanup();
+        if(epoch!==S.sessionVersion)err=sessionAbort();
         if(err) reject(err); else resolve(value);
       }
       onAbort=function(){
@@ -3087,6 +3100,7 @@ var Net = (function(){
         if(controller) controller.abort();
         finish(e);
       };
+      requests.add(onAbort);
       if(externalSignal){
         if(externalSignal.aborted){ onAbort(); return; }
         externalSignal.addEventListener('abort',onAbort,{once:true});
@@ -3098,12 +3112,22 @@ var Net = (function(){
         var e=new Error('Request timed out after '+timeout+'ms'); e.name='TimeoutError'; reject(e);
       },timeout);
       try{
-        fetch(url,config).then(function(response){ finish(null,response); },function(error){ finish(error); });
+        fetch(url,config).then(function(response){
+          if(settled)return;
+          if(!response.ok||response.type==='opaque'){finish(null,response);return}
+          // Keep timeout, logout cancellation and the session guard active until
+          // the body is fully received, not merely until headers arrive.
+          var body=typeof response.text==='function'?response.text():response.json().then(JSON.stringify);
+          Promise.resolve(body).then(function(text){
+            finish(null,{ok:response.ok,status:response.status,type:response.type,
+              text:function(){return Promise.resolve(text)},json:function(){return Promise.resolve().then(function(){return JSON.parse(text)})}});
+          },function(error){finish(error)});
+        },function(error){ finish(error); });
       }catch(error){ finish(error); }
     });
   }
   function postDB(payload, opt){
-    opt=opt||{};
+    var epoch=S.sessionVersion;opt=opt||{};
     if(!U.isOnline()){ S.failCount++; setConn(false); return Promise.resolve(false); }
     return timedFetch(CFG.API_URL,{
       method:'POST', mode:'cors', cache:'no-store',
@@ -3117,13 +3141,16 @@ var Net = (function(){
         return r.status>=500? null : false;
       }
       return r.text().then(function(text){
+        if(epoch!==S.sessionVersion)throw sessionAbort();
         var body=null;
         try{ body=text?JSON.parse(text):null; }catch(e){}
         if(apiFailure(body,text)){
           lastErr=String((body&&(body.error||body.message||body.result))||text||'API rejected request').slice(0,240);
           stats.fail++; S.failCount++; return false;
         }
-        stats.ok++; stats.lastOk=Date.now(); S.failCount=0; return true;
+        var ack=body&&typeof body==='object'&&(body.ok===true||body.ok===1||body.ok==='true'||body.success===true||body.result==='ok'||body.status==='ok'||body.status==='success');
+        if(!ack&&!/^(ok|success|true)$/i.test(String(text||'').trim()))return null;
+        stats.ok++;stats.lastOk=Date.now();S.failCount=0;return true;
       });
     }).catch(function(e){
       lastErr=String(e&&e.message||e); stats.fail++;
@@ -3136,13 +3163,14 @@ var Net = (function(){
   }
   // POST قابل‌خواندن؛ پاسخ HTTP و بدنهٔ خطا هر دو اعتبارسنجی می‌شوند.
   function postJSON(payload, opt){
-    opt=opt||{};
+    var epoch=S.sessionVersion;opt=opt||{};
     return timedFetch(CFG.API_URL,{
       method:'POST', mode:'cors', cache:'no-store',
       headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)
     },opt.timeout||CFG.POST_TIMEOUT_MS,opt.signal).then(function(r){
       if(!r.ok) throw new Error('HTTP '+r.status);
       return r.text().then(function(text){
+        if(epoch!==S.sessionVersion)throw sessionAbort();
         var body=null;
         try{ body=text?JSON.parse(text):null; }catch(e){ body=text; }
         if(apiFailure(body,text)) throw new Error(String((body&&(body.error||body.message||body.result))||text||'API rejected request'));
@@ -3151,20 +3179,23 @@ var Net = (function(){
     });
   }
   function getDB(params, opt){
-    opt = opt||{};
+    var epoch=S.sessionVersion;opt = opt||{};
     var url = CFG.API_URL + '?' + new URLSearchParams(params).toString();
     var tries = opt.tries==null? 2 : opt.tries;
     var timeout = opt.timeout==null? 12000 : opt.timeout;
     return attempt(tries);
     function attempt(n){
+      if(epoch!==S.sessionVersion)return Promise.reject(sessionAbort());
       return timedFetch(url,{cache:'no-store'},timeout).then(function(r){
         if(!r.ok) throw new Error('HTTP '+r.status);
         return r.json();
       }).then(function(j){
+        if(epoch!==S.sessionVersion)throw sessionAbort();
         if(apiFailure(j)) throw new Error(String(j.error||j.message||j.result||'API error'));
         stats.ok++; stats.lastOk=Date.now(); S.failCount=0; return j;
       }).catch(function(e){
         lastErr=String(e&&e.message||e); stats.fail++;
+        if(epoch!==S.sessionVersion||e.name==='AbortError')throw e;
         if(n>1){ return U.sleep(400+Math.random()*400).then(function(){ return attempt(n-1); }); }
         throw e;
       });
@@ -3184,7 +3215,7 @@ var Net = (function(){
       }
     });
   }
-  return { postDB:postDB, getDB:getDB, postJSON:postJSON, postAndVerify:postAndVerify, stats:stats,
+  return { abortAll:abortAll,postDB:postDB, getDB:getDB, postJSON:postJSON, postAndVerify:postAndVerify, stats:stats,
            isApiFailure:apiFailure, lastError:function(){ return lastErr; } };
 })();
 var postDB = Net.postDB, getDB = Net.getDB;
@@ -3437,6 +3468,8 @@ var Guard = (function(){
     if(text){ lastText=String(text).trim(); lastTextAt=now; }
   }
   function canAttach(){
+    if(!S.me)return {ok:false,msg:'ابتدا وارد حساب شوید.'};
+    if(Auth.isBanned(S.me))return {ok:false,msg:'حساب شما اجازهٔ ارسال ندارد.'};
     var now=Date.now();
     attTimes = attTimes.filter(function(t){ return now-t<60000; });
     if(attTimes.length >= CFG.ATT_MAX_MIN) return {ok:false, msg:'در دقیقه اخیر پیوست‌های زیادی فرستادی.'};
@@ -3470,7 +3503,9 @@ var Guard = (function(){
   // پاک‌سازی متن برای جستجو/نمایش
   function cleanText(t){ return String(t==null?'':t).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,''); }
 
-  return { canSend:canSend, markSent:markSent, canAttach:canAttach, markAttach:markAttach,
+  function captureContext(){return {session:S.sessionVersion,me:S.me,chat:JSON.stringify(S.chat)}}
+  function validContext(context){return context&&!!S.me&&context.session===S.sessionVersion&&U.same(context.me,S.me)&&context.chat===JSON.stringify(S.chat)}
+  return { captureContext:captureContext,validContext:validContext,canSend:canSend, markSent:markSent, canAttach:canAttach, markAttach:markAttach,
            hashPassword:hashPassword, derive:derive, cleanText:cleanText };
 })();
 
@@ -3503,6 +3538,7 @@ var Data = (function(){
   function fetchMessages(opt){
     opt = opt||{};
     if(!S.me) return Promise.resolve(false);
+    var epoch=S.sessionVersion;
     // ✅ همیشه ۷ روز آخر رو می‌گیریم تا پیام‌های قدیمی از دست نرن
     var sinceIso = new Date(Date.now() - 7*CFG.DAY_MS).toISOString();    
     return getDB({action:'messages', user:S.me, since:sinceIso, limit:300}, {tries:opt.tries, timeout:opt.timeout}).then(function(j){
@@ -3531,6 +3567,7 @@ var Data = (function(){
       if(changed) App.render('messages');
       return true;
     }).catch(function(){
+      if(epoch!==S.sessionVersion)return false;
       S.failCount++;
       if(S.failCount>=2){ setConn(false); if(!S.demo && !S.messages.length) Demo.enter(); }
       throw new Error('messages');
@@ -3771,7 +3808,7 @@ var Data = (function(){
     }).catch(function(){});
   }
   function dedupeUsers(arr){
-    var map={};
+    var map=Object.create(null);
     arr.forEach(function(u){ map[U.normName(u.username).toLowerCase()] = Object.assign(map[U.normName(u.username).toLowerCase()]||{}, u); });
     return Object.keys(map).map(function(k){ return map[k]; });
   }
@@ -3851,15 +3888,16 @@ var Data = (function(){
   function exportCSV(){
     var rows = [['id','from','to_group','to_user','date','text']];
     S.messages.forEach(function(m){
-      rows.push([m.id, m.from, m.to_group, m.to_user, m.date, String(Wire.strip(m.text)).replace(/"/g,'""')]);
+      rows.push([m.id, m.from, m.to_group, m.to_user, m.date, String(Wire.strip(m.text))]);
     });
-    var csv = '\uFEFF'+rows.map(function(r){ return r.map(function(c){ return '"'+String(c==null?'':c)+'"'; }).join(','); }).join('\n');
+    var csv = '\uFEFF'+rows.map(function(r){ return r.map(function(c){ var value=String(c==null?'':c);if(/^[\s\u0000-\u001f]*[=+@-]/.test(value)||/^[\t\r\n]/.test(value))value="'"+value;return '"'+value.replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
     download('hakimestan-messages-'+U.toEn(U.dayKey(new Date().toISOString()))+'.csv', csv, 'text/csv');
   }
   function importJSON(rawText){
     try{
+      if(typeof rawText==='string'&&rawText.length>10*1024*1024)throw new Error('فایل پشتیبان بزرگ‌تر از حد مجاز است.');
       var parsed = typeof rawText==='string'? U.safeParse(rawText, null) : rawText;
-      if(!parsed || typeof parsed!=='object' || !Array.isArray(parsed.messages)) throw new Error('ساختار فایل پشتیبان معتبر نیست.');
+      if(!parsed || typeof parsed!=='object' || !Array.isArray(parsed.messages)||parsed.messages.length>10000||parsed.messages.some(function(m){return !m||typeof m!=='object'||Array.isArray(m)})) throw new Error('ساختار فایل پشتیبان معتبر نیست.');
       if(Array.isArray(parsed.groups)){
         parsed.groups.forEach(function(g){
           var ng = Norm.group(g);
@@ -3909,13 +3947,22 @@ var Data = (function(){
    خودکار ارسال می‌شود (به ترتیب). وضعیت هر پیام در حباب نشان داده می‌شود. */
 var Outbox = (function(){
   function all(){ return S.outbox; }
-  function save(){ DB.set('outbox', S.outbox.map(function(i){
-    return {id:i.id, payload:i.payload, tries:i.tries, nextAt:i.nextAt, status:i.status, preview:i.preview, at:i.at};
-  })); Upd.badge(); }
+  function owner(item){var p=item&&item.payload||{};return p.by||p.from_user||p.username||p.from||''}
+  function valid(item){return item&&typeof item==='object'&&item.id&&item.payload&&typeof item.payload==='object'&&!Array.isArray(item.payload)}
+  function owned(item){return !!S.me&&U.same(owner(item),S.me)}
+  function canDeliver(item){return owned(item)&&(item.payload.role!=='teacher'||(S.authenticated&&S.role==='teacher'))}
+  function save(){
+    if(!S.me)return;
+    var others=DB.get('outbox',[]).filter(function(item){return valid(item)&&!owned(item)});
+    var mine=S.outbox.filter(function(item){return valid(item)&&owned(item)}).map(function(i){
+      return {id:i.id,payload:i.payload,tries:i.tries,nextAt:i.nextAt,status:i.status,preview:i.preview,at:i.at};
+    });
+    if(!DB.set('outbox',others.concat(mine)))toast('حافظهٔ دستگاه پر است؛ صف ارسال روی دستگاه ذخیره نشد. صفحه را نبندید.','err',6000);
+    Upd.badge();
+  }
   function restore(){
-    var items = DB.get('outbox', [])||[];
-    S.outbox = items;
-    S.outbox.forEach(function(i){ if(i.status==='sending') i.status='queued'; });
+    S.outbox=DB.get('outbox',[]).filter(function(item){return valid(item)&&owned(item)});
+    S.outbox.forEach(function(i){if(i.status==='sending')i.status='queued'});
   }
   function find(id){ return S.outbox.filter(function(i){ return i.id===id; })[0]||null; }
   function add(payload, preview, at){
@@ -3998,16 +4045,18 @@ var Outbox = (function(){
   }
   // فرستادن همه صف به ترتیب؛ هر درخواست timeout دارد و echo سرور تأیید می‌شود.
   function flush(){
-    if(S.queueRunning) return Promise.resolve();
+    if(!S.me||S.queueRunning) return Promise.resolve();
+    var epoch=S.sessionVersion;
     if(!U.isOnline()) return Promise.resolve();
-    var ready = S.outbox.filter(function(i){ return i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()) && (!i.at || i.at<=Date.now()); });
+    var ready = S.outbox.filter(function(i){ return canDeliver(i)&&i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()) && (!i.at || i.at<=Date.now()); });
     if(!ready.length) return Promise.resolve();
     S.queueRunning = true;
     return ready.reduce(function(p, item){
       return p.then(function(){
-        if(item.cancelled || !find(item.id)) return;
+        if(epoch!==S.sessionVersion||!canDeliver(item)||item.cancelled||!find(item.id))return;
         item.status='sending'; item.sentAt=Date.now(); save();
         return Net.postDB(item.payload,{timeout:CFG.POST_TIMEOUT_MS}).then(function(result){
+          if(epoch!==S.sessionVersion)return;
           if(item.cancelled){
             // فقط لغو صریح کاربر باید POST درحال‌اجرا را جبران کند؛ echo ممکن است
             // پیش از پاسخ برسد و Outbox.done را اجرا کند، که به معنی حذف پیام نیست.
@@ -4019,6 +4068,7 @@ var Outbox = (function(){
             done(item.id); App.markAcked(item.id);
           } else if(result===null){
             return verify(item).then(function(found){
+              if(epoch!==S.sessionVersion)return;
               if(item.cancelled){ if(result!==false) return deleteCancelled(item); return; }
               if(!find(item.id)) return; // Data.merge ممکن است قبلاً echo را تأیید کرده باشد.
               if(found){ done(item.id); App.markAcked(item.id); }
@@ -4028,11 +4078,12 @@ var Outbox = (function(){
         });
       });
     }, Promise.resolve()).then(function(){
+      if(epoch!==S.sessionVersion)return;
       S.queueRunning=false; save();
       if(!pendingCount()) setTimeout(function(){ Data.fetchMessages().catch(function(){}); }, 900);
       // پیامی که حین همین ارسال به صف اضافه شده، منتظر چرخهٔ بعدی نماند:
-      else if(S.outbox.some(function(i){ return i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()) && (!i.at || i.at<=Date.now()); })) return flush();
-    }).catch(function(){ S.queueRunning=false; save(); });
+      else if(S.outbox.some(function(i){ return canDeliver(i)&&i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()) && (!i.at || i.at<=Date.now()); })) return flush();
+    }).catch(function(){if(epoch!==S.sessionVersion)return;S.queueRunning=false;save()});
   }
   // تلاش دوباره برای پیام‌های ناموفق
   function retryFailed(){
@@ -4201,7 +4252,8 @@ var Auth = (function(){
   }
 
   function loginSuccess(u, role){
-    S.me=u; S.role=role==='teacher'?'teacher':'student';
+    if(S.me&&!U.same(S.me,u)){S.messages=[];S.render={ids:[],sig:''}}
+    Poll.stop();Net.abortAll();S.queueRunning=false;S.me=u;S.role=role==='teacher'?'teacher':'student';S.authenticated=true;Outbox.restore();
     DB.set('session',{username:u, at:Date.now()});
     S.profile = Profile.load(u);
     if(!S.groups.length) S.groups=[DEFAULT_GROUP];
@@ -4217,9 +4269,20 @@ var Auth = (function(){
   function logout(){
     Ui.confirmDlg('خروج از حساب','مطمئنی می‌خوای خارج بشی؟','خروج').then(function(ok){
       if(!ok) return;
-      DB.del('session'); S.me=null;
-      Poll.stop();
-      Typing.stopAll();
+      Compose.saveDraftNow();Outbox.save();Typing.stopAll();Poll.stop();Net.abortAll();
+      Recorder.cancel(true);Voice.reset();Compose.clear();
+      DB.del('session');S.me=null;S.role='student';S.authenticated=false;S.chat={type:'group',id:DEFAULT_GROUP};
+      S.messages=[];S.users=[];S.profiles={};S.profile={display:'',bio:'',avatar:''};S.outbox=[];S.queueRunning=false;S.demo=false;S.serverOffset=0;
+      S.replyTo=null;S.editing=null;S.forwardFrom=null;S.render={ids:[],sig:''};S.chatQ='';S.sideQ='';
+      // Shared cache has no reliable owner metadata: remove only server-derived cache,
+      // leaving account-owned drafts/outbox and appearance preferences untouched.
+      DB.del('cache');DB.del('users');DB.del('profiles');Data.resetSince();
+      ['msgs','sideContent','teacherBody','profileBody','searchBody','chatInfoBody','chatInfoPinned','replySnip','editSnip'].forEach(function(id){var node=$('#'+id);if(node)node.textContent=''});
+      $('#studioPersonName').textContent='پروفایل من';$('#studioPersonAvatar').textContent='م';
+      $('#msgInput').value='';$('#chatTitle').textContent='کلاس';$('#chatStatus').textContent='';$('#chatAvatar').textContent='ک';
+      $('#chatInfo').classList.remove('open');$('#btnChatInfo').setAttribute('aria-pressed','false');
+      if(window.HK&&HK.V3){HK.V3.Sticker.toggle(false);HK.V3.Live.stop()}
+      Sync.drawer();
       App.showPage('welcome');
       toast('فعلاً خداحافظ!');
     });
@@ -4456,6 +4519,11 @@ var App = (function(){
   /* ── سایدبار ── */
   function renderSide(){
     var box=$('#sideContent'); if(!box) return;
+    var person=$('#studioPersonName'),avatar=$('#studioPersonAvatar');
+    if(person)person.textContent=S.profile.display||S.me||'پروفایل من';
+    if(avatar)avatar.textContent=U.initials(S.profile.display||S.me||'من');
+    $('#studioSaved').setAttribute('aria-pressed',String(!!S.chat&&S.chat.type==='saved'));
+    $('#studioStarred').setAttribute('aria-pressed',String(!!S.chat&&S.chat.type==='starred'));
     var q = S.sideQ.trim().toLowerCase();
     var on = onlineMap();
     var flt = S.chatFilter||'all';
@@ -4476,13 +4544,13 @@ var App = (function(){
     }
 
     // پیام‌های ستاره‌دار
-    if(flt==='all' || flt==='star'){
+    if(flt==='star'){
       var st = lastMsgOf('starred','me');
       html += '<div class="side-sec"><svg class="ic-sm"><use href="#i-starfill"/></svg> ستاره‌دارها</div>';
       html += sideItemHTML('starred','me','پیام‌های ستاره‌دار', st? Md.plain(st.text)||'پیوست':'روی پیام بزن و ستاره بزن', st?st.date:null, S.starred.length, 0);
     }
     // ذخیره‌شده‌ها (همان قابلیت نسخه قبل)
-    if(flt==='all' || flt==='saved'){
+    if(flt==='saved'){
       var sv = lastMsgOf('saved','me');
       html += '<div class="side-sec"><svg class="ic-sm"><use href="#i-book"/></svg> ذخیره‌شده‌ها</div>';
       html += sideItemHTML('saved','me','پیام‌های ذخیره‌شده', sv? (Md.plain(sv.text)||'پیوست') :'روی هر پیام بزن و ذخیره کن', sv?sv.date:null, S.saved.length, unreadCount('saved','me'));
@@ -5158,6 +5226,7 @@ var App = (function(){
 
   /* ── باز کردن چت ── */
   function openChat(type, id){
+    Voice.reset();Recorder.cancel(true);
     if(S.chat && Compose.saveDraftNow) Compose.saveDraftNow();
     S.chat = {type:type, id:id};
     S.chatQ=''; var si=$('#inchatSearch'); if(si) si.value='';
@@ -5190,20 +5259,23 @@ var App = (function(){
     var shell=$('#chatShell'); if(!shell) return;
     var mobile = window.innerWidth < 920;
     var inChat = shell.classList.contains('in-chat');
+    document.body.setAttribute('data-chat-open',inChat?'true':'false');
     // در موبایل: یا لیست گفتگوها دیده می‌شود یا خود چت (مثل نسخه قبل)
     $('#sideList').classList.toggle('is-hidden', mobile && inChat);
     $('#btnBackToList').classList.toggle('is-hidden', !mobile);
+    document.dispatchEvent(new Event('hk-chat-layout'));
   }
 
   /* ── خوش‌آمد ── */
   function showWelcomeBanner(){
     if(!S.me || S.welcomed[S.me]) return;
-    $('#welcomeBannerTxt').textContent = 'سلام '+displayName(S.me)+' عزیز! به پیام‌رسان حکیمستان خوش اومدی. از لیست، یه گروه یا دوست رو انتخاب کن و شروع کن به چت!';
+    $('#welcomeBannerTxt').textContent = 'سلام '+displayName(S.me)+'! خوش اومدی؛ یک گفتگو انتخاب کن و ایده‌هات رو به اشتراک بگذار.';
     $('#welcomeBanner').style.display='flex';
   }
 
   /* ── صفحه‌ها ── */
   function showPage(name){
+    if(name==='teacher'&&(S.role!=='teacher'||!S.authenticated)){toast('برای ابزارهای معلم، با رمز حساب معلم وارد شوید.','err');name=S.me?'chat':'login'}
     PAGES.forEach(function(p){ var pе=$('#page-'+p); if(pе) pе.classList.toggle('active', p===name); });
     /* نام صفحهٔ فعال روی <body> — لایهٔ دسترس‌پذیری از آن استفاده می‌کند
        تا دکمهٔ ♿ در صفحهٔ چت، بالای کادر ارسال بنشیند (روی دکمهٔ ارسال نیفتد) */
@@ -5335,10 +5407,10 @@ var Filter = (function(){
   return { hit:hit, mask:mask };
 })();
 
-/* ═════════════ ۱۵-ب. رمزنگاری انتهایی و قفل رمز (Sec) ═════════════
-   E2EE: متن پیام‌های Privat با یک کلید مشتق‌شده از用户名 با رمز یک‌طرفه XOR+Base64 متراکم می‌شود
-   قبل از ذخیره/ارسال. این رمزنگاری انتبه محلی است (جلوگیری از دید کنجکاوِ localStorage)
-   و نمی‌تواند جایگزین رمزنگاری واقعی (مثل Signal Protocol) باشد، اما لایه اضافی امنیتی است.
+/* ═════════════ ۱۵-ب. سازگاری کدگذاری قدیمی و قفل محلی (Sec) ═════════════
+   Legacy XOR uses public usernames, not a secret. It is NOT encryption or E2EE.
+   Its decoder is retained only to read historical messages; new sends never use it.
+   PIN is a local UI lock, not encryption of messages or server authentication.
    قفل PIN: پس از تنظیم، در ورود به پیام‌رسان باید رمز داده‌شده را تأیید کند. */
 var Sec = (function(){
   var PIN_KEY = 'hk_pin_enc';
@@ -5393,7 +5465,7 @@ var Sec = (function(){
     var stored = DB.get(PIN_KEY, '');
     if(!stored) return true; // قفل فعال نیست
     var dec = U.deobfuscate(stored);
-    return !!dec && dec === hashPin(pin);
+    return !!dec&&dec===String(hashPin(pin));
   }
 
   var locked = false;
@@ -5612,7 +5684,7 @@ var Typing = (function(){
     var key = App.chatKey(S.chat.type, S.chat.id);
     // خواندن از localStorage (تب‌های دیگر) به‌عنوان پشتیبان
     DB.keys().filter(function(k){ return k.indexOf('typing_')===0; }).forEach(function(k){
-      var who = k.slice(8);
+      var who = k.slice(7);
       if(U.same(who, S.me)) return;
       var v = DB.get(k, null);
       if(v && v.chat===key && Date.now()-(v.at||0) < 3500) seen[who]=v;
@@ -5683,15 +5755,16 @@ var Compose = (function(){
   }
   function setEditBar(v){ if(!v) $('#editBar').classList.add('is-hidden'); }
   function clear(){
-    S.replyTo=null; S.editing=null;
+    var wasEditing=!!S.editing;S.replyTo=null;S.editing=null;
     $('#replyBar').classList.add('is-hidden');
     $('#editBar').classList.add('is-hidden');
-    var inp=$('#msgInput'); if(inp && S.editing) inp.value='';
+    var inp=$('#msgInput');if(inp&&wasEditing)inp.value='';
     autoGrow();
   }
 
   // ارسال پیام (یا ذخیره ویرایش)
   async function send(){
+    if(!S.me){toast('ابتدا وارد حساب شوید.','err');return}
     if(!S.chat){ toast('اول یه گروه یا کاربر انتخاب کن','err'); return; }
     if(S.chat.type==='saved' || S.chat.type==='starred'){ toast('این بخش فقط برای مرور پیام‌هاست'); return; }
     if(Auth.isBanned(S.me)){ toast('حساب شما مسدود است و نمی‌توانی پیام بفرستی!','err'); return; }
@@ -5705,8 +5778,9 @@ var Compose = (function(){
 
     var meta = {};
     if(S.replyTo) meta.r = {id:S.replyTo.id, from:S.replyTo.from, txt:S.replyTo.txt};
-    await deliver({ text:text, meta:meta, kind:'text' });
-
+    var context=Guard.captureContext();
+    await deliver({text:text,meta:meta,kind:'text'});
+    if(!Guard.validContext(context))return;
     input.value=''; autoGrow();
     clearDraftForCurrent();
     clear();
@@ -5716,6 +5790,7 @@ var Compose = (function(){
 
   // ارسال واقعی (متن + متادیتا) با صف آفلاین
   async function deliver(opts){
+    if(!S.me||!S.chat)throw new Error('نشست پایان یافته است. دوباره وارد شوید.');
     var t = opts.text||'', meta = opts.meta||{};
     var schedAt = opts.at || 0;                      // زمان برنامه‌ریزی‌شده (اگر داشت)
     try{ if(window.HK && HK.Snd) HK.Snd.play('send'); }catch(e){}   // صدای ارسال (نسخه ۳)
@@ -5724,9 +5799,8 @@ var Compose = (function(){
     var clientId = U.uid('q');
     var date = new Date((schedAt || Date.now()) + (S.serverOffset||0)).toISOString();
 
-    // رمزنگاری انتهایی: در گفتگوی خصوصی و با فعال‌سازی، متن با کلید مشتق‌شده از کاربر دو طرف رمز می‌شود
-    // و با علامت \u200B⟦e2ee:..⟧ قابل شناسایی است. این لایه محلی است (جلوگیری از دید localStorage).
-    var e2eeOn = !!DB.get('e2ee', false) && !!to_user;
+    // Historical XOR envelopes remain readable, but no new XOR envelopes are generated.
+    var e2eeOn = false; // Legacy XOR is decode-only, never a security boundary.
     var sendText = t;
     if(e2eeOn && t){
       sendText = '\u2776' + Sec.encrypt(t, S.me, to_user) + '\u2777';
@@ -5761,12 +5835,14 @@ var Compose = (function(){
       App.render('messages');        // badge ⏰ بلافاصله روی حباب بیاید
     }
     else if(!U.isOnline()) toast('آفلاین هستی؛ پیام در صف می‌ماند','err');
+    var deliverySession=S.sessionVersion;
     Outbox.flush().then(function(){
+      if(deliverySession!==S.sessionVersion)return;
       // وضعیت را از روی صف تعیین کن، نه خوش‌بینی: اگر هنوز در صف است یعنی ارسال نشده
       var item = Outbox.find(clientId);
       if(!item) App.markAcked(clientId);
       else App.markStatus(clientId, item.status==='failed'? 'failed' : (U.isOnline()? 'sending':'queued'));
-      if(!item) setTimeout(function(){ Data.fetchMessages().catch(function(){}); }, 1400);
+      if(!item)setTimeout(function(){if(deliverySession===S.sessionVersion)Data.fetchMessages().catch(function(){})},1400);
       Upd.badge();
     });
     return local;
@@ -5803,8 +5879,8 @@ var Compose = (function(){
 
   var draftSaveTimer = null;
   function currentDraftKey(){
-    if(!S.chat || !S.chat.id || S.chat.type==='saved' || S.chat.type==='starred') return '';
-    return S.chat.type + ':' + S.chat.id;
+    if(!S.me||!S.chat || !S.chat.id || S.chat.type==='saved' || S.chat.type==='starred') return '';
+    return JSON.stringify([S.me,S.chat.type,S.chat.id]);
   }
   function saveDraftNow(){
     clearTimeout(draftSaveTimer);
@@ -6073,6 +6149,7 @@ var Attach = (function(){
   // پسوندهای خطرناکی که اجازه ندارند ارسال شوند (جلوگیری از اجرای کد از طریق پیوست)
   var DANGER_EXT = /^(html?|xhtml|svg|svgz|js|mjs|jsx|ts|php|phtml|pht|asp|aspx|exe|msi|apk|jar|bat|cmd|com|scr|vbs|wsf|ps1|lnk|sh|py|cgi|htaccess)$/i;
   async function send(file, caption, forceKind){
+    var context=Guard.captureContext();
     if(!file){ return; }
     // زدودن نویسه‌های دوطرفه (BiDi Trojan) از نام فایل + رد پسوندهای خطرناک
     var safeName = U.stripBidi(file.name || '');
@@ -6093,6 +6170,7 @@ var Attach = (function(){
       var blob=file, name=safeName||(kind==='img'?'photo.jpg': kind==='voice'?'voice.webm':'file.bin'), w=0,h=0,dur=0;
       if(kind==='img'){
         var r = await squeezeImage(file, 900*1024);
+        if(!Guard.validContext(context))throw new Error('Conversation changed');
         if(!r) throw new Error('image');
         blob = r.blob; w=r.w; h=r.h;
         name = (safeName||'photo').replace(/\.[^.]+$/,'') + '.jpg';
@@ -6102,6 +6180,7 @@ var Attach = (function(){
       if(Upload.ready()){
         prog.set(15, 'آپلود به سرور…');
         var url = await Upload.any(blob, name, att.m);
+        if(!Guard.validContext(context))throw new Error('Conversation changed');
         if(url){
           att.u = url;
           prog.set(100, 'ارسال…');
@@ -6113,6 +6192,7 @@ var Attach = (function(){
       }
       // ۲) ارسال مستقیم (تک‌پیام یا تکه‌تکه)
       var dataURL = await U.blobToDataURL(blob);
+      if(!Guard.validContext(context))throw new Error('Conversation changed');
       var b64 = String(dataURL).split(',')[1]||'';
       att.u = dataURL;
       if(b64.length <= CFG.CHUNK_CHARS){
@@ -6130,14 +6210,16 @@ var Attach = (function(){
         toast('فایل بزرگ است (سقف '+need+'). کلید imgbb را در تنظیمات بگذار یا بک‌اند نسخه ۲ را فعال کن.','err', 6000);
         return;
       }
-      await sendChunked(att, b64, caption, prog);
+      await sendChunked(att,b64,caption,prog,context);
     }catch(e){
       prog.done(); toast('پیوست ارسال نشد!','err');
     }
   }
 
   // ارسال تکه‌تکه: هر تکه یک پیام کنترلی است، گیرنده آن‌ها را به هم می‌چسباند
-  async function sendChunked(att, b64, caption, prog){
+  async function sendChunked(att,b64,caption,prog,context){
+    context=context||Guard.captureContext();
+    if(!Guard.validContext(context))return;
     var cid = U.uid('c');
     var total = Math.ceil(b64.length / CFG.CHUNK_CHARS);
     var to_group = S.chat.type==='group'? S.chat.id:'';
@@ -6166,6 +6248,7 @@ var Attach = (function(){
     }
     // پایش پیشرفت
     var watch = setInterval(function(){
+      if(!Guard.validContext(context)){clearInterval(watch);prog.done();return}
       var left = ids.filter(function(id){ return !!Outbox.find(id); }).length;
       var done = total-left;
       var p = 40 + Math.round(done/total*60);
@@ -6387,7 +6470,7 @@ var Voice = (function(){
 
 /* ═════════════ ۲۳. ضبط صدا (Recorder) — حداکثر ۶۰ ثانیه ═════════════ */
 var Recorder = (function(){
-  var rec=null, chunks=[], stream=null, analyser=null, rafId=null, startedAt=0, tickTimer=null, ac=null;
+  var rec=null,chunks=[],stream=null,analyser=null,rafId=null,startedAt=0,tickTimer=null,ac=null,recordContext=null,recordGeneration=0;
 
   function supported(){ return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder); }
   function bestMime(){
@@ -6396,15 +6479,21 @@ var Recorder = (function(){
     return '';
   }
   async function start(){
+    if(rec)return;
+    var generation=++recordGeneration,captureSession=S.sessionVersion,captureChat=S.chat&&App.chatKey(S.chat.type,S.chat.id);
+    recordContext=Guard.captureContext();
+    if(!S.me)return;
     if(!supported()){ toast('مرورگرت از ضبط صدا پشتیبانی نمی‌کند','err'); return; }
     if(!S.chat || S.chat.type==='saved' || S.chat.type==='starred'){ toast('اول یه گفتگو انتخاب کن','err'); return; }
     var g = Guard.canAttach(); if(!g.ok){ toast(g.msg,'err'); return; }
     try{
-      stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true, noiseSuppression:true}});
-      chunks=[];
+      var acquired=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+      if(generation!==recordGeneration||captureSession!==S.sessionVersion||!S.me||captureChat!==App.chatKey(S.chat.type,S.chat.id)){acquired.getTracks().forEach(function(track){track.stop()});return}
+      stream=acquired;
+      chunks=[];var recordingChunks=chunks;
       var mime = bestMime();
       rec = new MediaRecorder(stream, mime? {mimeType:mime, audioBitsPerSecond:24000} : undefined);
-      rec.ondataavailable = function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+      rec.ondataavailable = function(e){ if(e.data&&e.data.size)recordingChunks.push(e.data); };
       rec.start(400);
       startedAt = Date.now();
       $('#recordBar').classList.remove('is-hidden');
@@ -6417,6 +6506,7 @@ var Recorder = (function(){
       }, 250);
       if(navigator.vibrate) try{ navigator.vibrate(25); }catch(e){}
     }catch(e){
+      if(generation!==recordGeneration)return;
       toast('دسترسی به میکروفون داده نشد','err');
       cleanup();
     }
@@ -6439,18 +6529,19 @@ var Recorder = (function(){
     }catch(e){}
   }
   function stop(thenSend){
-    if(!rec) return;
-    try{ rec.stop(); }catch(e){}
-    var wasAuto = thenSend;
-    rec.onstop = function(){
-      var blob = new Blob(chunks, {type: (rec && rec.mimeType) || 'audio/webm'});
-      var dur = Math.round((Date.now()-startedAt)/1000);
+    if(!rec||rec.state==='inactive')return;
+    var activeRecorder=rec,activeChunks=chunks,context=recordContext,generation=recordGeneration;
+    var duration=Math.round((Date.now()-startedAt)/1000);
+    activeRecorder.onstop=function(){
+      if(generation!==recordGeneration||rec!==activeRecorder)return;
+      var blob=new Blob(activeChunks,{type:activeRecorder.mimeType||'audio/webm'});
       cleanup();
-      if(wasAuto && blob.size) send(blob, dur);
-      else if(blob.size) send(blob, dur);
+      if(blob.size)send(blob,duration,context).catch(function(){if(Guard.validContext(context))toast('ارسال صدا انجام نشد.','err')});
     };
+    try{activeRecorder.stop()}catch(e){cleanup()}
   }
-  async function send(blob, dur){
+  async function send(blob,dur,context){
+    if(!Guard.validContext(context))return;
     if(!blob || !blob.size){ toast('صدایی ضبط نشد','err'); return; }
     if(dur < 1){ toast('خیلی کوتاه بود!','err'); return; }
     if(blob.size > 12*1024*1024){ toast('صدای ضبط‌شده بزرگ است','err'); return; }
@@ -6461,6 +6552,7 @@ var Recorder = (function(){
     if(Attach.Upload.ready()){
       toast('در حال آپلود صدا…');
       var url = await Attach.Upload.any(blob, name, blob.type);
+      if(!Guard.validContext(context))return;
       if(url){
         Guard.markAttach();
         await Compose.deliver({ text:'', meta:{a:{k:'voice', u:url, n:name, s:blob.size, m:blob.type, d:dur}}, kind:'voice' });
@@ -6470,6 +6562,7 @@ var Recorder = (function(){
     }
     // ۲) ارسال مستقیم (تک‌پیام یا تکه‌تکه)
     var dataURL = await U.blobToDataURL(blob);
+    if(!Guard.validContext(context))return;
     var b64 = String(dataURL).split(',')[1] || '';
     var att = { k:'voice', n:name, s:blob.size, m:blob.type||'audio/webm', d:dur, u:dataURL };
     Guard.markAttach();
@@ -6483,18 +6576,21 @@ var Recorder = (function(){
       toast('صدای ضبط‌شده بزرگ‌تر از حد مجاز است؛ کلید imgbb را در تنظیمات بگذار.','err', 5000);
       return;
     }
-    Attach.sendChunks(att, b64, '', { set:function(){}, done:function(){} });
+    Attach.sendChunks(att,b64,'',{set:function(){},done:function(){}},context);
   }
 
-  function cancel(){
+  function cancel(quiet){
+    recordGeneration++;recordContext=null;
+    if(rec)rec.onstop=null;
     try{ if(rec && rec.state!=='inactive') rec.stop(); }catch(e){}
-    cleanup(); toast('ضبط لغو شد');
+    cleanup();if(quiet!==true)toast('ضبط لغو شد');
   }
   function cleanup(){
     if(rafId) cancelAnimationFrame(rafId); rafId=null;
     if(tickTimer) clearInterval(tickTimer); tickTimer=null;
     if(stream) stream.getTracks().forEach(function(t){ try{ t.stop(); }catch(e){} });
-    stream=null; rec=null; chunks=[];
+    stream=null;rec=null;chunks=[];
+    if(ac){try{ac.close().catch(function(){})}catch(e){}ac=null}
     $('#recordBar').classList.add('is-hidden');
     $('#recordBar').setAttribute('aria-hidden','true');
     $('#recTime').textContent='۰:۰۰';
@@ -6513,7 +6609,7 @@ var Profile = (function(){
 
   function load(username){
     if(U.same(username, S.me)){
-      var mine = DB.get('me', null) || {};
+      var mine=DB.get('me:'+username,null)||{};
       return { display: mine.display||'', bio: mine.bio||'', avatar: U.safeImgSrc(mine.avatar||'') };
     }
     var rec = S.profiles[username] || { display:'', bio:'', avatar:'' };
@@ -6522,7 +6618,7 @@ var Profile = (function(){
   function saveLocal(username, p){
     if(U.same(username, S.me)){
       S.profile = { display:p.display||'', bio:p.bio||'', avatar:p.avatar||'' };
-      DB.set('me', S.profile);
+      DB.set('me:'+username,S.profile);
     } else {
       S.profiles[username] = { display:p.display||'', bio:p.bio||'', avatar:p.avatar||'' };
       DB.set('profiles', S.profiles);
@@ -6530,7 +6626,7 @@ var Profile = (function(){
     App.renderAll('all');
   }
   async function saveFromForm(){
-    var name = S.me;
+    var profileSession=S.sessionVersion;var name=S.me;if(!name)return;
     var display = $('#pfName').value.trim().slice(0,32);
     var bio = $('#pfBio').value.trim().slice(0,140);
     var avatar = S.profile.avatar||'';
@@ -6543,7 +6639,8 @@ var Profile = (function(){
         avatar = await U.blobToDataURL(r.blob);
       }
     }
-    saveLocal(name, {display:display, bio:bio, avatar:avatar});
+    if(profileSession!==S.sessionVersion||!U.same(name,S.me))return;
+    saveLocal(name,{display:display,bio:bio,avatar:avatar});
     DB.set('profileDirty', true);
     // همگام‌سازی با سرور (نسخه ۲) + تلاش برای بک‌اند فعلی
     var payload = {action:'setProfile', username:name, displayName:display, bio:bio, avatar:avatar.slice(0, 20000)};
@@ -7190,9 +7287,11 @@ function renderTools(b){
     $('#tImportJson').addEventListener('click', function(){ $('#tImportJsonFile').click(); });
     $('#tImportJsonFile').addEventListener('change', function(e){
       var f = e.target.files && e.target.files[0]; e.target.value='';
-      if(!f) return;
+      if(!f)return;
+      if(f.size>10*1024*1024){toast('حداکثر حجم پشتیبان ۱۰ مگابایت است.','err');return}
+      var importSession=S.sessionVersion;
       var reader = new FileReader();
-      reader.onload = function(){ Data.importJSON(reader.result); diag(); };
+      reader.onload = function(){if(importSession!==S.sessionVersion)return;Data.importJSON(reader.result);diag()};
       reader.onerror = function(){ toast('خواندن فایل JSON ناموفق بود','err'); };
       reader.readAsText(f, 'UTF-8');
     });
@@ -7208,22 +7307,25 @@ function renderTools(b){
       toast('حافظه پاک شد','ok'); App.renderAll('all'); diag();
     });
    $('#tWipeAll').addEventListener('click', async function(){
+  if(S.role!=='teacher'||!S.me){toast('دسترسی معلم لازم است.','err');return}
   var ok = await Ui.confirmDlg(
     'پاک‌سازی کامل',
     'همه پیام‌ها از سرور پاک می‌شن و برای همه کاربران ناپدید می‌شن. مطمئنی؟',
     'بله، همه رو پاک کن',
     true
   );
-  if(!ok) return;
-  
+  if(!ok)return;
+  var wipeSession=S.sessionVersion;
   var btn = this;
   btn.disabled = true;
   btn.innerHTML = 'در حال پاک کردن…';
   
   try{
-    await Net.postDB({action:'wipeAll', role:'teacher', by:S.me});
+    if(S.role!=='teacher')throw new Error('دسترسی معلم لازم است.');
+    var wiped=await Net.postDB({action:'wipeAll',role:'teacher',by:S.me});
+    if(wiped!==true)throw new Error('پاک‌سازی از سمت سرور تأیید نشد.');
     await U.sleep(2000);
-    
+    if(wipeSession!==S.sessionVersion)return;
     DB.del('cache');
     DB.del('controls');
     DB.del('tomb');
@@ -7251,7 +7353,7 @@ function renderTools(b){
     toast('پاک‌سازی ناقص موند! دوباره امتحان کن','err', 5000);
     btn.disabled = false;
     btn.innerHTML = '<svg class="ic"><use href="#i-trash"/></svg> پاک کردن همه پیام‌ها';
-  }
+  }finally{btn.disabled=false;btn.innerHTML='<svg class="ic"><use href="#i-trash"/></svg> پاک کردن همه پیام‌ها'}
 });
     diag();
   }
@@ -7282,8 +7384,9 @@ var Settings = (function(){
     var s=$('#swSound'); if(s) s.checked=S.sound!==false;
     var h=$('#swHaptic'); if(h) h.checked=S.haptic!==false;
     var lg=$('#swLegacyDm'); if(lg) lg.checked=!!DB.get('legacyDm', false);
-    var e2=$('#swE2EE'); if(e2) e2.checked=!!DB.get('e2ee', false);
+    var e2=$('#swE2EE');if(e2)e2.checked=false;
     var dt=$('#dwDarkTxt'); if(dt) dt.textContent='حالت شب: '+(DB.get('dark', false)?'روشن':'خاموش');
+    if(window.HK&&HK.V3)HK.V3.refreshWallpaperPreview();
     var meta=document.querySelector('meta[name="theme-color"]');
     if(meta){
       var tc = '#ff7d3b';
@@ -7322,8 +7425,7 @@ var Settings = (function(){
     U.on($('#swHaptic'),'change', function(){ S.haptic=this.checked; DB.set('haptic', S.haptic); });
     U.on($('#swLegacyDm'),'change', function(){ DB.set('legacyDm', this.checked); App.renderAll('all'); });
     U.on($('#swE2EE'),'change', function(){
-      DB.set('e2ee', this.checked);
-      toast(this.checked?'رمزنگاری انتهایی روشن شد 🔒':'رمزنگاری انتهایی خاموش شد', 'ok');
+      this.checked=false;DB.set('e2ee',false);toast('کدگذاری قدیمی رمزنگاری امن نیست و غیرفعال شده است.','err');
       App.renderAll('all');
     });
     U.on($('#btnPinLock'),'click', function(){ openPinDialog(); });
@@ -7336,18 +7438,20 @@ var Settings = (function(){
       var p=$('#newPass').value, p2=$('#newPass2')? $('#newPass2').value : p;
       if(p.length<4){ toast('رمز باید حداقل ۴ حرف باشه!','err'); return; }
       if(p2!==p){ toast('تکرار رمز یکی نیست','err'); return; }
-      this.disabled=true;
+      var passwordSession=S.sessionVersion;this.disabled=true;
       var payload = {action:'changePassword', username:S.me, password:p, newPassword:p};
       if(S.caps.hash){ payload.passwordHash = await Guard.hashPassword(S.me, p); delete payload.password; delete payload.newPassword; }
-      await Net.postDB(payload);
+      var changed=await Net.postDB(payload);
       this.disabled=false;
+      if(passwordSession!==S.sessionVersion)return;
+      if(changed!==true){toast('تغییر رمز از طرف سرور تأیید نشد؛ وضعیت را بررسی و دوباره تلاش کنید.','err',5000);return}
       $('#newPass').value=''; if($('#newPass2')) $('#newPass2').value='';
       toast('درخواست تغییر رمز ارسال شد ✅','ok');
     });
     U.on($('#btnProfileShortcut'),'click', function(){ App.showPage('profile'); });
     U.on($('#btnSearchShortcut'),'click', function(){ App.showPage('search'); });
     U.on($('#btnClearCache'),'click', async function(){
-      var ok = await Ui.confirmDlg('پاک کردن حافظه','حافظه محلی پیام‌ها پاک بشه؟','پاک کن',true);
+      var ok = await Ui.confirmDlg('پاک کردن حافظه','پیام‌های کش‌شده و صف ارسال همین حساب از دستگاه پاک شوند؟ پیام‌های سرور باقی می‌مانند.','پاک کن',true);
       if(ok){ DB.softClear(); S.messages=[]; S.render.ids=[]; toast('پاک شد','ok'); App.renderAll('all'); }
     });
     U.on($('#btnExport'),'click', Data.exportJSON);
@@ -7360,11 +7464,7 @@ var Settings = (function(){
     if(enabled){
       var cur = await Ui.promptDlg('قفل با رمز','رمز فعلی خود را وارد کن (برای تغییر):', '', 'رمز فعلی');
       if(cur == null) return;
-      if(!Sec.verifyPin(cur)){
-        var ok2 = await Ui.confirmDlg('رمز اشتباه است','رمز فعلی اشتباه است. برای پاک کردن قفل و انتخاب رمز جدید، تأیید می‌کنی؟','پاک و تازه کن',true);
-        if(!ok2){ toast('قفل بدون تغییر باقی ماند'); return; }
-        Sec.clearPin();
-      }
+      if(!Sec.verifyPin(cur)){toast('رمز فعلی اشتباه است؛ قفل بدون تغییر باقی ماند.','err');return}
       var nv = await Ui.promptDlg('رمز جدید','رمز جدید را وارد کن (حداقل ۴ حرف):', '', 'رمز جدید');
       if(nv == null) return;
       if(nv.length < 4){ toast('رمز جدید باید حداقل ۴ حرف باشد','err'); return; }
@@ -7415,12 +7515,12 @@ var Poll = (function(){
     if(!U.isOnline()){ setConn(false); schedule(); return; }
     if(inflight){ schedule(); return; }
     inflight = true;
-    tickCount++;
+    var epoch=S.sessionVersion;tickCount++;
     var jobs = [];
     // اول صف ارسال تخلیه شود، بعد پیام‌ها گرفته شوند؛ اجرای هم‌زمانِ این دو
     // هم تأیید echo را خراب می‌کرد و هم یک دریافت اضافه روی سرور می‌ساخت.
     jobs.push((S.outbox.length? Outbox.flush().catch(function(){}) : Promise.resolve())
-      .then(function(){ return Data.fetchMessages().catch(function(){}); }));
+      .then(function(){if(epoch!==S.sessionVersion||!running)return;return Data.fetchMessages().catch(function(){});}));
     if(tickCount % 3 === 0) jobs.push(Data.fetchGroups().catch(function(){}));
     if(tickCount % 4 === 0) jobs.push(Data.fetchUsers().catch(function(){}));
     if(tickCount % 6 === 0) jobs.push(Data.fetchReads().catch(function(){}));
@@ -7607,6 +7707,12 @@ var Sync = (function(){
 
 /* ═════════════ ۳۳. راه‌اندازی (Init) ═════════════ */
 (function init(){
+  // One-time ownership migration: do not reuse a previous user's global profile.
+  if(!DB.get('profileOwnershipMigrated',false)){
+    var previousSession=DB.get('session',null),oldProfile=DB.get('me',null);
+    if(previousSession&&previousSession.username&&oldProfile&&!DB.get('me:'+previousSession.username,null))DB.set('me:'+previousSession.username,oldProfile);
+    DB.set('profileOwnershipMigrated',true);
+  }
   // ۱) بازیابی وضعیت ذخیره‌شده
   S.reactions = DB.get('reacts', {})||{};
   S.saved = DB.get('saved', [])||[];
@@ -7625,10 +7731,20 @@ var Sync = (function(){
 
   // ۲) مقدارهای پیش‌فرض داده‌های سرور (کش قبلی تا اولین دریافت)
   var cached = DB.get('cache', null);
-  if(cached && cached.length) S.messages = cached.map(Norm.msg);
+  if(Array.isArray(cached))S.messages=cached.filter(function(m){return m&&typeof m==='object'}).map(Norm.msg);
   S.users = (DB.get('users', [])||[]).map(Norm.user);
   S.groups = U.uniq((DB.get('groups', [])||[]).concat(DB.get('groupsLocal', [])).concat([DEFAULT_GROUP]));
 
+  function fitChatViewport(){
+    var viewport=window.visualViewport;
+    if(viewport&&viewport.scale!==1)return;
+    var height=viewport?viewport.height:window.innerHeight;
+    if(Number.isFinite(height)&&height>0)document.documentElement.style.setProperty('--chat-viewport-height',Math.round(height)+'px');
+  }
+  U.on(window,'resize',fitChatViewport);
+  if(window.visualViewport)U.on(window.visualViewport,'resize',fitChatViewport);
+  fitChatViewport();
+  $all('button[title]').forEach(function(button){if(!button.hasAttribute('aria-label'))button.setAttribute('aria-label',button.title)});
   // ۳) ساختارها و رویدادها
   Settings.applyTheme();
   Ui.initLightbox();
@@ -7666,6 +7782,11 @@ var Sync = (function(){
     set(); setTimeout(set, 600);
   })();
 
+  U.on($('#studioAppearance'),'click',function(){App.showPage('settings')});
+  U.on($('#studioMenu'),'click',function(){openDrawer()});
+  U.on($('#studioProfile'),'click',function(){App.showPage('profile')});
+  U.on($('#studioSaved'),'click',function(){App.openChat('saved','me')});
+  U.on($('#studioStarred'),'click',function(){App.openChat('starred','me')});
   // ۴) ناوبری پایه
   U.on($('#btnBackToList'),'click', function(){ $('#chatShell').classList.remove('in-chat'); App.updateChatView(); });
   U.on($('#btnScrollDown'),'click', function(){ S._forceScroll=true; App.scrollBottom(); });
@@ -7686,6 +7807,9 @@ var Sync = (function(){
     var atts = App.messagesOf(S.chat.type, S.chat.id).filter(function(m){ return m.meta && m.meta.a; }).length;
     var stars = App.messagesOf(S.chat.type, S.chat.id).filter(function(m){ return S.starred.indexOf(m.id)>=0; }).length;
     var items = [];
+    items.push({txt:'جستجو در همین گفتگو',icon:'search',fn:function(){$('#btnInChatSearch').click()}});
+    items.push({txt:'اطلاعات گفتگو',icon:'info',fn:function(){$('#btnChatInfo').click()}});
+    if(S.role==='teacher'&&S.chat.type==='pv')items.push({txt:'مدیریت مسدودسازی این کاربر',icon:'ban',fn:function(){$('#btnToggleBan').click()}});
     if(S.chat.type==='pv') items.push({txt:'پروفایل '+App.displayName(S.chat.id), icon:'user', fn:function(){ Profile.show(S.chat.id); }});
     if(S.chat.type==='group' || S.chat.type==='pv'){
       var pIn = (window.HK && HK.Pinned)? HK.Pinned.isPinned(S.chat.type, S.chat.id): false;
@@ -7701,11 +7825,20 @@ var Sync = (function(){
   });
   // toggle پنل اطلاعات گفتگو (سوم‌ین ستون)
   U.on($('#btnChatInfo'),'click', function(){
-    var panel=$('#chatInfo'); if(!panel) return;
+    var panel=$('#chatInfo'); if(!panel)return;
+    if(window.innerWidth<920){
+      App.renderChatInfo();
+      var details=panel.querySelector('.chat-info-inner').cloneNode(true);
+      var closeButton=details.querySelector('#btnCloseChatInfo');if(closeButton)closeButton.remove();
+      details.removeAttribute('id');
+      details.querySelectorAll('[id]').forEach(function(node){node.removeAttribute('id')});
+      Ui.openModal('اطلاعات گفتگو',details,[{txt:'بستن',cls:'btn-ghost',val:false,primary:true}]);return;
+    }
     var open=panel.classList.toggle('open');
     this.setAttribute('aria-pressed', String(open));
     if(open) App.renderChatInfo && App.renderChatInfo();
   });
+  U.on($('#btnCloseChatInfo'),'click',function(){$('#chatInfo').classList.remove('open');$('#btnChatInfo').setAttribute('aria-pressed','false');$('#btnChatInfo').focus()});
   // پرش از پیام‌های فشرده‌شده در پنل اطلاعات
   U.on(document,'click', function(e){
     var j=e.target.closest('[data-jump]'); if(!j) return;
@@ -7767,21 +7900,15 @@ var Sync = (function(){
   if(sess && sess.username){
     // نقش ذخیره‌شده در localStorage قابل‌دستکاری است؛ نشست آفلاین فقط دانش‌آموز است.
     // ارتقای نقش معلم تنها پس از دریافت رکورد مرجع از سرور انجام می‌شود.
-    S.me = sess.username; S.role = 'student';
+    S.me = sess.username; S.role = 'student';Outbox.restore();
     S.profile = Profile.load(S.me);
     Sync.drawer(); Sync.theme();
     App.showPage('chat');
     Poll.boot(true);
     Data.detectCaps().then(function(){ Profile.syncToServer(); });
-    // بررسی بن و همگام‌سازی نقش از فهرست سرور، نه از مقدار محلیِ نشست.
-    Data.fetchUsers().then(function(){
-      var account=Auth.findUser(S.me);
-      if(account){
-        S.role=account.role==='teacher'?'teacher':'student';
-        Sync.drawer(); App.render('all');
-      }
-      Auth.checkMyBan();
-    });
+    // A public user list is not proof of password authentication. In particular,
+    // changing the cached username must never promote a restored session to teacher.
+    Data.fetchUsers().then(function(){Auth.checkMyBan();var account=Auth.findUser(S.me);if(account&&account.role==='teacher')toast('برای ابزارهای معلم و ارسال‌های مدیریتی، با رمز حساب وارد شوید.','',5000)});
   } else {
     App.showPage('welcome');
   }
@@ -7967,97 +8094,87 @@ var V3 = (function(){
 
   /* ═══ ۳۴-۶) پس‌زمینهٔ زنده (canvas) ═══ */
   var Live = (function(){
-    var cv=null, cx=null, raf=null, t=0, on=false, last=0, cols=['#ff7d3b','#3d8bff'];
+    var cv=null,cx=null,raf=null,t=0,on=false,last=0,lastDraw=0;
+    var cols=['#ff7d3b','#3d8bff'],cssWidth=0,cssHeight=0,pixelRatio=1,resizeObserver=null;
     function ensure(){
-      var main = document.querySelector('#page-chat .main');
-      if(!main) return null;
+      var main=document.querySelector('#page-chat .main');
+      if(!main)return false;
       if(!cv){
-        cv = document.createElement('canvas');
-        cv.className = 'live-bg';
-        cv.setAttribute('aria-hidden','true');
-        main.insertBefore(cv, main.firstChild);      // زیر کاغذ دیواری و پیام‌ها
+        cv=document.createElement('canvas');cv.className='live-bg';cv.setAttribute('aria-hidden','true');
+        main.insertBefore(cv,main.firstChild);
+        try{cx=cv.getContext('2d')}catch(e){cx=null}
+        if(window.ResizeObserver){
+          resizeObserver=new ResizeObserver(function(){if(on){size();draw()}});
+          resizeObserver.observe(main);
+        }
       }
-      cx = cv.getContext('2d');
-      return cv;
+      return !!cx;
     }
     function readColors(){
-      try{
-        var cs = getComputedStyle(document.body);
-        var a = cs.getPropertyValue('--accent').trim() || '#ff7d3b';
-        var b = cs.getPropertyValue('--accent2').trim() || '#3d8bff';
-        cols = [a,b];
-      }catch(e){}
+      var cs=getComputedStyle(document.body);
+      cols=[cs.getPropertyValue('--accent').trim()||'#ff7d3b',cs.getPropertyValue('--accent2').trim()||'#3d8bff'];
     }
     function size(){
-      if(!cv) return;
-      var r = cv.parentElement.getBoundingClientRect();
-      var dpr = Math.min(window.devicePixelRatio||1, 2);
-      cv.width = Math.max(1, Math.floor(r.width*dpr));
-      cv.height = Math.max(1, Math.floor(r.height*dpr));
-      if(cx) cx.setTransform(dpr,0,0,dpr,0,0);
+      if(!cv||!cx)return false;
+      // Use one capped DPR for both allocation and drawing. A hidden mobile chat
+      // must be measured again when opened, never stretched from a 1px bitmap.
+      cssWidth=cv.clientWidth;cssHeight=cv.clientHeight;
+      if(!cssWidth||!cssHeight)return false;
+      pixelRatio=Math.max(1,Math.min(window.devicePixelRatio||1,2));
+      var width=Math.max(1,Math.round(cssWidth*pixelRatio)),height=Math.max(1,Math.round(cssHeight*pixelRatio));
+      if(cv.width!==width||cv.height!==height){cv.width=width;cv.height=height}
+      cx.setTransform(pixelRatio,0,0,pixelRatio,0,0);
+      return true;
     }
-    function draw(dt){
-      if(!cx) return;
-      var w = cv.width/(window.devicePixelRatio||1), h = cv.height/(window.devicePixelRatio||1);
-      cx.clearRect(0,0,w,h);
-      var blobs = [
-        {x:0.22, y:0.18, r:0.42, s:0.00016, c:cols[0]},
-        {x:0.78, y:0.72, r:0.46, s:-0.00013, c:cols[1]},
-        {x:0.55, y:0.42, r:0.30, s:0.00021, c:cols[0]}
-      ];
-      blobs.forEach(function(b,i){
-        var ph = t*b.s + i*1.7;
-        var cxp = (b.x + Math.sin(ph)*0.06)*w;
-        var cyp = (b.y + Math.cos(ph*1.3)*0.06)*h;
-        var rad = b.r*Math.min(w,h)*(1 + Math.sin(ph*0.9)*0.14);
-        var g = cx.createRadialGradient(cxp,cyp,0,cxp,cyp,Math.max(1,rad));
-        g.addColorStop(0, hexA(b.c, 0.11));
-        g.addColorStop(1, hexA(b.c, 0));
-        cx.fillStyle = g;
-        cx.beginPath(); cx.arc(cxp,cyp,Math.max(1,rad),0,Math.PI*2); cx.fill();
-      });
-    }
-    function hexA(c, a){
-      c = (c||'#888').trim();
-      if(c[0] !== '#') return 'rgba(128,128,128,'+a+')';
-      if(c.length === 4) c = '#'+c[1]+c[1]+c[2]+c[2]+c[3]+c[3];
-      var n = parseInt(c.slice(1),16);
-      if(isNaN(n)) return 'rgba(128,128,128,'+a+')';
+    function hexA(c,a){
+      c=(c||'#888').trim();
+      if(/^#[0-9a-f]{3}$/i.test(c))c='#'+c[1]+c[1]+c[2]+c[2]+c[3]+c[3];
+      if(!/^#[0-9a-f]{6}$/i.test(c))return 'rgba(128,128,128,'+a+')';
+      var n=parseInt(c.slice(1),16);
       return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';
     }
+    function draw(){
+      if(!cx||!cssWidth||!cssHeight)return;
+      var w=cssWidth,h=cssHeight;
+      cx.clearRect(0,0,w,h);
+      [{x:.22,y:.18,r:.55,s:.00016,c:cols[0]},
+       {x:.78,y:.72,r:.58,s:-.00013,c:cols[1]},
+       {x:.55,y:.42,r:.40,s:.00021,c:cols[0]}].forEach(function(b,i){
+        var phase=t*b.s+i*1.7,x=(b.x+Math.sin(phase)*.06)*w,y=(b.y+Math.cos(phase*1.3)*.06)*h;
+        var radius=Math.max(1,b.r*Math.min(w,h)*(1+Math.sin(phase*.9)*.14));
+        var gradient=cx.createRadialGradient(x,y,0,x,y,radius);
+        gradient.addColorStop(0,hexA(b.c,.15));gradient.addColorStop(1,hexA(b.c,0));
+        cx.fillStyle=gradient;cx.beginPath();cx.arc(x,y,radius,0,Math.PI*2);cx.fill();
+      });
+    }
+    function animated(){return !Fx.reduced()&&window.innerWidth>=920}
+    function visible(){return !document.hidden&&document.body.getAttribute('data-page')==='chat'&&!!S.me}
     function loop(ts){
-      if(!on) return;
-      if(!last) last = ts;
-      var dt = ts - last; last = ts; t += dt;
-      if(dt > 16){                                   // حدود ۳۰ فریم در ثانیه، سبک برای موبایل
-        draw(dt);
-        if(!Live.lastRead || Date.now()-Live.lastRead > 2500){ readColors(); Live.lastRead = Date.now(); }
-      }
-      raf = requestAnimationFrame(loop);
+      raf=null;if(!on||!visible()||!animated())return;
+      if(!last)last=ts;
+      t+=Math.min(100,ts-last);last=ts;
+      if(ts-lastDraw>=32){lastDraw=ts;draw()}
+      raf=requestAnimationFrame(loop);
     }
     function start(){
-      if(!ensure()) return;
-      readColors(); size(); on = true; last = 0;
-      if(Fx.reduced() || window.innerWidth<920){ draw(0); cv.classList.add('show'); return; }  // موبایل و حساس به حرکت: تصویر ثابت، بدون انیمیشنِ باتری‌خور
-      if(!raf) raf = requestAnimationFrame(loop);
-      cv.classList.add('show');
+      if(!ensure())return;
+      on=true;readColors();if(size())draw();cv.classList.add('show');
+      if(raf){cancelAnimationFrame(raf);raf=null}
+      last=0;lastDraw=0;
+      if(animated()&&visible())raf=requestAnimationFrame(loop);
     }
     function stop(){
-      on = false;
-      if(raf){ cancelAnimationFrame(raf); raf = null; }
-      if(cv){ if(cx) cx.clearRect(0,0,cv.width,cv.height); cv.classList.remove('show'); }
+      on=false;if(raf){cancelAnimationFrame(raf);raf=null}
+      if(cv){if(cx)cx.clearRect(0,0,cv.width,cv.height);cv.classList.remove('show')}
     }
-    function apply(){
-      var want = !!DB.get('liveBg', false);
-      if(want) start(); else stop();
-    }
-    U.on(window,'resize', U.debounce(function(){ if(on){ size(); draw(16); } }, 200));
-    U.on(document,'visibilitychange', function(){
-      if(!on) return;
-      if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
-      else { last = 0; if(!raf) raf = requestAnimationFrame(loop); }
-    });
-    return { apply:apply, start:start, stop:stop, on:function(){ return on; } };
+    function apply(){if(DB.get('liveBg',false)&&visible())start();else stop()}
+    U.on(window,'resize',U.debounce(apply,120));
+    U.on(document,'visibilitychange',apply);
+    U.on(document,'hk-chat-layout',apply);
+    if(window.MutationObserver)new MutationObserver(apply).observe(document.body,{attributes:true,attributeFilter:['data-page','data-theme','data-mode']});
+    var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(reduced&&reduced.addEventListener)reduced.addEventListener('change',apply);
+    return {apply:apply,start:start,stop:stop,on:function(){return on}};
   })();
 
   /* ═══ ۳۴-۷) ریسهٔ کلیک (موج) ═══ */
@@ -8445,8 +8562,15 @@ var V3 = (function(){
   }
 
   /* ─── ۳۴-۱۲) اعمال تنظیمات ظاهری نسخه ۳ ─── */
+  function refreshWallpaperPreview(){
+    if(!U.$('#wallpaperPreview'))return;
+    // The preview shares the exact CSS wallpaper rules; no bitmap/screenshot or remote image is needed.
+    var selected=WALLS.filter(function(w){return w.id===DB.get('wall','default')})[0]||WALLS[0];
+    U.$('#wallpaperPreviewLabel').textContent='پیش‌نمایش: '+selected.label+' · انتخاب شما روی همین دستگاه ذخیره می‌شود.';
+  }
   function applyExtras(){
-    var wall = DB.get('wall','default');
+    var wall=DB.get('wall','default');
+    if(!WALLS.some(function(w){return w.id===wall})){wall='default';DB.set('wall',wall)}
     if(wall === 'default') document.body.removeAttribute('data-wall');
     else document.body.setAttribute('data-wall', wall);
     document.body.setAttribute('data-density', DB.get('density','comfort'));
@@ -8471,7 +8595,7 @@ var V3 = (function(){
     var fx = U.$('#swFx'); if(fx) fx.checked = DB.get('fx', true) !== false;
     S.fx = DB.get('fx', true) !== false;
     Sticker.visible(DB.get('sticker', true) !== false);
-    Schedule.syncBtn();
+    Schedule.syncBtn();refreshWallpaperPreview();
   }
 
   /* ─── ۳۴-۱۳) اتصال رویدادهای تنظیمات ─── */
@@ -8556,7 +8680,7 @@ var V3 = (function(){
   return { init:init, THEMES:THEMES, WALLS:WALLS, STICKERS:STICKERS, QUICK_REACTS:QUICK_REACTS,
           Snd:Snd, Fx:Fx, Live:Live, Sticker:Sticker, React:React_,
           Schedule:Schedule, Pinned:Pinned,
-          applyExtras:applyExtras, decorate:decorate, buildThemeCards:buildThemeCards, buildWalls:buildWalls };
+          applyExtras:applyExtras,refreshWallpaperPreview:refreshWallpaperPreview, decorate:decorate, buildThemeCards:buildThemeCards, buildWalls:buildWalls };
 })();
 
 /* راه‌اندازی نسخه ۳ (بعد از آماده شدن DOM و اجرای Init نسخه ۲) */
