@@ -40,6 +40,7 @@ const change=(id,value)=>{$(id).value=value;$(id).dispatchEvent(new w.Event('cha
 async function login(){ $('passIn').value='  password with spaces  ';$('btnLogin').click();await settle() }
 async function blobText(blob){return new Promise(resolve=>{const r=new w.FileReader();r.onload=()=>resolve(r.result);r.readAsText(blob)})}
 (async()=>{try{
+  for(const id of ['loginLobbyLink','panelLobbyLink']){assert.equal($(id).getAttribute('href'),'../index.html');assert.equal($(id).textContent.trim(),'بازگشت به لابی');assert.equal($(id).getAttribute('data-lobby-link'),'../index.html');assert.ok($(id).classList.contains('btl-lobby-btn'));assert.equal($(id).getAttribute('aria-label'),'بازگشت به لابی حکیمستان');assert.ok($(id).querySelector('.btl-icon'));assert.ok($(id).querySelector('.btl-text'))}
   assert.equal(d.body.dataset.theme,'blue','new visitors should get the light studio theme');
   assert.equal($('fStudent').value,'');
   assert.ok(!w.localStorage.getItem('hakimestan_panel_filters_v1').includes('PRIVATE OLD SEARCH'));

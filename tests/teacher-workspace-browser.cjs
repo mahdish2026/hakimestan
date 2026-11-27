@@ -20,6 +20,7 @@ const sizes=[[1440,1000],[1024,900],[768,1024],[390,844],[320,740]].filter(v=>!w
    await p.evaluateOnNewDocument(()=>{localStorage.clear();localStorage.setItem('hk_no_stats','1')});
    await p.setRequestInterception(true);
    p.on('request',r=>{
+    if(r.isNavigationRequest()&&r.url()===new URL('index.html',base).href)return r.respond({status:200,contentType:'text/html',body:'<!doctype html><html lang="fa"><title>لابی آزمایشی</title><h1>لابی آزمایشی</h1></html>'});
     if(r.url().startsWith(base))return r.continue();
     if(r.url().includes('script.google.com')){
      const body=JSON.parse(r.postData()||'{}');actions.push(body.action);let data={ok:true};
@@ -36,6 +37,8 @@ const sizes=[[1440,1000],[1024,900],[768,1024],[390,844],[320,740]].filter(v=>!w
    assert.equal(await p.$eval('.teacher-login-art',e=>e.complete&&e.naturalWidth>0),true);
    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'login overflow');
    assert.equal(await p.$eval('#loginView .login-wordmark',e=>e.getAttribute('href')),'../index.html');
+   const checkLobby=async id=>{const box=await p.$eval(id,e=>{const r=e.getBoundingClientRect();return {w:r.width,h:r.height,left:r.left,right:r.right,text:e.textContent.trim(),href:e.getAttribute('href'),display:getComputedStyle(e).display,color:getComputedStyle(e).color,bg:getComputedStyle(e).backgroundImage,radius:getComputedStyle(e).borderRadius,label:e.getAttribute('aria-label'),textDisplay:getComputedStyle(e.querySelector('.btl-text')).display}});assert.equal(box.text,'بازگشت به لابی');assert.equal(box.href,'../index.html');assert.ok(box.w>0&&box.h>=44&&box.left>=0&&box.right<=width,`${width}: visible touch-sized lobby link ${id}`);assert.notEqual(box.display,'none');assert.equal(box.color,'rgb(255, 217, 138)');assert.ok(box.bg.includes('rgb(36, 95, 97)')&&box.bg.includes('rgb(16, 57, 70)'),'shared lobby gradient');assert.equal(box.label,'بازگشت به لابی حکیمستان');if(width<=600){assert.equal(box.radius,'50%');assert.equal(box.textDisplay,'none');assert.ok(box.w<=48)}else{assert.equal(box.radius,'14px');assert.notEqual(box.textDisplay,'none')}};
+   await checkLobby('#loginLobbyLink');
    await p.screenshot({path:`reports/teacher-workspace/login-${width}.png`,fullPage:true});
    await p.type('#passIn','wrong');await p.click('#btnLogin');await p.waitForFunction(()=>document.getElementById('loginAlert').textContent.includes('نادرست'));
    assert.equal(await p.$eval('#appShell',e=>e.classList.contains('hidden')),true);
@@ -43,6 +46,7 @@ const sizes=[[1440,1000],[1024,900],[768,1024],[390,844],[320,740]].filter(v=>!w
    await p.type('#passIn','fictional-password');await p.click('#btnLogin');await p.waitForFunction(()=>!document.getElementById('appShell').classList.contains('hidden'));
    await p.waitForFunction(()=>document.getElementById('dashboardUpdated').textContent.includes('به‌روز'));
    await p.evaluate(()=>document.fonts.ready);
+   await checkLobby('#panelLobbyLink');
    assert.equal(await p.$eval('#heroTeacherName',e=>e.textContent),'معلم آزمایشی');
    assert.equal(await p.$eval('#hakimMount',e=>e.classList.contains('hidden')),true,'companion must not obscure reports on login');
    assert.equal(await p.$$eval('.teacher-meter',es=>es.length),4);
@@ -81,9 +85,14 @@ const sizes=[[1440,1000],[1024,900],[768,1024],[390,844],[320,740]].filter(v=>!w
    await p.focus('#detailModal .btn[data-close-detail]');await p.keyboard.press('Tab');
    assert.equal(await p.evaluate(()=>document.activeElement===document.querySelector('#detailModal button')),true);
    await p.keyboard.press('Escape');
+   await checkLobby('#panelLobbyLink');
+   // Follow the real anchor in each view; only the destination response is mocked.
+   await Promise.all([p.waitForNavigation(),p.click('#panelLobbyLink')]);assert.equal(p.url(),new URL('index.html',base).href);
+   await p.goto(base+'panels/teacher.html',{waitUntil:'networkidle0'});await p.type('#passIn','fictional-password');await p.click('#btnLogin');await p.waitForSelector('#appShell:not(.hidden)');
    await p.click('#btnTeacherGuide');
    await p.evaluate(()=>document.getElementById('btnLogout').click());assert.equal(await p.$eval('#hakimMount',e=>e.classList.contains('hidden')),true,'logout closes guidance');assert.equal(await p.$eval('#resultsTable',el=>el.textContent),'');
    assert.equal(await p.$eval('#heroTeacherName',e=>e.textContent),'معلم عزیز');
+   await Promise.all([p.waitForNavigation(),p.click('#loginLobbyLink')]);assert.equal(p.url(),new URL('index.html',base).href);
    assert.deepEqual(missing,[],`${width}: missing asset`);
    assert.deepEqual(errors,[],`${width}: browser errors`);
    console.log(`PASS ${width}×${height}: 6 themes, illustrated studio/login, opt-in guide, all navigation, no overflow, results paging, dialog focus/Escape/Tab, logout`);

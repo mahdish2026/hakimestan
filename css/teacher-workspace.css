@@ -311,3 +311,11 @@ input[type="radio"],input[type="checkbox"]{min-height:0}
 .theme-panel{inset-inline-start:auto;inset-inline-end:25px;top:95px}
 @media(max-width:700px){.theme-panel{inset-inline-start:auto;inset-inline-end:12px;top:85px}}
 @media(max-width:600px){.login-brand{overflow:hidden}}
+
+/* Use the shared green/gold lobby button, including its circular mobile icon. */
+.teacher-lobby-link:focus-visible{outline:3px solid #245f61;outline-offset:3px}
+.teacher-login-lobby{width:100%}
+@media(max-width:600px){.teacher-login-lobby.btl-lobby-btn{display:flex!important;margin-inline:auto!important}}
+/* Preserve a 44px touch target on the smallest screens. */
+@media(max-width:380px){.teacher-lobby-link.btl-lobby-btn{width:44px!important;height:44px!important;min-width:44px!important}}
+@media print{.teacher-lobby-link.btl-lobby-btn{display:none!important}}
