@@ -4259,6 +4259,9 @@ var Auth = (function(){
     if(!S.groups.length) S.groups=[DEFAULT_GROUP];
     if(S.groups.indexOf(DEFAULT_GROUP)<0) S.groups.unshift(DEFAULT_GROUP);
     if(!S.chat) S.chat={type:'group', id:S.groups[0]};
+    // Restore before navigation can blur the composer: an empty buffer must never
+    // overwrite this account's saved draft during a rapid logout/login.
+    Compose.restoreDraft();
     Sync.drawer(); Sync.theme(); Upd.badge();
     App.showPage('chat');
     Poll.boot(true);
@@ -5288,7 +5291,7 @@ var App = (function(){
     if(name==='profile') Profile.renderPage();
     if(name==='search') Search.open();
     // فوکوس روی سربرگ تازه برای صفحه‌خوان
-    var h = $('#page-'+name+' .topbar h1, #page-'+name+' .topbar h2'); if(h){ h.setAttribute('tabindex','-1'); setTimeout(function(){ h.focus(); }, 80); }
+    var h = $('#page-'+name+' .topbar h1, #page-'+name+' .topbar h2'), focusSession=S.sessionVersion; if(h){ h.setAttribute('tabindex','-1'); setTimeout(function(){ if(focusSession===S.sessionVersion&&document.body.getAttribute('data-page')===name)h.focus(); }, 80); }
   }
 
   /* ── رندر کل ── */
