@@ -14,11 +14,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="حکیمستان">
 <meta name="application-name" content="پیامرسان حکیمستان">
-<meta name="description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، برنامه‌ریزی ارسال، گفتگوی فشار-دهی‌شده، ۱۶ تم زیبا، جستجوی پیشرفته و کار آفلاین">
+<meta name="description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، برنامه‌ریزی ارسال، گفتگوی فشار-دهی‌شده، ۲۰ تم زیبا و میراثی، کاغذ دیواری‌های متنوع، نظرسنجی و آزمون، رمزنگاری انتهایی و کار آفلاین">
 <meta name="author" content="مهدی شریفیان">
 <meta name="referrer" content="no-referrer">
 <!-- سیاست امنیتی محتوا (جلوگیری از XSS و اسکریپت بیرونی ناشناس) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: blob:; font-src 'self' data:; manifest-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https: blob:; font-src 'self' data:; manifest-src 'self' data: blob:; worker-src 'self' blob:">
 <title>پیامرسان حکیمستان</title>
 <!-- مانیفست PWA (در زمان اجرا با مانیفست ساخته‌شده جایگزین می‌شود) -->
 <link rel="manifest" href="manifest.json">
@@ -245,6 +245,20 @@ body[data-mode="dark"]{
 /* بخش پیام‌ها */
 .main{flex:1;display:none;flex-direction:column;min-width:0;min-height:0}
 .chat-shell.in-chat .main{display:flex}
+/* پنل اطلاعات گفتگو (سوم‌ین ستون — فقط صفحه‌های گسترده) */
+.chat-info{width:0;overflow:hidden;transition:width .3s ease;border-left:2px solid transparent;flex:0 0 auto}
+.chat-info.open{width:300px;border-left-color:var(--line)}
+@media(min-width:1180px){
+  .chat-info{width:0}
+  .chat-shell.in-chat .chat-info.open{width:320px}
+}
+.chat-info-inner{display:flex;flex-direction:column;gap:12px;padding:14px;overflow-y:auto;max-height:calc(100dvh - 330px)}
+.ci-card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:12px}
+.ci-card h4{margin:0 0 8px;font-size:.9rem}
+.ci-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-size:.85rem}
+.ci-row:last-child{border-bottom:none}
+.ci-row .k{color:var(--muted)}
+.ci-pill{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border:2px solid var(--line);border-radius:99px;padding:5px 12px;font-size:.8rem;font-weight:700;margin:3px}
 .back-fab{display:inline-flex}
 .msgs{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;max-height:calc(100dvh - 330px);min-height:200px;scroll-behavior:smooth}
 .day-sep{align-self:center;background:var(--card);border:2px solid var(--line);color:var(--muted);font-size:.75rem;font-weight:800;padding:5px 18px;border-radius:99px;position:sticky;top:0;z-index:4;box-shadow:var(--shadow)}
@@ -371,6 +385,16 @@ textarea.code{direction:ltr;text-align:left}
 /* ─── مودال و تست ─── */
 .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;display:none;align-items:center;justify-content:center;padding:20px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .modal-ov.open{display:flex;animation:fadeUp .25s}
+/* لایه قفل کل پیام‌رسان (PIN) */
+.app-lock{position:fixed;inset:0;background:rgba(8,10,18,.72);z-index:120;display:none;align-items:center;justify-content:center;padding:20px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.app-lock.open{display:flex;animation:fadeUp .25s}
+.app-lock-card{background:var(--card);border:2px solid var(--line);border-radius:28px;padding:32px 26px;width:100%;max-width:380px;box-shadow:var(--shadow);text-align:center;animation:popIn .3s;display:flex;flex-direction:column;align-items:center}
+.app-lock-ic{width:58px;height:58px;border-radius:50%;background:var(--card2);color:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:var(--glow)}
+.app-lock-ic .ic{width:26px;height:26px}
+.app-lock-t{font-size:1.2rem;margin:0 0 4px}
+.app-lock-d{color:var(--muted);font-size:.88rem;margin:0 0 16px;line-height:1.6}
+.app-lock-pin{width:100%;text-align:center;letter-spacing:.3em;font-size:1.1rem}
+.app-lock-err{color:#ef4444;font-size:.85rem;min-height:1.2em;margin-top:8px}
 .modal{background:var(--card);border-radius:26px;padding:24px;width:100%;max-width:400px;box-shadow:var(--shadow);border:2px solid var(--line);animation:popIn .3s}
 .modal h3{font-size:1.1rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .modal p{color:var(--muted);font-size:.9rem;line-height:2;margin-bottom:14px}
@@ -688,6 +712,7 @@ body[data-mode="dark"] .bubble .quote{background:rgba(255,255,255,.08)}
 .am-ic.camera{background:linear-gradient(135deg,#ff7d3b,#ff4d8d)}
 .am-ic.voice{background:linear-gradient(135deg,#ff5b5b,#ff9d3b)}
 .am-ic.file{background:linear-gradient(135deg,#2bb673,#3d8bff)}
+.am-ic.poll{background:linear-gradient(135deg,#7c3aed,#ec4899)}
 .am-ic.loc{background:linear-gradient(135deg,#00b4d8,#0077b6)}
 .composer-wrap{position:relative}
 .sheet-ov{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:110;display:none}
@@ -845,6 +870,32 @@ body[data-mode="dark"] .pill.err{color:#ff9b9b}
 /* ─── ۱۸. تکمیل‌های نهایی ظاهر ─── */
 #btnAttach{background:var(--card2);border:2.5px solid var(--line);color:var(--ink);border-radius:20px;align-self:flex-end}
 #btnAttach:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* نوارابزار ویرایش مارک‌داون در کادر ارسال */
+.md-tools{display:flex;gap:2px;align-items:center;flex:0 0 auto;padding-left:2px;opacity:.7}
+.md-tools:hover{opacity:1}
+.md-t{min-width:26px;height:26px;border:none;background:none;color:var(--muted);border-radius:8px;cursor:pointer;font-size:.78rem;display:inline-flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
+.md-t:hover{background:var(--card2);color:var(--accent)}
+.md-t:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+/* پنلِ نظرسنجی / آزمون */
+.poll-box{display:flex;flex-direction:column;gap:8px;padding:4px 2px;min-width:0}
+.poll-q{font-weight:800;margin-bottom:2px}
+.poll-opt{position:relative;overflow:hidden;display:flex;align-items:center;gap:8px;width:100%;text-align:right;
+  padding:10px 12px;border-radius:16px;border:2.5px solid var(--line);background:var(--card2);color:var(--ink);cursor:pointer;
+  min-height:44px;transition:border-color .2s,transform .1s}
+.poll-opt:not(:disabled):hover{border-color:var(--accent)}
+.poll-opt:active{transform:scale(.98)}
+.poll-bar{position:absolute;inset:0;width:0;background:var(--accent);opacity:.16;transition:width .5s cubic-bezier(.2,.9,.3,1.4);z-index:0}
+.poll-t,.poll-n{position:relative;z-index:1}
+.poll-t{flex:1;text-align:right}
+.poll-n{font-size:.82rem;color:var(--muted);white-space:nowrap;font-weight:700}
+.poll-opt.is-answer .poll-t::after{content:' ✓';color:#10b981}
+.poll-opt:disabled{cursor:default}
+.poll-foot{font-size:.78rem;color:var(--muted);margin-top:2px}
+.poll-type-seg{display:flex;gap:6px}
+.poll-type-seg button{flex:1;padding:8px;border:2.5px solid var(--line);background:var(--card2);color:var(--ink);border-radius:12px;cursor:pointer;font-weight:700}
+.poll-type-seg button.sel{border-color:var(--accent);color:var(--accent);background:var(--card)}
+.poll-opt-edit{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.poll-opt-edit .input{flex:1}
 #msgs{outline:none}
 .bubble .sender{font-size:.72rem;font-weight:900;color:var(--accent);margin-bottom:3px;display:flex;align-items:center;gap:6px}
 .bubble.other .sender{color:var(--accent2)}
@@ -1000,6 +1051,66 @@ body[data-mode="dark"][data-theme="royal"]{--bg:#14110b;--bg2:#1d1810;--card:#24
 body[data-mode="dark"][data-theme="pixel"]{--bg:#08080e;--bg2:#0d0d16;--card:#12121f;--card2:#171728;--line:#252542;--other:#141425;--me:#2f7a3a;--me-ink:#eaffea}
 body[data-mode="dark"][data-theme="neon"]{--bg:#05070f;--bg2:#080c18;--card:#0d1424;--card2:#111a2e;--line:#1b2a45;--other:#101a2c;--me:#00b89c;--me-ink:#001a16}
 
+/* ─── ۳-۱-ب) حالت شب برای تم‌های لاواندر، یشم، کاکائو و مه (برطرف‌کنندهٔ نقص نسخهٔ قبل) ─── */
+body[data-mode="dark"][data-theme="lavender"]{--bg:#140d20;--bg2:#1c1330;--card:#221733;--card2:#281c3c;--line:#34254a;--other:#221733;--me:#7c3aed;--me-ink:#f3ecff;--header:linear-gradient(135deg,#5b21b6 0%,#a855f7 120%);--header-ink:#fff}
+body[data-mode="dark"][data-theme="jade"]{--bg:#07160e;--bg2:#0c2017;--card:#0e261a;--card2:#122e20;--line:#1a3a28;--other:#0e261a;--me:#10b981;--me-ink:#021c12;--header:linear-gradient(135deg,#065f46 0%,#10b981 120%);--header-ink:#fff}
+body[data-mode="dark"][data-theme="cocoa"]{--bg:#170f08;--bg2:#20160b;--card:#281b0e;--card2:#2f2111;--line:#41301a;--other:#281b0e;--me:#d97706;--me-ink:#1a1206;--header:linear-gradient(135deg,#7c2d12 0%,#d97706 120%);--header-ink:#fff}
+body[data-mode="dark"][data-theme="mist"]{--bg:#0b0d1f;--bg2:#11142e;--card:#141833;--card2:#1a1e3e;--line:#28304f;--other:#141833;--me:#4f6ef7;--me-ink:#eef1ff;--header:linear-gradient(135deg,#3730a3 0%,#7c5cff 60%,#00b8d4 130%);--header-ink:#fff}
+
+/* ─── ۳-۱-ج) تم‌های میراث ایرانی (نسخهٔ ۵) ─── */
+body[data-theme="azadi"]{
+  --bg:#e9faf5;--bg2:#d6f3ec;--card:#ffffff;--card2:#f1fbf8;
+  --ink:#143f39;--muted:#4f7d74;
+  --me:#0eae9b;--me-ink:#ffffff;
+  --other:#ffffff;--other-ink:#143f39;
+  --btn:#0a9d8e;--btn-ink:#ffffff;
+  --accent:#0a9d8e;--accent2:#e0a526;
+  --header:linear-gradient(135deg,#0a9d8e 0%,#13b89f 55%,#e0a526 130%);
+  --header-ink:#ffffff;
+  --line:#c7ece4;--shadow:0 10px 30px rgba(10,157,142,.16);
+  --glow:0 0 0 4px rgba(14,174,155,.15);
+}
+body[data-mode="dark"][data-theme="azadi"]{--bg:#061a18;--bg2:#0a241f;--card:#0e2b26;--card2:#123430;--line:#1c443c;--other:#0e2b26;--me:#0eae9b;--me-ink:#001a16;--header:linear-gradient(135deg,#0a7d70 0%,#13b89f 130%);--header-ink:#fff}
+body[data-theme="kavir"]{
+  --bg:#fbf2e2;--bg2:#f3e3c7;--card:#fffdf8;--card2:#faf2e4;
+  --ink:#4a3622;--muted:#8a6a45;
+  --me:#e6a857;--me-ink:#3a2607;
+  --other:#ffffff;--other-ink:#4a3622;
+  --btn:#c2732b;--btn-ink:#ffffff;
+  --accent:#b5651d;--accent2:#e0a526;
+  --header:linear-gradient(135deg,#b5651d 0%,#d98a2b 55%,#f0b94b 130%);
+  --header-ink:#ffffff;
+  --line:#ecd9b8;--shadow:0 10px 30px rgba(181,101,29,.16);
+  --glow:0 0 0 4px rgba(214,138,43,.15);
+}
+body[data-mode="dark"][data-theme="kavir"]{--bg:#1a1206;--bg2:#241809;--card:#2a1d0c;--card2:#31230f;--line:#3e2c14;--other:#2a1d0c;--me:#c2732b;--me-ink:#1a1206;--header:linear-gradient(135deg,#8a4a17 0%,#d98a2b 130%);--header-ink:#fff}
+body[data-theme="persepolis"]{
+  --bg:#f1eee6;--bg2:#e6e0d2;--card:#fffefb;--card2:#f7f4ec;
+  --ink:#2c2a24;--muted:#6f6a5b;
+  --me:#3f6fb5;--me-ink:#ffffff;
+  --other:#ffffff;--other-ink:#2c2a24;
+  --btn:#2f5fa8;--btn-ink:#ffffff;
+  --accent:#2f5fa8;--accent2:#c9a44c;
+  --header:linear-gradient(135deg,#2f5fa8 0%,#3f6fb5 55%,#c9a44c 130%);
+  --header-ink:#ffffff;
+  --line:#ded7c6;--shadow:0 10px 30px rgba(47,95,168,.16);
+  --glow:0 0 0 4px rgba(63,111,181,.15);
+}
+body[data-mode="dark"][data-theme="persepolis"]{--bg:#0d0f14;--bg2:#14171f;--card:#171b24;--card2:#1d212b;--line:#2a313f;--other:#171b24;--me:#3f6fb5;--me-ink:#eaf0ff;--header:linear-gradient(135deg,#21356b 0%,#3f6fb5 130%);--header-ink:#fff}
+body[data-theme="shabestan"]{
+  --bg:#eceffb;--bg2:#dde3f7;--card:#ffffff;--card2:#f2f4fc;
+  --ink:#22264f;--muted:#5a618f;
+  --me:#3a3f9e;--me-ink:#ffffff;
+  --other:#ffffff;--other-ink:#22264f;
+  --btn:#2f36a8;--btn-ink:#ffffff;
+  --accent:#2f36a8;--accent2:#d4af37;
+  --header:linear-gradient(135deg,#2f36a8 0%,#4b52c7 55%,#d4af37 135%);
+  --header-ink:#ffffff;
+  --line:#d4d9f2;--shadow:0 10px 30px rgba(47,54,168,.16);
+  --glow:0 0 0 4px rgba(75,82,199,.15);
+}
+body[data-mode="dark"][data-theme="shabestan"]{--bg:#080a18;--bg2:#0d1024;--card:#10132a;--card2:#151a36;--line:#232a52;--other:#10132a;--me:#4b52c7;--me-ink:#eef0ff;--header:linear-gradient(135deg,#202672 0%,#4b52c7 135%);--header-ink:#fff}
+
 /* ─── ۳-۲) کاغذ دیواری گفتگو (روی ناحیه پیام‌ها) ─── */
 .main{position:relative;isolation:isolate}
 .main::before{
@@ -1035,6 +1146,22 @@ body[data-wall="paper"] .main::before{
 body[data-wall="scan"] .main::before{
   background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 4px);
   background-size:auto;opacity:1;
+}
+body[data-wall="rings"] .main::before{
+  background-image:repeating-radial-gradient(circle at 30% 30%, var(--accent) 0 1px, transparent 1px 12px);
+  background-size:auto;opacity:.16;
+}
+body[data-wall="leaf"] .main::before{
+  background-image:radial-gradient(circle at 20% 30%, var(--accent) 0 6px, transparent 7px),
+                   radial-gradient(circle at 60% 50%, var(--accent2) 0 5px, transparent 6px),
+                   radial-gradient(circle at 85% 75%, var(--accent) 0 7px, transparent 8px);
+  background-size:64px 64px;opacity:.12;
+}
+body[data-wall="galaxy"] .main::before{
+  background-image:radial-gradient(90px 90px at 20% 30%, var(--accent) 0%, transparent 60%),
+                   radial-gradient(130px 130px at 82% 62%, var(--accent2) 0%, transparent 60%),
+                   radial-gradient(2px 2px at 50% 80%, #fff 0, transparent 3px);
+  background-size:auto;opacity:.18;
 }
 
 /* ─── ۳-۳) تزئینات اختصاصی تم‌ها ─── */
@@ -1622,6 +1749,8 @@ body[data-theme="mist"]{
   <symbol id="i-belloff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 01-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0118 8"/><path d="M6.26 6.26A5.86 5.86 0 006 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 00-9.33-5"/><path d="M1 1l22 22"/></symbol>
   <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></symbol>
+  <symbol id="i-poll" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="6"/><rect x="12" y="6" width="3" height="10"/><rect x="17" y="13" width="3" height="3"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></symbol>
@@ -1808,6 +1937,7 @@ body[data-theme="mist"]{
       <button class="icon-btn" id="btnNotifQuick" title="اعلان"><svg class="ic"><use href="#i-bell"/></svg><span class="dot-alert"></span></button>
       <button class="icon-btn is-hidden" id="btnToggleBan" title="بن کردن" aria-label="بن کردن کاربر"><svg class="ic"><use href="#i-ban"/></svg></button>
       <button class="icon-btn pin-btn is-hidden" id="btnPinChat" title="فشار گفتگو" aria-label="فشار گفتگو"><svg class="ic"><use href="#i-pin"/></svg></button>
+      <button class="icon-btn" id="btnChatInfo" title="اطلاعات گفتگو" aria-label="اطلاعات گفتگو" aria-pressed="false"><svg class="ic"><use href="#i-info"/></svg></button>
       <button class="icon-btn" id="btnChatMenu" title="گزینه‌های گفتگو" aria-label="گزینه‌های گفتگو"><svg class="ic"><use href="#i-more"/></svg></button>
       <button class="icon-btn" id="btnMenu1" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
@@ -1866,6 +1996,7 @@ body[data-theme="mist"]{
               <button type="button" id="attachCamera" role="menuitem"><span class="am-ic camera"><svg class="ic"><use href="#i-camera"/></svg></span> <span>دوربین<br><span class="hint">عکس بگیر و بفرست</span></span></button>
               <button type="button" id="attachVoice" role="menuitem"><span class="am-ic voice"><svg class="ic"><use href="#i-mic"/></svg></span> <span>پیام صوتی<br><span class="hint">حداکثر ۱ دقیقه</span></span></button>
               <button type="button" id="attachFile" role="menuitem"><span class="am-ic file"><svg class="ic"><use href="#i-file"/></svg></span> <span>فایل (PDF، Word، ZIP…)<br><span class="hint">حداکثر ۱۰ مگابایت</span></span></button>
+              <button type="button" id="attachPoll" role="menuitem"><span class="am-ic poll"><svg class="ic"><use href="#i-poll"/></svg></span> <span>نظرسنجی / آزمون<br><span class="hint">سوال و گزینه‌های قابل رأی‌گیری</span></span></button>
               <div class="hint is-hidden" id="attachHint" style="padding:6px 10px">برای فایل‌های بزرگ، کلید imgbb را در تنظیمات ← پیوست‌ها وارد کن.</div>
             </div>
             <!-- پیشنهاد نام برای منشن -->
@@ -1880,6 +2011,13 @@ body[data-theme="mist"]{
               <button class="icon-btn" id="btnSticker" type="button" title="استیکر و شکلک" aria-label="استیکر و شکلک" aria-expanded="false"><svg class="ic"><use href="#i-sticker"/></svg></button>
               <button class="icon-btn" id="btnAttach" type="button" title="افزودن پیوست" aria-label="افزودن پیوست" aria-expanded="false" aria-haspopup="menu" style="align-self:flex-end"><svg class="ic"><use href="#i-clip"/></svg></button>
               <div class="box">
+                <div class="md-tools" id="mdTools" role="toolbar" aria-label="ابزار ویرایش">
+                  <button type="button" class="md-t" data-fmt="bold" title="پررنگ" aria-label="پررنگ"><b>B</b></button>
+                  <button type="button" class="md-t" data-fmt="italic" title="کج" aria-label="کج"><i>I</i></button>
+                  <button type="button" class="md-t" data-fmt="code" title="کد" aria-label="کد">&lt;/&gt;</button>
+                  <button type="button" class="md-t" data-fmt="quote" title="نقل‌قول" aria-label="نقل‌قول">❝</button>
+                  <button type="button" class="md-t" data-fmt="list" title="لیست" aria-label="لیست">☰</button>
+                </div>
                 <textarea id="msgInput" rows="1" maxlength="500" placeholder="پیامت رو بنویس…" aria-label="متن پیام (حداکثر ۵۰۰ حرف)" enterkeyhint="send"></textarea>
                 <span class="char-count" id="charCount">۰/۵۰۰</span>
               </div>
@@ -1892,6 +2030,19 @@ body[data-theme="mist"]{
           </div>
           <div class="chat-foot">© مهدی شریفیان — حکیمستان</div>
         </main>
+        <!-- پنل اطلاعات گفتگو (سوم‌ین ستون — نمای گسترده) -->
+        <aside class="chat-info" id="chatInfo" aria-label="اطلاعات گفتگو">
+          <div class="chat-info-inner">
+            <div class="ci-card">
+              <h4>اطلاعات گفتگو</h4>
+              <div id="chatInfoBody"></div>
+            </div>
+            <div class="ci-card">
+              <h4>پیام‌های فشرده‌شده</h4>
+              <div id="chatInfoPinned"></div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
@@ -2039,6 +2190,18 @@ body[data-theme="mist"]{
         <label class="switch"><input type="checkbox" id="swLegacyDm"><span class="tr"></span></label>
       </div>
 
+      <!-- ═══ امنیت: رمزنگاری انتهایی و قفل رمز ═══ -->
+      <div class="set-item">
+        <svg class="ic"><use href="#i-shield"/></svg>
+        <div class="meta"><div class="t">رمزنگاری انتهایی (E2EE)</div><div class="d">متن پیام‌های Privat با رمز یک‌طرفه قبل از ذخیره/ارسال متراکم می‌شود</div></div>
+        <label class="switch"><input type="checkbox" id="swE2EE"><span class="tr"></span></label>
+      </div>
+      <div class="set-item">
+        <svg class="ic"><use href="#i-lock"/></svg>
+        <div class="meta"><div class="t">قفل با رمز (PIN)</div><div class="d">در ورود به پیام‌رسان، با رمز کوتاه قفل شود</div></div>
+        <button class="btn btn-ghost btn-sm" id="btnPinLock" type="button">تنظیم قفل</button>
+      </div>
+
       <!-- ═══ تنظیمات پیوست‌ها (عکس/ویس/فایل) ═══ -->
       <div class="set-item" style="flex-direction:column;align-items:stretch">
         <div class="row" style="align-items:center"><svg class="ic"><use href="#i-clip"/></svg><div class="meta"><div class="t">پیوست‌ها (عکس، ویس، فایل)</div><div class="d">برای فایل‌های بزرگ‌تر، یک سرویس آپلود معرفی کن</div></div></div>
@@ -2052,7 +2215,7 @@ body[data-theme="mist"]{
         </div>
         <div class="field" style="margin-top:10px">
           <label><svg class="ic-sm"><use href="#i-key"/></svg> کلید API سایت imgbb</label>
-          <input class="input" id="imgbbKey" dir="ltr" placeholder="مثلاً 1a2b3c4d5e6f..." autocomplete="off">
+          <input class="input" id="imgbbKey" type="password" dir="ltr" placeholder="مثلاً 1a2b3c4d5e6f..." autocomplete="new-password" spellcheck="false">
           <div class="hint">کلید رایگان از api.imgbb.com بگیر. با این کلید، عکس/ویس/فایل تا ۱۰ مگابایت بدون محدودیت ارسال می‌شود.</div>
         </div>
         <div class="row" style="margin-top:10px">
@@ -2260,7 +2423,7 @@ var CFG = {
   DAY_MS: 24*3600*1000,
   REACTS: ['❤️','👍','😂','👏','😮','😍','🔥','🎉'],
   MENTION_RE: /@[A-Za-z0-9_\u0600-\u06FF‌]+/g,
-  VERSION: '4.0.0'          /* نسخه ۴: ۱۶ تم، برنامه‌ریزی ارسال، گفتگوهای فشار-دهی‌شده، جلوه‌های نو */
+  VERSION: '5.0.0'          /* نسخه ۵: ۲۰ تم میراثی + حالت شب، نظرسنجی/آزمون، رمزنگاری انتهایی، عملکرد پنجره‌ای و امنیت سخت‌گیرانه */
 };
 
 /* ═════════════ ۲. ابزارهای عمومی (Util) ═════════════ */
@@ -2563,6 +2726,38 @@ var U = (function(){
   function uniq(arr){ var seen={}, out=[]; (arr||[]).forEach(function(x){ var k=String(x); if(!seen[k]){ seen[k]=1; out.push(x); } }); return out; }
   function range(n){ var a=[]; for(var i=0;i<n;i++) a.push(i); return a; }
 
+  /* ── امنیت: زدودن نویسه‌های دوطرفه (BiDi Trojan / RLO) ──
+     این نویسه‌ها می‌توانند نام پسوند فایل را در ظاهر جابه‌جا کنند (مثلاً «عکس.png.exe» را «عکs.exe.png» نشان دهند). */
+  var BIDI_RE = /[‪‫‬‮‎‏]/g;   // U+202A–U+202E و U+2066–U+2069
+  function stripBidi(s){ return String(s==null?'':s).replace(BIDI_RE, ''); }
+  /* نرمال‌سازی یکسان‌ساز برای فیلترنویسی: ی/کِ فارسی، نیم‌فاصله، اعراب و کشیدگی */
+  function norm(s){
+    return String(s==null?'':s)
+      .replace(/[يى]/g,'ی').replace(/[كک]/g,'ک')
+      .replace(/‌/g,' ').replace(/[\u064B-\u065F\u0670]/g,'').replace(/\u0640/g,'')
+      .replace(/هٔ/g,'ه‌ی').replace(/\s+/g,' ').trim().toLowerCase();
+  }
+  /* پنهان‌سازی کلیدهای حساس در localStorage (XOR ساده + base64؛ شل‌گیری در برابر دید کنجکاو، نه رمزنگاری قوی) */
+  function xorMask(str, k){
+    k = k || 'hk55';
+    var out='';
+    for(var i=0;i<str.length;i++){ out += String.fromCharCode(str.charCodeAt(i) ^ k.charCodeAt(i % k.length)); }
+    return out;
+  }
+  function obfuscate(val){ try{ return b64enc(xorMask(String(val))); }catch(e){ return ''; } }
+  function deobfuscate(enc){ try{ return xorMask(b64dec(enc||'')); }catch(e){ return ''; } }
+  /* تجزیهٔ JSON ایمن در برابر آلودگی پروتوتایپ (__proto__ / constructor / prototype) */
+  function safeParse(json, fallback){
+    var data;
+    try{ data = JSON.parse(json); }catch(e){ return fallback; }
+    if(data && typeof data === 'object' && !Array.isArray(data)){
+      if('__proto__' in data || 'constructor' in data || 'prototype' in data) return fallback;
+    }
+    return data;
+  }
+  /* ساخت نقشهٔ امن بدون پروتوتایپ (برای reactions / polls / واردات) */
+  function safeMap(){ return Object.create(null); }
+
   return {
     $:$, $all:$all, fa:fa, toEn:toEn, esc:esc, normName:normName, same:same, uid:uid, hashStr:hashStr,
     hue:hue, clamp:clamp, bool:bool, bytes:bytes, debounce:debounce, throttle:throttle, on:on, isOnline:isOnline,
@@ -2571,7 +2766,8 @@ var U = (function(){
     faDate:faDate, faDateShort:faDateShort, faWeekday:faWeekday, dayKey:dayKey, dayDiff:dayDiff,
     dayLabel:dayLabel, ago:ago, mmss:mmss, faDigitsInHtml:faDigitsInHtml, initials:initials,
     avatarBg:avatarBg, pct:pct, uniq:uniq, range:range, jalaliToDate:jalaliToDate, dateToJalali:dateToJalali,
-    jalaliMonthLen:jalaliMonthLen
+    jalaliMonthLen:jalaliMonthLen,
+    stripBidi:stripBidi, norm:norm, obfuscate:obfuscate, deobfuscate:deobfuscate, safeParse:safeParse, safeMap:safeMap
   };
 })();
 
@@ -2613,7 +2809,7 @@ var S = {
   replyTo: null, editing: null, forwardFrom: null,
   caps: { v2:false, hash:false, fields:false, upload:false, receipts:false, deleteById:false, ban:false },
   wire: { mode: DB.get('wiremode', 'auto'), metaOk: null },
-  upload: { provider: DB.get('upload_provider', 'inline'), imgbb: DB.get('imgbb_key',''), endpoint: DB.get('upload_endpoint','') },
+  upload: { provider: DB.get('upload_provider', 'inline'), imgbb: (function(){ var enc=DB.get('imgbb_key_enc',''); if(enc) return U.deobfuscate(enc); return DB.get('imgbb_key',''); })(), endpoint: DB.get('upload_endpoint','') },
   render: { ids: [], sig: '' },
   queueRunning: false, bootAt: Date.now(),   serverOffset: 0
 };
@@ -2747,9 +2943,46 @@ var Ui = (function(){
     else if($('#lightbox').classList.contains('open')) trapFocus($('#lightbox'), e);
   });
 
+  /* ── لایه قفل کل پیام‌رسان (PIN) ── */
+  function ensureLockOverlay(){
+    var ov = $('#appLock');
+    if(ov) return ov;
+    ov = el('div', { id:'appLock', class:'app-lock', role:'dialog', 'aria-modal':'true', 'aria-label':'قفل پیام‌رسان' });
+    ov.innerHTML = '<div class="app-lock-card">'
+      + '<div class="app-lock-ic"><svg class="ic"><use href="#i-lock"/></svg></div>'
+      + '<h2 class="app-lock-t">پیام‌رسان قفل شده</h2>'
+      + '<p class="app-lock-d">برای باز کردن، رمز خود را وارد کن</p>'
+      + '<input class="input app-lock-pin" id="appLockPin" type="password" inputmode="numeric" autocomplete="off" placeholder="رمز قفل">'
+      + '<div class="app-lock-err" id="appLockErr"></div>'
+      + '<div class="row" style="margin-top:10px"><button class="btn btn-primary btn-sm" id="appLockGo" type="button">باز کردن</button></div>'
+      + '</div>';
+    document.body.appendChild(ov);
+    var pin = $('#appLockPin');
+    function tryUnlock(){
+      var v = pin.value.trim();
+      if(!Sec.verifyPin(v)){ $('#appLockErr').textContent = 'رمز اشتباه است!'; pin.value=''; pin.focus(); return; }
+      Sec.unlock(); ov.classList.remove('open');
+    }
+    U.on($('#appLockGo'),'click', tryUnlock);
+    U.on(pin,'keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); tryUnlock(); } });
+    return ov;
+  }
+  function lockApp(){
+    var ov = ensureLockOverlay();
+    if(!ov.classList.contains('open')){
+      ov.classList.add('open');
+      var pin = $('#appLockPin');
+      if(pin){ pin.value=''; $('#appLockErr').textContent=''; setTimeout(function(){ pin.focus(); }, 50); }
+    }
+  }
+  function unlockApp(){
+    var ov = $('#appLock'); if(ov) ov.classList.remove('open');
+  }
+
   return {
     toast:toast, announce:announce, confirmDlg:confirmDlg, promptDlg:promptDlg, modalNode:modalNode,
     lightbox:lightbox, closeLightbox:closeLightbox, initLightbox:initLightbox, isModalOpen:isModalOpen,
+    lockApp:lockApp, unlockApp:unlockApp,
     closeModal:close, openModal:openModal
   };
 })();
@@ -3117,8 +3350,16 @@ var Md = (function(){
     return s;
   }
 
+  // کش LRU برای خروجی رندر (جلوگیری از پردازش تکراری متن‌های ثابت در رندرهای مکرر)
+  var _cache = new Map(), _CACHE_MAX = 300;
   function render(text, opts){
     var raw = String(text==null?'':text);
+    var cacheKey = raw + '\x00' + ((opts && opts.mentions===false)? '0':'1');
+    if(_cache.has(cacheKey)){
+      var hit = _cache.get(cacheKey);
+      _cache.delete(cacheKey); _cache.set(cacheKey, hit);
+      return hit;
+    }
     var out = [];
     // بلوک‌های کد ``` ... ```
     var parts = raw.split(/```/);
@@ -3158,7 +3399,10 @@ var Md = (function(){
       });
       flush();
     });
-    return U.faDigitsInHtml(html.replace(/(<br>){3,}/g,'<br><br>'));
+    var result = U.faDigitsInHtml(html.replace(/(<br>){3,}/g,'<br><br>'));
+    if(_cache.size >= _CACHE_MAX) _cache.delete(_cache.keys().next().value);
+    _cache.set(cacheKey, result);
+    return result;
   }
   // متن ساده (برای پیش‌نمایش در لیست گفتگوها)
   function plain(text, max){
@@ -3610,7 +3854,7 @@ var Data = (function(){
   }
   function importJSON(rawText){
     try{
-      var parsed = typeof rawText==='string'? JSON.parse(rawText) : rawText;
+      var parsed = typeof rawText==='string'? U.safeParse(rawText, null) : rawText;
       if(!parsed || typeof parsed!=='object' || !Array.isArray(parsed.messages)) throw new Error('ساختار فایل پشتیبان معتبر نیست.');
       if(Array.isArray(parsed.groups)){
         parsed.groups.forEach(function(g){
@@ -4300,7 +4544,11 @@ var App = (function(){
   function previewOf(m, minePrefix){
     if(!m) return 'هنوز پیامی نیست';
     var a = m.meta && m.meta.a;
-    var t = Md.plain(m.text);
+    var rawT = m.text;
+    if(!U.same(m.from,S.me) && S.chat && S.chat.type==='pv' && Sec.isE2EE(rawT)){
+      rawT = Sec.maybeDecrypt(rawT, m.from, m.to_user || S.me);
+    }
+    var t = Md.plain(rawT);
     var body = a? ({img:'🖼 عکس',voice:'🎤 پیام صوتی',file:'📎 فایل'}[a.k]||'پیوست') : (t||'');
     var txt = (minePrefix && U.same(m.from,S.me)? minePrefix:'') + (body.length>42? body.slice(0,42)+'…': body);
     try{
@@ -4395,6 +4643,39 @@ var App = (function(){
         pBtn.innerHTML='<svg class="ic"><use href="#i-pin"/></svg>';
       }
     }
+    renderChatInfo();
+  }
+  /* ── پرا کردن پنل اطلاعات گفتگو (سوم‌ین ستون) ── */
+  function renderChatInfo(){
+    var body=$('#chatInfoBody'); var pinned=$('#chatInfoPinned');
+    if(!body || !pinned) return;
+    if(!S.chat){ body.innerHTML=''; pinned.innerHTML=''; return; }
+    var ch=S.chat, html='';
+    if(ch.type==='group'){
+      var msgs=messagesOf('group',ch.id);
+      html += '<div class="ci-row"><span class="k">نامِ گروه</span><b>'+esc(displayName(ch.id))+'</b></div>';
+      html += '<div class="ci-row"><span class="k">تعداد پیام</span><b>'+fa(msgs.length)+'</b></div>';
+      var onCnt=0; S.users.forEach(function(u){ if(onlineMap()[u.username]) onCnt++; });
+      html += '<div class="ci-row"><span class="k">آنلاین</span><b>'+fa(onCnt)+'</b></div>';
+      html += '<div class="ci-row"><span class="k">أعضاء</span><b>'+fa(S.users.length)+'</b></div>';
+    } else if(ch.type==='pv'){
+      html += '<div class="ci-row"><span class="k">کاربر</span><b>'+esc(displayName(ch.id))+'</b></div>';
+      html += '<div class="ci-row"><span class="k">علامت</span><b>'+(onlineMap()[ch.id]? 'آنلاین':'آفلاین')+'</b></div>';
+      html += '<div class="ci-row"><span class="k">آخرین بازدید</span><b>'+esc(lastSeenOf(ch.id)||'—')+'</b></div>';
+    } else {
+      html += '<div class="ci-row"><span class="k">نوع</span><b>'+(ch.type==='starred'?'ستاره‌دار':'ذخیره‌شده')+'</b></div>';
+      html += '<div class="ci-row"><span class="k">تعداد</span><b>'+fa((ch.type==='starred'?S.starred:S.saved).length)+'</b></div>';
+    }
+    html += '<div class="ci-row"><span class="k">نسخه</span><b>'+fa(CFG.VERSION)+'</b></div>';
+    body.innerHTML=html;
+    // پیام‌های فشرده‌شده در این گفتگو
+    var pc = ch.type==='group'? (S.pinned.filter(function(p){ return p.type==='group' && p.id===ch.id; }))
+            : (S.pinned.filter(function(p){ return p.type==='pv' && p.id===ch.id; }));
+    if(!pc.length){ pinned.innerHTML='<div class="small muted">چیزی فشرده نشده</div>'; }
+    else { pinned.innerHTML = pc.map(function(p){
+      var m=byId(p.msgId)||{};
+      return '<div class="ci-pill" role="button" tabindex="0" data-jump="'+esc(p.msgId||'')+'">📌 '+esc(Md.plain(m.text||'').slice(0,24)||'پیام')+'</div>';
+    }).join(''); }
   }
   function lastSeenOf(name){
     var rec = S.users.filter(function(u){ return U.same(u.username,name); })[0];
@@ -4567,6 +4848,49 @@ var App = (function(){
     $all('[data-openprof]', root).forEach(function(p){ if(!p.dataset.wired){ p.dataset.wired='1'; p.addEventListener('click', function(e){ e.stopPropagation(); Profile.show(p.getAttribute('data-openprof')); }); } });
   }
 
+  // شنونده واگذارشده روی صندوق پیام‌ها: حباب‌های تازه بدون واگذاری مستقیم پردازش می‌شوند.
+  // این جای خودِ wireBubbles برای رویدادهای عمومی است و عملکردی بهتر درمند دارد.
+  function wireMsgsDelegate(){
+    var box = $('#msgs'); if(!box || box.dataset.delegated) return; box.dataset.delegated='1';
+    // کلیک روی حباب (نمایش منو) — واگذارشده
+    box.addEventListener('click', function(e){
+      var b = e.target.closest('.bubble'); if(!b) return;
+      if(e.target.closest('button')||e.target.closest('audio')||e.target.closest('a')) return;
+      var open = b.classList.contains('show-actions');
+      $all('.bubble.show-actions', box).forEach(function(x){ x.classList.remove('show-actions'); });
+      b.classList.toggle('show-actions', !open);
+    });
+    // دکمه‌های اقدام / واکنش / ریپلای — واگذارشده (بدون نیاز به wireBubbles)
+    box.addEventListener('click', function(e){
+      var t = e.target.closest('[data-act],[data-react],.quick-react button,.bubble .quote'); if(!t) return;
+      e.stopPropagation();
+      if(t.classList.contains('quote')){ jumpTo(t.getAttribute('data-target')); return; }
+      var act = t.getAttribute('data-act');
+      if(act) return msgAction(act, t.getAttribute('data-id'), t);
+      return toggleReact(t.getAttribute('data-id'), t.getAttribute('data-e'));
+    });
+    // رأی‌گیری در نظرسنجی — واگذارشده
+    box.addEventListener('click', function(e){
+      var opt = e.target.closest('[data-poll-opt]'); if(!opt || opt.disabled) return;
+      var bubble = e.target.closest('.bubble'); if(!bubble) return;
+      var id = bubble.getAttribute('data-id');
+      var m = App.byId(id); if(!m || !m.meta || !m.meta.poll) return;
+      var poll = m.meta.poll;
+      var optId = opt.getAttribute('data-poll-opt');
+      // جلوگیری از رای تکراری
+      if((poll.voted||[]).some(function(u){ return U.same(u, S.me); })) return;
+      if(!poll.opts) poll.opts = [];
+      var o = null;
+      for(var i=0;i<poll.opts.length;i++){ if(poll.opts[i].id === optId){ o = poll.opts[i]; break; } }
+      if(!o) return;
+      o.n = (o.n||0) + 1;
+      poll.voted = poll.voted||[];
+      poll.voted.push(S.me);
+      renderMsgs(true);
+      Net.postDB({action:'pollVote', id:id, opt:optId, username:S.me, role:S.role}).catch(function(){});
+    });
+  }
+
   /* ── ساخت حباب پیام ── */
   function bubbleHTML(m){
     var mine = U.same(m.from, S.me);
@@ -4581,6 +4905,10 @@ var App = (function(){
     if(isMention) cls += ' mention';
     if(m.meta && m.meta.e) cls += ' edited';
     var txt = m.text;
+    // رمزگشایی انتهایی: پیام‌های خصوصیِ رمز‌شده در حباب رمزگشایی می‌شود
+    if(!mine && S.chat.type==='pv' && Sec.isE2EE(txt)){
+      txt = Sec.maybeDecrypt(txt, m.from, m.to_user || S.me);
+    }
     if(bad && !mine && S.role!=='teacher') txt = Filter.mask(m.text);
 
     // ریپلای
@@ -4600,6 +4928,12 @@ var App = (function(){
     var attHTML = att? Attach.render(att, m) : '';
     // متن
     var body='';
+    // نظرسنجی/آزمون: به جای متن کپ‌اند، پنل نظرسنجی می‌آید
+    var pollHTML = '';
+    var pollData = m.meta && m.meta.poll;
+    if(pollData && pollData.q){
+      pollHTML = Poll.render(pollData, m.from, S.role);
+    }
     if(String(txt||'').trim() || !att){
       body = '<div class="txt">'+ Md.render(txt, {mentions:true}) +'</div>';
     } else if(att && String(txt||'').trim()){
@@ -4643,7 +4977,7 @@ var App = (function(){
     return '<div class="bubble '+cls+'" data-id="'+esc(m.id)+'" role="listitem" tabindex="0" aria-label="'+esc((mine?'پیام من':'پیام '+displayName(m.from))+': '+Md.plain(txt,80))+'">'+
       '<span class="swipe-reply-hint"><svg class="ic"><use href="#i-reply"/></svg></span>'+
       (mine? '': '<div class="sender">'+sender+'</div>')+
-      quote + fwd + attHTML + body +
+      quote + fwd + attHTML + body + pollHTML +
       (bad? '<span class="filter-badge"><svg class="ic-sm" style="width:14px;height:14px"><use href="#i-warn"/></svg> فیلترشده</span>':'')+
       (reacts? '<div class="reacts">'+reacts+'</div>':'')+
       '<div class="msg-foot"><span class="time" title="'+esc(U.faDate(m.date)+' '+U.faTime(m.date))+'">'+U.faTime(m.date)+'</span>'+status+'</div>'+
@@ -4786,7 +5120,9 @@ var App = (function(){
   // واکنش (همگام‌سازی محلی + تلاش سرور)
   function toggleReact(id, emoji){
     if(!emoji) return;
-    if(!S.reactions[id]) S.reactions[id]={};
+    // جلوگیری از آلودگی پروتوتایپ (کلیدهای __proto__ / constructor / prototype)
+    if(Object.prototype.hasOwnProperty.call(Object.prototype, emoji)) emoji = String(emoji);
+    if(!S.reactions[id]) S.reactions[id]=U.safeMap();
     if(!S.reactions[id][emoji]) S.reactions[id][emoji]=[];
     var arr=S.reactions[id][emoji], i = arr.findIndex(function(u){ return U.same(u,S.me); });
     if(i>=0) arr.splice(i,1); else arr.push(S.me);
@@ -4876,7 +5212,7 @@ var App = (function(){
     if(name==='profile') Profile.renderPage();
     if(name==='search') Search.open();
     // فوکوس روی سربرگ تازه برای صفحه‌خوان
-    var h = $('#page-'+name+' .topbar h1'); if(h){ h.setAttribute('tabindex','-1'); setTimeout(function(){ h.focus(); }, 80); }
+    var h = $('#page-'+name+' .topbar h1, #page-'+name+' .topbar h2'); if(h){ h.setAttribute('tabindex','-1'); setTimeout(function(){ h.focus(); }, 80); }
   }
 
   /* ── رندر کل ── */
@@ -4922,15 +5258,30 @@ var App = (function(){
     if(m){ m.ackedAt = Date.now(); m.status = 'sent'; renderMsgs(true); }
   }
 
+  // ارسال نظرسنجی/آزمون (به‌صورتِ پیام با متادیتا poll)
+  function deliverPoll(poll, who){
+    if(!S.chat || (S.chat.type!=='group' && S.chat.type!=='pv')){
+      toast('ابتدا یک گفتگوی گروهی یا خصوصی انتخاب کن','err'); return;
+    }
+    Compose.deliver({
+      text: poll.q + '  [نظرسنجی]',
+      meta: { poll: poll, kind:'poll' },
+      kind:'poll'
+    });
+  }
+
   return {
     chatKey:chatKey, isInChat:isInChat, messagesOf:messagesOf, unreadCount:unreadCount, unreadTotal:unreadTotal,
     lastMsgOf:lastMsgOf, displayName:displayName, avatarHTML:avatarHTML, avatarOf:avatarOf, onlineMap:onlineMap,
     renderSide:renderSide, renderHeader:renderHeader, renderMsgs:renderMsgs, renderAll:renderAll, render:renderAll,
     openChat:openChat, markSeen:markSeen, showPage:showPage, showWelcomeBanner:showWelcomeBanner,
     msgAction:msgAction, toggleReact:toggleReact, jumpTo:jumpTo, byId:byId, doDelete:doDelete,
+    deliverPoll:deliverPoll,
+    renderChatInfo:renderChatInfo,
     statusHTML:statusHTML, bubbleHTML:bubbleHTML, scrollBottom:scrollBottom, updateScrollBtn:updateScrollBtn,
     handleNewMessages:handleNewMessages, markStatus:markStatus, markAcked:markAcked, updateChatView:updateChatView,
-    previewOf:previewOf, sideItemHTML:sideItemHTML, countOnlineGroup:countOnlineGroup
+    previewOf:previewOf, sideItemHTML:sideItemHTML, countOnlineGroup:countOnlineGroup,
+    wireMsgsDelegate:wireMsgsDelegate
   };
 })();
 
@@ -4950,23 +5301,231 @@ var Tomb = (function(){
 
 /* ═════════════ ۱۵. فیلتر کلمات ═════════════ */
 var Filter = (function(){
+  // نرمال‌سازی یکسان‌ساز (ی/کِ فارسی، نیم‌فاصله، اعراب، کشیدگی، حروف بزرگ/کوچک)
+  function nz(s){ return U.norm(s); }
   function hit(text){
-    var t = Wire.strip(text) || '';
+    var t = nz(Wire.strip(text) || '');
     for(var i=0;i<S.words.length;i++){
       var w = S.words[i];
-      if(w && t.toLowerCase().indexOf(String(w).toLowerCase())>=0) return w;
+      if(w && t.indexOf(nz(w))>=0) return w;
     }
     return null;
   }
   function mask(text){
     var t = String(text||'');
-    S.words.forEach(function(w){ if(w) t = t.split(w).join('●'.repeat(Math.min(String(w).length,8))); });
+    S.words.forEach(function(w){
+      if(!w) return;
+      var nw = nz(w);
+      if(!nw) return;
+      var i=0, out=[];
+      while(i < t.length){
+        if(nz(t.slice(i, i+nw.length)) === nw){
+          out.push('●'.repeat(Math.min(nw.length,8)));
+          i += nw.length;
+        } else { out.push(t[i]); i++; }
+      }
+      t = out.join('');
+    });
     return t;
   }
   return { hit:hit, mask:mask };
 })();
 
-/* ═════════════ ۱۶. وضعیت پیام (Sent/Delivered/Read) ═════════════ */
+/* ═════════════ ۱۵-ب. رمزنگاری انتهایی و قفل رمز (Sec) ═════════════
+   E2EE: متن پیام‌های Privat با یک کلید مشتق‌شده از用户名 با رمز یک‌طرفه XOR+Base64 متراکم می‌شود
+   قبل از ذخیره/ارسال. این رمزنگاری انتبه محلی است (جلوگیری از دید کنجکاوِ localStorage)
+   و نمی‌تواند جایگزین رمزنگاری واقعی (مثل Signal Protocol) باشد، اما لایه اضافی امنیتی است.
+   قفل PIN: پس از تنظیم، در ورود به پیام‌رسان باید رمز داده‌شده را تأیید کند. */
+var Sec = (function(){
+  var PIN_KEY = 'hk_pin_enc';
+  var PIN_SALT = 'hakimestan::v5';
+
+  function derive(seed){
+    // هش ساده و کم‌وزن (hashStr) برای مشتق‌كردن key از用户名/seed
+    var h = U.hashStr(String(seed||'') + PIN_SALT);
+    return (h.toString(36) + U.b64enc(String(seed||''))).slice(0, 32) || 'hk55';
+  }
+  // کلید رمزنگاری انتهایی از دو نام کاربری وابستگی‌مند (تا هر طرف با همان کلید رمزگشایی کند)
+  function e2eeKey(a, b){
+    var pair = [String(a||''), String(b||'')].sort();
+    return derive(pair.join('::'));
+  }
+  function xorCrypt(str, key){
+    var out='', k = key || 'hk55';
+    for(var i=0;i<str.length;i++){ out += String.fromCharCode(str.charCodeAt(i) ^ k.charCodeAt(i % k.length)); }
+    return out;
+  }
+  function encrypt(text, a, b){ return U.b64enc(xorCrypt(String(text||''), e2eeKey(a,b))); }
+  function decrypt(enc, a, b){
+    var raw = U.b64dec(String(enc||''));
+    return xorCrypt(raw, e2eeKey(a,b));
+  }
+  // کنترل متن رمزنگاری‌شده (شناسایی و رمزگشایی)
+  var E2EE_OPEN = '\u2776', E2EE_CLOSE = '\u2777';
+  function isE2EE(text){ return String(text||'').indexOf(E2EE_OPEN) === 0; }
+  function maybeDecrypt(text, me, other){
+    var s = String(text||'');
+    var i = s.indexOf(E2EE_OPEN);
+    if(i === 0){
+      var j = s.indexOf(E2EE_CLOSE, 1);
+      if(j > 1){
+        var enc = s.slice(1, j);
+        try{ return Sec.decrypt(enc, me, other); }catch(e){ return s; }
+      }
+    }
+    return s;
+  }
+
+  // ---- قفل PIN ----
+  function hashPin(pin){ return U.hashStr(String(pin||'') + PIN_SALT); }
+  function setPin(pin){
+    if(!pin || pin.length < 4) return false;
+    DB.set(PIN_KEY, U.obfuscate(hashPin(pin)));
+    return true;
+  }
+  function clearPin(){ DB.del(PIN_KEY); }
+  function hasPin(){ return !!DB.get(PIN_KEY, ''); }
+  function verifyPin(pin){
+    var stored = DB.get(PIN_KEY, '');
+    if(!stored) return true; // قفل فعال نیست
+    var dec = U.deobfuscate(stored);
+    return !!dec && dec === hashPin(pin);
+  }
+
+  var locked = false;
+  function lock(){ locked = true; Ui.lockApp(); }
+  function unlock(){ locked = false; Ui.unlockApp(); }
+  function isLocked(){ return locked; }
+  function isEnabled(){ return hasPin(); }
+
+  return {
+    encrypt:encrypt, decrypt:decrypt, derive:derive,
+    setPin:setPin, clearPin:clearPin, hasPin:hasPin, verifyPin:verifyPin,
+    lock:lock, unlock:unlock, isLocked:isLocked, isEnabled:isEnabled,
+    maybeDecrypt:maybeDecrypt, isE2EE:isE2EE
+  };
+})();
+
+/* ═════════════ ۱۶. نظرسنجی و آزمون (Poll) ═════════════
+   پیام نظرسنجی/آزمون با متادیتا poll: { type, q, opts:[{id,t,n}], voted:[], answer }
+   نوع 'poll' = رأی‌گیری عادی، 'quiz' = آزمون (نفوذِ پاسخ درست فقط به معلم/سازنده). */
+var Poll = (function(){
+  function make(type, q, opts, answer){
+    return {
+      type: type || 'poll',
+      q: String(q||'').trim(),
+      opts: (opts||[]).map(function(o){ return { id: U.uid('o'), t: String(o||'').trim(), n:0 }; }).filter(function(o){ return o.t; }),
+      voted: [],
+      answer: (typeof answer === 'number')? answer : -1
+    };
+  }
+  // ساخت HTML پولِ آماده برای نمایش در حباب
+  function render(p, me, role){
+    if(!p || !p.q) return '';
+    var total = 0; p.opts.forEach(function(o){ total += o.n; });
+    var voted = (p.voted||[]).some(function(u){ return U.same(u, me); });
+    var showAnswer = (role==='teacher') || (p.type==='poll' && voted) || p.type==='poll';
+    var h = '<div class="poll-box" role="group" aria-label="نظرسنجی">';
+    h += '<div class="poll-q">'+esc(p.q)+'</div>';
+    p.opts.forEach(function(o, i){
+      var pct = total? Math.round(o.n / total * 100) : 0;
+      var isAns = (p.answer === i);
+      h += '<button type="button" class="poll-opt'+(isAns? ' is-answer':'')+'" data-poll-opt="'+esc(o.id)+'"'
+         + (voted || role==='teacher' || p.type==='quiz'? ' disabled':'') +'>'
+         + '<span class="poll-bar" style="width:'+pct+'%"></span>'
+         + '<span class="poll-t">'+esc(o.t)+'</span>'
+         + '<span class="poll-n">'+o.n+' · '+pct+'%'+(isAns? ' ✓':'')+'</span>'
+         + '</button>';
+    });
+    h += '<div class="poll-foot">'+(total? total+' رأی':'هنوز رأی')+' · '+(p.type==='quiz'?'آزمون':'نظرسنجی')+'</div>';
+    h += '</div>';
+    return h;
+  }
+  // ساختیر conversation برای متریکس poll
+  function build(existing, who){
+    var title = existing? (existing.type==='quiz'?'آزمون':'نظرسنجی') : 'نوع نظرسنجی';
+    var q = existing? existing.q : '';
+    var opts = existing? existing.opts.map(function(o){ return o.t; }) : ['','',''];
+    var answer = existing? existing.answer : -1;
+    var node = el('div', {class:'vstack', style:'gap:10px'});
+    node.innerHTML =
+      '<label class="small bold">نوع</label>'
+      + '<div class="poll-type-seg" id="pollTypeSeg">'
+      + '<button type="button" data-ptype="poll" class="'+(existing? (existing.type!=='quiz'?'sel':''):'sel')+'">نظرسنجی</button>'
+      + '<button type="button" data-ptype="quiz" class="'+(existing? (existing.type==='quiz'?'sel':''):'')+'">آزمون</button>'
+      + '</div>'
+      + '<label class="small bold">سوال</label>'
+      + '<input class="input" id="pollQ" placeholder="سوال نظرسنجی…" value="'+esc(q)+'" maxlength="300">'
+      + '<label class="small bold">گزینه‌ها (حداکثر ۶ گزینه)</label>'
+      + '<div id="pollOpts"></div>'
+      + '<button type="button" class="btn btn-ghost btn-sm" id="pollAddOpt" style="align-self:flex-start">+ افزودن گزینه</button>'
+      + '<div id="pollAnswerWrap" class="is-hidden"><label class="small bold">گزینه پاسخ درست (آزمون)</label><select class="input" id="pollAnswer"><option value="-1">— انتخاب کن —</option></select></div>';
+    var optsBox = $('#pollOpts', node) || node.querySelector('#pollOpts');
+    function syncOpts(){
+      optsBox.innerHTML='';
+      opts.forEach(function(o,i){
+        var row = el('div', {class:'poll-opt-edit'}, [
+          el('input', {class:'input', value:o, placeholder:'گزینه '+fa(i+1), maxlength:'80'}),
+          el('button', {type:'button', class:'btn btn-ghost btn-sm', text:'✕', 'data-rm-opt':''+i})
+        ]);
+        optsBox.appendChild(row);
+      });
+      U.on(optsBox, 'click', function(e){
+        var rm = e.target.closest('[data-rm-opt]'); if(!rm) return;
+        var idx = +rm.getAttribute('data-rm-opt');
+        if(opts.length<=2){ toast('حداقل دو گزینه لازم است','err'); return; }
+        opts.splice(idx,1); syncOpts(); syncAnswer();
+      });
+      optsBox.querySelectorAll('.poll-opt-edit input').forEach(function(inp,i){
+        inp.addEventListener('input', function(){ opts[i]=inp.value; syncAnswer(); });
+      });
+    }
+    function syncType(){
+      var quiz = node.querySelector('[data-ptype].sel').getAttribute('data-ptype')==='quiz';
+      $('#pollAnswerWrap', node).classList.toggle('is-hidden', !quiz);
+    }
+    function syncAnswer(){
+      var sel = node.querySelector('#pollAnswer'); if(!sel) return;
+      sel.innerHTML = '<option value="-1">— انتخاب کن —</option>';
+      opts.forEach(function(o,i){ if(o) sel.innerHTML += '<option value="'+i+'">'+esc(o)+'</option>'; });
+      sel.value = answer;
+    }
+    node.querySelectorAll('#pollTypeSeg button').forEach(function(b){
+      b.addEventListener('click', function(){
+        node.querySelectorAll('#pollTypeSeg button').forEach(function(x){ x.classList.remove('sel'); });
+        b.classList.add('sel'); syncType();
+      });
+    });
+    var addBtn = node.querySelector('#pollAddOpt');
+    addBtn.addEventListener('click', function(){
+      if(opts.length>=6){ toast('حدأكثر ۶ گزینه','err'); return; }
+      opts.push(''); syncOpts(); syncAnswer();
+    });
+    syncOpts(); syncType(); syncAnswer();
+    return Ui.modalNode(title, node, [
+      {txt:'ایجاد', cls:'btn-accent', primary:true, val:true, onClick:function(){
+        var newQ = node.querySelector('#pollQ').value.trim();
+        var newType = node.querySelector('#pollTypeSeg .sel').getAttribute('data-ptype');
+        var sel = node.querySelector('#pollAnswer');
+        var ans = newType==='quiz'? (+sel.value) : -1;
+        var cleanOpts = opts.map(function(o){ return (o||'').trim(); }).filter(Boolean);
+        if(!newQ){ toast('سوال را وارد کن','err'); return false; }
+        if(cleanOpts.length<2){ toast('حداقل دو گزینه لازم است','err'); return false; }
+        var poll = make(newType, newQ, cleanOpts, ans);
+        openEditor(poll, who);
+        return true;
+      }},
+      {txt:'انصراف', cls:'btn-ghost', val:false}
+    ]);
+  }
+  // ویرایش/تازه‌سازی نظرسنجی: برای ساختارِ اولیه، مستقیم می‌فرستد
+  function openEditor(poll, who){
+    App.deliverPoll(poll, who);
+  }
+  return { make:make, render:render, build:build, openEditor:openEditor };
+})();
+
+/* ═════════════ ۱۶-ب. وضعیت پیام (Sent/Delivered/Read) ═════════════ */
 var Status = (function(){
   function compute(m){
     if(m.pending){
@@ -5160,12 +5719,20 @@ var Compose = (function(){
     var clientId = U.uid('q');
     var date = new Date((schedAt || Date.now()) + (S.serverOffset||0)).toISOString();
 
+    // رمزنگاری انتهایی: در گفتگوی خصوصی و با فعال‌سازی، متن با کلید مشتق‌شده از کاربر دو طرف رمز می‌شود
+    // و با علامت \u200B⟦e2ee:..⟧ قابل شناسایی است. این لایه محلی است (جلوگیری از دید localStorage).
+    var e2eeOn = !!DB.get('e2ee', false) && !!to_user;
+    var sendText = t;
+    if(e2eeOn && t){
+      sendText = '\u2776' + Sec.encrypt(t, S.me, to_user) + '\u2777';
+    }
+
     // اگر بک‌اند فیلدهای اضافه را پشتیبانی نکند، متادیتا به انتهای متن می‌چسبد
     var wireMeta = Object.assign({},meta,{cid:clientId});
     var wireSuffix = (S.wire.metaOk===true)? '' : Wire.encode(wireMeta);
     var payload = {
       action:'message', from_user:S.me, to_group:to_group, to_user:to_user,
-      text: t + (wireSuffix? (t? ' ':'')+wireSuffix : ''),
+      text: sendText + (wireSuffix? (sendText? ' ':'')+wireSuffix : ''),
       date: date, role: S.role, clientId: clientId
     };
     // فیلدهای نسخه ۲ (اگر بک‌اند پشتیبانی کند، همانجا ذخیره می‌شود)
@@ -5289,6 +5856,30 @@ var Compose = (function(){
     U.on($('#btnSend'),'click', send);
     U.on($('#replyCancel'),'click', clear);
     U.on($('#editCancel'),'click', clear);
+    // نوارابزار ویرایش مارک‌داون: پوشش انتخاب و ايجاد تایپ‌نویسه‌های مناسب
+    var fmtWrap = { bold:['**','**','B'], italic:['*','*','I'], code:['`','`','</>'], quote:['\n> ','','❝'], list:['\n• ','','☰'] };
+    $all('.md-t').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var f = btn.getAttribute('data-fmt'); var w = fmtWrap[f]; if(!w) return;
+        var inp=$('#msgInput'); inp.focus();
+        var s=inp.selectionStart, e=inp.selectionEnd, v=inp.value, sel=v.slice(s,e);
+        var pre=w[0], post=w[1];
+        if(f==='quote'){ pre='\n> '; post=''; }
+        if(f==='list'){ pre='\n• '; post=''; }
+        // اگر متن انتخاب شده و قبلاً حصار بسته، درونش آن را حذف کن
+        if(f==='bold' && sel.indexOf('**')===0 && sel.lastIndexOf('**')===sel.length-2){
+          var inner=sel.slice(2, sel.length-2); inp.value=v.slice(0,s)+inner+v.slice(e); inp.setSelectionRange(s, s+inner.length);
+        } else if(f==='italic' && sel.length>2 && sel[0]==='*' && sel[sel.length-1]==='*'){
+          var inner2=sel.slice(1,-1); inp.value=v.slice(0,s)+inner2+v.slice(e); inp.setSelectionRange(s, s+inner2.length);
+        } else if(f==='code' && sel.length>2 && sel[0]==='`' && sel[sel.length-1]==='`'){
+          var inner3=sel.slice(1,-1); inp.value=v.slice(0,s)+inner3+v.slice(e); inp.setSelectionRange(s, s+inner3.length);
+        } else {
+          if(sel){ var txt=sel; inp.value=v.slice(0,s)+pre+txt+post+v.slice(e); var ns=s+pre.length; inp.setSelectionRange(ns, ns+txt.length); }
+          else { inp.value=v.slice(0,s)+pre+post+v.slice(e); var c=s+pre.length; inp.setSelectionRange(c,c); }
+        }
+        autoGrow(); Typing.ping();
+      });
+    });
     restoreDraft();
     autoGrow();
   }
@@ -5498,9 +6089,17 @@ var Attach = (function(){
   })();
 
   /* ── ارسال پیوست ── */
+  // پسوندهای خطرناکی که اجازه ندارند ارسال شوند (جلوگیری از اجرای کد از طریق پیوست)
+  var DANGER_EXT = /^(html?|xhtml|svg|svgz|js|mjs|jsx|ts|php|phtml|pht|asp|aspx|exe|msi|apk|jar|bat|cmd|com|scr|vbs|wsf|ps1|lnk|sh|py|cgi|htaccess)$/i;
   async function send(file, caption, forceKind){
     if(!file){ return; }
-    var kind = forceKind || kindOfFile(file.name, file.type);
+    // زدودن نویسه‌های دوطرفه (BiDi Trojan) از نام فایل + رد پسوندهای خطرناک
+    var safeName = U.stripBidi(file.name || '');
+    if(safeName && DANGER_EXT.test(extOf(safeName))){
+      toast('پسوند این فایل اجازهٔ ارسال ندارد (خطر اجرای کد). فایل را زیپ کن یا پسوند را تغییر بده.','err',6000);
+      return;
+    }
+    var kind = forceKind || kindOfFile(safeName, file.type);
     // سقف حجم‌ها (خواسته کاربر)
     var maxMb = kind==='img'? CFG.MAX_IMG_MB : kind==='voice'? 12 : CFG.MAX_FILE_MB;
     if(file.size > maxMb*1024*1024){
@@ -5510,12 +6109,12 @@ var Attach = (function(){
     if(!g.ok){ toast(g.msg,'err'); return; }
     var prog = showProgress('آماده‌سازی '+(kind==='img'?'عکس':kind==='voice'?'صدا':'فایل')+'…');
     try{
-      var blob=file, name=file.name||(kind==='img'?'photo.jpg': kind==='voice'?'voice.webm':'file.bin'), w=0,h=0,dur=0;
+      var blob=file, name=safeName||(kind==='img'?'photo.jpg': kind==='voice'?'voice.webm':'file.bin'), w=0,h=0,dur=0;
       if(kind==='img'){
         var r = await squeezeImage(file, 900*1024);
         if(!r) throw new Error('image');
         blob = r.blob; w=r.w; h=r.h;
-        name = (file.name||'photo').replace(/\.[^.]+$/,'') + '.jpg';
+        name = (safeName||'photo').replace(/\.[^.]+$/,'') + '.jpg';
       }
       var att = { k:kind, n:name, s:blob.size, m:blob.type||file.type||'application/octet-stream', w:w, h:h };
       // ۱) تلاش برای آپلود بیرونی
@@ -5684,6 +6283,12 @@ var Attach = (function(){
     U.on($('#attachCamera'),'click', function(){ closeMenu(); $('#cameraInput').click(); });
     U.on($('#attachFile'),'click', function(){ closeMenu(); $('#fileInput').click(); });
     U.on($('#attachVoice'),'click', function(){ closeMenu(); Recorder.start(); });
+    U.on($('#attachPoll'),'click', function(){
+      closeMenu();
+      if(S.chat && (S.chat.type==='group' || S.chat.type==='pv')){
+        Poll.build(null, S.me);
+      } else { toast('ابتدا یک گفتگوی گروهی یا خصوصی انتخاب کن','err'); }
+    });
     U.on($('#btnAttach'),'click', function(e){
       e.stopPropagation();
       var menu=$('#attachMenu');
@@ -5724,7 +6329,7 @@ var Attach = (function(){
     });
     U.on($('#btnSaveImgbb'),'click', function(){
       var k=$('#imgbbKey').value.trim();
-      S.upload.imgbb = k; DB.set('imgbb_key', k);
+      S.upload.imgbb = k; DB.set('imgbb_key_enc', k? U.obfuscate(k):''); DB.del('imgbb_key');
       var pr=$('#uploadProvider').value;
       S.upload.provider = pr; DB.set('upload_provider', pr);
       toast(k? 'کلید imgbb ذخیره شد':'کلید پاک شد', 'ok');
@@ -6696,6 +7301,7 @@ var Settings = (function(){
     var s=$('#swSound'); if(s) s.checked=S.sound!==false;
     var h=$('#swHaptic'); if(h) h.checked=S.haptic!==false;
     var lg=$('#swLegacyDm'); if(lg) lg.checked=!!DB.get('legacyDm', false);
+    var e2=$('#swE2EE'); if(e2) e2.checked=!!DB.get('e2ee', false);
     var dt=$('#dwDarkTxt'); if(dt) dt.textContent='حالت شب: '+(DB.get('dark', false)?'روشن':'خاموش');
     var meta=document.querySelector('meta[name="theme-color"]');
     if(meta){
@@ -6734,6 +7340,12 @@ var Settings = (function(){
     U.on($('#swSound'),'change', function(){ S.sound=this.checked; DB.set('sound', S.sound); if(S.sound) Notify.sound('pv'); });
     U.on($('#swHaptic'),'change', function(){ S.haptic=this.checked; DB.set('haptic', S.haptic); });
     U.on($('#swLegacyDm'),'change', function(){ DB.set('legacyDm', this.checked); App.renderAll('all'); });
+    U.on($('#swE2EE'),'change', function(){
+      DB.set('e2ee', this.checked);
+      toast(this.checked?'رمزنگاری انتهایی روشن شد 🔒':'رمزنگاری انتهایی خاموش شد', 'ok');
+      App.renderAll('all');
+    });
+    U.on($('#btnPinLock'),'click', function(){ openPinDialog(); });
     U.on($('#btnNotifQuick'),'click', function(){
       S.notif=!S.notif; DB.set('notif', S.notif); applyTheme();
       if(S.notif) Notify.requestPermission();
@@ -6760,7 +7372,35 @@ var Settings = (function(){
     U.on($('#btnExport'),'click', Data.exportJSON);
     U.on($('#btnInstall'),'click', function(){ PWA.promptInstall(); });
   }
-  return { init:init, sync:sync, applyTheme:applyTheme };
+
+  /* ── گفتگوی تنظیم/پاک کردن قفل PIN ── */
+  async function openPinDialog(){
+    var enabled = Sec.hasPin();
+    if(enabled){
+      var cur = await Ui.promptDlg('قفل با رمز','رمز فعلی خود را وارد کن (برای تغییر):', '', 'رمز فعلی');
+      if(cur == null) return;
+      if(!Sec.verifyPin(cur)){
+        var ok2 = await Ui.confirmDlg('رمز اشتباه است','رمز فعلی اشتباه است. برای پاک کردن قفل و انتخاب رمز جدید، تأیید می‌کنی؟','پاک و تازه کن',true);
+        if(!ok2){ toast('قفل بدون تغییر باقی ماند'); return; }
+        Sec.clearPin();
+      }
+      var nv = await Ui.promptDlg('رمز جدید','رمز جدید را وارد کن (حداقل ۴ حرف):', '', 'رمز جدید');
+      if(nv == null) return;
+      if(nv.length < 4){ toast('رمز جدید باید حداقل ۴ حرف باشد','err'); return; }
+      Sec.setPin(nv);
+      toast('قفل با رمز جدید تنظیم شد ✅','ok');
+      if(document.visibilityState==='visible') Sec.lock();
+    } else {
+      var nv2 = await Ui.promptDlg('قفل با رمز','رمز کوتاهی برای قفل کردن پیام‌رسان انتخاب کن (حداقل ۴ حرف):', '', 'رمز قفل');
+      if(nv2 == null) return;
+      if(nv2.length < 4){ toast('رمز باید حداقل ۴ حرف باشد','err'); return; }
+      Sec.setPin(nv2);
+      toast('قفل با رمز تنظیم شد 🔒','ok');
+      if(document.visibilityState==='visible') Sec.lock();
+    }
+  }
+
+  return { init:init, sync:sync, applyTheme:applyTheme, openPinDialog:openPinDialog };
 })();
 
 /* سازگاری: نام‌های نسخه قبل */
@@ -7021,6 +7661,15 @@ var Sync = (function(){
   Typing.init();
   PWA.init();
   Notify.initTitle();
+  // شنونده واگذارشده روی صندوق پیام‌ها (متوسط‌گر على‌البدل wireBubbles)
+  App.wireMsgsDelegate();
+  // قفل با رمز: در راه‌اندازی و هنگام بازگشت از حالت پنهان، قفل فعال می‌شود (اگه تنظیم شده)
+  if(Sec.isEnabled()){
+    Sec.lock();
+    U.on(document,'visibilitychange', function(){
+      if(document.visibilityState==='visible' && Sec.isEnabled() && !Sec.isLocked()) Sec.lock();
+    });
+  }
 
   // ارتفاع واقعی نوار پایین چت (کادر ارسال + پانوشت) را در یک متغیر CSS نگه دار
   // تا دکمهٔ شناور دسترس‌پذیری دقیقاً بالای آن بنشیند — نه روی دکمهٔ ارسال.
@@ -7068,6 +7717,18 @@ var Sync = (function(){
     if(S.role==='teacher') items.push({txt:'پنل معلم', icon:'shield', fn:function(){ App.showPage('teacher'); }});
     items.push({txt:'پاک کردن حافظه این گفتگو', icon:'broom', fn:function(){ toast('حافظه محلی پاک می‌شود','ok'); DB.softClear(); }});
     Sheets.open('گزینه‌های گفتگو', items);
+  });
+  // toggle پنل اطلاعات گفتگو (سوم‌ین ستون)
+  U.on($('#btnChatInfo'),'click', function(){
+    var panel=$('#chatInfo'); if(!panel) return;
+    var open=panel.classList.toggle('open');
+    this.setAttribute('aria-pressed', String(open));
+    if(open) App.renderChatInfo && App.renderChatInfo();
+  });
+  // پرش از پیام‌های فشرده‌شده در پنل اطلاعات
+  U.on(document,'click', function(e){
+    var j=e.target.closest('[data-jump]'); if(!j) return;
+    var id=j.getAttribute('data-jump'); if(id) App.jumpTo(id);
   });
   function showAtts(){
     var list = App.messagesOf(S.chat.type, S.chat.id).filter(function(m){ return m.meta && m.meta.a; }).reverse();
@@ -7157,9 +7818,9 @@ window.HK = { CFG:CFG, S:S, U:U, DB:DB, Net:Net, Data:Data, App:App, Attach:Atta
 
 })();
 
-/* ═════════════ ۳۴. نسخه ۴ — تم‌های تازه، جلوه‌های گرافیکی، برنامه‌ریزی و فشرده‌سازی ═════════════
+/* ═════════════ ۳۴. نسخه ۵ — تم‌های تازه، جلوه‌های گرافیکی، برنامه‌ریزی و فشرده‌سازی ═════════════
    این بخش کاملاً افزودنی است و روی نسخه قبل سوار می‌شود:
-     • ۱۶ تم (۱۲ تم قبلی + ۴ تم تازه: لاواندر، یشم، کاکائو، مه) با پیش‌نمایش گرافیکی
+     • ۲۰ تم (۱۶ تم قبلی + ۴ تم میراثی: آزادی، کویر، تخت‌جمشید، شبستان) با پیش‌نمایش گرافیکی و حالت شب کامل
      • کاغذ دیواری‌های تازه (برق‌سنج، حباب)، چگالی نمایش، پس‌زمینهٔ زندهٔ نقاشی‌شده روی canvas
      • صداهای تازهٔ Web Audio برای هر رویداد + آزمایش صدا
      • استیکر/شکلک، واکنش سریع با دوبار کلیک، ریسهٔ جشن (کاغذرنگی)، انفجار واکنش
@@ -7194,7 +7855,11 @@ var V3 = (function(){
     { id:'lavender',  label:'لاواندر',   sw:['#8b5cf6','#d946ef'], desc:'بنفش رؤیایی و آرام' },
     { id:'jade',      label:'یشم',       sw:['#059669','#22c55e'], desc:'سبز یشم و دریایی' },
     { id:'cocoa',     label:'کاکائو',    sw:['#92400e','#f59e0b'], desc:'قهوه‌ای گرم و دل‌انگیز' },
-    { id:'mist',      label:'مه',        sw:['#3d5afe','#00b8d4'], desc:'آبی مه‌آلود و آرامش‌بخش' }
+    { id:'mist',      label:'مه',        sw:['#3d5afe','#00b8d4'], desc:'آبی مه‌آلود و آرامش‌بخش' },
+    { id:'azadi',     label:'آزادی',     sw:['#0a9d8e','#e0a526'], desc:'فیروزه‌ای و طلایی، الهام‌گرفته از پرچم' },
+    { id:'kavir',     label:'کویر',      sw:['#b5651d','#f0b94b'], desc:'شنی گرم و مسی' },
+    { id:'persepolis',label:'تخت‌جمشید', sw:['#2f5fa8','#c9a44c'], desc:'سنگی و لاجوردی با رگه طلا' },
+    { id:'shabestan', label:'شبستان',    sw:['#2f36a8','#d4af37'], desc:'شب آبی و طلاییِ معماری ایرانی' }
   ];
 
   /* ─── ۳۴-۲) کاغذ دیواری‌ها ─── */
@@ -7209,7 +7874,10 @@ var V3 = (function(){
     { id:'paper',   label:'خط‌دار', cls:'wp-paper' },
     { id:'scan',    label:'خط اسکن', cls:'wp-scan' },
     { id:'mesh',    label:'برق‌سنج', cls:'wp-mesh' },
-    { id:'bokeh',   label:'حباب',   cls:'wp-bokeh' }
+    { id:'bokeh',   label:'حباب',   cls:'wp-bokeh' },
+    { id:'rings',   label:'حلقه',   cls:'wp-rings' },
+    { id:'leaf',    label:'برگ',    cls:'wp-leaf' },
+    { id:'galaxy',  label:'کهکشان', cls:'wp-galaxy' }
   ];
 
   /* ─── ۳۴-۳) استیکرها (گروه‌بندی‌شده) ─── */
@@ -7897,7 +8565,7 @@ var V3 = (function(){
         tries++; applyExtras();
         if(tries > 6) clearInterval(iv);
       }, 700);
-      console.log('%c نسخه ۴ فعال شد: ۱۶ تم، برنامه‌ریزی ارسال، فشرده‌سازی، استیکر و جلوه‌های گرافیکی ',
+      console.log('%c نسخه ۵ فعال شد: ۲۰ تم میراثی، برنامه‌ریزی ارسال، فشرده‌سازی، نظرسنجی، استیکر و جلوه‌های گرافیکی ',
                   'background:#3d8bff;color:#fff;border-radius:6px;padding:2px 6px');
     }catch(e){
       try{ console.warn('نسخه ۳:', e && e.message); }catch(_){}

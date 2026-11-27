@@ -112,13 +112,13 @@ async function until(fn, timeout = 9000, step = 120) {
     assert(d.body.getAttribute('data-theme') === t, 'تم ' + t + ' اعمال شد');
   }
   const cards = d.querySelectorAll('.theme-card');
-  assert(cards.length === 16, '۱۶ دکمه تم ساخته شد: ' + cards.length);
-  console.log('themes: PASS (16 تم)');
+  assert(cards.length === 20, '۲۰ دکمه تم ساخته شد: ' + cards.length);
+  console.log('themes: PASS (20 تم)');
 
   // ۴) کاغذ دیواری‌های جدید
   const walls = d.querySelectorAll('.wall-card');
-  assert(walls.length === 11, '۱۱ کاغذ دیواری: ' + walls.length);
-  console.log('walls: PASS (11)');
+  assert(walls.length === 14, '۱۴ کاغذ دیواری: ' + walls.length);
+  console.log('walls: PASS (14)');
 
   console.log('ALL NEW-FEATURE CHECKS PASS');
   w.close();
