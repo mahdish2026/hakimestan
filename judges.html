@@ -912,6 +912,20 @@ body[data-theme="kashi"] .shot-empty{ border-color:rgba(0,128,128,.32); }
 <script src="back-to-lobby.js"></script>
 <!-- هستهٔ هماهنگی تم و فضای لابی (کلید مشترک hakimestan_lobby_theme) -->
 <script src="js/hakim-theme.js" defer></script>
+<script>
+// Account for mobile wrapping, font loading and enlarged accessibility text.
+(function(){
+  var header=document.getElementById('siteHeader');
+  function measureHeader(){
+    var height=Math.ceil(header.getBoundingClientRect().height);
+    if(height>0)document.documentElement.style.setProperty('--story-header-height',height+'px');
+  }
+  measureHeader();
+  if(window.ResizeObserver)new ResizeObserver(measureHeader).observe(header);
+  window.addEventListener('resize',measureHeader);
+  if(document.fonts)document.fonts.ready.then(measureHeader);
+})();
+</script>
 <!-- 📊 ردیاب بازدید حکیمستان -->
 <script>
 (function(){
