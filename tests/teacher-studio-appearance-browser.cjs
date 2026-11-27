@@ -15,7 +15,8 @@ try{
   await p.click('[data-atelier-depth-toggle]');assert.equal(await p.$eval('body',e=>e.dataset.atelierDepth),'off');assert.notEqual(await p.$eval('#btnSample',e=>getComputedStyle(e).boxShadow),raisedShadow,'depth toggle changes actual controls, not just decoration');
   await p.click('[data-atelier-depth-toggle]');
   assert.equal(await p.$eval('.desk-sigil-front',e=>getComputedStyle(e).animationIterationCount),'1');
-  await p.click('#btnSample');const data=await p.evaluate(()=>JSON.stringify(HQFConverter.state.result.hqf));
+  // Locator waits for smooth scrolling and tactile hover geometry before a real click.
+  await p.locator('#btnSample').click();await p.waitForFunction(()=>HQFConverter.state.result?.hqf.questions.length>0);const data=await p.evaluate(()=>JSON.stringify(HQFConverter.state.result.hqf));
   for(const palette of palettes){await p.select('#atelierPalette',palette);await audit(`converter ${width} ${palette} results`);assert.equal(await p.evaluate(()=>JSON.stringify(HQFConverter.state.result.hqf)),data,'appearance must not mutate content')}
   await p.select('#atelierPalette','ocean');await p.reload({waitUntil:'load'});assert.equal(await p.$eval('#atelierPalette',e=>e.value),'ocean');
   if(await p.$eval('[data-atelier-depth-toggle]',e=>e.getAttribute('aria-pressed'))==='false')await p.click('[data-atelier-depth-toggle]');
