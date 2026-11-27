@@ -17,15 +17,21 @@ const base=process.env.SITE_BASE||'http://localhost:8000/';
   for(const width of [320,360,390,768,1366]){
    await page.setViewport({width,height:900});await page.goto(base+'judges.html',{waitUntil:'networkidle0'});await page.evaluate(()=>document.fonts.ready);
    for(const enlarged of [false,true]){
-    await page.evaluate(big=>document.documentElement.style.fontSize=big?'200%':'',enlarged);
+    await page.evaluate(big=>{document.documentElement.style.fontSize=big?'200%':'';scrollTo(0,0);},enlarged);
+    await page.waitForFunction(()=>Math.abs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--story-header-height'))-document.querySelector('#siteHeader').getBoundingClientRect().height)<1);
     const layout=await page.evaluate(()=>{const header=document.querySelector('#siteHeader').getBoundingClientRect(),cover=document.querySelector('.story-cover').getBoundingClientRect(),title=document.querySelector('#hero-title').getBoundingClientRect(),kicker=document.querySelector('.cover-kicker').getBoundingClientRect();return {header:header.bottom,cover:cover.top,title:title.top,kicker:kicker.top,overflow:document.documentElement.scrollWidth>innerWidth};});
     assert.ok(layout.cover>=layout.header,`dossier cover below header at ${width}, enlarged=${enlarged}: ${JSON.stringify(layout)}`);
     assert.ok(layout.title>layout.header&&layout.kicker>layout.header,'intro text entirely below header');assert.equal(layout.overflow,false,'dossier has no horizontal page overflow');
     if(!enlarged&&(width===390||width===1366))await page.screenshot({path:`reports/dossier-${width}.png`});
+    await page.evaluate(()=>scrollTo(0,700));
+    await page.waitForFunction(()=>scrollY>=690);
+    assert.ok(await page.$eval('#siteHeader',e=>Math.abs(e.getBoundingClientRect().top)<1),'masthead stays pinned while scrolling, including 200% text');
+    await page.evaluate(()=>document.querySelector('.story-index a[href="#origin"]').click());
+    await page.waitForFunction(()=>{const header=document.querySelector('#siteHeader').getBoundingClientRect(),target=document.querySelector('#origin').getBoundingClientRect();return target.top>=header.bottom&&target.top<=header.bottom+26;});
+    if(!enlarged&&width===390)await page.screenshot({path:'reports/dossier-sticky-mobile.png'});
+    await page.evaluate(()=>{history.replaceState(null,'',location.pathname);scrollTo(0,0);});
    }
-   await page.evaluate(()=>document.documentElement.style.fontSize='');await page.click('.story-index a[href="#origin"]');
-   await page.waitForFunction(()=>location.hash==='#origin');
-   assert.ok(await page.$eval('#origin',e=>e.getBoundingClientRect().top>=0),'anchor heading not hidden behind masthead');
+   await page.evaluate(()=>document.documentElement.style.fontSize='');
   }
   for(const width of [320,390,768,1366]){
    await page.setViewport({width,height:1000});await page.goto(base+'darsgah.html',{waitUntil:'networkidle0'});await page.evaluate(()=>document.fonts.ready);
@@ -38,6 +44,24 @@ const base=process.env.SITE_BASE||'http://localhost:8000/';
    await page.keyboard.press('Escape');assert.equal(await page.$eval('#bookFileMenu',e=>e.open),false,'Escape dismisses file menu');
    await page.evaluate(()=>scrollTo(0,0));if(width===390||width===1366)await page.screenshot({path:`reports/studio-redesign-${width}.png`,fullPage:true});
   }
-  assert.deepEqual(errors,[]);console.log('Dossier masthead clears content at 320–1366px and 200% text; studio responsive hierarchy and disclosure controls OK');
+  // Select themes through the real UI, then verify the whole hero palette and persistence.
+  await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+  for(const width of [390,1366]){
+  await page.setViewport({width,height:1000});
+  const palettes=[];
+  for(const theme of ['orange','green','blue','purple']){
+   await page.evaluate(()=>scrollTo(0,0));await page.click('#themeBtn');await page.click('[data-set-theme="'+theme+'"]');await page.click('#themeDialog [data-close]');
+   const palette=await page.evaluate(()=>({background:getComputedStyle(document.querySelector('.intro')).backgroundColor,glow:getComputedStyle(document.querySelector('.intro'),'::before').backgroundImage,accent:getComputedStyle(document.querySelector('.intro h1 span')).color,button:getComputedStyle(document.querySelector('.desk-shortcuts .btn')).backgroundColor,number:getComputedStyle(document.querySelector('.intro .step.current .step-number')).backgroundColor}));
+   for(const previous of palettes)for(const key of ['background','glow','accent','button','number'])assert.notEqual(palette[key],previous[key],`hero ${key} follows ${theme} theme`);
+   palettes.push(palette);
+   const contrast=await page.evaluate(async()=>{const r=await axe.run('.intro',{runOnly:['color-contrast']});return r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}));});assert.deepEqual(contrast,[],theme+' hero contrast');
+   await page.screenshot({path:`reports/studio-theme-${theme}-${width}.png`});
+  }
+  await page.reload({waitUntil:'networkidle0'});
+  assert.equal(await page.$eval('html',e=>e.dataset.theme),'purple');
+  assert.equal(await page.$eval('.intro',e=>getComputedStyle(e).backgroundColor),palettes[3].background,'hero restores saved theme');
+  await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+  }
+  assert.deepEqual(errors,[]);console.log('Dossier stays pinned without overlap at 320–1366px/200% text, anchors clear header; all four studio hero themes, persistence, contrast and disclosure controls OK');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
