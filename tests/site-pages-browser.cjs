@@ -8,6 +8,23 @@ const pup = require('puppeteer-core');
 const root = path.resolve(__dirname, '..');
 const base = 'http://localhost:8000/';
 async function run() {
+  // The local preview is independent of external servers and supports browser assets/media.
+  const pageResponse = await fetch(base);
+  assert.equal(pageResponse.status, 200);
+  assert.match(pageResponse.headers.get('content-type'), /^text\/html/);
+  assert.match(await pageResponse.text(), /<html/i);
+  const script = await fetch(base + 'js/hakim-logo.js', {method:'HEAD'});
+  assert.equal(script.status, 200);
+  assert.match(script.headers.get('content-type'), /^text\/javascript/);
+  assert.equal(await script.text(), '');
+  const audio = await fetch(base + 'games/math-geometry/audio/angles.mp3', {headers:{Range:'bytes=0-15'}});
+  assert.equal(audio.status, 206);
+  assert.match(audio.headers.get('content-range'), /^bytes 0-15\/\d+$/);
+  assert.equal((await audio.arrayBuffer()).byteLength, 16);
+  const invalid = await fetch(base + 'games/math-geometry/audio/angles.mp3', {headers:{Range:'bytes=999999999-'}});
+  assert.equal(invalid.status, 416);
+  assert.equal((await fetch(base + '.git/config')).status, 404);
+  assert.equal((await fetch(base + 'index.html', {method:'POST'})).status, 405);
   const pkg = process.env.CHROME_PATH ? null : require('@sparticuz/chromium');
   const chrome = pkg?.default || pkg;
   const b = await pup.launch({executablePath:process.env.CHROME_PATH || await chrome.executablePath(),args:chrome?.args || ['--no-sandbox']});
