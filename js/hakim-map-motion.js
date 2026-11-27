@@ -88,6 +88,17 @@
         '<path d="M12 24 L6 32 L16 28 Z" fill="#fde68a" stroke="#78350f" stroke-width="1.1" stroke-linejoin="round"/>' +
         '<path d="M6 32 L11.5 27.5" stroke="#78350f" stroke-width="1" stroke-linecap="round"/>' +
         '<circle cx="5.2" cy="34.2" r="2.5" fill="#0d9488" stroke="#ccfbf1" stroke-width=".9"/>'
+    },
+    compass: {
+      label: 'قطب‌نمای گنج', color: '#b45309', soft: 'rgba(180,83,9,.22)', glyphs: ['✦', '◈', '✧', '❖', '★'], bob: true,
+      svg: '<defs><linearGradient id="hkMmCp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fef3c7"/><stop offset=".55" stop-color="#f59e0b"/><stop offset="1" stop-color="#92400e"/></linearGradient></defs>' +
+        '<circle cx="20" cy="4.5" r="2.8" fill="none" stroke="#92400e" stroke-width="1.6"/>' +
+        '<circle cx="20" cy="22" r="15.5" fill="url(#hkMmCp)" stroke="#78350f" stroke-width="1.6"/>' +
+        '<circle cx="20" cy="22" r="12" fill="#fffbeb" stroke="#b45309" stroke-width="1.1"/>' +
+        '<path d="M20 11.5 V32.5 M9.5 22 H30.5" stroke="#d97706" stroke-width="1" opacity=".55"/>' +
+        '<polygon points="12,15 22.5,19.5 17.5,24.5" fill="#e11d48"/>' +
+        '<polygon points="28,29 17.5,24.5 22.5,19.5" fill="#1e3a8a"/>' +
+        '<circle cx="20" cy="22" r="2.3" fill="#78350f" stroke="#fde68a" stroke-width=".9"/>'
     }
   };
 
