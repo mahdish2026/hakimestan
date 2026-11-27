@@ -62,12 +62,25 @@ jobs:
         run: npm install --no-save --package-lock=false --ignore-scripts jsdom@26.1.0 puppeteer-core@24.43.1
       - name: Test teacher and messenger behaviour with mocked APIs
         run: |
-          node tests/teacher-workspace.cjs
-          node tests/teacher-panel-geometry.cjs
-          node tests/teacher-panel-math-decimals.cjs
-          node tests/payamresan-v4-features.cjs
-          node tests/messenger-workspace.cjs
-          node tests/payamresan-v5.cjs
+          run_test() {
+            if node "$1" >/tmp/workspace-test.log 2>&1; then
+              cat /tmp/workspace-test.log
+            else
+              cat /tmp/workspace-test.log
+              message=$(tail -c 10000 /tmp/workspace-test.log)
+              message="${message//'%'/'%25'}"
+              message="${message//$'\n'/'%0A'}"
+              message="${message//$'\r'/'%0D'}"
+              printf '::error file=%s::%s\n' "$1" "$message"
+              return 1
+            fi
+          }
+          run_test tests/teacher-workspace.cjs
+          run_test tests/teacher-panel-geometry.cjs
+          run_test tests/teacher-panel-math-decimals.cjs
+          run_test tests/payamresan-v4-features.cjs
+          run_test tests/messenger-workspace.cjs
+          run_test tests/payamresan-v5.cjs
       - name: Test workspace layouts and real navigation on Chromium
         run: |
           export CHROME_PATH="$(command -v google-chrome)"
