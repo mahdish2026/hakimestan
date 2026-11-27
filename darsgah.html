@@ -228,6 +228,50 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
     #darsgahPrintSheet .dp-foot{margin-top:10px;text-align:center;font-size:9pt;color:#555}
   }
 
+/* Teaching desk: quiet depth, clear groups, theme-aware accents. */
+body{background:radial-gradient(ellipse at 95% 0,var(--orange-soft),transparent 48%),var(--cream)}
+.intro{padding:22px 25px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(120deg,#ffffffb8,var(--paper));box-shadow:0 10px 35px #343b3505}
+.step.current .step-number{background:var(--orange-soft);border-color:var(--orange);color:var(--orange-dark)}
+.book-card{box-shadow:0 12px 45px #26372d0a}.book-toolbar{background:linear-gradient(100deg,var(--paper),var(--orange-soft));flex-wrap:wrap}
+.toolbar-actions{flex-wrap:wrap}.ink-tool[aria-pressed=true]{background:var(--orange-soft);border-color:var(--orange);color:var(--orange-dark)}
+.desk-shortcuts{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:13px}.desk-shortcuts span{font-size:10px;color:var(--muted)}
+.history-tools{display:flex;gap:4px;padding-inline-end:8px;border-inline-end:1px solid var(--line)}
+.bookmark-bar{padding:8px 14px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;background:var(--paper);border-bottom:1px solid var(--line);font-size:10px;color:var(--muted)}
+.bookmark-bar .btn[aria-current=page]{background:var(--orange-soft);border-color:var(--orange);color:var(--orange-dark)}
+.lesson-tools-grid{display:grid;gap:16px}.lesson-tool-card{padding:18px;border:1px solid var(--line);border-radius:15px;background:var(--paper)}
+.lesson-tool-card h3{font-size:14px;margin-bottom:5px}.lesson-tool-card p{font-size:11px;color:var(--muted);margin-bottom:12px}
+.lesson-tool-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.lesson-tool-row .select{width:auto;flex:1;min-width:120px}.lesson-tool-row input[type=number]{width:80px}
+.lesson-tool-card label{font-size:11px}.lesson-clock{direction:ltr;display:inline-block;font-variant-numeric:tabular-nums;font-size:28px;font-weight:750;color:var(--orange-dark)}
+#lessonTimerStatus{font-size:11px;color:var(--muted)}.caption-input{resize:vertical;min-height:74px;width:100%;font:inherit}
+.lesson-route{display:flex;flex-wrap:wrap;gap:7px;max-height:180px;overflow:auto;padding:4px}.lesson-route .btn{direction:rtl;font-variant-numeric:tabular-nums}
+.lesson-route .btn[aria-current=true]{border-color:var(--orange);background:var(--orange-soft)}
+.focus-mode .bookmark-bar{display:none}.route-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:17px 0 8px}.route-heading h3{font-size:13px}
+.record-bar.is-recording:not(.is-paused) .rec-status i{animation:lesson-pulse 1.8s ease-out infinite}
+@keyframes lesson-pulse{50%{box-shadow:0 0 0 5px #da4d481f}}
+@media(prefers-reduced-motion:reduce){.record-bar.is-recording:not(.is-paused) .rec-status i{animation:none}}
+@media(max-width:760px){.intro{padding:17px}.desk-shortcuts{gap:6px}.history-tools{padding-inline-end:4px}.ink-options{flex-wrap:wrap}.lesson-tool-card{padding:13px}.bookmark-bar{padding:7px 10px}.bookmark-bar .btn{min-height:36px}.ink-tool{min-height:40px}.lesson-tool-row .btn{min-height:40px}}
+
+
+/* Studio layout: deliberate visual hierarchy, not just new decoration. */
+:root{--studio-deep:#173e3b;--studio-muted:#c7dad4}
+.app{padding-top:24px}.topbar{height:auto;min-height:78px;padding-block:14px}.studio-label{font-size:12px}
+.intro{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:38px;padding:32px 36px;margin-bottom:24px;background:var(--studio-deep);color:#fffdf5;border:1px solid #32554e;box-shadow:0 12px 36px #173e3b15}
+.intro::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 90% -30%,#53796c88,transparent 60%),repeating-linear-gradient(135deg,transparent 0 34px,#ffffff04 34px 35px);pointer-events:none}
+.intro h1{font-size:clamp(26px,2.6vw,37px);line-height:1.65;letter-spacing:-1px}.intro h1 span{color:#ffcf99}.intro .eyebrow{color:#f6dbba;font-size:11px}.intro .eyebrow::before{background:#ffcf99}.intro p{color:#e0eae4;font-size:12px;max-width:49ch;line-height:2.1}
+.desk-shortcuts{margin-top:19px;gap:13px}.desk-shortcuts .btn{background:#ffe3bd;color:#3d2c18;border-color:#ffe3bd;min-height:42px;font-size:12px}.desk-shortcuts>span{color:var(--studio-muted);font-size:10px}
+.intro-journey{padding:20px 22px;border:1px solid #ffffff26;border-radius:18px;background:#ffffff08;align-self:center}.journey-heading{display:flex;gap:12px;align-items:center;padding-bottom:14px;margin-bottom:12px;border-bottom:1px solid #ffffff20}.journey-heading strong{display:block;font-size:13px}.journey-heading div>span{display:block;font-size:10px;color:var(--studio-muted);margin-top:3px}.journey-symbol{display:grid;place-items:center;color:#ffcf99;background:#ffffff0a;width:42px;height:42px;border:1px solid #ffffff28;border-radius:14px;font-size:30px}
+.intro .steps{display:flex;flex-direction:column;align-items:stretch;gap:11px;font-size:12px;color:#dce8e3}.intro .step{gap:12px}.intro .step b{display:block;font-size:12px;font-weight:650}.intro .step small{display:block;color:#b8d0c6;font-size:10px;margin-top:1px}.intro .step-number{width:29px;height:29px;border-radius:10px;border-color:#ffffff40;color:#e1ede7;flex-shrink:0}.intro .step.current{color:#fff6e6}.intro .step.current .step-number{background:#ffe3bd;border-color:#ffe3bd;color:#3d2c18}
+.layout{grid-template-columns:minmax(0,1fr) 284px;gap:20px}.sidebar{gap:13px}.panel-caption{display:flex;flex-direction:column;padding:0 4px 2px}.panel-caption>span{font-size:12px;font-weight:750}.panel-caption small{font-size:10px;color:var(--muted)}.side-card{padding:17px}.card-heading{margin-bottom:12px}.title-icon{font-size:14px}.camera-caption{font-size:11px}.label-row{font-size:12px}.quality-note{font-size:10px}.camera-stage{aspect-ratio:16/8}
+.camera-appearance{margin-top:12px;border-top:1px solid var(--line)}.camera-appearance>summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding-top:12px;font-size:12px;font-weight:600;list-style:none}.camera-appearance>summary::-webkit-details-marker{display:none}.camera-appearance[open]>summary{color:var(--orange-dark)}.camera-appearance[open]>summary>span{transform:rotate(180deg)}
+.book-toolbar{padding:14px 17px;gap:12px;background:var(--paper);min-height:74px}.book-toolbar-title>.icon{width:35px;height:35px;padding:7px;border-radius:11px;background:var(--green-light)}.book-name{font-size:14px;max-width:290px}.book-meta{font-size:10px;margin-top:2px}.toolbar-actions{gap:6px}.book-file-menu{position:relative}.book-file-menu>summary{list-style:none;cursor:pointer;border:1px solid var(--line);font-size:11px}.book-file-menu>summary::-webkit-details-marker{display:none}.book-file-menu[open]>summary{background:var(--orange-soft);color:var(--orange-dark)}
+.book-file-actions{position:absolute;top:calc(100% + 8px);inset-inline-end:0;z-index:45;background:var(--paper);border:1px solid var(--line);border-radius:13px;box-shadow:0 12px 35px #173e3b26;padding:8px;width:250px;max-width:calc(100vw - 40px);display:flex;flex-direction:column;gap:3px}.book-file-actions .btn{justify-content:flex-start;white-space:normal;text-align:start;width:100%;font-size:12px;min-height:40px}.book-file-actions p{font-size:10px;color:var(--muted);padding:8px;border-top:1px solid var(--line);margin-top:4px}.book-card:has(.book-file-menu[open]){overflow:visible}
+.canvas-area{padding:26px;min-height:435px}.upload-sheet{max-width:560px;min-height:375px;border-radius:18px;box-shadow:0 14px 35px #173e3b09}.upload-sheet::before{border-radius:12px;inset:10px}.upload-sheet h2{font-size:23px}.upload-sheet p{font-size:12px}.book-art{margin-bottom:12px}.upload-links{font-size:12px}.sheet-label{font-size:10px}.book-bottom p{font-size:10px}.pdf-controls{padding:12px 16px;background:#fcfcf8}
+.record-dock{border-radius:17px;box-shadow:0 6px 28px #173e3b15}.record-dock .record-bar{padding:13px 16px;min-height:75px}.record-dock .record-btn{min-height:44px}.palette-caption{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:2px 2px 5px}.palette-caption span{font-size:10px;font-weight:700;color:var(--green)}.palette-caption small{font-size:9px;color:var(--muted)}.drawing-toolbar{padding:11px 14px;gap:9px;background:#fcfcf8}.ink-tools{gap:4px}.ink-tool{border-color:#e5e9df;background:var(--paper);min-height:38px;border-radius:9px}.ink-tool span{font-size:11px}.ink-options{border-top:1px solid var(--line);padding-top:8px;gap:8px}.ink-help{font-size:10px}.history-tools .btn{min-width:34px;font-size:17px}.ink-colors{padding:3px 0}.library-strip{padding:13px 15px;border:1px solid var(--line);background:#ffffffa8;border-radius:14px}.library-strip>span{font-size:11px}.book-pill{font-size:10px;min-height:32px}.record-help p{font-size:11px}.focus-mode .palette-caption{display:none}
+@media(min-width:761px) and (max-width:1100px){.intro{gap:22px;padding:26px}.layout{grid-template-columns:minmax(0,1fr) 250px}.book-name{max-width:200px}.book-toolbar{padding:12px}.intro-journey{padding:16px}.ink-options{gap:6px}}
+@media(max-width:760px){.topbar{min-height:66px;padding:12px;gap:8px}.top-actions{flex-shrink:0}.intro{grid-template-columns:1fr;gap:20px;padding:24px 21px;margin-bottom:18px;border-radius:20px}.intro h1{font-size:29px}.intro p{font-size:12px}.intro .eyebrow{font-size:10px}.desk-shortcuts{gap:10px;margin-top:15px;align-items:flex-start;flex-direction:column}.desk-shortcuts>span{font-size:10px}.intro-journey{padding:14px 16px;align-self:auto}.journey-heading{display:none}.intro .steps{gap:12px}.intro .step small{font-size:10px}.layout{display:flex;gap:16px}.sidebar{display:grid;grid-template-columns:1fr 1fr;width:100%}.panel-caption{grid-column:1/-1}.side-card{padding:16px}.book-toolbar{padding:12px;min-height:65px}.book-name{max-width:180px;font-size:13px}.book-toolbar-title>.icon{display:none}.toolbar-actions{gap:4px}.toolbar-actions #externalPdf{display:none}.book-file-menu>summary{font-size:10px;min-height:38px;padding:5px 8px}.book-file-actions .button-text{display:inline}.book-meta{font-size:10px}.canvas-area{min-height:380px;padding:15px}.upload-sheet{min-height:345px;padding:28px 20px}.upload-sheet h2{font-size:21px}.upload-sheet p{font-size:12px;line-height:2}.upload-sheet .sheet-label{top:22px;right:25px;font-size:9px}.upload-sheet .book-art{width:120px;height:98px;margin-top:16px}.record-dock{border-radius:16px 16px 0 0}.record-dock .record-bar{min-height:64px;padding:9px 12px}.drawing-toolbar{padding:6px 10px 8px;gap:5px}.palette-caption{padding:0;font-size:9px}.palette-caption small{display:none}.ink-tools{padding-block:3px;gap:5px}.ink-tool{min-width:38px;min-height:38px}.ink-options{padding-top:6px;gap:7px}.ink-options .btn{min-height:34px}.library-strip{padding:12px;gap:7px}.library-strip>span{width:100%}.book-pill{font-size:11px;min-height:35px}.focus-mode .drawing-toolbar{padding:6px 10px}}
+@media(max-width:470px){.sidebar{grid-template-columns:1fr}.intro h1{font-size:27px}.intro{padding:22px 19px}.book-toolbar-title{flex:1;min-width:90px}.book-name{max-width:155px}.book-toolbar .toolbar-actions{flex-shrink:0}.book-file-menu>summary{max-width:110px}.history-tools{gap:3px}.ink-options{gap:6px}.ink-help{display:none}}
+@media(prefers-reduced-motion:reduce){.camera-appearance>summary>span{transition:none}}
+
 </style>
 <script>
   (function(){
@@ -292,16 +336,19 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    </div>
 </header>
 <main class="app">
- <section class="intro"><div><div class="eyebrow">درسگاه حکیمستان</div><h1>از اینجا، کلاس شما شروع می‌شود.</h1><p>کتاب، صدای شما و یک درس ماندگار؛ روی گوشی و لپ‌تاپ، بدون ضبط صفحه.</p></div><div class="steps" aria-label="مراحل ساخت فیلم"><div class="step current" id="step1"><span class="step-number">۱</span>انتخاب کتاب</div><span class="step-line"></span><div class="step" id="step2"><span class="step-number">۲</span>ضبط تدریس</div><span class="step-line"></span><div class="step" id="step3"><span class="step-number">۳</span>فیلم آماده!</div></div></section>
+ <section class="intro" aria-labelledby="studioWelcomeTitle">
+  <div class="intro-copy"><div class="eyebrow">درسگاه حکیمستان · استودیوی شخصی معلم</div><h1 id="studioWelcomeTitle">یک کتاب، صدای شما،<br><span>یک کلاس ماندگار.</span></h1><p>تدریس را ساده‌تر بسازید؛ روی کتاب بنویسید، نکته‌ها را نشان دهید و فیلم درس را با خودتان ببرید.</p><div class="desk-shortcuts"><button class="btn btn-soft" data-open="lessonToolsDialog">✦ جعبه‌ابزار تدریس</button><span>بدون ضبط صفحه · پردازش روی دستگاه شما</span></div></div>
+  <div class="intro-journey"><div class="journey-heading"><span class="journey-symbol" aria-hidden="true">✺</span><div><strong>از صفحهٔ کتاب تا یک درس تازه</strong><span>سه قدم ساده؛ با ریتم خودتان</span></div></div><div class="steps" aria-label="مراحل ساخت فیلم"><div class="step current" id="step1"><span class="step-number">۱</span><div><b>کتاب را باز کنید</b><small>PDF خودتان یا کتابخانهٔ پنجم</small></div></div><div class="step" id="step2"><span class="step-number">۲</span><div><b>روایت کنید و بنویسید</b><small>صدا، قلم و تصویر اختیاری شما</small></div></div><div class="step" id="step3"><span class="step-number">۳</span><div><b>درس را همراه ببرید</b><small>پیش‌نمایش و دانلود فیلم</small></div></div></div></div>
+ </section>
  <div id="environmentBanner" class="banner" role="status" hidden></div><div id="pdfjsBanner" class="banner library-status" role="status"><span id="pdfjsStatus">در حال آماده‌سازی نمایشگر کتاب…</span><button id="retryPdfjs" class="btn btn-small" hidden>تلاش دوباره</button></div>
  <div class="mobile-top-tools"><button class="btn btn-primary" id="mobileUpload"><svg class="icon"><use href="#i-upload"/></svg>انتخاب PDF از گوشی / رایانه</button><button class="btn" id="mobileCamera" role="switch" aria-checked="false"><svg class="icon"><use href="#i-camera"/></svg><span>وب‌کم</span></button><button class="btn" id="mobileSwitchCamera" hidden>🔄 چرخش</button></div>
  <div class="layout">
-  <aside class="sidebar" aria-label="تنظیمات ضبط">
+  <aside class="sidebar" aria-label="تنظیمات ضبط"><div class="panel-caption"><span>تنظیمات استودیو</span><small>پیش از شروع، یک‌بار بررسی کنید</small></div>
    <section class="card side-card">
     <div class="card-heading"><h2 class="title-icon"><svg class="icon"><use href="#i-camera"/></svg>تصویر شما <span class="tag">اختیاری</span></h2><button id="cameraToggle" class="switch" role="switch" aria-checked="false" aria-label="فعال کردن وب‌کم"></button></div>
     <div class="camera-stage" id="cameraStage"><div class="mock-lines"></div><div id="cameraPlaceholder" class="camera-placeholder"><svg class="icon"><use href="#i-camera"/></svg></div><video id="cameraVideo" class="camera-live bordered" autoplay muted playsinline hidden></video></div>
     <div class="camera-caption"><svg class="icon"><use href="#i-screen"/></svg><span id="cameraCaption">جای تصویر شما در فیلم؛ وب‌کم خاموش است</span></div>
-    <fieldset class="camera-controls"><legend class="sr-only">ظاهر تصویر وب‌کم</legend>
+    <details class="camera-appearance"><summary>چیدمان و قاب دوربین <span aria-hidden="true">⌄</span></summary>    <fieldset class="camera-controls"><legend class="sr-only">ظاهر تصویر وب‌کم</legend>
      <div class="label-row"><span>گوشهٔ تصویر</span><span class="muted" id="positionLabel">پایین چپ</span></div>
      <div class="position-grid" role="group" aria-label="موقعیت تصویر"><button class="position-btn" data-position="tr" aria-label="بالا راست" aria-pressed="false" title="بالا راست"><span class="position-shape tr"></span></button><button class="position-btn" data-position="tl" aria-label="بالا چپ" aria-pressed="false" title="بالا چپ"><span class="position-shape tl"></span></button><button class="position-btn" data-position="br" aria-label="پایین راست" aria-pressed="false" title="پایین راست"><span class="position-shape br"></span></button><button class="position-btn" data-position="bl" aria-label="پایین چپ" aria-pressed="true" title="پایین چپ"><span class="position-shape bl"></span></button></div>
      <div class="camera-shape-row"><div class="label-row"><span>شکل تصویر</span><span class="muted">نحوه نمایش در فیلم</span></div><div class="segmented cam-shape-options" role="group" aria-label="شکل وب‌کم"><button class="segment" data-cam-shape="circle" aria-pressed="true">◉ دایره</button><button class="segment" data-cam-shape="square" aria-pressed="false">○ مربع</button><button class="segment" data-cam-shape="rectangle" aria-pressed="false">○ مستطیل<small>16:9</small></button></div></div>
@@ -309,7 +356,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
      <div class="segmented" role="group" aria-label="اندازه وب‌کم"><button class="segment" data-size="0.10" aria-pressed="false">کوچک<small>۱۰٪</small></button><button class="segment" data-size="0.15" aria-pressed="true">متوسط<small>۱۵٪</small></button><button class="segment" data-size="0.20" aria-pressed="false">بزرگ<small>۲۰٪</small></button></div>
      <label class="check-label"><input id="cameraBorder" type="checkbox" checked>حاشیهٔ نارنجی دور تصویر<span class="orange-ring"></span></label>
      <button class="btn btn-small btn-quiet switch-camera-btn" id="switchCamera" hidden>🔄 چرخش دوربین</button>
-    </fieldset>
+    </fieldset></details>
    </section>
    <section class="card side-card">
     <div class="card-heading"><h2 class="title-icon"><svg class="icon"><use href="#i-mic"/></svg>صدا و کیفیت</h2></div>
@@ -322,7 +369,8 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   </aside>
   <section class="workspace" aria-label="میز تدریس">
    <div class="card book-card" id="bookCard">
-    <div class="book-toolbar"><div class="book-toolbar-title"><svg class="icon"><use href="#i-book"/></svg><div><div class="book-name" id="bookName">میز تدریس شما</div><div class="book-meta" id="bookMeta">هنوز کتابی انتخاب نشده</div></div></div><div class="toolbar-actions"><button id="changeBook" class="btn btn-small btn-quiet" title="انتخاب فایل PDF"><svg class="icon"><use href="#i-upload"/></svg><span class="button-text">انتخاب PDF</span></button><button id="exportNotesBtn" class="btn btn-small btn-quiet" title="پشتیبان‌گیری JSON از یادداشت‌های روی کتاب" hidden>💾 <span class="button-text">ذخیرهٔ نوشته‌ها</span></button><button id="importNotesBtn" class="btn btn-small btn-quiet" title="بازیابی یادداشت‌های روی کتاب از فایل JSON" hidden>📂 <span class="button-text">بازیابی نوشته‌ها</span></button><button id="printPageBtn" class="btn btn-small btn-quiet" title="چاپ صفحهٔ فعلی به همراه نوشته‌ها (A4)" hidden>🖨️ <span class="button-text">چاپ A4</span></button><button class="btn btn-icon btn-quiet" id="focusBtn" aria-label="باز کردن حالت تمرکز" title="حالت تمرکز"><svg class="icon"><use href="#i-expand"/></svg></button><button class="btn btn-small focus-exit" id="exitFocus">خروج از تمرکز</button><a id="externalPdf" class="btn btn-icon btn-quiet" target="_blank" rel="noopener" title="باز کردن PDF در برگه جدا" aria-label="باز کردن PDF در برگه جدا" hidden><svg class="icon"><use href="#i-external"/></svg></a></div></div>
+    <div id="bookmarkBar" class="bookmark-bar" role="navigation" aria-label="پرش به نشانک‌های کتاب" hidden></div>
+    <div class="book-toolbar"><div class="book-toolbar-title"><svg class="icon"><use href="#i-book"/></svg><div><div class="book-name" id="bookName">میز تدریس شما</div><div class="book-meta" id="bookMeta">هنوز کتابی انتخاب نشده</div></div></div><div class="toolbar-actions"><button id="changeBook" class="btn btn-small btn-quiet" title="انتخاب فایل PDF"><svg class="icon"><use href="#i-upload"/></svg><span class="button-text">انتخاب PDF</span></button><details class="book-file-menu" id="bookFileMenu"><summary class="btn btn-small">ابزارهای فایل <span aria-hidden="true">⌄</span></summary><div class="book-file-actions"><button id="exportNotesBtn" class="btn btn-small btn-quiet" title="پشتیبان‌گیری JSON از یادداشت‌های روی کتاب" hidden>💾 <span class="button-text">ذخیرهٔ نوشته‌ها</span></button><button id="importNotesBtn" class="btn btn-small btn-quiet" title="بازیابی یادداشت‌های روی کتاب از فایل JSON" hidden>📂 <span class="button-text">بازیابی نوشته‌ها</span></button><button id="snapshotBtn" class="btn btn-small btn-quiet" title="دانلود تصویر صفحه و نوشته‌ها به صورت PNG" hidden>📷 <span class="button-text">عکس صفحه</span></button><button id="printPageBtn" class="btn btn-small btn-quiet" title="چاپ صفحهٔ فعلی به همراه نوشته‌ها (A4)" hidden>🖨️ <span class="button-text">چاپ A4</span></button><p>نوشته‌ها جدا از فایل اصلی کتاب نگه‌داری می‌شوند.</p></div></details><button class="btn btn-icon btn-quiet" id="focusBtn" aria-label="باز کردن حالت تمرکز" title="حالت تمرکز"><svg class="icon"><use href="#i-expand"/></svg></button><button class="btn btn-small focus-exit" id="exitFocus">خروج از تمرکز</button><a id="externalPdf" class="btn btn-icon btn-quiet" target="_blank" rel="noopener" title="باز کردن PDF در برگه جدا" aria-label="باز کردن PDF در برگه جدا" hidden><svg class="icon"><use href="#i-external"/></svg></a></div></div>
     <div id="emptyState" class="canvas-area"><div class="upload-sheet"><span class="sheet-label"><svg class="icon"><use href="#i-leaf"/></svg>هر صفحه، یک فرصت تازه</span>
      <svg class="book-art" viewBox="0 0 180 145" fill="none" aria-hidden="true"><ellipse cx="91" cy="125" rx="60" ry="9" fill="#e7e9dd"/><path d="m22 41 60 11 70-14 8 77-72 14-63-11-3-77Z" fill="#d9dfcb"/><path d="m30 29 56 14 60-15 7 82-65 15-58-14V29Z" fill="#f9f6e8" stroke="#809470" stroke-width="1.7" stroke-linejoin="round"/><path d="M86 43v81M35 33c18-2 34 3 51 12 18-11 35-16 55-16v77c-20 1-38 6-55 16-16-8-33-12-51-13V33Z" fill="#fffdf2" stroke="#849876" stroke-width="1.7"/><path d="m48 53 23 6m-23 8 23 6m-23 8 16 4m38-29 24-7m-24 21 24-7m-24 21 17-5" stroke="#d5dcc5" stroke-width="3" stroke-linecap="round"/><path d="m122 30 10-3v32l-5-3-5 6V30Z" fill="#ff985b"/><path d="M157 21v-9m-4 4h9M21 67h-9m5-5v10" stroke="#ffb98d" stroke-width="2.5" stroke-linecap="round"/><circle cx="53" cy="16" r="3" fill="#c2d3ac"/><path d="m150 86 15 4-18 17-5-4 8-17Z" fill="#ff985b" stroke="#c78251"/><path d="m142 103-3 9 8-5" fill="#ead8bb" stroke="#c78251"/></svg>
      <h2>امروز، کدام کتاب را درس می‌دهیم؟</h2><p>فایل کتاب را اینجا بکشید یا از گوشی و رایانه انتخاب کنید.<br>بقیه‌اش، صدای گرم شماست.</p><button id="uploadMain" class="btn btn-primary"><svg class="icon"><use href="#i-upload"/></svg>انتخاب PDF از کامپیوتر / گوشی</button><span class="upload-sub">فایل روی دستگاه شما می‌ماند؛ آپلود نمی‌شود.</span><div class="upload-alt"><button data-open="libraryDialog">کتابخانهٔ پایه پنجم</button><span>·</span><button data-open="urlDialog">باز کردن از لینک</button></div>
@@ -338,9 +386,9 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
     <div class="book-bottom"><p><svg class="icon"><use href="#i-screen"/></svg><span id="viewerHint">فقط کتاب و تصویر شما ضبط می‌شود؛ نه صفحهٔ گوشی یا اعلان‌ها.</span></p><span class="ratio-label">PDF → YOUR LESSON</span></div>
    </div>
    <div id="recordDock" class="record-dock"><div class="card record-bar" id="recordBar"><div class="rec-controls"><button class="btn btn-primary record-btn" id="startBtn"><span class="rec-circle"></span>شروع ضبط</button><button class="btn btn-small" id="pauseBtn" hidden><svg class="icon"><use href="#i-pause"/></svg><span>توقف موقت</span></button><button class="btn btn-small trim-button" id="trimBtn" hidden title="ویرایش انتهای ضبط">✂️ <span>ویرایش انتها</span></button><button class="btn btn-danger" id="stopBtn" hidden><svg class="icon"><use href="#i-stop"/></svg>پایان ضبط</button></div><div class="rec-info"><div class="rec-status" role="status"><i></i><span id="recordStatus">آمادهٔ یک درس تازه</span></div><div><div class="timer" id="timer" role="timer" aria-label="مدت ضبط">00:00</div><div class="timer-label">زمان تدریس</div><span class="rec-size" id="recSize" hidden></span></div></div></div>
-<div id="drawingToolbar" class="drawing-toolbar" role="toolbar" aria-label="ابزار نوشتن روی کتاب">
- <div class="ink-tools"><button class="ink-tool" data-tool="none" title="جابجایی و بزرگنمایی" aria-label="جابجایی و بزرگنمایی" aria-pressed="true">✋ <span>جابجایی</span></button><button class="ink-tool" data-tool="pen" title="قلم دائمی" aria-label="قلم دائمی" aria-pressed="false">🖊️ <span>دائمی</span></button><button class="ink-tool" data-tool="temp-pen" title="قلم موقت؛ محو شدن پس از ۳ ثانیه" aria-label="قلم موقت" aria-pressed="false">✏️ <span>موقت</span></button><button class="ink-tool" data-tool="highlighter" title="هایلایتر" aria-label="هایلایتر" aria-pressed="false">🖍️ <span>هایلایتر</span></button><button class="ink-tool picker-trigger" data-tool="shape" id="shapeTool" aria-pressed="false" aria-expanded="false" aria-controls="shapePicker" aria-label="ابزار اشکال؛ مربع" title="اشکال هندسی"><b id="shapeIcon">🔷</b> <span>اشکال</span></button><button class="ink-tool" data-tool="text" aria-pressed="false" aria-label="تایپ متن" title="تایپ متن">🅰️ <span>متن</span></button><button class="ink-tool picker-trigger" data-tool="sticker" id="stickerTool" aria-pressed="false" aria-expanded="false" aria-controls="stickerPicker" aria-label="استیکر" title="استیکر"><b id="stickerIcon">⭐</b> <span>استیکر</span></button><button class="ink-tool" data-tool="eraser" title="پاک‌کن" aria-label="پاک‌کن" aria-pressed="false">🧽 <span>پاک‌کن</span></button><button class="ink-tool clear-ink" id="clearPageInk" title="پاک کردن تمام خط‌های همین صفحه" aria-label="پاک کردن تمام خط‌های همین صفحه">🗑️ <span>پاک کردن صفحه</span></button></div>
- <div class="ink-options"><div class="ink-colors" role="group" aria-label="رنگ قلم"><button class="ink-color" data-color="#e53935" style="--ink-color:#e53935" title="قرمز" aria-label="قرمز" aria-pressed="true"></button><button class="ink-color" data-color="#1e88e5" style="--ink-color:#1e88e5" title="آبی" aria-label="آبی" aria-pressed="false"></button><button class="ink-color" data-color="#43a047" style="--ink-color:#43a047" title="سبز" aria-label="سبز" aria-pressed="false"></button><button class="ink-color" data-color="#fdd835" style="--ink-color:#fdd835" title="زرد" aria-label="زرد" aria-pressed="false"></button><button class="ink-color" data-color="#263238" style="--ink-color:#263238" title="مشکی" aria-label="مشکی" aria-pressed="false"></button></div><label class="stroke-select"><span>ضخامت</span><select id="strokeWidth" aria-label="ضخامت قلم"><option value="1">نازک</option><option value="3" selected>متوسط</option><option value="7">ضخیم</option></select></label><span class="ink-help" id="inkStatus">برای حرکت کتاب، ابزار دست را انتخاب کنید.</span></div>
+<div id="drawingToolbar" class="drawing-toolbar" role="toolbar" aria-label="ابزار نوشتن روی کتاب"><div class="palette-caption"><span>ابزارهای روی کتاب</span><small>نوشته‌های هر صفحه، جداگانه حفظ می‌شوند</small></div>
+ <div class="ink-tools"><button class="ink-tool" data-tool="laser" aria-label="اشاره‌گر لیزری؛ با لمس یا کشیدن" aria-pressed="false" title="لیزر؛ لمس کنید یا بکشید">🔦 <span>لیزر</span></button><button class="ink-tool" data-tool="none" title="جابجایی و بزرگنمایی" aria-label="جابجایی و بزرگنمایی" aria-pressed="true">✋ <span>جابجایی</span></button><button class="ink-tool" data-tool="pen" title="قلم دائمی" aria-label="قلم دائمی" aria-pressed="false">🖊️ <span>دائمی</span></button><button class="ink-tool" data-tool="temp-pen" title="قلم موقت؛ محو شدن پس از ۳ ثانیه" aria-label="قلم موقت" aria-pressed="false">✏️ <span>موقت</span></button><button class="ink-tool" data-tool="highlighter" title="هایلایتر" aria-label="هایلایتر" aria-pressed="false">🖍️ <span>هایلایتر</span></button><button class="ink-tool picker-trigger" data-tool="shape" id="shapeTool" aria-pressed="false" aria-expanded="false" aria-controls="shapePicker" aria-label="ابزار اشکال؛ مربع" title="اشکال هندسی"><b id="shapeIcon">🔷</b> <span>اشکال</span></button><button class="ink-tool" data-tool="text" aria-pressed="false" aria-label="تایپ متن" title="تایپ متن">🅰️ <span>متن</span></button><button class="ink-tool picker-trigger" data-tool="sticker" id="stickerTool" aria-pressed="false" aria-expanded="false" aria-controls="stickerPicker" aria-label="استیکر" title="استیکر"><b id="stickerIcon">⭐</b> <span>استیکر</span></button><button class="ink-tool" data-tool="eraser" title="پاک‌کن" aria-label="پاک‌کن" aria-pressed="false">🧽 <span>پاک‌کن</span></button><button class="ink-tool clear-ink" id="clearPageInk" title="پاک کردن تمام خط‌های همین صفحه" aria-label="پاک کردن تمام خط‌های همین صفحه">🗑️ <span>پاک کردن صفحه</span></button></div>
+ <div class="ink-options"><div class="history-tools" role="group" aria-label="تاریخچهٔ نوشته‌ها"><button id="undoInk" class="btn btn-small" title="واگرد؛ Ctrl+Z" aria-label="واگرد آخرین تغییر" aria-keyshortcuts="Control+Z Meta+Z" disabled>↶</button><button id="redoInk" class="btn btn-small" title="انجام دوباره؛ Ctrl+Shift+Z" aria-label="انجام دوباره" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z" disabled>↷</button></div><button class="btn btn-small btn-soft" data-open="lessonToolsDialog" title="زمان‌سنج، زیرنویس و نشانک‌ها">✦ <span>ابزار کلاس</span></button><div class="ink-colors" role="group" aria-label="رنگ قلم"><button class="ink-color" data-color="#e53935" style="--ink-color:#e53935" title="قرمز" aria-label="قرمز" aria-pressed="true"></button><button class="ink-color" data-color="#1e88e5" style="--ink-color:#1e88e5" title="آبی" aria-label="آبی" aria-pressed="false"></button><button class="ink-color" data-color="#43a047" style="--ink-color:#43a047" title="سبز" aria-label="سبز" aria-pressed="false"></button><button class="ink-color" data-color="#fdd835" style="--ink-color:#fdd835" title="زرد" aria-label="زرد" aria-pressed="false"></button><button class="ink-color" data-color="#263238" style="--ink-color:#263238" title="مشکی" aria-label="مشکی" aria-pressed="false"></button></div><label class="stroke-select"><span>ضخامت</span><select id="strokeWidth" aria-label="ضخامت قلم"><option value="1">نازک</option><option value="3" selected>متوسط</option><option value="7">ضخیم</option></select></label><span class="ink-help" id="inkStatus">برای حرکت کتاب، ابزار دست را انتخاب کنید.</span></div>
 
 <div id="textSettings" class="text-settings" hidden><label>اندازه <select id="textSize" aria-label="اندازهٔ متن و استیکر"><option value="14">کوچک · ۱۴</option><option value="24" selected>متوسط · ۲۴</option><option value="40">بزرگ · ۴۰</option><option value="60">خیلی بزرگ · ۶۰</option></select></label><label id="textBgLabel">پس‌زمینه <select id="textBg" aria-label="پس‌زمینهٔ متن"><option value="none">شفاف</option><option value="white">سفید</option><option value="yellow">زرد</option></select></label><span id="textToolHelp">Enter تأیید · Shift+Enter خط جدید · Esc لغو</span></div>
 <div id="shapePicker" class="ink-picker" role="group" aria-label="انتخاب شکل هندسی" hidden><div class="picker-heading">یک شکل برای توضیح بهتر <button class="picker-close" data-close-picker aria-label="بستن اشکال">✕</button></div><div class="shape-grid"><button data-shape="square">🔷 <span>مربع</span></button><button data-shape="rectangle">▬ <span>مستطیل</span></button><button data-shape="ellipse">⚫ <span>دایره / بیضی</span></button><button data-shape="trapezoid">⏢ <span>ذوزنقه</span></button><button data-shape="parallelogram">▱ <span>متوازی‌الاضلاع</span></button><button data-shape="pentagon">⬡ <span>پنج‌ضلعی</span></button><button data-shape="hexagon">⬢ <span>شش‌ضلعی</span></button><button data-shape="octagon">⬟ <span>هشت‌ضلعی</span></button></div><p>رنگ و ضخامت از پالت؛ روی کتاب بکشید و رها کنید.</p></div>
@@ -362,7 +410,19 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
 <dialog id="helpDialog" aria-labelledby="helpTitle"><div class="dialog-head"><h2 id="helpTitle">از کتاب تا فیلم، در سه قدم</h2><button class="btn btn-icon btn-quiet" data-close aria-label="بستن راهنما"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><ol class="guide-list"><li><div><h3>کتاب را روی میز بگذارید.</h3><p>PDF را از گوشی یا رایانه انتخاب کنید. کتاب با PDF.js داخل همین صفحه باز می‌شود. دکمه‌های قبلی و بعدی ورق می‌زنند؛ شمارهٔ صفحه هم قابل تغییر است. بزرگنمایی و جابه‌جایی کتاب در فیلم نهایی دیده می‌شود.</p></div></li><li><div><h3>صدا و تصویرتان را آماده کنید.</h3><p>میکروفون را آزمایش کنید و در صورت تمایل وب‌کم را روشن کنید. تصویر دایره‌ای شما روی کتاب دیده می‌شود. با شروع ضبط، فقط کتاب و وب‌کم اختیاری به فیلم تبدیل می‌شوند؛ هیچ مجوز ضبط صفحه‌ای درخواست نمی‌شود. فقط صدای میکروفون ضبط می‌شود، نه صدای دستگاه.</p></div></li><li><div><h3>درس بدهید، فیلم را دانلود کنید.</h3><p>ورق بزنید، بزرگنمایی کنید و توضیح بدهید. می‌توانید ضبط را موقتاً متوقف کنید. پس از پایان، فیلم را ببینید و پیش از بستن برگه دانلود کنید. برای حفظ صدای معلم، WebM در اولویت است؛ اگر مرورگر آن را پشتیبانی نکند، MP4 انتخاب می‌شود.</p></div></li><li><div><h3>نوشتن و اشاره روی کتاب</h3><p>در پایین صفحه، نوار ابزار نقاشی هست. ابزارها:<br>• ✋ جابجایی: برای ورق زدن و بزرگنمایی کتاب.<br>• 🖊️ قلم دائمی: خط‌ها روی صفحه می‌مانند و با ورق زدن از بین نمی‌روند.<br>• ✏️ قلم موقت: خط‌ها بعد از سه ثانیه خودشان محو می‌شوند — مناسب اشاره سریع.<br>• 🖍️ هایلایتر: برای رنگ‌آمیزی متن.<br>• 🔷 اشکال: هشت شکل هندسی (مربع، مستطیل، دایره، ذوزنقه، متوازی‌الاضلاع، پنج‌ضلعی، شش‌ضلعی، هشت‌ضلعی). روی کتاب بکشید و رها کنید — شکل به همان اندازه‌ای که کشیدید رسم می‌شود.<br>• 🅰️ متن: روی صفحه کلیک کنید، تایپ کنید، با Enter تأیید کنید. Shift+Enter برای خط جدید، Esc برای لغو. برای جابجایی کادر قبل از تأیید، دستگیرهٔ بالا را بکشید.<br>• ⭐ استیکر: ده استیکر آماده (ستاره، قلب، تیک، ضربدر، هشدار، سؤال، اشاره، هدف، آفرین، ایده).<br>• 🧽 پاک‌کن: پاک کردن خط‌های کشیده‌شده.<br>• 🗑️ پاک کردن صفحه: همهٔ نوشته‌های همین صفحه پاک شوند.<br>رنگ قلم از پالت پایین نوار، و ضخامت از منوی «ضخامت» انتخاب می‌شود.</p></div></li><li><div><h3>حالت تمرکز</h3><p>دکمهٔ حالت تمرکز (⛶) در نوار بالای میز تدریس. وقتی می‌زنید، PDF تمام صفحه می‌شود، تا تمرکز کامل روی درس باشد. برای نوشتن روی PDF، دکمهٔ 🎨 پایین صفحه را بزنید تا نوار ابزار ظاهر شود؛ دوباره بزنید، نوار بسته می‌شود. برای خروج، دکمهٔ «خروج از تمرکز» بالا یا کلید Esc.</p></div></li><li><div><h3>ویرایش انتهای ضبط</h3><p>وقتی ضبط را موقتاً متوقف می‌کنید، دکمهٔ «✂️ ویرایش انتها» ظاهر می‌شود. با آن می‌توانید تا ۳۰ ثانیه از آخر فیلم را حذف کنید و بعد ضبط را ادامه دهید. دو حالت دارد:<br>• حالت دقیق: بازضبط کامل با حفظ صدا و زمان‌بندی. کند است (به اندازهٔ خود فیلم طول می‌کشد)، ولی نتیجه بی‌نقص.<br>• حالت سریع: حذف فوری و بدون بازضبط. سریع است، ولی ممکن است کمی ناهماهنگی صدا و تصویر داشته باشد.<br>⚠️ این قابلیت فقط با خروجی WebM فعال است (کروم/فایرفاکس دسکتاپ یا کروم اندروید).</p></div></li><li><div><h3>تصویر وب‌کم و چرخش دوربین</h3><p>می‌توانید وب‌کم را اختیاری روشن کنید. تصویر شما روی کتاب دیده می‌شود و همراه با کتاب ضبط می‌شود.<br>• شکل تصویر: دایره، مربع، یا مستطیل (۱۶:۹).<br>• گوشهٔ تصویر: یکی از چهار گوشه (بالا/پایین، راست/چپ).<br>• اندازهٔ تصویر: کوچک، متوسط، بزرگ.<br>• چرخش دوربین: اگر گوشی شما دو دوربین دارد، دکمهٔ «🔄 چرخش دوربین» ظاهر می‌شود و می‌توانید بین دوربین جلو و عقب سوییچ کنید.</p></div></li><li><div><h3>کتابخانه و کتاب‌های پایه پنجم</h3><p>در پایین میز تدریس، ۸ کتاب درسی پایه پنجم آمادهٔ استفاده هستند: ریاضی، علوم تجربی، فارسی، نگارش، مطالعات اجتماعی، هدیه‌های آسمان، آموزش قرآن و کار آموزش خط تحریری. با کلیک روی هر کتاب، PDF همان کتاب مستقیماً باز می‌شود؛ همچنین می‌توانید هر فایل PDF دیگری را از گوشی یا رایانه انتخاب کنید.</p></div></li><li><div><h3>کیفیت و نسبت ابعاد فیلم</h3><p>پنج کیفیت موجود است: ۳۶۰p (کم‌حجم)، ۴۸۰p، ۵۴۰p (متعادل)، ۷۲۰p (خوب، پیش‌فرض)، ۱۰۸۰p (بالا).<br>نسبت ابعاد: خودکار (بر اساس PDF)، ۱۶:۹ افقی، ۹:۱۶ عمودی، ۱:۱ مربع، ۴:۳ کلاسیک. حالت خودکار، از صفحهٔ اول کتاب تشخیص می‌دهد.</p></div></li></ol><div class="about-box"><h3>دربارهٔ درسگاه</h3><p>درسگاه حکیمستان یک ابزار آموزشی برای ضبط درس از روی کتاب‌های PDF است. طراحی و توسعه توسط <strong>مهدی شریفیان</strong>، معلم پایه پنجم ابتدایی، انجام شده است.</p></div><div class="help-note">روی گوشی: «عرض صفحه» متن کتاب را بزرگ‌تر می‌کند؛ با کشیدن روی کتاب، قسمت‌های دیگر را نشان بدهید. حالت افقی گوشی فضای بیشتری می‌دهد. هنگام ضبط این برگه را باز نگه دارید. اگر به برنامهٔ دیگری بروید، ضبط برای جلوگیری از فیلم ناقص موقتاً متوقف می‌شود؛ پس از برگشت «ادامهٔ ضبط» را بزنید.</div><div class="help-note">تازه‌های درسگاه: نسبت فیلم به‌صورت خودکار از صفحهٔ اول کتاب تشخیص داده می‌شود و دستی هم قابل انتخاب است. نقاشی هر صفحه جدا می‌ماند؛ قلم موقت بعد از سه ثانیه محو می‌شود. خط‌ها، شکل‌ها، متن‌ها و استیکرها به قاب فیلم متصل‌اند، نه به زوم کتاب. ابزار متن با Enter تأیید، با Shift+Enter چندخطی و با Esc لغو می‌شود؛ قبل از تأیید، کادر را از دستگیرهٔ بالایش جابه‌جا کنید. حافظهٔ نقاشی محدود به ۲۰ صفحه است؛ با ویرایش صفحهٔ بیست‌ویکم، نقاشیِ قدیمی‌ترین صفحهٔ ویرایش‌شده حذف می‌شود. در حالت تمرکز با دکمهٔ 🎨 ابزارها را باز کنید. شکل وب‌کم را می‌توانید دایره، مربع یا مستطیل انتخاب کنید و بین دوربین جلو و عقب جابجا شوید.</div><p class="field-note">ویرایش انتها: هنگام توقف موقت، با ✂️ تا ۳۰ ثانیه از پایان حذف کنید. این قابلیت فقط برای WebM فعال است. دو حالت دارد: «دقیق» برش را همان لحظه با بازضبط انجام می‌دهد؛ «سریع» نقطهٔ برش را فوراً ثبت می‌کند و برش واقعی را به خروجی نهایی می‌سپارد. در هر دو حالت، یکپارچه‌سازی ممکن است به اندازهٔ فیلم زمان ببرد. هیچ فایلی به سرور ارسال نمی‌شود. پس از حذف، «ادامهٔ ضبط» را بزنید. دقت نهایی در حد فریم و زمان‌بندی مرورگر است.</p><p class="field-note">برای میکروفون و وب‌کم، سایت باید HTTPS باشد. مرورگر باید Canvas Capture و MediaRecorder داشته باشد؛ مرورگر به‌روز گوشی یا لپ‌تاپ را امتحان کنید. سازگاری همهٔ مدل‌های گوشی تضمین‌شده نیست. نمایشگر PDF.js به‌صورت محلی همراه برنامه ذخیره شده و آفلاین کار می‌کند.</p><p class="field-note">حریم خصوصی: فایل محلی PDF، یادداشت‌ها، صدا، تصویر و فیلم به سرور ارسال نمی‌شوند. نوشته‌های روی صفحات به‌صورت خودکار در حافظهٔ مرورگر (IndexedDB) ذخیره می‌شوند تا با رفرش صفحه از بین نروند و قابل پشتیبان‌گیری JSON و چاپ A4 هستند.</p></div><div class="dialog-footer"><button class="btn btn-primary" data-close>آماده‌ام، بریم سراغ درس!</button></div></dialog>
 <dialog id="libraryDialog" aria-labelledby="libraryTitle"><div class="dialog-head"><h2 id="libraryTitle">کتابخانهٔ پایه پنجم</h2><button class="btn btn-icon btn-quiet" data-close aria-label="بستن کتابخانه"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><p>کتاب درس امروز را انتخاب کنید.</p><div class="library-grid"><button class="library-book" data-book="riazi-5"><div class="book-cover"><span style="font-size:28px">🔢</span><span>ریاضی</span></div><span>ریاضی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="oloom-5"><div class="book-cover orange"><span style="font-size:28px">🔬</span><span>علوم تجربی</span></div><span>علوم پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="farsi-5"><div class="book-cover blue"><span style="font-size:28px">📖</span><span>فارسی</span></div><span>فارسی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="negaresh-5"><div class="book-cover"><span style="font-size:28px">✍️</span><span>نگارش</span></div><span>نگارش فارسی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="motaleat-5"><div class="book-cover orange"><span style="font-size:28px">🗺️</span><span>مطالعات</span></div><span>مطالعات اجتماعی پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="hediyeh-5"><div class="book-cover blue"><span style="font-size:28px">🕌</span><span>هدیه‌ها</span></div><span>هدیه‌های آسمان پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="quran-5"><div class="book-cover"><span style="font-size:28px">📿</span><span>قرآن</span></div><span>آموزش قرآن پنجم</span><small>فایل PDF</small></button><button class="library-book" data-book="khat-tahriri-5"><div class="book-cover orange"><span style="font-size:28px">🖋️</span><span>خط تحریری</span></div><span>کار آموزش خط تحریری</span><small>فایل PDF</small></button></div><p class="field-note" style="margin-top:19px">هر ۸ کتاب درسی پایه پنجم در پوشهٔ <bdi>books/</bdi> همراه سایت قرار دارند. برای سایر جزوه‌ها یا کتاب‌ها، فایل PDF را از رایانه یا گوشی انتخاب کنید.</p></div></dialog>
 <dialog id="urlDialog" aria-labelledby="urlTitle"><form id="urlForm"><div class="dialog-head"><h2 id="urlTitle">کتاب را از لینک باز کنید</h2><button type="button" class="btn btn-icon btn-quiet" data-close aria-label="بستن"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><label for="pdfUrl" class="form-label">نشانی مستقیم فایل PDF</label><input class="text-input" id="pdfUrl" type="url" placeholder="https://example.com/books/book.pdf" dir="ltr" required><p class="field-note">لینک باید مستقیم و قابل دریافت باشد. اگر سایت مبدأ اجازهٔ دریافت فایل (CORS) ندهد، فایل را دانلود و از گوشی یا رایانه انتخاب کنید. فقط لینک‌های HTTPS و HTTP پذیرفته می‌شوند.</p><p id="urlError" role="alert" style="color:var(--orange-dark);font-size:12px;margin-top:12px" hidden></p></div><div class="dialog-footer"><button type="button" class="btn" data-close>انصراف</button><button type="submit" class="btn btn-primary" id="loadUrlBtn"><svg class="icon"><use href="#i-link"/></svg>باز کردن کتاب</button></div></form></dialog>
-<dialog id="outputDialog" class="output-dialog" aria-labelledby="outputTitle"><div class="dialog-head"><div><div class="eyebrow">خسته نباشید، معلم عزیز</div><h2 id="outputTitle">یک درس تازه، آمادهٔ یادگیری.</h2></div><button class="btn btn-icon btn-quiet" data-close aria-label="بستن پیش‌نمایش"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><video id="outputVideo" class="output-video" controls playsinline preload="metadata"></video><div id="outputMeta" class="output-meta"></div><p class="field-note">فیلم را قبل از اشتراک‌گذاری بررسی کنید و پیش از بستن صفحه دانلود کنید. دانلود شروع می‌شود؛ پایان دانلود را در مرورگر بررسی کنید.</p><p class="webm-note" id="webmNote" hidden>خروجی این درس با فرمت WebM ذخیره شد. این فرمت در مرورگرها و پخش‌کننده‌های مدرنِ پشتیبان WebM باز می‌شود.</p><p class="field-note" id="playbackError" hidden>مرورگر نتوانست این خروجی را پخش کند. فایل را دانلود و با پخش‌کننده‌ای مثل VLC بررسی کنید.</p><label class="form-label" for="downloadName" style="margin-top:15px">نام فیلم</label><input class="text-input" id="downloadName" maxlength="100" value="درس من"></div><div class="dialog-footer"><button class="btn" data-close>بازگشت به میز تدریس</button><a class="btn btn-primary" id="downloadBtn" download><svg class="icon"><use href="#i-download"/></svg><span id="downloadLabel">دانلود فیلم</span></a></div></dialog>
+<dialog id="lessonToolsDialog" aria-labelledby="lessonToolsTitle">
+ <div class="dialog-head"><div><div class="eyebrow">کوچک، کاربردی، مخصوص کلاس شما</div><h2 id="lessonToolsTitle">جعبه‌ابزار تدریس</h2></div><button class="btn btn-icon btn-quiet" data-close aria-label="بستن جعبه‌ابزار">×</button></div>
+ <div class="dialog-body lesson-tools-grid">
+  <section class="lesson-tool-card" aria-labelledby="classTimerTitle"><h3 id="classTimerTitle">⏱ زمانِ فکر کردن</h3><p>زمان‌سنج در بالای فیلم دیده و ضبط می‌شود. هنگام توقف ضبط، خودکار مکث می‌کند؛ مستقل از ضبط هم قابل استفاده است.</p>
+   <div class="lesson-tool-row"><label for="lessonTimerKind">حالت</label><select class="select" id="lessonTimerKind"><option value="none">پنهان</option><option value="down">شمارش معکوس</option><option value="up">کرنومتر</option></select><label for="lessonMinutes">دقیقه</label><input class="text-input" id="lessonMinutes" type="number" min="1" max="180" step="1" value="3"></div>
+   <div class="lesson-tool-row" style="margin-top:12px"><output id="lessonTimerDisplay" class="lesson-clock" aria-label="زمان تمرین" role="timer">03:00</output><button id="lessonTimerToggle" class="btn btn-soft">شروع</button><button id="lessonTimerReset" class="btn">از نو</button><span id="lessonTimerStatus" role="status">آمادهٔ تمرین</span></div>
+  </section>
+  <section class="lesson-tool-card" aria-labelledby="lessonCaptionTitle"><h3 id="lessonCaptionTitle">✍ زیرنویس و پرسش روی فیلم</h3><p id="captionHelp">یک نکته یا سؤال کوتاه بنویسید؛ با «نمایش» در پایین فیلم ثبت می‌شود. کاملاً آفلاین؛ این ابزار تشخیص گفتار نیست.</p><label for="lessonCaptionInput" class="sr-only">متن زیرنویس یا پرسش</label><textarea id="lessonCaptionInput" class="text-input caption-input" maxlength="160" rows="2" placeholder="مثلاً: به نظر شما چرا یخ روی آب می‌ماند؟" aria-describedby="captionHelp"></textarea><div class="lesson-tool-row" style="margin-top:10px"><button id="applyLessonCaption" class="btn btn-soft">نمایش روی فیلم</button><button id="clearLessonCaption" class="btn">پنهان کردن</button><span id="lessonCaptionStatus" role="status" class="muted">بدون زیرنویس</span></div></section>
+  <section class="lesson-tool-card" aria-labelledby="bookmarksTitle"><h3 id="bookmarksTitle">🔖 ایستگاه‌های درس</h3><p>صفحه‌های مهم را نشان کنید و هنگام تدریس، مستقیم به آن‌ها برگردید. برای هر کتاب تا ۱۲ نشانک در همین مرورگر نگه داشته می‌شود.</p><div class="lesson-tool-row"><button id="toggleBookmark" class="btn btn-soft" disabled>نشان کردن صفحهٔ فعلی</button><button id="clearBookmarks" class="btn" disabled>حذف نشانک‌های کتاب</button></div><div id="lessonBookmarks" class="lesson-route" style="margin-top:10px"></div></section>
+  <p class="field-note">واگرد تا ۱۲ مرحله برای هر صفحه، در سقف مجموع ۳۲ مگابایت؛ با تغییر کیفیت/قاب یا بازیابی نوشته‌ها بازنشانی می‌شود. میان‌برها: Ctrl / ⌘ + Z واگرد · Ctrl / ⌘ + Shift + Z انجام دوباره. لیزر و زیرنویس در فیلم دیده می‌شوند، اما در یادداشت‌های کتاب ذخیره نمی‌شوند.</p>
+ </div><div class="dialog-footer"><button class="btn btn-primary" data-close>بازگشت به تدریس</button></div>
+</dialog>
+<dialog id="outputDialog" class="output-dialog" aria-labelledby="outputTitle"><div class="dialog-head"><div><div class="eyebrow">خسته نباشید، معلم عزیز</div><h2 id="outputTitle">یک درس تازه، آمادهٔ یادگیری.</h2></div><button class="btn btn-icon btn-quiet" data-close aria-label="بستن پیش‌نمایش"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><video id="outputVideo" class="output-video" controls playsinline preload="metadata"></video><div id="outputMeta" class="output-meta"></div><section id="lessonRouteSection" hidden aria-labelledby="lessonRouteTitle"><div class="route-heading"><h3 id="lessonRouteTitle">🗺 مسیر این درس</h3><button id="downloadLessonRoute" class="btn btn-small">دانلود فهرست زمان‌ها</button></div><p class="field-note">برای رفتن به زمانِ نمایش هر صفحه، روی آن بزنید.</p><div id="lessonRoute" class="lesson-route"></div></section><p class="field-note">فیلم را قبل از اشتراک‌گذاری بررسی کنید و پیش از بستن صفحه دانلود کنید. دانلود شروع می‌شود؛ پایان دانلود را در مرورگر بررسی کنید.</p><p class="webm-note" id="webmNote" hidden>خروجی این درس با فرمت WebM ذخیره شد. این فرمت در مرورگرها و پخش‌کننده‌های مدرنِ پشتیبان WebM باز می‌شود.</p><p class="field-note" id="playbackError" hidden>مرورگر نتوانست این خروجی را پخش کند. فایل را دانلود و با پخش‌کننده‌ای مثل VLC بررسی کنید.</p><label class="form-label" for="downloadName" style="margin-top:15px">نام فیلم</label><input class="text-input" id="downloadName" maxlength="100" value="درس من"></div><div class="dialog-footer"><button class="btn" data-close>بازگشت به میز تدریس</button><a class="btn btn-primary" id="downloadBtn" download><svg class="icon"><use href="#i-download"/></svg><span id="downloadLabel">دانلود فیلم</span></a></div></dialog>
 <dialog id="passwordDialog" aria-labelledby="passwordTitle"><form id="passwordForm"><div class="dialog-head"><h2 id="passwordTitle">این کتاب رمز دارد</h2><button class="btn btn-icon btn-quiet" type="button" data-close aria-label="انصراف"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="dialog-body"><p id="passwordHint">برای باز کردن کتاب، رمز فایل PDF را وارد کنید.</p><label class="form-label" for="pdfPassword">رمز فایل</label><input id="pdfPassword" class="text-input" type="password" autocomplete="off" required></div><div class="dialog-footer"><button type="button" class="btn" data-close>انصراف</button><button class="btn btn-primary" type="submit">باز کردن کتاب</button></div></form></dialog>
 <!-- PDF.js renders one page at a time into pdfCanvas. mixCanvas composites it with the circular camera; previewCanvas shows exactly the same composition. -->
 <canvas id="drawingCanvas" hidden></canvas><canvas id="tempDrawingCanvas" hidden></canvas><canvas id="pdfCanvas" hidden></canvas><canvas id="mixCanvas" width="1280" height="720" hidden></canvas><canvas id="circleCanvas" hidden></canvas>
@@ -393,7 +453,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   const migrated={high:'1080',medium:'720',low:'540'}[p.quality]||p.quality;
   if(qualityOptions[migrated])prefs.quality=migrated;
   if(['auto','16:9','9:16','1:1','4:3'].includes(p.aspect))prefs.aspect=p.aspect;
-  if(['none','pen','temp-pen','highlighter','eraser','shape','text','sticker'].includes(p.tool))prefs.tool=p.tool;
+  if(['none','pen','temp-pen','highlighter','eraser','shape','text','sticker','laser'].includes(p.tool))prefs.tool=p.tool;
   if(['#e53935','#1e88e5','#43a047','#fdd835','#263238'].includes(p.color))prefs.color=p.color;
   if([1,3,7].includes(p.strokeWidth))prefs.strokeWidth=p.strokeWidth;
   if(['square','rectangle','ellipse','trapezoid','parallelogram','pentagon','hexagon','octagon'].includes(p.shape))prefs.shape=p.shape;
@@ -476,7 +536,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    const img=await pngToImageData(url,drawing.width||1280,drawing.height||720);
    if(img){pageDrawings.set(p,img);count++;if(pageDrawings.size>=20)break;}
   }
-  if(pdfDoc){restoreDrawingPage(pageNumber);drawFrame();}
+  if(pdfDoc){clearInkHistory();restoreDrawingPage(pageNumber);drawFrame();}
   return count;
  }
  async function loadNotesFromIdb(title){
@@ -511,6 +571,13 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  let savedSegments=[],segmentBase=0,segmentStopResolve=null,trimBusy=false,trimUrl='',trimSource=null,trimDuration=0,processingController=null;
  let focusToolsOpen=false;
  let textEdit=null,textDrag=null,openPicker=null,stickerHover=null,fastFinalizeRequired=false;
+ // Local-only teaching tools; no network services or new runtime dependencies.
+ const undoStacks=new Map(),redoStacks=new Map();const HISTORY_LIMIT=12;
+ let lessonTimer={kind:'none',running:false,accum:0,startTs:0,total:0};
+ let lessonCaption='',laserPoint=null,historySequence=0;
+ const HISTORY_BYTES=32*1024*1024;
+ let bookmarks=[],pageVisitLog=[],resultVisitLog=[];
+ const bookmarksKey='hakimestan.darsgah.bookmarks.v1';
  let trimSegments=[],trimPlaylist=[],trimIndex=0,trimPosition=0,trimEpoch=0,trimRunning=false,trimRAF=0,trimLoadAbort=null;
  const active=()=>['preparing','recording','paused','stopping'].includes(state);
  const recordingSupported=!!(window.MediaRecorder&&mix.captureStream&&ctx&&pdfCtx&&previewCtx&&circleCtx);
@@ -522,7 +589,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   const close=document.createElement('button');close.textContent='×';close.setAttribute('aria-label','بستن پیام');close.onclick=()=>box.remove();
   box.append(icon,text,close);$('toasts').append(box);setTimeout(()=>box.remove(),duration);
  }
- function openDialog(id){const d=$(id);if(!d.open)d.showModal();}
+ function openDialog(id){const d=$(id);if(!d.open)d.showModal();if(id==='lessonToolsDialog')updateLessonTimer();}
  $$('[data-open]').forEach(b=>b.onclick=()=>openDialog(b.dataset.open));
  $$('[data-close]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
  $$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d&&d.id!=='processingDialog'){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}}));
@@ -580,7 +647,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   $('pageInput').value=pageNumber;$('pageInput').max=pageCount||1;$('pageTotal').textContent=fa(pageCount||0);
   $('prevPage').disabled=!pdfDoc||requestedPage<=1||loadingBook;$('nextPage').disabled=!pdfDoc||requestedPage>=pageCount||loadingBook;
   $('pageInput').disabled=!pdfDoc||loadingBook;
-  $('pageLoading').hidden=!pageBusy;syncFocusPage();
+  $('pageLoading').hidden=!pageBusy;syncFocusPage();updateHistoryUI();renderBookmarks();
   $('bookMeta').textContent=pdfDoc?'صفحهٔ '+fa(pageNumber)+' از '+fa(pageCount)+' · رندر مستقیم PDF':loadingBook?'در حال باز کردن کتاب…':'هنوز کتابی انتخاب نشده';
   $('startBtn').disabled=active()||loadingBook||pageBusy||micTestBusy||!recordingSupported;
  }
@@ -596,7 +663,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    commitRaster(scratch);pageNumber=target;if(pageChanged){restoreDrawingPage(target);clearTemporaryInk();}
    if(bookTitle){prefs.lastPages=prefs.lastPages||{};prefs.lastPages[bookTitle.slice(0,80)]=pageNumber;savePrefs();}
    if(resetView){zoom=1;panX=0;panY=0;}
-   if(state==='recording')recordingPages.add(target);
+   if(state==='recording'){recordingPages.add(target);if(pageChanged)logPageVisit();}
    updateZoomUI();drawFrame();
   }catch(error){if(seq===renderSequence&&error.name!=='RenderingCancelledException'){requestedPage=pageNumber;toast('نمایش این صفحه انجام نشد. '+pdfError(error),'error');}}
   finally{if(seq===renderSequence){pageBusy=false;updatePageUI();}}
@@ -624,11 +691,11 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    const previousDoc=pdfDoc,previousUrl=pdfUrl;
    pdfDoc=doc;pageCount=doc.numPages;pageNumber=requestedPage=savedStartPage;bookTitle=title;zoom=1;panX=panY=0;
    autoAspect=Math.abs(scratch.width/scratch.height-1)<=.05?'1:1':scratch.width>scratch.height?'16:9':'9:16';
-   cancelText();pageDrawings.clear();drawingDirty=false;clearTemporaryInk();drawingCtx.clearRect(0,0,drawing.width,drawing.height);
+   cancelText();clearInkHistory();laserPoint=null;pageDrawings.clear();drawingDirty=false;clearTemporaryInk();drawingCtx.clearRect(0,0,drawing.width,drawing.height);
    commitRaster(scratch);setOutputSize(false);pdfUrl=URL.createObjectURL(new Blob([blob],{type:'application/pdf'}));
-   $('externalPdf').href=pdfUrl;$('externalPdf').hidden=false;$('exportNotesBtn').hidden=false;$('importNotesBtn').hidden=false;$('printPageBtn').hidden=false;$('bookName').textContent=title;$('bookName').title=title;
+   $('externalPdf').href=pdfUrl;$('externalPdf').hidden=false;$('exportNotesBtn').hidden=false;$('importNotesBtn').hidden=false;$('printPageBtn').hidden=false;$('snapshotBtn').hidden=false;$('bookName').textContent=title;$('bookName').title=title;
    $('emptyState').hidden=true;$('pdfWrap').hidden=false;
-   await loadNotesFromIdb(title);
+   loadBookmarks();await loadNotesFromIdb(title);
    updateOutputLabel();
    $('step1').classList.remove('current');$('step2').classList.add('current');$('step3').classList.remove('current');
    updateZoomUI();resizePreview();drawFrame();
@@ -709,19 +776,19 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  // Every preview frame comes from the SAME composition that is captured by MediaRecorder.
  function setOutputSize(preserve=true){
   if(preserve){commitText();stashDrawingPage();}const q=outputDimensions();
-  if(mix.width!==q.width||mix.height!==q.height){mix.width=q.width;mix.height=q.height;drawing.width=q.width;drawing.height=q.height;tempDrawing.width=q.width;tempDrawing.height=q.height;clearTemporaryInk();restoreDrawingPage(pageNumber);}
+  if(mix.width!==q.width||mix.height!==q.height){clearInkHistory();mix.width=q.width;mix.height=q.height;drawing.width=q.width;drawing.height=q.height;tempDrawing.width=q.width;tempDrawing.height=q.height;clearTemporaryInk();restoreDrawingPage(pageNumber);}
   else if(drawing.width!==q.width||drawing.height!==q.height){drawing.width=q.width;drawing.height=q.height;tempDrawing.width=q.width;tempDrawing.height=q.height;}
   $('previewStage').style.setProperty('--frame-ratio',q.width/q.height);$('outputVideo').style.aspectRatio=q.width+'/'+q.height;$('trimVideo').style.aspectRatio=q.width+'/'+q.height;
   updateOutputLabel();clampPan();drawFrame();requestAnimationFrame(resizePreview);
  }
  function updateOutputLabel(){const q=outputDimensions();$('dimensionInfo').textContent=aspectLabel()+' · '+q.width+' × '+q.height+' · '+(qualityOptions[prefs.quality].bitrate/1000000).toLocaleString('fa-IR')+' مگابیت/ثانیه';$('viewerHint').textContent='قاب '+aspectLabel()+' · کتاب، خط‌ها و تصویر شما در فیلم دیده می‌شود.';}
- function stashDrawingPage(){if(!pdfDoc||!drawingDirty)return;
+ function stashDrawingPage(){updateHistoryUI();if(!pdfDoc||!drawingDirty)return;
   pageDrawings.delete(pageNumber);pageDrawings.set(pageNumber,drawingCtx.getImageData(0,0,drawing.width,drawing.height));drawingDirty=false;
   if(pageDrawings.size>20){const oldest=pageDrawings.keys().next().value;pageDrawings.delete(oldest);toast('برای آزاد شدن حافظه، نقاشی صفحهٔ '+fa(oldest)+' حذف شد. خودِ PDF تغییری نکرد؛ حداکثر ۲۰ صفحهٔ نقاشی نگه داشته می‌شود.','warning',11000);}
   scheduleNotesSave();
  }
  function restoreDrawingPage(page){drawingCtx.clearRect(0,0,drawing.width,drawing.height);const saved=pageDrawings.get(page);if(saved){const c=document.createElement('canvas');c.width=saved.width;c.height=saved.height;c.getContext('2d').putImageData(saved,0,0);drawingCtx.drawImage(c,0,0,drawing.width,drawing.height);c.width=1;c.height=1;}drawingDirty=false;}
- function clearTemporaryInk(){hideStickerCursor();tempStrokes=[];currentStroke=null;inkPointer=null;tempCtx.clearRect(0,0,tempDrawing.width,tempDrawing.height);}
+ function clearTemporaryInk(){laserPoint=null;hideStickerCursor();tempStrokes=[];currentStroke=null;inkPointer=null;tempCtx.clearRect(0,0,tempDrawing.width,tempDrawing.height);}
  function traceStroke(context,stroke,opacity=1){const points=stroke.points;if(!points.length)return;context.save();context.globalCompositeOperation=stroke.tool==='eraser'?'destination-out':'source-over';context.globalAlpha=opacity*(stroke.tool==='highlighter'?.25:1);context.strokeStyle=stroke.color;context.fillStyle=stroke.color;context.lineWidth=stroke.width;context.lineCap='round';context.lineJoin='round';context.beginPath();if(points.length===1){context.arc(points[0].x,points[0].y,stroke.width/2,0,Math.PI*2);context.fill();}else{context.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length;i++)context.lineTo(points[i].x,points[i].y);context.stroke();}context.restore();}
  function renderTemporaryInk(){tempCtx.clearRect(0,0,tempDrawing.width,tempDrawing.height);const now=performance.now();tempStrokes=tempStrokes.filter(s=>s.endedAt===null||now-s.endedAt<3000);for(const stroke of tempStrokes){const age=stroke.endedAt===null?0:now-stroke.endedAt,opacity=age<2300?1:Math.max(0,(3000-age)/700);traceStroke(tempCtx,stroke,opacity);}if(currentStroke?.tool==='shape')drawShape(tempCtx,currentStroke);}
  const shapeDefs={square:['🔷','مربع'],rectangle:['▬','مستطیل'],ellipse:['⚫','دایره / بیضی'],trapezoid:['⏢','ذوزنقه'],parallelogram:['▱','متوازی‌الاضلاع'],pentagon:['⬡','پنج‌ضلعی'],hexagon:['⬢','شش‌ضلعی'],octagon:['⬟','هشت‌ضلعی']};
@@ -744,21 +811,23 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
   if(prefs.tool==='text'){if(textEdit){commitText();return;}beginText(point);return;}
   if(textEdit)commitText();
   if(prefs.tool==='sticker'){stampSticker(point);if(e.pointerType==='mouse')updateStickerCursor(e);else hideStickerCursor();return;}
+  if(prefs.tool==='laser'){inkPointer=e.pointerId;preview.setPointerCapture(e.pointerId);laserPoint={...point,at:performance.now()};drawFrame();return;}
+  if(!['temp-pen','none'].includes(prefs.tool))rememberInk();
   inkPointer=e.pointerId;preview.setPointerCapture(e.pointerId);const tool=prefs.tool,width=prefs.strokeWidth*(tool==='highlighter'?6:tool==='eraser'?7:1);
   currentStroke={tool,color:prefs.color,width,shape:prefs.shape,points:[point],endedAt:null};
   if(tool==='shape'){drawFrame();return;}
   if(tool==='temp-pen'||tool==='eraser')tempStrokes.push(currentStroke);
   if(tool!=='temp-pen'){traceStroke(drawingCtx,currentStroke);drawingDirty=true;}drawFrame();
  }
- function moveInk(e){if(e.pointerId!==inkPointer||!currentStroke)return;const point=toMixPoint(e);
+ function moveInk(e){if(e.pointerId===inkPointer&&prefs.tool==='laser'){laserPoint={...toMixPoint(e),at:performance.now()};drawFrame();return;}if(e.pointerId!==inkPointer||!currentStroke)return;const point=toMixPoint(e);
   if(currentStroke.tool==='shape'){currentStroke.points[1]=point;drawFrame();return;}
   const previous=currentStroke.points[currentStroke.points.length-1];currentStroke.points.push(point);if(currentStroke.tool!=='temp-pen'){traceStroke(drawingCtx,{...currentStroke,points:[previous,point]});drawingDirty=true;}drawFrame();
  }
- function endInk(e){if(e.pointerId!==inkPointer)return;if(currentStroke?.tool==='shape'){if(e.type!=='pointercancel'){drawShape(drawingCtx,currentStroke);drawingDirty=true;}}else if(currentStroke)currentStroke.endedAt=performance.now();currentStroke=null;inkPointer=null;stashDrawingPage();drawFrame();}
+ function endInk(e){if(e.pointerId!==inkPointer)return;if(laserPoint)laserPoint.at=performance.now();if(currentStroke?.tool==='shape'){if(e.type!=='pointercancel'){drawShape(drawingCtx,currentStroke);drawingDirty=true;}}else if(currentStroke)currentStroke.endedAt=performance.now();currentStroke=null;inkPointer=null;stashDrawingPage();drawFrame();}
  function updateDrawingUI(){
   $$('[data-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tool===prefs.tool)));$$('[data-color]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===prefs.color)));$('strokeWidth').value=prefs.strokeWidth;
   preview.style.cursor={none:'grab',text:'text',sticker:'copy'}[prefs.tool]||'crosshair';
-  $('inkStatus').textContent={none:'لمس و کشیدن برای جابه‌جایی کتاب',pen:'خط دائمی؛ مخصوص همین صفحه','temp-pen':'اشارهٔ موقت؛ محو شدن پس از ۳ ثانیه',highlighter:'هایلایت نیمه‌شفاف روی همین صفحه',eraser:'پاک کردن خط‌ها، نه تصویر کتاب',shape:'شکل را با کشیدن رسم کنید؛ فقط خط دور',text:'روی کتاب بزنید؛ متن پس از تأیید ضبط می‌شود',sticker:'هر لمس، یک استیکر؛ رنگ ایموجی ثابت است'}[prefs.tool];
+  $('inkStatus').textContent={laser:'لمس کنید یا بکشید؛ اشارهٔ نورانی، بدون تغییر یادداشت‌ها',none:'لمس و کشیدن برای جابه‌جایی کتاب',pen:'خط دائمی؛ مخصوص همین صفحه','temp-pen':'اشارهٔ موقت؛ محو شدن پس از ۳ ثانیه',highlighter:'هایلایت نیمه‌شفاف روی همین صفحه',eraser:'پاک کردن خط‌ها، نه تصویر کتاب',shape:'شکل را با کشیدن رسم کنید؛ فقط خط دور',text:'روی کتاب بزنید؛ متن پس از تأیید ضبط می‌شود',sticker:'هر لمس، یک استیکر؛ رنگ ایموجی ثابت است'}[prefs.tool];
   $('shapeIcon').textContent=shapeDefs[prefs.shape][0];$('shapeTool').setAttribute('aria-label','اشکال؛ '+shapeDefs[prefs.shape][1]);$('stickerIcon').textContent=prefs.sticker;
   $$('[data-shape]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shape===prefs.shape)));$$('[data-sticker]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sticker===prefs.sticker)));
   $('textSettings').hidden=!['text','sticker'].includes(prefs.tool);$('textBgLabel').hidden=prefs.tool!=='text';$('textSize').value=prefs.textSize;$('textBg').value=prefs.textBg;
@@ -777,7 +846,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  $$('[data-close-picker]').forEach(b=>b.onclick=closePickers);
  $$('[data-color]').forEach(b=>b.onclick=()=>{prefs.color=b.dataset.color;updateDrawingUI();});$('strokeWidth').onchange=()=>{prefs.strokeWidth=+$('strokeWidth').value;updateDrawingUI();};
  $('textSize').onchange=()=>{prefs.textSize=+$('textSize').value;updateDrawingUI();};$('textBg').onchange=()=>{prefs.textBg=$('textBg').value;updateDrawingUI();};
- $('clearPageInk').onclick=()=>{if(!pdfDoc)return;if(!confirm('همهٔ خط‌ها، شکل‌ها، متن‌ها و استیکرهای همین صفحه پاک شوند؟'))return;cancelText();pageDrawings.delete(pageNumber);drawingCtx.clearRect(0,0,drawing.width,drawing.height);drawingDirty=false;clearTemporaryInk();scheduleNotesSave();drawFrame();};
+ $('clearPageInk').onclick=()=>{if(!pdfDoc)return;if(!confirm('همهٔ خط‌ها، شکل‌ها، متن‌ها و استیکرهای همین صفحه پاک شوند؟'))return;cancelText();rememberInk();pageDrawings.delete(pageNumber);drawingCtx.clearRect(0,0,drawing.width,drawing.height);drawingDirty=false;clearTemporaryInk();scheduleNotesSave();drawFrame();};
  $('exportNotesBtn').onclick=()=>{
   if(!pdfDoc)return;
   commitText();stashDrawingPage();
@@ -831,7 +900,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  },true);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&textEdit){e.preventDefault();e.stopImmediatePropagation();cancelText();}else if(e.key==='Escape'&&openPicker){e.preventDefault();e.stopImmediatePropagation();closePickers();}},true);
  window.addEventListener('scroll',()=>{if(openPicker)positionPicker(openPicker);},true);
- function stampSticker(point){drawingCtx.save();drawingCtx.font=prefs.textSize+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';drawingCtx.textAlign='center';drawingCtx.textBaseline='middle';drawingCtx.globalAlpha=1;drawingCtx.globalCompositeOperation='source-over';drawingCtx.fillText(prefs.sticker,point.x,point.y);drawingCtx.restore();drawingDirty=true;stashDrawingPage();drawFrame();}
+ function stampSticker(point){rememberInk();drawingCtx.save();drawingCtx.font=prefs.textSize+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';drawingCtx.textAlign='center';drawingCtx.textBaseline='middle';drawingCtx.globalAlpha=1;drawingCtx.globalCompositeOperation='source-over';drawingCtx.fillText(prefs.sticker,point.x,point.y);drawingCtx.restore();drawingDirty=true;stashDrawingPage();drawFrame();}
  function updateStickerCursor(e){if(prefs.tool!=='sticker'||!pdfDoc)return hideStickerCursor();const point=toMixPoint(e);if(!point.inside)return hideStickerCursor();stickerHover=point;const r=sceneRect(),stage=$('previewStage').getBoundingClientRect(),cursor=$('stickerCursor');cursor.textContent=prefs.sticker;cursor.style.left=(r.left-stage.left+point.x*r.width/mix.width)+'px';cursor.style.top=(r.top-stage.top+point.y*r.height/mix.height)+'px';cursor.style.fontSize=(prefs.textSize*r.width/mix.width)+'px';cursor.hidden=false;}
  function hideStickerCursor(){stickerHover=null;$('stickerCursor').hidden=true;}
  preview.addEventListener('pointerleave',hideStickerCursor);
@@ -858,7 +927,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  function commitText(){
   if(!textEdit)return;const t=textEdit,value=t.input.value.slice(0,500);textEdit=null;textDrag=null;t.element.remove();
   if(!value.trim()||!pdfDoc||t.page!==pageNumber)return;
-  const padding=8;drawingCtx.save();drawingCtx.font=t.weight+' '+t.size+'px Vazirmatn,Tahoma,sans-serif';drawingCtx.direction=textDirection(value);const rtl=drawingCtx.direction==='rtl';drawingCtx.textAlign=rtl?'right':'left';drawingCtx.textBaseline='top';
+  rememberInk();const padding=8;drawingCtx.save();drawingCtx.font=t.weight+' '+t.size+'px Vazirmatn,Tahoma,sans-serif';drawingCtx.direction=textDirection(value);const rtl=drawingCtx.direction==='rtl';drawingCtx.textAlign=rtl?'right':'left';drawingCtx.textBaseline='top';
   const lines=wrapCanvasText(drawingCtx,value,t.width-padding*2),lineHeight=t.size*1.5,height=lines.length*lineHeight+padding*2;
   if(t.bg!=='none'){drawingCtx.fillStyle=t.bg==='white'?'#ffffff':'#fff3a3';drawingCtx.fillRect(t.x,t.y,t.width,height);}
   drawingCtx.fillStyle=t.color;const x=rtl?t.x+t.width-padding:t.x+padding;lines.forEach((line,i)=>drawingCtx.fillText(line,x,t.y+padding+i*lineHeight));drawingCtx.restore();drawingDirty=true;stashDrawingPage();drawFrame();
@@ -904,11 +973,12 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    }
    const x=prefs.position[1]==='r'?w-margin-camW:margin,y=prefs.position[0]==='b'?h-margin-camH:margin;ctx.drawImage(circle,(circle.width-camW)/2,(circle.height-camH)/2,camW,camH,x,y,camW,camH);
   }
+  drawLessonOverlays(w,h);
   if(!$('pdfWrap').hidden&&preview.width>0){previewCtx.imageSmoothingEnabled=true;previewCtx.imageSmoothingQuality='high';const scale=Math.min(preview.width/w,preview.height/h),dw=w*scale,dh=h*scale;previewCtx.fillStyle='#e9eee3';previewCtx.fillRect(0,0,preview.width,preview.height);previewCtx.drawImage(mix,(preview.width-dw)/2,(preview.height-dh)/2,dw,dh);}
  }
  function resizePreview(){if($('pdfWrap').hidden)return;const r=preview.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,3);if(!r.width||!r.height)return;const w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));if(preview.width!==w||preview.height!==h){preview.width=w;preview.height=h;}drawFrame();positionTextEditor();if(openPicker)positionPicker(openPicker);}
  if(window.ResizeObserver)new ResizeObserver(resizePreview).observe($('previewStage'));window.addEventListener('resize',resizePreview);
- function idleLoop(now){if(state!=='recording'&&(videoAlive(cameraStream)||tempStrokes.length||currentStroke)&&now-lastPreview>33){drawFrame();lastPreview=now;}idleRAF=requestAnimationFrame(idleLoop);}
+ function idleLoop(now){if(state!=='recording'&&(videoAlive(cameraStream)||tempStrokes.length||currentStroke||laserPoint||lessonTimer.running)&&now-lastPreview>33){drawFrame();lastPreview=now;}idleRAF=requestAnimationFrame(idleLoop);}
  idleRAF=requestAnimationFrame(idleLoop);
  function startRenderClock(){
   drawFrame();
@@ -1031,7 +1101,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    setOutputSize();drawFrame();composedStream=mix.captureStream(30);
    if(!composedStream.getVideoTracks().length)throw new Error('مرورگر نتوانست جریان تصویر Canvas بسازد. از مرورگر به‌روز استفاده کنید.');
    recordedWithMic=audioAlive(micStream);if(recordedWithMic)micStream.getAudioTracks().forEach(t=>composedStream.addTrack(t));
-   savedSegments=[];fastFinalizeRequired=false;segmentBase=0;chunks=[];bytes=0;elapsed=0;recordingTitle=bookTitle;recordingPages=new Set([pageNumber]);warnedDuration=warnedMemory=false;recorderFinalizing=false;
+   savedSegments=[];fastFinalizeRequired=false;segmentBase=0;chunks=[];bytes=0;elapsed=0;recordingTitle=bookTitle;recordingPages=new Set([pageNumber]);pageVisitLog=[{page:pageNumber,time:0}];warnedDuration=warnedMemory=false;recorderFinalizing=false;
    constructRecorder(composedStream);state='recording';segmentStarted=performance.now();autoPaused=false;startRenderClock();timerId=setInterval(tick,250);
    if(recordedWithMic)beginMeter();requestWakeLock();$('timer').textContent='00:00';$('step2').classList.add('current');$('step3').classList.remove('current');refreshUI();
   }catch(e){if(session!==recordSession)return;recorder=null;state='idle';releaseRecordingDevices();refreshUI();toast(e.message||'ضبط شروع نشد؛ مرورگر به‌روز دیگری امتحان کنید.','error',12000);}
@@ -1049,11 +1119,11 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  function pauseRecording(fromBackground=false){
   if(trimBusy)return;
   try{
-   if(state==='recording'&&recorder){elapsed=elapsedNow();recorder.pause();state='paused';try{recorder.requestData();}catch(_){}releaseWakeLock();if(fromBackground)autoPaused=true;}
+   if(state==='recording'&&recorder){elapsed=elapsedNow();freezeLessonTimer();recorder.pause();state='paused';try{recorder.requestData();}catch(_){}releaseWakeLock();if(fromBackground)autoPaused=true;}
    else if(state==='paused'&&!fromBackground){
     if(recordedWithMic&&!audioAlive(micStream)){toast('میکروفون قطع شده است؛ این بخش را پایان دهید و اتصال را بررسی کنید.','warning');return;}
     drawFrame();if(!recorder){segmentBase=elapsed;chunks=[];recorderFinalizing=false;constructRecorder(composedStream);}else recorder.resume();
-    segmentStarted=performance.now();state='recording';recordingPages.add(pageNumber);autoPaused=false;clearInterval(timerId);timerId=setInterval(tick,250);requestWakeLock();
+    segmentStarted=performance.now();state='recording';resumeLessonTimer();recordingPages.add(pageNumber);logPageVisit();autoPaused=false;clearInterval(timerId);timerId=setInterval(tick,250);requestWakeLock();
    }
    refreshUI();tick();
   }catch(e){toast('ادامه یا توقف موقت انجام نشد؛ لطفاً فیلم موجود را با پایان ضبط ذخیره کنید.','warning');state='paused';refreshUI();}
@@ -1067,13 +1137,13 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  }
  function stopRecording(){if(state==='idle'||state==='stopping'||trimBusy)return;
   if(state==='preparing'){recordSession++;state='idle';releaseRecordingDevices();refreshUI();toast('شروع ضبط لغو شد. اگر پنجرهٔ مجوز باز است، آن را ببندید.');return;}
-  elapsed=elapsedNow();state='stopping';clearInterval(timerId);releaseWakeLock();refreshUI();
+  elapsed=elapsedNow();freezeLessonTimer();lessonTimer.running=false;state='stopping';clearInterval(timerId);releaseWakeLock();refreshUI();
   if(recorder&&recorder.state!=='inactive'){try{recorder.stop();}catch(_){finalizeRecording(recorder);}}
   else if(!recorder)finalizeRecording(null);
  }
  async function finalizeRecording(finished){
   if(recorder!==finished||recorderFinalizing)return;recorderFinalizing=true;
-  if(state==='recording')elapsed=elapsedNow();recorder=null;state='stopping';collectCurrentSegment();refreshUI();
+  if(state==='recording')elapsed=elapsedNow();freezeLessonTimer();lessonTimer.running=false;recorder=null;state='stopping';collectCurrentSegment();refreshUI();
   try{
    if(!savedSegments.length){state='idle';releaseRecordingDevices();refreshUI();toast('هنوز فیلمی برای ذخیره وجود ندارد. یک ضبط کوتاه بگیرید.','warning');return;}
    if(fastFinalizeRequired)toast('حالت سریع استفاده شد. فیلم نهایی در حال یکپارچه‌سازی است.','info',11000);
@@ -1084,6 +1154,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    $('outputVideo').src=resultUrl;$('playbackError').hidden=true;$('webmNote').hidden=resultExt!=='webm';$('downloadName').value=prefs.downloadName||recordingTitle||'درس من';$('outputVideo').style.aspectRatio=mix.width+'/'+mix.height;
    $('outputMeta').replaceChildren();
    [resultExt.toUpperCase(),mix.width+' × '+mix.height,aspectLabel(),formatTime(elapsed),formatBytes(blob.size),recordedWithMic?'با صدای میکروفون':'بدون صدای میکروفون',fa(recordingPages.size)+' صفحهٔ مرورشده'].forEach(text=>{const el=document.createElement('span');el.textContent=text;$('outputMeta').append(el);});
+   resultVisitLog=pageVisitLog.filter(v=>v.time<elapsed);renderLessonRoute();
    savedSegments=[];segmentBase=0;updateDownload();$('resultSummary').textContent=recordingTitle+' · '+formatTime(elapsed)+' · '+formatBytes(blob.size);$('resultCard').hidden=false;$('step2').classList.remove('current');$('step3').classList.add('current');state='idle';refreshUI();$('timer').textContent=formatTime(elapsed);openDialog('outputDialog');
   }catch(e){state='paused';recorderFinalizing=false;refreshUI();tick();toast((e.name==='AbortError'?'پردازش لغو شد.':e.message)+' قطعات اصلی حفظ شده‌اند؛ می‌توانید ادامه دهید یا دوباره پایان ضبط را بزنید.','warning',13000);}
  }
@@ -1187,7 +1258,7 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
    const kept=Math.max(0,trimDuration-seconds*1000);
    if(mode==='fast'){savedSegments=keptSegments(trimSegments,kept);fastFinalizeRequired=true;}
    else{const blob=kept>0?await encodeSegments(trimSegments,kept,'حذف دقیق انتهای ضبط'):null;savedSegments=blob?[{blob,duration:kept}]:[];fastFinalizeRequired=false;}
-   chunks=[];elapsed=segmentBase=kept;bytes=savedSegments.reduce((n,s)=>n+s.blob.size,0);trimSegments=[];trimSource=null;$('trimDialog').close();
+   chunks=[];elapsed=segmentBase=kept;prunePageVisits(kept);bytes=savedSegments.reduce((n,s)=>n+s.blob.size,0);trimSegments=[];trimSource=null;$('trimDialog').close();
    toast(seconds.toLocaleString('fa-IR')+(mode==='fast'?' ثانیه برای حذف ثبت شد؛ فیلم هنگام پایان ضبط یکپارچه می‌شود.':' ثانیه از انتها حذف شد.')+' برای ادامه، «ادامهٔ ضبط» را بزنید.','info',12000);
   }catch(e){toast((e.name==='AbortError'?'حذف لغو شد.':e.message)+' فیلم اصلی تغییری نکرد.','warning',12000);}
   finally{trimBusy=false;refreshUI();tick();$('applyTrim').disabled=+$('trimSeconds').value<=0;}
@@ -1206,6 +1277,140 @@ dialog{border:1px solid var(--line);background:#fffefa;color:var(--ink);padding:
  window.addEventListener('beforeunload',e=>{if(active()||(resultBlob&&!resultDownloaded)){e.preventDefault();e.returnValue='';}});
  window.addEventListener('pagehide',()=>{try{commitText();stashDrawingPage();persistNotesToIdbNow();}catch(_){}pauseTrimPreview();cancelText();recordSession++;fetchController?.abort();if(recorder&&recorder.state!=='inactive'){recorder.onstop=null;try{recorder.stop();}catch(_){}}recorder=null;state='idle';processingController?.abort();releaseRecordingDevices();cancelAnimationFrame(idleRAF);});
  window.addEventListener('pageshow',e=>{if(e.persisted){idleRAF=requestAnimationFrame(idleLoop);refreshUI();resizePreview();}});
+ // Bounded, per-page undo/redo. The shared byte budget prevents high-resolution
+ // snapshots from consuming unbounded memory on phones; oldest entries expire first.
+ function updateHistoryUI(){
+  const blocked=!pdfDoc||loadingBook||pageBusy||inkPointer!==null;
+  $('undoInk').disabled=blocked||!(undoStacks.get(pageNumber)?.length);
+  $('redoInk').disabled=blocked||!(redoStacks.get(pageNumber)?.length);
+ }
+ function clearInkHistory(){undoStacks.clear();redoStacks.clear();updateHistoryUI();}
+ function inkSnapshot(){return pageDrawings.has(pageNumber)||drawingDirty?drawingCtx.getImageData(0,0,drawing.width,drawing.height):null;}
+ function pushHistory(map,image){
+  const stack=map.get(pageNumber)||[];stack.push({image,order:++historySequence});
+  if(stack.length>HISTORY_LIMIT)stack.shift();map.set(pageNumber,stack);
+  let entries=[];
+  for(const m of [undoStacks,redoStacks])for(const list of m.values())for(const item of list)entries.push({list,item});
+  let bytes=entries.reduce((n,e)=>n+(e.item.image?.data.byteLength||0),0);
+  entries.sort((a,b)=>a.item.order-b.item.order);
+  for(const {list,item} of entries){if(bytes<=HISTORY_BYTES)break;bytes-=item.image?.data.byteLength||0;list.splice(list.indexOf(item),1);}
+ }
+ function rememberInk(){
+  if(!pdfDoc)return;
+  try{const image=inkSnapshot();redoStacks.delete(pageNumber);pushHistory(undoStacks,image);}catch(_){clearInkHistory();toast('حافظهٔ واگرد کافی نیست؛ یادداشت‌های فعلی حفظ شدند.','warning');}
+  updateHistoryUI();
+ }
+ function travelInk(redo=false){
+  if(!pdfDoc||pageBusy||loadingBook||inkPointer!==null)return;
+  commitText();const source=redo?redoStacks:undoStacks,target=redo?undoStacks:redoStacks,stack=source.get(pageNumber);
+  if(!stack?.length)return;
+  try{
+   const current=inkSnapshot(),entry=stack.pop();pushHistory(target,current);
+   drawingCtx.clearRect(0,0,drawing.width,drawing.height);
+   if(entry.image)drawingCtx.putImageData(entry.image,0,0);
+   drawingDirty=true;clearTemporaryInk();stashDrawingPage();drawFrame();updateHistoryUI();
+  }catch(_){clearInkHistory();toast('واگرد انجام نشد؛ حافظهٔ دستگاه را بررسی کنید.','warning');}
+ }
+ $('undoInk').onclick=()=>travelInk();$('redoInk').onclick=()=>travelInk(true);
+ document.addEventListener('keydown',e=>{
+  if(e.defaultPrevented||e.isComposing||e.altKey||!(e.ctrlKey||e.metaKey)||$$('dialog[open]').length||e.target.closest('input,textarea,select,[contenteditable]'))return;
+  if(e.code==='KeyZ'){e.preventDefault();travelInk(e.shiftKey);}
+ });
+ function bookmarksBookKey(){return pdfDoc?.fingerprints?.[0]||bookTitle.slice(0,120);}
+ function readBookmarkLibrary(){try{const data=JSON.parse(localStorage.getItem(bookmarksKey)||'[]');return Array.isArray(data)?data.filter(b=>b&&typeof b.key==='string'&&Array.isArray(b.pages)).slice(-40):[];}catch(_){return [];}}
+ function loadBookmarks(){
+  const saved=readBookmarkLibrary().find(b=>b.key===bookmarksBookKey());
+  bookmarks=[...new Set((saved?.pages||[]).filter(p=>Number.isInteger(p)&&p>=1&&p<=pageCount))].slice(0,12).sort((a,b)=>a-b);renderBookmarks();
+ }
+ function saveBookmarks(){
+  const key=bookmarksBookKey(),data=readBookmarkLibrary().filter(b=>b.key!==key);
+  if(bookmarks.length)data.push({key,pages:bookmarks});
+  try{localStorage.setItem(bookmarksKey,JSON.stringify(data.slice(-40)));}catch(_){toast('نشانک‌ها فقط تا بستن این صفحه می‌مانند؛ ذخیره‌سازی مرورگر در دسترس نیست.','warning');}
+  renderBookmarks();
+ }
+ function renderBookmarks(){
+  const available=!!pdfDoc&&!loadingBook;
+  $('toggleBookmark').disabled=!available||pageBusy;$('clearBookmarks').disabled=!available||!bookmarks.length;
+  const marked=bookmarks.includes(pageNumber);$('toggleBookmark').textContent=marked?'حذف نشانک صفحهٔ '+fa(pageNumber):'نشان کردن صفحهٔ '+fa(pageNumber);$('toggleBookmark').setAttribute('aria-pressed',String(marked));
+  for(const id of ['bookmarkBar','lessonBookmarks']){
+   const box=$(id);box.replaceChildren();
+   if(id==='bookmarkBar'){box.hidden=!pdfDoc||!bookmarks.length;const label=document.createElement('span');label.textContent='🔖 ایستگاه‌های درس';box.append(label);}
+   for(const page of bookmarks){const b=document.createElement('button');b.className='btn btn-small';b.textContent='صفحهٔ '+fa(page);b.disabled=!available||pageBusy;if(page===pageNumber)b.setAttribute('aria-current','page');b.onclick=()=>{if($('lessonToolsDialog').open)$('lessonToolsDialog').close();changePage(page);};box.append(b);}
+   if(id==='lessonBookmarks'&&!bookmarks.length){const hint=document.createElement('span');hint.className='field-note';hint.textContent=pdfDoc?'هنوز صفحه‌ای نشان نشده است.':'ابتدا کتاب یا PDF خود را باز کنید.';box.append(hint);}
+  }
+ }
+ $('toggleBookmark').onclick=()=>{if(!pdfDoc||pageBusy||loadingBook)return;if(bookmarks.includes(pageNumber))bookmarks=bookmarks.filter(p=>p!==pageNumber);else{if(bookmarks.length>=12){toast('برای هر کتاب تا ۱۲ نشانک نگه داشته می‌شود؛ یکی را حذف کنید.','warning');return;}bookmarks.push(pageNumber);bookmarks.sort((a,b)=>a-b);}saveBookmarks();};
+ $('clearBookmarks').onclick=()=>{if(!bookmarks.length||!confirm('همهٔ نشانک‌های این کتاب حذف شوند؟ نوشته‌های کتاب تغییری نمی‌کنند.'))return;bookmarks=[];saveBookmarks();};
+ function lessonTimerMillis(){return lessonTimer.accum+(lessonTimer.running&&!lessonTimer.suspended?performance.now()-lessonTimer.startTs:0);}
+ function freezeLessonTimer(){if(lessonTimer.running&&!lessonTimer.suspended){lessonTimer.accum=lessonTimerMillis();lessonTimer.suspended=true;}}
+ function resumeLessonTimer(){if(lessonTimer.running&&lessonTimer.suspended){lessonTimer.startTs=performance.now();lessonTimer.suspended=false;}}
+ function resetLessonTimer(){
+  const minutes=Math.max(1,Math.min(180,Math.round(Number($('lessonMinutes').value)||3)));$('lessonMinutes').value=minutes;
+  lessonTimer={kind:$('lessonTimerKind').value,running:false,suspended:false,accum:0,startTs:0,total:minutes*60000};updateLessonTimer();drawFrame();
+ }
+ function updateLessonTimer(){
+  const passed=lessonTimerMillis(),left=lessonTimer.total-passed;
+  if(lessonTimer.kind==='down'&&lessonTimer.running&&left<=0){lessonTimer.accum=lessonTimer.total;lessonTimer.running=false;toast('زمان تمرین به پایان رسید.');}
+  const text=formatTime(lessonTimer.kind==='up'?passed:Math.max(0,left));
+  if(!$('lessonToolsDialog').open)return text;
+  if($('lessonTimerDisplay').textContent!==text)$('lessonTimerDisplay').textContent=text;
+  const toggleText=lessonTimer.running?'مکث':lessonTimer.accum?'ادامه':'شروع';
+  if($('lessonTimerToggle').textContent!==toggleText)$('lessonTimerToggle').textContent=toggleText;
+  if($('lessonTimerToggle').disabled!==(lessonTimer.kind==='none'))$('lessonTimerToggle').disabled=lessonTimer.kind==='none';
+  if($('lessonMinutes').disabled!==(lessonTimer.kind!=='down'))$('lessonMinutes').disabled=lessonTimer.kind!=='down';
+  const status=lessonTimer.kind==='none'?'در فیلم پنهان است':lessonTimer.kind==='down'&&left<=0?'زمان تمام شد':lessonTimer.running?(lessonTimer.suspended?'در انتظار ادامهٔ ضبط':'زمان در حال گذر است'):'آماده / مکث';
+  if($('lessonTimerStatus').textContent!==status)$('lessonTimerStatus').textContent=status;
+  return text;
+ }
+ $('lessonTimerKind').onchange=resetLessonTimer;$('lessonMinutes').onchange=resetLessonTimer;$('lessonTimerReset').onclick=resetLessonTimer;
+ $('lessonTimerToggle').onclick=()=>{
+  if(lessonTimer.kind==='none')return;
+  if(lessonTimer.running){freezeLessonTimer();lessonTimer.running=false;}
+  else{if(lessonTimer.kind==='down'&&lessonTimerMillis()>=lessonTimer.total)lessonTimer.accum=0;lessonTimer.running=true;lessonTimer.suspended=state==='paused';lessonTimer.startTs=performance.now();}
+  updateLessonTimer();drawFrame();
+ };
+ $('applyLessonCaption').onclick=()=>{lessonCaption=$('lessonCaptionInput').value.replace(/\s+/g,' ').trim().slice(0,160);$('lessonCaptionStatus').textContent=lessonCaption?'زیرنویس روی فیلم نمایش داده می‌شود':'بدون زیرنویس';drawFrame();};
+ $('clearLessonCaption').onclick=()=>{lessonCaption='';$('lessonCaptionStatus').textContent='زیرنویس پنهان شد؛ متن برای ویرایش باقی است';drawFrame();};
+ function drawLessonOverlays(w,h){
+  const now=performance.now();
+  if(laserPoint){const age=now-laserPoint.at;if(age>900&&inkPointer===null)laserPoint=null;else{
+   ctx.save();ctx.globalAlpha=inkPointer!==null?1:Math.max(0,1-age/900);ctx.shadowColor='#ef4444';ctx.shadowBlur=Math.max(10,w*.014);ctx.strokeStyle='#d52335';ctx.lineWidth=Math.max(2,w*.0025);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(laserPoint.x,laserPoint.y,Math.max(5,w*.007),0,Math.PI*2);ctx.fill();ctx.stroke();ctx.restore();
+  }}
+  const time=updateLessonTimer(),font=Math.max(14,Math.round(Math.min(w,h)*.032)),padding=Math.round(font*.7);
+  ctx.save();ctx.font='700 '+font+'px Vazirmatn,Tahoma,sans-serif';ctx.textBaseline='middle';
+  if(lessonTimer.kind!=='none'){
+   const label=(lessonTimer.kind==='down'&&lessonTimerMillis()>=lessonTimer.total?'زمان تمام شد':lessonTimer.kind==='down'?'زمان تمرین':'کرنومتر')+'  '+time;
+   const bw=ctx.measureText(label).width+padding*2,bh=font+padding*2,x=(w-bw)/2,y=h*.025;
+   ctx.fillStyle='#172d2aeb';roundRect(ctx,x,y,bw,bh,Math.min(12,bh/3));ctx.fill();ctx.fillStyle='#fff';ctx.direction='rtl';ctx.textAlign='center';ctx.fillText(label,w/2,y+bh/2);
+  }
+  if(lessonCaption){
+   ctx.font='600 '+font+'px Vazirmatn,Tahoma,sans-serif';const maxWidth=w*.84,lines=wrapCanvasText(ctx,lessonCaption,maxWidth-padding*2),lineHeight=font*1.65,bh=lines.length*lineHeight+padding*2,x=(w-maxWidth)/2,y=h-h*.035-bh;
+   ctx.fillStyle='#172d2aeb';roundRect(ctx,x,y,maxWidth,bh,Math.min(12,bh/3));ctx.fill();ctx.fillStyle='#fff';ctx.direction=textDirection(lessonCaption);ctx.textAlign='center';lines.forEach((line,i)=>ctx.fillText(line,w/2,y+padding+lineHeight*(i+.5)));
+  }
+  ctx.restore();
+ }
+ function prunePageVisits(kept){pageVisitLog=pageVisitLog.filter(v=>v.time<kept);recordingPages=new Set(pageVisitLog.map(v=>v.page));}
+ function logPageVisit(){const last=pageVisitLog[pageVisitLog.length-1];if(last?.page!==pageNumber)pageVisitLog.push({page:pageNumber,time:Math.max(0,elapsedNow())});}
+ function renderLessonRoute(){
+  const box=$('lessonRoute');box.replaceChildren();$('lessonRouteSection').hidden=!resultVisitLog.length;
+  for(const visit of resultVisitLog){const b=document.createElement('button');b.className='btn btn-small';b.dataset.time=visit.time;b.textContent=formatTime(visit.time)+' · صفحهٔ '+fa(visit.page);b.setAttribute('aria-label','رفتن به زمان '+formatTime(visit.time)+'، صفحهٔ '+fa(visit.page));b.onclick=()=>{try{$('outputVideo').currentTime=visit.time/1000;}catch(_){toast('پس از آماده شدن فیلم، دوباره روی زمان بزنید.','warning');}};box.append(b);}
+ }
+ $('outputVideo').addEventListener('timeupdate',()=>{let current=-1;resultVisitLog.forEach((v,i)=>{if(v.time<=$('outputVideo').currentTime*1000+100)current=i;});[...$('lessonRoute').children].forEach((b,i)=>b.setAttribute('aria-current',String(i===current)));});
+ function downloadLocalBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}
+ function safeLessonFilename(name){return (name||'درس').replace(/[<>:"/\\|?*\x00-\x1f]/g,'-').replace(/[. ]+$/,'').slice(0,80)||'درس';}
+ $('downloadLessonRoute').onclick=()=>{
+  const text=['مسیر درس — '+recordingTitle,'مدت فیلم: '+formatTime(elapsed),'',...resultVisitLog.map(v=>formatTime(v.time)+' — صفحهٔ '+fa(v.page))].join('\n');
+  downloadLocalBlob(new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'}),safeLessonFilename($('downloadName').value)+' - فهرست درس.txt');
+ };
+ document.addEventListener('click',e=>{const menu=$('bookFileMenu');if(menu.open&&(!menu.contains(e.target)||e.target.closest('.book-file-actions button')))menu.open=false;});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('bookFileMenu').open){$('bookFileMenu').open=false;$('bookFileMenu').querySelector('summary').focus();}});
+ $('snapshotBtn').onclick=()=>{
+  if(!pdfDoc||pageBusy||loadingBook)return;commitText();stashDrawingPage();
+  const name=safeLessonFilename(bookTitle)+' - صفحه '+pageNumber+'.png',c=document.createElement('canvas');c.width=mix.width;c.height=mix.height;const g=c.getContext('2d'),geom=geometry();g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(pdfCanvas,(c.width-geom.w)/2+panX*c.width,(c.height-geom.h)/2+panY*c.height,geom.w,geom.h);g.drawImage(drawing,0,0);
+  c.toBlob(blob=>{if(blob)downloadLocalBlob(blob,name);else toast('ساخت تصویر ممکن نشد.','warning');c.width=c.height=1;},'image/png');
+ };
+ resetLessonTimer();renderBookmarks();
+
  setOutputSize(false);updateDrawingUI();updateCameraAppearance();updateCameraUI();updateSwitchCameraUI();updateZoomUI();updatePageUI();showEnvironment();refreshUI();updateDockHeight();ensurePdfJs().catch(()=>{});checkCameraCount().then(c=>{if(c>=2){$('switchCamera').hidden=false;$('mobileSwitchCamera').hidden=false;}}).catch(()=>{});
 })();
 

@@ -75,7 +75,7 @@ node tools/inject-csp.mjs [--dry]
 | `azmoon-saz.html` | آزمون‌ساز با ۱۱ قلم فونت فارسی و خروجی PDF |
 | `daftar.html` | دفتر معلم: حضور و غیاب، نمره، کارنامه |
 | `tarh-dars.html` | کارگاه طرح درس |
-| `darsgah.html` | درسگاه — استودیوی ضبط تدریس |
+| `darsgah.html` | درسگاه — استودیوی ضبط تدریس؛ [راهنمای ابزارهای جدید](docs/darsgah-studio-tools.md) |
 | `hqf-converter.html` | مبدل آزمون به قالب HQF |
 | `payamresan.html` | پیام‌رسان کلاسی |
 | `panels/teacher.html` | پنل مدیریت معلم |
