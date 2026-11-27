@@ -48,9 +48,9 @@ const sleep = ms => new Promise(r=>setTimeout(r,ms));
   const duplicates=await page.evaluate(()=>[...document.querySelectorAll('[id]')].map(e=>e.id).filter((id,i,all)=>all.indexOf(id)!==i));assert.deepEqual(duplicates,[]);
   await page.evaluate(bytes=>{const input=document.querySelector('#fileInput'),dt=new DataTransfer();dt.items.add(new File([new Uint8Array(bytes)],'studio-test.pdf',{type:'application/pdf'}));input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}));},fixturePdf());
   await page.waitForFunction(()=>window.__studioTest.ready(),{timeout:30000});
-  await page.select('#quality','360');
+  await page.select('#quality','360');await page.waitForFunction(()=>__studioTest.ready());
   const ink=()=>page.evaluate(()=>__studioTest.ink());
-  const click=async selector=>{await page.evaluate(sel=>{const e=document.querySelector(sel),details=e?.closest('details');if(details)details.open=true;},selector);await page.$eval(selector,e=>e.scrollIntoView({block:'center'}));await page.click(selector);};
+  const click=async selector=>{await page.waitForFunction(sel=>{const e=document.querySelector(sel);return !!e&&!e.disabled;},{timeout:15000},selector);await page.evaluate(sel=>{const e=document.querySelector(sel),details=e?.closest('details');if(details)details.open=true;},selector);await page.$eval(selector,e=>e.scrollIntoView({block:'center'}));await page.click(selector);};
   const canvasPoint=async(drag=false)=>{
    await page.$eval('#previewCanvas',e=>e.scrollIntoView({block:'center'}));
    const box=await page.$eval('#previewCanvas',e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
@@ -71,7 +71,7 @@ const sleep = ms => new Promise(r=>setTimeout(r,ms));
   await click('[data-tool="laser"]');await canvasPoint(true);assert.equal(await ink(),first,'laser never changes notes');await page.waitForFunction(()=>!__studioTest.laser(),{timeout:5000,polling:100});assert.equal(await page.evaluate(()=>__studioTest.laser()),false,'laser fades');
   await page.evaluate(()=>__studioTest.go(2));assert.equal(await ink(),0,'page histories isolated');await page.evaluate(()=>__studioTest.go(1));assert.equal(await ink(),first,'ink restored on return');
   // Budget is shared across pages and undo/redo, rather than per page.
-  await page.select('#quality','1080');await page.evaluate(()=>{for(let i=0;i<20;i++)__studioTest.snapshot();});const history=await page.evaluate(()=>__studioTest.history());assert.ok(history.bytes<=32*1024*1024&&history.count<12,'high-resolution history obeys shared byte budget');await page.select('#quality','360');first=await ink();
+  await page.select('#quality','1080');await page.waitForFunction(()=>__studioTest.ready());await page.evaluate(()=>{for(let i=0;i<20;i++)__studioTest.snapshot();});const history=await page.evaluate(()=>__studioTest.history());assert.ok(history.bytes<=32*1024*1024&&history.count<12,'high-resolution history obeys shared byte budget');await page.select('#quality','360');await page.waitForFunction(()=>__studioTest.ready());first=await ink();
   console.log('Ink tools OK; checking lesson tools');
   await click('.ink-options [data-open="lessonToolsDialog"]');await click('#toggleBookmark');assert.equal(await page.$$eval('#lessonBookmarks button',es=>es.length),1);
   await page.select('#lessonTimerKind','down');await click('#lessonTimerToggle');await sleep(1100);assert.ok(await page.evaluate(()=>__studioTest.timer())>900);
