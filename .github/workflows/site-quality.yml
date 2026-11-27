@@ -103,6 +103,7 @@ jobs:
           curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
           node tests/teacher-ateliers-browser.cjs
           node tests/teacher-studio-appearance-browser.cjs
+          node tests/teacher-studio-pro-browser.cjs
           node tests/teacher-workspace-browser.cjs
           node tests/messenger-studio-browser.cjs
           node tests/messenger-workspace-browser.cjs
