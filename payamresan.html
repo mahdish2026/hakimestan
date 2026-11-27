@@ -870,12 +870,6 @@ body[data-mode="dark"] .pill.err{color:#ff9b9b}
 /* ─── ۱۸. تکمیل‌های نهایی ظاهر ─── */
 #btnAttach{background:var(--card2);border:2.5px solid var(--line);color:var(--ink);border-radius:20px;align-self:flex-end}
 #btnAttach:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-/* نوارابزار ویرایش مارک‌داون در کادر ارسال */
-.md-tools{display:flex;gap:2px;align-items:center;flex:0 0 auto;padding-left:2px;opacity:.7}
-.md-tools:hover{opacity:1}
-.md-t{min-width:26px;height:26px;border:none;background:none;color:var(--muted);border-radius:8px;cursor:pointer;font-size:.78rem;display:inline-flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
-.md-t:hover{background:var(--card2);color:var(--accent)}
-.md-t:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 /* پنلِ نظرسنجی / آزمون */
 .poll-box{display:flex;flex-direction:column;gap:8px;padding:4px 2px;min-width:0}
 .poll-q{font-weight:800;margin-bottom:2px}
@@ -2011,13 +2005,6 @@ body[data-theme="mist"]{
               <button class="icon-btn" id="btnSticker" type="button" title="استیکر و شکلک" aria-label="استیکر و شکلک" aria-expanded="false"><svg class="ic"><use href="#i-sticker"/></svg></button>
               <button class="icon-btn" id="btnAttach" type="button" title="افزودن پیوست" aria-label="افزودن پیوست" aria-expanded="false" aria-haspopup="menu" style="align-self:flex-end"><svg class="ic"><use href="#i-clip"/></svg></button>
               <div class="box">
-                <div class="md-tools" id="mdTools" role="toolbar" aria-label="ابزار ویرایش">
-                  <button type="button" class="md-t" data-fmt="bold" title="پررنگ" aria-label="پررنگ"><b>B</b></button>
-                  <button type="button" class="md-t" data-fmt="italic" title="کج" aria-label="کج"><i>I</i></button>
-                  <button type="button" class="md-t" data-fmt="code" title="کد" aria-label="کد">&lt;/&gt;</button>
-                  <button type="button" class="md-t" data-fmt="quote" title="نقل‌قول" aria-label="نقل‌قول">❝</button>
-                  <button type="button" class="md-t" data-fmt="list" title="لیست" aria-label="لیست">☰</button>
-                </div>
                 <textarea id="msgInput" rows="1" maxlength="500" placeholder="پیامت رو بنویس…" aria-label="متن پیام (حداکثر ۵۰۰ حرف)" enterkeyhint="send"></textarea>
                 <span class="char-count" id="charCount">۰/۵۰۰</span>
               </div>
@@ -5856,30 +5843,6 @@ var Compose = (function(){
     U.on($('#btnSend'),'click', send);
     U.on($('#replyCancel'),'click', clear);
     U.on($('#editCancel'),'click', clear);
-    // نوارابزار ویرایش مارک‌داون: پوشش انتخاب و ايجاد تایپ‌نویسه‌های مناسب
-    var fmtWrap = { bold:['**','**','B'], italic:['*','*','I'], code:['`','`','</>'], quote:['\n> ','','❝'], list:['\n• ','','☰'] };
-    $all('.md-t').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var f = btn.getAttribute('data-fmt'); var w = fmtWrap[f]; if(!w) return;
-        var inp=$('#msgInput'); inp.focus();
-        var s=inp.selectionStart, e=inp.selectionEnd, v=inp.value, sel=v.slice(s,e);
-        var pre=w[0], post=w[1];
-        if(f==='quote'){ pre='\n> '; post=''; }
-        if(f==='list'){ pre='\n• '; post=''; }
-        // اگر متن انتخاب شده و قبلاً حصار بسته، درونش آن را حذف کن
-        if(f==='bold' && sel.indexOf('**')===0 && sel.lastIndexOf('**')===sel.length-2){
-          var inner=sel.slice(2, sel.length-2); inp.value=v.slice(0,s)+inner+v.slice(e); inp.setSelectionRange(s, s+inner.length);
-        } else if(f==='italic' && sel.length>2 && sel[0]==='*' && sel[sel.length-1]==='*'){
-          var inner2=sel.slice(1,-1); inp.value=v.slice(0,s)+inner2+v.slice(e); inp.setSelectionRange(s, s+inner2.length);
-        } else if(f==='code' && sel.length>2 && sel[0]==='`' && sel[sel.length-1]==='`'){
-          var inner3=sel.slice(1,-1); inp.value=v.slice(0,s)+inner3+v.slice(e); inp.setSelectionRange(s, s+inner3.length);
-        } else {
-          if(sel){ var txt=sel; inp.value=v.slice(0,s)+pre+txt+post+v.slice(e); var ns=s+pre.length; inp.setSelectionRange(ns, ns+txt.length); }
-          else { inp.value=v.slice(0,s)+pre+post+v.slice(e); var c=s+pre.length; inp.setSelectionRange(c,c); }
-        }
-        autoGrow(); Typing.ping();
-      });
-    });
     restoreDraft();
     autoGrow();
   }
