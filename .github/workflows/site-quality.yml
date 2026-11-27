@@ -104,6 +104,7 @@ jobs:
           node tests/teacher-ateliers-browser.cjs
           node tests/teacher-studio-appearance-browser.cjs
           node tests/teacher-studio-pro-browser.cjs
+          node tests/teacher-workdesk-browser.cjs
           node tests/teacher-workspace-browser.cjs
           node tests/messenger-studio-browser.cjs
           node tests/messenger-workspace-browser.cjs
