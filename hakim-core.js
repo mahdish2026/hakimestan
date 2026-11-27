@@ -1,7 +1,12 @@
 /*!
  * hakim-core.js — هسته‌ی شخصیت «حکیم» برای پروژه‌ی حکیمستان
- * نسخه: 3.1.1 (Universal)
+ * نسخه: 3.2.0 (Universal)
  * ساخته مهدی شریفیان
+ *
+ * ─── تغییرات v3.2.0 ─────────────────────────────────────────
+ *  • جزئیات تازهٔ چهره و ردا با حفظ هویت و همهٔ حالت‌های قدیمی
+ *  • شناسهٔ یکتا حتی در API قدیمی FACES؛ پنل‌های مستقل بدون شناسهٔ تکراری
+ *  • پیام‌های امن‌تر و بدون تداخل تایمر، پشتیبانی بهتر از صفحه‌خوان و حرکت کاهش‌یافته
  *
  * ─── تغییرات v3.1.1 ─────────────────────────────────────────
  *  • renderFace/setMood حالا در هر فراخوانی SVG تازه با شناسه‌های
@@ -19,7 +24,7 @@
  *  • افکت‌ها: sparkle در حالت wise، ستاره در excited،
  *    کاغذ رنگی در Hakim.react('win')
  *  • حباب دیالوگ مدرن با دم (tail)، موبایل‌اول، فارسی RTL
- *  • بدون فریم‌ورک / بدون CDN (فونت Google اختیاری و قابل غیرفعال‌کردن)
+ *  • بدون فریم‌ورک و CDN؛ فونت محلی و قابل غیرفعال‌کردن
  *
  * ─── سه حالت استفاده (مثل قبل) ────────────────────────────────
  *  1) پنل در HTML هست → خودش پیدا می‌کنه
@@ -107,6 +112,9 @@
 
   function fillTemplate(str, vars) {
     return String(str).replace(/\{(\w+)\}/g, (_, k) => (vars && vars[k] != null) ? vars[k] : '');
+  }
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>\"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[ch]));
   }
   function pickPhrase(arr) {
     if (!Array.isArray(arr) || arr.length === 0) return '';
@@ -277,6 +285,7 @@
   // ============================================================
   // 🧙 ساخت SVG چهره (تولید مشترک + ویژگی‌های هر حالت)
   // ============================================================
+  const MOOD_LABELS = { normal:'آرام', happy:'شاد', thinking:'در حال فکر کردن', sad:'نگران', excited:'هیجان‌زده', surprised:'شگفت‌زده', sleepy:'خواب‌آلود', wise:'دانا', wink:'چشمک‌زن' };
   function buildFaceSVG(mood) {
     const f = MOOD_FEATURES[mood] || MOOD_FEATURES.normal;
     const id = uid();
@@ -287,7 +296,7 @@
     const goldGrad  = 'hkGold' + id;
 
     return [
-      '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="چهرهٔ حکیم">',
+      '<svg class="hk-character" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="چهرهٔ حکیم، ' + (MOOD_LABELS[mood] || MOOD_LABELS.normal) + '">',
       '<defs>',
         '<radialGradient id="' + skinGrad + '" cx="40%" cy="35%" r="70%">',
           '<stop offset="0%" stop-color="' + C.skinHi + '"/>',
@@ -320,6 +329,10 @@
         // ردا (شانه‌ها)
         '<path d="M 32 200 L 36 150 Q 40 138 70 134 L 130 134 Q 160 138 164 150 L 168 200 Z" fill="url(#' + robeGrad + ')"/>',
         '<path d="M 42 156 Q 100 145 158 156" stroke="' + C.robe2 + '" stroke-width="3" fill="none" opacity=".55"/>',
+        // لبهٔ ردای نیلی و نشان کتاب دانش، ساده و خوانا حتی در اندازهٔ کوچک
+        '<path d="M 64 145 Q 73 169 100 185 Q 127 169 136 145" fill="none" stroke="' + C.gold + '" stroke-width="2" opacity=".72"/>',
+        '<circle cx="100" cy="182" r="8" fill="' + C.gold2 + '" stroke="' + C.goldHi + '" stroke-width="1"/>',
+        '<path d="M 95 180 Q 98 179 100 181 Q 102 179 105 180 L 105 185 Q 102 184 100 186 Q 98 184 95 185 Z" fill="#fff5d8"/>',
 
         // عصای چوبی با سر طلایی
         '<rect x="159" y="50" width="9" height="122" rx="4.5" fill="' + C.wood + '"/>',
@@ -338,7 +351,9 @@
         '<ellipse cx="134" cy="94" rx="3" ry="5" fill="' + C.skinLo + '" opacity=".55"/>',
 
         // صورت
-        '<ellipse cx="100" cy="92" rx="35" ry="37" fill="url(#' + skinGrad + ')"/>',
+        '<ellipse cx="100" cy="92" rx="35" ry="37" fill="url(#' + skinGrad + ')" stroke="#a86f42" stroke-opacity=".35" stroke-width="1"/>',
+        '<ellipse cx="79" cy="106" rx="5" ry="3" fill="' + C.blush + '" opacity=".18"/>',
+        '<ellipse cx="121" cy="106" rx="5" ry="3" fill="' + C.blush + '" opacity=".18"/>',
         '<path d="M 76 120 Q 100 130 124 120" stroke="' + C.skinLo + '" stroke-width="1.5" fill="none" opacity=".3"/>',
 
         // بینی
@@ -350,6 +365,7 @@
         '<path d="M 66 108 C 62 138 74 162 100 168 C 126 162 138 138 134 108 C 126 120 114 124 100 124 C 86 124 74 120 66 108 Z" fill="url(#' + beardGrad + ')"/>',
         '<path d="M 84 138 Q 100 148 116 138" stroke="' + C.beard2 + '" stroke-width="1.6" fill="none"/>',
         '<path d="M 88 150 Q 100 158 112 150" stroke="' + C.beard2 + '" stroke-width="1.4" fill="none" opacity=".7"/>',
+        '<path d="M 73 132 Q 75 149 85 155 M 127 132 Q 125 149 115 155" stroke="#d6c8b4" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".65"/>',
         '<path d="M 76 124 Q 86 130 94 126" stroke="' + C.beard2 + '" stroke-width="1.4" fill="none" opacity=".6"/>',
         '<path d="M 106 126 Q 114 130 124 124" stroke="' + C.beard2 + '" stroke-width="1.4" fill="none" opacity=".6"/>',
 
@@ -370,11 +386,17 @@
           '<path d="M 72 45 C 82 27 96 19 116 16" stroke="' + C.hat3 + '" stroke-width="2.5" fill="none" opacity=".4"/>',
           '<path d="M 58 58 Q 100 48 146 58" stroke="' + C.gold + '" stroke-width="9" fill="none" stroke-linecap="round"/>',
           '<path d="M 62 59 Q 100 51 142 59" stroke="' + C.gold2 + '" stroke-width="1.6" fill="none" opacity=".5"/>',
+          '<circle cx="100" cy="54.5" r="3.5" fill="' + C.hat2 + '" stroke="' + C.goldHi + '" stroke-width="1"/>',
+          '<circle cx="100" cy="54.5" r="1.1" fill="#fff4cc"/>',
           '<circle cx="128" cy="12" r="5" fill="url(#' + goldGrad + ')"/>',
           '<circle cx="126.5" cy="10.5" r="1.6" fill="#fff" opacity=".85"/>',
           spark(97, 32, 4.5, C.goldHi, 'hk-spark'),
         '</g>',
 
+        // دست روی عصا و سرآستین طلایی، نشانهٔ همراهی و کنجکاوی حکیم
+        '<path d="M 147 158 Q 154 151 161 153 L 165 163 Q 159 170 151 169 Z" fill="' + C.robe + '" stroke="' + C.gold2 + '" stroke-width="1.3"/>',
+        '<ellipse cx="163" cy="154" rx="6" ry="7" fill="url(#' + skinGrad + ')" stroke="' + C.skinLo + '" stroke-width="1"/>',
+        '<path d="M 160 153 Q 163 155 166 153 M 160 157 Q 163 159 166 157" fill="none" stroke="' + C.skinLo + '" stroke-width=".8" opacity=".65"/>',
         f.extras,
       '</g>',
       '</svg>'
@@ -383,8 +405,10 @@
 
   // ساخت همه‌ی چهره‌ها (هم نام جدید، هم alias قدیمی)
   const HAKIM_FACES = {};
-  MOODS.forEach((m) => { HAKIM_FACES[m] = buildFaceSVG(m); });
-  Object.keys(MOOD_ALIASES).forEach((a) => { HAKIM_FACES[a] = HAKIM_FACES[MOOD_ALIASES[a]]; });
+  // سازگاری با API رشته‌ای قدیمی، با شناسهٔ تازه در هر دسترسی.
+  MOODS.concat(Object.keys(MOOD_ALIASES)).forEach((m) => {
+    Object.defineProperty(HAKIM_FACES, m, { enumerable: true, get: () => buildFaceSVG(resolveMood(m)) });
+  });
 
   // ============================================================
   // 🎭 ایموجی → حالت
@@ -503,9 +527,9 @@
         '--hk-font:Vazirmatn,"Segoe UI",Tahoma,sans-serif;',
         'display:none;position:relative;max-width:760px;margin:0 auto 16px;',
         'padding:14px 16px;gap:14px;align-items:flex-start;',
-        'border-radius:22px;border:1.5px solid rgba(233,180,76,.30);',
-        'background:linear-gradient(145deg,rgba(48,32,14,.92),rgba(24,16,6,.94));',
-        'box-shadow:0 10px 34px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);',
+        'border-radius:20px;border:1px solid rgba(233,180,76,.42);',
+        'background:linear-gradient(135deg,#342541,#201929 65%,#291d17);',
+        'box-shadow:0 12px 32px rgba(20,10,24,.32),inset 0 1px 0 rgba(255,255,255,.10);',
         'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);',
         'overflow:hidden;font-family:var(--hk-font);direction:rtl;text-align:right;',
         'color:#f6edd8',
@@ -542,11 +566,11 @@
 
       // ── حباب دیالوگ ─────────────────────────────────────
       '.hakim-bubble{position:relative;flex:1;min-width:0;',
-        'background:rgba(255,255,255,.055);border:1px solid rgba(233,180,76,.16);',
+        'background:rgba(255,248,231,.08);border:1px solid rgba(233,180,76,.22);',
         'border-radius:16px 6px 16px 16px;padding:10px 14px 12px;',
         'box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}',
       '.hakim-bubble::after{content:"";position:absolute;top:18px;right:-7px;width:12px;height:12px;',
-        'background:#33220e;border:1px solid rgba(233,180,76,.16);border-left:none;border-bottom:none;transform:rotate(45deg)}',
+        'background:#3a2b37;border:1px solid rgba(233,180,76,.22);border-left:none;border-bottom:none;transform:rotate(45deg)}',
       '.hakim-name{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:800;',
         'color:#f5c842;letter-spacing:.4px;margin-bottom:6px;padding:2px 11px;border-radius:99px;',
         'background:rgba(233,180,76,.10);border:1px solid rgba(233,180,76,.18)}',
@@ -620,7 +644,7 @@
 
       // کاهش حرکت (دسترس‌پذیری)
       '@media (prefers-reduced-motion:reduce){',
-        '.hakim-panel,.hakim-panel *{animation:none !important;transition:none !important}',
+        '.hakim-panel,.hakim-panel *,.hk-character,.hk-character *{animation:none !important;transition:none !important}',
       '}'
     ].join('');
     document.head.appendChild(style);
@@ -631,7 +655,7 @@
   // ============================================================
   const state = {
     panelEl: null, faceEl: null, textEl: null, srEl: null,
-    typeTimer: null, hideTimer: null, hideAnimTimer: null,
+    typeTimer: null, hideTimer: null, hideAnimTimer: null, speakingTimer: null,
     name: 'دوست من', mood: 'normal',
     autoHideMs: 4200,
     initialized: false
@@ -649,22 +673,25 @@
         if (container.classList && container.classList.contains('hakim-panel')) return container;
         const inside = container.querySelector && container.querySelector('.hakim-panel');
         if (inside) return inside;
+        return null; // کانتینر مشخص‌شده نباید پنل دیگری در صفحه را تصاحب کند.
       }
     }
     return document.querySelector('.hakim-panel') || document.getElementById('hakimPanel');
   }
 
   function buildPanelHTML() {
+    // شناسه‌های قدیمی را فقط وقتی آزادند اضافه می‌کنیم؛ کلاس‌ها همواره وجود دارند.
+    const idAttr = id => document.getElementById(id) ? '' : ' id="' + id + '"';
     return (
-      '<div class="hakim-panel" id="hakimPanel">' +
+      '<div class="hakim-panel"' + idAttr('hakimPanel') + '>' +
         '<div class="hakim-avatar">' +
           '<div class="hakim-glow" aria-hidden="true"></div>' +
-          '<div class="hakim-face" id="hakimFace" aria-hidden="true"></div>' +
+          '<div class="hakim-face"' + idAttr('hakimFace') + ' aria-hidden="true"></div>' +
         '</div>' +
         '<div class="hakim-bubble">' +
           '<div class="hakim-name"><span class="hakim-dot" aria-hidden="true"></span> حکیم، همراه تو</div>' +
-          '<div class="hakim-text" id="hakimCoreText" aria-hidden="true"></div>' +
-          '<div class="hakim-sr-only" id="hakimSrText" role="status" aria-live="polite"></div>' +
+          '<div class="hakim-text"' + idAttr('hakimCoreText') + ' aria-hidden="true"></div>' +
+          '<div class="hakim-sr-only"' + idAttr('hakimSrText') + ' role="status" aria-live="polite"></div>' +
         '</div>' +
       '</div>'
     );
@@ -707,6 +734,7 @@
       panelEl = wrapper.querySelector('.hakim-panel');
     }
 
+    if (state.panelEl && state.panelEl !== panelEl) reset();
     bindPanelEls(panelEl);
     setMood('normal');
     state.initialized = true;
@@ -739,7 +767,7 @@
   function setMood(mood) {
     if (!state.faceEl) return;
     const m = resolveMood(mood);
-    if (state.faceEl.dataset.mood === m) return;
+    if (state.faceEl.dataset.mood === m && state.faceEl.querySelector('svg')) return;
     state.mood = m;
     state.faceEl.dataset.mood = m;
     if (state.panelEl) state.panelEl.dataset.mood = m;
@@ -763,8 +791,19 @@
     element.classList.add('face-change');
   }
 
+  function reducedMotion() {
+    try { return !!(global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+    catch (_) { return false; }
+  }
+
+  function clearSpeechTimers() {
+    clearInterval(state.typeTimer); clearTimeout(state.hideTimer);
+    clearTimeout(state.speakingTimer);
+    state.typeTimer = state.hideTimer = state.speakingTimer = null;
+  }
+
   function say(text, opts) {
-    opts = opts || {};
+    opts = typeof opts === 'string' ? { mood: opts } : (opts || {});
     if (!state.panelEl || !state.textEl) return;
     const msg = String(text || '');
     if (!msg) return;
@@ -772,36 +811,38 @@
     let mood = opts.mood;
     if (!mood && opts.emoji) mood = EMOJI_TO_MOOD[opts.emoji];
     if (mood) setMood(mood);
-
+    clearSpeechTimers();
     if (state.hideAnimTimer) { clearTimeout(state.hideAnimTimer); state.hideAnimTimer = null; }
-    state.panelEl.classList.remove('leaving');
-    state.panelEl.classList.add('active', 'speaking');
-    state.textEl.textContent = '';
-    state.textEl.classList.add('typing');
-    if (state.srEl) state.srEl.textContent = '';
+    const panel = state.panelEl, textEl = state.textEl, srEl = state.srEl;
+    panel.classList.remove('leaving');
+    panel.classList.add('active', 'speaking');
+    textEl.textContent = '';
+    textEl.classList.remove('typing');
+    // متن کامل فقط یک بار برای صفحه‌خوان اعلام می‌شود، نه حرف‌به‌حرف.
+    if (srEl) srEl.textContent = msg;
 
-    clearInterval(state.typeTimer);
-    clearTimeout(state.hideTimer);
-
-    const speed = opts.speed || 22;
-    let i = 0;
-    state.typeTimer = setInterval(() => {
-      state.textEl.textContent += msg.charAt(i);
-      i++;
-      if (i >= msg.length) {
-        clearInterval(state.typeTimer);
-        state.typeTimer = null;
-        state.textEl.classList.remove('typing');
-        if (state.srEl) state.srEl.textContent = msg;
-      }
-    }, speed);
-
-    setTimeout(() => { if (state.panelEl) state.panelEl.classList.remove('speaking'); }, 700);
-
+    let chars;
+    try { chars = typeof Intl !== 'undefined' && Intl.Segmenter ? Array.from(new Intl.Segmenter('fa', {granularity:'grapheme'}).segment(msg), part => part.segment) : Array.from(msg); }
+    catch (_) { chars = Array.from(msg); }
+    const speed = typeof opts.speed === 'number' && Number.isFinite(opts.speed) ? Math.max(0, Math.min(1000, opts.speed)) : 22;
+    const instant = speed === 0 || reducedMotion();
+    if (instant) textEl.textContent = msg;
+    else {
+      textEl.classList.add('typing');
+      let i = 0;
+      state.typeTimer = setInterval(() => {
+        textEl.textContent += chars[i++];
+        if (i >= chars.length) {
+          clearInterval(state.typeTimer); state.typeTimer = null;
+          textEl.classList.remove('typing');
+        }
+      }, speed);
+    }
+    state.speakingTimer = setTimeout(() => { panel.classList.remove('speaking'); state.speakingTimer = null; }, instant ? 0 : 700);
     const autoHide = opts.autoHide !== false && !opts.permanent;
     if (autoHide) {
-      const total = msg.length * speed + state.autoHideMs;
-      state.hideTimer = setTimeout(() => hide(), total);
+      const total = chars.length * speed + state.autoHideMs;
+      state.hideTimer = setTimeout(() => hide(), Math.max(0, total));
     }
   }
 
@@ -815,6 +856,7 @@
   function show() {
     if (!state.panelEl) return;
     if (state.hideAnimTimer) { clearTimeout(state.hideAnimTimer); state.hideAnimTimer = null; }
+    clearTimeout(state.hideTimer); state.hideTimer = null;
     state.panelEl.classList.remove('leaving');
     state.panelEl.classList.add('active');
   }
@@ -822,17 +864,23 @@
   function hide() {
     if (!state.panelEl) return;
     const el = state.panelEl;
+    clearSpeechTimers();
+    if (state.textEl) state.textEl.classList.remove('typing');
+    el.classList.remove('speaking');
     if (el.classList.contains('leaving')) return;
     el.classList.add('leaving');
     state.hideAnimTimer = setTimeout(() => {
       el.classList.remove('active', 'leaving');
-      setMood('normal');
-    }, 300);
+      state.hideAnimTimer = null;
+      if (state.panelEl === el) setMood('normal');
+    }, reducedMotion() ? 0 : 300);
   }
 
   function reset() {
-    clearInterval(state.typeTimer);
-    clearTimeout(state.hideTimer);
+    clearSpeechTimers();
+    clearTimeout(confettiTimer); confettiTimer = null;
+    if (confettiLayer) { confettiLayer.remove(); confettiLayer = null; }
+    if (state.textEl) state.textEl.classList.remove('typing');
     if (state.hideAnimTimer) { clearTimeout(state.hideAnimTimer); state.hideAnimTimer = null; }
     if (state.textEl) state.textEl.textContent = '';
     if (state.srEl) state.srEl.textContent = '';
@@ -916,6 +964,7 @@
   // ============================================================
   // 🎉 جشن / کاغذ رنگی
   // ============================================================
+  let confettiTimer = null, confettiLayer = null;
   function burstConfetti(panelEl) {
     if (!panelEl) return;
     try {
@@ -928,6 +977,10 @@
       layer.setAttribute('aria-hidden', 'true');
       panelEl.appendChild(layer);
     }
+    clearTimeout(confettiTimer);
+    if (confettiLayer && confettiLayer !== layer) confettiLayer.remove();
+    confettiLayer = layer;
+    layer.replaceChildren();
     const colors = ['#f5c842', '#e74c3c', '#2ecc71', '#3498db', '#9b59b6', '#e67e22', '#ff7eb9', '#7ef0ff'];
     for (let i = 0; i < 26; i++) {
       const p = document.createElement('i');
@@ -942,7 +995,7 @@
         'border-radius:' + (Math.random() > 0.5 ? '2px' : '50%');
       layer.appendChild(p);
     }
-    setTimeout(() => { if (layer.parentNode) layer.parentNode.removeChild(layer); }, 3600);
+    confettiTimer = setTimeout(() => { if (layer.parentNode) layer.parentNode.removeChild(layer); confettiTimer = null; confettiLayer = null; }, 3600);
   }
 
   function celebrate(type) {
@@ -961,7 +1014,7 @@
     if (!profile || !profile.lesson) return '';
     options = options || {};
     const p = profile;
-    const name = state.name;
+    const name = escapeHtml(state.name);
     const lessonNames = { 18:'قیام و حکومت‌های ایرانی', 19:'سلجوقیان و وزیران کاردان', 20:'حمله مغول و تیمور', 21:'بازسازی ایران' };
     let html = '';
     const totalWrong = [18,19,20,21].reduce((a, l) => a + p.lesson[l].w, 0);
@@ -976,7 +1029,7 @@
     if (options.commander) {
       const cmd = options.commander;
       html += '<div class="hakim-report-line" style="background:rgba(155,89,182,0.08);border-right-color:#9b59b6;">' +
-        (cmd.icon || '') + ' <strong>سردارت:</strong> ' + cmd.name + ' (' + (cmd.title || '') + ') — ' + (cmd.desc || '') +
+        escapeHtml(cmd.icon || '') + ' <strong>سردارت:</strong> ' + escapeHtml(cmd.name) + ' (' + escapeHtml(cmd.title || '') + ') — ' + escapeHtml(cmd.desc || '') +
       '</div>';
     }
 
@@ -1040,7 +1093,7 @@
     MOODS,
     MOOD_ALIASES,
     utils: { fillTemplate, pickPhrase, toEnglishNum, getLessonFromQ },
-    VERSION: '3.1.1'
+    VERSION: '3.2.0'
   }, shortcuts, { moods: moodsObj });
 
   global.Hakim = api;

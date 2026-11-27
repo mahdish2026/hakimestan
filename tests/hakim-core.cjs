@@ -1,0 +1,58 @@
+// Compatibility and timing regressions for the shared Hakim character.
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const {JSDOM}=require('jsdom');
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+(async()=>{
+  const dom=new JSDOM('<!doctype html><html lang="fa"><head></head><body><div id="first"></div><div id="second"></div></body></html>',{url:'http://localhost/',runScripts:'outside-only',pretendToBeVisual:true});
+  const w=dom.window; let reduce=false;
+  w.matchMedia=()=>({matches:reduce});
+  w.eval(fs.readFileSync('hakim-core.js','utf8'));
+  const H=w.Hakim;
+  for(const method of ['init','say','setMood','renderFace','react','track','buildReport','createProfile','show','hide','reset','saveAnswer','saveSession','getLocalProgress']) assert.equal(typeof H[method],'function',method);
+  for(const mood of [...H.MOODS,...Object.keys(H.MOOD_ALIASES)]) {
+    const host=w.document.createElement('div'); H.renderFace(mood,host);
+    assert.ok(host.querySelector('svg.hk-character'),mood);
+    assert.match(host.querySelector('svg').getAttribute('aria-label'),/چهرهٔ حکیم،/);
+  }
+  const a=w.document.createElement('div'), b=w.document.createElement('div');
+  a.innerHTML=H.FACES.wise; b.innerHTML=H.FACES.wise;
+  const ids=[...a.querySelectorAll('[id]'),...b.querySelectorAll('[id]')].map(n=>n.id);
+  assert.equal(new Set(ids).size,ids.length,'legacy FACES strings have unique gradients per access');
+  H.init({container:'#first',font:false,autoHideMs:15,name:'<img src=x onerror=alert(1)>'});
+  assert.ok(w.document.querySelector('#first .hk-character'));
+  H.say('الف 👩‍👩‍👧‍👦',{speed:1,autoHide:false,mood:'happy'});
+  assert.equal(w.document.querySelector('#first .hakim-sr-only').textContent,'الف 👩‍👩‍👧‍👦');
+  await wait(70);
+  assert.equal(w.document.querySelector('#first .hakim-text').textContent,'الف 👩‍👩‍👧‍👦');
+  H.say('پیام اول',{speed:0}); H.say('پیام تازه',{speed:0,autoHide:false});
+  await wait(60);
+  assert.equal(w.document.querySelector('#first .hakim-text').textContent,'پیام تازه');
+  assert.ok(w.document.querySelector('#first .hakim-panel').classList.contains('active'),'old hide timer cannot close new message');
+  H.say('در حال نوشته شدن',{speed:60,autoHide:false}); H.hide();
+  const hiddenText=w.document.querySelector('#first .hakim-text').textContent;
+  await wait(100);
+  assert.equal(w.document.querySelector('#first .hakim-text').textContent,hiddenText,'hidden message stops typing');
+  H.say('بازگشت',{speed:0,autoHide:false}); await wait(350);
+  assert.ok(w.document.querySelector('#first .hakim-panel').classList.contains('active'),'new speech cancels delayed hide');
+  H.init({container:'#second',font:false});
+  assert.ok(w.document.querySelector('#second .hakim-panel'),'explicit new container gets its own panel');
+  assert.equal(w.document.querySelector('#first .hakim-panel').classList.contains('active'),false);
+  const allIds=[...w.document.querySelectorAll('[id]')].map(e=>e.id);
+  assert.equal(new Set(allIds).size,allIds.length,'multiple panels do not reuse HTML or SVG IDs');
+  H.say('سلام', 'thinking');
+  assert.equal(w.document.querySelector('#second .hakim-panel').dataset.mood,'thinking','legacy string mood works');
+  H.burstConfetti(w.document.querySelector('#second .hakim-panel'));
+  H.burstConfetti(w.document.querySelector('#second .hakim-panel'));
+  assert.equal(w.document.querySelectorAll('#second .hakim-confetti i').length,26,'successive celebrations replace rather than accumulate');
+  H.reset(); reduce=true;
+  H.say('بدون تایپ متحرک ✨',{mood:'happy',autoHide:false});
+  assert.equal(w.document.querySelector('#second .hakim-text').textContent,'بدون تایپ متحرک ✨');
+  H.celebrate(); assert.equal(w.document.querySelectorAll('.hakim-confetti').length,0,'reduced motion disables confetti');
+  const report=H.buildReport(H.createProfile(),{commander:{name:'<img src=x>',desc:'<script>bad</script>'}});
+  const holder=w.document.createElement('div'); holder.innerHTML=report;
+  assert.equal(holder.querySelector('img,script'),null,'report escapes user-supplied data');
+  H.reset(); dom.window.close();
+  console.log('Hakim core: API, unique faces, messages, reduced motion, panel isolation and report safety OK');
+})().catch(err=>{console.error(err);process.exitCode=1});
