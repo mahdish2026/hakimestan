@@ -42,6 +42,8 @@ const w=dom.window,d=w.document,$=id=>d.getElementById(id);
 async function logout(H){H.Ui.confirmDlg=async()=>true;H.Auth.logout();await pause()}
 (async()=>{try{
  await pause(100);const H=w.HK;assert.ok(H?.V3);H.Poll.stop();
+ const draftWrites=[],dbSet=H.DB.set;H.DB.set=function(key,value){if(key==='drafts')draftWrites.push({account:H.S.me,chat:{...H.S.chat},input:$('msgInput').value,value:JSON.stringify(value),stack:new Error().stack});return dbSet.call(this,key,value)};
+
  assert.equal(H.S.role,'student','public users list must not authenticate a restored teacher username');
  assert.equal(H.S.profile.display,'نام پروفایل حساب اول','legacy profile must migrate to its existing session owner');
  assert.equal(H.U.safeParse('{"normal":{"value":1}}',null).normal.value,1,'normal JSON objects were rejected by inherited constructor');
@@ -102,7 +104,7 @@ async function logout(H){H.Ui.confirmDlg=async()=>true;H.Auth.logout();await pau
  H.Outbox.add({action:'message',from_user:'دوم',to_group:'عمومی',text:'دوم',clientId:'future-b'},'دوم',Date.now()+3600000);
  assert.equal(H.DB.get('outbox',[]).length,2,'saving a different account erased the first account queue');
  H.DB.softClear();assert.ok(H.DB.get('outbox',[]).some(x=>x.id==='future-a'),'clear local account cache erased another user’s pending messages');
- await logout(H);H.Auth.loginSuccess('آزمایش','student');H.Poll.stop();await pause();assert.equal(H.S.outbox.length,1);H.Compose.restoreDraft();assert.equal($('msgInput').value,'پیش‌نویس خصوصی حساب اول');
+ await logout(H);H.Auth.loginSuccess('آزمایش','student');H.Poll.stop();await pause();assert.equal(H.S.outbox.length,1);H.Compose.restoreDraft();assert.equal($('msgInput').value,'پیش‌نویس خصوصی حساب اول',JSON.stringify(draftWrites,null,2));
  // Logout while a POST is pending must not acknowledge or delete it in a newer session.
  H.S.outbox[0].at=Date.now();H.Outbox.save();holdPosts=true;const posting=H.Outbox.flush();await pause();const stalePost=deferred.find(x=>x.action==='message');assert.ok(stalePost);
  await logout(H);H.Auth.loginSuccess('دوم','student');H.Poll.stop();stalePost.resolve(response({ok:true}));await posting;

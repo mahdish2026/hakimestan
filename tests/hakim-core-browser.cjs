@@ -115,7 +115,10 @@ const axe=require('axe-core');
       });
       await page.goto('http://localhost:8000/panels/teacher.html',{waitUntil:'load'});
       await page.type('#passIn','local-test'); await page.click('#btnLogin');
-      await page.waitForSelector('#appShell:not(.hidden)'); await page.click('#btnTheme');
+      await page.waitForSelector('#appShell:not(.hidden)');
+      assert.equal(await page.$eval('#hakimMount',el=>el.classList.contains('hidden')),true,'teacher guidance is opt-in');
+      await page.click('#btnTeacherGuide'); await page.waitForSelector('#hakimMount:not(.hidden) .hakim-panel');
+      await page.click('#btnTheme');
       await page.evaluate(axe.source);
       const palettes=[];
       for(const theme of ['indigo','purple','forest','morning','pink','blue']) {
