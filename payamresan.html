@@ -300,7 +300,7 @@ body[data-mode="dark"]{
    • فیلد متن: flex:1 + min-width:0 → همیشه تمام فضای باقی‌مانده را می‌گیرد،
      زیر فشارِ عرض صفحه کوچک می‌شود (نه سرریز، نه «فضای خالی وسط»)
    • دکمه‌ها: flex:none → هرگز فشرده یا از جای خود جابه‌جا نمی‌شوند */
-.composer{padding:10px 12px 4px;display:flex;gap:8px;align-items:flex-end;min-width:0;background:linear-gradient(transparent,var(--bg) 30%)}
+.composer{padding:10px 12px 4px;display:flex;gap:8px;align-items:flex-end;min-width:0;background:transparent}
 .composer .box{flex:1 1 0%;min-width:0;background:var(--card);border:2.5px solid var(--line);border-radius:22px;padding:4px 6px 4px 16px;display:flex;align-items:flex-end;gap:6px;transition:border-color .2s,box-shadow .2s}
 .composer .box:focus-within{border-color:var(--accent);box-shadow:var(--glow)}
 .composer textarea{flex:1 1 0%;min-width:0;border:none;background:none;resize:none;max-height:120px;min-height:48px;padding:12px 6px;line-height:1.8}
@@ -521,12 +521,12 @@ textarea.code{direction:ltr;text-align:left}
     overflow-y:auto!important;
   }
 
-  /* کادر پیام: بچسبه پایین */
+  /* کادر پیام: بچسبه پایین — پس‌زمینه دیوار از این ناحیه هم نشان داده شود */
   .composer-wrap{
     flex:none!important;
     position:sticky!important;bottom:0!important;
     width:100%!important;padding:0!important;
-    background:var(--bg)!important;z-index:5!important;
+    background:transparent!important;z-index:5!important;
   }
   .chat-notices{padding:0 6px!important}
   .chat-foot{flex:none!important;padding:2px!important;font-size:.62rem!important}
@@ -1120,12 +1120,12 @@ body[data-wall="waves"] .main::before{
   background-image:radial-gradient(120px 60px at 20% 110%, var(--accent) 0%, transparent 60%),
                    radial-gradient(160px 70px at 70% 115%, var(--accent2) 0%, transparent 60%),
                    radial-gradient(140px 60px at 110% 108%, var(--accent) 0%, transparent 60%);
-  background-size:auto;opacity:.14;
+  background-size:auto;opacity:.30;
 }
 body[data-wall="hearts"] .main::before{
   background-image:radial-gradient(circle at 30% 30%, var(--accent) 0 3px, transparent 4px),
                    radial-gradient(circle at 70% 70%, var(--accent2) 0 3px, transparent 4px);
-  background-size:44px 44px;opacity:.16;
+  background-size:44px 44px;opacity:.30;
 }
 body[data-wall="stars"] .main::before{
   background-image:radial-gradient(circle at 20% 30%, #fff 0 1.5px, transparent 2px),
@@ -1146,30 +1146,30 @@ body[data-wall="mesh"] .main::before{
                    radial-gradient(at 80% 25%, var(--accent2) 0%, transparent 50%),
                    radial-gradient(at 35% 80%, var(--accent) 0%, transparent 55%),
                    radial-gradient(at 90% 85%, var(--accent2) 0%, transparent 50%);
-  background-size:150% 150%;background-repeat:no-repeat;opacity:.16;
+  background-size:150% 150%;background-repeat:no-repeat;opacity:.32;
 }
 body[data-wall="bokeh"] .main::before{
   background-image:radial-gradient(circle at 15% 25%, var(--accent) 0 3px, transparent 4px),
                    radial-gradient(circle at 72% 15%, var(--accent2) 0 4px, transparent 5px),
                    radial-gradient(circle at 85% 62%, var(--accent) 0 3px, transparent 4px),
                    radial-gradient(circle at 28% 82%, var(--accent2) 0 4px, transparent 5px);
-  background-size:64px 64px;opacity:.18;
+  background-size:64px 64px;opacity:.34;
 }
 body[data-wall="rings"] .main::before{
   background-image:repeating-radial-gradient(circle at 30% 30%, var(--accent) 0 1px, transparent 1px 12px);
-  background-size:auto;opacity:.16;
+  background-size:auto;opacity:.34;
 }
 body[data-wall="leaf"] .main::before{
   background-image:radial-gradient(circle at 20% 30%, var(--accent) 0 6px, transparent 7px),
                    radial-gradient(circle at 60% 50%, var(--accent2) 0 5px, transparent 6px),
                    radial-gradient(circle at 85% 75%, var(--accent) 0 7px, transparent 8px);
-  background-size:64px 64px;opacity:.12;
+  background-size:64px 64px;opacity:.30;
 }
 body[data-wall="galaxy"] .main::before{
   background-image:radial-gradient(90px 90px at 20% 30%, var(--accent) 0%, transparent 60%),
                    radial-gradient(130px 130px at 82% 62%, var(--accent2) 0%, transparent 60%),
                    radial-gradient(2px 2px at 50% 80%, #fff 0, transparent 3px);
-  background-size:auto;opacity:.18;
+  background-size:auto;opacity:.34;
 }
 
 /* ─── ۳-۳) تزئینات اختصاصی تم‌ها ─── */
