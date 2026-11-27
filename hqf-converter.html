@@ -7,6 +7,7 @@
 
 <script src="js/teacher-studio-appearance.js" defer></script>
 <script src="js/teacher-studio-pro.js" defer></script>
+<script src="js/teacher-workdesk.js" defer></script>
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
 <!-- hakim-core:end -->
@@ -586,16 +587,19 @@
 <link rel="stylesheet" href="css/folio.css">
 <link rel="stylesheet" href="css/teacher-studios.css">
 <link rel="stylesheet" href="css/teacher-studios-pro.css">
+<link rel="stylesheet" href="css/teacher-workdesk.css">
+<link rel="stylesheet" href="css/teacher-materials.css">
 </head>
-<body data-atelier-palette="garden" data-atelier-depth="on" class="converter-studio">
+<body data-workdesk="converter" data-atelier-palette="garden" data-atelier-depth="on" class="converter-studio">
 
 <a class="studio-skip" href="#sectionUpload">رفتن به میز تبدیل</a>
-<nav class="studio-masthead" aria-label="کارگاه معلم"><a class="studio-wordmark" href="index.html"><span aria-hidden="true">✦</span> حکیمستان <small>ابزارهای خلاق معلم</small></a><div><a href="tarh-dars.html">کارگاه طرح درس ↗</a><a class="btl-lobby-btn" data-lobby-link="index.html" href="index.html" aria-label="بازگشت به لابی حکیمستان"><svg class="btl-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 11 10-8 10 8M5 10v10h14V10M10 20v-5a2 2 0 0 1 4 0v5"/></svg><span class="btl-text">بازگشت به لابی</span></a></div></nav>
+<nav class="studio-masthead" aria-label="کارگاه معلم"><a class="studio-wordmark" href="index.html"><span aria-hidden="true">✦</span> حکیمستان <small>ابزارهای خلاق معلم</small></a><div><details class="studio-guide-drawer" id="studioGuide"><summary><span aria-hidden="true">✦</span> <span class="workdesk-guide-label">حکیم</span> <small>راهنمای محلی ابزار</small></summary><div class="workdesk-guide-content"><p class="studio-guide-disclosure">راهنمای همین صفحه؛ بدون ارسال محتوا و بدون چت هوش مصنوعی.</p><div id="hakimMount"></div><div class="studio-guide-actions"><button type="button" data-studio-guide="next" data-btl-processed="1">قدم بعدی چیست؟</button><button type="button" data-studio-guide="review" data-btl-processed="1">چه چیزی را بررسی کنم؟</button></div><p id="studioGuideFallback" role="status"></p></div></details><a href="tarh-dars.html">کارگاه طرح درس ↗</a><a class="btl-lobby-btn" data-lobby-link="index.html" href="index.html" aria-label="بازگشت به لابی حکیمستان"><svg class="btl-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 11 10-8 10 8M5 10v10h14V10M10 20v-5a2 2 0 0 1 4 0v5"/></svg><span class="btl-text">بازگشت به لابی</span></a></div></nav>
 <section class="atelier-appearance" aria-label="ظاهر کارگاه"><div><strong>حال‌وهوای کارگاه تو</strong><small>رنگ دلخواه، کمی خیال، همان ابزار قابل اعتماد.</small></div><label for="atelierPalette">پالت رنگ<select id="atelierPalette"><option value="garden">🌿 باغ زمردی</option><option value="ocean">🌊 آبی اقیانوس</option><option value="sunrise">☀️ طلوع نارنجی</option><option value="rose">🌸 باغ گل</option><option value="lavender">🔮 رویای یاسی</option><option value="sand">🏺 شن و مس</option><option value="night">🌙 آسمان شب</option></select></label><button type="button" class="atelier-depth-toggle" data-atelier-depth-toggle data-btl-processed="1" aria-pressed="true"><span aria-hidden="true">◈</span> جلوهٔ حجمی و حرکت</button><span id="atelierAppearanceStatus" role="status"></span></section>
-<header class="studio-hero"><div class="studio-editorial"><p class="studio-eyebrow">HAKIMESTAN / QUESTION LAB <span>استودیوی ۰۱</span></p><h1>به سؤال‌هایت<br><em>جانِ بازی بده.</em></h1><p>اینجا پایان یک آزمون، آغاز یک ماجراجویی است. با حکیم، فایل‌های آزمون را به پرسش‌های آمادهٔ بازی تبدیل کن.</p><div class="studio-hero-actions"><a class="studio-main-action" href="#sectionUpload">ورود به میز تبدیل <span aria-hidden="true">↙</span></a><button type="button" data-studio-demo data-btl-processed="1">اول یک نمونه ببینم ↗</button></div><div class="studio-editorial-foot"><span>۰۱ / فایل را بیاور</span><span>۰۲ / نتیجه را بسنج</span><span>۰۳ / بازی را بساز</span></div></div><div class="atelier-scene studio-gallery" aria-hidden="true"><div class="atelier-object"><img class="atelier-art" src="assets/teacher-studios/question-engine.webp" width="1120" height="751" alt="" fetchpriority="high"><span class="atelier-spark">✦</span></div><span class="studio-art-label">آزمایشگاه پرسش و بازی <b>✦ HAKIMESTAN</b></span></div></header>
+<header class="studio-hero workdesk-intro"><div class="studio-editorial"><p class="studio-eyebrow">HAKIMESTAN / QUESTION LAB <span>استودیوی ۰۱</span></p><h1>کارخانهٔ کوچکِ<br><em>پرسش‌های بزرگ.</em></h1><p>از فایل آزمون تا سؤال آمادهٔ بازی؛ ورودی، تنظیمات و نتیجه را روی یک میز کنترل کن.</p><div class="studio-hero-actions"><a class="studio-main-action" href="#sectionUpload">ورود به میز تبدیل <span aria-hidden="true">↙</span></a><button type="button" data-studio-demo data-btl-processed="1">اول یک نمونه ببینم ↗</button></div><div class="studio-editorial-foot"><span>۰۱ / فایل را بیاور</span><span>۰۲ / نتیجه را بسنج</span><span>۰۳ / بازی را بساز</span></div></div><div class="desk-sigil" aria-hidden="true"><span class="desk-sigil-orbit"></span><span class="desk-sigil-sheet desk-sigil-back"></span><span class="desk-sigil-sheet desk-sigil-front"><i></i><i></i><i></i></span><span class="desk-sigil-seal">✓</span><span class="desk-sigil-spark">✦</span></div></header>
 
-<details class="studio-guide-drawer" id="studioGuide"><summary><span aria-hidden="true">✦</span> همراهی با حکیم <small>راهنمای محلی ابزار</small></summary><p class="studio-guide-disclosure">راهنمای همین صفحه؛ بدون ارسال محتوا و بدون چت هوش مصنوعی.</p><div id="hakimMount"></div><div class="studio-guide-actions"><button type="button" data-studio-guide="next" data-btl-processed="1">قدم بعدی چیست؟</button><button type="button" data-studio-guide="review" data-btl-processed="1">چه چیزی را بررسی کنم؟</button></div><p id="studioGuideFallback" role="status"></p></details>
-<main class="container studio-workbench" id="studioWorkbench"><div class="studio-workbench-heading"><div><span class="studio-overline">THE CONVERSION DESK</span><h2>روی میزِ پرسش</h2></div><p>ورود فایل، بررسی نتیجه و دریافت خروجی؛ در یک میز کار.<br>پردازش روی دستگاه شما انجام می‌شود.</p></div><div class="studio-input-column">
+
+<nav class="workdesk-rail" aria-label="مسیر میز تبدیل"><a class="workdesk-rail-mark" href="#studioWorkbench" aria-label="میز پرسش">HQF<span>QUESTION LAB</span></a><a href="#sectionUpload" data-desk-step="source"><b aria-hidden="true">۰۱</b><span>ورودی</span></a><a href="#sectionSelect" data-desk-step="settings"><b aria-hidden="true">۰۲</b><span>تنظیمات</span></a><a href="#sectionResult" data-desk-step="result"><b aria-hidden="true">۰۳</b><span>خروجی</span></a><div class="workdesk-rail-end"><span aria-hidden="true">✦</span><small>حکیمستان<br>میزِ معلم</small></div></nav>
+<main class="container studio-workbench" id="studioWorkbench"><div class="studio-workbench-heading"><div><span class="studio-overline">WORKSPACE / میز تبدیل</span><h2 id="deskDocumentTitle">پروژهٔ سؤال تازه</h2></div><div class="workdesk-heading-actions"><span id="deskDocumentStatus" role="status">منتظر فایل ورودی</span><button id="deskFocus" type="button" aria-pressed="false" disabled data-btl-processed="1">نمای تمرکز ↗</button></div></div><div class="studio-input-column">
 
   <!-- ═══════════ بخش ۱: بارگذاری فایل ═══════════ -->
   <section class="card" id="sectionUpload" tabindex="-1">
@@ -615,7 +619,7 @@
       <button class="btn btn-outline" id="btnSample" data-btl-processed="1" type="button">🧪 تست با مثال آماده</button>
     </div>
 
-    <button class="sample-link" id="btnSample2" type="button">بدون فایل؟ یک آزمون نمونه (ریاضی پنجم) را امتحان کنید ←</button>
+    <button class="sample-link" id="btnSample2" type="button" hidden>بدون فایل؟ یک آزمون نمونه (ریاضی پنجم) را امتحان کنید ←</button>
 
     <div id="uploadMsg" role="status" aria-live="polite"></div><button id="btnRecoverDraft" class="btn btn-outline" type="button" hidden>دریافت نسخهٔ خام پیش‌نویس خراب</button><p id="converterStorageState" class="studio-storage" role="status">پیش‌نویس فقط در مرورگر همین دستگاه نگه‌داری می‌شود؛ برای نگه‌داری مطمئن، فایل خروجی بگیرید.</p>
     <div class="file-chips" id="fileChips"></div>
@@ -668,19 +672,8 @@
     <div id="converterPrintTitle" class="studio-print-heading"></div>
     <h2><span class="step-num">۳</span> پیش‌نمایش و خروجی</h2>
     <p class="desc">نتیجه‌ی تبدیل را بررسی کنید، سپس فایل HQF را دانلود کنید.</p>
-    <div class="btn-row cols-auto" style="margin-top:16px">
-      <button class="btn btn-gold" id="btnDownload" type="button">💾 دانلود فایل ‎.json</button>
-      <button class="btn btn-gold hidden" id="btnDownloadAll" type="button"
-              title="برای هر آزمون بارگذاری‌شده یک فایل HQF جداگانه ساخته و دانلود می‌شود">📦 دانلود جداگانه‌ی هر آزمون</button>
-      <button class="btn btn-outline" id="btnPreview" type="button">👁 پیش‌نمایش JSON</button>
-      <button class="btn btn-outline" id="btnCopy" type="button">📋 کپی JSON</button>
-      <button class="btn btn-outline" id="btnDownloadCsv" type="button">📊 دانلود CSV</button>
-      <button class="btn btn-outline" id="btnDownloadTxt" type="button">📄 دانلود متن ساده</button>
-      <button class="btn btn-outline" id="btnCopyTxt" type="button">📋 کپی متن ساده</button>
-      <button class="btn btn-outline" id="btnPrintHqf" type="button">🖨️ چاپ A4</button>
-      <button class="btn btn-outline" id="btnQualityReport" type="button">دریافت گزارش تبدیل</button>
-      <button class="btn btn-ghost" id="btnReset" type="button">🔄 فایل جدید</button>
-    </div>
+<div class="workdesk-result-top"><div class="workdesk-result-tabs" role="group" aria-label="نمای نتیجه"><button type="button" data-result-view="questions" aria-pressed="true" data-btl-processed="1">پرسش‌ها</button><button type="button" data-result-view="report" aria-pressed="false" data-btl-processed="1">گزارش تبدیل <span id="deskIssueBadge" hidden></span></button><button type="button" data-result-view="code" aria-pressed="false" data-btl-processed="1">ساختار JSON</button></div><button id="deskDensity" type="button" aria-pressed="false" data-btl-processed="1">نمای فهرست</button></div><div class="btn-row cols-auto workdesk-export"><button class="btn btn-gold" id="btnDownload" type="button">💾 دانلود فایل ‎.json</button><button class="btn btn-outline" id="btnPrintHqf" type="button">🖨️ چاپ A4</button><button class="btn btn-outline" id="btnQualityReport" type="button">دریافت گزارش تبدیل</button><details class="workdesk-export-more"><summary>سایر خروجی‌ها ⌄</summary><div><button class="btn btn-gold hidden" id="btnDownloadAll" type="button"
+              title="برای هر آزمون بارگذاری‌شده یک فایل HQF جداگانه ساخته و دانلود می‌شود">📦 دانلود جداگانه‌ی هر آزمون</button><button class="btn btn-outline" id="btnPreview" type="button">👁 پیش‌نمایش JSON</button><button class="btn btn-outline" id="btnCopy" type="button">📋 کپی JSON</button><button class="btn btn-outline" id="btnDownloadCsv" type="button">📊 دانلود CSV</button><button class="btn btn-outline" id="btnDownloadTxt" type="button">📄 دانلود متن ساده</button><button class="btn btn-outline" id="btnCopyTxt" type="button">📋 کپی متن ساده</button></div></details><button class="btn btn-ghost" id="btnReset" type="button">🔄 فایل جدید</button></div>
 
     <div class="stats">
       <div class="stat stat-ok"><div class="num" id="statOk">۰</div><div class="lbl">سؤال تبدیل شد</div></div>
@@ -688,7 +681,7 @@
       <div class="stat stat-warn"><div class="num" id="statWarn">۰</div><div class="lbl">هشدار / خطا</div></div>
     </div>
 
-    <div class="issue-list" id="issueList"></div>
+    <div class="issue-list" id="issueList"></div><p id="deskCleanReport" hidden>در بررسی ساختاری این تبدیل، پیامی ثبت نشده است. این نتیجه تأیید علمی پرسش‌ها نیست.</p>
 
     <div class="studio-preview-tools" role="search" aria-label="جست‌وجو در پیش‌نمایش">
       <label>جست‌وجوی سؤال<input id="previewSearch" type="search" placeholder="متن سؤال، بخش یا پاسخ…" maxlength="200"></label>

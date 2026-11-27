@@ -1,0 +1,70 @@
+/* Tactile controls, selective frosted chrome and finite motion. No image, canvas,
+   pointer tracking, animation library or perpetual rendering loop. */
+body[data-workdesk]{--material-edge:color-mix(in srgb,var(--accent) 30%,var(--line));--material-shadow:color-mix(in srgb,var(--text) 18%,transparent)}
+/* The mark is a small abstract document icon, never a replacement character. */
+.desk-sigil{position:relative;isolation:isolate;width:180px;height:154px;flex:0 0 180px;justify-self:center;direction:ltr;pointer-events:none}
+.desk-sigil-orbit{position:absolute;inset:5px 14px;border:1px solid var(--material-edge);border-radius:50%;transform:rotate(-24deg) scaleY(.76)}
+.desk-sigil-orbit:before,.desk-sigil-orbit:after{content:'';position:absolute;width:8px;height:8px;border:2px solid var(--card);border-radius:50%;background:var(--accent);top:25px;left:7px;box-shadow:0 2px 5px var(--material-shadow)}
+.desk-sigil-orbit:after{top:auto;left:auto;right:9px;bottom:22px;background:var(--gold,#b78c44)}
+.desk-sigil-sheet{position:absolute;width:69px;height:91px;left:55px;top:29px;border:1px solid var(--material-edge);border-radius:11px;background:var(--card);box-shadow:0 5px 0 var(--line),0 14px 20px var(--material-shadow)}
+.desk-sigil-back{transform:translate(-13px,-6px) rotate(-17deg);background:var(--soft)}
+.desk-sigil-front{transform:rotate(8deg);padding:20px 12px;background:linear-gradient(135deg,#ffffff28,transparent),var(--card)}
+.desk-sigil-front i{display:block;height:4px;margin:0 0 9px;background:var(--material-edge);border-radius:5px}.desk-sigil-front i:first-child{width:55%;height:7px;background:var(--accent)}.desk-sigil-front i:last-child{width:70%}
+.desk-sigil-seal{position:absolute;left:105px;top:90px;width:36px;height:36px;display:grid;place-items:center;background:var(--accent);color:var(--on-accent,#fff);border:2px solid var(--card);border-radius:12px;box-shadow:0 3px 0 var(--material-edge),0 6px 12px var(--material-shadow);font:700 22px/1 Tahoma,sans-serif;transform:rotate(-9deg)}
+.desk-sigil-spark{position:absolute;left:32px;top:16px;font-size:22px;color:var(--accent)}
+body[data-workdesk=converter] header.studio-hero.workdesk-intro{grid-template-columns:minmax(0,1fr) 210px;background:radial-gradient(ellipse at 10% 10%,var(--card),transparent 65%),var(--soft)}
+body[data-workdesk=lesson] .hero.desk-welcome{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:24px}
+/* Only shallow chrome gets glass. Reading/editing surfaces stay solid. */
+body[data-workdesk=converter] .studio-masthead,body[data-workdesk=lesson] .topbar{isolation:isolate;backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--card);border-bottom-color:var(--material-edge);box-shadow:0 1px 0 #ffffff38 inset,0 8px 24px var(--material-shadow)}
+body[data-workdesk=converter] .studio-masthead{position:relative;z-index:45}
+@supports(backdrop-filter:blur(12px)){
+ /* A separate glass layer avoids containing/trapping the fixed nav and guide. */
+ body[data-workdesk=converter] .studio-masthead,body[data-workdesk=lesson] .topbar{background:transparent}
+ body[data-workdesk=converter] .studio-masthead:before,body[data-workdesk=lesson] .topbar:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:color-mix(in srgb,var(--card) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+ body[data-workdesk] .workdesk-export-more>div{background:color-mix(in srgb,var(--card) 96%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+}
+/* Two-layer controls: visible top bevel, solid sidewall and soft contact shadow.
+   Excludes the shared green/gold lobby button and all destructive controls. */
+body[data-workdesk][data-atelier-depth=on] :is(button.btn:not(.danger),a.btn:not(.danger),.studio-hero-actions>button,.studio-hero-actions>a,.workdesk-heading-actions>button,#deskDensity,.atelier-depth-toggle){
+ background-image:linear-gradient(170deg,#ffffff24,transparent 58%);border-color:var(--material-edge);box-shadow:inset 0 1px 0 #ffffff50,0 3px 0 var(--material-edge),0 6px 10px var(--material-shadow);transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease;
+}
+body[data-workdesk=converter][data-atelier-depth=on] #sectionResult>.workdesk-export>.btn:not(.danger){box-shadow:inset 0 1px 0 #ffffff50,0 3px 0 var(--material-edge),0 6px 10px var(--material-shadow)}
+body[data-workdesk][data-atelier-depth=on] :is(.brand-icon,.subject-icon,.stat .s-icon){border:1px solid var(--material-edge);background-image:linear-gradient(145deg,#ffffff44,transparent);box-shadow:inset 0 1px 0 #ffffff70,0 3px 0 var(--material-edge),0 6px 12px var(--material-shadow);border-radius:12px}
+body[data-workdesk][data-atelier-depth=on] .template-choice .mini-sheet{box-shadow:3px 4px 0 var(--line),6px 8px 0 var(--soft),0 10px 14px var(--material-shadow);transition:transform .22s ease}
+body[data-workdesk] :is(.btn,.studio-hero-actions>a,.studio-hero-actions>button,.workdesk-heading-actions>button,#deskDensity):focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+@media(hover:hover) and (pointer:fine){
+ body[data-workdesk][data-atelier-depth=on] :is(button.btn:not(.danger),a.btn:not(.danger),.studio-hero-actions>button,.studio-hero-actions>a,.workdesk-heading-actions>button,#deskDensity,.atelier-depth-toggle):not(:disabled):not([aria-disabled=true]):hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 #ffffff60,0 5px 0 var(--material-edge),0 10px 16px var(--material-shadow)}
+ body[data-workdesk][data-atelier-depth=on] .template-choice:hover .mini-sheet{transform:translateY(-4px) rotate(-5deg)}
+ body[data-workdesk][data-atelier-depth=on] .template-choice{transition:border-color .2s ease,background-color .2s ease}
+}
+body[data-workdesk][data-atelier-depth=on] :is(button.btn:not(.danger),a.btn:not(.danger),.studio-hero-actions>button,.studio-hero-actions>a,.workdesk-heading-actions>button,#deskDensity,.atelier-depth-toggle):not(:disabled):active{transform:translateY(3px);box-shadow:inset 0 1px 3px var(--material-shadow),0 0 0 var(--material-edge)}
+@keyframes desk-paper-arrive{from{opacity:0;transform:translateY(14px) rotate(-8deg)}to{opacity:1;transform:translateY(0) rotate(8deg)}}
+@keyframes desk-seal-arrive{0%{opacity:0;transform:scale(.6) rotate(-25deg)}70%{opacity:1;transform:scale(1.12) rotate(-6deg)}100%{opacity:1;transform:scale(1) rotate(-9deg)}}
+@keyframes desk-view-arrive{from{transform:translateY(7px)}to{transform:translateY(0)}}
+body[data-workdesk][data-atelier-depth=on] .desk-sigil-front{animation:desk-paper-arrive .65s cubic-bezier(.2,.7,.2,1) both}
+body[data-workdesk][data-atelier-depth=on] .desk-sigil-seal{animation:desk-seal-arrive .55s .2s ease-out both}
+body[data-workdesk=converter][data-atelier-depth=on][data-result-view=questions] #qGrid,
+body[data-workdesk=converter][data-atelier-depth=on][data-result-view=report] #issueList,
+body[data-workdesk=converter][data-atelier-depth=on][data-result-view=code] #jsonPanel{animation:desk-view-arrive .24s ease-out both}
+body[data-workdesk][data-atelier-depth=off] .desk-sigil-sheet{box-shadow:none;transform:none}body[data-workdesk][data-atelier-depth=off] .desk-sigil-back{transform:translate(-9px,-7px)}body[data-workdesk][data-atelier-depth=off] .desk-sigil-seal{box-shadow:none;transform:none}body[data-workdesk][data-atelier-depth=off] .desk-sigil-spark{display:none}
+@media(max-width:760px){
+ body[data-workdesk=converter] header.studio-hero.workdesk-intro{grid-template-columns:minmax(0,1fr) 90px;gap:9px;padding-block:22px}
+ .desk-sigil{width:90px;height:112px;flex-basis:90px;transform:scale(.72);transform-origin:center; margin-inline:0}
+ .desk-sigil-sheet{left:14px;top:14px}.desk-sigil-seal{left:60px;top:76px}.desk-sigil-spark{left:1px;top:0}.desk-sigil-orbit{inset:-3px -15px}
+ body[data-workdesk=lesson] .desk-welcome h1{font-size:1.65rem}body[data-workdesk=lesson] .hero.desk-welcome{gap:4px}
+ body[data-workdesk=converter] .studio-masthead,body[data-workdesk=lesson] .topbar{background:var(--card)}
+ body[data-workdesk=converter] .studio-masthead:before,body[data-workdesk=lesson] .topbar:before{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ body[data-workdesk] *,body[data-workdesk] *:before,body[data-workdesk] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ body[data-workdesk] .desk-sigil-sheet,body[data-workdesk] .desk-sigil-seal{transform:none!important}
+ body[data-workdesk] .desk-sigil-back{translate:-9px -7px}
+ body[data-workdesk][data-atelier-depth=on] :is(.btn,.template-choice .mini-sheet,.atelier-depth-toggle,.studio-hero-actions>button,.studio-hero-actions>a,.workdesk-heading-actions>button,#deskDensity):hover,
+ body[data-workdesk][data-atelier-depth=on] :is(.btn,.atelier-depth-toggle,.studio-hero-actions>button,.studio-hero-actions>a,.workdesk-heading-actions>button,#deskDensity):active{transform:none!important}
+}
+@media print{.desk-sigil{display:none!important}body[data-workdesk] :is(.topbar,.studio-masthead){backdrop-filter:none!important;box-shadow:none!important}}
+/* In a workbench the optional install invitation belongs in document flow.
+   A fixed footer can intercept an otherwise visible upload/export control. */
+body[data-workdesk] #hk-install-banner{position:relative;inset:auto;inset-inline:auto;inset-block-end:auto;z-index:auto;margin:16px 28px;max-width:100%;border-radius:12px;animation:none;transform:none;box-shadow:0 3px 12px var(--material-shadow);flex-wrap:wrap}
+body[data-workdesk] #hk-install-banner .hk-ib-text{flex:1 1 170px}
+@media(max-width:760px){body[data-workdesk] #hk-install-banner{margin:14px;font-size:12px}}
