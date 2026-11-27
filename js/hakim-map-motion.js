@@ -66,6 +66,18 @@
       svg: '<path d="M2 20 L38 6 L26 34 L19 24 Z" fill="#e0f2fe" stroke="#1f6f8b" stroke-width="1.8" stroke-linejoin="round"/>' +
         '<path d="M38 6 L19 24 L17 33 L22 26" fill="#bae6fd" stroke="#1f6f8b" stroke-width="1.6" stroke-linejoin="round"/>' +
         '<path d="M2 20 L19 24" stroke="#1f6f8b" stroke-width="1.2"/>'
+    },
+    simorgh: {
+      label: 'سیمرغ حکمت', color: '#d99a26', soft: 'rgba(245,199,106,.24)', glyphs: ['✦', '🕯️', '📜', '✧', '🪶'], hover: true, flip: true,
+      svg: '<defs><linearGradient id="hkMmSg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff4cc"/><stop offset=".55" stop-color="#f5c76a"/><stop offset="1" stop-color="#c97a16"/></linearGradient></defs>' +
+        '<path d="M22 21 C30 10 37 8 39 4 C36 13 31 18 24 22 Z" fill="url(#hkMmSg)" stroke="#7c4a08" stroke-width="1"/>' +
+        '<path d="M22 23 C31 18 36 19 39 17 C35 23 29 25 23 25 Z" fill="#fde68a" stroke="#7c4a08" stroke-width=".9"/>' +
+        '<path d="M23 25 C29 29 34 33 38 37 C31 35 26 31 21 26 Z" fill="#f59e0b" stroke="#7c4a08" stroke-width=".9"/>' +
+        '<path d="M8 20 C12 15 18 16 24 20 C26 23 23 27 17 27 C12 27 9 24 8 20 Z" fill="url(#hkMmSg)" stroke="#7c4a08" stroke-width="1.2"/>' +
+        '<circle cx="10.5" cy="19" r="4" fill="#fde68a" stroke="#7c4a08" stroke-width="1.1"/>' +
+        '<path d="M7 19.5 L3.2 21 L7.2 21.8 Z" fill="#ea580c"/>' +
+        '<path d="M11 15 C12 11 15 9 18 8 M13 15.5 C15 12.5 17.5 11.5 20 11" stroke="#f59e0b" stroke-width="1.3" fill="none" stroke-linecap="round"/>' +
+        '<circle cx="9.6" cy="18.8" r="1.1" fill="#1e1b4b"/>'
     }
   };
 
