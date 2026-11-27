@@ -63,3 +63,8 @@ body[data-workdesk][data-atelier-depth=off] .desk-sigil-sheet{box-shadow:none;tr
  body[data-workdesk][data-atelier-depth=on] :is(.btn,.atelier-depth-toggle,.studio-hero-actions>button,.studio-hero-actions>a,.workdesk-heading-actions>button,#deskDensity):active{transform:none!important}
 }
 @media print{.desk-sigil{display:none!important}body[data-workdesk] :is(.topbar,.studio-masthead){backdrop-filter:none!important;box-shadow:none!important}}
+/* In a workbench the optional install invitation belongs in document flow.
+   A fixed footer can intercept an otherwise visible upload/export control. */
+body[data-workdesk] #hk-install-banner{position:relative;inset:auto;inset-inline:auto;inset-block-end:auto;z-index:auto;margin:16px 28px;max-width:100%;border-radius:12px;animation:none;transform:none;box-shadow:0 3px 12px var(--material-shadow);flex-wrap:wrap}
+body[data-workdesk] #hk-install-banner .hk-ib-text{flex:1 1 170px}
+@media(max-width:760px){body[data-workdesk] #hk-install-banner{margin:14px;font-size:12px}}
