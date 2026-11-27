@@ -7,3 +7,10 @@
 .wrap-sections{max-width:none;padding:0 0 40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.wrap-sections>section{min-width:0;grid-column:1/-1;scroll-margin-top:95px}.wrap-sections>.highlight-card{grid-column:auto}.wrap-sections .section-title{font-size:clamp(1.14rem,2vw,1.55rem);border-inline-start:4px solid var(--teal);padding-inline-start:12px}.wrap-sections .gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:15px}.gallery .shot{grid-column:span 2;margin:0;border:1px solid var(--hairline);background:var(--card);border-radius:16px;overflow:hidden}.gallery .cinema-shot,.gallery .school-shot{grid-column:span 3}.gallery .shot img{width:100%;height:auto;display:block;border:0;border-radius:0}.gallery figcaption{padding:8px 12px;margin:0}.wrap-sections .designer-card{padding-block:14px}
 @media(max-width:720px){.story-cover{grid-template-columns:1fr;gap:20px;margin-top:18px}.cover-copy h1 span{display:inline}.story-index{gap:2px 8px}.wrap-sections{display:flex}.wrap-sections .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery .shot{grid-column:auto}.gallery .cinema-shot{grid-column:1/-1}}
 @media(max-width:440px){.story-cover,.story-index,.wrap-sections{width:calc(100% - 24px)}.wrap-sections .gallery{grid-template-columns:1fr}.story-index b{flex-basis:100%}}
+
+/* Keep the dossier masthead in document flow. Unlike the old page-hero,
+   story-cover has no fixed-header spacer; a wrapped mobile header hid its copy.
+   Natural flow also accommodates zoom, safe areas and enlarged a11y text. */
+#siteHeader{position:relative;inset:auto;transform:none}
+.wrap-sections>section{scroll-margin-top:24px}
+@media print{#siteHeader{display:none!important}}

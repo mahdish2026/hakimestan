@@ -47,4 +47,6 @@ jobs:
           node tests/kohan-start-browser.cjs
           node tests/hakim-core-browser.cjs
           node tests/cert-brand-browser.cjs
+          node tests/darsgah-tools-browser.cjs
+          node tests/studio-dossier-layout-browser.cjs
           node tests/teacher-dashboard-security.cjs
