@@ -3297,11 +3297,7 @@
               <div>شماره سریال یکتا: <strong id="certSerialNum" style="font-family:monospace;">HK5-1405-0001</strong></div>
               <div style="margin-top:3px;">صادرشده توسط سامانه هوشمند آموزشی <strong>حکیمستان</strong></div>
             </div>
-            <div class="cert-seal" aria-label="مهر تأیید حکیمستان">
-              <span>🧙‍♂️</span>
-              <span>مهر تأیید</span>
-              <span>حکیمستان</span>
-            </div>
+            <img class="hk-cert-brand" src="../assets/img/hakimestan-logo-stacked.svg" alt="لوگوی حکیمستان">
           </div>
         </div>
       </div>
@@ -6632,7 +6628,7 @@
               if (!canvas || !canvas.width || !canvas.height) canvas = null;
             } catch (err) { canvas = null; }
           }
-          if (!canvas) canvas = renderCertificateFallbackCanvas();
+          if (!canvas) canvas = await renderCertificateFallbackCanvas();
           triggerCanvasDownload(canvas, 'hakimistan-certificate.png');
           showToast('✅ تصویر گواهی‌نامه دانلود شد.');
         } catch (e) {
@@ -6643,7 +6639,7 @@
       }
       
 
-      function renderCertificateFallbackCanvas() {
+      async function renderCertificateFallbackCanvas() {
         var W = 1000, H = 720;
         var c = document.createElement('canvas');
         c.width = W * 2;
@@ -6766,29 +6762,10 @@
         ctx.fillStyle = '#5b21b6';
         ctx.fillText('طراحی و توسعه: مهدی شریفیان', W - 70, 674);
       
-        ctx.textAlign = 'center';
-        var sealX = 130, sealY = 630, sealR = 44;
-      
-        ctx.beginPath();
-        ctx.arc(sealX, sealY, sealR, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(124,58,237,0.12)';
-        ctx.fill();
-        ctx.strokeStyle = '#5b21b6';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-      
-        ctx.beginPath();
-        ctx.arc(sealX, sealY, sealR - 6, 0, Math.PI * 2);
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      
-        ctx.font = '20px "Segoe UI Emoji","Apple Color Emoji",sans-serif';
-        ctx.fillStyle = '#5b21b6';
-        ctx.fillText('🧙‍♂️', sealX, sealY - 22);
-        ctx.font = 'bold 12px ' + fa;
-        ctx.fillText('مهر تأیید', sealX, sealY - 2);
-        ctx.font = 'bold 13px ' + fa;
-        ctx.fillText('حکیمستان', sealX, sealY + 18);
+        // همان لوگوی محلی در خروجی تصویری و بدون نیاز به شبکهٔ بیرونی
+        const brand = new Image();
+        const loaded = await new Promise(resolve => { brand.onload = () => resolve(true); brand.onerror = () => resolve(false); brand.src = '../assets/img/hakimestan-logo-stacked.svg'; });
+        if (loaded) ctx.drawImage(brand, 100, 575, 60, 104);
       
         return c;
       }

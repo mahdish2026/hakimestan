@@ -70,6 +70,11 @@ const overlap = (a,b) => a.left < b.right-1 && a.right > b.left+1 && a.top < b.b
       assert.ok(game.buttons.every(button=>button.height>=44), 'map buttons must have full-sized touch targets');
       assert.ok(!overlap(game.buttons[0],game.buttons[1]), 'map buttons must not overlap');
       assert.equal(game.comboHidden,true,'zero combo does not reserve header space');
+      assert.match(await page.$eval('.timer-circle',e=>e.getAttribute('aria-label')),/ثانیه/);
+      assert.equal(await page.$eval('#city-progress-bar',e=>e.getAttribute('aria-valuenow')),'0');
+      await page.evaluate(()=>{if(window.Hakim) Hakim.saveAnswer=()=>{};const q=QUESTIONS[state.currentQ];checkAnswer(q.answer)});
+      assert.notEqual(await page.$eval('#city-progress-bar',e=>e.getAttribute('aria-valuenow')),'0', 'city progress updates immediately');
+      assert.match(await page.$eval('#feedbackBox',e=>e.textContent),/پاسخ درست/);
       await page.evaluate(()=>{state.combo=2;updateHeader()});
       assert.equal(await page.$eval('#combo-display',e=>e.hidden),false,'combo becomes visible after scoring');
       await page.evaluate(()=>openMapModal());

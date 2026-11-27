@@ -128,9 +128,8 @@
         '<div class="hk-a4-spacer"></div>' +
         (o.quote ? '<p class="hk-a4-quote"><b>حکیم:</b> ' + esc(o.quote) + '</p>' : '') +
         '<footer class="hk-a4-foot">' +
-          seal((o.seal && o.seal.label) || o.world || 'حکیمستان', (o.seal && o.seal.sub) || '', id + 's') +
-          '<div class="hk-a4-sign"><span class="hk-a4-sign-t">مهر و امضا</span>' +
-            (L ? L.stacked({ label: 'لوگوی حکیمستان — مهر و امضای سامانه' }) : '') +
+          '<div class="hk-a4-sign">' +
+            (L ? L.stacked({ label: 'لوگوی حکیمستان' }) : '') +
             '<b>سامانهٔ آموزشی حکیمستان</b><small>' + esc(o.program || 'سرزمین یادگیری') + '</small>' +
             '<small class="hk-a4-dev">' + esc(o.credit || CREDIT) + '</small></div>' +
         '</footer>' +

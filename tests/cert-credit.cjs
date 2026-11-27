@@ -39,10 +39,10 @@ const inside = [
   ['games/lab2d.html', /<div>طراحی و توسعه<b>مهدی شریفیان<\/b><\/div>/],
   ['games/lab2d-apps/hakim-incline.html', /طراحی و توسعه: مهدی شریفیان/],
   ['games/lab2d-apps/hakim-pulley.html', /طراحی و توسعه: مهدی شریفیان/],
-  ['games/kohan-diyar.html', /ctx\.fillText\('✍️  طراحی و توسعه: مهدی شریفیان'/],
+  ['games/kohan-diyar.html', /ctx\.fillText\('طراحی و توسعه: مهدی شریفیان'/],
   ['games/farsi5-vocab.html', /ctx\.fillText\('طراحی و توسعه: مهدی شریفیان'/],
   ['cert-studio.html', /class="c-dev"[^`]*طراحی و توسعه: مهدی شریفیان/],
-  ['masir-yadgiri.html', /W\.signature\('مهدی شریفیان'/],
+  ['masir-yadgiri.html', /طراحی و توسعه: مهدی شریفیان/],
 ];
 for (const [f, re] of inside) assert.match(read(f), re, f + ': designer credit missing from the certificate');
 for (const f of ['games/math-nesbat.html', 'games/math-olgoha.html', 'games/math-learning-1.html'])
@@ -55,4 +55,14 @@ for (const f of ['games/math-nesbat.html', 'games/math-olgoha.html', 'games/math
   assert.ok(cert && cert.textContent.includes('مهدی شریفیان'), 'hakim-quest #certificate lacks the credit');
 }
 
-console.log('cert-credit: all certificate generators credit the designer ✓');
+// The legacy templates use the same local stacked logo; achievement badges remain distinct from stamps.
+for (const f of ['games/hakim-quest.html','games/kohan-diyar.html','games/lab2d.html',
+  'games/math-fasl2.html','games/math-learning-1.html','games/math-nesbat.html',
+  'games/math-olgoha.html','games/math-time-mission.html','games/farsi5-vocab.html',
+  'games/lab2d-apps/hakim-incline.html','games/lab2d-apps/hakim-pulley.html','masir-yadgiri.html','cert-studio.html']) {
+  assert.match(read(f), /hakimestan-logo-stacked\.svg/, f + ': official logo missing');
+}
+assert.doesNotMatch(read('masir-yadgiri.html'), /W\.(seal|signature)\(/, 'grand certificate must not use a seal or handwritten signature');
+assert.doesNotMatch(read('js/hakim-worlds.js'), /M8 32c14-22 22-26/, 'handwritten signature removed');
+assert.doesNotMatch(read('games/kohan-diyar.html'), /ctx\.fillText\('مهر'/, 'legacy PNG seal removed');
+console.log('cert-credit: all certificate generators credit the designer and legacy certificates use the official logo ✓');
