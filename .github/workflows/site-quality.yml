@@ -40,7 +40,7 @@ jobs:
           node tools/build-naghshestan.cjs
           node tools/build-memizestan.cjs
           export CHROME_PATH="$(command -v google-chrome)"
-          python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/hakim-server.log 2>&1 &
+          node tools/serve.cjs 8000 127.0.0.1 >/tmp/hakim-server.log 2>&1 &
           trap 'kill $!' EXIT
           curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
           node tests/site-pages-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)

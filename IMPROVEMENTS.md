@@ -363,7 +363,7 @@ node tools/check-contrast.mjs     # بازرسی کنتراست
 پیش‌نمایش محلی:
 
 ```bash
-python3 -m http.server 8080
+node tools/serve.cjs 8080
 # سپس http://localhost:8080
 # برای دیدن گزارش بازرسی: http://localhost:8080/index.html?a11y=debug
 ```
