@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.110';
+const VERSION = 'hakim-v1.5.111';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -182,6 +182,10 @@ const PREFETCH_PAGES = [
   './darsgah.html',
   './hqf-converter.html',
   './css/teacher-studios.css',
+  './css/teacher-studios-pro.css',
+  './js/teacher-studio-pro.js',
+  './assets/teacher-studios/question-engine.webp',
+  './assets/teacher-studios/lesson-landscape.webp',
   './js/teacher-studio-appearance.js',
   './assets/teacher-studios/question-atelier.svg',
   './assets/teacher-studios/lesson-atelier.svg',

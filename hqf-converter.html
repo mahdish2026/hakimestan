@@ -6,6 +6,7 @@
 <!-- hakim-csp:end -->
 
 <script src="js/teacher-studio-appearance.js" defer></script>
+<script src="js/teacher-studio-pro.js" defer></script>
 <!-- hakim-core:start -->
 <link rel="stylesheet" href="css/a11y.css">
 <!-- hakim-core:end -->
@@ -584,16 +585,17 @@
 <!-- hakim-meta:end -->
 <link rel="stylesheet" href="css/folio.css">
 <link rel="stylesheet" href="css/teacher-studios.css">
+<link rel="stylesheet" href="css/teacher-studios-pro.css">
 </head>
 <body data-atelier-palette="garden" data-atelier-depth="on" class="converter-studio">
 
 <a class="studio-skip" href="#sectionUpload">رفتن به میز تبدیل</a>
 <nav class="studio-masthead" aria-label="کارگاه معلم"><a class="studio-wordmark" href="index.html"><span aria-hidden="true">✦</span> حکیمستان <small>ابزارهای خلاق معلم</small></a><div><a href="tarh-dars.html">کارگاه طرح درس ↗</a><a class="btl-lobby-btn" data-lobby-link="index.html" href="index.html" aria-label="بازگشت به لابی حکیمستان"><svg class="btl-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2 11 10-8 10 8M5 10v10h14V10M10 20v-5a2 2 0 0 1 4 0v5"/></svg><span class="btl-text">بازگشت به لابی</span></a></div></nav>
 <section class="atelier-appearance" aria-label="ظاهر کارگاه"><div><strong>حال‌وهوای کارگاه تو</strong><small>رنگ دلخواه، کمی خیال، همان ابزار قابل اعتماد.</small></div><label for="atelierPalette">پالت رنگ<select id="atelierPalette"><option value="garden">🌿 باغ زمردی</option><option value="ocean">🌊 آبی اقیانوس</option><option value="sunrise">☀️ طلوع نارنجی</option><option value="rose">🌸 باغ گل</option><option value="lavender">🔮 رویای یاسی</option><option value="sand">🏺 شن و مس</option><option value="night">🌙 آسمان شب</option></select></label><button type="button" class="atelier-depth-toggle" data-atelier-depth-toggle data-btl-processed="1" aria-pressed="true"><span aria-hidden="true">◈</span> جلوهٔ حجمی و حرکت</button><span id="atelierAppearanceStatus" role="status"></span></section>
-<header class="studio-hero"><div><p class="studio-eyebrow">QUESTION ATELIER · استودیوی سؤال</p><h1>از یک پرسش،<br><em>تا هزار فرصت یادگیری.</em></h1><p>سؤال‌های شما، آمادهٔ یک ماجراجویی تازه؛ فایل آزمون را بیاورید، نتیجه را بسنجید و به بازی‌های حکیمستان ببرید.</p><div class="studio-tags"><span>JSON · CSV · TXT</span><span>پردازش فایل روی دستگاه شما</span><span>HQF 1.0 · نسخهٔ ۳</span></div></div><div class="atelier-scene" aria-hidden="true"><div class="atelier-orbit"></div><div class="atelier-object"><span class="atelier-pebble atelier-pebble-a">?</span><img class="atelier-art" src="assets/teacher-studios/question-atelier.svg" width="480" height="360" alt=""><span class="atelier-pebble atelier-pebble-b">✓</span><span class="atelier-companion"><i></i><i></i><b></b></span></div><span class="atelier-scene-caption">پرسش کوچک، کشف بزرگ.</span></div></header>
-<div class="studio-path" aria-label="مراحل تبدیل"><span>۰۱ <b>فایل‌هایت را بیاور</b></span><span>۰۲ <b>تنظیم و بررسی</b></span><span>۰۳ <b>آمادهٔ بازی</b></span></div>
-<div id="hakimMount"></div>
-<main class="container">
+<header class="studio-hero"><div class="studio-editorial"><p class="studio-eyebrow">HAKIMESTAN / QUESTION LAB <span>استودیوی ۰۱</span></p><h1>به سؤال‌هایت<br><em>جانِ بازی بده.</em></h1><p>اینجا پایان یک آزمون، آغاز یک ماجراجویی است. با حکیم، فایل‌های آزمون را به پرسش‌های آمادهٔ بازی تبدیل کن.</p><div class="studio-hero-actions"><a class="studio-main-action" href="#sectionUpload">ورود به میز تبدیل <span aria-hidden="true">↙</span></a><button type="button" data-studio-demo data-btl-processed="1">اول یک نمونه ببینم ↗</button></div><div class="studio-editorial-foot"><span>۰۱ / فایل را بیاور</span><span>۰۲ / نتیجه را بسنج</span><span>۰۳ / بازی را بساز</span></div></div><div class="atelier-scene studio-gallery" aria-hidden="true"><div class="atelier-object"><img class="atelier-art" src="assets/teacher-studios/question-engine.webp" width="1120" height="751" alt="" fetchpriority="high"><span class="atelier-spark">✦</span></div><span class="studio-art-label">آزمایشگاه پرسش و بازی <b>✦ HAKIMESTAN</b></span></div></header>
+
+<details class="studio-guide-drawer" id="studioGuide"><summary><span aria-hidden="true">✦</span> همراهی با حکیم <small>راهنمای محلی ابزار</small></summary><p class="studio-guide-disclosure">راهنمای همین صفحه؛ بدون ارسال محتوا و بدون چت هوش مصنوعی.</p><div id="hakimMount"></div><div class="studio-guide-actions"><button type="button" data-studio-guide="next" data-btl-processed="1">قدم بعدی چیست؟</button><button type="button" data-studio-guide="review" data-btl-processed="1">چه چیزی را بررسی کنم؟</button></div><p id="studioGuideFallback" role="status"></p></details>
+<main class="container studio-workbench" id="studioWorkbench"><div class="studio-workbench-heading"><div><span class="studio-overline">THE CONVERSION DESK</span><h2>روی میزِ پرسش</h2></div><p>ورود فایل، بررسی نتیجه و دریافت خروجی؛ در یک میز کار.<br>پردازش روی دستگاه شما انجام می‌شود.</p></div><div class="studio-input-column">
 
   <!-- ═══════════ بخش ۱: بارگذاری فایل ═══════════ -->
   <section class="card" id="sectionUpload" tabindex="-1">
@@ -660,11 +662,25 @@
     </div>
   </section>
 
+<section class="studio-question-map" aria-labelledby="studioMapTitle"><span class="studio-overline">QUESTION ATLAS</span><h2 id="studioMapTitle">نقشهٔ سؤال‌ها</h2><p id="studioMapSummary">با ورود فایل، ترکیب سؤال‌های خروجی را اینجا ببین.</p><div id="studioTypeMap"></div><p class="studio-map-note">انتخاب نوع فقط پیش‌نمایش را فیلتر می‌کند؛ خروجی اصلی کامل می‌ماند.</p></section></div>
   <!-- ═══════════ بخش ۳: پیش‌نمایش و خروجی ═══════════ -->
   <section class="card hidden" id="sectionResult">
     <div id="converterPrintTitle" class="studio-print-heading"></div>
     <h2><span class="step-num">۳</span> پیش‌نمایش و خروجی</h2>
     <p class="desc">نتیجه‌ی تبدیل را بررسی کنید، سپس فایل HQF را دانلود کنید.</p>
+    <div class="btn-row cols-auto" style="margin-top:16px">
+      <button class="btn btn-gold" id="btnDownload" type="button">💾 دانلود فایل ‎.json</button>
+      <button class="btn btn-gold hidden" id="btnDownloadAll" type="button"
+              title="برای هر آزمون بارگذاری‌شده یک فایل HQF جداگانه ساخته و دانلود می‌شود">📦 دانلود جداگانه‌ی هر آزمون</button>
+      <button class="btn btn-outline" id="btnPreview" type="button">👁 پیش‌نمایش JSON</button>
+      <button class="btn btn-outline" id="btnCopy" type="button">📋 کپی JSON</button>
+      <button class="btn btn-outline" id="btnDownloadCsv" type="button">📊 دانلود CSV</button>
+      <button class="btn btn-outline" id="btnDownloadTxt" type="button">📄 دانلود متن ساده</button>
+      <button class="btn btn-outline" id="btnCopyTxt" type="button">📋 کپی متن ساده</button>
+      <button class="btn btn-outline" id="btnPrintHqf" type="button">🖨️ چاپ A4</button>
+      <button class="btn btn-outline" id="btnQualityReport" type="button">دریافت گزارش تبدیل</button>
+      <button class="btn btn-ghost" id="btnReset" type="button">🔄 فایل جدید</button>
+    </div>
 
     <div class="stats">
       <div class="stat stat-ok"><div class="num" id="statOk">۰</div><div class="lbl">سؤال تبدیل شد</div></div>
@@ -680,22 +696,10 @@
       <label>تعداد در صفحه<select id="previewSize"><option value="24">۲۴</option><option value="48">۴۸</option><option value="96">۹۶</option></select></label>
       <label class="studio-answer-toggle"><input type="checkbox" id="hidePreviewAnswers">پنهان‌کردن پاسخ در پیش‌نمایش</label>
     </div><p class="studio-preview-note">جست‌وجو و فیلتر فقط پیش‌نمایش را تغییر می‌دهند؛ همهٔ سؤال‌های تبدیل‌شده در خروجی باقی می‌مانند.</p>
-    <div class="q-grid" id="qGrid"></div>
+    <div class="q-grid" id="qGrid" tabindex="0" role="region" aria-label="پرسش‌های پیش‌نمایش؛ قابل پیمایش"></div>
     <nav class="studio-pagination" aria-label="صفحه‌های پیش‌نمایش"><button id="previewPrev" class="btn btn-outline" type="button">صفحهٔ قبل</button><span id="previewCount" role="status" aria-live="polite"></span><button id="previewNext" class="btn btn-outline" type="button">صفحهٔ بعد</button></nav>
 
-    <div class="btn-row cols-auto" style="margin-top:16px">
-      <button class="btn btn-gold" id="btnDownload" type="button">💾 دانلود فایل ‎.json</button>
-      <button class="btn btn-gold hidden" id="btnDownloadAll" type="button"
-              title="برای هر آزمون بارگذاری‌شده یک فایل HQF جداگانه ساخته و دانلود می‌شود">📦 دانلود جداگانه‌ی هر آزمون</button>
-      <button class="btn btn-outline" id="btnPreview" type="button">👁 پیش‌نمایش JSON</button>
-      <button class="btn btn-outline" id="btnCopy" type="button">📋 کپی JSON</button>
-      <button class="btn btn-outline" id="btnDownloadCsv" type="button">📊 دانلود CSV</button>
-      <button class="btn btn-outline" id="btnDownloadTxt" type="button">📄 دانلود متن ساده</button>
-      <button class="btn btn-outline" id="btnCopyTxt" type="button">📋 کپی متن ساده</button>
-      <button class="btn btn-outline" id="btnPrintHqf" type="button">🖨️ چاپ A4</button>
-      <button class="btn btn-outline" id="btnQualityReport" type="button">دریافت گزارش تبدیل</button>
-      <button class="btn btn-ghost" id="btnReset" type="button">🔄 فایل جدید</button>
-    </div>
+
     <p class="studio-preview-note">فایل JSON مرجع کاملِ بازی‌ها و نگه‌داری ساختار سؤال است؛ CSV و متن ساده خروجی‌های کمکی‌اند و همهٔ جزئیات سؤال‌های وصل‌کردنی یا گزینه‌های بیشتر از چهار را بازنمایی نمی‌کنند.</p>
     <p class="btn-hint hidden" id="downloadAllHint">📦 در حالت «دانلود جداگانه» برای هر آزمون یک فایل ساخته می‌شود. مرورگر ممکن است اجازه‌ی دانلود چند فایل پشت‌سرهم بخواهد — آن را بپذیرید.</p>
 
@@ -704,6 +708,7 @@
     </div>
   </section>
 
+<section class="studio-empty-preview" aria-labelledby="studioEmptyTitle"><div class="studio-empty-mark" aria-hidden="true">؟</div><span class="studio-overline">FROM A QUESTION TO A POSSIBILITY</span><h2 id="studioEmptyTitle">جایِ بازیِ بعدی تو<br>اینجاست.</h2><p>یک فایل وارد کن؛ سؤال‌ها، پاسخ‌ها و گزارش تبدیل کنار هم ظاهر می‌شوند. پیش از خروجی، فرصت داری همه‌چیز را بررسی کنی.</p><div class="studio-empty-receipt"><span>ورودی <b>JSON / CSV / TXT</b></span><span>خروجی مرجع <b>HQF 1.0</b></span><span>نگه‌داری مطمئن <b>فایل پشتیبان مستقل</b></span></div></section>
 </main>
 
 <footer style="text-align:center;padding:24px 16px;color:#b9afd0;font-size:.85rem;line-height:2">

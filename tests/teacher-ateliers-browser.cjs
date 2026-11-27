@@ -40,6 +40,6 @@ try{for(const [width,height]of sizes){
  const excel=await p.evaluate(async()=>{const rows=await IO.readXlsx(new File([IO.xlsx([{name:'آزمایش',headers:['عنوان','مقدار'],rows:[['=SUM(A1)','<img src=x>']]}])],'fixture.xlsx'));return rows});assert.deepEqual(excel,[['عنوان','مقدار'],['=SUM(A1)','<img src=x>']]);
  await p.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);await p.locator('#nav-home').click();assert.equal(await p.$eval('.hero-art',e=>getComputedStyle(e).animationName),'none');
  assert.deepEqual(errors,[],`${width}: page errors`);assert.deepEqual(missing,[],`${width}: missing local assets`);assert.deepEqual(external,[],`${width}: no external requests (analytics opted out)`);
- console.log(`PASS teacher ateliers ${width}: local SVGs, shared lobby buttons, bounded file import, paged/search preview, complete JSON/print, quality report, accessible review/run-sheet, section focus, v1 save/reload, themes/navigation, real DOCX roundtrip, reduced motion`);
+ console.log(`PASS teacher ateliers ${width}: local artwork, shared lobby buttons, bounded file import, paged/search preview, complete JSON/print, quality report, accessible review/run-sheet, section focus, v1 save/reload, themes/navigation, real DOCX roundtrip, reduced motion`);
  await p.close();
 }}finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

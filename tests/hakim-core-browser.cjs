@@ -67,6 +67,8 @@ const axe=require('axe-core');
         if (!document.querySelector(selector) && window.HakimCompanion) HakimCompanion.mount({gameId:'hakim-test'});
         const mount=document.querySelector(selector);
         if (!mount) throw new Error('Missing companion mount: '+selector);
+        // Studio guidance is opt-in: test the actual visible panel after opening its native disclosure.
+        const disclosure=mount.closest('details'); if(disclosure) disclosure.open=true;
         Hakim.init({container:mount,font:false});
         Hakim.say('سلام دوست من! با هم یاد می‌گیریم.',{mood:'excited',autoHide:false});
       },selector);
