@@ -1141,6 +1141,20 @@ body[data-wall="scan"] .main::before{
   background-image:repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 4px);
   background-size:auto;opacity:1;
 }
+body[data-wall="mesh"] .main::before{
+  background-image:radial-gradient(at 20% 20%, var(--accent) 0%, transparent 50%),
+                   radial-gradient(at 80% 25%, var(--accent2) 0%, transparent 50%),
+                   radial-gradient(at 35% 80%, var(--accent) 0%, transparent 55%),
+                   radial-gradient(at 90% 85%, var(--accent2) 0%, transparent 50%);
+  background-size:150% 150%;background-repeat:no-repeat;opacity:.16;
+}
+body[data-wall="bokeh"] .main::before{
+  background-image:radial-gradient(circle at 15% 25%, var(--accent) 0 3px, transparent 4px),
+                   radial-gradient(circle at 72% 15%, var(--accent2) 0 4px, transparent 5px),
+                   radial-gradient(circle at 85% 62%, var(--accent) 0 3px, transparent 4px),
+                   radial-gradient(circle at 28% 82%, var(--accent2) 0 4px, transparent 5px);
+  background-size:64px 64px;opacity:.18;
+}
 body[data-wall="rings"] .main::before{
   background-image:repeating-radial-gradient(circle at 30% 30%, var(--accent) 0 1px, transparent 1px 12px);
   background-size:auto;opacity:.16;
@@ -1616,6 +1630,9 @@ body[data-theme="mist"]{
 /* ─── کاغذ دیواری‌های تازه ─── */
 .wp-mesh{background-image:radial-gradient(at 20% 20%, var(--accent) 0%, transparent 50%),radial-gradient(at 80% 25%, var(--accent2) 0%, transparent 50%),radial-gradient(at 35% 80%, var(--accent) 0%, transparent 55%),radial-gradient(at 90% 85%, var(--accent2) 0%, transparent 50%);background-size:150% 150%}
 .wp-bokeh{background-image:radial-gradient(circle at 15% 25%, var(--accent) 0 3px, transparent 4px),radial-gradient(circle at 72% 15%, var(--accent2) 0 4px, transparent 5px),radial-gradient(circle at 85% 62%, var(--accent) 0 3px, transparent 4px),radial-gradient(circle at 28% 82%, var(--accent2) 0 4px, transparent 5px);background-size:64px 64px}
+.wp-rings{background-image:repeating-radial-gradient(circle at 30% 30%, var(--accent) 0 1px, transparent 1px 12px);background-size:24px 24px}
+.wp-leaf{background-image:radial-gradient(circle at 20% 30%, var(--accent) 0 5px, transparent 6px),radial-gradient(circle at 60% 50%, var(--accent2) 0 4px, transparent 5px),radial-gradient(circle at 85% 75%, var(--accent) 0 6px, transparent 7px);background-size:32px 32px}
+.wp-galaxy{background-image:radial-gradient(circle at 25% 30%, var(--accent) 0 4px, transparent 5px),radial-gradient(circle at 70% 55%, var(--accent2) 0 5px, transparent 6px),radial-gradient(circle at 50% 80%, #fff 0 1px, transparent 2px);background-size:40px 40px}
 
 /* ─── بهینه‌سازی عملکرد: محدود کردن محوطهٔ چیدمان حباب‌ها ─── */
 .bubble{contain:layout style}
