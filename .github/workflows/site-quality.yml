@@ -72,7 +72,7 @@ jobs:
         with:
           node-version: '22'
       - name: Install workspace test dependencies
-        run: npm install --no-save --package-lock=false --ignore-scripts jsdom@26.1.0 puppeteer-core@24.43.1
+        run: npm install --no-save --package-lock=false --ignore-scripts jsdom@26.1.0 puppeteer-core@24.43.1 axe-core@4.14.1
       - name: Test teacher and messenger behaviour with mocked APIs
         run: |
           run_test() {
@@ -88,6 +88,7 @@ jobs:
               return 1
             fi
           }
+          run_test tests/teacher-ateliers.cjs
           run_test tests/teacher-workspace.cjs
           run_test tests/teacher-panel-geometry.cjs
           run_test tests/teacher-panel-math-decimals.cjs
@@ -100,6 +101,8 @@ jobs:
           node tools/serve.cjs 8000 127.0.0.1 >/tmp/workspace-server.log 2>&1 &
           trap 'kill $!' EXIT
           curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
+          node tests/teacher-ateliers-browser.cjs
+          node tests/teacher-studio-appearance-browser.cjs
           node tests/teacher-workspace-browser.cjs
           node tests/messenger-studio-browser.cjs
           node tests/messenger-workspace-browser.cjs

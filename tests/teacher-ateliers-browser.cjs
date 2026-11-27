@@ -1,0 +1,45 @@
+// Real browser, fictional local files, no production APIs.
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),pup=require('puppeteer-core'),axe=require('axe-core');
+const base=process.env.BASE_URL||'http://localhost:8000/';
+const selected=process.env.VIEWPORT_WIDTHS?.split(',').map(Number),sizes=[[1440,1000],[1024,900],[768,1024],[390,844],[320,740]].filter(v=>!selected||selected.includes(v[0]));
+(async()=>{const pkg=process.env.CHROME_PATH?null:require('@sparticuz/chromium'),c=pkg?.default||pkg,b=await pup.launch({executablePath:process.env.CHROME_PATH||await c.executablePath(),args:c?.args||['--no-sandbox'],headless:true});fs.mkdirSync('reports/teacher-studios',{recursive:true});
+try{for(const [width,height]of sizes){
+ const p=await b.newPage(),errors=[],missing=[],external=[];await p.setViewport({width,height});await p.setBypassServiceWorker(true);p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push(r.url())});
+ await p.setRequestInterception(true);p.on('request',r=>{if(r.url().startsWith(base)||/^(blob:|data:)/.test(r.url()))return r.continue();external.push(r.url());return r.abort()});
+ await p.evaluateOnNewDocument(()=>{localStorage.setItem('hk_no_stats','1')});
+ const overflow=async label=>assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,`${width} ${label}: overflow`);
+ const downloadCapture=()=>p.evaluate(()=>{window.__downloads=[];HTMLAnchorElement.prototype.click=function(){if(this.download)window.__downloads.push({name:this.download,url:this.href});else location.href=this.href}});
+ const readDownload=index=>p.evaluate(async i=>{const r=await fetch(window.__downloads[i].url);return await r.text()},index);
+ const axeCheck=async selector=>{await p.evaluate(axe.source);const violations=await p.evaluate(async s=>(await axe.run(document.querySelector(s),{runOnly:['wcag2a','wcag2aa','wcag21aa']})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),selector);assert.deepEqual(violations,[],`${width}: ${selector} accessibility`)};
+ await p.goto(base+'hqf-converter.html',{waitUntil:'networkidle0'});await p.evaluate(()=>{localStorage.removeItem('hakimestan_hqf_converter_v1')});await p.evaluate(()=>document.fonts.ready);
+ await overflow('converter home');await axeCheck('body');assert.equal(await p.$$eval('[id]',es=>new Set(es.map(e=>e.id)).size===es.length),true,'duplicate IDs');assert.equal(await p.$$eval('.btl-lobby-btn',es=>es.length),1,'single explicit lobby path');
+ assert.equal(await p.$eval('.studio-hero img',e=>e.complete&&e.naturalWidth>0),true);await p.screenshot({path:`reports/teacher-studios/converter-home-${width}.png`,fullPage:true});
+ await p.evaluate(()=>{const exam={title:'آزمون ساختگی',subject:'ریاضی',questions:Array.from({length:73},(_,i)=>({type:'mcq',text:'پرسش آزمایشی '+i,options:['الف','ب','ج','د'],answer:0}))},dt=new DataTransfer();dt.items.add(new File(['\uFEFF'+JSON.stringify(exam)],'fictional-exam.json',{type:'application/json'}));const input=document.getElementById('fileInput');input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}))});
+ await p.waitForFunction(()=>window.HQFConverter?.state.result?.hqf.questions.length===73);await overflow('converter result');await axeCheck('body');assert.equal(await p.$$eval('.q-card',es=>es.length),24);
+ await p.locator('#previewNext').click();assert.equal(await p.$eval('.q-num',e=>e.textContent),'۲۵');await p.type('#previewSearch','آزمایشی 72');await p.waitForFunction(()=>document.querySelectorAll('.q-card').length===1);await p.click('#hidePreviewAnswers');assert.equal(await p.$eval('.q-ans',e=>getComputedStyle(e).display),'none');
+ await axeCheck('.studio-preview-tools');await downloadCapture();await p.locator('#btnDownload').click();const packet=JSON.parse((await readDownload(0)).replace(/^\uFEFF/,''));assert.equal(packet.questions.length,73,'download must ignore preview filters');
+ await p.locator('#btnQualityReport').click();assert.match(await readDownload(1),/73 سؤال خروجی/);
+ await p.evaluate(()=>dispatchEvent(new Event('beforeprint')));assert.equal(await p.$$eval('.q-card',es=>es.length),73);await p.evaluate(()=>dispatchEvent(new Event('afterprint')));assert.equal(await p.$$eval('.q-card',es=>es.length),1);
+ await p.$eval('#previewSearch',e=>{e.value='';e.dispatchEvent(new Event('input'))});await p.waitForFunction(()=>document.querySelectorAll('.q-card').length===24);await p.screenshot({path:`reports/teacher-studios/converter-results-${width}.png`,fullPage:true});
+ await p.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);assert.equal(await p.$eval('.studio-hero img',e=>getComputedStyle(e).animationName),'none');
+ // Planner: operate through the real interface, with authored demo plans.
+ await p.goto(base+'tarh-dars.html',{waitUntil:'networkidle0'});await p.evaluate(()=>{localStorage.removeItem('hakimestan_tarhdars_v1');localStorage.removeItem('hakimestan_tarhdars_history_v1')});await p.reload({waitUntil:'networkidle0'});await p.evaluate(()=>document.fonts.ready);await overflow('planner home');await axeCheck('body');assert.equal(await p.$$eval('.btl-lobby-btn',es=>es.length),1,'no duplicate injected lobby buttons');assert.equal(await p.$eval('.hero-art',e=>e.complete&&e.naturalWidth>0),true);
+ await p.screenshot({path:`reports/teacher-studios/planner-home-${width}.png`,fullPage:true});
+ await p.locator('[data-act="use-plan"]').click();await p.waitForSelector('#planTitle');await overflow('planner editor');await axeCheck('body');await p.locator('.editor-toolbar [data-act="lesson-review"]').click();await p.waitForSelector('#modal[open] .studio-review-list');assert.ok(await p.$$eval('.studio-review-item',es=>es.length)>=8);await axeCheck('#modal');
+ await downloadCapture();await p.locator('[data-act="review-download"]').click();const report=await readDownload(0);assert.match(report,/میز اجرای کلاس/);assert.match(report,/0–5/);assert.match(report,/نه تأیید علمی/);await p.screenshot({path:`reports/teacher-studios/planner-review-${width}.png`,fullPage:true});
+ await p.locator('[data-act="review-jump"]').click();assert.equal(await p.$eval('#modal',e=>e.open),false);assert.equal(await p.evaluate(()=>!!document.activeElement.closest('.editor-section')),true,'jump opens and focuses the actual section');
+ // Changing title must survive a real save/reload, including the legacy v1 storage envelope.
+ await p.$eval('#planTitle',e=>{e.value='طرح آزمایشی ذخیره و بازیابی';e.dispatchEvent(new Event('input',{bubbles:true}))});await p.locator('.page-head [data-act="save"]').click();
+ const persisted=await p.evaluate(()=>JSON.parse(localStorage.getItem('hakimestan_tarhdars_v1')));assert.equal(persisted.version,1);assert.equal(persisted.myPlans[0].data.title,'طرح آزمایشی ذخیره و بازیابی');
+ await p.reload({waitUntil:'networkidle0'});await p.locator('#nav-editor').click();await p.waitForSelector('#planTitle');assert.equal(await p.$eval('#planTitle',e=>e.value),'طرح آزمایشی ذخیره و بازیابی');
+ for(const theme of await p.evaluate(()=>THEMES.map(t=>t[0]))){await p.evaluate(t=>{store.settings.theme=t;themeApply()},theme);await overflow('planner '+theme)}await p.evaluate(()=>{store.settings.theme='paper';themeApply()});
+ for(const tab of ['bank','mine','library','calendar','tools','settings','about']){await p.locator('#nav-'+tab).click();await p.waitForFunction(t=>document.getElementById('nav-'+t).getAttribute('aria-selected')==='true',{},tab);await overflow('planner '+tab)}
+ // Real Office export/import: no library mocks. Validate new CRC checks on generated DOCX.
+ const roundtrip=await p.evaluate(async()=>{const packet=clone(BANK[0]),blob=await createDocx([packet]),file=new File([blob],'fixture.docx'),plans=await importDocx(file);return {title:plans[0].title,sections:plans[0].sections.length,original:packet.sections.length}});assert.equal(roundtrip.title,'کسرهای مساوی');assert.equal(roundtrip.sections,roundtrip.original);
+ const excel=await p.evaluate(async()=>{const rows=await IO.readXlsx(new File([IO.xlsx([{name:'آزمایش',headers:['عنوان','مقدار'],rows:[['=SUM(A1)','<img src=x>']]}])],'fixture.xlsx'));return rows});assert.deepEqual(excel,[['عنوان','مقدار'],['=SUM(A1)','<img src=x>']]);
+ await p.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);await p.locator('#nav-home').click();assert.equal(await p.$eval('.hero-art',e=>getComputedStyle(e).animationName),'none');
+ assert.deepEqual(errors,[],`${width}: page errors`);assert.deepEqual(missing,[],`${width}: missing local assets`);assert.deepEqual(external,[],`${width}: no external requests (analytics opted out)`);
+ console.log(`PASS teacher ateliers ${width}: local SVGs, shared lobby buttons, bounded file import, paged/search preview, complete JSON/print, quality report, accessible review/run-sheet, section focus, v1 save/reload, themes/navigation, real DOCX roundtrip, reduced motion`);
+ await p.close();
+}}finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});
