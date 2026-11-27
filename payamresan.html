@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="حکیمستان">
 <meta name="application-name" content="پیامرسان حکیمستان">
-<meta name="description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، جستجوی پیشرفته و کار آفلاین">
+<meta name="description" content="پیامرسان حکیمستان — چت گروهی و خصوصی برای کلاس درس؛ عکس، پیام صوتی، فایل، ریپلای، ویرایش، ستاره‌دار، برنامه‌ریزی ارسال، گفتگوی فشار-دهی‌شده، ۱۶ تم زیبا، جستجوی پیشرفته و کار آفلاین">
 <meta name="author" content="مهدی شریفیان">
 <meta name="referrer" content="no-referrer">
 <!-- سیاست امنیتی محتوا (جلوگیری از XSS و اسکریپت بیرونی ناشناس) -->
@@ -1432,6 +1432,171 @@ body[data-bgimg="on"] #page-chat .main::before{
 }
 </style>
 <!-- pr-fix:end -->
+<!-- ═══════════════════════════════════════════════════════════════════
+   پیام‌رسان حکیمستان — لایه استایل نسخه ۴ (ارتقای گرافیک، چیدمان و عملکرد)
+   همه چیز افزودنی و روی لایه‌های قبل سوار می‌شود؛ چیزی از قبل حذف نشده.
+   ═══════════════════════════════════════════════════════════════════ -->
+<style id="pr-v4-layer">
+/* ─── تم‌های تازه (۴ تم) ─── */
+body[data-theme="lavender"]{
+  --bg:#f6f0ff;--bg2:#efe4ff;--card:#ffffff;--card2:#fbf6ff;
+  --ink:#4a3a5c;--muted:#8b7aa5;
+  --me:#efe0ff;--me-ink:#4a2f7a;
+  --other:#ffffff;--other-ink:#4a3a5c;
+  --btn:#8b5cf6;--btn-ink:#ffffff;
+  --accent:#7c3aed;--accent2:#a855f7;
+  --header:linear-gradient(135deg,#8b5cf6 0%,#d946ef 120%);
+  --header-ink:#ffffff;
+  --line:#e5dbff;--shadow:0 10px 30px rgba(124,58,237,.16);
+  --glow:0 0 0 4px rgba(124,58,237,.15);
+}
+body[data-theme="jade"]{
+  --bg:#eefbf3;--bg2:#ddf4e4;--card:#ffffff;--card2:#f2fbf5;
+  --ink:#22443a;--muted:#5f8578;
+  --me:#d9f5e3;--me-ink:#14532d;
+  --other:#ffffff;--other-ink:#22443a;
+  --btn:#10b981;--btn-ink:#ffffff;
+  --accent:#059669;--accent2:#14b8a6;
+  --header:linear-gradient(135deg,#059669 0%,#10b981 55%,#22c55e 120%);
+  --header-ink:#ffffff;
+  --line:#c8ecd6;--shadow:0 10px 30px rgba(5,150,105,.16);
+  --glow:0 0 0 4px rgba(16,185,129,.15);
+}
+body[data-theme="cocoa"]{
+  --bg:#f8f1e9;--bg2:#efe2d2;--card:#fffdf9;--card2:#faf3e8;
+  --ink:#4a3327;--muted:#8a6f5b;
+  --me:#eeddc7;--me-ink:#5b3d20;
+  --other:#ffffff;--other-ink:#4a3327;
+  --btn:#b45309;--btn-ink:#ffffff;
+  --accent:#92400e;--accent2:#d97706;
+  --header:linear-gradient(135deg,#92400e 0%,#d97706 55%,#f59e0b 120%);
+  --header-ink:#ffffff;
+  --line:#e6d5bf;--shadow:0 10px 30px rgba(146,64,14,.16);
+  --glow:0 0 0 4px rgba(217,119,6,.15);
+}
+body[data-theme="mist"]{
+  --bg:#eef2ff;--bg2:#e0e7ff;--card:#ffffff;--card2:#f4f6ff;
+  --ink:#2e3155;--muted:#6b7099;
+  --me:#dcdfff;--me-ink:#1e2a6e;
+  --other:#ffffff;--other-ink:#2e3155;
+  --btn:#4f6ef7;--btn-ink:#ffffff;
+  --accent:#3d5afe;--accent2:#7c5cff;
+  --header:linear-gradient(135deg,#3d5afe 0%,#7c5cff 60%,#00b8d4 130%);
+  --header-ink:#ffffff;
+  --line:#d8dcff;--shadow:0 10px 30px rgba(61,90,254,.16);
+  --glow:0 0 0 4px rgba(79,110,247,.15);
+}
+/* پیش‌نمایش تم‌های تازه در تنظیمات */
+.tp-lavender{background:linear-gradient(135deg,#8b5cf6,#d946ef)}
+.tp-jade{background:linear-gradient(135deg,#059669,#22c55e)}
+.tp-cocoa{background:linear-gradient(135deg,#92400e,#f59e0b)}
+.tp-mist{background:linear-gradient(135deg,#3d5afe,#00b8d4)}
+
+/* ─── کاغذ دیواری‌های تازه ─── */
+.wp-mesh{background-image:radial-gradient(at 20% 20%, var(--accent) 0%, transparent 50%),radial-gradient(at 80% 25%, var(--accent2) 0%, transparent 50%),radial-gradient(at 35% 80%, var(--accent) 0%, transparent 55%),radial-gradient(at 90% 85%, var(--accent2) 0%, transparent 50%);background-size:150% 150%}
+.wp-bokeh{background-image:radial-gradient(circle at 15% 25%, var(--accent) 0 3px, transparent 4px),radial-gradient(circle at 72% 15%, var(--accent2) 0 4px, transparent 5px),radial-gradient(circle at 85% 62%, var(--accent) 0 3px, transparent 4px),radial-gradient(circle at 28% 82%, var(--accent2) 0 4px, transparent 5px);background-size:64px 64px}
+
+/* ─── بهینه‌سازی عملکرد: محدود کردن محوطهٔ چیدمان حباب‌ها ─── */
+.bubble{contain:layout style}
+.side-item{contain:layout style}
+#msgs img,.avatar img,.drawer-head img{loading:lazy;decoding:async}
+
+/* ─── دکمهٔ برنامه‌ریزی (⏰) در کادر ارسال ─── */
+.schedule-btn{
+  width:44px;height:44px;min-width:44px;min-height:44px;border-radius:14px;flex:none;
+  background:var(--card2);border:2px solid var(--line);color:var(--muted);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:transform .12s ease,border-color .2s,color .2s,background .2s;
+}
+.schedule-btn:active{transform:scale(.9)}
+.schedule-btn:hover{border-color:var(--accent);color:var(--accent)}
+.schedule-btn.has-due{background:var(--accent);color:#fff;border-color:var(--accent)}
+.composer .schedule-btn{align-self:flex-end}
+
+/* ─── دکمهٔ فشار (📌) در سربرگ ─── */
+.icon-btn.pin-btn.pinned{background:var(--accent);color:#fff}
+.icon-btn.pin-btn.pinned:hover{background:var(--accent)}
+
+/* ─── حباب پیام‌های برنامه‌ریزی‌شده ─── */
+.sched-badge{
+  display:inline-flex;align-items:center;gap:4px;margin-top:4px;
+  font-size:.68rem;font-weight:800;background:rgba(255,255,255,.85);color:#5b4a00;
+  border:2px solid var(--line);border-radius:99px;padding:1px 9px;
+}
+.bubble.me .sched-badge{background:#fff4d6;color:#8a5a00}
+
+/* ─── پیام‌های هم‌فرستنده: فاصله کم‌تر ─── */
+.bubble.tail-cont{margin-top:-7px}
+
+/* ─── انفجار واکنش (انیمشن اضافه واکنش) ─── */
+.reacts .react.burst{animation:reactBurst .5s ease}
+@keyframes reactBurst{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.55) rotate(-8deg)}
+  100%{transform:scale(1)}
+}
+/* درخشش پس از افزودن واکنش به حباب */
+.reacts.pop .react{animation:reactGlow .6s ease}
+@keyframes reactGlow{
+  0%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+  40%{box-shadow:0 0 0 4px rgba(255,255,255,.5)}
+  100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+}
+
+/* ─── نشان‌گذار گفتگوهای فشار-دهی‌شده در لیست ─── */
+.side-sec .pin-star{margin-inline-start:auto;color:var(--accent)}
+.side-item .pin-pin{
+  position:absolute;top:6px;inline-end:6px;width:26px;height:26px;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;color:var(--accent);
+}
+.side-item{position:relative}
+.pinned-list .side-item{border-color:var(--accent);box-shadow:var(--glow)}
+
+/* ─── مودال برنامه‌ریزی ─── */
+.sched-modal .field{margin-bottom:12px}
+.sched-presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sched-preset{
+  min-height:46px;padding:8px 16px;border-radius:99px;font-weight:800;font-size:.88rem;
+  background:var(--card2);border:2px solid var(--line);color:var(--ink);
+  transition:all .15s;
+}
+.sched-preset:active{transform:scale(.95)}
+.sched-preset.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.sched-time{display:flex;gap:8px;align-items:stretch}
+.sched-time .input{min-height:56px;text-align:center;font-size:1.1rem;font-weight:900}
+.sched-preview{
+  display:flex;align-items:center;gap:10px;background:var(--card2);
+  border:2px dashed var(--line);border-radius:16px;padding:10px 14px;font-size:.85rem;
+}
+.sched-preview b{color:var(--accent)}
+
+/* ─── بمانی تایپ با نام‌ها در گروه ─── */
+.typing.multi #typingTxt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60vw}
+
+/* ─── صفحه خوشآمد: هالهٔ زنده و جلوه‌های تازه ─── */
+.hero-mesh{
+  position:absolute;inset:-40% -20% auto -20%;height:150%;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(40% 40% at 25% 20%, var(--accent) 0%, transparent 60%),
+    radial-gradient(45% 45% at 80% 10%, var(--accent2) 0%, transparent 60%);
+  opacity:.14;filter:blur(8px);animation:heroMeshFloat 9s ease-in-out infinite;
+}
+@keyframes heroMeshFloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-14px) scale(1.06)}
+}
+#page-welcome .wrap{position:relative;overflow:hidden}
+.hero-art{position:relative;z-index:1}
+
+/* ─── خالی‌های تازه برای ستاره‌دار/ذخیره‌شده ─── */
+.empty.v4 svg{opacity:.85;filter:drop-shadow(0 6px 10px rgba(0,0,0,.08))}
+.empty.v4 b{font-size:1.05rem}
+
+/* ─── جزئیات چیدمان ─── */
+.side-badge{background:var(--accent2);color:#fff;font-size:.66rem;font-weight:800;padding:2px 9px;border-radius:99px}
+/* دکمهٔ خارج‌ازقاب برای پیام‌های برنامه‌ریزی‌شده در نوار صف */
+#outboxBar .sched-tag{font-size:.74rem;font-weight:800;color:#8a5a00;background:#fff4d6;padding:2px 10px;border-radius:99px}
+</style>
 <link rel="stylesheet" href="css/folio.css">
 </head>
 <body data-theme="hakimستان" data-mode="light" data-font="medium">
@@ -1541,6 +1706,7 @@ body[data-bgimg="on"] #page-chat .main::before{
   <!-- ═════════ ۱. صفحه خوشآمد ═════════ -->
   <section id="page-welcome" class="page active">
     <div class="wrap">
+      <div class="hero-mesh" aria-hidden="true"></div>
       <div class="hero-art"><svg><use href="#mascot"/></svg></div>
       <div class="center">
         <p class="hk-folio">دفتر ارتباط کلاس</p>
@@ -1641,6 +1807,7 @@ body[data-bgimg="on"] #page-chat .main::before{
       <button class="icon-btn" id="btnInChatSearch" title="جستجو در این چت"><svg class="ic"><use href="#i-search"/></svg></button>
       <button class="icon-btn" id="btnNotifQuick" title="اعلان"><svg class="ic"><use href="#i-bell"/></svg><span class="dot-alert"></span></button>
       <button class="icon-btn is-hidden" id="btnToggleBan" title="بن کردن" aria-label="بن کردن کاربر"><svg class="ic"><use href="#i-ban"/></svg></button>
+      <button class="icon-btn pin-btn is-hidden" id="btnPinChat" title="فشار گفتگو" aria-label="فشار گفتگو"><svg class="ic"><use href="#i-pin"/></svg></button>
       <button class="icon-btn" id="btnChatMenu" title="گزینه‌های گفتگو" aria-label="گزینه‌های گفتگو"><svg class="ic"><use href="#i-more"/></svg></button>
       <button class="icon-btn" id="btnMenu1" aria-controls="drawer" aria-expanded="false" title="منو"><svg class="ic"><use href="#i-menu"/></svg></button>
     </div>
@@ -1716,6 +1883,7 @@ body[data-bgimg="on"] #page-chat .main::before{
                 <textarea id="msgInput" rows="1" maxlength="500" placeholder="پیامت رو بنویس…" aria-label="متن پیام (حداکثر ۵۰۰ حرف)" enterkeyhint="send"></textarea>
                 <span class="char-count" id="charCount">۰/۵۰۰</span>
               </div>
+              <button class="schedule-btn" id="btnSchedule" type="button" title="برنامه‌ریزی ارسال" aria-label="برنامه‌ریزی ارسال پیام"><svg class="ic"><use href="#i-clock"/></svg></button>
               <button class="send-btn" id="btnSend" title="ارسال" aria-label="ارسال پیام"><svg class="ic"><use href="#i-send"/></svg></button>
             </div>
             <input type="file" id="photoInput" accept="image/*" class="sr-only">
@@ -2090,9 +2258,9 @@ var CFG = {
   MSG_MAX_5M: 60,                        // ضد اسپم: سقف پیام در ۵ دقیقه
   ATT_MAX_MIN: 8,                       // سقف پیوست در دقیقه
   DAY_MS: 24*3600*1000,
-  REACTS: ['❤️','👍','😂','👏','😮','😍'],
+  REACTS: ['❤️','👍','😂','👏','😮','😍','🔥','🎉'],
   MENTION_RE: /@[A-Za-z0-9_\u0600-\u06FF‌]+/g,
-  VERSION: '3.0.0'          /* نسخه ۳: ۱۲ تم، کاغذ دیواری، استیکر و جلوه‌های گرافیکی */
+  VERSION: '4.0.0'          /* نسخه ۴: ۱۶ تم، برنامه‌ریزی ارسال، گفتگوهای فشار-دهی‌شده، جلوه‌های نو */
 };
 
 /* ═════════════ ۲. ابزارهای عمومی (Util) ═════════════ */
@@ -2433,7 +2601,7 @@ var S = {
   users: [], groups: [], messages: [], words: [],
   chat: { type:'group', id: DEFAULT_GROUP },
   lastSeen: {}, reads: {},                        // رسیدهای خوانده‌شده
-  reactions: {}, saved: [], starred: [], savedDays: [], banned: [],
+  reactions: {}, saved: [], starred: [], pinned: [], savedDays: [], banned: [],
   controls: {}, bannedPanel: false,
   profiles: {},                                   // پروفایل بقیه (کش محلی)
   tomb: {},                                       // پیام‌های حذف‌شده (تا دوباره ظاهر نشوند)
@@ -3502,8 +3670,8 @@ var Outbox = (function(){
     S.outbox.forEach(function(i){ if(i.status==='sending') i.status='queued'; });
   }
   function find(id){ return S.outbox.filter(function(i){ return i.id===id; })[0]||null; }
-  function add(payload, preview){
-    var item = { id:payload.clientId || U.uid('q'), payload:payload, tries:0, nextAt:0, status:'queued', preview:preview||'', at:Date.now() };
+  function add(payload, preview, at){
+    var item = { id:payload.clientId || U.uid('q'), payload:payload, tries:0, nextAt:0, status:'queued', preview:preview||'', at:at||Date.now() };
     S.outbox.push(item); save();
     return item;
   }
@@ -3584,7 +3752,7 @@ var Outbox = (function(){
   function flush(){
     if(S.queueRunning) return Promise.resolve();
     if(!U.isOnline()) return Promise.resolve();
-    var ready = S.outbox.filter(function(i){ return i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()); });
+    var ready = S.outbox.filter(function(i){ return i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()) && (!i.at || i.at<=Date.now()); });
     if(!ready.length) return Promise.resolve();
     S.queueRunning = true;
     return ready.reduce(function(p, item){
@@ -3615,7 +3783,7 @@ var Outbox = (function(){
       S.queueRunning=false; save();
       if(!pendingCount()) setTimeout(function(){ Data.fetchMessages().catch(function(){}); }, 900);
       // پیامی که حین همین ارسال به صف اضافه شده، منتظر چرخهٔ بعدی نماند:
-      else if(S.outbox.some(function(i){ return i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()); })) return flush();
+      else if(S.outbox.some(function(i){ return i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()) && (!i.at || i.at<=Date.now()); })) return flush();
     }).catch(function(){ S.queueRunning=false; save(); });
   }
   // تلاش دوباره برای پیام‌های ناموفق
@@ -3668,14 +3836,19 @@ function onConnectivityChange(){
 var Upd = (function(){
   function badge(){
     var bar=$('#outboxBar'); if(!bar) return;
-    var n = Outbox.pendingCount(), f = Outbox.failedItems().length;
-    if(!n && !f){ bar.classList.add('is-hidden'); }
-    else{
-      bar.classList.remove('is-hidden');
-      $('#outboxTxt').textContent = f? (fa(f)+' پیام ناموفق — برای تلاش دوباره بزن')
+    var items = S.outbox.filter(function(i){ return i.status!=='failed'; });
+    var n = items.length, f = Outbox.failedItems().length;
+    var sched = items.filter(function(i){ return i.at && i.at > Date.now(); }).length;
+    var tag = document.getElementById('outboxSched');
+    if(!n && !f){ bar.classList.add('is-hidden'); if(tag) tag.remove(); return; }
+    bar.classList.remove('is-hidden');
+    $('#outboxTxt').textContent = f? (fa(f)+' پیام ناموفق — برای تلاش دوباره بزن')
                                     : (fa(n)+' پیام در صف ارسال');
-      $('#outboxRetry').classList.toggle('is-hidden', !f);
-    }
+    $('#outboxRetry').classList.toggle('is-hidden', !f);
+    if(sched && !f){
+      if(!tag){ tag = document.createElement('span'); tag.id='outboxSched'; tag.className='sched-tag'; bar.appendChild(tag); }
+      tag.textContent = fa(sched)+' برنامه‌ریزی‌شده';
+    } else if(tag){ tag.remove(); }
   }
   return { badge:badge };
 })();
@@ -4040,6 +4213,20 @@ var App = (function(){
     var flt = S.chatFilter||'all';
     var html='';
 
+    // گفتگوهای فشار-دهی‌شده (بالای همه)
+    var pinnedList = (S.pinned||[]).slice();
+    if(flt==='all' && pinnedList.length){
+      if(q) pinnedList = pinnedList.filter(function(p){ return (p.name||'').toLowerCase().indexOf(q)>=0; });
+      if(pinnedList.length){
+        html += '<div class="side-sec pinned-list"><svg class="ic-sm pin-star"><use href="#i-pin"/></svg> فشرده‌ها</div>';
+        pinnedList.forEach(function(p){
+          var lm = lastMsgOf(p.type, p.id);
+          var row = sideItemHTML(p.type, p.id, p.name, previewOf(lm,'تو: '), lm?lm.date:null, 0, unreadCount(p.type,p.id));
+          html += row.replace('</button>', '<span class="pin-pin" aria-hidden="true"><svg class="ic-sm"><use href="#i-pin"/></svg></span></button>');
+        });
+      }
+    }
+
     // پیام‌های ستاره‌دار
     if(flt==='all' || flt==='star'){
       var st = lastMsgOf('starred','me');
@@ -4098,6 +4285,15 @@ var App = (function(){
       x.addEventListener('touchstart', function(){ timer=setTimeout(function(){ Profile.show(id); }, 620); }, {passive:true});
       ['touchend','touchmove','touchcancel'].forEach(function(ev){ x.addEventListener(ev, function(){ clearTimeout(timer); }, {passive:true}); });
     });
+    // فشار/رها کردن گفتگو: لمس طولانی یا کلیک راست روی گروه‌ها
+    $all('.side-item[data-t="group"]').forEach(function(x){
+      var id = x.getAttribute('data-id'), nm = x.getAttribute('data-name')||id;
+      function toggle(){ try{ (window.HK && HK.Pinned) && HK.Pinned.toggle('group', id, nm); }catch(e){} }
+      x.addEventListener('contextmenu', function(e){ e.preventDefault(); toggle(); });
+      var timer=null;
+      x.addEventListener('touchstart', function(){ timer=setTimeout(toggle, 620); }, {passive:true});
+      ['touchend','touchmove','touchcancel'].forEach(function(ev){ x.addEventListener(ev, function(){ clearTimeout(timer); }, {passive:true}); });
+    });
     renderSideTabs();
     Upd.badge();
   }
@@ -4106,7 +4302,12 @@ var App = (function(){
     var a = m.meta && m.meta.a;
     var t = Md.plain(m.text);
     var body = a? ({img:'🖼 عکس',voice:'🎤 پیام صوتی',file:'📎 فایل'}[a.k]||'پیوست') : (t||'');
-    return (minePrefix && U.same(m.from,S.me)? minePrefix:'') + (body.length>42? body.slice(0,42)+'…': body);
+    var txt = (minePrefix && U.same(m.from,S.me)? minePrefix:'') + (body.length>42? body.slice(0,42)+'…': body);
+    try{
+      var oi = Outbox.find(m.id);
+      if(oi && oi.at && oi.at > Date.now()) txt = '⏰ '+U.faTime(new Date(oi.at))+' · '+txt;
+    }catch(e){}
+    return txt;
   }
   function countOnlineGroup(g,on){
     var n=0; S.users.forEach(function(u){ if(on[u.username]) n++; });
@@ -4122,7 +4323,7 @@ var App = (function(){
            : (type==='saved')? '<span class="avatar sm" style="background:linear-gradient(135deg,#3d8bff,#8e54ff)">🔖</span>'
            : avatarHTML(name,'sm',isOnCls);
     var extraTxt = (extra>0)? '<span class="side-badge">'+fa(extra)+' آنلاین</span>' : '';
-    return '<button class="side-item'+active+'" data-t="'+esc(type)+'" data-id="'+esc(id)+'" aria-current="'+(active?'true':'false')+'">'+ av +
+    return '<button class="side-item'+active+'" data-t="'+esc(type)+'" data-id="'+esc(id)+'" data-name="'+esc(name)+'" aria-current="'+(active?'true':'false')+'">'+ av +
       '<span class="meta"><span class="nm">'+esc(name)+' '+badge+'</span>'+
       '<span class="pv">'+esc(preview||'')+'</span></span>'+
       '<span class="vstack" style="align-items:flex-end;gap:4px">'+
@@ -4180,6 +4381,18 @@ var App = (function(){
         var banned = S.banned.some(function(x){ return U.same(x,S.chat.id); });
         tBtn.innerHTML='<svg class="ic"><use href="#i-ban"/></svg>';
         tBtn.title = banned? 'آن‌بن کردن '+S.chat.id : 'بن کردن '+S.chat.id;
+      }
+    }
+    // دکمه فشار (📌) در سربرگ: فقط برای گفتگوهای واقعی
+    var pBtn=$('#btnPinChat'); if(pBtn){
+      var pShow = S.chat && (S.chat.type==='group' || S.chat.type==='pv');
+      pBtn.classList.toggle('is-hidden', !pShow);
+      if(pShow){
+        var isPinned = (S.pinned||[]).some(function(p){ return p.type===S.chat.type && U.same(p.id, S.chat.id); });
+        pBtn.classList.toggle('pinned', isPinned);
+        pBtn.title = isPinned? 'رها کردن گفتگو' : 'فشردن گفتگو';
+        pBtn.setAttribute('aria-label', pBtn.title);
+        pBtn.innerHTML='<svg class="ic"><use href="#i-pin"/></svg>';
       }
     }
   }
@@ -4264,7 +4477,12 @@ var App = (function(){
     updateScrollBtn();
   }
   function emptyMsgsHTML(){
-    return '<div class="empty"><svg width="90" height="76"><use href="#i-empty"/></svg><b>هنوز پیامی نیست</b><span>اولین نفری باش که سلام می‌کنه!</span></div>';
+    var t = S.chat && S.chat.type;
+    var txt = {
+      starred: ['<b>پیام‌های ستاره‌دار</b>','پیام‌هایی که با ☆ ستاره‌برداری کردی اینجا می‌آیند.'],
+      saved:   ['<b>ذخیره‌شده‌ها</b>','پیام‌هایی که با 📑 ذخیره کردی، از اینجا پیدا می‌شوند.']
+    }[t] || ['<b>هنوز پیامی نیست</b>','اولین نفری باش که سلام می‌کنه!'];
+    return '<div class="empty v4"><svg width="90" height="76"><use href="#i-empty"/></svg>'+txt[0]+'<span>'+txt[1]+'</span></div>';
   }
   function cssEsc(s){ return String(s).replace(/["\\]/g, '\\$&'); }
   // اتصال رویدادهای حباب‌ها (کلیک، دکمه‌ها، لمس طولانی، سوایپ)
@@ -4412,6 +4630,15 @@ var App = (function(){
       (mine? '<button class="mini-btn" data-act="edit" data-id="'+esc(m.id)+'"><svg class="ic-sm"><use href="#i-edit"/></svg> ویرایش</button>':'')+
       ((mine||S.role==='teacher')? '<button class="mini-btn danger" data-act="del" data-id="'+esc(m.id)+'"><svg class="ic-sm"><use href="#i-trash"/></svg></button>':'');
     var fail = (m.status==='failed')? '<div class="fail-note"><svg class="ic-sm" style="width:14px;height:14px"><use href="#i-warn"/></svg> ارسال نشد <button class="mini-btn" data-act="retry" data-id="'+esc(m.id)+'">تلاش دوباره</button></div>' : '';
+    // پیام برنامه‌ریزی‌شده: زمان رسیدن را نشان دهد
+    var sched = '';
+    try{
+      var oi = Outbox.find(m.id);
+      if(oi && oi.at && oi.at > Date.now()){
+        var due = new Date(oi.at);
+        sched = '<span class="sched-badge" title="پیام در ساعت '+esc(U.faTime(due))+' روز '+esc(U.faDateShort(due))+' ارسال می‌شود"><svg class="ic-sm" style="width:13px;height:13px"><use href="#i-clock"/></svg> '+esc(U.faTime(due))+' ارسال</span>';
+      }
+    }catch(e){}
 
     return '<div class="bubble '+cls+'" data-id="'+esc(m.id)+'" role="listitem" tabindex="0" aria-label="'+esc((mine?'پیام من':'پیام '+displayName(m.from))+': '+Md.plain(txt,80))+'">'+
       '<span class="swipe-reply-hint"><svg class="ic"><use href="#i-reply"/></svg></span>'+
@@ -4420,7 +4647,7 @@ var App = (function(){
       (bad? '<span class="filter-badge"><svg class="ic-sm" style="width:14px;height:14px"><use href="#i-warn"/></svg> فیلترشده</span>':'')+
       (reacts? '<div class="reacts">'+reacts+'</div>':'')+
       '<div class="msg-foot"><span class="time" title="'+esc(U.faDate(m.date)+' '+U.faTime(m.date))+'">'+U.faTime(m.date)+'</span>'+status+'</div>'+
-      fail +
+      fail + sched +
       '<div class="quick-react">'+picks+'</div>'+
       '<div class="msg-actions">'+acts+'</div>'+
     '</div>';
@@ -4567,6 +4794,16 @@ var App = (function(){
     DB.set('reacts', S.reactions);
     Net.postDB({action:'react', id:id, emoji:emoji, username:S.me, role:S.role});
     renderMsgs(true);
+    // جلوه‌ی انفجار روی واکنش تازه (اگر حباب در دید باشد)
+    setTimeout(function(){
+      try{
+        var b = $('.bubble[data-id="'+cssEsc(id)+'"]');
+        if(!b) return;
+        var chip = $('.reacts .react[data-e="'+cssEsc(emoji)+'"]', b);
+        if(chip){ chip.classList.remove('burst'); void chip.offsetWidth; chip.classList.add('burst'); }
+        var box = $('.reacts', b); if(box){ box.classList.remove('pop'); void box.offsetWidth; box.classList.add('pop'); }
+      }catch(e){}
+    }, 10);
   }
 
   /* ── اسکرول ── */
@@ -4816,15 +5053,22 @@ var Typing = (function(){
       var v = DB.get(k, null);
       if(v && v.chat===key && Date.now()-(v.at||0) < 3500) seen[who]=v;
     });
-    var now = Date.now(), found=null;
+    var now = Date.now(), found=[];
     Object.keys(seen).forEach(function(w){
       var v=seen[w];
       if(!v.at || now-v.at>3500 || v.chat!==key) delete seen[w];
-      else if(!found) found = w;
+      else found.push(w);
     });
     var b=$('#typingBubble');
-    if(found){ $('#typingTxt').textContent = App.displayName(found)+' در حال تایپ…'; b.classList.add('show'); }
-    else hide();
+    if(found.length){
+      var names = found.slice(0,2).map(function(w){ return App.displayName(w); });
+      var txt = found.length>2? names.join('، ')+' و '+fa(found.length-2)+' نفر دیگر'
+              : names.length>1? names.join(' و ') : names[0];
+      $('#typingTxt').textContent = txt+' در حال تایپ…';
+      b.classList.toggle('multi', found.length>1);
+      b.classList.add('show');
+    }
+    else { b.classList.remove('multi'); hide(); }
   }
   function hide(){ var b=$('#typingBubble'); if(b) b.classList.remove('show'); }
   return { init:init, ping:ping, stop:stop, stopAll:stopAll, clearFor:clearFor, hide:hide, isTyping:function(){ return $('#typingBubble').classList.contains('show'); } };
@@ -4909,11 +5153,12 @@ var Compose = (function(){
   // ارسال واقعی (متن + متادیتا) با صف آفلاین
   async function deliver(opts){
     var t = opts.text||'', meta = opts.meta||{};
+    var schedAt = opts.at || 0;                      // زمان برنامه‌ریزی‌شده (اگر داشت)
     try{ if(window.HK && HK.Snd) HK.Snd.play('send'); }catch(e){}   // صدای ارسال (نسخه ۳)
     var to_group = S.chat.type==='group'? S.chat.id : '';
     var to_user  = S.chat.type==='pv'? S.chat.id : '';
     var clientId = U.uid('q');
-    var date = new Date(Date.now() + (S.serverOffset||0)).toISOString();
+    var date = new Date((schedAt || Date.now()) + (S.serverOffset||0)).toISOString();
 
     // اگر بک‌اند فیلدهای اضافه را پشتیبانی نکند، متادیتا به انتهای متن می‌چسبد
     var wireMeta = Object.assign({},meta,{cid:clientId});
@@ -4931,15 +5176,19 @@ var Compose = (function(){
     var local = {
       id: clientId, from: S.me, to_group:to_group, to_user:to_user,
       text: t, meta: meta, date: date, filtered: !!Filter.hit(t), pending:true,
-      status: U.isOnline()? 'sending':'queued', mine:true
+      status: schedAt? 'queued' : (U.isOnline()? 'sending':'queued'), mine:true
     };
     S.messages.push(local);
     S.render.ids.push(clientId);          // تا رندر افزایشی آن را «تازه» بداند
     S._forceScroll = true;
     App.render('messages');
     App.markSeen();
-    var item = Outbox.add(payload, Md.plain(t)||'پیوست');
-    if(!U.isOnline()) toast('آفلاین هستی؛ پیام در صف می‌ماند','err');
+    var item = Outbox.add(payload, Md.plain(t)||'پیوست', schedAt);
+    if(schedAt){
+      toast('پیام برای ساعت '+U.faTime(new Date(schedAt))+' برنامه‌ریزی شد ⏰','ok');
+      App.render('messages');        // badge ⏰ بلافاصله روی حباب بیاید
+    }
+    else if(!U.isOnline()) toast('آفلاین هستی؛ پیام در صف می‌ماند','err');
     Outbox.flush().then(function(){
       // وضعیت را از روی صف تعیین کن، نه خوش‌بینی: اگر هنوز در صف است یعنی ارسال نشده
       var item = Outbox.find(clientId);
@@ -6449,7 +6698,11 @@ var Settings = (function(){
     var lg=$('#swLegacyDm'); if(lg) lg.checked=!!DB.get('legacyDm', false);
     var dt=$('#dwDarkTxt'); if(dt) dt.textContent='حالت شب: '+(DB.get('dark', false)?'روشن':'خاموش');
     var meta=document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute('content', DB.get('dark', false)? '#1b1a20' : '#ff7d3b');
+    if(meta){
+      var tc = '#ff7d3b';
+      try{ var ac = getComputedStyle(document.body).getPropertyValue('--accent').trim(); if(ac) tc = ac; }catch(e){}
+      meta.setAttribute('content', DB.get('dark', false)? '#1b1a20' : tc);
+    }
   }
   function sync(){
     applyTheme();
@@ -6804,6 +7057,11 @@ var Sync = (function(){
     var stars = App.messagesOf(S.chat.type, S.chat.id).filter(function(m){ return S.starred.indexOf(m.id)>=0; }).length;
     var items = [];
     if(S.chat.type==='pv') items.push({txt:'پروفایل '+App.displayName(S.chat.id), icon:'user', fn:function(){ Profile.show(S.chat.id); }});
+    if(S.chat.type==='group' || S.chat.type==='pv'){
+      var pIn = (window.HK && HK.Pinned)? HK.Pinned.isPinned(S.chat.type, S.chat.id): false;
+      items.push({txt: pIn? 'رها کردن گفتگو از فشرده‌ها' : 'فشردن گفتگو 📌', icon:'pin',
+        fn:function(){ (window.HK && HK.Pinned) && HK.Pinned.toggle(S.chat.type, S.chat.id); }});
+    }
     items.push({txt:'پیوست‌های این گفتگو ('+fa(atts)+')', icon:'image', fn:function(){ showAtts(); }});
     items.push({txt:'ستاره‌دارهای این گفتگو ('+fa(stars)+')', icon:'star', fn:function(){ App.showPage('search'); setTimeout(function(){ $('#sQuery').value=''; Search.state.type='star'; Search.state.q=''; Search.run(); }, 150); }});
     items.push({txt:'جستجوی پیشرفته در همه چت‌ها', icon:'search', fn:function(){ App.showPage('search'); }});
@@ -6899,12 +7157,14 @@ window.HK = { CFG:CFG, S:S, U:U, DB:DB, Net:Net, Data:Data, App:App, Attach:Atta
 
 })();
 
-/* ═════════════ ۳۴. نسخه ۳ — تم‌های تازه، جلوه‌های گرافیکی و تعامل‌های نو ═════════════
+/* ═════════════ ۳۴. نسخه ۴ — تم‌های تازه، جلوه‌های گرافیکی، برنامه‌ریزی و فشرده‌سازی ═════════════
    این بخش کاملاً افزودنی است و روی نسخه قبل سوار می‌شود:
-     • ۱۲ تم (۴ تم قبلی + ۸ تم تازه) با پیش‌نمایش گرافیکی
-     • کاغذ دیواری گفتگو، چگالی نمایش، پس‌زمینهٔ زندهٔ نقاشی‌شده روی canvas
+     • ۱۶ تم (۱۲ تم قبلی + ۴ تم تازه: لاواندر، یشم، کاکائو، مه) با پیش‌نمایش گرافیکی
+     • کاغذ دیواری‌های تازه (برق‌سنج، حباب)، چگالی نمایش، پس‌زمینهٔ زندهٔ نقاشی‌شده روی canvas
      • صداهای تازهٔ Web Audio برای هر رویداد + آزمایش صدا
-     • استیکر/شکلک، واکنش سریع با دوبار کلیک، ریسهٔ جشن (کاغذرنگی)
+     • استیکر/شکلک، واکنش سریع با دوبار کلیک، ریسهٔ جشن (کاغذرنگی)، انفجار واکنش
+     • برنامه‌ریزی ارسال پیام (⏰) با زمان‌پیکرگیری و ارسال خودکار در زمان مقرر
+     • گفتگوهای فشرده‌دهی‌شده (📌) با دکمهٔ سربرگ، منو و لیست فشرده‌ها
      • جلوه‌های حرکت نرم: موج کلیک، دم حباب، درخشش پیام تازه
    هیچ‌کدام از قابلیت‌های قبلی حذف نشده‌اند؛ فقط لایهٔ تازه روی آن‌ها نشسته است. */
 var V3 = (function(){
@@ -6930,7 +7190,11 @@ var V3 = (function(){
     { id:'paper',     label:'کاغذی',     sw:['#f6f4ef','#c2703f'], desc:'مینیمال و تمیز' },
     { id:'pixel',     label:'پیکسلی',    sw:['#101018','#7ee07e'], desc:'بازی‌گونه با گوشه‌های تیز' },
     { id:'rose',      label:'گلی',       sw:['#e0568f','#ffc2dd'], desc:'صورتی لطیف' },
-    { id:'royal',     label:'شاهانه',    sw:['#7a5a24','#f0d9a0'], desc:'طلایی و مجلسی' }
+    { id:'royal',     label:'شاهانه',    sw:['#7a5a24','#f0d9a0'], desc:'طلایی و مجلسی' },
+    { id:'lavender',  label:'لاواندر',   sw:['#8b5cf6','#d946ef'], desc:'بنفش رؤیایی و آرام' },
+    { id:'jade',      label:'یشم',       sw:['#059669','#22c55e'], desc:'سبز یشم و دریایی' },
+    { id:'cocoa',     label:'کاکائو',    sw:['#92400e','#f59e0b'], desc:'قهوه‌ای گرم و دل‌انگیز' },
+    { id:'mist',      label:'مه',        sw:['#3d5afe','#00b8d4'], desc:'آبی مه‌آلود و آرامش‌بخش' }
   ];
 
   /* ─── ۳۴-۲) کاغذ دیواری‌ها ─── */
@@ -6943,7 +7207,9 @@ var V3 = (function(){
     { id:'hearts',  label:'شکلک', cls:'wp-hearts' },
     { id:'stars',   label:'ستاره', cls:'wp-stars' },
     { id:'paper',   label:'خط‌دار', cls:'wp-paper' },
-    { id:'scan',    label:'خط اسکن', cls:'wp-scan' }
+    { id:'scan',    label:'خط اسکن', cls:'wp-scan' },
+    { id:'mesh',    label:'برق‌سنج', cls:'wp-mesh' },
+    { id:'bokeh',   label:'حباب',   cls:'wp-bokeh' }
   ];
 
   /* ─── ۳۴-۳) استیکرها (گروه‌بندی‌شده) ─── */
@@ -6955,7 +7221,7 @@ var V3 = (function(){
     'قلب':   ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','💖','💗','💞','💘']
   };
 
-  var QUICK_REACTS = ['❤️','👍','😂','😮','😢','🔥'];
+  var QUICK_REACTS = ['❤️','👍','😂','🔥','🎉','😮','😢','👏'];
 
   /* ═══ ۳۴-۴) صدا (Web Audio) ═══ */
   var Snd = (function(){
@@ -7186,6 +7452,7 @@ var V3 = (function(){
       isNewDay = !!(n && n.classList.contains('day-sep'));
       var first = (i===0) || prev !== k || isNewDay;
       b.classList.toggle('tail-start', first);
+      b.classList.toggle('tail-cont', !first);
       prev = k;
       // وضعیت صف روی حباب
       var m = null;
@@ -7339,6 +7606,138 @@ var V3 = (function(){
     return { build:build, install:install, close:close };
   })();
 
+  /* ═══ ۳۴-۱۱) گفتگوهای فشار-دهی‌شده (📌) ═══ */
+  var Pinned = (function(){
+    function load(){ if(!S.pinned || !S.pinned.length){ S.pinned = DB.get('pinned', [])||[]; } return S.pinned; }
+    function save(){ DB.set('pinned', S.pinned||[]); }
+    function list(){ load(); return (S.pinned||[]).slice(); }
+    function isPinned(type, id){
+      return (S.pinned||[]).some(function(p){ return p.type===type && U.same(p.id, id); });
+    }
+    function toggle(type, id, name){
+      if(!type || !id) return false;
+      load();
+      var nm = name || (type==='group'? id : App.displayName(id));
+      var i=-1;
+      (S.pinned||[]).forEach(function(p, idx){ if(p.type===type && U.same(p.id,id)) i=idx; });
+      if(i>=0){ S.pinned.splice(i,1); toast('گفتگو از فشرده‌ها حذف شد'); }
+      else { S.pinned.unshift({type:type, id:id, name:nm}); toast('گفتگو فشرده شد 📌','ok'); }
+      if(S.pinned.length>20) S.pinned = S.pinned.slice(0,20);
+      save();
+      try{ App.renderAll('all'); }catch(e){}
+      if(Snd) Snd.play('send');
+      return isPinned(type, id);
+    }
+    function current(){
+      if(!S.chat || (S.chat.type!=='group' && S.chat.type!=='pv')) return null;
+      return {type:S.chat.type, id:S.chat.id};
+    }
+    return { load:load, save:save, list:list, isPinned:isPinned, toggle:toggle, current:current };
+  })();
+
+  /* ═══ ۳۴-۱۲) برنامه‌ریزی ارسال پیام (⏰) ═══ */
+  var Schedule = (function(){
+    var timer=null;
+    function count(){
+      try{ return S.outbox.filter(function(i){ return i.at && i.at > Date.now() && i.status!=='failed'; }).length; }
+      catch(e){ return 0; }
+    }
+    function syncBtn(){
+      var b = U.$('#btnSchedule'); if(!b) return;
+      var n = count();
+      b.classList.toggle('has-due', n>0);
+      b.title = n>0? ('برنامه‌ریزی‌شده: '+U.fa(n)) : 'برنامه‌ریزی ارسال';
+    }
+    function startChecker(){
+      if(timer) return;
+      timer = setInterval(function(){
+        syncBtn();
+        try{
+          var due = S.outbox.filter(function(i){ return i.at && i.at<=Date.now() && i.status!=='failed' && (!i.nextAt || i.nextAt<=Date.now()); });
+          if(due.length && HK.Outbox) HK.Outbox.flush();
+        }catch(e){}
+      }, 8000);
+    }
+    function open(){
+      if(!S.chat || S.chat.type==='saved' || S.chat.type==='starred'){ toast('ابتدا یک گفتگوی واقعی انتخاب کن','err'); return; }
+      var inp = U.$('#msgInput');
+      var text = inp? inp.value : '';
+      if(!text || !text.trim()){ toast('متن پیام خالی است','err'); return; }
+      buildModal(text.trim());
+    }
+    function buildModal(text){
+      var now = new Date();
+      var d = new Date(now.getTime() + 10*60000); d.setSeconds(0,0);
+      var h = d.getHours(), m = d.getMinutes();
+      var ov = document.createElement('div');
+      ov.className='modal-ov open';
+      var card = document.createElement('div');
+      card.className='modal sched-modal';
+      card.innerHTML =
+        '<h3>⏰ برنامه‌ریزی ارسال</h3>'+
+        '<p>پیام در زمان انتخاب‌شده خودکار ارسال می‌شود؛ حتی اگر تب بسته باشد.</p>'+
+        '<div class="sched-presets">'+
+          '<button type="button" class="sched-preset" data-min="10">۱۰ دقیقه دیگر</button>'+
+          '<button type="button" class="sched-preset" data-min="30">۳۰ دقیقه دیگر</button>'+
+          '<button type="button" class="sched-preset" data-min="60">۱ ساعت دیگر</button>'+
+          '<button type="button" class="sched-preset" data-min="1440">صبح فردا</button>'+
+        '</div>'+
+        '<div class="field"><label>ساعت و دقیقه ارسال</label>'+
+          '<div class="sched-time">'+
+            '<input class="input" type="number" id="schedH" min="0" max="23" value="'+h+'" aria-label="ساعت">'+
+            '<input class="input" type="number" id="schedM" min="0" max="59" value="'+m+'" aria-label="دقیقه"></div></div>'+
+        '<div class="sched-preview">پیام: <b>'+esc(text.slice(0,60))+(text.length>60?'…':'')+'</b></div>'+
+        '<div class="row" style="margin-top:14px">'+
+          '<button type="button" class="btn btn-ghost" data-x="0">لغو</button>'+
+          '<button type="button" class="btn btn-accent" data-x="1">برنامه‌ریزی</button></div>';
+      ov.appendChild(card);
+      document.body.appendChild(ov);
+      var preset = U.$('.sched-preset.active', card);
+      if(preset) preset.classList.remove('active');
+      U.$('.sched-preset[data-min="10"]', card).classList.add('active');
+      function close(){
+        document.removeEventListener('keydown', onKey, true);
+        document.removeEventListener('pointerdown', onDoc, true);
+        if(ov.parentNode) ov.parentNode.removeChild(ov);
+      }
+      function onDoc(e){ if(e.target.closest && e.target.closest('.sched-modal')) return; close(); }
+      function onKey(e){ if(e.key==='Escape'){ e.stopPropagation(); close(); } }
+      document.addEventListener('pointerdown', onDoc, true);
+      document.addEventListener('keydown', onKey, true);
+      U.$all('.sched-preset', card).forEach(function(b){
+        b.addEventListener('click', function(){
+          U.$all('.sched-preset', card).forEach(function(x){ x.classList.remove('active'); });
+          b.classList.add('active');
+          var mins = parseInt(b.getAttribute('data-min'),10) || 0;
+          var nd = new Date(Date.now() + mins*60000);
+          var nh = U.$('#schedH'), nm = U.$('#schedM');
+          if(nh) nh.value = nd.getHours();
+          if(nm) nm.value = nd.getMinutes();
+        });
+      });
+      U.$all('[data-x]', card).forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var go = btn.getAttribute('data-x')==='1';
+          if(!go){ close(); return; }
+          var hh = U.clamp(parseInt(U.$('#schedH').value,10)||0, 0, 23);
+          var mm = U.clamp(parseInt(U.$('#schedM').value,10)||0, 0, 59);
+          var target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
+          if(target.getTime() <= Date.now() + 30000) target = new Date(target.getTime() + 86400000); // به فردا منتقل شود
+          try{
+            Compose.deliver({ text:text, meta:{}, kind:'text', at:target.getTime() });
+            var inp = U.$('#msgInput'); if(inp){ inp.value=''; if(Compose.autoGrow) Compose.autoGrow(); }
+            if(Compose.clear) Compose.clear();
+            if(HK.Typing && HK.Typing.stop) HK.Typing.stop();
+          }catch(e){ toast('برنامه‌ریزی ناموفق بود','err'); }
+          close();
+        });
+      });
+      syncBtn();
+    }
+    function init(){ startChecker(); syncBtn(); }
+    return { init:init, open:open, count:count, syncBtn:syncBtn };
+  })();
+
   /* ═══ ۳۴-۱۱) ساخت دکمه‌های تم و کاغذ دیواری ═══ */
   function buildThemeCards(){
     var grid = document.querySelector('.theme-grid');
@@ -7423,6 +7822,7 @@ var V3 = (function(){
     var fx = U.$('#swFx'); if(fx) fx.checked = DB.get('fx', true) !== false;
     S.fx = DB.get('fx', true) !== false;
     Sticker.visible(DB.get('sticker', true) !== false);
+    Schedule.syncBtn();
   }
 
   /* ─── ۳۴-۱۳) اتصال رویدادهای تنظیمات ─── */
@@ -7443,6 +7843,12 @@ var V3 = (function(){
       if(this.checked) Fx.confetti(14);
     });
     U.on(U.$('#btnSticker'),'click', function(){ Sticker.toggle(); tap(); });
+    U.on(U.$('#btnSchedule'),'click', function(){ Schedule.open(); tap(); });
+    U.on(U.$('#btnPinChat'),'click', function(){
+      var c = Pinned.current();
+      if(c) Pinned.toggle(c.type, c.id);
+      tap();
+    });
     U.on(U.$('#btnAttach'),'click', function(){ Sticker.toggle(false); React_.close(); });
     U.on(U.$('#sndTestPv'),'click', function(){ Snd.play('pv'); toast('صدای پیام خصوصی'); });
     U.on(U.$('#sndTestGroup'),'click', function(){ Snd.play('group'); toast('صدای پیام گروهی'); });
@@ -7474,6 +7880,7 @@ var V3 = (function(){
       Sticker.build();
       React_.build();
       React_.install();
+      Schedule.init();
       installRipple();
       installObserver();
       wire();
@@ -7490,7 +7897,7 @@ var V3 = (function(){
         tries++; applyExtras();
         if(tries > 6) clearInterval(iv);
       }, 700);
-      console.log('%c نسخه ۳ فعال شد: ۱۲ تم، کاغذ دیواری، استیکر و جلوه‌های گرافیکی ',
+      console.log('%c نسخه ۴ فعال شد: ۱۶ تم، برنامه‌ریزی ارسال، فشرده‌سازی، استیکر و جلوه‌های گرافیکی ',
                   'background:#3d8bff;color:#fff;border-radius:6px;padding:2px 6px');
     }catch(e){
       try{ console.warn('نسخه ۳:', e && e.message); }catch(_){}
@@ -7498,8 +7905,9 @@ var V3 = (function(){
   }
 
   return { init:init, THEMES:THEMES, WALLS:WALLS, STICKERS:STICKERS, QUICK_REACTS:QUICK_REACTS,
-           Snd:Snd, Fx:Fx, Live:Live, Sticker:Sticker, React:React_,
-           applyExtras:applyExtras, decorate:decorate, buildThemeCards:buildThemeCards, buildWalls:buildWalls };
+          Snd:Snd, Fx:Fx, Live:Live, Sticker:Sticker, React:React_,
+          Schedule:Schedule, Pinned:Pinned,
+          applyExtras:applyExtras, decorate:decorate, buildThemeCards:buildThemeCards, buildWalls:buildWalls };
 })();
 
 /* راه‌اندازی نسخه ۳ (بعد از آماده شدن DOM و اجرای Init نسخه ۲) */
@@ -7511,7 +7919,7 @@ var V3 = (function(){
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
   // در دسترس بودن برای آزمون‌ها و سایر بخش‌ها
-  if(window.HK){ try{ HK.V3 = V3; HK.Snd = V3.Snd; HK.Fx = V3.Fx; }catch(e){} }
+  if(window.HK){ try{ HK.V3 = V3; HK.Snd = V3.Snd; HK.Fx = V3.Fx; HK.Schedule = V3.Schedule; HK.Pinned = V3.Pinned; }catch(e){} }
 })();
 
 </script>
