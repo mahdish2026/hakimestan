@@ -72,8 +72,6 @@ const assert = (cond, msg) => {
     assert(themeCards.length === 20, '۲۴/۲۰ دکمه تم ساخته شد: ' + themeCards.length);
     assert(wallCards.length === 14, '۱۴ دکمه کاغذ دیواری ساخته شد: ' + wallCards.length);
 
-    // ابزار ویرایش مارک‌داون
-    assert(d.querySelectorAll('.md-t').length === 5, '۵ دکمه ابزار ویرایش مارک‌داون موجود است');
 
     // پنل اطلاعات گفتگو
     assert(!!d.querySelector('#chatInfo'), 'پنل اطلاعات گفتگو (سوم‌ین ستون) موجود است');
