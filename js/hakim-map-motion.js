@@ -78,6 +78,16 @@
         '<path d="M7 19.5 L3.2 21 L7.2 21.8 Z" fill="#ea580c"/>' +
         '<path d="M11 15 C12 11 15 9 18 8 M13 15.5 C15 12.5 17.5 11.5 20 11" stroke="#f59e0b" stroke-width="1.3" fill="none" stroke-linecap="round"/>' +
         '<circle cx="9.6" cy="18.8" r="1.1" fill="#1e1b4b"/>'
+    },
+    qalam: {
+      label: 'قلمِ حکمت', color: '#0f766e', soft: 'rgba(15,118,110,.22)', glyphs: ['ق', 'ن', '✦', 'ح', 'ی'], hover: true, flip: true,
+      svg: '<defs><linearGradient id="hkMmQl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fef3c7"/><stop offset=".5" stop-color="#d97706"/><stop offset="1" stop-color="#78350f"/></linearGradient></defs>' +
+        '<path d="M26 14 C31 7 36 5 39 4 C37 10 33 15 28 17 Z" fill="#2dd4bf" stroke="#0f766e" stroke-width="1"/>' +
+        '<path d="M12 24 L29 9 L33 13 L16 28 Z" fill="url(#hkMmQl)" stroke="#78350f" stroke-width="1.2" stroke-linejoin="round"/>' +
+        '<path d="M23 14.2 L27.2 18.4 M18.5 18.2 L22.7 22.4" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>' +
+        '<path d="M12 24 L6 32 L16 28 Z" fill="#fde68a" stroke="#78350f" stroke-width="1.1" stroke-linejoin="round"/>' +
+        '<path d="M6 32 L11.5 27.5" stroke="#78350f" stroke-width="1" stroke-linecap="round"/>' +
+        '<circle cx="5.2" cy="34.2" r="2.5" fill="#0d9488" stroke="#ccfbf1" stroke-width=".9"/>'
     }
   };
 

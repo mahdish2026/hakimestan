@@ -9,292 +9,1301 @@
 <link rel="stylesheet" href="../css/a11y.css">
 <!-- hakim-core:end -->
 
-  <link rel="icon" type="image/svg+xml" href="../icon.svg">
+<link rel="icon" type="image/svg+xml" href="../icon.svg">
 <link rel="apple-touch-icon" href="../icon.svg">
 <link rel="manifest" href="../manifest.json">
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../css/fonts.css">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#eaf2fb">
+<meta name="theme-color" content="#f5efe2">
+<meta property="og:title" content="جدول حکمت — نگارخانهٔ حروف و کاشیِ خرد">
+<meta property="og:description" content="بازی جدول کلمات متقاطع علوم، فارسی و مطالعات پایه پنجم دبستان حکیمستان با نگارخانهٔ کاشی‌کاری ایرانی و قلمِ متحرک">
+<meta property="og:type" content="website">
 <title>🧩 جدول حکمت — حکیمستان</title>
 <link rel="canonical" href="https://hakimistan.ir/games/jadval-hekmat.html">
 <meta name="description" content="جدول حکمت — بازی جدول کلمات علوم، فارسی و مطالعات اجتماعی پایه پنجم دبستان حکیمستان. آفلاین و رایگان.">
+<link rel="stylesheet" href="../css/fonts.css">
+<link rel="stylesheet" href="../css/hakim-tazhib.css">
+
 <style>
-  /* ------------------------------------------------------------------ */
-  /* ۱) متغیرها و پایه                                                  */
-  /* ------------------------------------------------------------------ */
+  /* ==================================================================
+     جدول حکمت — نگارخانهٔ حروف، کاشیِ معرّق و قلمِ نی
+     پالت دوزیسته: کاغذ سمرقندی و فیروزهٔ اصفهان (روز) / شبستان لاجوردی و زر (شب)
+     + سه تالار پویا: حجرهٔ فیروزه (۰)، ایوان لاجورد (۱)، گنبد زرین‌نگار (۲)
+     ================================================================== */
   :root{
-    --bg1:#eef5fd; --bg2:#f8fbfe;
-    --ink:#1e2a52; --ink-soft:#46537e;
-    --indigo:#4a5fd0; --indigo-dark:#33419c; --indigo-deep:#2c3e8f;
-    --block:#2f3c74;
-    --paper:#ffffff;
-    --sel:#fdf0bd; --sel-bd:#e6c95c;
-    --good:#17803f; --good-bg:#d8f3e4;
-    --bad:#d64545; --bad-bg:#fde3e3;
-    --gold:#c9a227; --gold-soft:#f7e9c0;
-    --cell:40px;
-    --radius:14px;
+    --bg-1:#f6f0e3;
+    --bg-2:#ece2cd;
+    --surface:#fcfaf4;
+    --surface-2:#f4ede0;
+    --surface-3:#ebe1ce;
+    --ink:#16223d;
+    --ink-strong:#0c1529;
+    --ink-soft:#3b4a6b;
+    --muted:#4c5b7d;
+    --line:#d5c7ad;
+    --line-strong:#bfa982;
+    --gold:#9a6507;
+    --gold-bright:#d99a26;
+    --gold-soft:#faecc8;
+    --teal:#0f766e;
+    --teal-soft:#d9f5ef;
+    --lapis:#293c8f;
+    --lapis-soft:#e4eafc;
+    --block:#1d2e5c;
+    --block-2:#142146;
+    --paper:#fffdf8;
+    --sel:#fef0be;
+    --sel-bd:#d99a1c;
+    --good:#136f3a;
+    --good-bg:#d6f5e3;
+    --bad:#b91c1c;
+    --bad-bg:#fee2e2;
+    --solved-bg:#ccf2e3;
+    --solved-bd:#10b981;
+    --solved-ink:#0b5d3b;
+    --rev-ink:#6d28d9;
+    --shadow:0 18px 46px -18px rgba(24,34,66,.20);
+    --shadow-sm:0 6px 18px -8px rgba(24,34,66,.16);
+    --cell:42px;
+    --radius:20px;
+
+    /* متغیرهای پویا بر اساس تالار انتخابی */
+    --ch-accent:#0f766e;
+    --ch-accent-2:#115e59;
+    --ch-soft:#daf4ef;
+    --ch-glow:rgba(15,118,110,.22);
+    --arch-1:#14384b;
+    --arch-2:#0d5c63;
+    --arch-sky-1:#dff4fb;
+    --arch-sky-2:#fef3c7;
   }
+
+  body[data-chamber="0"]{
+    --ch-accent:#0f766e; --ch-accent-2:#115e59; --ch-soft:#daf4ef; --ch-glow:rgba(15,118,110,.22);
+    --arch-1:#133b4d; --arch-2:#0f626a; --arch-sky-1:#d9f3fc; --arch-sky-2:#fef0c7;
+  }
+  body[data-chamber="1"]{
+    --ch-accent:#2b3d96; --ch-accent-2:#1e2c73; --ch-soft:#e2e8fc; --ch-glow:rgba(43,61,150,.22);
+    --arch-1:#1a275c; --arch-2:#283c8a; --arch-sky-1:#e0e7ff; --arch-sky-2:#fde68a;
+  }
+  body[data-chamber="2"]{
+    --ch-accent:#6b21a8; --ch-accent-2:#581c87; --ch-soft:#f1e4fc; --ch-glow:rgba(107,33,168,.22);
+    --arch-1:#2e1654; --arch-2:#4c1d95; --arch-sky-1:#ede9fe; --arch-sky-2:#fde68a;
+  }
+
+  /* حالت شب: شبستان لاجوردی و معرّق زرین */
+  body[data-theme="dark"]{
+    --bg-1:#0b1224;
+    --bg-2:#131f3a;
+    --surface:#162340;
+    --surface-2:#1d2d50;
+    --surface-3:#243760;
+    --ink:#f2f6fd;
+    --ink-strong:#ffffff;
+    --ink-soft:#cbd6ea;
+    --muted:#a9b9d6;
+    --line:#2e426b;
+    --line-strong:#466094;
+    --gold:#f5c96b;
+    --gold-bright:#fbbf24;
+    --gold-soft:#382c14;
+    --teal:#2dd4bf;
+    --teal-soft:#12383a;
+    --lapis:#93a8ff;
+    --lapis-soft:#1e2c54;
+    --block:#091022;
+    --block-2:#0f1933;
+    --paper:#1e2e52;
+    --sel:#483912;
+    --sel-bd:#f59e0b;
+    --good:#4ade80;
+    --good-bg:#123828;
+    --bad:#fca5a5;
+    --bad-bg:#471b22;
+    --solved-bg:#123c34;
+    --solved-bd:#14b8a6;
+    --solved-ink:#6ee7b7;
+    --rev-ink:#d8b4fe;
+    --shadow:0 22px 54px -18px rgba(2,6,18,.75);
+    --shadow-sm:0 8px 22px -8px rgba(2,6,18,.6);
+  }
+  body[data-theme="dark"][data-chamber="0"]{
+    --ch-accent:#2dd4bf; --ch-accent-2:#0d9488; --ch-soft:#13383c; --ch-glow:rgba(45,212,191,.24);
+    --arch-1:#0b2234; --arch-2:#0f3a47; --arch-sky-1:#09152b; --arch-sky-2:#17324d;
+  }
+  body[data-theme="dark"][data-chamber="1"]{
+    --ch-accent:#93a8ff; --ch-accent-2:#4338ca; --ch-soft:#1e2a52; --ch-glow:rgba(147,168,255,.24);
+    --arch-1:#0f193d; --arch-2:#1d2e68; --arch-sky-1:#080f26; --arch-sky-2:#1b2856;
+  }
+  body[data-theme="dark"][data-chamber="2"]{
+    --ch-accent:#f5c96b; --ch-accent-2:#7e22ce; --ch-soft:#2d1f4a; --ch-glow:rgba(245,201,107,.25);
+    --arch-1:#1c1138; --arch-2:#351c63; --arch-sky-1:#0c0820; --arch-sky-2:#2d1b4e;
+  }
+
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; padding:0; overflow-x:clip; }
   body{
     font-family:'Vazirmatn', system-ui, sans-serif;
-    background-color:#eef5fd;
-    background:
-      radial-gradient(1200px 600px at 85% -10%, #dbe9fb 0%, transparent 60%),
-      radial-gradient(900px 500px at -10% 110%, #e3edfb 0%, transparent 55%),
-      linear-gradient(160deg, var(--bg1), var(--bg2));
+    background-color:var(--bg-1);
+    background-image:
+      radial-gradient(1100px 620px at 88% -8%, var(--ch-glow), transparent 62%),
+      radial-gradient(920px 560px at 10% 108%, rgba(217,154,38,.12), transparent 58%),
+      linear-gradient(168deg, var(--bg-1) 0%, var(--bg-2) 100%);
     background-attachment:fixed;
     color:var(--ink);
     min-height:100dvh;
-    padding: calc(env(safe-area-inset-top,0px) + 12px) calc(env(safe-area-inset-right,0px) + 12px) calc(env(safe-area-inset-bottom,0px) + 16px) calc(env(safe-area-inset-left,0px) + 12px);
+    padding: calc(env(safe-area-inset-top,0px) + 12px) calc(env(safe-area-inset-right,0px) + 12px) calc(env(safe-area-inset-bottom,0px) + 20px) calc(env(safe-area-inset-left,0px) + 12px);
     -webkit-text-size-adjust:100%;
     user-select:none; -webkit-user-select:none;
     overflow-x:hidden;
+    position:relative;
   }
-  body[data-theme="dark"]{
-    --bg1:#12182b; --bg2:#1b2440;
-    --ink:#f1f5f9; --ink-soft:#cbd5e1;
-    --indigo:#7b93ff; --indigo-dark:#a5b4fc; --indigo-deep:#c7d2fe;
-    --block:#0b1020;
-    --paper:#1e293b;
-    --sel:#423612; --sel-bd:#eab308;
-    --good:#4ade80; --good-bg:#143828;
-    --bad:#f87171; --bad-bg:#451a1a;
-    --gold:#fbbf24; --gold-soft:#3b2f12;
-    background-color:#12182b;
-    background:linear-gradient(160deg, #12182b, #1b2440);
+
+  /* نقش گره‌چینی کاشی محو در پس‌زمینه */
+  body::before{
+    content:"";
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    opacity:.055;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%231e3a5f' stroke-width='1.1'%3E%3Cpolygon points='36,4 45,22 64,22 50,36 56,55 36,45 16,55 22,36 8,22 27,22'/%3E%3Ccircle cx='36' cy='34' r='9'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:72px 72px;
   }
-  body[data-theme="dark"] .start-card,
-  body[data-theme="dark"] .clue-box,
-  body[data-theme="dark"] .kb-bar,
-  body[data-theme="dark"] .modal,
-  body[data-theme="dark"] .hud-chip,
-  body[data-theme="dark"] .icon-btn,
-  body[data-theme="dark"] .grid-hakim-slot .hakim-panel{
-    background:#1e293b; border-color:rgba(148,163,184,.25); color:#f1f5f9;
+  body[data-theme="dark"]::before{
+    opacity:.08;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23f5c96b' stroke-width='1'%3E%3Cpolygon points='36,4 45,22 64,22 50,36 56,55 36,45 16,55 22,36 8,22 27,22'/%3E%3Ccircle cx='36' cy='34' r='9'/%3E%3C/g%3E%3C/svg%3E");
   }
-  body[data-theme="dark"] .field input,
-  body[data-theme="dark"] .level-btn,
-  body[data-theme="dark"] .rules,
-  body[data-theme="dark"] .key{
-    background:#0f172a; border-color:rgba(148,163,184,.28); color:#f1f5f9;
-  }
-  body[data-theme="dark"] .meta-chip{ background:#283558; color:#e0e7ff; }
-  body[data-theme="dark"] .title{ text-shadow:none; }
-  @media(max-width:380px){
-    body{ padding-inline:8px; }
-    .start-card{ padding:18px 12px 16px; }
-    .levels{ grid-template-columns:1fr; }
-    .hud{ flex-wrap:wrap; gap:6px; }
-    .controls{ flex-wrap:wrap; }
-  }
+
   .hidden{ display:none !important; }
-  button{ font-family:inherit; touch-action:manipulation; }
-  h1,h2,h3{ margin:0; }
+  button, input{ font-family:inherit; touch-action:manipulation; }
+  h1,h2,h3,p{ margin:0; }
 
-  .wrap{ max-width:920px; margin:0 auto; }
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    position:relative;
+    z-index:1;
+  }
 
-  /* ------------------------------------------------------------------ */
-  /* ۲) صفحهٔ شروع                                                      */
-  /* ------------------------------------------------------------------ */
-  .start-card{
-    background:linear-gradient(180deg,#ffffff, #f5f9ff);
-    border:1px solid #dbe6f6;
-    border-radius:20px;
-    box-shadow:0 18px 50px rgba(44,62,143,.14);
-    padding:26px 20px 20px;
-    text-align:center;
-    animation:rise .5s ease both;
+  /* قاب‌های تذهیب نگارخانه */
+  .ornate-panel{
+    position:relative;
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
   }
-  @keyframes rise{ from{ opacity:0; transform:translateY(16px);} to{opacity:1; transform:none;} }
-  .title{
-    font-family:'Lalezar', 'Vazirmatn', sans-serif;
-    font-size:clamp(40px, 10vw, 64px);
-    color:var(--indigo-dark);
-    line-height:1.1;
-    letter-spacing:.5px;
-    text-shadow:0 2px 0 #ffffff, 0 4px 14px rgba(74,95,208,.25);
+  .ornate-panel::before{
+    content:"";
+    position:absolute; inset:5px;
+    border:1px solid rgba(185,142,58,.24);
+    border-radius:calc(var(--radius) - 5px);
+    pointer-events:none;
   }
-  .title .puz{ display:inline-block; animation:wig 3.2s ease-in-out infinite; }
-  @keyframes wig{ 0%,100%{transform:rotate(0)} 5%{transform:rotate(-8deg) scale(1.08)} 10%{transform:rotate(8deg)} 15%{transform:rotate(0)} }
-  .subtitle{ margin-top:8px; color:var(--ink-soft); font-size:14.5px; }
-  .meta-chip{ display:inline-block; margin-top:10px; background:#eaf0fd; color:#33419c; border-radius:999px; padding:6px 14px; font-size:13px; font-weight:700; }
 
-  .field{ margin-top:18px; text-align:right; }
-  .field label{ display:block; font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-weight:700; }
-  .field input{
-    width:100%; font-family:inherit; font-size:16px;
-    padding:12px 14px; border-radius:12px; border:1.5px solid #d4e0f2;
-    background:#fbfdff; color:var(--ink); outline:none;
-  }
-  .field input:focus{ border-color:var(--indigo); box-shadow:0 0 0 3px rgba(74,95,208,.14); }
-
-  .levels{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px; }
-  .level-btn{
-    border:1.5px solid #d4e0f2; background:#fbfdff; color:var(--ink);
-    border-radius:14px; padding:12px 6px; min-height:44px; cursor:pointer;
-    display:flex; flex-direction:column; align-items:center; gap:3px;
-    transition:transform .12s, box-shadow .12s, border-color .12s;
-  }
-  .level-btn:active{ transform:scale(.97); }
-  .level-btn .lv-ic{ font-size:20px; }
-  .level-btn .lv-name{ font-weight:800; font-size:14.5px; }
-  .level-btn .lv-desc{ font-size:11.5px; color:var(--ink-soft); }
-  .level-btn.sel{ border-color:var(--indigo); background:#eef2ff; box-shadow:0 0 0 3px rgba(74,95,208,.15); }
-
-  .start-actions{ display:flex; flex-direction:column; gap:10px; margin-top:20px; }
-  .btn{
-    border:none; border-radius:14px; cursor:pointer; min-height:48px;
-    font-weight:800; font-size:16px; color:#fff;
-    background:linear-gradient(180deg,#5b6fe0,#4052b8);
-    box-shadow:0 6px 18px rgba(64,82,184,.35);
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    transition:transform .12s, filter .12s;
-  }
-  .btn:active{ transform:scale(.97); filter:brightness(.96); }
-  .btn.ghost{ background:#fff; color:var(--indigo-dark); border:1.5px solid #cdd9f0; box-shadow:none; }
-  .btn.sm{ min-height:44px; font-size:14px; }
-
-  .rules{
-    margin-top:20px; text-align:right; background:#f2f7ff; border:1px dashed #cfddf2;
-    border-radius:14px; padding:14px 16px; font-size:13.5px; color:var(--ink-soft); line-height:2;
-  }
-  .rules b{ color:var(--indigo-dark); }
-  .word-count{ margin-top:6px; font-size:12.5px; color:#7d8bb8; }
-  .reset-link{ margin-top:10px; font-size:12.5px; color:var(--indigo); text-decoration:underline; cursor:pointer; background:none; border:none; }
-
-  /* ------------------------------------------------------------------ */
-  /* ۳) صفحهٔ بازی                                                     */
-  /* ------------------------------------------------------------------ */
-  .hud{
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-    background:#ffffff; border:1px solid #dbe6f6; border-radius:16px;
-    padding:8px 10px; box-shadow:0 6px 20px rgba(44,62,143,.10);
-    margin-bottom:14px;
-  }
-  .hud-chip{ display:flex; align-items:center; gap:6px; background:#f1f6ff; border-radius:10px; padding:7px 10px; font-size:13.5px; font-weight:800; color:var(--indigo-dark); }
-  .hud-chip .ic{ font-size:15px; }
-  .hud-spacer{ flex:1; }
+  /* دکمه‌های آیکونی مشترک */
   .icon-btn{
-    border:1.5px solid #d7e2f4; background:#fff; color:var(--ink);
-    border-radius:10px; min-width:44px; min-height:44px; cursor:pointer; font-size:17px;
-    display:inline-flex; align-items:center; justify-content:center; gap:5px; font-weight:800;
-    transition:transform .1s;
+    border:1.5px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink);
+    border-radius:12px;
+    min-width:44px; min-height:44px;
+    padding:0 10px;
+    cursor:pointer;
+    font-size:17px;
+    font-weight:800;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    transition:transform .14s ease, border-color .2s ease, background .2s ease;
   }
+  .icon-btn:hover{ border-color:var(--ch-accent); background:var(--ch-soft); }
   .icon-btn:active{ transform:scale(.94); }
 
-  .board-scroll{ overflow-x:auto; direction:rtl; -webkit-overflow-scrolling:touch; display:flex; padding:6px 2px 10px; }
-  .board{ display:grid; gap:3px; direction:rtl; margin:auto; }
+  /* ==================================================================
+     ۱) صفحهٔ لابی نگارخانه (#screenStart)
+     ================================================================== */
+  .start-shell{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    animation:riseIn .45s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:none; }
+  }
 
-  .cell{
-    position:relative; width:var(--cell); height:var(--cell); border-radius:6px;
+  .start-hero{
+    padding:22px 22px 24px;
+    text-align:center;
+    background:
+      radial-gradient(520px 220px at 50% 0%, var(--ch-glow), transparent 72%),
+      linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  }
+  .hero-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+    position:relative;
+    z-index:2;
+  }
+  .best-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:6px 13px; border-radius:999px;
+    background:var(--gold-soft);
+    border:1px solid var(--line-strong);
+    color:var(--ink-strong);
+    font-size:12.5px; font-weight:800;
+  }
+  body[data-theme="dark"] .best-pill{ color:var(--gold); }
+
+  .hero-kicker{
+    display:inline-block;
+    font-size:12.5px;
+    font-weight:800;
+    letter-spacing:.3px;
+    color:var(--ch-accent);
+    background:var(--ch-soft);
+    border:1px solid var(--line);
+    padding:4px 14px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+
+  /* نشان سه‌بعدی کاشی و شمسهٔ جدول حکمت */
+  .jadval-emblem{
+    position:relative;
+    width:112px; height:112px;
+    margin:4px auto 10px;
     display:flex; align-items:center; justify-content:center;
   }
-  .cell.active{ background:var(--paper); border:1.5px solid #c9d4ea; box-shadow:0 1px 2px rgba(20,40,90,.07); cursor:pointer; }
-  .cell.block{ background:var(--block); border:1px solid var(--block); box-shadow:inset 0 0 0 1px rgba(255,255,255,.05); }
-  .cell .letter{ font-family:'Vazirmatn'; font-weight:800; font-size:calc(var(--cell)*0.55); color:var(--ink); line-height:1; pointer-events:none; }
-  .cell .num{ position:absolute; top:1px; right:3px; font-size:calc(var(--cell)*0.27); color:#93a1c6; font-weight:800; line-height:1; pointer-events:none; }
-  .cell.sel{ background:var(--sel); border-color:var(--sel-bd); }
-  .cell.cur{ border:2.5px solid var(--indigo); box-shadow:0 0 0 3px rgba(74,95,208,.18); z-index:2; }
-  .cell.good{ background:var(--good-bg); border-color:#6fd39f; }
+  .jadval-emblem::before{
+    content:"";
+    position:absolute; inset:-6px;
+    background:url("../assets/img/tazhib-shamseh.svg") center/contain no-repeat;
+    opacity:.55;
+    animation:slowSpin 38s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes slowSpin{ to{ transform:rotate(360deg); } }
+  .emblem-mosaic{
+    position:relative; z-index:1;
+    width:86px; height:86px;
+    border-radius:20px;
+    padding:6px;
+    background:linear-gradient(145deg, #163b50, #1f336e);
+    border:2px solid #d99a26;
+    box-shadow:0 12px 28px rgba(18,32,68,.28), inset 0 1px 0 rgba(255,255,255,.28);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:4px;
+    transform:rotate(-3deg);
+    transition:transform .3s ease;
+  }
+  .jadval-emblem:hover .emblem-mosaic{ transform:rotate(0deg) scale(1.04); }
+  .em-tile{
+    border-radius:5px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Lalezar','Vazirmatn',sans-serif;
+    font-size:15px; line-height:1;
+    color:#16223d;
+    background:linear-gradient(180deg,#fffdf7,#f5e6c4);
+    box-shadow:inset 0 -2px 0 rgba(180,130,40,.35);
+  }
+  .em-tile.t-turq{
+    background:linear-gradient(145deg,#14b8a6,#0f766e);
+    color:#ffffff;
+    box-shadow:inset 0 -2px 0 rgba(0,0,0,.22);
+  }
+  .em-tile.t-dark{
+    background:linear-gradient(145deg,#0f1d3d,#1e3264);
+    color:#fbbf24;
+    font-size:11px;
+  }
+
+  .title{
+    font-family:'Lalezar','Vazirmatn',sans-serif;
+    font-size:clamp(36px, 7.5vw, 56px);
+    color:var(--ink-strong);
+    line-height:1.12;
+    letter-spacing:.4px;
+  }
+  .subtitle{
+    margin-top:6px;
+    font-family:'Amiri','Vazirmatn',serif;
+    font-size:clamp(16px, 2.5vw, 19.5px);
+    font-weight:700;
+    color:var(--ink-soft);
+    line-height:1.7;
+  }
+  .meta-row{
+    margin-top:10px;
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+  }
+  .meta-chip{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--ch-soft);
+    color:var(--ch-accent);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 14px;
+    font-size:13px; font-weight:800;
+  }
+  .spec-chip{
+    display:inline-flex; align-items:center; gap:5px;
+    background:var(--surface-2);
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 12px;
+    font-size:12.5px; font-weight:700;
+  }
+
+  /* شبکهٔ دوستونهٔ لابی */
+  .lobby-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  @media(min-width:840px){
+    .lobby-grid{ grid-template-columns:1.05fr 1fr; align-items:stretch; }
+  }
+
+  .lobby-col{
+    padding:20px 18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:14px;
+    min-width:0;
+  }
+  .section-head{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
+  }
+  .section-title{
+    font-family:'Lalezar','Vazirmatn',sans-serif;
+    font-size:21px;
+    font-weight:400;
+    color:var(--ink-strong);
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-sub{
+    font-size:12.5px;
+    color:var(--muted);
+    font-weight:700;
+  }
+
+  /* دکمه‌های تعاملی گفت‌وگو با حکیم در لابی */
+  .sage-prompts{
+    display:flex; flex-wrap:wrap; gap:8px;
+  }
+  .sage-chip-btn{
+    flex:1 1 auto;
+    min-height:40px;
+    padding:6px 12px;
+    border-radius:11px;
+    border:1px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink);
+    font-size:12.5px;
+    font-weight:800;
+    cursor:pointer;
+    transition:background .18s, border-color .18s, transform .12s;
+  }
+  .sage-chip-btn:hover{ background:var(--ch-soft); border-color:var(--ch-accent); }
+  .sage-chip-btn:active{ transform:scale(.97); }
+
+  /* کارت‌های چهارگانهٔ راهنمای نگارخانه */
+  .rules-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:9px;
+  }
+  @media(max-width:420px){
+    .rules-grid{ grid-template-columns:1fr; }
+  }
+  .rule-tile{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:10px 11px;
+    display:flex; align-items:flex-start; gap:9px;
+    text-align:right;
+  }
+  .rule-ic{
+    flex:0 0 32px; height:32px;
+    border-radius:9px;
+    background:var(--ch-soft);
+    color:var(--ch-accent);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+  }
+  .rule-body{ min-width:0; font-size:12.5px; line-height:1.65; color:var(--ink-soft); }
+  .rule-body b{ display:block; color:var(--ink-strong); font-size:13px; margin-bottom:1px; }
+
+  /* ورودی نام و انتخاب بستهٔ واژگان */
+  .field{ text-align:right; }
+  .field label{
+    display:block; font-size:13px; color:var(--ink-soft); margin-bottom:6px; font-weight:800;
+  }
+  .name-box{
+    display:flex; align-items:center; gap:8px;
+    padding:4px 12px;
+    border-radius:13px;
+    border:1.5px solid var(--line);
+    background:var(--surface-2);
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .name-box:focus-within{
+    border-color:var(--ch-accent);
+    box-shadow:0 0 0 3px var(--ch-glow);
+  }
+  .name-box .nib{ font-size:17px; flex-shrink:0; }
+  .name-box input{
+    width:100%; min-width:0; min-height:42px;
+    border:none; background:transparent;
+    font-size:15.5px; font-weight:700;
+    color:var(--ink-strong);
+    outline:none;
+  }
+  .name-box input::placeholder{ color:var(--muted); font-weight:500; }
+
+  /* گنجینهٔ موضوعی واژگان */
+  .pack-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:8px;
+  }
+  @media(max-width:380px){
+    .pack-grid{ grid-template-columns:1fr; }
+  }
+  .pack-btn{
+    min-height:46px;
+    padding:8px 10px;
+    border-radius:12px;
+    border:1.5px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink);
+    cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+    text-align:right;
+    transition:border-color .18s, background .18s, transform .12s;
+    min-width:0;
+  }
+  .pack-btn:hover{ border-color:var(--ch-accent); }
+  .pack-btn:active{ transform:scale(.98); }
+  .pack-btn.active{
+    background:var(--ch-soft);
+    border-color:var(--ch-accent);
+    box-shadow:0 0 0 2px var(--ch-glow);
+  }
+  .pack-btn .pk-ic{ font-size:18px; flex-shrink:0; }
+  .pack-btn .pk-txt{ min-width:0; display:flex; flex-direction:column; }
+  .pack-btn .pk-name{ font-size:13px; font-weight:800; color:var(--ink-strong); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pack-btn .pk-sub{ font-size:11px; color:var(--muted); font-weight:600; }
+
+  .start-actions{ display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+  .btn-row-2{ display:grid; grid-template-columns:1fr; gap:8px; }
+
+  .btn{
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    min-height:50px;
+    padding:10px 16px;
+    font-weight:800;
+    font-size:15.5px;
+    color:#ffffff;
+    background:linear-gradient(180deg, #11847b 0%, #0d635d 100%);
+    box-shadow:0 8px 20px -6px rgba(13,99,93,.45);
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    transition:transform .14s ease, filter .16s ease, box-shadow .2s ease;
+    min-width:0;
+  }
+  body[data-chamber="1"] .btn:not(.ghost):not(.warn){
+    background:linear-gradient(180deg, #3549ab 0%, #243484 100%);
+    box-shadow:0 8px 20px -6px rgba(36,52,132,.45);
+  }
+  body[data-chamber="2"] .btn:not(.ghost):not(.warn){
+    background:linear-gradient(180deg, #7c2dc2 0%, #5b1c96 100%);
+    box-shadow:0 8px 20px -6px rgba(91,28,150,.45);
+  }
+  .btn:hover{ filter:brightness(1.05); }
+  .btn:active{ transform:scale(.98); filter:brightness(.96); }
+  .btn.ghost{
+    background:var(--surface-2);
+    color:var(--ink-strong);
+    border:1.5px solid var(--line-strong);
+    box-shadow:none;
+  }
+  .btn.ghost:hover{ background:var(--ch-soft); border-color:var(--ch-accent); }
+  .btn.warn{
+    background:var(--surface-2);
+    color:var(--ink-strong);
+    border:1.5px solid var(--line);
+    box-shadow:none;
+  }
+  .btn.warn:hover{ background:var(--ch-soft); border-color:var(--ch-accent); }
+
+  .word-count-row{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;
+  }
+  .word-count{ font-size:12.5px; color:var(--muted); font-weight:700; }
+  .reset-link{
+    font-size:12.5px; font-weight:800;
+    color:var(--ch-accent);
+    text-decoration:underline;
+    cursor:pointer;
+    background:none; border:none;
+    min-height:36px; padding:4px 6px;
+  }
+
+  /* اطلس زندهٔ سه تالار نگارخانه (همراه حرکت قلمِ حکمت — HakimMapMotion) */
+  .chambers-atlas{
+    padding:20px 18px 18px;
+    overflow:hidden;
+  }
+  .levels{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:14px;
+    margin-top:14px;
+    padding:34px 6px 8px;
+  }
+  @media(max-width:680px){
+    .levels{
+      grid-template-columns:1fr;
+      padding:32px 4px 6px;
+    }
+  }
+  .level-btn{
+    position:relative;
+    z-index:1;
+    border:1.5px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink);
+    border-radius:16px;
+    padding:14px 12px;
+    min-height:94px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    text-align:center;
+    transition:transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    min-width:0;
+  }
+  .level-btn:hover{
+    transform:translateY(-2px);
+    border-color:var(--ch-accent);
+  }
+  .level-btn:active{ transform:scale(.98); }
+  .level-btn.sel{
+    border-color:var(--ch-accent);
+    background:var(--ch-soft);
+    box-shadow:0 10px 26px -12px var(--ch-glow), 0 0 0 2.5px var(--ch-glow);
+  }
+  .lv-step{
+    font-size:11px;
+    font-weight:800;
+    padding:2px 9px;
+    border-radius:999px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--muted);
+  }
+  .level-btn.sel .lv-step{
+    background:var(--ch-accent);
+    border-color:var(--ch-accent);
+    color:#ffffff;
+  }
+  body[data-theme="dark"] .level-btn.sel .lv-step{
+    color:#0b1224;
+  }
+  .lv-art{
+    width:46px; height:40px;
+    display:block;
+    margin:2px 0;
+  }
+  .level-btn .lv-name{
+    font-family:'Lalezar','Vazirmatn',sans-serif;
+    font-weight:400;
+    font-size:19px;
+    color:var(--ink-strong);
+    line-height:1.2;
+  }
+  .level-btn .lv-desc{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+  }
+  .atlas-verse{
+    margin-top:12px;
+    padding:9px 14px;
+    border-radius:12px;
+    background:var(--surface-2);
+    border:1px dashed var(--line-strong);
+    text-align:center;
+    font-family:'Amiri','Vazirmatn',serif;
+    font-size:15.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+  }
+
+  /* ==================================================================
+     ۲) صفحهٔ بازی (#screenGame) — نگارخانهٔ زنده و میز کار جدول
+     ================================================================== */
+  .game-shell{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    animation:riseIn .4s ease both;
+  }
+
+  /* نوار وضعیت بالای بازی */
+  .hud{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    border-radius:18px;
+    padding:9px 12px;
+    box-shadow:var(--shadow-sm);
+  }
+  .hud-brand{
+    display:flex; align-items:center; gap:8px;
+    padding-left:8px;
+    border-left:1px solid var(--line);
+  }
+  .hud-chamber-badge{
+    font-family:'Lalezar','Vazirmatn',sans-serif;
+    font-size:17px;
+    color:var(--ch-accent);
+    line-height:1.1;
+  }
+  .hud-pack-sub{
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--muted);
+  }
+  .hud-chip{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:7px 11px;
+    font-size:13.5px; font-weight:800;
+    color:var(--ink-strong);
+  }
+  .hud-chip .ic{ font-size:15px; }
+  .hud-spacer{ flex:1 1 auto; }
+  .hud-actions{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+
+  /* صحنهٔ پانورامیک نگارخانهٔ خطاطی و حرکت قلمِ زرین (#scriptoriumScene) */
+  .scriptorium-scene{
+    position:relative;
+    border-radius:20px;
+    border:1.5px solid var(--line-strong);
+    background:linear-gradient(180deg, var(--arch-sky-1) 0%, var(--arch-sky-2) 100%);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .chamber-banner{
+    position:absolute;
+    top:8px; right:12px;
+    z-index:3;
+    display:inline-flex; align-items:center; gap:6px;
+    padding:4px 12px;
+    border-radius:999px;
+    background:rgba(15,24,48,.78);
+    color:#fef3c7;
+    border:1px solid rgba(245,201,107,.45);
+    font-size:12px; font-weight:800;
+    pointer-events:none;
+    backdrop-filter:blur(6px);
+  }
+  .scriptorium-svg{
+    display:block;
+    width:100%;
+    height:auto;
+    max-height:164px;
+  }
+  .candle-flame{
+    transform-origin:706px 76px;
+    animation:candleFlicker 2.4s ease-in-out infinite;
+  }
+  @keyframes candleFlicker{
+    0%,100%{ transform:scale(1) rotate(-2deg); opacity:.95; }
+    50%{ transform:scale(1.08, .94) rotate(3deg); opacity:1; }
+  }
+  .quill-float{
+    animation:quillHover 2.6s ease-in-out infinite;
+  }
+  @keyframes quillHover{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-3.5px) rotate(-2.5deg); }
+  }
+  .quill-dip{
+    animation:quillDipAnim .28s cubic-bezier(.2,1.5,.4,1);
+  }
+  @keyframes quillDipAnim{
+    0%{ transform:translate(0,0) rotate(0deg); }
+    45%{ transform:translate(-2px, 6px) rotate(-12deg) scale(1.06); }
+    100%{ transform:translate(0,0) rotate(0deg); }
+  }
+  .finial-spin{
+    transform-origin:72px 92px;
+    animation:slowSpin 28s linear infinite;
+  }
+  .scriptorium-scene.all-done .finial-spin{
+    animation-duration:8s;
+  }
+
+  /* کتیبهٔ سرنخ فعال بالای جدول */
+  .active-clue-bar{
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface);
+    border:1.5px solid var(--ch-accent);
+    border-radius:16px;
+    padding:9px 11px;
+    box-shadow:0 8px 22px -12px var(--ch-glow);
+  }
+  .clue-nav-btn{
+    flex:0 0 40px; width:40px; height:40px;
+    border-radius:11px;
+    border:1px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink-strong);
+    font-size:15px; font-weight:900;
+    cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    transition:background .15s, transform .1s;
+  }
+  .clue-nav-btn:hover{ background:var(--ch-soft); border-color:var(--ch-accent); }
+  .clue-nav-btn:active{ transform:scale(.93); }
+  .active-clue-mid{
+    flex:1 1 auto; min-width:0;
+    display:flex; flex-direction:column; gap:2px;
+    text-align:right;
+  }
+  .active-clue-meta{
+    display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+    font-size:11.5px; font-weight:800;
+    color:var(--ch-accent);
+  }
+  .active-clue-pill{
+    padding:1px 8px; border-radius:999px;
+    background:var(--ch-soft);
+    color:var(--ch-accent);
+  }
+  .active-clue-text{
+    font-size:14.5px; font-weight:800;
+    color:var(--ink-strong);
+    line-height:1.65;
+    overflow-wrap:anywhere;
+  }
+
+  /* چیدمان دوستونهٔ میز کار در دسکتاپ */
+  .workspace-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    align-items:start;
+  }
+  @media(min-width:900px){
+    .workspace-grid{
+      grid-template-columns:minmax(0, 1.18fr) minmax(310px, .82fr);
+    }
+  }
+  .board-column, .clues-column{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    min-width:0;
+  }
+
+  /* قاب لوح کاشی‌کاری جدول */
+  .board-frame{
+    position:relative;
+    padding:14px 10px 16px;
+    background:
+      radial-gradient(400px 220px at 50% 0%, var(--ch-glow), transparent 75%),
+      linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    border:2px solid var(--line-strong);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+  }
+  .board-frame::before{
+    content:"";
+    position:absolute; inset:5px;
+    border:1px dashed rgba(185,142,58,.35);
+    border-radius:15px;
+    pointer-events:none;
+  }
+  .board-scroll{
+    overflow-x:auto;
+    direction:rtl;
+    -webkit-overflow-scrolling:touch;
+    display:flex;
+    padding:6px 4px;
+    max-width:100%;
+  }
+  .board{
+    display:grid;
+    gap:4px;
+    direction:rtl;
+    margin:0 auto;
+    padding:8px;
+    border-radius:14px;
+    background:linear-gradient(145deg, var(--block-2), var(--block));
+    border:2px solid #c8962e;
+    box-shadow:0 12px 28px rgba(10,18,42,.26), inset 0 0 0 1px rgba(255,255,255,.12);
+  }
+
+  .cell{
+    position:relative;
+    width:var(--cell); height:var(--cell);
+    border-radius:7px;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .14s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .cell.active{
+    background:linear-gradient(180deg, var(--paper) 0%, var(--surface-2) 100%);
+    border:1.5px solid #c9bc9f;
+    box-shadow:0 2px 3px rgba(12,20,44,.16), inset 0 1px 0 rgba(255,255,255,.7);
+    cursor:pointer;
+  }
+  body[data-theme="dark"] .cell.active{
+    border-color:#3a4f7a;
+    box-shadow:0 2px 4px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  /* خانه‌های بسته به شکل کاشی لاجوردی با ستارهٔ گره‌چینی */
+  .cell.block{
+    background-color:var(--block);
+    background-image:radial-gradient(circle at 50% 50%, rgba(217,154,38,.20) 0 2px, transparent 2.5px),
+      linear-gradient(135deg, rgba(255,255,255,.05) 0%, transparent 60%);
+    border:1px solid rgba(217,154,38,.18);
+  }
+  .cell .letter{
+    font-family:'Vazirmatn',sans-serif;
+    font-weight:900;
+    font-size:calc(var(--cell)*0.54);
+    color:var(--ink-strong);
+    line-height:1;
+    pointer-events:none;
+  }
+  .cell .num{
+    position:absolute;
+    top:2px; right:3px;
+    font-size:calc(var(--cell)*0.27);
+    color:var(--muted);
+    font-weight:900;
+    line-height:1;
+    pointer-events:none;
+  }
+  .cell.sel{
+    background:var(--sel);
+    border-color:var(--sel-bd);
+  }
+  .cell.cur{
+    border:2.5px solid var(--ch-accent);
+    box-shadow:0 0 0 3px var(--ch-glow), 0 4px 10px rgba(0,0,0,.15);
+    z-index:2;
+    transform:scale(1.04);
+  }
+  .cell.good{
+    background:var(--good-bg);
+    border-color:#34d399;
+  }
   .cell.good .letter{ color:var(--good); }
-  .cell.bad{ background:var(--bad-bg); border-color:#ef8f8f; }
+  .cell.bad{
+    background:var(--bad-bg);
+    border-color:#f87171;
+    animation:shake .34s;
+  }
   .cell.bad .letter{ color:var(--bad); }
-  .cell.solved{ background:#cfeede; border-color:#6fd39f; pointer-events:none; }
-  .cell.solved .letter{ color:#14803c; }
-  .cell.revealed .letter{ color:#7c3aed; }
-  .cell.pop{ animation:pop .18s ease; }
-  @keyframes pop{ 50%{ transform:scale(1.14); } }
+  .cell.solved{
+    background:linear-gradient(145deg, var(--solved-bg), var(--teal-soft));
+    border-color:var(--solved-bd);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.45);
+    pointer-events:none;
+  }
+  .cell.solved .letter{ color:var(--solved-ink); }
+  .cell.revealed .letter{ color:var(--rev-ink); }
+  .cell.pop{ animation:pop .2s cubic-bezier(.2,1.5,.4,1); }
+  @keyframes pop{ 50%{ transform:scale(1.15); } }
   @keyframes shake{
     0%,100%{ transform:translateX(0); }
     20%{ transform:translateX(4px); } 40%{ transform:translateX(-4px); }
     60%{ transform:translateX(3px); } 80%{ transform:translateX(-3px); }
   }
-  .cell.bad{ animation:shake .34s; }
 
-  /* سرنخ‌ها */
-  .clues{
-    display:grid; grid-template-columns:1fr; gap:10px; margin-top:12px;
+  /* صفحه‌کلید مُهرهای حروف فارسی */
+  .kb-bar{
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    border-radius:18px;
+    padding:11px 10px;
+    box-shadow:var(--shadow-sm);
   }
-  @media(min-width:760px){ .clues{ grid-template-columns:1fr 1fr; } }
-  .clue-box{ background:#fff; border:1px solid #dbe6f6; border-radius:14px; padding:12px 12px 6px; box-shadow:0 4px 14px rgba(44,62,143,.06); }
-  .clue-box h3{ font-size:14.5px; color:var(--indigo-dark); margin-bottom:6px; display:flex; align-items:center; gap:6px; }
-  .clue-item{
-    display:flex; align-items:flex-start; gap:8px; width:100%; text-align:right;
-    border:none; background:none; cursor:pointer; border-radius:10px; padding:7px 8px; font-family:inherit;
-    font-size:13.5px; color:var(--ink); line-height:1.7;
+  .kb-head{
+    display:flex; align-items:center; gap:6px;
+    margin-bottom:8px;
   }
-  .clue-item:hover{ background:#f1f6ff; }
-  .clue-item.sel{ background:var(--sel); }
-  .clue-item.solved{ opacity:.55; }
-  .clue-item.solved .clue-text{ text-decoration:line-through; }
-  .clue-num{
-    flex:0 0 auto; min-width:22px; height:22px; border-radius:7px; background:#e8eefb; color:var(--indigo-dark);
-    display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; margin-top:2px;
+  .kb-title{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-weight:800;
   }
-
-  /* صفحه‌کلید داخلی */
-  .kb-bar{ margin-top:14px; background:#fff; border:1px solid #dbe6f6; border-radius:16px; padding:10px; box-shadow:0 4px 14px rgba(44,62,143,.06); }
-  .kb-head{ display:flex; align-items:center; gap:6px; margin-bottom:8px; }
-  .kb-title{ font-size:12.5px; color:var(--ink-soft); font-weight:800; }
   .kb-head .kb-spacer{ flex:1; }
-  .kb-mini{ border:1.5px solid #d7e2f4; background:#f7faff; color:var(--indigo-dark); border-radius:8px; min-width:40px; min-height:36px; cursor:pointer; font-size:14px; font-weight:800; }
-  .keyboard{ display:grid; grid-template-columns:repeat(8,1fr); gap:5px; }
-  .key{
-    min-height:44px; border:1px solid #dbe6f6; background:#fbfdff; color:var(--ink);
-    border-radius:10px; cursor:pointer; font-family:'Vazirmatn'; font-weight:800; font-size:17px;
-    display:flex; align-items:center; justify-content:center;
-    transition:transform .08s, background .08s;
+  .kb-mini{
+    border:1.5px solid var(--line);
+    background:var(--surface-2);
+    color:var(--ink-strong);
+    border-radius:9px;
+    min-width:40px; min-height:38px;
+    padding:0 8px;
+    cursor:pointer;
+    font-size:14px; font-weight:800;
   }
-  .key:active{ transform:scale(.92); background:#eaf0fd; }
-  .key.del{ background:#fdeaea; border-color:#f3c8c8; color:#c0392b; font-size:16px; }
+  .kb-mini:hover{ border-color:var(--ch-accent); background:var(--ch-soft); }
+  .keyboard{
+    display:grid;
+    grid-template-columns:repeat(8, minmax(0,1fr));
+    gap:5px;
+  }
+  @media(max-width:350px){
+    .keyboard{ gap:3.5px; }
+  }
+  .key{
+    min-width:0;
+    min-height:44px;
+    padding:0;
+    border:1px solid var(--line);
+    border-bottom:2.5px solid var(--line-strong);
+    background:var(--surface-2);
+    color:var(--ink-strong);
+    border-radius:10px;
+    cursor:pointer;
+    font-family:'Vazirmatn',sans-serif;
+    font-weight:800;
+    font-size:16.5px;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .08s, background .12s, border-color .12s;
+  }
+  .key:hover{ background:var(--ch-soft); border-color:var(--ch-accent); }
+  .key:active{ transform:translateY(1px) scale(.94); }
+  .key.del{
+    background:var(--bad-bg);
+    border-color:#f87171;
+    color:var(--bad);
+    font-size:16px;
+  }
 
-  .controls{ display:flex; gap:9px; margin-top:14px; flex-wrap:wrap; }
-  .controls .btn{ flex:1 1 0; font-size:14px; padding:0 10px; }
-  .controls .btn.warn{ background:linear-gradient(180deg,#f2f5ff,#e4ebfb); color:var(--indigo-dark); box-shadow:none; border:1.5px solid #d7e2f4; }
+  .controls{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:8px;
+  }
+  @media(max-width:460px){
+    .controls{ grid-template-columns:1fr 1fr; }
+    .controls #btnCheck{ grid-column:1 / -1; }
+  }
+  .controls .btn{
+    font-size:14px;
+    min-height:46px;
+    padding:8px 10px;
+  }
 
-  /* ------------------------------------------------------------------ */
-  /* ۴) مودال‌ها و افکت‌ها                                              */
-  /* ------------------------------------------------------------------ */
+  /* ستون طومار سرنخ‌ها */
+  .clues{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  @media(min-width:640px) and (max-width:899px){
+    .clues{ grid-template-columns:1fr 1fr; }
+  }
+  .clue-box{
+    background:var(--surface);
+    border:1.5px solid var(--line);
+    border-radius:16px;
+    padding:12px 12px 8px;
+    box-shadow:var(--shadow-sm);
+  }
+  .clue-box h3{
+    font-family:'Lalezar','Vazirmatn',sans-serif;
+    font-weight:400;
+    font-size:17.5px;
+    color:var(--ch-accent);
+    margin-bottom:8px;
+    padding-bottom:6px;
+    border-bottom:1px dashed var(--line);
+    display:flex; align-items:center; justify-content:space-between; gap:6px;
+  }
+  .clue-list{
+    display:flex; flex-direction:column; gap:4px;
+    max-height:310px;
+    overflow-y:auto;
+    padding-left:2px;
+  }
+  .clue-item{
+    display:flex; align-items:flex-start; gap:8px;
+    width:100%;
+    text-align:right;
+    border:1px solid transparent;
+    background:transparent;
+    cursor:pointer;
+    border-radius:11px;
+    padding:7px 8px;
+    font-family:inherit;
+    font-size:13.5px;
+    color:var(--ink);
+    line-height:1.7;
+  }
+  .clue-item:hover{ background:var(--surface-2); }
+  .clue-item.sel{
+    background:var(--sel);
+    border-color:var(--sel-bd);
+  }
+  body[data-theme="dark"] .clue-item.sel{ color:#fef3c7; }
+  .clue-item.solved{
+    background:var(--teal-soft);
+    border-color:rgba(16,185,129,.35);
+    color:var(--solved-ink);
+  }
+  .clue-item.solved .clue-text{
+    text-decoration:line-through;
+    color:var(--solved-ink);
+  }
+  .clue-num{
+    flex:0 0 auto;
+    min-width:24px; height:24px;
+    border-radius:7px;
+    padding:0 5px;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:900;
+    margin-top:2px;
+  }
+  .clue-text{ flex:1 1 auto; min-width:0; font-weight:600; }
+  .clue-len{
+    flex:0 0 auto;
+    font-size:11px; font-weight:800;
+    color:var(--muted);
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:1px 7px;
+    margin-top:3px;
+  }
+
+  /* ==================================================================
+     ۳) پنل شخصیت حکیم (.grid-hakim-slot) — منطبق بر استاندارد هسته
+     دم حباب دقیقاً هم‌رنگ پس‌زمینهٔ مات حباب است و قاب طلایی پیش‌فرض ندارد
+     ================================================================== */
+  .grid-hakim-slot:empty{ display:none; }
+  .grid-hakim-slot .hakim-panel{
+    --hk-panel-bg:linear-gradient(135deg, #fbf7ec, #edf4fc);
+    --hk-border:#c9d6ea;
+    --hk-bubble-bg:#f2f6fc;
+    --hk-bubble-border:#c3d3ec;
+    --hk-text:#16223d;
+    --hk-label:#0f5c56;
+    --hk-label-bg:#dff3ef;
+    --hk-ring:#0f766e;
+    --hk-ring-light:#99f6e4;
+    --hk-ring-deep:#1e3a8a;
+    --hk-face-light:#1e3a5f;
+    --hk-face-dark:#0f1d38;
+    --hk-glow:rgba(15,118,110,.38);
+    max-width:none;
+    margin:0;
+    padding:12px;
+    gap:12px;
+    box-shadow:var(--shadow-sm);
+  }
+  body[data-theme="dark"] .grid-hakim-slot .hakim-panel{
+    --hk-panel-bg:linear-gradient(135deg, #162442, #101b34);
+    --hk-border:#314770;
+    --hk-bubble-bg:#1e2f52;
+    --hk-bubble-border:#3d5684;
+    --hk-text:#f2f6fd;
+    --hk-label:#99f6e4;
+    --hk-label-bg:#143a45;
+    --hk-ring:#2dd4bf;
+    --hk-ring-light:#ccfbf1;
+    --hk-ring-deep:#1d4ed8;
+    --hk-face-light:#223863;
+    --hk-face-dark:#0b152b;
+    --hk-glow:rgba(45,212,191,.42);
+  }
+  .grid-hakim-slot .hakim-avatar{ width:66px; height:66px; }
+  .grid-hakim-slot .hakim-bubble{ min-width:0; }
+  .grid-hakim-slot .hakim-text{ font-size:13.8px; line-height:1.85; overflow-wrap:anywhere; }
+  .grid-hakim-slot .hakim-fallback{
+    padding:12px 14px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    text-align:right;
+    font-size:13.8px;
+    line-height:1.85;
+    color:var(--ink);
+  }
+  @media(max-width:480px){
+    .grid-hakim-slot .hakim-panel{ padding:10px; gap:10px; }
+    .grid-hakim-slot .hakim-avatar{ width:56px; height:56px; }
+  }
+
+  /* ==================================================================
+     ۴) مودال لوح افتخار پایان جدول و مودال خطا
+     ================================================================== */
   .modal-back{
-    position:fixed; inset:0; background:rgba(30,42,82,.45); backdrop-filter:blur(3px);
-    display:flex; align-items:center; justify-content:center; padding:20px; z-index:50;
+    position:fixed; inset:0;
+    background:rgba(10,16,36,.62);
+    backdrop-filter:blur(5px);
+    display:flex; align-items:center; justify-content:center;
+    padding:16px;
+    z-index:50;
     animation:fade .2s ease;
   }
   @keyframes fade{ from{opacity:0} to{opacity:1} }
   .modal{
-    background:#fff; border-radius:22px; padding:24px 20px; width:100%; max-width:400px;
-    text-align:center; box-shadow:0 30px 80px rgba(20,30,80,.35); animation:zoom .28s cubic-bezier(.2,1.4,.4,1);
-    max-height:90dvh; overflow:auto;
+    position:relative;
+    background:var(--surface);
+    border:2px solid var(--line-strong);
+    border-radius:24px;
+    padding:22px 18px 18px;
+    width:100%; max-width:480px;
+    text-align:center;
+    box-shadow:0 30px 80px rgba(6,12,32,.48);
+    animation:zoom .28s cubic-bezier(.2,1.35,.4,1);
+    max-height:92dvh;
+    overflow:auto;
+    color:var(--ink);
   }
-  @keyframes zoom{ from{ opacity:0; transform:scale(.85);} to{opacity:1; transform:none;} }
-  .modal h2{ font-family:'Lalezar', sans-serif; font-size:30px; color:var(--indigo-dark); }
-  .modal .stars{ font-size:44px; margin:10px 0 2px; }
-  .modal .stars .star{ display:inline-block; opacity:.2; transform:scale(.6); }
+  @keyframes zoom{ from{ opacity:0; transform:scale(.88);} to{opacity:1; transform:none;} }
+  .modal h2{
+    font-family:'Lalezar','Vazirmatn',sans-serif;
+    font-weight:400;
+    font-size:28px;
+    color:var(--ch-accent);
+  }
+
+  /* لوح افتخار نگارخانه */
+  .honor-cert{
+    margin-top:12px;
+    padding:16px 14px 14px;
+    border-radius:18px;
+    background:linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%);
+    border:1.5px solid var(--line-strong);
+    position:relative;
+  }
+  .honor-cert::before{
+    content:"";
+    position:absolute; inset:4px;
+    border:1px dashed rgba(185,142,58,.4);
+    border-radius:14px;
+    pointer-events:none;
+  }
+  .cert-top-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    margin-bottom:8px;
+  }
+  .hk-cert-brand{
+    width:54px; height:auto;
+    display:block;
+  }
+  .cert-kicker{
+    font-size:12px; font-weight:800;
+    color:var(--gold);
+  }
+  .cert-scribe-name{
+    font-family:'Amiri','Vazirmatn',serif;
+    font-size:18px; font-weight:700;
+    color:var(--ink-strong);
+    margin:4px 0;
+  }
+  .modal .stars{ font-size:38px; margin:4px 0; }
+  .modal .stars .star{ display:inline-block; opacity:.22; transform:scale(.7); }
   .modal .stars .star.on{ opacity:1; animation:starPop .5s cubic-bezier(.2,1.6,.4,1) both; }
-  .modal .stars .star:nth-child(2){ animation-delay:.15s; }
-  .modal .stars .star:nth-child(3){ animation-delay:.3s; }
-  @keyframes starPop{ from{ transform:scale(0) rotate(-40deg);} to{ transform:scale(1) rotate(0);} }
-  .stats-list{ text-align:right; margin:16px 0 6px; background:#f4f8ff; border-radius:14px; padding:14px 16px; font-size:14px; color:var(--ink-soft); }
-  .stats-list .row{ display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dashed #dfe8f7; }
+  .modal .stars .star:nth-child(2){ animation-delay:.14s; }
+  .modal .stars .star:nth-child(3){ animation-delay:.28s; }
+  @keyframes starPop{ from{ transform:scale(0) rotate(-35deg);} to{ transform:scale(1) rotate(0);} }
+
+  .res-words-row{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:5px;
+    margin:10px 0;
+  }
+  .res-word-pill{
+    padding:3px 10px;
+    border-radius:999px;
+    background:var(--teal-soft);
+    border:1px solid var(--solved-bd);
+    color:var(--solved-ink);
+    font-size:12px; font-weight:800;
+  }
+
+  .stats-list{
+    text-align:right;
+    margin:10px 0 8px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:13px;
+    padding:10px 14px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .stats-list .row{
+    display:flex; justify-content:space-between;
+    padding:5px 0;
+    border-bottom:1px dashed var(--line);
+  }
   .stats-list .row:last-child{ border-bottom:none; }
-  .stats-list b{ color:var(--ink); }
-  .modal .btn{ width:100%; margin-top:10px; }
-  .modal .btn.ghost{ width:100%; }
-  .err-text{ font-size:14px; color:#8a2f2f; line-height:2; text-align:right; background:#fdeeee; border-radius:12px; padding:12px 14px; margin:14px 0 6px; }
+  .stats-list b{ color:var(--ink-strong); }
+  .cert-credit-line{
+    margin-top:8px;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--muted);
+  }
+  .cert-credit-line b{ color:var(--gold); }
+
+  .modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:12px;
+  }
+  .modal-actions #btnNew{ grid-column:1 / -1; }
+  .modal-actions .btn{ width:100%; min-height:46px; font-size:14.5px; }
+
+  .err-text{
+    font-size:14px; color:var(--bad); line-height:2; text-align:right;
+    background:var(--bad-bg); border:1px solid #f87171; border-radius:12px;
+    padding:12px 14px; margin:14px 0 12px; white-space:pre-line;
+  }
 
   #toast{
-    position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 24px); transform:translateX(-50%) translateY(20px);
-    background:#2c3e8f; color:#fff; padding:11px 20px; border-radius:999px; font-size:14px; font-weight:800;
-    box-shadow:0 10px 30px rgba(20,30,80,.4); opacity:0; pointer-events:none; transition:.28s; z-index:60; max-width:90vw; text-align:center;
+    position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 24px);
+    transform:translateX(-50%) translateY(20px);
+    background:#13254c; color:#ffffff;
+    border:1px solid rgba(245,201,107,.45);
+    padding:11px 20px; border-radius:999px;
+    font-size:14px; font-weight:800;
+    box-shadow:0 12px 32px rgba(6,12,32,.45);
+    opacity:0; pointer-events:none; transition:.28s; z-index:60;
+    max-width:92vw; text-align:center;
   }
   #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 
   .float-plus{
-    position:fixed; z-index:40; font-weight:800; color:#17803f; font-size:18px; pointer-events:none;
-    text-shadow:0 1px 2px #fff; animation:floatUp .95s ease-out forwards;
+    position:fixed; z-index:40; font-weight:900; color:var(--good); font-size:18px;
+    pointer-events:none; text-shadow:0 1px 2px var(--surface);
+    animation:floatUp .95s ease-out forwards;
   }
   @keyframes floatUp{ from{ opacity:1; transform:translateY(0);} to{ opacity:0; transform:translateY(-44px);} }
 
@@ -306,159 +1315,453 @@
     border:none; background:transparent; font-size:16px; z-index:-1;
   }
 
-  /* ------------------------------------------------------------------ */
-  /* ۵) فوتر                                                            */
-  /* ------------------------------------------------------------------ */
-  footer{ text-align:center; margin-top:22px; font-size:11.5px; color:#8a97c0; line-height:2; }
-  footer .dev{ color:#b8860b; font-weight:800; }
+  footer{
+    text-align:center;
+    margin-top:14px;
+    padding:10px;
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.9;
+  }
+  footer .dev{ color:var(--gold); font-weight:800; }
 
-  @media(min-width:760px){
-    .cell{ border-radius:7px; }
-    :root{ --cell:46px; }
+  @media(max-width:380px){
+    body{ padding-inline:8px; }
+    .start-hero, .lobby-col, .chambers-atlas{ padding:15px 12px; }
+    .hud{ padding:8px; gap:6px; }
+    .hud-brand{ border-left:none; padding-left:0; width:100%; justify-content:space-between; }
   }
 
-  /* پنل حکیم‌کور؛ آواتار فقط از فایل مشترک ساخته می‌شود. */
-  .grid-hakim-slot:empty{display:none;}
-  .grid-hakim-slot .hakim-panel{max-width:none;margin:14px 0;padding:12px;gap:12px;
-    background:linear-gradient(135deg,#fffaf0,#f1f5ff);color:var(--ink);
-    border-color:#dbe6f6;box-shadow:0 6px 20px rgba(44,62,143,.08);}
-  .grid-hakim-slot .hakim-panel.speaking{box-shadow:0 6px 22px rgba(201,162,39,.16);}
-  .grid-hakim-slot .hakim-avatar{width:64px;height:64px;}
-  .grid-hakim-slot .hakim-bubble{min-width:0;}
-  .grid-hakim-slot .hakim-name{color:var(--indigo-dark);}
-  .grid-hakim-slot .hakim-text{color:var(--ink);font-size:14px;line-height:1.9;overflow-wrap:anywhere;}
-  .grid-hakim-slot .hakim-fallback{padding:12px 14px;margin:14px 0;background:#fffaf0;
-    border:1px solid #dbe6f6;border-radius:14px;text-align:right;font-size:14px;line-height:1.9;}
-  @media(max-width:480px){
-    .grid-hakim-slot .hakim-panel{padding:10px;gap:10px;}
-    .grid-hakim-slot .hakim-avatar{width:56px;height:56px;}
+  /* چاپ تمیز لوح افتخار */
+  @media print{
+    body{ background:#fff !important; padding:0 !important; }
+    .wrap, #toast, #confetti, .modal-actions, #hakimResult{ display:none !important; }
+    #modalResult{
+      position:static !important; background:none !important; padding:0 !important;
+      display:block !important; backdrop-filter:none !important;
+    }
+    #modalResult .modal{
+      max-width:100% !important; max-height:none !important;
+      box-shadow:none !important; border:2px solid #9a6507 !important;
+      background:#fff !important; color:#111 !important;
+    }
   }
 
-  /* کاهش حرکت */
+  /* احترام کامل به کاهش حرکت */
   @media(prefers-reduced-motion: reduce){
-    *{ animation-duration:.001s !important; animation-iteration-count:1 !important; transition-duration:.001s !important; }
+    *, *::before, *::after{
+      animation:none !important;
+      transition:none !important;
+    }
   }
 </style>
 </head>
-<body>
+<body data-chamber="0">
 <div class="wrap">
 
-  <!-- ═══════════════ صفحهٔ شروع ═══════════════ -->
-  <section id="screenStart" class="start-card">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:4px">
-      <button type="button" class="icon-btn" id="btnThemeStart" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب" aria-pressed="false">🌙</button>
-    </div>
-    <h1 class="title"><span class="puz">🧩</span> جدول حکمت</h1>
-    <p class="subtitle">جدول کلمات متقاطع آموزشی — آرام، فکری و بدون عجله</p>
-    <span class="meta-chip" id="metaTitle">جدول حکمت</span>
-    <div class="grid-hakim-slot" id="hakimStart"></div>
+  <!-- ═══════════════ صفحهٔ لابی نگارخانه (#screenStart) ═══════════════ -->
+  <section id="screenStart" class="start-shell">
 
-    <div class="field">
-      <label for="nameInput">نام بازیکن (اختیاری)</label>
-      <input id="nameInput" type="text" maxlength="24" placeholder="مثلاً: مهدی" autocomplete="off">
+    <header class="ornate-panel start-hero">
+      <div class="hero-topbar">
+        <span class="best-pill hidden" id="bestBadge">🏅 بهترین رکورد: ۰</span>
+        <span style="flex:1"></span>
+        <button type="button" class="icon-btn" id="btnThemeStart" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب" aria-pressed="false">🌙</button>
+      </div>
+
+      <span class="hero-kicker">✦ نگارخانهٔ حروف و کاشیِ خرد • پایهٔ پنجم ✦</span>
+
+      <div class="jadval-emblem" aria-hidden="true">
+        <div class="emblem-mosaic">
+          <span class="em-tile t-turq">ح</span>
+          <span class="em-tile">ک</span>
+          <span class="em-tile t-dark">✦</span>
+          <span class="em-tile">ق</span>
+          <span class="em-tile t-turq">م</span>
+          <span class="em-tile">ل</span>
+          <span class="em-tile t-dark">🪶</span>
+          <span class="em-tile">ت</span>
+          <span class="em-tile t-turq">م</span>
+        </div>
+      </div>
+
+      <h1 class="title">جدول حکمت</h1>
+      <p class="subtitle">در تالار کاشی‌های فیروزه و لاجورد، سرنخ‌ها را بخوان و واژه‌های دانایی را با قلمِ نی بنگار</p>
+
+      <div class="meta-row">
+        <span class="meta-chip" id="metaTitle">جدول حکمت</span>
+        <span class="spec-chip">🏛️ ۳ تالار نگارخانه</span>
+        <span class="spec-chip">📚 ۴ گنجینهٔ موضوعی</span>
+      </div>
+    </header>
+
+    <div class="lobby-grid">
+      <!-- ستون راست: محفل حکیم و شیوهٔ نگارش -->
+      <div class="ornate-panel lobby-col">
+        <div class="section-head">
+          <h2 class="section-title">🧙 محفل حکیم و خوشنویس</h2>
+          <span class="section-sub">راهنمای گام‌به‌گام حل جدول</span>
+        </div>
+
+        <div class="grid-hakim-slot" id="hakimStart"></div>
+
+        <div class="sage-prompts">
+          <button type="button" class="sage-chip-btn" id="btnSageTip">🪶 شگرد حل جدول متقاطع</button>
+          <button type="button" class="sage-chip-btn" id="btnSageQuote">📜 کلامی دربارهٔ واژه و قلم</button>
+        </div>
+
+        <div class="rules-grid">
+          <div class="rule-tile">
+            <span class="rule-ic" aria-hidden="true">🟨</span>
+            <div class="rule-body"><b>انتخاب کاشی و جهت</b>روی هر خانه یا سرنخ بزن تا ردیف آن روشن شود؛ ضربهٔ دوباره در تقاطع جهت را عوض می‌کند.</div>
+          </div>
+          <div class="rule-tile">
+            <span class="rule-ic" aria-hidden="true">🪶</span>
+            <div class="rule-body"><b>نگارش روان با قلم</b>با صفحه‌کلید صفحه یا سیستم بنویس؛ قلم خودکار به خانهٔ بعدی می‌لغزد.</div>
+          </div>
+          <div class="rule-tile">
+            <span class="rule-ic" aria-hidden="true">🔍</span>
+            <div class="rule-body"><b>بررسی و کاشی زمردی</b>با زدن «بررسی»، حروف درست سبز و واژه‌های کامل به کاشی فیروزه‌ای تبدیل می‌شوند.</div>
+          </div>
+          <div class="rule-tile">
+            <span class="rule-ic" aria-hidden="true">💡</span>
+            <div class="rule-body"><b>یاری قلمِ حکمت</b>هر راهنما یک حرف را بر لوح آشکار می‌کند (با کسر ۱۰ امتیاز از نتیجهٔ نهایی).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ستون چپ: پیشخوان آغاز نگارش و انتخاب گنجینه -->
+      <div class="ornate-panel lobby-col">
+        <div class="section-head">
+          <h2 class="section-title">📜 پیشخوان آغاز نگارش</h2>
+          <span class="section-sub" id="selectedChamberTag">تالار فعلی: حجرهٔ فیروزه</span>
+        </div>
+
+        <div class="field">
+          <label for="nameInput">نام خوشنویس / بازیکن (اختیاری)</label>
+          <div class="name-box">
+            <span class="nib" aria-hidden="true">🪶</span>
+            <input id="nameInput" type="text" maxlength="24" placeholder="مثلاً: سارا یا مهدی" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>انتخاب گنجینهٔ واژگان</label>
+          <div class="pack-grid" id="packGrid" role="group" aria-label="بسته‌های موضوعی واژگان">
+            <button type="button" class="pack-btn active" data-pack="default">
+              <span class="pk-ic" aria-hidden="true">🌟</span>
+              <span class="pk-txt"><span class="pk-name">علوم و هدیه‌ها</span><span class="pk-sub">بستهٔ پیش‌فرض • ۱۵ واژه</span></span>
+            </button>
+            <button type="button" class="pack-btn" data-pack="science">
+              <span class="pk-ic" aria-hidden="true">🔬</span>
+              <span class="pk-txt"><span class="pk-name">کاوشگر علوم</span><span class="pk-sub">طبیعت و ابزار • ۱۵ واژه</span></span>
+            </button>
+            <button type="button" class="pack-btn" data-pack="farsi">
+              <span class="pk-ic" aria-hidden="true">📖</span>
+              <span class="pk-txt"><span class="pk-name">بوستان ادب فارسی</span><span class="pk-sub">شاعران و آرایه‌ها • ۱۵ واژه</span></span>
+            </button>
+            <button type="button" class="pack-btn" data-pack="iran">
+              <span class="pk-ic" aria-hidden="true">🏛️</span>
+              <span class="pk-txt"><span class="pk-name">ایران‌شناسی و تاریخ</span><span class="pk-sub">میراث و جغرافیا • ۱۵ واژه</span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="start-actions">
+          <button type="button" class="btn" id="startBtn">🪶 گشودن لوح و شروع جدول</button>
+          <div class="btn-row-2">
+            <button type="button" class="btn ghost" id="loadBtn">📂 بارگذاری فایل سؤال‌ها (JSON/HQF)</button>
+          </div>
+        </div>
+
+        <div class="word-count-row">
+          <p class="word-count" id="wordCount"></p>
+          <button type="button" class="reset-link hidden" id="resetDefault">↩ بازگشت به سؤال‌های پیش‌فرض</button>
+        </div>
+      </div>
     </div>
 
-    <div class="levels" id="levels">
-      <button type="button" class="level-btn sel" data-lv="6"><span class="lv-ic">🟢</span><span class="lv-name">آسان</span><span class="lv-desc">۶ کلمه — جدول کوچک</span></button>
-      <button type="button" class="level-btn" data-lv="10"><span class="lv-ic">🟡</span><span class="lv-name">متوسط</span><span class="lv-desc">۱۰ کلمه — جدول متوسط</span></button>
-      <button type="button" class="level-btn" data-lv="15"><span class="lv-ic">🔴</span><span class="lv-name">سخت</span><span class="lv-desc">۱۵ کلمه — جدول بزرگ</span></button>
+    <!-- اطلس زندهٔ سه تالار نگارخانه همراه حرکت قلمِ حکمت (HakimMapMotion) -->
+    <div class="ornate-panel chambers-atlas">
+      <div class="section-head">
+        <h2 class="section-title">🗺️ اطلس تالارهای نگارخانه</h2>
+        <span class="section-sub">روی هر تالار بزن تا قلمِ حکمت به آن منزل پرواز کند</span>
+      </div>
+
+      <div class="levels" id="levels" role="group" aria-label="انتخاب سطح و تالار جدول">
+        <button type="button" class="level-btn sel" data-lv="6" data-ch="0">
+          <span class="lv-step">منزل اول • آسان</span>
+          <svg class="lv-art" viewBox="0 0 56 44" aria-hidden="true">
+            <rect x="8" y="6" width="40" height="32" rx="8" fill="#0f766e" stroke="#d99a26" stroke-width="2"/>
+            <polygon points="28,11 33,19 42,19 35,25 38,33 28,28 18,33 21,25 14,19 23,19" fill="#99f6e4" opacity=".9"/>
+          </svg>
+          <span class="lv-name">حجرهٔ فیروزه</span>
+          <span class="lv-desc">۶ واژه — لوح آغازین</span>
+        </button>
+
+        <button type="button" class="level-btn" data-lv="10" data-ch="1">
+          <span class="lv-step">منزل دوم • متوسط</span>
+          <svg class="lv-art" viewBox="0 0 56 44" aria-hidden="true">
+            <path d="M10 38 V18 C10 10 28 4 28 4 C28 4 46 10 46 18 V38 Z" fill="#2b3d96" stroke="#d99a26" stroke-width="2"/>
+            <path d="M18 38 V22 C18 16 28 12 28 12 C28 12 38 16 38 22 V38 Z" fill="#93a8ff" opacity=".85"/>
+          </svg>
+          <span class="lv-name">ایوان لاجورد</span>
+          <span class="lv-desc">۱۰ واژه — لوح میانی</span>
+        </button>
+
+        <button type="button" class="level-btn" data-lv="15" data-ch="2">
+          <span class="lv-step">منزل سوم • سخت</span>
+          <svg class="lv-art" viewBox="0 0 56 44" aria-hidden="true">
+            <path d="M12 38 H44 V26 C44 15 28 7 28 7 C28 7 12 15 12 26 Z" fill="#6b21a8" stroke="#f5c96b" stroke-width="2"/>
+            <circle cx="28" cy="5" r="2.5" fill="#f5c96b"/>
+            <circle cx="28" cy="24" r="7" fill="#fde68a" opacity=".9"/>
+          </svg>
+          <span class="lv-name">گنبد زرین‌نگار</span>
+          <span class="lv-desc">۱۵ واژه — لوح استادان</span>
+        </button>
+      </div>
+
+      <div class="atlas-verse" id="chamberVerse">«در حجرهٔ فیروزه، هر حرفِ نخست کلیدِ گشودنِ واژه‌های دیگر است»</div>
     </div>
 
-    <div class="start-actions">
-      <button type="button" class="btn" id="startBtn">🧩 شروع جدول</button>
-      <button type="button" class="btn ghost" id="loadBtn">📂 بارگذاری سؤال‌ها</button>
-    </div>
-
-    <div class="rules">
-      <b>قوانین بازی:</b><br>
-      • روی هر خانه بزن تا کلمهٔ آن انتخاب شود (زرد می‌شود)<br>
-      • با خواندن سرنخ‌ها کلمه را حدس بزن و حروفش را پر کن — حرف بعد از تایپ خودکار به خانهٔ بعد می‌رود<br>
-      • 🔍 بررسی: حرف‌های درست سبز و غلط قرمز می‌شوند<br>
-      • 💡 راهنما یک حرف را فاش می‌کند (هر راهنما ۱۰ امتیاز کم می‌کند)<br>
-      • وقتی همهٔ کلمات درست پر شوند، جدول کامل می‌شود و جشن می‌گیریم 🎉
-    </div>
-    <p class="word-count" id="wordCount"></p>
-    <button class="reset-link hidden" id="resetDefault">↩ بازگشت به سؤال‌های پیش‌فرض</button>
   </section>
 
-  <!-- ═══════════════ صفحهٔ بازی ═══════════════ -->
-  <section id="screenGame" class="hidden">
+  <!-- ═══════════════ صفحهٔ بازی (#screenGame) ═══════════════ -->
+  <section id="screenGame" class="game-shell hidden">
+
     <div class="hud">
-      <span class="hud-chip"><span class="ic">⏱</span><span id="hudTime">۰۰:۰۰</span></span>
-      <span class="hud-chip"><span class="ic">🧩</span><span id="hudWords">۰ / ۰</span></span>
-      <span class="hud-spacer"></span>
-      <button type="button" class="icon-btn" id="btnTheme" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب" aria-pressed="false">🌙</button>
-      <button type="button" class="icon-btn" id="btnHintTop" title="راهنما" aria-label="راهنما">💡</button>
-      <button type="button" class="icon-btn" id="btnMusic" title="موسیقی" aria-label="موسیقی">🎵</button>
-      <button type="button" class="icon-btn" id="btnHome" title="خانه" aria-label="خانه">🏠</button>
-    </div>
-
-    <div class="grid-hakim-slot" id="hakimGame"></div>
-
-    <div class="board-scroll" id="boardScroll">
-      <div class="board" id="board"></div>
-    </div>
-
-    <div class="clues" id="clues">
-      <div class="clue-box"><h3>➡️ افقی</h3><div id="cluesH"></div></div>
-      <div class="clue-box"><h3>⬇️ عمودی</h3><div id="cluesV"></div></div>
-    </div>
-
-    <div class="kb-bar">
-      <div class="kb-head">
-        <span class="kb-title">⌨️ صفحه‌کلید فارسی</span>
-        <span class="kb-spacer"></span>
-        <button class="kb-mini" id="sysKb" title="صفحه‌کلید سیستم" aria-label="صفحه‌کلید سیستم">⌨️</button>
-        <button class="kb-mini" id="kbToggle" title="نمایش/پنهان" aria-label="نمایش و پنهان‌کردن صفحه‌کلید">⌄</button>
+      <div class="hud-brand">
+        <div>
+          <div class="hud-chamber-badge" id="hudChamberName">حجرهٔ فیروزه</div>
+          <div class="hud-pack-sub" id="hudPackName">علوم و هدیه‌ها</div>
+        </div>
       </div>
-      <div class="keyboard" id="keyboard"></div>
+      <span class="hud-chip"><span class="ic" aria-hidden="true">⏱</span><span id="hudTime">۰۰:۰۰</span></span>
+      <span class="hud-chip"><span class="ic" aria-hidden="true">🧩</span><span id="hudWords">۰ / ۰</span></span>
+      <span class="hud-spacer"></span>
+      <div class="hud-actions">
+        <button type="button" class="icon-btn" id="btnTheme" title="تغییر حالت روز و شب" aria-label="تغییر حالت روز و شب" aria-pressed="false">🌙</button>
+        <button type="button" class="icon-btn" id="btnHintTop" title="راهنما" aria-label="راهنما">💡</button>
+        <button type="button" class="icon-btn" id="btnMusic" title="موسیقی" aria-label="موسیقی">🎵</button>
+        <button type="button" class="icon-btn" id="btnHome" title="بازگشت به خانه" aria-label="خانه">🏠</button>
+      </div>
     </div>
 
-    <div class="controls">
-      <button class="btn" id="btnCheck">🔍 بررسی</button>
-      <button class="btn warn" id="btnHint">💡 راهنما</button>
-      <button class="btn warn" id="btnRestart">🔄 شروع دوباره</button>
+    <!-- صحنهٔ پانورامیک نگارخانهٔ خطاطی: پرواز قلم نی بین نگین‌های واژگان روی طومار معرّق -->
+    <div class="scriptorium-scene" id="scriptoriumScene">
+      <div class="chamber-banner" id="chamberBanner" aria-live="polite">🪶 نگارخانهٔ حروف آمادهٔ نگارش است</div>
+      <svg class="scriptorium-svg" id="scriptoriumSvg" viewBox="0 0 760 152" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="scArchGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--arch-1)"/>
+            <stop offset="100%" stop-color="var(--arch-2)"/>
+          </linearGradient>
+          <linearGradient id="scDeskGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3b2618"/>
+            <stop offset="100%" stop-color="#21130b"/>
+          </linearGradient>
+          <linearGradient id="scScrollPaper" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#f7e6c4"/>
+            <stop offset="50%" stop-color="#fff9eb"/>
+            <stop offset="100%" stop-color="#f3ddb3"/>
+          </linearGradient>
+          <linearGradient id="scRibbonLit" x1="1" y1="0" x2="0" y2="0">
+            <stop offset="0%" stop-color="#f59e0b"/>
+            <stop offset="50%" stop-color="#14b8a6"/>
+            <stop offset="100%" stop-color="#fde047"/>
+          </linearGradient>
+          <radialGradient id="scCandleGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fde047" stop-opacity=".65"/>
+            <stop offset="100%" stop-color="#fde047" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- طاق‌های سه‌گانهٔ معماری ایرانی و پنجرهٔ اُرسی -->
+        <path d="M0 0 H760 V126 H0 Z" fill="url(#scArchGrad)" opacity=".92"/>
+        <!-- سه طاق جناغی -->
+        <path d="M36 126 V54 C36 26 118 10 118 10 C118 10 200 26 200 54 V126 Z" fill="#0d1b36" opacity=".45" stroke="#d99a26" stroke-width="1.3"/>
+        <path d="M250 126 V44 C250 16 380 4 380 4 C380 4 510 16 510 44 V126 Z" fill="#0d1b36" opacity=".52" stroke="#f5c96b" stroke-width="1.6"/>
+        <path d="M560 126 V54 C560 26 642 10 642 10 C642 10 724 26 724 54 V126 Z" fill="#0d1b36" opacity=".45" stroke="#d99a26" stroke-width="1.3"/>
+
+        <!-- شیشه‌های رنگی پنجرهٔ اُرسی میانی -->
+        <g opacity=".72">
+          <circle cx="380" cy="34" r="16" fill="none" stroke="#f5c96b" stroke-width="1.2"/>
+          <path d="M380 18 L386 34 L380 50 L374 34 Z" fill="#14b8a6"/>
+          <path d="M364 34 L380 28 L396 34 L380 40 Z" fill="#f59e0b"/>
+          <circle cx="344" cy="42" r="7" fill="#ec4899" opacity=".75"/>
+          <circle cx="416" cy="42" r="7" fill="#38bdf8" opacity=".75"/>
+        </g>
+
+        <!-- میز چوبی نگارخانه -->
+        <rect x="0" y="122" width="760" height="30" fill="url(#scDeskGrad)"/>
+        <line x1="0" y1="122" x2="760" y2="122" stroke="#d99a26" stroke-width="1.6" opacity=".8"/>
+
+        <!-- طومار کاغذ سمرقندی گسترده روی میز -->
+        <path d="M54 74 C210 54, 540 54, 704 74 L712 134 C540 118, 210 118, 46 134 Z" fill="url(#scScrollPaper)" stroke="#c58f2b" stroke-width="1.8"/>
+        <!-- دسته‌های چوبی دو سر طومار -->
+        <rect x="42" y="69" width="11" height="69" rx="5" fill="#78350f" stroke="#f5c96b" stroke-width="1.2"/>
+        <rect x="705" y="69" width="11" height="69" rx="5" fill="#78350f" stroke="#f5c96b" stroke-width="1.2"/>
+
+        <!-- شمسهٔ زرین مقصد در انتهای چپ طومار -->
+        <g class="finial-spin">
+          <polygon points="72,74 76,86 89,86 79,94 83,106 72,99 61,106 65,94 55,86 68,86" fill="#fbbf24" stroke="#92400e" stroke-width="1"/>
+          <circle cx="72" cy="92" r="5.5" fill="#0f766e" stroke="#fef3c7" stroke-width="1.2"/>
+        </g>
+
+        <!-- مسیر پایه و مسیر روشن‌شوندهٔ مرکّب زرین از راست (دوات) به چپ (شمسه) -->
+        <path id="inkPathBase" d="M 672 106 C 510 72, 260 128, 86 94" fill="none" stroke="#cbd5e1" stroke-width="5.5" stroke-linecap="round"/>
+        <path id="inkPathDash" d="M 672 106 C 510 72, 260 128, 86 94" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="3 8" stroke-linecap="round"/>
+        <path id="inkPathLit" d="M 672 106 C 510 72, 260 128, 86 94" fill="none" stroke="url(#scRibbonLit)" stroke-width="6" stroke-linecap="round"/>
+
+        <!-- گروه نگین‌های کاشی واژگان روی طومار -->
+        <g id="scrollStations"></g>
+
+        <!-- دوات فیروزه‌نشان و شمعدان برنجی در سمت راست -->
+        <circle cx="706" cy="76" r="26" fill="url(#scCandleGlow)"/>
+        <g class="candle-flame" id="candleFlame">
+          <path d="M706 62 C711 70 711 77 706 80 C701 77 701 70 706 62 Z" fill="#fde047"/>
+          <path d="M706 67 C708.5 72 708.5 76 706 78 C703.5 76 703.5 72 706 67 Z" fill="#f97316"/>
+        </g>
+        <rect x="702" y="80" width="8" height="18" rx="2" fill="#fef3c7" stroke="#d97706" stroke-width=".9"/>
+        <path d="M694 98 H718 L714 104 H698 Z" fill="#d99a26"/>
+        <!-- دوات فیروزه‌ای -->
+        <g transform="translate(674, 106)">
+          <ellipse cx="14" cy="18" rx="14" ry="5" fill="#091e26" opacity=".35"/>
+          <path d="M4 8 H24 L27 18 C27 22 1 22 1 18 Z" fill="#0f766e" stroke="#f5c96b" stroke-width="1.3"/>
+          <ellipse cx="14" cy="8" rx="10" ry="3.2" fill="#134e4a" stroke="#f5c96b" stroke-width="1.1"/>
+          <ellipse cx="14" cy="8" rx="6.5" ry="1.8" fill="#2dd4bf"/>
+        </g>
+
+        <!-- قلمِ نی خوشنویسی متحرک (#scribeQuill) -->
+        <g id="scribeQuill" transform="translate(672, 106)">
+          <g id="scribeQuillInner">
+            <g class="quill-float">
+              <!-- هالهٔ سرقلم -->
+              <circle cx="0" cy="0" r="10" fill="#14b8a6" opacity=".24"/>
+              <!-- پرِ زرین-فیروزه‌ای انتهای قلم -->
+              <path d="M18 -24 C28 -34 38 -36 44 -35 C39 -26 31 -20 22 -18 Z" fill="#14b8a6" stroke="#0f766e" stroke-width="1"/>
+              <path d="M20 -20 C30 -25 38 -24 43 -22 C36 -17 28 -15 21 -16 Z" fill="#fde047" stroke="#b45309" stroke-width=".9"/>
+              <!-- بدنهٔ قلم نی -->
+              <path d="M5 -8 L24 -25 L29 -20 L10 -3 Z" fill="#d97706" stroke="#78350f" stroke-width="1.2" stroke-linejoin="round"/>
+              <line x1="13" y1="-15" x2="18" y2="-10" stroke="#fef3c7" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- تراش سرقلم (فاق قلم) که دقیقاً روی مختصات (0,0) می‌نشیند -->
+              <path d="M5 -8 L0 0 L10 -3 Z" fill="#fef3c7" stroke="#78350f" stroke-width="1.1" stroke-linejoin="round"/>
+              <circle cx="0" cy="0" r="2.2" fill="#0f766e"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <!-- کتیبهٔ سرنخ فعال بالای جدول -->
+    <div class="active-clue-bar" id="activeClueBar">
+      <button type="button" class="clue-nav-btn" id="prevWordBtn" title="واژهٔ قبلی" aria-label="واژهٔ قبلی">❮</button>
+      <div class="active-clue-mid">
+        <div class="active-clue-meta">
+          <span class="active-clue-pill" id="activeClueBadge">واژهٔ ۱ • افقی</span>
+          <span id="activeClueLen">۴ حرف</span>
+        </div>
+        <div class="active-clue-text" id="activeClueText">سرنخ واژهٔ انتخاب‌شده اینجا نمایش داده می‌شود</div>
+      </div>
+      <button type="button" class="clue-nav-btn" id="nextWordBtn" title="واژهٔ بعدی" aria-label="واژهٔ بعدی">❯</button>
+    </div>
+
+    <!-- میز کار دوستونه: لوح جدول و کیبورد + حکیم و سرنخ‌ها -->
+    <div class="workspace-grid">
+      <div class="board-column">
+        <div class="board-frame" id="boardFrame">
+          <div class="board-scroll" id="boardScroll">
+            <div class="board" id="board"></div>
+          </div>
+        </div>
+
+        <div class="kb-bar">
+          <div class="kb-head">
+            <span class="kb-title">⌨️ مُهرهای حروف فارسی</span>
+            <span class="kb-spacer"></span>
+            <button type="button" class="kb-mini" id="sysKb" title="صفحه‌کلید سیستم" aria-label="صفحه‌کلید سیستم">⌨️</button>
+            <button type="button" class="kb-mini" id="kbToggle" title="نمایش/پنهان" aria-label="نمایش و پنهان‌کردن صفحه‌کلید">⌄</button>
+          </div>
+          <div class="keyboard" id="keyboard"></div>
+        </div>
+
+        <div class="controls">
+          <button type="button" class="btn" id="btnCheck">🔍 بررسی لوح</button>
+          <button type="button" class="btn warn" id="btnHint">💡 افشای حرف</button>
+          <button type="button" class="btn warn" id="btnRestart">🔄 شروع دوباره</button>
+        </div>
+      </div>
+
+      <div class="clues-column">
+        <div class="grid-hakim-slot" id="hakimGame"></div>
+
+        <div class="clues" id="clues">
+          <div class="clue-box">
+            <h3><span>➡️ سرنخ‌های افقی</span><span class="clue-len" id="countH">۰</span></h3>
+            <div class="clue-list" id="cluesH"></div>
+          </div>
+          <div class="clue-box">
+            <h3><span>⬇️ سرنخ‌های عمودی</span><span class="clue-len" id="countV">۰</span></h3>
+            <div class="clue-list" id="cluesV"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer>
-      🧙 حکیمستان — دیار حکیم، سرزمین یادگیری<br>
-      طراح و توسعه‌دهنده: <span class="dev">مهدی شریفیان</span>
+      🧙 حکیمستان — نگارخانهٔ جدول حکمت، سرزمین یادگیری<br>
+      طراحی و توسعه: <span class="dev">مهدی شریفیان</span>
     </footer>
   </section>
 </div>
 
-<!-- ═══════════════ مودال نتیجه ═══════════════ -->
+<!-- ═══════════════ مودال لوح افتخار نتیجه ═══════════════ -->
 <div class="modal-back hidden" id="modalResult">
-  <div class="modal">
-    <h2>آفرین! جدول کامل شد 🎉</h2>
-    <div class="grid-hakim-slot" id="hakimResult"></div>
-    <div class="stars" id="resStars"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
-    <div class="stats-list" id="resStats"></div>
-    <button class="btn" id="btnNew">🔄 جدول جدید</button>
-    <button class="btn ghost" id="btnHome2">🏠 خانه</button>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="resHeading">
+    <h2 id="resHeading">آفرین! لوح جدول کامل شد 🎉</h2>
+    <div class="grid-hakim-slot" id="hakimResult" style="margin-top:8px"></div>
+
+    <div class="honor-cert" id="jadvalCert">
+      <div class="cert-top-row">
+        <img class="hk-cert-brand" src="../assets/img/hakimestan-logo-stacked.svg" alt="نشان حکیمستان">
+        <span class="cert-kicker" id="certChamberLabel">✦ لوح افتخار نگارخانهٔ حکمت ✦</span>
+      </div>
+      <div class="cert-scribe-name" id="resPlayerName">خوشنویس فرهیخته: بازیکن</div>
+      <div class="stars" id="resStars"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
+      <div class="res-words-row" id="resWordsRow"></div>
+      <div class="stats-list" id="resStats"></div>
+      <div class="cert-credit-line">طراحی و توسعه: <b>مهدی شریفیان</b></div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn" id="btnNew">🔄 گشودن جدول جدید</button>
+      <button type="button" class="btn ghost" id="btnPrintCert">🖨️ چاپ لوح افتخار</button>
+      <button type="button" class="btn ghost" id="btnHome2">🏠 بازگشت به خانه</button>
+    </div>
   </div>
 </div>
 
 <!-- ═══════════════ مودال خطا ═══════════════ -->
 <div class="modal-back hidden" id="modalError">
-  <div class="modal">
-    <h2>خطا در فایل 📛</h2>
-    <div class="grid-hakim-slot" id="hakimError"></div>
+  <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="errHeading">
+    <h2 id="errHeading">خطا در فایل 📛</h2>
+    <div class="grid-hakim-slot" id="hakimError" style="margin-top:8px"></div>
     <div class="err-text" id="errMsg"></div>
-    <button class="btn ghost" id="errClose">باشه</button>
+    <button type="button" class="btn ghost" id="errClose" style="width:100%">باشه</button>
   </div>
 </div>
 
-<div id="toast"></div>
-<canvas id="confetti"></canvas>
+<div id="toast" role="status" aria-live="polite"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
 <input id="ghost" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" dir="rtl" tabindex="-1" aria-label="ورود حرف در جدول">
 <input type="file" id="fileInput" accept=".json,application/json" class="hidden">
 <audio id="music" src="music7.mp3" loop preload="none"></audio>
 
 <script src="../hakim-core.js"></script>
+<script src="../js/hakim-map-motion.js"></script>
 <script>
 /* ================================================================== */
-/* ۰) دادهٔ پیش‌فرض (هدیه‌های آسمان + علوم — پنجم دبستان)            */
+/* ۰) گنجینه‌های چهارگانهٔ واژگان (علوم، هدیه‌ها، فارسی، ایران‌شناسی)  */
 /* ================================================================== */
 const DEFAULT_HQF = {
   "hqf": "1.0",
@@ -486,32 +1789,122 @@ const DEFAULT_HQF = {
   ]
 };
 
+const WORD_PACKS = {
+  default: DEFAULT_HQF,
+  science: {
+    meta: { title: "جدول حکمت — کاوشگر علوم", subject: "علوم تجربی", grade: "پنجم دبستان" },
+    words: [
+      { word: "کلروفیل", clue: "سبزینهٔ برگ گیاهان برای غذاسازی در نور خورشید" },
+      { word: "میکروسکوپ", clue: "وسیلهٔ مشاهدهٔ سلول‌ها و موجودات بسیار ریز" },
+      { word: "آتشفشان", clue: "کوهی که مواد مذاب از دهانهٔ آن بیرون می‌ریزد" },
+      { word: "منظومه", clue: "خورشید و سیاره‌هایی که به دور آن می‌گردند" },
+      { word: "قرقره", clue: "ماشین ساده‌ای با چرخ شیاردار و طناب برای بالابردن بار" },
+      { word: "اهرم", clue: "میله‌ای ساده که با تکیه‌گاه جابه‌جایی اجسام را آسان می‌کند" },
+      { word: "منشور", clue: "جسم شفافی که نور سفید را به هفت رنگ تجزیه می‌کند" },
+      { word: "عدسی", clue: "قطعهٔ شفاف خمیده در عینک، ذره‌بین و دوربین" },
+      { word: "شبکیه", clue: "پردهٔ حساس به نور در عقب کرهٔ چشم" },
+      { word: "مخچه", clue: "بخش حفظ تعادل بدن در دستگاه عصبی" },
+      { word: "تبخیر", clue: "تبدیل مایع به بخار در اثر گرما" },
+      { word: "میعان", clue: "تبدیل بخار به قطرات مایع در برخورد با سطح سرد" },
+      { word: "خاکبرگ", clue: "کود طبیعی حاصل از پوسیدن برگ‌ها در خاک" },
+      { word: "گوشته", clue: "لایهٔ ضخیم و داغ زمین در زیر پوسته" },
+      { word: "آهنربا", clue: "جسمی که آهن و فولاد را به سوی خود می‌کشد" }
+    ]
+  },
+  farsi: {
+    meta: { title: "جدول حکمت — بوستان ادب فارسی", subject: "فارسی و نگارش", grade: "پنجم دبستان" },
+    words: [
+      { word: "شاهنامه", clue: "حماسهٔ بزرگ حکیم ابوالقاسم فردوسی به زبان فارسی" },
+      { word: "فردوسی", clue: "شاعر بزرگ توس که سی سال برای زنده‌داشتن فارسی رنج برد" },
+      { word: "گلستان", clue: "کتاب مشهور حکایت‌های شیرین سعدی به نثر و نظم" },
+      { word: "بوستان", clue: "اثر منظوم اخلاقی و پندآموز شیخ اجل سعدی شیرازی" },
+      { word: "خوشنویسی", clue: "هنر زیبای نوشتن حروف با قلم نی و مرکّب" },
+      { word: "قافیه", clue: "واژه‌های هم‌آهنگ در پایان مصراع‌ها یا بیت‌های شعر" },
+      { word: "تشبیه", clue: "مانند کردن چیزی به چیز دیگر در سخن ادبی" },
+      { word: "سیمرغ", clue: "پرندهٔ افسانه‌ای و خردمند کوه قاف در ادب فارسی" },
+      { word: "کتابخانه", clue: "گنجینهٔ نگهداری و مطالعهٔ کتاب‌ها و نسخه‌های خطی" },
+      { word: "ضرب‌المثل", clue: "سخن کوتاه، مشهور و پندآموز که نسل‌به‌نسل مانده است" },
+      { word: "حکایت", clue: "داستان کوتاه و عبرت‌آموز در متون کهن فارسی" },
+      { word: "واژه‌نامه", clue: "کتابی که معنای درست کلمه‌ها را به ترتیب الفبا می‌آورد" },
+      { word: "مثنوی", clue: "قالبی از شعر فارسی که هر بیت آن قافیهٔ مستقل دارد" },
+      { word: "نگارگری", clue: "هنر ظریف نقاشی ایرانی و آراستن کتاب‌های خطی" },
+      { word: "معرفت", clue: "شناخت عمیق، دانایی و بینش روشن" }
+    ]
+  },
+  iran: {
+    meta: { title: "جدول حکمت — ایران‌شناسی و تاریخ", subject: "مطالعات اجتماعی", grade: "پنجم دبستان" },
+    words: [
+      { word: "تخت‌جمشید", clue: "یادگار باشکوه معماری هخامنشیان در مرودشت فارس" },
+      { word: "هگمتانه", clue: "پایتخت باستانی مادها در شهر همدان امروزی" },
+      { word: "پاسارگاد", clue: "نخستین پایتخت هخامنشیان در استان فارس" },
+      { word: "بیستون", clue: "کوه و کتیبهٔ تاریخی مشهور در استان کرمانشاه" },
+      { word: "اصفهان", clue: "شهر گنبدهای فیروزه‌ای، سی‌وسه‌پل و میدان نقش‌جهان" },
+      { word: "دماوند", clue: "بلندترین قلهٔ ایران در رشتهکوه البرز" },
+      { word: "خلیج‌فارس", clue: "دریای نیلگون و مهم در جنوب ایران" },
+      { word: "کاروانسرا", clue: "استراحتگاه کاروان‌ها و مسافران در راه‌های کهن ایران" },
+      { word: "نیشابور", clue: "شهر تاریخی خراسان و معدن نامدار سنگ فیروزه" },
+      { word: "فیروزه", clue: "سنگ قیمتی آبی‌رنگ که کاشی‌ها و جواهرات را می‌آراید" },
+      { word: "زاگرس", clue: "رشتهکوه بزرگ و پربلوط در غرب و جنوب‌غربی ایران" },
+      { word: "البرز", clue: "رشتهکوه شمالی ایران در جنوب دریای خزر" },
+      { word: "قنات", clue: "کاریز؛ شاهکار ایرانیان برای هدایت آب‌های زیرزمینی" },
+      { word: "کاشان", clue: "شهر باغ فین، گلاب‌گیری و خانه‌های تاریخی زیبا" },
+      { word: "شیراز", clue: "شهر بهارنارنج و آرامگاه حافظ و سعدی" }
+    ]
+  }
+};
+
+const CHAMBERS = {
+  6:  { idx: 0, name: "حجرهٔ فیروزه",   short: "آسان • ۶ واژه",  verse: "«در حجرهٔ فیروزه، هر حرفِ نخست کلیدِ گشودنِ واژه‌های دیگر است»" },
+  10: { idx: 1, name: "ایوان لاجورد",   short: "متوسط • ۱۰ واژه", verse: "«تقاطعِ واژه‌ها همچون گره‌چینیِ کاشی‌های ایوان، نظمِ پنهانِ دانش را آشکار می‌کند»" },
+  15: { idx: 2, name: "گنبد زرین‌نگار", short: "سخت • ۱۵ واژه",  verse: "«بر فرازِ گنبدِ زرین‌نگار، حوصله و باریک‌بینیِ استادانِ کلام به بار می‌نشیند»" }
+};
+
+const SAGE_TIPS = [
+  "شگرد خوشنویسان: اول سراغ سرنخ‌هایی برو که جوابشان برایت قطعی است؛ حروف مشترک در تقاطع‌ها بقیهٔ کلمه‌ها را لو می‌دهند!",
+  "اگر بین دو کلمهٔ متقاطع مرددی، روی خانهٔ مشترکشان دوباره بزن تا جهت افقی و عمودی جابه‌جا شود و هر دو سرنخ را بسنجی.",
+  "به تعداد خانه‌های هر کلمه دقت کن؛ گاهی شمارش حروف بین دو پاسخ نزدیک، گزینهٔ درست را فوری مشخص می‌کند."
+];
+const SAGE_QUOTES = [
+  "هر واژه‌ای که می‌آموزی، کاشیِ تازه‌ای در بنای اندیشهٔ توست؛ با آرامش فکر کن و از کشف هر کلمه لذت ببر.",
+  "قلمِ نی تا در مرکّبِ صبر فرو نرود، خطی ماندگار بر کاغذ سمرقندی نمی‌نگارد.",
+  "توانا بود هر که دانا بود — ز دانش دل پیر برنا بود! آماده‌ای یک جدول خوش‌نقش بنگاریم؟"
+];
+
 /* ================================================================== */
 /* ۱) ثابت‌ها و وضعیت کلی                                             */
 /* ================================================================== */
 const LETTERS = ['ا','ب','پ','ت','ث','ج','چ','ح','خ','د','ذ','ر','ز','ژ','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ک','گ','ل','م','ن','و','ه','ی'];
 const PRAISE = [
-  'آفرین! یه کلمهٔ دیگه پیدا شد 🧠',
-  'داری خوب پیش می‌ری! ✨',
-  'نزدیکه، ادامه بده! 💪',
-  'حکیم بهت افتخار می‌کنه! 🌟',
-  'چه تمرکزی! جدول داره کامل می‌شه 📘',
-  'آفرین! حروفت حسابی درستن 🎯'
+  'آفرین! یک کاشیِ واژهٔ دیگر درخشید 🧠',
+  'قلمت چه روان پیش می‌رود! ✨',
+  'نزدیک است، به همین دقت ادامه بده! 💪',
+  'حکیم به تمرکزت افتخار می‌کند! 🌟',
+  'نگارخانه دارد کامل می‌شود! 📘',
+  'آفرین! حروف کاملاً سر جایشان نشستند 🎯'
 ];
-const WORD_COLORS = ['#4a5fd0','#0e9f6e','#d97706','#7c3aed','#dc2626','#0891b2','#ca8a04','#db2777'];
+/* پالت‌های دسترس‌پذیر با کنتراست تضمینی WCAG AA برای شمارهٔ سرنخ‌ها */
+const CLUE_PALETTES = [
+  { bg:'#e0e7ff', fg:'#1e3a8a', dbg:'#1e3a8a', dfg:'#e0e7ff' },
+  { bg:'#ccfbf1', fg:'#115e59', dbg:'#115e59', dfg:'#ccfbf1' },
+  { bg:'#fef3c7', fg:'#78350f', dbg:'#78350f', dfg:'#fef3c7' },
+  { bg:'#f3e8ff', fg:'#581c87', dbg:'#581c87', dfg:'#f3e8ff' },
+  { bg:'#ffe4e6', fg:'#881337', dbg:'#881337', dfg:'#ffe4e6' },
+  { bg:'#e0f2fe', fg:'#0c4a6e', dbg:'#0c4a6e', dfg:'#e0f2fe' }
+];
 
 const state = {
-  words: [],        // فهرست کلمات آماده: [{word, clue}]
+  words: [],
   meta: {},
+  packKey: 'default',
   customLoaded: false,
   level: 6,
   name: 'بازیکن',
-  puzzle: null,     // خروجی buildPuzzle
-  placed: [],       // کلمات چیده‌شده
-  grid: [],         // آرایه ۲بعدی خانه‌ها
-  entries: {},      // ورودی کاربر: "r,c" -> حرف
-  marks: {},        // "r,c" -> 'good'|'bad'|'revealed'
-  solved: {},       // wordIdx -> true
+  puzzle: null,
+  placed: [],
+  grid: [],
+  entries: {},
+  marks: {},
+  solved: {},
   solvedCount: 0,
   current: { wordIdx: 0, pos: 0 },
   attempts: 0,
@@ -523,27 +1916,210 @@ const state = {
 };
 
 /* ================================================================== */
-/* همراه متنی حکیم؛ بدون خواندن با صدا و بدون SVG محلی */
-/* این بخش فقط نمایش پیام را کنترل می‌کند، نه پاسخ، امتیاز یا جدول. */
+/* موتور حرکت اختصاصی «نگارخانهٔ خطاطی» (ScriptoriumMotion)            */
+/* حرکت بزیهٔ قلمِ نی بین نگین‌های واژگان روی طومار معرّق (بدون وابستگی) */
+/* ================================================================== */
+const ScriptoriumMotion = (function(){
+  const NS = 'http://www.w3.org/2000/svg';
+  const P0 = { x: 672, y: 106 }, C1 = { x: 510, y: 72 }, C2 = { x: 260, y: 128 }, P3 = { x: 86, y: 94 };
+  let curT = 0, animId = 0, totalArc = 600;
+
+  function ptAt(t){
+    const u = 1 - t;
+    return {
+      x: u*u*u*P0.x + 3*u*u*t*C1.x + 3*u*t*t*C2.x + t*t*t*P3.x,
+      y: u*u*u*P0.y + 3*u*u*t*C1.y + 3*u*t*t*C2.y + t*t*t*P3.y
+    };
+  }
+  /* محاسبهٔ طول قوس تقریبی در جاوااسکریپت خالص (سازگار با JSDOM و مرورگر) */
+  (function calcArc(){
+    let len = 0, prev = P0;
+    for(let s = 1; s <= 80; s++){
+      const cur = ptAt(s / 80);
+      len += Math.hypot(cur.x - prev.x, cur.y - prev.y);
+      prev = cur;
+    }
+    totalArc = len;
+  })();
+
+  function stationT(idx, count){
+    if(count <= 1) return 0.5;
+    return 0.06 + (idx / (count - 1)) * 0.84;
+  }
+
+  function isReduced(){
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+      document.documentElement.getAttribute('data-motion') === 'reduced';
+  }
+
+  function placeQuill(t){
+    curT = t;
+    const quill = document.getElementById('scribeQuill');
+    if(!quill) return;
+    const p = ptAt(t);
+    quill.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ')');
+  }
+
+  function flyTo(targetT){
+    targetT = clamp(targetT, 0, 1);
+    if(animId){ cancelAnimationFrame(animId); animId = 0; }
+    if(isReduced() || Math.abs(targetT - curT) < 0.005){
+      placeQuill(targetT);
+      return;
+    }
+    const startT = curT;
+    const dur = 520;
+    const t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+    function frame(now){
+      const ts = typeof now === 'number' ? now : Date.now();
+      const k = clamp((ts - t0) / dur, 0, 1);
+      const ease = 1 - Math.pow(1 - k, 3);
+      placeQuill(startT + (targetT - startT) * ease);
+      if(k < 1){ animId = requestAnimationFrame(frame); }
+      else { animId = 0; placeQuill(targetT); }
+    }
+    animId = requestAnimationFrame(frame);
+  }
+
+  function dipNib(){
+    if(isReduced()) return;
+    const inner = document.getElementById('scribeQuillInner');
+    if(!inner) return;
+    inner.classList.remove('quill-dip');
+    void inner.offsetWidth;
+    inner.classList.add('quill-dip');
+  }
+
+  function renderStations(){
+    const g = document.getElementById('scrollStations');
+    const lit = document.getElementById('inkPathLit');
+    const banner = document.getElementById('chamberBanner');
+    const scene = document.getElementById('scriptoriumScene');
+    if(!g) return;
+    while(g.firstChild) g.removeChild(g.firstChild);
+
+    const n = state.placed.length;
+    const solvedTotal = Object.keys(state.solved).length;
+    const ratio = state.done ? 1 : (n ? solvedTotal / n : 0);
+
+    if(lit){
+      lit.style.strokeDasharray = totalArc.toFixed(1);
+      lit.style.strokeDashoffset = (totalArc * (1 - ratio)).toFixed(1);
+    }
+    if(scene){
+      scene.classList.toggle('all-done', !!state.done);
+    }
+    const ch = CHAMBERS[state.level] || CHAMBERS[6];
+    if(banner){
+      banner.textContent = state.done
+        ? ('✨ لوح ' + ch.name + ' به‌تمامی نگارش شد!')
+        : ('🪶 ' + ch.name + ' • ' + toFa(solvedTotal) + ' از ' + toFa(n) + ' واژه گشوده شد');
+    }
+
+    const compact = n > 11;
+    const rSize = compact ? 8.5 : 10.5;
+
+    for(let i = 0; i < n; i++){
+      const w = state.placed[i];
+      const t = stationT(i, n);
+      const p = ptAt(t);
+      const isSolved = !!state.solved[w.idx];
+      const isCur = (w.idx === state.current.wordIdx) && !state.done;
+
+      const node = document.createElementNS(NS, 'g');
+      node.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ')');
+      node.style.cursor = 'pointer';
+
+      if(isCur){
+        const halo = document.createElementNS(NS, 'circle');
+        halo.setAttribute('r', String(rSize + 5));
+        halo.setAttribute('fill', '#f59e0b');
+        halo.setAttribute('opacity', '.32');
+        node.appendChild(halo);
+      }
+
+      const diamond = document.createElementNS(NS, 'rect');
+      diamond.setAttribute('x', String(-rSize));
+      diamond.setAttribute('y', String(-rSize));
+      diamond.setAttribute('width', String(rSize * 2));
+      diamond.setAttribute('height', String(rSize * 2));
+      diamond.setAttribute('rx', '3.5');
+      diamond.setAttribute('transform', 'rotate(45)');
+      diamond.setAttribute('fill', isSolved ? '#0f766e' : (isCur ? '#fef3c7' : '#fffdf8'));
+      diamond.setAttribute('stroke', isSolved ? '#fde047' : (isCur ? '#d97706' : '#94a3b8'));
+      diamond.setAttribute('stroke-width', isCur || isSolved ? '2' : '1.4');
+      node.appendChild(diamond);
+
+      const txt = document.createElementNS(NS, 'text');
+      txt.setAttribute('y', '3.6');
+      txt.setAttribute('text-anchor', 'middle');
+      txt.setAttribute('font-family', 'Vazirmatn, Tahoma, sans-serif');
+      txt.setAttribute('font-size', compact ? '8.5' : '9.8');
+      txt.setAttribute('font-weight', '900');
+      txt.setAttribute('fill', isSolved ? '#ffffff' : '#1e293b');
+      txt.textContent = isSolved ? w.letters[0] : toFa(w.num);
+      node.appendChild(txt);
+
+      (function(wordIdx){
+        node.addEventListener('click', function(){
+          if(!state.done) selectWord(wordIdx, 0);
+        });
+      })(w.idx);
+
+      g.appendChild(node);
+    }
+  }
+
+  return {
+    init: function(){
+      curT = 0;
+      placeQuill(0);
+      renderStations();
+      if(state.placed.length){
+        flyTo(stationT(0, state.placed.length));
+      }
+    },
+    focusWord: function(wordIdx){
+      renderStations();
+      if(!state.placed.length) return;
+      const posIdx = state.placed.findIndex(function(w){ return w.idx === wordIdx; });
+      if(posIdx >= 0) flyTo(stationT(posIdx, state.placed.length));
+    },
+    onLetterTyped: function(){
+      dipNib();
+    },
+    onProgress: function(){
+      renderStations();
+    },
+    onWin: function(){
+      renderStations();
+      flyTo(1);
+      dipNib();
+    }
+  };
+})();
+
+/* ================================================================== */
+/* همراه متنی حکیم؛ بدون خواندن با صدا و بدون SVG محلی                */
 /* ================================================================== */
 let hakimPanel = null, hakimFallback = null, hakimLastMsg = '', hakimLastAt = 0;
-const HAKIM_REPEAT_MS = 4000;
+const HAKIM_REPEAT_MS = 3500;
 
 function hakimClearChat(){
   try{ if(window.Hakim && typeof window.Hakim.reset === 'function') window.Hakim.reset(); }catch(e){}
-  document.querySelectorAll('.hakim-panel, .hakim-fallback').forEach(el => el.remove());
+  document.querySelectorAll('.hakim-panel, .hakim-fallback').forEach(function(el){ el.remove(); });
   hakimPanel = null;
   hakimFallback = null;
 }
 
-function hakimSay(text, mood){
+function hakimSay(text, mood, forceNow){
   const errorOpen = !document.getElementById('modalError').classList.contains('hidden');
   const resultOpen = !document.getElementById('modalResult').classList.contains('hidden');
   const host = document.getElementById(errorOpen ? 'hakimError' : resultOpen ? 'hakimResult' :
     document.getElementById('screenStart').classList.contains('hidden') ? 'hakimGame' : 'hakimStart');
   if(!host) return;
   const msg = text ? String(text) : '';
-  if(msg && msg === hakimLastMsg && (Date.now() - hakimLastAt) < HAKIM_REPEAT_MS) return;
+  if(!forceNow && msg && msg === hakimLastMsg && (Date.now() - hakimLastAt) < HAKIM_REPEAT_MS) return;
   hakimClearChat();
   hakimLastMsg = msg;
   hakimLastAt = Date.now();
@@ -559,7 +2135,7 @@ function hakimSay(text, mood){
         return;
       }
     }
-  }catch(e){ /* نبودن یا خطای حکیم‌کور نباید بازی را متوقف کند. */ }
+  }catch(e){}
 
   hakimFallback = document.createElement('div');
   hakimFallback.className = 'hakim-fallback';
@@ -568,41 +2144,49 @@ function hakimSay(text, mood){
   hakimFallback.textContent = 'حکیم: ' + msg;
   host.appendChild(hakimFallback);
 }
+
 function hakimReact(event, data){
   data = data || {};
   const name = state.name || 'دوست من';
+  const ch = CHAMBERS[state.level] || CHAMBERS[6];
   switch(event){
     case 'welcome':
-      hakimSay('سلام! من حکیمم؛ با هم سرنخ‌ها رو می‌خونیم و جدول حکمت رو کامل می‌کنیم. یک سطح انتخاب کن؛ برای فکر کردن عجله‌ای نیست!', 'happy');
+      hakimSay('سلام به نگارخانهٔ حروف خوش آمدی! من حکیمم؛ یک گنجینهٔ واژگان و یکی از سه تالار پایین را انتخاب کن تا با هم جدول حکمت را بنگاریم.', 'happy');
+      break;
+    case 'chamber':
+      hakimSay('قلمِ حکمت به «' + ch.name + '» پرواز کرد (' + ch.short + '). هر زمان آماده بودی دکمهٔ شروع جدول را بزن!', 'wise', true);
+      break;
+    case 'pack':
+      hakimSay('گنجینهٔ «' + (data.title || 'جدول حکمت') + '» با ' + toFa(state.words.length) + ' واژه آماده شد.', 'happy', true);
       break;
     case 'start':
-      hakimSay(name + '، آماده‌ای؟ این جدول ' + toFa(state.placed.length) + ' کلمه داره. سرنخ‌ها رو بخون، حروف رو بنویس و با دکمهٔ «بررسی» جواب‌هات رو بسنج.', 'happy');
+      hakimSay(name + ' عزیز، لوح «' + ch.name + '» گشوده شد! این جدول ' + toFa(state.placed.length) + ' واژه دارد. سرنخ‌ها را بخوان و با آرامش بنگار.', 'happy');
       break;
     case 'clue':
-      hakimSay('سرنخ ' + toFa(data.num) + '، ' + (data.dir === 'h' ? 'افقی' : 'عمودی') + '، ' + toFa(data.letters.length) + ' حرف: ' + data.clue, 'thinking');
+      hakimSay('سرنخ ' + toFa(data.num) + ' (' + (data.dir === 'h' ? 'افقی' : 'عمودی') + '، ' + toFa(data.letters.length) + ' حرف): ' + data.clue, 'thinking');
       break;
     case 'check':
       hakimSay(data.wrong > 0
-        ? (data.newly ? 'آفرین! ' + toFa(data.newly) + ' کلمهٔ تازه رو درست پیدا کردی. ' : '') + 'بعضی خانه‌ها هنوز خالی یا نادرست‌اند. سرنخ‌ها و حروف قرمز رو دوباره بررسی کن؛ می‌تونی درستشون کنی!'
-        : 'آفرین ' + name + '! جواب‌هات درست‌اند.', data.wrong > 0 ? 'thinking' : 'happy');
+        ? (data.newly ? 'آفرین! ' + toFa(data.newly) + ' واژهٔ تازه به کاشی فیروزه‌ای تبدیل شد. ' : '') + 'چند خانه هنوز خالی یا نادرست‌اند؛ خانه‌های سرخ را با سرنخ‌ها دوباره بسنج!'
+        : 'آفرین ' + name + '! همهٔ حروف کاملاً درست نشسته است.', data.wrong > 0 ? 'thinking' : 'happy');
       break;
     case 'hint':
-      hakimSay('حرف «' + data.letter + '» رو در خانهٔ ' + toFa(data.position) + ' این کلمه نشون دادم. این راهنما ۱۰ امتیاز از نتیجه کم می‌کنه؛ حالا بقیهٔ حروف رو پیدا کن!', 'wise');
+      hakimSay('قلمِ راهنما حرف «' + data.letter + '» را در خانهٔ ' + toFa(data.position) + ' آشکار کرد (۱۰ امتیاز کسر شد). باقی حروف را خودت بیاب!', 'wise');
       break;
     case 'filled':
-      hakimSay('این کلمه کاملاً پر شده؛ اگر از جواب مطمئن نیستی، دکمهٔ «بررسی» رو بزن.', 'thinking');
+      hakimSay('همهٔ خانه‌های این واژه پر شده است؛ دکمهٔ «بررسی لوح» را بزن تا درستی آن سنجیده شود.', 'thinking');
       break;
     case 'restart':
-      hakimSay('از نو شروع کردیم، ' + name + '! همان جدول منتظر توست؛ این بار با دقت بیشتری سرنخ‌ها رو کنار هم بذار.', 'happy');
+      hakimSay('لوح را پاکیزه کردیم، ' + name + '! همان واژه‌ها منتظر قلمِ دقیق‌تر تو هستند.', 'happy');
       break;
     case 'win':
-      hakimSay('آفرین ' + name + '! هر ' + toFa(state.placed.length) + ' کلمه رو پیدا کردی و جدول کامل شد. چه تمرکز خوبی! آمادهٔ یک جدول تازه‌ای؟', 'excited');
+      hakimSay('هزار آفرین ' + name + '! هر ' + toFa(state.placed.length) + ' واژهٔ «' + ch.name + '» را گشودی و لوح افتخار به نامت ثبت شد!', 'excited');
       break;
     case 'loaded':
-      hakimSay(toFa(data.count) + ' کلمه با سرنخ بارگذاری شد. حالا یک سطح انتخاب کن تا جدول تازه رو بسازیم!', 'happy');
+      hakimSay(toFa(data.count) + ' واژه با سرنخ از فایل بارگذاری شد! اکنون تالار دلخواهت را برگزین و جدول تازه را آغاز کن.', 'happy', true);
       break;
     case 'error':
-      hakimSay('این بار نتونستیم ادامه بدیم. توضیح پایین رو بخون و دوباره امتحان کن؛ من کنارت هستم.', 'thinking');
+      hakimSay('نتوانستیم این فایل یا جدول را بگشاییم. پیام زیر را بخوان و دوباره امتحان کن؛ من کنارت هستم.', 'thinking');
       break;
   }
 }
@@ -611,12 +2195,11 @@ function hakimReact(event, data){
 /* ۲) ابزارهای عمومی                                                   */
 /* ================================================================== */
 function shuffle(a){ const r = a.slice(); for(let i=r.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [r[i],r[j]]=[r[j],r[i]]; } return r; }
-function toFa(n){ return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+function toFa(n){ return String(n).replace(/\d/g, function(d){ return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
 function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
-function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
 function fmtTime(s){ const m=Math.floor(s/60), ss=s%60; return toFa(String(m).padStart(2,'0')) + ':' + toFa(String(ss).padStart(2,'0')); }
 
-/* نمایش پیام کوتاه (توست) */
 let toastTimer = null;
 function toast(msg){
   const t = document.getElementById('toast');
@@ -626,7 +2209,6 @@ function toast(msg){
   toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2400);
 }
 
-/* نرمال‌سازی یک حرف (برای مقایسه) */
 function normalizeCh(ch){
   ch = String(ch==null?'':ch);
   ch = ch.replace(/[\u064A\u0649\u0626]/g,'\u06CC')
@@ -636,7 +2218,6 @@ function normalizeCh(ch){
          .replace(/[\u200c\u200e\u200f\u200b]/g,'');
   return ch.length === 1 ? ch : '';
 }
-/* تبدیل کلمه به آرایهٔ حروف مجاز فارسی */
 function toLetters(w){
   return String(w==null?'':w)
     .replace(/[\u200c\u200e\u200f\u200b]/g,'')
@@ -645,7 +2226,7 @@ function toLetters(w){
     .replace(/\u0643/g,'\u06a9')
     .replace(/\u0629/g,'\u0647')
     .split('')
-    .filter(ch => LETTERS.includes(ch));
+    .filter(function(ch){ return LETTERS.includes(ch); });
 }
 
 /* ================================================================== */
@@ -668,6 +2249,10 @@ function tone(freq, dur, type, vol, when){
   o.start(t); o.stop(t+(dur||0.12)+0.05);
 }
 function sfxType(){ tone(620, 0.06, 'triangle', 0.07); }
+function sfxChamber(idx){
+  const chords = [[440,554,659],[494,622,740],[523,659,784]];
+  (chords[idx] || chords[0]).forEach(function(f,i){ tone(f, 0.14, 'sine', 0.07, i*0.05); });
+}
 function sfxGood(){ tone(880, 0.10, 'sine', 0.11); tone(1320, 0.14, 'sine', 0.07, 0.05); }
 function sfxBad(){ tone(190, 0.20, 'sawtooth', 0.05); }
 function sfxWord(){ tone(660,0.09,'sine',0.11); tone(880,0.09,'sine',0.11,0.08); tone(1100,0.17,'sine',0.09,0.16); }
@@ -725,14 +2310,15 @@ updateMusicBtn();
 /* ۵) جشن کاغذرنگی                                                    */
 /* ================================================================== */
 const confettiCanvas = document.getElementById('confetti');
-const cctx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
+let cctx = null;
+try{ if(confettiCanvas && confettiCanvas.getContext) cctx = confettiCanvas.getContext('2d'); }catch(e){ cctx = null; }
 let parts = [], confettiOn = false;
-const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 function confetti(){
   if(!cctx || reduceMotion || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)){ return; }
   const w = confettiCanvas.width = window.innerWidth;
   const h = confettiCanvas.height = window.innerHeight;
-  const colors = ['#4a5fd0','#f6c445','#34d399','#f87171','#a78bfa','#38bdf8','#fbbf24'];
+  const colors = ['#0f766e','#f59e0b','#10b981','#3b82f6','#8b5cf6','#ec4899','#fbbf24'];
   parts = [];
   for(let i=0;i<150;i++){
     parts.push({ x:Math.random()*w, y:-20-Math.random()*h*0.5, s:4+Math.random()*6,
@@ -776,7 +2362,7 @@ function convertQ(q, addWord){
       if(joined) addWord(joined, q.text);
       break;
     }
-    default: break; /* match و انواع ناشناخته نادیده گرفته می‌شوند */
+    default: break;
   }
 }
 function extractWords(data){
@@ -794,7 +2380,6 @@ function extractWords(data){
   } else if(data && data.hakimestan && Array.isArray(data.exams) && data.exams[0] && Array.isArray(data.exams[0].questions)){
     data.exams[0].questions.forEach(function(q){ convertQ(q, addWord); });
   }
-  /* حذف تکراری‌ها */
   const seen = new Set(); const res = [];
   out.forEach(function(x){
     const k = x.word;
@@ -808,12 +2393,12 @@ function extractWords(data){
 /* ================================================================== */
 function buildPuzzle(words){
   const sorted = words
-    .map(function(w){ return { letters: toLetters(w.word), clue: w.clue }; })
+    .map(function(w){ return { word: w.word, letters: toLetters(w.word), clue: w.clue }; })
     .filter(function(w){ return w.letters.length >= 3 && w.letters.length <= 10; })
     .sort(function(a,b){ return b.letters.length - a.letters.length; });
   if(!sorted.length) return null;
 
-  const grid = {}; // "r,c" -> {ch, dir}
+  const grid = {};
   const placed = [];
   const bounds = { minR:0, maxR:0, minC:0, maxC:0 };
   const setCell = function(r,c,ch,dir){
@@ -823,7 +2408,6 @@ function buildPuzzle(words){
   };
   const getCell = function(r,c){ return grid[r+','+c]; };
 
-  /* بررسی مجاز بودن چیدمان */
   const canPlace = function(letters, row, col, dir, needCross){
     const dr = dir==='v' ? 1 : 0, dc = dir==='h' ? 1 : 0;
     let cross = 0;
@@ -831,18 +2415,16 @@ function buildPuzzle(words){
       const r = row + dr*i, c = col + dc*i;
       const ex = getCell(r,c);
       if(ex){
-        if(ex.ch !== letters[i]) return false; /* تضاد حرف */
-        if(ex.dir === dir) return false;       /* هم‌جهت نباید روی هم بیفتند */
+        if(ex.ch !== letters[i]) return false;
+        if(ex.dir === dir) return false;
         cross++;
       }
-      /* همسایه‌های عمود باید خالی باشند مگر در نقطهٔ تقاطع */
       if(dir==='h'){
         if(!ex && (getCell(r-1,c) || getCell(r+1,c))) return false;
       } else {
         if(!ex && (getCell(r,c-1) || getCell(r,c+1))) return false;
       }
     }
-    /* دو سر کلمه باید خالی باشد */
     if(dir==='h'){
       if(getCell(row, col-1)) return false;
       if(getCell(row, col+letters.length)) return false;
@@ -854,12 +2436,10 @@ function buildPuzzle(words){
     return true;
   };
 
-  /* کلمهٔ اول: افقی در مبدأ */
   const first = sorted[0];
   first.letters.forEach(function(ch,i){ setCell(0, i, ch, 'h'); });
-  placed.push({ letters:first.letters, clue:first.clue, row:0, col:0, dir:'h', idx:0 });
+  placed.push({ word:first.word, letters:first.letters, clue:first.clue, row:0, col:0, dir:'h', idx:0 });
 
-  /* بقیهٔ کلمات */
   for(let wi=1; wi<sorted.length; wi++){
     const w = sorted[wi];
     let best = null, bestScore = Infinity;
@@ -881,9 +2461,8 @@ function buildPuzzle(words){
     if(best){
       const dr = best.dir==='v' ? 1 : 0, dc = best.dir==='h' ? 1 : 0;
       w.letters.forEach(function(ch,i){ setCell(best.row+dr*i, best.col+dc*i, ch, best.dir); });
-      placed.push({ letters:w.letters, clue:w.clue, row:best.row, col:best.col, dir:best.dir, idx:wi });
+      placed.push({ word:w.word, letters:w.letters, clue:w.clue, row:best.row, col:best.col, dir:best.dir, idx:wi });
     } else {
-      /* جای جدا: یک ردیف پایین‌تر از بلوک فعلی */
       let row = bounds.maxR + 2, col = bounds.minC, ok = false;
       if(canPlace(w.letters, row, col, 'h', false)){ ok = true; }
       if(!ok){
@@ -896,16 +2475,16 @@ function buildPuzzle(words){
       }
       if(ok){
         w.letters.forEach(function(ch,i){ setCell(row, col+i, ch, 'h'); });
-        placed.push({ letters:w.letters, clue:w.clue, row:row, col:col, dir:'h', idx:wi });
+        placed.push({ word:w.word, letters:w.letters, clue:w.clue, row:row, col:col, dir:'h', idx:wi });
       }
     }
   }
 
-  /* نرمال‌سازی مختصات به بازهٔ صفر */
   const rows = bounds.maxR - bounds.minR + 1;
   const cols = bounds.maxC - bounds.minC + 1;
   const grid2 = Array.from({length:rows}, function(){ return Array(cols).fill(null); });
   placed.forEach(function(p, idx){
+    p.idx = idx;
     p.num = idx + 1;
     p.row -= bounds.minR; p.col -= bounds.minC;
   });
@@ -914,7 +2493,6 @@ function buildPuzzle(words){
     const r = Number(parts2[0]) - bounds.minR, c = Number(parts2[1]) - bounds.minC;
     grid2[r][c] = { ch: grid[k].ch };
   });
-  /* شمارهٔ شروع کلمات */
   const starts = {};
   placed.forEach(function(p){
     const k = p.row + ',' + p.col;
@@ -922,7 +2500,6 @@ function buildPuzzle(words){
     else starts[k] = Math.min(starts[k], p.num);
   });
 
-  /* هشدار اگر بعضی کلمات جا نشدند */
   if(placed.length < words.length){
     console.warn('تنها ' + placed.length + ' از ' + words.length + ' کلمه جا شد');
   }
@@ -986,17 +2563,32 @@ function renderGrid(){
   recalcCellSize();
 }
 function recalcCellSize(){
+  if(!state.puzzle) return;
   const cols = state.puzzle.cols;
-  const avail = Math.min(window.innerWidth - 32, 560);
-  let size = Math.floor((avail - (cols+1)*3) / cols);
-  size = clamp(size, 28, 56);
+  const frame = document.getElementById('boardFrame');
+  const frameW = (frame && frame.clientWidth) ? (frame.clientWidth - 44) : (window.innerWidth - 48);
+  const avail = Math.min(Math.max(220, frameW), 560);
+  let size = Math.floor((avail - (cols + 1) * 4) / cols);
+  size = clamp(size, 26, 52);
   board.style.setProperty('--cell', size + 'px');
+}
+
+function applyClueBadgeColors(){
+  const dark = document.body.dataset.theme === 'dark';
+  document.querySelectorAll('.clue-item .clue-num').forEach(function(numEl){
+    const pIdx = Number(numEl.dataset.pal || 0) % CLUE_PALETTES.length;
+    const pal = CLUE_PALETTES[pIdx];
+    numEl.style.background = dark ? pal.dbg : pal.bg;
+    numEl.style.color = dark ? pal.dfg : pal.fg;
+  });
 }
 
 function renderClues(){
   const h = document.getElementById('cluesH'), v = document.getElementById('cluesV');
   h.innerHTML = ''; v.innerHTML = '';
+  let hc = 0, vc = 0;
   state.placed.forEach(function(w){
+    if(w.dir === 'h') hc++; else vc++;
     const box = w.dir==='h' ? h : v;
     const b = document.createElement('button');
     b.type = 'button';
@@ -1004,16 +2596,22 @@ function renderClues(){
     b.dataset.idx = w.idx;
     const num = document.createElement('span');
     num.className = 'clue-num';
+    num.dataset.pal = String((w.num - 1) % CLUE_PALETTES.length);
     num.textContent = toFa(w.num);
-    num.style.background = WORD_COLORS[(w.num - 1) % WORD_COLORS.length] + '22';
-    num.style.color = WORD_COLORS[(w.num - 1) % WORD_COLORS.length];
     const t = document.createElement('span');
     t.className = 'clue-text';
     t.textContent = w.clue;
-    b.appendChild(num); b.appendChild(t);
+    const ln = document.createElement('span');
+    ln.className = 'clue-len';
+    ln.textContent = toFa(w.letters.length) + ' حرف';
+    b.appendChild(num); b.appendChild(t); b.appendChild(ln);
     b.addEventListener('click', function(){ selectWord(w.idx, 0); });
     box.appendChild(b);
   });
+  const chEl = document.getElementById('countH'), cvEl = document.getElementById('countV');
+  if(chEl) chEl.textContent = toFa(hc) + ' واژه';
+  if(cvEl) cvEl.textContent = toFa(vc) + ' واژه';
+  applyClueBadgeColors();
 }
 
 function renderKeyboard(){
@@ -1031,6 +2629,17 @@ function renderKeyboard(){
   del.setAttribute('aria-label', 'پاک‌کردن حرف');
   del.addEventListener('click', function(){ backspace(); });
   kb.appendChild(del);
+}
+
+function updateActiveClueBar(){
+  const w = currentWord();
+  const badge = document.getElementById('activeClueBadge');
+  const lenEl = document.getElementById('activeClueLen');
+  const txtEl = document.getElementById('activeClueText');
+  if(!w || !badge || !lenEl || !txtEl) return;
+  badge.textContent = 'واژهٔ ' + toFa(w.num) + ' • ' + (w.dir === 'h' ? 'افقی ➡️' : 'عمودی ⬇️');
+  lenEl.textContent = toFa(w.letters.length) + ' حرف' + (state.solved[w.idx] ? ' • ✓ گشوده‌شده' : '');
+  txtEl.textContent = w.clue;
 }
 
 function updateCells(){
@@ -1068,6 +2677,7 @@ function updateClues(){
     if(state.solved[idx]) el.classList.add('solved');
     if(idx === state.current.wordIdx) el.classList.add('sel');
   });
+  updateActiveClueBar();
 }
 
 function updateHUD(){
@@ -1088,6 +2698,7 @@ function selectWord(idx, pos){
   state.current.wordIdx = idx;
   state.current.pos = clamp(pos, 0, w.letters.length-1);
   updateCells(); updateClues(); scrollToCurrent();
+  ScriptoriumMotion.focusWord(idx);
   if(!isTouch() && window.innerWidth > 768) ghost.focus();
   if(!state.done) hakimReact('clue', w);
 }
@@ -1096,7 +2707,6 @@ function onCellClick(r,c){
   ensureAudio(); ensureMusic();
   let here = wordsAtCell(r,c);
   if(!here.length) return;
-  /* کلمه‌های حل‌شده انتخاب نمی‌شوند (فقط حل‌نشده‌ها) */
   const unsolvedHere = here.filter(function(x){ return !state.solved[x.idx]; });
   if(unsolvedHere.length) here = unsolvedHere;
   else return;
@@ -1120,13 +2730,13 @@ function nextWord(step){
   state.current.wordIdx = (state.current.wordIdx + (step||1) + n) % n;
   state.current.pos = 0;
   updateCells(); updateClues(); scrollToCurrent();
+  ScriptoriumMotion.focusWord(state.current.wordIdx);
   if(!state.done) hakimReact('clue', currentWord());
 }
 
-/* تایپ حرف */
 function typeLetter(ch){
   const w = currentWord(); if(!w || state.done) return;
-  if(state.solved[w.idx]) return;   /* کلمهٔ حل‌شده قابل ویرایش نیست */
+  if(state.solved[w.idx]) return;
   const n = normalizeCh(ch);
   if(!n || LETTERS.indexOf(n) < 0) return;
   const key = cellKey(w, state.current.pos);
@@ -1134,13 +2744,14 @@ function typeLetter(ch){
   delete state.marks[key];
   popCell(key);
   sfxType();
+  ScriptoriumMotion.onLetterTyped();
   if(state.current.pos < w.letters.length-1) state.current.pos++;
   updateCells(); updateClues();
   maybeAutoWin();
 }
 function backspace(){
   const w = currentWord(); if(!w || state.done) return;
-  if(state.solved[w.idx]) return;   /* کلمهٔ حل‌شده قابل ویرایش نیست */
+  if(state.solved[w.idx]) return;
   let pos = state.current.pos;
   let key = cellKey(w, pos);
   if(getEntry(key)){
@@ -1181,9 +2792,9 @@ function allCorrect(){
 function checkAnswers(){
   if(!state.started || state.done) return;
   state.attempts++;
-  const wasSolved = state.solved;   /* وضعیت قبلی برای تشخیص کلمه‌های تازه‌حل‌شده */
-  state.solved = {};                /* از نو ساخته می‌شود */
-  state.marks = {};                 /* پاک‌کردن علامت‌های قبلی */
+  const wasSolved = state.solved;
+  state.solved = {};
+  state.marks = {};
   let wrong = 0;
   const newly = [];
   state.placed.forEach(function(w){
@@ -1195,20 +2806,20 @@ function checkAnswers(){
     }
     if(ok){
       state.solved[w.idx] = true;
-      if(!wasSolved[w.idx]) newly.push(w);   /* فقط کلمه‌های تازه جشن می‌گیرند */
+      if(!wasSolved[w.idx]) newly.push(w);
     }
   });
   updateCells(); updateClues(); updateHUD();
+  ScriptoriumMotion.onProgress();
   if(wrong > 0){
     sfxBad();
     retriggerShake();
-    toast(toFa(wrong) + ' خانه مشکل داره — دوباره تلاش کن 🙈');
+    toast(toFa(wrong) + ' خانه هنوز نیاز به اصلاح دارد — دوباره تلاش کن');
   } else {
     sfxGood();
   }
   newly.forEach(function(w){ celebrateWord(w); });
   if(!wrong && allSolved()){ winGame(); }
-  /* اگه کلمهٔ فعلی حل شده بود، برو به کلمهٔ حل‌نشدهٔ بعدی */
   else if(state.solved[state.current.wordIdx]){
     const unsolved = state.placed.findIndex(function(w){ return !state.solved[w.idx]; });
     if(unsolved >= 0) selectWord(unsolved, 0);
@@ -1226,7 +2837,7 @@ function revealHint(){
   const w = currentWord(); if(!w || state.done) return;
   let pos = -1;
   for(let i=0;i<w.letters.length;i++){ if(!getEntry(cellKey(w,i))){ pos = i; break; } }
-  if(pos < 0){ toast('این کلمه کامل پر شده ✨'); hakimReact('filled'); return; }
+  if(pos < 0){ toast('همهٔ خانه‌های این واژه پر شده است ✨'); hakimReact('filled'); return; }
   state.hints++;
   state.revealedCount++;
   const key = cellKey(w, pos);
@@ -1234,6 +2845,7 @@ function revealHint(){
   state.marks[key] = 'revealed';
   state.current.pos = pos;
   sfxHint();
+  ScriptoriumMotion.onLetterTyped();
   updateCells(); updateClues(); updateHUD(); scrollToCurrent();
   hakimReact('hint', {letter:w.letters[pos], position:pos + 1});
   maybeAutoWin();
@@ -1241,7 +2853,18 @@ function revealHint(){
 function maybeAutoWin(){
   if(state.done) return;
   if(allFilled() && allCorrect()){
-    setTimeout(function(){ if(!state.done && allCorrect()) winGame(); }, 260);
+    setTimeout(function(){
+      if(!state.done && allCorrect()){
+        state.placed.forEach(function(w){
+          if(!state.solved[w.idx]){
+            state.solved[w.idx] = true;
+            celebrateWord(w);
+          }
+        });
+        updateCells(); updateClues(); updateHUD();
+        winGame();
+      }
+    }, 260);
   }
 }
 
@@ -1254,8 +2877,8 @@ function celebrateWord(w){
       experiment_id: 'level-' + state.level,
       question_id: 'word-' + (w.idx + 1),
       question_text: w.clue || '',
-      student_answer: w.word || '',
-      correct_answer: w.word || '',
+      student_answer: w.word || w.letters.join(''),
+      correct_answer: w.word || w.letters.join(''),
       is_correct: true,
       time_taken: Math.max(1, state.seconds || 1)
     });
@@ -1291,12 +2914,15 @@ function winGame(){
   if(state.done) return;
   state.done = true;
   stopTimer();
+  ScriptoriumMotion.onWin();
   sfxWin();
   confetti();
   sendResultsToPanel();
+  renderBestBadge();
   showResult();
 }
-  /* 📤 ارسال نتیجه به پنل معلم */
+
+/* 📤 ارسال نتیجه به پنل معلم */
 function sendResultsToPanel(){
   try {
     const total = state.placed.length;
@@ -1358,15 +2984,30 @@ function showResult(){
   const revealed = state.revealedCount;
   const accuracy = totalLetters ? Math.round((totalLetters - revealed) / totalLetters * 100) : 100;
   const stars = computeStars(total, state.hints, state.seconds);
+  const ch = CHAMBERS[state.level] || CHAMBERS[6];
+
+  const certLabel = document.getElementById('certChamberLabel');
+  if(certLabel) certLabel.textContent = '✦ لوح افتخار ' + ch.name + ' ✦';
+  const nameEl = document.getElementById('resPlayerName');
+  if(nameEl) nameEl.textContent = 'خوشنویس فرهیخته: ' + (state.name || 'بازیکن');
+
+  const wordsRow = document.getElementById('resWordsRow');
+  if(wordsRow){
+    wordsRow.innerHTML = state.placed.map(function(w){
+      return '<span class="res-word-pill">✓ ' + esc(w.letters.join('')) + '</span>';
+    }).join('');
+  }
+
   const rows = [
-    ['⏱ زمان', fmtTime(state.seconds)],
-    ['🧩 کلمات', toFa(total) + ' کلمه'],
-    ['💡 راهنما', toFa(state.hints) + ' بار'],
-    ['🎯 دقت', toFa(accuracy) + '٪'],
-    ['🏅 امتیاز', toFa(score)]
+    ['🏛️ تالار نگارخانه', ch.name],
+    ['⏱ زمان نگارش', fmtTime(state.seconds)],
+    ['🧩 واژگان گشوده‌شده', toFa(total) + ' واژه'],
+    ['💡 یاری قلم راهنما', toFa(state.hints) + ' بار'],
+    ['🎯 دقت نگارش', toFa(accuracy) + '٪'],
+    ['🏅 امتیاز کل', toFa(score)]
   ];
   document.getElementById('resStats').innerHTML = rows.map(function(r){
-    return '<div class="row"><span>' + r[0] + '</span><b>' + r[1] + '</b></div>';
+    return '<div class="row"><span>' + r[0] + '</span><b>' + esc(r[1]) + '</b></div>';
   }).join('');
   const starEls = document.querySelectorAll('#resStars .star');
   starEls.forEach(function(el,i){ el.classList.toggle('on', i < stars); });
@@ -1384,18 +3025,30 @@ function startTimer(){
 }
 function stopTimer(){ if(timerId){ clearInterval(timerId); timerId = null; } }
 
+function applyChamberTheme(level){
+  const ch = CHAMBERS[level] || CHAMBERS[6];
+  document.body.dataset.chamber = String(ch.idx);
+  const tag = document.getElementById('selectedChamberTag');
+  if(tag) tag.textContent = 'تالار فعلی: ' + ch.name + ' (' + ch.short + ')';
+  const verse = document.getElementById('chamberVerse');
+  if(verse) verse.textContent = ch.verse;
+  const hudCh = document.getElementById('hudChamberName');
+  if(hudCh) hudCh.textContent = ch.name;
+}
+
 function startGame(level){
   ensureAudio(); ensureMusic();
   state.name = (document.getElementById('nameInput').value || '').trim() || 'بازیکن';
   state.level = level;
+  applyChamberTheme(level);
   const pool = shuffle(state.words.slice());
   const want = Math.min(level, pool.length);
-  if(want < 3){ showError('برای ساختن جدول حداقل ۳ کلمه لازم است.'); return; }
+  if(want < 3){ showError('برای ساختن جدول حداقل ۳ واژه لازم است.'); return; }
   const chosen = pool.slice(0, want);
   const puzzle = buildPuzzle(chosen);
-  if(!puzzle || puzzle.placed.length < 3){ showError('نتوانستم با این کلمات جدول بسازم — تعداد یا حروف مشترک کافی نیست.'); return; }
+  if(!puzzle || puzzle.placed.length < 3){ showError('نتوانستم با این واژه‌ها جدول متقاطع بسازم — تعداد یا حروف مشترک کافی نیست.'); return; }
   if(puzzle.placed.length < want){
-    toast('⚠️ تنها ' + toFa(puzzle.placed.length) + ' کلمه از ' + toFa(want) + ' کلمه جا شد');
+    toast('⚠️ تنها ' + toFa(puzzle.placed.length) + ' واژه از ' + toFa(want) + ' واژه در لوح جا شد');
   }
   state.puzzle = puzzle;
   state.placed = puzzle.placed;
@@ -1408,13 +3061,19 @@ function startGame(level){
   state.current = { wordIdx:0, pos:0 };
   state.done = false;
   state.started = true;
+
+  const hudPack = document.getElementById('hudPackName');
+  if(hudPack) hudPack.textContent = (state.meta && state.meta.subject) ? state.meta.subject : 'گنجینهٔ واژگان';
+
   showScreen('game');
   renderGrid(); renderClues(); renderKeyboard(); updateCells(); updateHUD();
+  ScriptoriumMotion.init();
   startTimer();
   selectWord(0, 0);
   if(!isTouch()) ghost.focus();
   hakimReact('start');
 }
+
 function restartGame(){
   state.entries = {};
   state.marks = {};
@@ -1424,27 +3083,30 @@ function restartGame(){
   state.current = { wordIdx:0, pos:0 };
   state.done = false;
   updateCells(); updateClues(); updateHUD();
+  ScriptoriumMotion.init();
   stopTimer(); startTimer();
   selectWord(0,0);
-  toast('جدول از نو شروع شد 🌱');
+  toast('لوح از نو پاکیزه و آماده شد 🌱');
   hakimReact('restart');
 }
+
 function goHome(){
   stopTimer();
   state.started = false; state.done = false;
   showScreen('start');
+  renderBestBadge();
   hakimReact('welcome');
 }
 
 function showScreen(name){
   document.getElementById('screenStart').classList.toggle('hidden', name !== 'start');
   document.getElementById('screenGame').classList.toggle('hidden', name !== 'game');
-  if(name === 'game'){ recalcCellSize(); }
+  if(name === 'game'){ setTimeout(recalcCellSize, 0); }
   hakimSay();
 }
 
 /* ================================================================== */
-/* ۱۱) بارگذاری فایل و خطا                                            */
+/* ۱۱) بارگذاری فایل، انتخاب گنجینه و رکورد                           */
 /* ================================================================== */
 function showError(msg){
   document.getElementById('errMsg').textContent = msg;
@@ -1465,18 +3127,49 @@ function loadCustomFile(file){
     if(!data || typeof data !== 'object'){ showError('ساختار فایل ناشناخته است.'); return; }
     const words = extractWords(data);
     if(words.length < 3){
-      showError('هیچ کلمهٔ معتبری در فایل پیدا نشد.\n\nکلمات باید بین ۳ تا ۱۰ حرف فارسی باشند و سرنخ داشته باشند.');
+      showError('هیچ واژهٔ معتبری در فایل پیدا نشد.\n\nواژه‌ها باید بین ۳ تا ۱۰ حرف فارسی باشند و سرنخ داشته باشند.');
       return;
     }
     state.words = words;
-    state.meta = (data && data.meta) || {};
+    state.meta = (data && data.meta) || { title: 'بستهٔ اختصاصی', subject: 'فایل سفارشی', grade: '' };
     state.customLoaded = true;
+    document.querySelectorAll('.pack-btn').forEach(function(b){ b.classList.remove('active'); });
     renderStart();
-    toast('✅ ' + toFa(words.length) + ' کلمه بارگذاری شد');
+    toast('✅ ' + toFa(words.length) + ' واژه بارگذاری شد');
     hakimReact('loaded', {count:words.length});
   };
   reader.onerror = function(){ showError('خواندن فایل ممکن نشد.'); };
   reader.readAsText(file);
+}
+
+function selectPack(packKey, silent){
+  const pack = WORD_PACKS[packKey] || WORD_PACKS.default;
+  state.packKey = packKey;
+  state.words = extractWords(pack);
+  state.meta = pack.meta || {};
+  state.customLoaded = false;
+  document.querySelectorAll('.pack-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.pack === packKey);
+  });
+  renderStart();
+  if(!silent){
+    sfxType();
+    hakimReact('pack', { title: state.meta.title });
+  }
+}
+
+function renderBestBadge(){
+  const badge = document.getElementById('bestBadge');
+  if(!badge) return;
+  try{
+    const saved = JSON.parse(localStorage.getItem('hakim_jadval_best_v1') || '{}');
+    if(saved && saved.bestScore > 0){
+      badge.textContent = '🏅 بهترین امتیاز: ' + toFa(saved.bestScore) + (saved.bestStars ? ' • ' + '⭐'.repeat(saved.bestStars) : '');
+      badge.classList.remove('hidden');
+      return;
+    }
+  }catch(e){}
+  badge.classList.add('hidden');
 }
 
 function renderStart(){
@@ -1485,9 +3178,10 @@ function renderStart(){
   const rd = document.getElementById('resetDefault');
   if(!mt || !wc || !rd) return;
   const meta = state.meta || {};
-  mt.textContent = (meta.title || 'جدول حکمت') + ' — ' + (meta.grade || '');
-  wc.textContent = '✨ ' + toFa(state.words.length) + ' کلمهٔ آماده (آسان ۶، متوسط ۱۰، سخت ۱۵)';
+  mt.textContent = (meta.title || 'جدول حکمت') + (meta.grade ? ' — ' + meta.grade : '');
+  wc.textContent = '✨ ' + toFa(state.words.length) + ' واژهٔ آماده (حجره ۶، ایوان ۱۰، گنبد ۱۵)';
   rd.classList.toggle('hidden', !state.customLoaded);
+  renderBestBadge();
 }
 
 /* ================================================================== */
@@ -1498,7 +3192,6 @@ function isTouch(){
   return (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || ('ontouchstart' in window);
 }
 
-/* ورودی کیبورد سیستم */
 ghost.addEventListener('input', function(){
   const v = ghost.value;
   ghost.value = '';
@@ -1526,7 +3219,6 @@ function jumpToCrossing(){
   if(target){ selectWord(target.idx, posOf(target, cell.r, cell.c)); }
 }
 
-/* دکمه‌های صفحهٔ شروع */
 document.getElementById('startBtn').addEventListener('click', function(){ ensureAudio(); startGame(selectedLevel); });
 document.getElementById('loadBtn').addEventListener('click', function(){ document.getElementById('fileInput').click(); });
 document.getElementById('fileInput').addEventListener('change', function(e){
@@ -1535,23 +3227,62 @@ document.getElementById('fileInput').addEventListener('change', function(e){
   e.target.value = '';
 });
 document.getElementById('resetDefault').addEventListener('click', function(){
-  state.words = extractWords(DEFAULT_HQF);
-  state.meta = DEFAULT_HQF.meta || {};
-  state.customLoaded = false;
-  renderStart();
-  toast('بازگشت به سؤال‌های پیش‌فرض ↩');
+  selectPack('default', true);
+  toast('بازگشت به گنجینهٔ پیش‌فرض ↩');
   hakimReact('welcome');
 });
+
+document.querySelectorAll('.pack-btn').forEach(function(b){
+  b.addEventListener('click', function(){
+    ensureAudio();
+    selectPack(b.dataset.pack, false);
+  });
+});
+
+let tipIdx = 0, quoteIdx = 0;
+document.getElementById('btnSageTip').addEventListener('click', function(){
+  ensureAudio(); sfxType();
+  hakimSay(SAGE_TIPS[tipIdx++ % SAGE_TIPS.length], 'thinking', true);
+});
+document.getElementById('btnSageQuote').addEventListener('click', function(){
+  ensureAudio(); sfxType();
+  hakimSay(SAGE_QUOTES[quoteIdx++ % SAGE_QUOTES.length], 'wise', true);
+});
+
 let selectedLevel = 6;
 document.querySelectorAll('.level-btn').forEach(function(b){
   b.addEventListener('click', function(){
     selectedLevel = Number(b.dataset.lv);
+    state.level = selectedLevel;
     document.querySelectorAll('.level-btn').forEach(function(x){ x.classList.toggle('sel', x === b); });
+    applyChamberTheme(selectedLevel);
     ensureAudio();
+    sfxChamber((CHAMBERS[selectedLevel] || CHAMBERS[6]).idx);
+    hakimReact('chamber');
   });
 });
 
-/* دکمه‌های بازی */
+/* اتصال اطلس تالارها به موتور مسیر و مسافر HakimMapMotion با تم «قلمِ حکمت» */
+if(window.HakimMapMotion && typeof window.HakimMapMotion.watch === 'function'){
+  window.HakimMapMotion.watch({
+    key: 'jadval-hekmat-chambers',
+    container: '#levels',
+    item: '.level-btn',
+    done: function(el){
+      const lv = Number(el.dataset.lv || 6);
+      return lv < selectedLevel;
+    },
+    current: function(el){
+      return el.classList.contains('sel');
+    },
+    theme: 'qalam',
+    tag: 'قلمِ حکمت'
+  });
+}
+
+/* دکمه‌های صفحهٔ بازی */
+document.getElementById('prevWordBtn').addEventListener('click', function(){ ensureAudio(); nextWord(-1); });
+document.getElementById('nextWordBtn').addEventListener('click', function(){ ensureAudio(); nextWord(1); });
 document.getElementById('btnCheck').addEventListener('click', function(){ ensureAudio(); checkAnswers(); });
 document.getElementById('btnHint').addEventListener('click', function(){ ensureAudio(); revealHint(); });
 document.getElementById('btnHintTop').addEventListener('click', function(){ ensureAudio(); revealHint(); });
@@ -1559,6 +3290,7 @@ document.getElementById('btnRestart').addEventListener('click', function(){ ensu
 document.getElementById('btnHome').addEventListener('click', function(){ goHome(); });
 document.getElementById('btnMusic').addEventListener('click', function(){ ensureAudio(); toggleMusic(); });
 document.getElementById('btnNew').addEventListener('click', function(){ closeModal(); startGame(state.level); });
+document.getElementById('btnPrintCert').addEventListener('click', function(){ window.print(); });
 document.getElementById('btnHome2').addEventListener('click', function(){ closeModal(); goHome(); });
 document.getElementById('errClose').addEventListener('click', function(){ closeModal(); });
 document.getElementById('kbToggle').addEventListener('click', function(){
@@ -1568,17 +3300,15 @@ document.getElementById('kbToggle').addEventListener('click', function(){
 });
 document.getElementById('sysKb').addEventListener('click', function(){ ghost.focus(); });
 
-/* اولین تعامل کاربر → فعال‌سازی صدا و موسیقی */
 function firstInteraction(){
   ensureAudio();
   if(state.started) ensureMusic();
 }
 document.addEventListener('pointerdown', firstInteraction, { once:false, passive:true });
 document.addEventListener('keydown', function(){ ensureAudio(); }, { passive:true });
-
 window.addEventListener('resize', function(){ if(state.started) recalcCellSize(); });
 
-  /* 📥 لود کلمات از پنل معلم */
+/* 📥 لود کلمات از پنل معلم */
 function loadServerQuestions(callback){
   if(navigator.onLine === false){
     if(callback) callback();
@@ -1597,7 +3327,8 @@ function loadServerQuestions(callback){
         if(words && words.length >= 3){
           state.words = words;
           state.customLoaded = true;
-          state.meta = { title: 'جدول حکمت (از پنل معلم)', subject: 'عمومی', grade: '' };
+          state.meta = { title: 'جدول حکمت (از پنل معلم)', subject: 'پنل معلم', grade: '' };
+          document.querySelectorAll('.pack-btn').forEach(function(b){ b.classList.remove('active'); });
         }
       }
       if(callback && document.getElementById('metaTitle')) callback();
@@ -1609,34 +3340,35 @@ function loadServerQuestions(callback){
 
 (function initJadvalTheme(){
   const btns = [document.getElementById('btnThemeStart'), document.getElementById('btnTheme')].filter(Boolean);
-  const apply = (th) => {
+  const apply = function(th){
     const dark = th === 'dark';
     document.body.dataset.theme = dark ? 'dark' : 'light';
-    btns.forEach((b) => {
+    btns.forEach(function(b){
       b.textContent = dark ? '☀️' : '🌙';
       b.setAttribute('aria-pressed', dark ? 'true' : 'false');
     });
+    applyClueBadgeColors();
   };
   let saved = 'light';
   try{ saved = localStorage.getItem('hakim_jadval_theme') || 'light'; }catch(e){}
   apply(saved);
-  btns.forEach((b) => b.addEventListener('click', function(){
-    ensureAudio();
-    const nxt = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
-    try{ localStorage.setItem('hakim_jadval_theme', nxt); }catch(e){}
-    apply(nxt);
-  }));
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      ensureAudio();
+      const nxt = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+      try{ localStorage.setItem('hakim_jadval_theme', nxt); }catch(e){}
+      apply(nxt);
+    });
+  });
 })();
 
 /* ================================================================== */
 /* ۱۳) شروع اولیه                                                     */
 /* ================================================================== */
-state.words = extractWords(DEFAULT_HQF);
-state.meta = DEFAULT_HQF.meta || {};
-renderStart();
+applyChamberTheme(6);
+selectPack('default', true);
 hakimReact('welcome');
-  
-// در پس‌زمینه، کلمات رو از پنل معلم بگیر
+
 loadServerQuestions(function(){
   renderStart();
 });
@@ -1648,7 +3380,7 @@ loadServerQuestions(function(){
   try {
     var API = 'https://script.google.com/macros/s/AKfycbztmPYCnyvlIpAlwC68yp6mLbUHbGKy6TA0875h_RK3CIN9h1lG5Uk_vrG28P1LbYgE/exec';
 
-    if (localStorage.getItem('hk_no_stats') === '1') return; // انصراف از آمار بازدید (صفحهٔ حریم خصوصی)
+    if (localStorage.getItem('hk_no_stats') === '1') return;
     var userId = localStorage.getItem('hk_uid');
     var isNew = false;
     if (!userId) {
