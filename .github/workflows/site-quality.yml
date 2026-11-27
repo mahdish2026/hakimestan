@@ -15,24 +15,37 @@ jobs:
         run: npm install --no-save --package-lock=false --ignore-scripts jsdom@26.1.0 puppeteer-core@24.43.1 axe-core@4.14.1
       - name: Check offline policies, accessibility settings and install metadata
         run: |
-          node tests/sw-cache-policy.cjs
-          node tests/offline-page.cjs
-          node tests/pwa-a11y.cjs
-          node tests/site-metadata.cjs
-          node tests/math-school-cards.cjs
-          node tests/math-time-mission-audio.cjs
-          node tests/phase1-quality-gates.cjs
-          node tests/math-phase2-games.cjs
-          node tests/phase3-general-games.cjs
-          node tests/payamresan-outbox.cjs
-          node tests/teacher-panel-wiring.cjs
-          node tests/phase4-teacher-showcase.cjs
-          node tests/phase5-curriculum-expansion.cjs
-          node tests/cert-credit.cjs
-          node tests/site-review-fixes.cjs
-          node tests/csp-hardening.cjs
-          node tests/kohan-map.cjs
-          node tests/hakim-core.cjs
+          run_test() {
+            if node "$1" >/tmp/workspace-test.log 2>&1; then
+              cat /tmp/workspace-test.log
+            else
+              cat /tmp/workspace-test.log
+              message=$(tail -c 10000 /tmp/workspace-test.log)
+              message="${message//'%'/'%25'}"
+              message="${message//$'\n'/'%0A'}"
+              message="${message//$'\r'/'%0D'}"
+              printf '::error file=%s::%s\n' "$1" "$message"
+              return 1
+            fi
+          }
+          run_test tests/sw-cache-policy.cjs
+          run_test tests/offline-page.cjs
+          run_test tests/pwa-a11y.cjs
+          run_test tests/site-metadata.cjs
+          run_test tests/math-school-cards.cjs
+          run_test tests/math-time-mission-audio.cjs
+          run_test tests/phase1-quality-gates.cjs
+          run_test tests/math-phase2-games.cjs
+          run_test tests/phase3-general-games.cjs
+          run_test tests/payamresan-outbox.cjs
+          run_test tests/teacher-panel-wiring.cjs
+          run_test tests/phase4-teacher-showcase.cjs
+          run_test tests/phase5-curriculum-expansion.cjs
+          run_test tests/cert-credit.cjs
+          run_test tests/site-review-fixes.cjs
+          run_test tests/csp-hardening.cjs
+          run_test tests/kohan-map.cjs
+          run_test tests/hakim-core.cjs
       - name: Check public pages on Chromium
         env:
           SITE_AXE: '1'
@@ -50,3 +63,43 @@ jobs:
           node tests/darsgah-tools-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
           node tests/studio-dossier-layout-browser.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
           node tests/teacher-dashboard-security.cjs 2> >(while IFS= read -r line; do printf '::error::%s\n' "$line"; done)
+  workspace-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Install workspace test dependencies
+        run: npm install --no-save --package-lock=false --ignore-scripts jsdom@26.1.0 puppeteer-core@24.43.1
+      - name: Test teacher and messenger behaviour with mocked APIs
+        run: |
+          run_test() {
+            if node "$1" >/tmp/workspace-test.log 2>&1; then
+              cat /tmp/workspace-test.log
+            else
+              cat /tmp/workspace-test.log
+              message=$(tail -c 10000 /tmp/workspace-test.log)
+              message="${message//'%'/'%25'}"
+              message="${message//$'\n'/'%0A'}"
+              message="${message//$'\r'/'%0D'}"
+              printf '::error file=%s::%s\n' "$1" "$message"
+              return 1
+            fi
+          }
+          run_test tests/teacher-workspace.cjs
+          run_test tests/teacher-panel-geometry.cjs
+          run_test tests/teacher-panel-math-decimals.cjs
+          run_test tests/payamresan-v4-features.cjs
+          run_test tests/messenger-workspace.cjs
+          run_test tests/payamresan-v5.cjs
+      - name: Test workspace layouts and real navigation on Chromium
+        run: |
+          export CHROME_PATH="$(command -v google-chrome)"
+          node tools/serve.cjs 8000 127.0.0.1 >/tmp/workspace-server.log 2>&1 &
+          trap 'kill $!' EXIT
+          curl -fsS --retry 5 --retry-connrefused http://localhost:8000/ -o /dev/null
+          node tests/teacher-workspace-browser.cjs
+          node tests/messenger-studio-browser.cjs
+          node tests/messenger-workspace-browser.cjs

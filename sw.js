@@ -14,7 +14,7 @@
 
 'use strict';
 
-const VERSION = 'hakim-v1.5.103';
+const VERSION = 'hakim-v1.5.107';
 const SHELL_CACHE = `${VERSION}-shell`;
 const PAGES_CACHE = `${VERSION}-pages`;
 const ASSETS_CACHE = `${VERSION}-assets`;
@@ -182,7 +182,12 @@ const PREFETCH_PAGES = [
   './darsgah.html',
   './hqf-converter.html',
   './payamresan.html',
+  './css/messenger-workspace.css',
+  './assets/messenger/conversation-orbit.svg',
+  './assets/messenger/stardust.svg',
   './panels/teacher.html',
+  './css/teacher-workspace.css',
+  './assets/teacher/learning-garden.svg',
   './404.html',
   './assessment/decimals-check.html'
 ];
