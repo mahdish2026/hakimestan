@@ -20,140 +20,198 @@
 <style>
 *,*::before,*::after{box-sizing:border-box}
 :root{
-  --bg:#eef3fa; --bg2:#e2ebf7;
-  --surface:rgba(255,255,255,.92); --surface-solid:#ffffff;
-  --ink:#132238; --muted:#475872;
-  --amber:#d98b16; --amber2:#c26f0d;
-  --teal:#0d8273; --sky:#1e6fb3; --leaf:#2d852d;
-  --rose:#c43b59; --violet:#654cd6; --sand:#9a6c28;
-  --line:rgba(19,34,56,.16);
-  --radius:18px;
+  --bg:#f1f6fb; --bg2:#e4edf7;
+  --surface:#ffffff; --surface-2:#f5f9fd; --surface-3:#eaf1f9; --glass:rgba(255,255,255,.80);
+  --surface-solid:#ffffff;
+  --ink:#0f2238; --ink2:#2c3f5c; --muted:#4f6280;
+  --amber:#e08a0c; --amber2:#b86605; --amber-ink:#8a4d05;
+  --teal:#0b8577; --teal-ink:#0a6b60; --cyan:#0b7aa1; --sky:#1e6fb3; --leaf:#2d852d;
+  --rose:#c43b59; --rose-ink:#a92d49; --violet:#5f4cc4; --sand:#9a6c28;
+  --line:rgba(15,34,56,.13); --line-2:rgba(15,34,56,.22);
+  --hero1:#0c2840; --hero2:#0d4a58; --hero3:#163a6b;
+  --tube:rgba(120,170,210,.30); --tube-edge:rgba(70,120,170,.45);
+  --radius:20px;
   --step-0:clamp(.95rem,.9rem + .3vw,1.06rem);
   --step-1:clamp(1.1rem,1rem + .7vw,1.4rem);
   --step-2:clamp(1.4rem,1.15rem + 1.4vw,2.1rem);
   --step-3:clamp(1.9rem,1.4rem + 2.6vw,3.1rem);
-  --shadow:0 1px 2px rgba(19,40,70,.10),0 16px 34px -22px rgba(19,40,70,.30);
+  --shadow:0 1px 2px rgba(15,40,70,.08),0 18px 36px -24px rgba(15,40,70,.38);
+  --shadow-lg:0 2px 4px rgba(15,40,70,.08),0 30px 60px -30px rgba(15,40,70,.45);
   --font-display:"Lalezar","Vazirmatn",Tahoma,sans-serif;
   --font-body:"Vazirmatn",Tahoma,"Iranian Sans",sans-serif;
+  color-scheme:light;
 }
 body[data-theme="dark"]{
-  --bg:#0d1424; --bg2:#152038;
-  --surface:rgba(22,33,56,.92); --surface-solid:#162138;
-  --ink:#eef4ff; --muted:#a9bad4;
-  --amber:#f5b74c; --amber2:#e29526;
-  --teal:#4de3cb; --sky:#62b5ff; --leaf:#6ee06e;
-  --rose:#ff7a98; --violet:#a692ff; --sand:#e3b76f;
-  --line:rgba(226,238,255,.16);
-  --shadow:0 2px 6px rgba(0,0,0,.4),0 18px 38px -20px rgba(0,0,0,.65);
-  background-color:#0d1424;
+  --bg:#09121f; --bg2:#0e1a2c;
+  --surface:#121f34; --surface-2:#0f1b2e; --surface-3:#172741; --glass:rgba(18,31,52,.82);
+  --surface-solid:#121f34;
+  --ink:#ecf3ff; --ink2:#c9d7ec; --muted:#9fb1cc;
+  --amber:#f6b545; --amber2:#e8970f; --amber-ink:#ffcf7a;
+  --teal:#3fd8c2; --teal-ink:#5fe6d1; --cyan:#5cc8f0; --sky:#6bb8ff; --leaf:#72de72;
+  --rose:#ff7d9a; --rose-ink:#ff9cb2; --violet:#a996ff; --sand:#e3b76f;
+  --line:rgba(226,238,255,.13); --line-2:rgba(226,238,255,.24);
+  --hero1:#081a2c; --hero2:#0a3442; --hero3:#13284d;
+  --tube:rgba(120,180,230,.16); --tube-edge:rgba(150,200,240,.32);
+  --shadow:0 2px 6px rgba(0,0,0,.35),0 18px 38px -20px rgba(0,0,0,.7);
+  --shadow-lg:0 2px 8px rgba(0,0,0,.4),0 30px 60px -28px rgba(0,0,0,.8);
+  background-color:#09121f;
+  color-scheme:dark;
 }
-body[data-theme="dark"]::before{
-  background:
-    radial-gradient(1100px 700px at 82% -12%, rgba(242,166,59,.14), transparent 62%),
-    radial-gradient(900px 620px at 6% 6%, rgba(47,143,216,.16), transparent 60%),
-    radial-gradient(900px 720px at 50% 112%, rgba(124,99,232,.14), transparent 62%),
-    linear-gradient(180deg,#0b1220,#101a2e 45%,#0d1424);
-}
-body[data-theme="dark"] .card,
-body[data-theme="dark"] .exp-card,
-body[data-theme="dark"] .quiz-card,
-body[data-theme="dark"] .bubble,
-body[data-theme="dark"] .taskbar{background:var(--surface);color:var(--ink);border-color:var(--line)}
-body[data-theme="dark"] .field input{background:#0f182a;color:#eef4ff;border-color:rgba(226,238,255,.22)}
-body[data-theme="dark"] .btn.ghost{background:rgba(255,255,255,.08);color:#eef4ff;border-color:rgba(255,255,255,.2)}
-body[data-theme="dark"] .chip{background:rgba(255,255,255,.08);color:#eef4ff;border-color:rgba(255,255,255,.16)}
-body[data-theme="dark"] .opt{background:#101b30;color:#eef4ff;border-color:rgba(255,255,255,.18)}
-body[data-theme="dark"] #result-msg{color:#dbe7fb!important}
 html,body{margin:0;padding:0;overflow-x:clip}
 body{
   font-family:var(--font-body);font-size:var(--step-0);
-  background-color:#eef3fa;background:var(--bg);color:var(--ink);line-height:1.9;
+  background-color:#f1f6fb;background:var(--bg);color:var(--ink);line-height:1.9;
   min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
+body::before{
+  content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;
+  background:
+    radial-gradient(1000px 640px at 88% -10%, rgba(240,160,40,.16), transparent 62%),
+    radial-gradient(900px 600px at 4% 4%, rgba(20,140,170,.16), transparent 60%),
+    radial-gradient(900px 700px at 50% 115%, rgba(96,80,200,.10), transparent 62%),
+    linear-gradient(180deg,#f7fbff,#edf4fb 50%,#f1f6fb);
+}
+body[data-theme="dark"]::before{
+  background:
+    radial-gradient(1000px 640px at 88% -10%, rgba(240,160,40,.12), transparent 62%),
+    radial-gradient(900px 600px at 4% 4%, rgba(40,170,200,.14), transparent 60%),
+    radial-gradient(900px 700px at 50% 115%, rgba(120,100,230,.14), transparent 62%),
+    linear-gradient(180deg,#08111d,#0c1828 50%,#09121f);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.55;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(30,100,160,.20) 1px, transparent 1.3px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%);
+}
+body[data-theme="dark"]::after{background-image:radial-gradient(circle at 1px 1px, rgba(140,200,255,.16) 1px, transparent 1.3px)}
+/* حباب‌های شناورِ پس‌زمینه */
+.lab-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.lab-bg i{position:absolute;bottom:-60px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.95),rgba(150,210,240,.35) 45%,rgba(90,170,220,.10) 70%);
+  border:1px solid rgba(80,150,200,.25);animation:bgRise linear infinite;opacity:.55}
+body[data-theme="dark"] .lab-bg i{background:radial-gradient(circle at 32% 30%,rgba(200,240,255,.55),rgba(90,170,220,.18) 50%,transparent 72%);border-color:rgba(140,200,240,.18)}
+.lab-bg i:nth-child(1){left:6%;width:26px;height:26px;animation-duration:19s}
+.lab-bg i:nth-child(2){left:18%;width:12px;height:12px;animation-duration:13s;animation-delay:-6s}
+.lab-bg i:nth-child(3){left:33%;width:18px;height:18px;animation-duration:22s;animation-delay:-11s}
+.lab-bg i:nth-child(4){left:52%;width:10px;height:10px;animation-duration:15s;animation-delay:-3s}
+.lab-bg i:nth-child(5){left:67%;width:30px;height:30px;animation-duration:25s;animation-delay:-14s}
+.lab-bg i:nth-child(6){left:80%;width:14px;height:14px;animation-duration:17s;animation-delay:-8s}
+.lab-bg i:nth-child(7){left:92%;width:20px;height:20px;animation-duration:21s;animation-delay:-2s}
+@keyframes bgRise{0%{transform:translate(0,0);opacity:0}10%{opacity:.55}50%{transform:translate(18px,-55vh)}90%{opacity:.4}100%{transform:translate(-10px,-112vh);opacity:0}}
+
 @media (max-width:380px){
   .screen{padding:10px 8px 96px}
   .btn{padding:.7rem 1.05rem;font-size:.9rem}
-  .hud{gap:.35rem;flex-wrap:wrap}
-  .chip{font-size:.78rem;padding:.3rem .55rem}
-  .lobby-actions{gap:.45rem}
-}
-body::before{
-  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:
-    radial-gradient(1100px 700px at 82% -12%, rgba(242,166,59,.20), transparent 62%),
-    radial-gradient(900px 620px at 6% 6%, rgba(47,143,216,.16), transparent 60%),
-    radial-gradient(900px 720px at 50% 112%, rgba(124,99,232,.10), transparent 62%),
-    linear-gradient(180deg,#f7fbff,#e9f1fa 45%,#eef4fb);
-}
-body::after{
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.6;
-  background-image:
-    linear-gradient(rgba(47,143,216,.10) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(47,143,216,.10) 1px, transparent 1px);
-  background-size:34px 34px;
 }
 h1,h2,h3{font-family:var(--font-display);font-weight:400;line-height:1.35;letter-spacing:0;margin:0}
 h1{font-size:var(--step-3)}
 h2{font-size:var(--step-2)}
 p{margin:.4em 0}
 img{max-width:100%}
+.ico{width:1.15em;height:1.15em;flex:none;display:inline-block;vertical-align:-.2em}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* ---------- screens ---------- */
-.screen{display:none;min-height:100vh;padding:clamp(14px,3vw,34px) clamp(14px,3vw,30px) 120px}
-.screen.active{display:block;animation:fadeUp .5s ease both}
+.screen{display:none;min-height:100vh;padding:clamp(14px,3vw,34px) clamp(12px,3vw,30px) 120px}
+.screen.active{display:block;animation:fadeUp .5s cubic-bezier(.2,.8,.2,1) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.wrap{max-width:1060px;margin:0 auto}
-.wrap.narrow{max-width:640px}
+.wrap{max-width:1100px;margin:0 auto}
+.wrap.narrow{max-width:680px}
 
 /* ---------- buttons ---------- */
 .btn{
   font-family:var(--font-body);font-weight:800;font-size:var(--step-0);
-  border:0;cursor:pointer;border-radius:999px;padding:.85rem 1.6rem;color:#101a2b;
-  background:linear-gradient(180deg,#e9a71f,var(--amber2));
-  box-shadow:0 12px 26px -14px rgba(255,140,40,.95), inset 0 1px 0 rgba(255,255,255,.65);
-  transition:transform .15s ease, box-shadow .2s ease, filter .2s;
-  display:inline-flex;align-items:center;gap:.5rem;justify-content:center;
+  border:0;cursor:pointer;border-radius:999px;padding:.8rem 1.5rem;color:#1d1204;
+  background:linear-gradient(180deg,#f7b733,#e08a0c);
+  box-shadow:0 12px 24px -14px rgba(224,120,12,.95), inset 0 1px 0 rgba(255,255,255,.6), inset 0 -2px 0 rgba(120,60,0,.18);
+  transition:transform .15s ease, box-shadow .2s ease, filter .2s, background .2s;
+  display:inline-flex;align-items:center;gap:.5rem;justify-content:center;line-height:1.5;text-decoration:none;
 }
 .btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
 .btn:active{transform:translateY(0) scale(.98)}
 .btn:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.5);transform:none;box-shadow:none}
-.btn.ghost{background:rgba(19,34,56,.05);color:var(--ink);border:1px solid var(--line);box-shadow:none;font-weight:600}
-.btn.ghost:hover{background:rgba(19,34,56,.09)}
-.btn.teal{background:linear-gradient(180deg,#86f2e4,var(--teal))}
-.btn.small{padding:.5rem 1.05rem;font-size:.85rem}
+.btn.ghost{background:var(--glass);color:var(--ink);border:1px solid var(--line-2);box-shadow:0 6px 16px -14px rgba(15,40,70,.5);font-weight:700}
+.btn.ghost:hover{background:var(--surface)}
+.btn.teal{background:linear-gradient(180deg,#2bc4ae,#0b8577);color:#fff;box-shadow:0 12px 24px -14px rgba(11,133,119,.95), inset 0 1px 0 rgba(255,255,255,.45)}
+.btn.small{padding:.5rem 1rem;font-size:.85rem}
+.btn.btn-lg{padding:1rem 2rem;font-size:1.12rem}
 .btn.block{width:100%}
+.btn .ico{width:1.2em;height:1.2em}
 :focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:12px}
 
 .card{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  padding:clamp(16px,3vw,30px);
+  box-shadow:var(--shadow);padding:clamp(16px,3vw,30px);
 }
 .pill{
-  display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:600;
-  padding:.3rem .8rem;border-radius:999px;border:1px solid var(--line);
-  background:color-mix(in oklab, var(--h,#ffb547) 16%, transparent);
-  color:color-mix(in oklab, var(--h,#ffb547) 78%, white);
+  display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:700;
+  padding:.28rem .8rem;border-radius:999px;border:1px solid color-mix(in oklab, var(--h,#e08a0c) 40%, transparent);
+  background:color-mix(in oklab, var(--h,#e08a0c) 13%, var(--surface));
+  color:color-mix(in oklab, var(--h,#e08a0c) 40%, var(--ink));
 }
+.kicker{display:inline-flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:800;letter-spacing:.01em;color:var(--teal-ink)}
+.kicker::before{content:"";width:22px;height:2px;border-radius:2px;background:currentColor;opacity:.7}
 .muted{color:var(--muted)}
 .center{text-align:center}
 
-/* ---------- forms ---------- */
-.field{display:block;margin:0 0 1rem}
-.field span{display:block;font-weight:600;font-size:.9rem;margin-bottom:.35rem;color:#33445f}
-.field input{
-  width:100%;padding:.85rem 1rem;border-radius:14px;border:1px solid var(--line);
-  background:#ffffff;border:1px solid var(--line);color:var(--ink);font-family:var(--font-body);font-size:var(--step-0);
-  transition:border-color .2s, box-shadow .2s;
-}
-.field input:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 4px rgba(92,200,255,.18)}
-.field .req{color:var(--rose)}
-.err{color:#b93a58;font-size:.85rem;min-height:1.2em;font-weight:600}
+/* ---------- entry ---------- */
+.entry{display:grid;place-items:center;min-height:calc(100vh - 160px)}
+.entry-card{position:relative;overflow:hidden;width:100%;display:grid;gap:clamp(16px,3vw,36px);align-items:center;
+  grid-template-columns:minmax(0,1fr);padding:clamp(20px,4vw,48px);border-radius:32px;
+  background:linear-gradient(140deg,var(--hero1),var(--hero2) 55%,var(--hero3));color:#eef6ff;box-shadow:var(--shadow-lg);isolation:isolate}
+.entry-card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
+  background-image:radial-gradient(circle at 1px 1px, rgba(180,230,255,.22) 1px, transparent 1.4px);background-size:22px 22px}
+.entry-card::after{content:"";position:absolute;z-index:-1;width:520px;height:520px;left:-160px;bottom:-260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,170,50,.35),transparent 65%)}
+@media(min-width:860px){.entry-card{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}}
+.entry-card .kicker{color:#7ee8d6}
+.entry-title{font-size:clamp(2.2rem,1.4rem + 3.6vw,3.8rem);line-height:1.25;margin:.35rem 0 .3rem;color:#fff}
+.entry-title span{background:linear-gradient(90deg,#ffd27a,#ff9f43);-webkit-background-clip:text;background-clip:text;color:transparent}
+.entry-hello{font-size:1.08rem;color:#d7e7f7;max-width:34em}
+.entry-hello b{color:#ffd88f}
+.entry-feats{list-style:none;padding:0;margin:1rem 0 1.4rem;display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.entry-feats li{display:flex;align-items:center;gap:.55rem;font-size:.9rem;font-weight:600;color:#e6f1fb;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:.5rem .7rem}
+.entry-feats li .ico{color:#7ee8d6;width:1.3em;height:1.3em}
+.entry-actions{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.entry-card .btn.ghost{background:rgba(255,255,255,.08);color:#eef6ff;border-color:rgba(255,255,255,.22)}
+.entry-card .btn.ghost:hover{background:rgba(255,255,255,.16)}
+.entry-art{position:relative;display:grid;place-items:center}
+.entry-art svg{width:min(460px,100%);height:auto;overflow:visible}
 
-/* ---------- intro ---------- */
-.stage-intro{display:grid;grid-template-columns:minmax(0,1fr);gap:1.2rem;align-items:center;justify-items:center}
-.char-svg{width:min(280px,62vw);filter:drop-shadow(0 24px 34px rgba(19,40,70,.25))}
-.hakim-core-hero{width:min(310px,70vw);height:min(310px,70vw);display:grid;place-items:center;border-radius:50%;padding:4px;background:radial-gradient(circle at 42% 28%,#ffffff,#e9f1fb 60%,#dbe7f7);box-shadow:0 0 0 1px rgba(19,34,56,.10),0 0 34px rgba(242,166,59,.20),inset 0 0 26px rgba(19,40,70,.08);overflow:visible}
+/* ---------- SVG scene motion (shared) ---------- */
+.bub{animation:bubUp 2.8s ease-in infinite;transform-box:fill-box;transform-origin:center}
+.bub:nth-of-type(2n){animation-duration:3.4s;animation-delay:-1.2s}
+.bub:nth-of-type(3n){animation-duration:2.3s;animation-delay:-.6s}
+@keyframes bubUp{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.95}100%{transform:translateY(-70px) scale(1.1);opacity:0}}
+.liq-wave{animation:wave 3.2s ease-in-out infinite}
+@keyframes wave{0%,100%{transform:translateX(0)}50%{transform:translateX(-14px)}}
+.flame-outer{transform-box:fill-box;transform-origin:50% 100%;animation:flameFlick 1.25s ease-in-out infinite}
+.flame-inner{transform-box:fill-box;transform-origin:50% 100%;animation:flameFlick 1s ease-in-out infinite reverse}
+@keyframes flameFlick{0%,100%{transform:scale(1,1) skewX(0)}25%{transform:scale(.96,1.05) skewX(2deg)}50%{transform:scale(1.03,.97) skewX(-1.5deg)}75%{transform:scale(.98,1.04) skewX(1deg)}}
+.chera-eyes{transform-box:fill-box;transform-origin:center;animation:eyeBlink 4.2s infinite}
+@keyframes eyeBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.chera-bob{animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.glow-pulse{animation:glowPulse 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes glowPulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.9;transform:scale(1.08)}}
+.spark{animation:sparkTw 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.spark:nth-of-type(2n){animation-delay:-1.1s}
+@keyframes sparkTw{0%,100%{opacity:.2;transform:scale(.5)}50%{opacity:1;transform:scale(1.1)}}
+
+/* ---------- intro (Hakim / Cheraghak) ---------- */
+.intro-stage{position:relative;overflow:hidden;border-radius:30px;padding:clamp(18px,3.5vw,40px);
+  background:linear-gradient(160deg,var(--surface),var(--surface-2));border:1px solid var(--line);box-shadow:var(--shadow-lg);
+  display:grid;gap:clamp(14px,3vw,34px);align-items:center;grid-template-columns:minmax(0,1fr);justify-items:center;isolation:isolate}
+@media(min-width:860px){.intro-stage{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);justify-items:stretch}}
+.intro-stage .shelf{position:absolute;inset:0;z-index:-1;opacity:.9;pointer-events:none}
+.intro-stage .shelf svg{position:absolute;left:0;right:0;top:0;width:100%;height:100%}
+.intro-who{display:grid;justify-items:center;gap:.6rem}
+.char-svg{width:min(280px,62vw);filter:drop-shadow(0 24px 30px rgba(15,40,70,.25))}
+.hakim-core-hero{width:min(300px,66vw);height:min(300px,66vw);display:grid;place-items:center;border-radius:50%;padding:4px;
+  background:radial-gradient(circle at 42% 28%,#ffffff,#e6f0fb 60%,#d3e3f5);box-shadow:0 0 0 6px rgba(255,255,255,.6),0 0 0 7px var(--line),0 0 50px rgba(240,160,40,.25),inset 0 0 26px rgba(15,40,70,.08);overflow:visible}
 .hakim-core-hero svg{width:100%;height:100%;display:block;overflow:visible}
 .hakim-core-hero .hk-body{transform-box:fill-box;transform-origin:50% 100%;animation:labHakimBreath 4.2s ease-in-out infinite}
 .hakim-core-hero .hk-eyes{transform-box:fill-box;transform-origin:center;animation:labHakimBlink 4.8s infinite}
@@ -164,144 +222,323 @@ img{max-width:100%}
 @keyframes labHakimHat{0%,100%{transform:rotate(0)}45%{transform:rotate(-2deg)}70%{transform:rotate(2deg)}}
 @keyframes labHakimTwinkle{0%,100%{transform:scale(.4);opacity:.25}50%{transform:scale(1.15);opacity:1}}
 #hakim-fig{animation:sway 4.5s ease-in-out infinite}
-@keyframes sway{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+@keyframes sway{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+.who-tag{font-family:var(--font-display);font-size:1.25rem;color:var(--amber-ink);display:inline-flex;align-items:center;gap:.4rem;position:relative;z-index:2;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.2rem .85rem;box-shadow:var(--shadow-sm,0 4px 12px -6px rgba(15,34,56,.25))}
+.who-tag small{font-family:var(--font-body);font-size:.78rem;font-weight:700;color:var(--muted)}
 .bubble{
-  position:relative;background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(232,240,255,.95));
-  color:#12203a;border-radius:20px;padding:1.1rem 1.3rem;max-width:560px;width:100%;
-  box-shadow:var(--shadow);min-height:96px;font-weight:600;
+  position:relative;background:var(--surface);color:var(--ink);border:1px solid var(--line);
+  border-radius:24px;padding:1.2rem 1.4rem;width:100%;max-width:600px;box-shadow:var(--shadow);min-height:120px;font-weight:600;font-size:1.05rem
 }
-.bubble::after{content:"";position:absolute;bottom:-12px;right:44px;width:24px;height:24px;
-  background:rgba(232,240,255,.95);transform:rotate(45deg);border-radius:4px}
+.bubble::after{content:"";position:absolute;top:-11px;right:50%;width:22px;height:22px;background:var(--surface);
+  border-left:1px solid var(--line);border-top:1px solid var(--line);transform:translateX(50%) rotate(45deg);border-radius:4px 0 0 0}
+@media(min-width:860px){.bubble::after{top:46px;right:-11px;transform:rotate(135deg)}}
 .typer{min-height:3.6em}
+.typer div{animation:lineIn .35s ease both}
+@keyframes lineIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .cursor{display:inline-block;width:.6ch;animation:blink 1s steps(1) infinite;color:var(--amber2)}
 @keyframes blink{50%{opacity:0}}
-.intro-actions{margin-top:1.1rem;display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.intro-actions{margin-top:1.1rem;display:flex;gap:.55rem;flex-wrap:wrap}
+.intro-dots{display:flex;gap:.35rem;justify-content:center;margin-top:1rem}
+.intro-dots i{width:9px;height:9px;border-radius:9px;background:var(--line-2);transition:width .3s,background .3s}
+.intro-dots i.on{width:26px;background:var(--amber)}
 
-/* ---------- lobby ---------- */
-.lobby-head{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:flex-end;margin-bottom:1.2rem}
-.brand h1{background:linear-gradient(90deg,#1b3a63,var(--amber2) 55%,var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand .sub{color:var(--muted);font-size:.95rem}
-.designer{display:inline-flex;align-items:center;gap:.4rem;margin-top:.25rem;font-size:.9rem;color:#8a5a12;font-weight:600}
-.designer b{font-family:var(--font-display);font-size:1.15rem;font-weight:400;color:#8a5a12}
-.hud{display:flex;gap:.5rem;flex-wrap:wrap}
-.hud .chip{display:flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--line);
-  border-radius:999px;padding:.45rem .9rem;font-size:.85rem;font-weight:600;box-shadow:var(--shadow)}
-.lobby-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+/* ---------- lobby hero ---------- */
+.lab-hero{position:relative;overflow:hidden;border-radius:30px;padding:clamp(18px,3.4vw,38px);color:#eef6ff;
+  background:linear-gradient(135deg,var(--hero1),var(--hero2) 55%,var(--hero3));box-shadow:var(--shadow-lg);isolation:isolate;
+  display:grid;gap:1.2rem;grid-template-columns:minmax(0,1fr);align-items:center}
+.lab-hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;background-image:radial-gradient(circle at 1px 1px, rgba(180,230,255,.2) 1px, transparent 1.4px);background-size:22px 22px}
+.lab-hero::after{content:"";position:absolute;z-index:-1;width:460px;height:460px;left:-120px;top:-220px;border-radius:50%;background:radial-gradient(circle,rgba(255,170,50,.28),transparent 65%)}
+@media(min-width:820px){.lab-hero{grid-template-columns:minmax(0,1fr) auto}}
+.lab-hero .kicker{color:#7ee8d6}
+.brand h1{color:#fff;margin:.2rem 0 .15rem;font-size:clamp(2rem,1.3rem + 3vw,3.3rem)}
+.brand h1 span{background:linear-gradient(90deg,#ffd27a,#ff9f43);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .hello{color:#d3e4f5;font-size:1rem;margin:.1rem 0 .1rem}
+.brand .hello b{color:#ffd88f}
+.designer{display:inline-flex;align-items:center;gap:.4rem;margin-top:.2rem;font-size:.85rem;color:#b9cde3;font-weight:600}
+.designer b{font-family:var(--font-display);font-size:1.08rem;font-weight:400;color:#ffd27a}
+.hud{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.hud .chip{display:inline-flex;align-items:center;gap:.45rem;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;padding:.45rem .8rem;font-size:.85rem;font-weight:600;color:#dbe9f7}
+.hud .chip b{font-family:var(--font-display);font-weight:400;font-size:1.15rem;color:#fff;line-height:1}
+.hud .chip .ico{color:#ffd27a}
+.hud .chip.c2 .ico{color:#7ee8d6}
+.hud .chip.c3 .ico{color:#b8a8ff}
+.hero-flask{display:grid;justify-items:center;gap:.2rem}
+.hero-flask svg{width:clamp(130px,16vw,170px);height:auto;overflow:visible}
+.hero-flask .cap{font-size:.78rem;font-weight:700;color:#b9cde3;text-align:center}
+.hero-flask .cap b{display:block;font-family:var(--font-display);font-weight:400;color:#fff;font-size:1.35rem;line-height:1.3}
+#heroLiquid{transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+
+/* ---------- section heads ---------- */
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:.8rem;flex-wrap:wrap;margin:1.8rem 0 .8rem}
+.sec-head h2{font-size:clamp(1.35rem,1.1rem + 1vw,1.8rem);display:flex;align-items:center;gap:.5rem}
+.sec-head h2 .ico{color:var(--teal);width:1.1em;height:1.1em}
+.sec-head p{margin:0;color:var(--muted);font-size:.88rem}
+
+/* ---------- glass circuit map ---------- */
+.lab-map{position:relative;border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);
+  background:linear-gradient(180deg,var(--surface),var(--surface-2))}
+.lab-map svg{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none}
+.lab-map .bench-dot{fill:var(--line-2)}
+.tube-edge{fill:none;stroke:var(--tube-edge);stroke-linecap:round;stroke-linejoin:round}
+.tube-glass{fill:none;stroke:var(--surface);stroke-linecap:round;stroke-linejoin:round}
+.tube-shine{fill:none;stroke:rgba(255,255,255,.75);stroke-linecap:round;stroke-linejoin:round}
+body[data-theme="dark"] .tube-shine{stroke:rgba(255,255,255,.12)}
+.tube-liquid{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tube-flow{fill:none;stroke:rgba(255,255,255,.95);stroke-linecap:round;stroke-dasharray:1.5 22;animation:tubeFlow 1.6s linear infinite}
+@keyframes tubeFlow{to{stroke-dashoffset:-47}}
+.st{cursor:pointer;outline:none}
+.st .st-hit{fill:transparent}
+.st .bulb-glass{fill:var(--surface);stroke:var(--tube-edge);stroke-width:2.5}
+.st .bulb-neck{fill:var(--surface);stroke:var(--tube-edge);stroke-width:2.5}
+.st .bulb-shine{fill:none;stroke:rgba(255,255,255,.9);stroke-width:3;stroke-linecap:round}
+body[data-theme="dark"] .st .bulb-shine{stroke:rgba(255,255,255,.22)}
+.st .st-ico{color:var(--ink2)}
+.st.done .st-ico{color:#fff}
+.st .st-num{font-family:var(--font-display);fill:#fff}
+.st .st-num-bg{stroke:var(--surface);stroke-width:3}
+.st .st-label{font-family:var(--font-body);font-weight:800;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.st .st-ring{fill:none;stroke-width:3;opacity:0;transition:opacity .25s}
+.st:hover .st-ring,.st:focus-visible .st-ring,.st.here .st-ring{opacity:1}
+.st:focus-visible .st-ring{stroke:var(--sky)!important;stroke-width:4;stroke-dasharray:none}
+.st.here .st-ring{stroke-dasharray:6 6;animation:ringSpin 6s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes ringSpin{to{transform:rotate(360deg)}}
+.st .st-body{transition:transform .25s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:50% 60%}
+.st:hover .st-body{transform:scale(1.07)}
+.st.boil .st-body{animation:boil .7s ease-in-out 2}
+@keyframes boil{0%,100%{transform:scale(1)}30%{transform:scale(1.1,.94)}60%{transform:scale(.96,1.08)}}
+.st .st-bubbles circle{opacity:0}
+.st.done .st-bubbles circle,.st.boil .st-bubbles circle{animation:stBub 2.4s ease-in infinite}
+.st .st-bubbles circle:nth-child(2){animation-delay:-.8s}
+.st .st-bubbles circle:nth-child(3){animation-delay:-1.6s}
+@keyframes stBub{0%{transform:translateY(0);opacity:0}20%{opacity:.9}100%{transform:translateY(-34px);opacity:0}}
+.map-star{fill:#f3b62b}
+.map-star.off{fill:var(--line-2)}
+#chera{pointer-events:none}
+#chera .trail circle{fill:#ffcf6b}
+.map-legend{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;padding:.6rem 1rem .9rem;font-size:.78rem;font-weight:700;color:var(--muted)}
+.map-legend span{display:inline-flex;align-items:center;gap:.35rem}
+.map-legend i{width:14px;height:14px;border-radius:50%;display:inline-block;border:2px solid var(--tube-edge)}
+.map-legend i.full{background:linear-gradient(180deg,#46d3c0,#0b8577);border-color:#0b8577}
+.map-legend i.fl{background:radial-gradient(circle at 50% 70%,#fff3b0,#ffb547 50%,#f5852a);border:0;border-radius:50% 50% 50% 50%/60% 60% 40% 40%}
+.map-status{position:absolute;top:12px;right:14px;left:14px;display:flex;justify-content:center;pointer-events:none}
+.map-status span{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border-radius:999px;padding:.3rem .9rem;font-size:.8rem;font-weight:700;color:var(--ink2);box-shadow:var(--shadow);opacity:0;transform:translateY(-6px);transition:.3s}
+.map-status span.show{opacity:1;transform:none}
+
+/* ---------- experiment cards ---------- */
+.lobby-grid{display:grid;gap:1rem;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.lobby-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.lobby-grid{grid-template-columns:1fr}}
 .exp-card{
-  position:relative;text-align:right;cursor:pointer;border:1px solid var(--line);border-radius:22px;
-  padding:1.15rem 1.15rem 1.3rem;background:linear-gradient(165deg,#ffffff,#eef4fb);
-  box-shadow:var(--shadow);overflow:hidden;transition:transform .22s ease, box-shadow .22s ease, border-color .22s;
-  display:flex;flex-direction:column;gap:.55rem;
+  position:relative;text-align:right;cursor:pointer;border:1px solid var(--line);border-radius:24px;
+  padding:1.1rem 1.1rem 1.1rem;background:var(--surface);
+  box-shadow:var(--shadow);overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, border-color .25s;
+  display:flex;flex-direction:column;gap:.5rem;isolation:isolate
 }
-.exp-card::before{content:"";position:absolute;inset:-40% 60% 40% -10%;
-  background:radial-gradient(circle,color-mix(in oklab,var(--h) 55%,transparent),transparent 68%);opacity:.5;transition:opacity .3s}
+.exp-card::before{content:"";position:absolute;inset:0 0 auto 0;height:86px;z-index:-1;
+  background:linear-gradient(135deg,color-mix(in oklab,var(--h) 26%,transparent),color-mix(in oklab,var(--h) 6%,transparent));}
+.exp-card::after{content:"";position:absolute;z-index:-1;width:140px;height:140px;left:-40px;top:-60px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in oklab,var(--h) 40%,transparent),transparent 70%);opacity:.6;transition:opacity .3s,transform .4s}
 .exp-card:hover{transform:translateY(-6px);border-color:color-mix(in oklab,var(--h) 55%,transparent);
-  box-shadow:0 26px 50px -30px color-mix(in oklab,var(--h) 60%,transparent)}
-.exp-card:hover::before{opacity:.85}
-.exp-ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;
-  background:color-mix(in oklab,var(--h) 18%,transparent);color:var(--h);border:1px solid color-mix(in oklab,var(--h) 40%,transparent)}
-.exp-ico svg{width:34px;height:34px}
-.exp-card h3{font-size:1.22rem;font-family:var(--font-display);font-weight:400}
-.exp-card .les{font-size:.8rem;color:var(--muted)}
-.exp-stars{margin-top:auto;display:flex;gap:.18rem;font-size:1.05rem;color:#e9a71f;letter-spacing:1px}
-.exp-card .done-badge{position:absolute;top:.9rem;left:.9rem;font-size:.72rem;font-weight:800;
-  background:color-mix(in oklab,var(--teal) 24%,transparent);color:#0f7f6e;border:1px solid rgba(47,214,192,.5);
-  padding:.2rem .55rem;border-radius:999px}
-.lobby-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.4rem}
+  box-shadow:0 28px 50px -30px color-mix(in oklab,var(--h) 70%,#000)}
+.exp-card:hover::after{opacity:1;transform:scale(1.25)}
+.exp-card:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.exp-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.exp-ico{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;position:relative;
+  background:var(--surface);color:color-mix(in oklab,var(--h) 72%,var(--ink));border:1px solid color-mix(in oklab,var(--h) 40%,transparent);
+  box-shadow:0 10px 20px -12px color-mix(in oklab,var(--h) 80%,#000)}
+.exp-ico svg{width:32px;height:32px}
+.exp-ico .n{position:absolute;bottom:-7px;left:-7px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--font-display);font-size:.85rem;color:#fff;background:color-mix(in oklab,var(--h) 70%,#0f2238);border:2px solid var(--surface)}
+.exp-tags{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem}
+.exp-type{font-size:.7rem;font-weight:800;padding:.18rem .55rem;border-radius:99px;background:var(--surface);border:1px solid var(--line);color:var(--ink2)}
+.exp-card .done-badge{display:inline-flex;align-items:center;gap:.25rem;font-size:.72rem;font-weight:800;
+  background:color-mix(in oklab,var(--teal) 16%,var(--surface));color:var(--teal-ink);border:1px solid color-mix(in oklab,var(--teal) 45%,transparent);
+  padding:.18rem .55rem;border-radius:999px}
+.exp-card .done-badge .ico{width:.95em;height:.95em}
+.exp-card h3{font-size:1.2rem;font-family:var(--font-display);font-weight:400;margin-top:.45rem}
+.exp-card .les{font-size:.78rem;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:.3rem}
+.exp-desc{color:var(--ink2);font-size:.8rem;line-height:1.75;min-height:2.8em}
+.exp-card-footer{display:flex;align-items:center;justify-content:space-between;gap:.55rem;margin-top:auto;padding-top:.55rem;border-top:1px dashed var(--line)}
+.exp-stars{display:flex;gap:.1rem}
+.exp-stars svg{width:18px;height:18px}
+.exp-start{display:inline-flex;align-items:center;gap:.3rem;font-size:.78rem;color:#fff;font-weight:800;white-space:nowrap;padding:.32rem .75rem;border-radius:99px;
+  background:color-mix(in oklab,var(--h) 70%,#0f2238);transition:gap .2s}
+.exp-card:hover .exp-start{gap:.55rem}
+.exp-start .ico{width:1em;height:1em}
+.lobby-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem;justify-content:center}
+.lobby-foot{margin-top:1.2rem;font-size:.82rem;text-align:center;color:var(--muted)}
+.lobby-foot a{color:var(--teal-ink);font-weight:700}
 
-/* ---------- lab ---------- */
-.lab-wrap{max-width:1120px;margin:0 auto}
-.lab-top{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;justify-content:space-between;margin-bottom:.9rem}
-.lab-title{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-.lab-title h2{font-size:clamp(1.25rem,1rem + 1.2vw,1.8rem)}
-.lab-hint{font-size:.88rem;color:#33445f;background:rgba(255,255,255,.92);border:1px solid var(--line);
-  border-radius:999px;padding:.45rem 1rem;max-width:100%}
-.lab-body{display:grid;gap:1rem;grid-template-columns:minmax(0,1fc)}
-@media(min-width:900px){.lab-body{grid-template-columns:minmax(0,1.55fr) minmax(260px,.85fr)}}
-.stage{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);
-  background:linear-gradient(180deg,#ffffff,#f1f7fd);box-shadow:var(--shadow)}
-.stage canvas{display:block;width:100%;height:auto;touch-action:manipulation}
-.taskbar{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:1rem;
-  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.8rem;backdrop-filter:blur(10px)}
-.taskbar h3{font-size:1.05rem;font-family:var(--font-display);color:#8a5a12}
-.ctrl{display:flex;flex-direction:column;gap:.35rem}
-.ctrl label{font-size:.85rem;font-weight:600;color:#33445f;display:flex;justify-content:space-between;gap:.5rem}
-input[type=range]{width:100%;accent-color:var(--amber);height:26px}
+/* ---------- lab bench ---------- */
+.lab-wrap{max-width:1180px;margin:0 auto}
+.bench-head{display:flex;flex-wrap:wrap;gap:.8rem 1rem;align-items:center;justify-content:space-between;margin-bottom:1rem;
+  background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:.7rem .9rem;box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.lab-title{display:flex;align-items:center;gap:.75rem;min-width:0;flex:1}
+.bench-ico{width:52px;height:52px;flex:none;border-radius:16px;display:grid;place-items:center;color:#fff;
+  background:linear-gradient(145deg,color-mix(in oklab,var(--h,#0b8577) 85%,#fff),color-mix(in oklab,var(--h,#0b8577) 80%,#0f2238));
+  box-shadow:0 10px 20px -10px color-mix(in oklab,var(--h,#0b8577) 90%,#000)}
+.bench-ico svg{width:30px;height:30px}
+.lab-title-copy{min-width:0}
+.lab-title-copy .k{font-size:.74rem;font-weight:800;color:var(--muted);display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
+.lab-title h2{font-size:clamp(1.2rem,1rem + 1.1vw,1.75rem);line-height:1.4}
+.lab-hint{font-size:.85rem;color:var(--ink2);margin:0;line-height:1.7}
+.lab-body{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr);align-items:start}
+@media(min-width:900px){.lab-body{grid-template-columns:minmax(0,1.6fr) minmax(280px,.9fr)}}
+.stage-col{display:grid;gap:.8rem}
+@media(min-width:900px){.stage-col{position:sticky;top:12px}}
+.stage{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);
+  background:var(--surface);box-shadow:var(--shadow-lg)}
+.stage-bar{display:flex;align-items:center;gap:.6rem;padding:.55rem .9rem;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,var(--surface-2),var(--surface));font-size:.78rem;font-weight:800;color:var(--muted)}
+.stage-bar .dots{display:flex;gap:.3rem}
+.stage-bar .dots i{width:10px;height:10px;border-radius:50%;background:#ff6b6b}
+.stage-bar .dots i:nth-child(2){background:#ffc145}
+.stage-bar .dots i:nth-child(3){background:#2ecc8f}
+.stage-bar .live{margin-inline-start:auto;display:inline-flex;align-items:center;gap:.35rem;color:var(--teal-ink)}
+.stage-bar .live::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;animation:livePulse 1.6s ease-in-out infinite}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.3}}
+.stage canvas{display:block;width:100%;height:auto;touch-action:none;background:#fff}
+.stage-foot{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.stage-foot .tip{font-size:.8rem;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:.35rem}
+.taskbar{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:1rem;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:.8rem;color:var(--ink)}
+.taskbar h3{font-size:1.05rem;font-family:var(--font-display);color:var(--amber-ink);display:flex;align-items:center;gap:.45rem;margin-top:.3rem}
+.taskbar h3::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.taskbar h3 .ico{width:1.5rem;height:1.5rem;padding:.22rem;border-radius:8px;background:var(--amber-soft,rgba(255,181,71,.18));color:var(--amber-ink);flex:none}
+.taskbar .btn.has-ico{display:inline-flex;align-items:center;justify-content:center;gap:.4rem}
+.taskbar .btn.has-ico .ico{width:1.05rem;height:1.05rem;flex:none}
+.ctrl{display:flex;flex-direction:column;gap:.25rem;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:.55rem .75rem .35rem}
+.ctrl label{font-size:.85rem;font-weight:700;color:var(--ink2);display:flex;justify-content:space-between;gap:.5rem;align-items:center}
+.ctrl label .val{font-family:var(--font-display);font-weight:400;font-size:1.05rem;color:var(--amber-ink)!important;
+  background:color-mix(in oklab,var(--amber) 14%,var(--surface));border:1px solid color-mix(in oklab,var(--amber) 35%,transparent);border-radius:9px;padding:0 .5rem;min-width:2.6em;text-align:center;line-height:1.6}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer;--p:50%}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:99px;background:linear-gradient(90deg,var(--amber) var(--p),var(--surface-3) var(--p));border:1px solid var(--line)}
+input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:var(--surface-3);border:1px solid var(--line)}
+input[type=range]::-moz-range-progress{height:8px;border-radius:99px;background:var(--amber)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;margin-top:-8px;
+  background:radial-gradient(circle at 40% 35%,#fff,#ffe2ad 45%,#e08a0c);border:2px solid #fff;box-shadow:0 2px 8px rgba(160,80,0,.45)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,#ffe2ad 45%,#e08a0c);border:2px solid #fff;box-shadow:0 2px 8px rgba(160,80,0,.45)}
+[dir=rtl] input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(270deg,var(--amber) var(--p),var(--surface-3) var(--p))}
 .row{display:flex;gap:.5rem;flex-wrap:wrap}
-.metric{display:flex;justify-content:space-between;font-size:.85rem;background:rgba(255,255,255,.9);
-  border:1px solid var(--line);border-radius:12px;padding:.5rem .7rem}
-.metric b{color:#8a5a12;font-variant-numeric:tabular-nums}
-.badge-ok{color:#0f7f6e;font-weight:700}
-.lab-foot{display:flex;justify-content:center;margin-top:1.1rem}
+.metric{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:12px;padding:.45rem .75rem;color:var(--ink2);font-weight:600}
+.metric b{color:var(--amber-ink);font-variant-numeric:tabular-nums;font-size:.95rem}
+.metric b.badge-ok,.badge-ok{color:var(--teal-ink);font-weight:800}
+.lab-foot{display:flex;justify-content:center}
+.lab-foot .btn{width:100%}
+@media(min-width:900px){.lab-foot .btn{width:auto}}
 
 /* ---------- راهنمای مشترک حکیم برای همهٔ آزمایش‌ها ---------- */
-.lab-guide{position:relative;overflow:hidden;display:grid;gap:.7rem;padding:.75rem;border:1px solid rgba(139,92,246,.36);border-radius:18px;background:linear-gradient(145deg,rgba(139,92,246,.10),rgba(56,189,248,.09));box-shadow:inset 0 1px 0 rgba(255,255,255,.75)}
-.lab-guide::before{content:"";position:absolute;inset:-50% -20% auto auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,199,106,.16),transparent 68%);pointer-events:none}
+.lab-guide{position:relative;overflow:hidden;display:grid;gap:.7rem;padding:.8rem;border:1px solid color-mix(in oklab,var(--violet) 30%,transparent);border-radius:18px;
+  background:linear-gradient(145deg,color-mix(in oklab,var(--violet) 10%,var(--surface)),color-mix(in oklab,var(--cyan) 8%,var(--surface)))}
+.lab-guide::before{content:"";position:absolute;inset:-50% -20% auto auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,199,106,.18),transparent 68%);pointer-events:none}
 .lab-guide-head{position:relative;z-index:1;display:flex;align-items:center;gap:.7rem;direction:rtl}
 .lab-guide-face{width:58px;height:58px;flex:none;display:grid;place-items:center;border-radius:50%;overflow:visible;background:radial-gradient(circle at 42% 28%,#7ea0c8,#47688f);box-shadow:0 0 18px rgba(242,166,59,.45),inset 0 -3px 8px rgba(20,45,80,.28)}
 .lab-guide-face svg{width:100%;height:100%;display:block;overflow:visible}
-.lab-guide-face .hk-body{transform-box:fill-box;transform-origin:50% 100%;animation:labGuideBreath 4.2s ease-in-out infinite}
-.lab-guide-face .hk-eyes{transform-box:fill-box;transform-origin:center;animation:labGuideBlink 4.8s infinite}
-.lab-guide-face .hk-hat{transform-box:fill-box;transform-origin:50% 96%;animation:labGuideHat 7s ease-in-out infinite}
-.lab-guide-face .hk-spark{transform-box:fill-box;transform-origin:center;animation:labGuideTwinkle 2.6s ease-in-out infinite}
-@keyframes labGuideBreath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.015)}}
-@keyframes labGuideBlink{0%,90%,100%{transform:scaleY(1)}93%,96%{transform:scaleY(.08)}}
-@keyframes labGuideHat{0%,100%{transform:rotate(0)}45%{transform:rotate(-2deg)}70%{transform:rotate(2deg)}}
-@keyframes labGuideTwinkle{0%,100%{transform:scale(.4);opacity:.25}50%{transform:scale(1.15);opacity:1}}
+.lab-guide-face .hk-body{transform-box:fill-box;transform-origin:50% 100%;animation:labHakimBreath 4.2s ease-in-out infinite}
+.lab-guide-face .hk-eyes{transform-box:fill-box;transform-origin:center;animation:labHakimBlink 4.8s infinite}
+.lab-guide-face .hk-hat{transform-box:fill-box;transform-origin:50% 96%;animation:labHakimHat 7s ease-in-out infinite}
+.lab-guide-face .hk-spark{transform-box:fill-box;transform-origin:center;animation:labHakimTwinkle 2.6s ease-in-out infinite}
 .lab-guide-copy{min-width:0;flex:1;text-align:right;direction:rtl}
-.lab-guide-kicker{font-size:.68rem;color:#6b52c9;font-weight:800;letter-spacing:.02em}
-.lab-guide-title{font-size:.92rem;color:#7a4f10;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lab-guide-message{font-size:.76rem;color:#33445f;line-height:1.75;margin-top:.12rem}
-.lab-guide-steps{position:relative;z-index:1;display:flex;gap:.3rem;flex-wrap:wrap}
-.lab-guide-steps span{font-size:.65rem;font-weight:800;padding:.2rem .45rem;border-radius:99px;color:#2a3b57;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
-.lab-guide-steps span:first-child{color:#8a5a12;background:rgba(245,199,106,.12);border-color:rgba(245,199,106,.3)}
+.lab-guide-kicker{font-size:.7rem;color:var(--violet);font-weight:800;letter-spacing:.02em}
+.lab-guide-title{font-size:.95rem;color:var(--amber-ink);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lab-guide-message{font-size:.8rem;color:var(--ink2);line-height:1.75;margin-top:.12rem}
+.lab-guide-steps{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;counter-reset:gs}
+.lab-guide-steps span b{font-family:var(--font-display);font-weight:400;margin-inline-end:.25rem;opacity:.75}
+.lab-guide-steps span{position:relative;text-align:center;font-size:.68rem;font-weight:800;padding:.3rem .2rem;border-radius:10px;color:var(--ink2);background:var(--surface);border:1px solid var(--line)}
+.lab-guide-steps span:first-child{color:var(--amber-ink);background:color-mix(in oklab,var(--amber) 14%,var(--surface));border-color:color-mix(in oklab,var(--amber) 40%,transparent)}
 .lab-guide-actions{position:relative;z-index:1;display:flex;gap:.4rem;flex-wrap:wrap}
-.lab-guide-actions .btn{flex:1;min-width:0;padding:.45rem .65rem;font-size:.72rem}
-.lab-guide-actions .btn.ghost{background:rgba(19,34,56,.06)}
-.exp-desc{color:#33445f;font-size:.78rem;line-height:1.7;min-height:2.8em;margin-top:.12rem}
-.exp-card-footer{display:flex;align-items:center;justify-content:space-between;gap:.55rem;margin-top:auto}
-.exp-card-footer .exp-stars{margin-top:0}
-.exp-start{font-size:.72rem;color:#0f7f6e;font-weight:800;white-space:nowrap;padding:.24rem .5rem;border-radius:99px;background:rgba(47,214,192,.09);border:1px solid rgba(47,214,192,.22)}
-@media(max-width:420px){.lab-guide-face{width:52px;height:52px}.lab-guide-title{font-size:.86rem}.lab-guide-message{font-size:.71rem}.exp-desc{font-size:.74rem}}
+.lab-guide-actions .btn{flex:1;min-width:0;padding:.45rem .65rem;font-size:.76rem}
+@media(max-width:420px){.lab-guide-face{width:52px;height:52px}.lab-guide-title{font-size:.86rem}.lab-guide-message{font-size:.74rem}.exp-desc{font-size:.76rem}}
 
 /* ---------- cheraghak corner ---------- */
-#cheraghak-corner{position:fixed;bottom:14px;left:14px;z-index:60;display:none;align-items:flex-end;gap:.6rem;max-width:min(74vw,420px)}
-#cheraghak-corner.show{display:flex}
-#cheraghak-corner .flame{width:74px;height:74px;flex:none;cursor:pointer;
-  filter:drop-shadow(0 0 16px rgba(255,150,40,.85));animation:flick 1.6s ease-in-out infinite}
-@keyframes flick{0%,100%{transform:translateY(0) scale(1) rotate(-2deg)}50%{transform:translateY(-6px) scale(1.05) rotate(2deg)}}
-#cheraghak-corner .tip{background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(232,240,255,.94));
-  color:#12203a;border-radius:16px;padding:.65rem .85rem;font-size:.85rem;font-weight:600;box-shadow:var(--shadow)}
+#cheraghak-corner{position:fixed;bottom:14px;left:14px;z-index:60;display:none;align-items:flex-end;gap:.5rem;max-width:min(78vw,420px)}
+#cheraghak-corner.show{display:flex;animation:cornerIn .45s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes cornerIn{from{opacity:0;transform:translateY(20px) scale(.9)}to{opacity:1;transform:none}}
+#cheraghak-corner .flame{width:72px;height:72px;flex:none;cursor:pointer;overflow:visible;
+  filter:drop-shadow(0 0 14px rgba(255,150,40,.75));animation:flick 2.2s ease-in-out infinite}
+@keyframes flick{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+#cheraghak-corner .tip{position:relative;background:var(--surface);border:1px solid var(--line);
+  color:var(--ink);border-radius:18px 18px 18px 6px;padding:.6rem .85rem;font-size:.85rem;font-weight:600;box-shadow:var(--shadow-lg);margin-bottom:24px}
 #cheraghak-corner .tip b{display:block;font-family:var(--font-display);font-weight:400;color:#c2551c;font-size:1rem}
+body[data-theme="dark"] #cheraghak-corner .tip b{color:#ffb070}
 
 /* ---------- quiz overlay ---------- */
 .overlay{position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:16px;
-  background:rgba(19,34,56,.42);backdrop-filter:blur(6px);overflow:auto}
+  background:rgba(8,20,36,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);overflow:auto}
 .overlay.show{display:grid}
-.quiz-card{width:min(680px,100%);background:linear-gradient(170deg,#ffffff,#f3f8fd 92%);
-  border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:clamp(16px,3vw,26px);animation:fadeUp .35s ease both}
-.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-bottom:.6rem}
-.qtext{font-size:var(--step-1);font-weight:800;margin:.4rem 0 1rem;line-height:1.7}
+.quiz-card{position:relative;width:min(700px,100%);background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow-lg);padding:clamp(16px,3vw,28px);animation:popIn .4s cubic-bezier(.3,1.4,.5,1) both;overflow:hidden;isolation:isolate}
+.quiz-card::before{content:"";position:absolute;inset:0 0 auto 0;height:120px;z-index:-1;background:linear-gradient(180deg,color-mix(in oklab,var(--h,#0b8577) 14%,transparent),transparent)}
+@keyframes popIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin-bottom:.6rem}
+.quiz-who{display:flex;align-items:center;gap:.6rem;min-width:0}
+.quiz-who .bench-ico{width:44px;height:44px;border-radius:14px}
+.quiz-who .bench-ico svg{width:26px;height:26px}
+.quiz-who .t{font-size:.72rem;font-weight:800;color:var(--muted)}
+.quiz-who .n{font-family:var(--font-display);font-size:1.05rem;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qpips{display:flex;gap:.35rem;align-items:flex-end;flex:none}
+.qpips svg{width:26px;height:34px;overflow:visible}
+.qpips .pip-glass{fill:var(--surface);stroke:var(--tube-edge);stroke-width:2}
+.qpips .pip-liq{fill:transparent;transition:fill .3s}
+.qpips .ok .pip-liq{fill:#1fb39e}
+.qpips .no .pip-liq{fill:#e5617d}
+.qpips .cur .pip-glass{stroke:var(--amber);stroke-width:2.6}
+.qpips .cur{animation:bob 1.6s ease-in-out infinite}
+.qtext{font-size:var(--step-1);font-weight:800;margin:.6rem 0 1rem;line-height:1.7}
+.qcount{font-size:.78rem;font-weight:800;color:var(--muted)}
 .opts{display:grid;gap:.6rem}
-.opt{text-align:right;font-family:var(--font-body);font-weight:600;font-size:var(--step-0);cursor:pointer;
-  background:rgba(19,34,56,.04);border:1.5px solid var(--line);color:var(--ink);
-  border-radius:16px;padding:.85rem 1rem;transition:transform .14s, background .2s, border-color .2s;display:flex;gap:.6rem;align-items:center}
-.opt .k{width:26px;height:26px;flex:none;border-radius:9px;display:grid;place-items:center;font-size:.8rem;
-  background:rgba(242,166,59,.18);font-weight:800}
-.opt:hover:not(.locked){transform:translateX(-4px);background:rgba(242,166,59,.12);border-color:rgba(242,166,59,.55)}
-.opt.correct{background:color-mix(in oklab,var(--teal) 25%,transparent);border-color:var(--teal)}
-.opt.wrong{background:color-mix(in oklab,var(--rose) 22%,transparent);border-color:var(--rose)}
+.opt{position:relative;text-align:right;font-family:var(--font-body);font-weight:600;font-size:var(--step-0);cursor:pointer;
+  background:var(--surface-2);border:1.5px solid var(--line);color:var(--ink);
+  border-radius:16px;padding:.8rem 1rem;transition:transform .14s, background .2s, border-color .2s, box-shadow .2s;display:flex;gap:.7rem;align-items:center;line-height:1.7}
+.opt .k{width:30px;height:30px;flex:none;border-radius:10px;display:grid;place-items:center;font-size:.8rem;
+  background:var(--surface);border:1px solid var(--line-2);font-weight:800;color:var(--ink2);transition:.2s}
+.opt .mk{margin-inline-start:auto;width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:50%;opacity:0;transform:scale(.4);transition:.3s cubic-bezier(.3,1.6,.5,1)}
+.opt:hover:not(.locked){transform:translateX(-4px);background:color-mix(in oklab,var(--amber) 9%,var(--surface));border-color:color-mix(in oklab,var(--amber) 55%,transparent)}
+.opt:hover:not(.locked) .k{background:var(--amber);color:#1d1204;border-color:transparent}
+.opt.correct{background:color-mix(in oklab,var(--teal) 14%,var(--surface));border-color:var(--teal);box-shadow:0 0 0 4px color-mix(in oklab,var(--teal) 18%,transparent)}
+.opt.correct .k{background:var(--teal);color:#fff;border-color:transparent}
+.opt.correct .mk{opacity:1;transform:none;background:var(--teal);color:#fff}
+.opt.wrong{background:color-mix(in oklab,var(--rose) 12%,var(--surface));border-color:var(--rose);animation:shake .45s}
+.opt.wrong .k{background:var(--rose);color:#fff;border-color:transparent}
+.opt.wrong .mk{opacity:1;transform:none;background:var(--rose);color:#fff}
+.opt .mk svg{width:16px;height:16px}
 .opt.locked{cursor:default}
-.qfb{margin-top:.9rem;font-weight:700;font-size:.95rem;min-height:1.4em}
-.qfb.ok{color:#0f7f6e}.qfb.no{color:#b93a58}
-.qexpl{margin-top:.3rem;font-size:.88rem;color:var(--muted);font-weight:600}
-.qbar{height:8px;border-radius:99px;background:rgba(19,34,56,.12);overflow:hidden;margin-bottom:.4rem}
-.qbar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--teal));width:0;transition:width .4s}
+.opt.locked:not(.correct):not(.wrong){opacity:.62}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.opt .pop{position:absolute;inset:0;pointer-events:none}
+.opt .pop i{position:absolute;top:50%;left:24px;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#5fe6d1 55%,#0b8577);opacity:0;animation:popB .8s ease-out forwards}
+@keyframes popB{0%{opacity:1;transform:translate(0,-50%) scale(.4)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2)}}
+.qfb-wrap{display:none;margin-top:1rem;border-radius:16px;padding:.75rem .9rem;border:1px solid var(--line);background:var(--surface-2)}
+.qfb-wrap.show{display:block;animation:fadeUp .35s ease both}
+.qfb-wrap.ok{background:color-mix(in oklab,var(--teal) 9%,var(--surface));border-color:color-mix(in oklab,var(--teal) 40%,transparent)}
+.qfb-wrap.no{background:color-mix(in oklab,var(--rose) 8%,var(--surface));border-color:color-mix(in oklab,var(--rose) 38%,transparent)}
+.qfb{font-weight:800;font-size:.98rem;margin:0}
+.qfb.ok{color:var(--teal-ink)}.qfb.no{color:var(--rose-ink)}
+.qexpl{margin:.25rem 0 0;font-size:.88rem;color:var(--ink2);font-weight:600}
 .quiz-actions{display:flex;justify-content:flex-start;margin-top:1rem}
-.result-grid{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));margin:1rem 0}
-.result-grid .r{background:rgba(19,34,56,.04);border:1px solid var(--line);border-radius:14px;padding:.7rem;text-align:center}
-.result-grid .r b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.6rem;color:#8a5a12}
-.big-stars{font-size:2.6rem;letter-spacing:.3rem;color:#e9a71f;text-align:center;filter:drop-shadow(0 4px 14px rgba(255,180,60,.6))}
+
+/* ---------- result ---------- */
+.result-card{text-align:center}
+.result-hero{display:grid;justify-items:center;gap:.2rem;margin-top:.3rem}
+.result-flask{width:150px;height:auto;overflow:visible}
+#resLiquid{transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+.big-stars{display:flex;gap:.4rem;justify-content:center;margin:.2rem 0 .3rem}
+.big-stars svg{width:46px;height:46px;filter:drop-shadow(0 6px 12px rgba(240,170,40,.45));opacity:0;transform:scale(.3) rotate(-30deg)}
+.big-stars svg.in{animation:starIn .55s cubic-bezier(.3,1.7,.5,1) forwards}
+.big-stars svg.in.off{filter:none}
+@keyframes starIn{to{opacity:1;transform:none}}
+.result-grid{display:grid;gap:.6rem;grid-template-columns:repeat(4,minmax(0,1fr));margin:1rem 0}
+@media(max-width:520px){.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.result-grid .r{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:.6rem;text-align:center;font-size:.82rem;font-weight:700;color:var(--muted)}
+.result-grid .r b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.6rem;color:var(--amber-ink);line-height:1.4}
+#result-msg{color:var(--ink2);font-weight:600}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
+.confetti i{position:absolute;top:-14px;width:9px;height:14px;border-radius:3px;opacity:0;animation:confetti 2.6s ease-in forwards}
+@keyframes confetti{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(560px) rotate(540deg)}}
 
 /* ---------- certificate ---------- */
 #cert-sheet{background:#fffdf7;color:#1c2333;border-radius:22px;padding:clamp(18px,4vw,44px);max-width:820px;margin:0 auto;
@@ -310,7 +547,8 @@ input[type=range]{width:100%;accent-color:var(--amber);height:26px}
 .cert-kicker{font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:#b8802a;text-align:center}
 .cert-name{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,1.2rem + 3vw,3rem);text-align:center;margin:.4rem 0;color:#1f2a44}
 .cert-line{text-align:center;color:#4a5570;font-weight:600}
-.cert-rows{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:1.4rem 0}
+.cert-rows{display:grid;gap:.5rem;grid-template-columns:repeat(4,minmax(0,1fr));margin:1.4rem 0}
+@media (max-width:620px){.cert-rows{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .cert-rows div{background:#f6efdf;border-radius:12px;padding:.6rem;text-align:center;font-size:.85rem;color:#5b6446;font-weight:600}
 .cert-rows b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:#22283c}
 .cert-sign{display:flex;justify-content:space-between;gap:1rem;margin-top:2.2rem;flex-wrap:wrap;text-align:center}
@@ -326,40 +564,42 @@ ul.cert-list li .tick{width:26px;height:26px;flex:none;border-radius:9px;display
 ul.cert-list li.ok{background:#f1fbf7;border-color:#bfe7dc}
 ul.cert-list li.ok .tick{background:linear-gradient(180deg,#2fd6c0,#17a892);color:#04332c}
 ul.cert-list li .nm{flex:1}
-ul.cert-list li .mt{font-size:.74rem;color:#7b8399;font-weight:700;white-space:nowrap}
-.cert-note{margin-top:.9rem;background:#fdf6e6;border:1px dashed #dcc48d;border-radius:12px;padding:.6rem .75rem;color:#7a6a45;font-size:.84rem;font-weight:600;text-align:center}
-.cert-foot{margin-top:1.1rem;text-align:center;font-size:.78rem;color:#7b8399;font-weight:600}
+ul.cert-list li .mt{font-size:.74rem;color:#6b7389;font-weight:700;white-space:nowrap}
+.cert-note{margin-top:.9rem;background:#fdf6e6;border:1px dashed #dcc48d;border-radius:12px;padding:.6rem .75rem;color:#6e5f3c;font-size:.84rem;font-weight:600;text-align:center}
+.cert-foot{margin-top:1.1rem;text-align:center;font-size:.78rem;color:#6b7389;font-weight:600}
 #cert-sheet{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .report-actions{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.page-head{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;justify-content:space-between;margin-bottom:1rem}
 
 /* ---------- report ---------- */
-.report-body{white-space:pre-wrap;font-family:"Vazirmatn",Tahoma,monospace;font-size:.9rem;line-height:2;
-  background:#ffffff;border:1px solid var(--line);border-radius:18px;padding:1rem;max-height:60vh;overflow:auto}
+.report-body{white-space:pre-wrap;font-family:"Vazirmatn",Tahoma,monospace;font-size:.9rem;line-height:2;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1rem;max-height:60vh;overflow:auto}
 
 /* ---------- toast ---------- */
 #toast{position:fixed;top:14px;right:50%;transform:translateX(50%) translateY(-24px);z-index:120;
-  background:rgba(255,255,255,.97);border:1px solid var(--line);color:var(--ink);padding:.7rem 1.1rem;border-radius:999px;
-  font-weight:700;font-size:.9rem;opacity:0;pointer-events:none;transition:.3s;box-shadow:var(--shadow)}
+  background:var(--surface);border:1px solid var(--line);color:var(--ink);padding:.7rem 1.1rem;border-radius:999px;
+  font-weight:700;font-size:.9rem;opacity:0;pointer-events:none;transition:.3s;box-shadow:var(--shadow-lg)}
 #toast.show{opacity:1;transform:translateX(50%) translateY(0)}
 
-/* ---------- sound toggle ---------- */
-
 .hakim-gosh-shell{max-width:1180px;margin:0 auto}
-.hakim-gosh-frame-wrap{height:clamp(640px,calc(100vh - 95px),960px);min-height:580px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#f0f6fc;box-shadow:var(--shadow)}
+.hakim-gosh-frame-wrap{height:clamp(640px,calc(100vh - 120px),960px);min-height:580px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#f0f6fc;box-shadow:var(--shadow-lg)}
 #hakim-gosh-frame{display:block;width:100%;height:100%;border:0;background:#ffffff}
-@media(max-width:700px){.hakim-gosh-frame-wrap{height:calc(100vh - 96px);min-height:620px;border-radius:18px}}
+@media(max-width:700px){.hakim-gosh-frame-wrap{height:calc(100vh - 120px);min-height:620px;border-radius:18px}}
 
 @media(max-width:600px){
   .screen{padding-bottom:150px}
-  #cheraghak-corner .flame{width:60px;height:60px}
-  .btn{padding:.75rem 1.2rem}
+  #cheraghak-corner .flame{width:58px;height:58px}
+  .btn{padding:.72rem 1.15rem}
+  .bench-head{padding:.6rem .7rem}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important;transition:none !important}
+  .lab-bg{display:none}
+  .big-stars svg{opacity:1;transform:none}
 }
 @media print{
   body{background:#fff}
-  body::before,body::after{display:none}
+  body::before,body::after,.lab-bg{display:none}
   .screen{display:none !important;padding:0}
   body.print-cert #screen-cert{display:block !important}
   body.print-report #screen-report{display:block !important}
@@ -371,139 +611,213 @@ ul.cert-list li .mt{font-size:.74rem;color:#7b8399;font-weight:700;white-space:n
 }
 @page{size:A4;margin:16mm}
 
-/* ---------- step runner ---------- */
-.step-card{background:linear-gradient(180deg,#ffffff,rgba(240,246,253,.92));border:1px solid var(--line);border-radius:16px;padding:.8rem .9rem}
+/* ---------- step runner & builder widgets ---------- */
+.step-card{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:.8rem .9rem}
 .step-count{font-size:.76rem;color:var(--muted);font-weight:800;letter-spacing:.02em}
 .step-text{font-weight:700;font-size:.97rem;line-height:1.75;margin-top:.2rem}
-.step-em{font-family:var(--font-display);font-weight:400;font-size:1.05rem;color:#8a5a12}
+.step-em{font-family:var(--font-display);font-weight:400;font-size:1.05rem;color:var(--amber-ink)}
 .steps-mini{display:flex;gap:.28rem;flex-wrap:wrap;margin:.35rem 0 .1rem}
 .dot{width:23px;height:23px;border-radius:8px;display:grid;place-items:center;font-size:.66rem;font-weight:800;
-  background:rgba(19,34,56,.05);border:1px solid var(--line);color:var(--muted);transition:.2s}
-.dot.done{background:color-mix(in oklab,var(--teal) 26%,transparent);color:#0f7f6e;border-color:rgba(47,214,192,.5)}
-.dot.cur{background:color-mix(in oklab,var(--amber) 32%,transparent);color:#8a5a12;border-color:rgba(255,181,71,.65);transform:scale(1.12)}
+  background:var(--surface-2);border:1px solid var(--line);color:var(--muted);transition:.2s}
+.dot.done{background:color-mix(in oklab,var(--teal) 22%,var(--surface));color:var(--teal-ink);border-color:color-mix(in oklab,var(--teal) 50%,transparent)}
+.dot.cur{background:color-mix(in oklab,var(--amber) 26%,var(--surface));color:var(--amber-ink);border-color:color-mix(in oklab,var(--amber) 60%,transparent);transform:scale(1.12)}
 .step-btn{width:100%}
-.step-hint{font-size:.78rem;color:#8a5a12;font-weight:600}
+.step-hint{font-size:.8rem;color:var(--amber-ink);font-weight:600}
 .tools{display:flex;flex-wrap:wrap;gap:.3rem}
-.tool{font-size:.74rem;padding:.24rem .6rem;border-radius:999px;background:rgba(19,34,56,.05);
-  border:1px solid var(--line);color:#33445f;white-space:nowrap}
+.tool{font-size:.74rem;padding:.24rem .6rem;border-radius:999px;background:var(--surface-2);
+  border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
 .mini-label{font-size:.78rem;color:var(--muted);font-weight:800;margin:.1rem 0 .1rem}
-.table-wrap{margin-top:.35rem;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-table.res{width:100%;border-collapse:collapse;font-size:.8rem}
+.table-wrap{margin-top:.35rem;border:1px solid var(--line);border-radius:14px;overflow:auto}
+table.res{width:100%;border-collapse:collapse;font-size:.8rem;color:var(--ink)}
 table.res th,table.res td{padding:.45rem .55rem;text-align:right;border-bottom:1px solid var(--line)}
-table.res th{background:#eaf1f9;font-weight:800;color:#7a4f10}
-table.res caption{caption-side:top;text-align:right;padding:.5rem .55rem;font-weight:800;color:#7a4f10;background:#f2f7fd}
+table.res th{background:var(--surface-3);font-weight:800;color:var(--amber-ink)}
+table.res caption{caption-side:top;text-align:right;padding:.5rem .55rem;font-weight:800;color:var(--amber-ink);background:var(--surface-2)}
 table.res tr:last-child td{border-bottom:0}
-.obs{background:rgba(47,214,192,.13);border:1px solid rgba(47,214,192,.38);border-radius:14px;
-  padding:.55rem .7rem;font-size:.86rem;font-weight:700;color:#0f7f6e;margin-top:.3rem}
-.obs.warn{background:rgba(255,122,156,.12);border-color:rgba(255,122,156,.4);color:#b93a58}
-.obs.info{background:rgba(92,200,255,.12);border-color:rgba(92,200,255,.4);color:#2a3b57}
+table.res select{background:var(--surface)!important;color:var(--ink)!important}
+.obs{background:color-mix(in oklab,var(--teal) 10%,var(--surface));border:1px solid color-mix(in oklab,var(--teal) 35%,transparent);border-radius:14px;
+  padding:.55rem .75rem;font-size:.86rem;font-weight:700;color:var(--teal-ink);margin-top:.1rem;line-height:1.8}
+.obs.warn{background:color-mix(in oklab,var(--rose) 8%,var(--surface));border-color:color-mix(in oklab,var(--rose) 35%,transparent);color:var(--rose-ink)}
+.obs.info{background:color-mix(in oklab,var(--sky) 9%,var(--surface));border-color:color-mix(in oklab,var(--sky) 35%,transparent);color:var(--ink2)}
 .swatches{display:flex;gap:.4rem;flex-wrap:wrap}
-.sw{width:34px;height:34px;border-radius:50%;border:2px solid rgba(19,34,56,.22);cursor:pointer}
-.sw.sel{outline:3px solid #132238;outline-offset:2px}
-.timer{height:10px;border-radius:99px;background:rgba(19,34,56,.12);overflow:hidden}
+.sw{width:34px;height:34px;border-radius:50%;border:2px solid var(--line-2);cursor:pointer}
+.sw.sel{outline:3px solid var(--ink);outline-offset:2px}
+.timer{height:10px;border-radius:99px;background:var(--surface-3);overflow:hidden;border:1px solid var(--line)}
 .timer i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--teal));transition:width .2s}
+.freeze-svg text.lt{fill:var(--ink2)}
+.freeze-svg text.lr{fill:var(--rose-ink)}
 
+.shelf .sb{fill:var(--line-2)}
+.shelf .sg{fill:none;stroke:var(--line-2);stroke-width:2.5}
+.st-liq{transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+.lab-hint .ico{color:var(--amber);margin-inline-end:.2rem}
+.qfb .ico{width:1.1em;height:1.1em;vertical-align:-.22em}
+.taskbar .btn.small:not(.ghost):not(.teal){background:color-mix(in oklab,var(--amber) 13%,var(--surface));color:var(--amber-ink);
+  border:1px solid color-mix(in oklab,var(--amber) 42%,transparent);box-shadow:none;font-weight:800}
+.taskbar .btn.small:not(.ghost):not(.teal):hover{background:color-mix(in oklab,var(--amber) 22%,var(--surface))}
+.st-hint{font-size:.78rem;color:var(--muted);text-align:center;margin:.2rem 0 0}
 </style>
 <link rel="stylesheet" href="../css/hakim-cert.css"><script src="../js/hakim-logo.js"></script><script src="../js/hakim-cert.js"></script>
 </head>
 
 <body>
+<div class="lab-bg" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
-<!-- ===================== 2) LOGIN FORM ===================== -->
+<!-- ===================== ورودی آزمایشگاه ===================== -->
 <section id="screen-form" class="screen active">
-  <div class="wrap narrow">
-    <div class="center" style="margin-top:clamp(10px,4vh,50px)">
-      <span class="pill" style="--h:var(--sky)">ورود دانشمند کوچک</span>
-      <h2 style="margin-top:.5rem;font-size:var(--step-3)">کارت ورود به آزمایشگاه</h2>
-      <p class="muted">اسمت رو بنویس تا حکیم و چراغک بدونن کی اومده کشف کنه! 🧪</p>
-    </div>
-    <form class="card" id="login-form" style="margin-top:1.2rem" novalidate>
-      <label class="field">
-        <span>اسم و فامیل <span class="req">*</span></span>
-        <input id="f-name" type="text" autocomplete="name" placeholder="مثلاً: علی محمدی" required>
-      </label>
-      <label class="field">
-        <span>کلاس</span>
-        <input id="f-class" type="text" placeholder="مثلاً: پنجم ۲">
-      </label>
-      <label class="field">
-        <span>مدرسه</span>
-        <input id="f-school" type="text" placeholder="نام مدرسه">
-      </label>
-      <p class="err" id="form-err"></p>
-      <button class="btn block teal" type="submit" style="font-size:1.05rem">شروع ماجراجویی! 🔬</button>
-      <div style="margin-top:.75rem;text-align:center">
-        <button class="btn ghost small" id="btn-theme-entry" type="button" aria-label="تغییر حالت روز و شب">🌙 حالت شب</button>
-      </div>
-    </form>
-  </div>
-</section>
-
-<!-- ===================== 3) INTRO ===================== -->
-<section id="screen-intro" class="screen">
-  <div class="wrap">
-    <div class="center" style="margin-bottom:.6rem">
-      <span class="pill" style="--h:var(--amber2)" id="intro-label">حکیم</span>
-    </div>
-    <div class="stage-intro">
-      <div style="display:grid;place-items:center">
-        <!-- HAKIM -->
-        <div class="char-svg hakim-core-hero" id="hakim-fig" role="img" aria-label="حکیم، همراه دانای حکیمستان"></div>
-      </div>
-      <div class="bubble">
-        <div class="typer" id="intro-text"><span class="cursor">▌</span></div>
-        <div class="intro-actions" id="intro-actions" style="display:none">
-          <button class="btn" id="intro-next">ادامه ➜</button>
-          <button class="btn ghost" id="intro-replay">🔁 پخش دوبارهٔ صدا</button>
-
-          <button class="btn ghost voice-toggle" id="voice-toggle-1" type="button">🔊 صدا روشن</button>
-          <button class="btn ghost" id="intro-skip">رد کردن</button>
+  <div class="wrap entry">
+    <div class="entry-card">
+      <div class="entry-copy">
+        <span class="kicker">علوم پنجم دبستان — ۹ آزمایش و بازی</span>
+        <h2 class="entry-title">آزمایشگاه <span>حکیمستان</span></h2>
+        <p class="entry-hello">سلام <b id="entry-name">دانشمند</b>! میز آزمایش آماده است؛ چراغک روی چراغ آزمایشگاه منتظر توست تا با هم رازهای طبیعت را کشف کنیم.</p>
+        <ul class="entry-feats">
+          <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21c3 0 5-1.5 5-4a3 3 0 0 0-3-3c-2 0-2 3-2 7z"/><path d="m8 14 11-11 2 2-11 11"/></svg> ۵ آزمایش تعاملی روی میز</li>
+          <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r="1" fill="currentColor"/><circle cx="18" cy="13.5" r="1" fill="currentColor"/></svg> ۴ بازی و شبیه‌ساز ویژه</li>
+          <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".9" fill="currentColor"/></svg> آزمون کوتاه و ستاره برای هر ایستگاه</li>
+          <li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg> گواهی پایان دوره</li>
+        </ul>
+        <div class="entry-actions">
+          <button class="btn btn-lg" id="btn-enter" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6.2L4.6 18.4A2 2 0 0 0 6.3 21.5h11.4a2 2 0 0 0 1.7-3.1L14 9.2V3"/><path d="M7.2 15.5h9.6"/></svg> ورود به آزمایشگاه</button>
+          <button class="btn ghost" id="btn-rename" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg> تغییر نام</button>
+          <button class="btn ghost theme-toggle" id="btn-theme-entry" type="button" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg> تم شب</button>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== CHERAGHAK INTRO ===== -->
-<section id="screen-intro2" class="screen">
-  <div class="wrap">
-    <div class="center" style="margin-bottom:.6rem">
-      <span class="pill" style="--h:var(--amber2)">چراغک</span>
-    </div>
-    <div class="stage-intro">
-      <div style="display:grid;place-items:center">
-        <svg class="char-svg" viewBox="0 0 240 300" role="img" aria-label="چراغک، شعلهٔ کارتونی بامزه">
+      <div class="entry-art" aria-hidden="true">
+        <svg viewBox="0 0 460 360">
           <defs>
-            <radialGradient id="fire1" cx="50%" cy="62%" r="60%">
-              <stop offset="0" stop-color="#fff3b0"/><stop offset="45%" stop-color="#ffb547"/><stop offset="100%" stop-color="#f5852a"/>
-            </radialGradient>
-            <radialGradient id="fireglow" cx="50%" cy="55%" r="60%">
-              <stop offset="0" stop-color="#ffce7a" stop-opacity=".85"/><stop offset="100%" stop-color="#ffce7a" stop-opacity="0"/>
-            </radialGradient>
+            <radialGradient id="enGlow" cx="50%" cy="55%" r="55%"><stop offset="0" stop-color="#ffcf6b" stop-opacity=".75"/><stop offset="1" stop-color="#ffcf6b" stop-opacity="0"/></radialGradient>
+            <radialGradient id="enFire" cx="50%" cy="72%" r="70%"><stop offset="0" stop-color="#fff6c4"/><stop offset=".45" stop-color="#ffb547"/><stop offset="1" stop-color="#f26b1d"/></radialGradient>
+            <linearGradient id="enTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ff0da"/><stop offset="1" stop-color="#0b8577"/></linearGradient>
+            <linearGradient id="enAmber" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#e0700c"/></linearGradient>
+            <linearGradient id="enViolet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c4b5ff"/><stop offset="1" stop-color="#6a52d9"/></linearGradient>
+            <linearGradient id="enMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d7f99"/><stop offset=".5" stop-color="#c9d6e6"/><stop offset="1" stop-color="#5d6f88"/></linearGradient>
+            <clipPath id="enRB"><circle cx="118" cy="214" r="54"/></clipPath>
+            <clipPath id="enER"><path d="M352 120h28v46l40 74a10 10 0 0 1-9 15h-90a10 10 0 0 1-9-15l40-74z"/></clipPath>
           </defs>
-          <ellipse cx="120" cy="150" rx="115" ry="140" fill="url(#fireglow)"/>
-          <path d="M120 18 Q162 92 168 134 Q186 190 120 236 Q54 190 72 134 Q78 92 120 18 Z" fill="url(#fire1)"/>
-          <path d="M120 66 Q146 122 146 152 Q154 190 120 214 Q86 190 94 152 Q94 122 120 66 Z" fill="#fff0b8" opacity=".85"/>
-          <circle cx="100" cy="162" r="17" fill="#fff"/>
-          <circle cx="150" cy="162" r="17" fill="#fff"/>
-          <circle cx="101" cy="166" r="9" fill="#25203a"/>
-          <circle cx="151" cy="166" r="9" fill="#25203a"/>
-          <circle cx="104" cy="161" r="3.4" fill="#fff"/>
-          <circle cx="154" cy="161" r="3.4" fill="#fff"/>
-          <path d="M92 140 q10 -8 22 -2" stroke="#a4551e" stroke-width="5" fill="none" stroke-linecap="round"/>
-          <path d="M136 138 q12 -6 22 2" stroke="#a4551e" stroke-width="5" fill="none" stroke-linecap="round"/>
-          <path d="M98 190 q22 22 44 0" stroke="#c06a2a" stroke-width="6" fill="none" stroke-linecap="round"/>
-          <circle cx="84" cy="186" r="10" fill="#ff9e9e" opacity=".7"/>
-          <circle cx="164" cy="186" r="10" fill="#ff9e9e" opacity=".7"/>
-          <path d="M60 250 q30 18 60 0 q30 -18 60 0" stroke="#7a5230" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <!-- میز -->
+          <rect x="10" y="276" width="440" height="16" rx="8" fill="#1b4560"/>
+          <rect x="30" y="292" width="14" height="60" rx="4" fill="#163a52"/><rect x="416" y="292" width="14" height="60" rx="4" fill="#163a52"/>
+          <!-- لولهٔ شیشه‌ای میان دو فلاسک -->
+          <path d="M118 158 C118 96 190 70 230 70 C290 70 366 80 366 120" fill="none" stroke="rgba(170,220,255,.35)" stroke-width="16" stroke-linecap="round"/>
+          <path d="M118 158 C118 96 190 70 230 70 C290 70 366 80 366 120" fill="none" stroke="#3fd8c2" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+          <path class="tube-flow" d="M118 158 C118 96 190 70 230 70 C290 70 366 80 366 120" stroke-width="4"/>
+          <!-- فلاسک ته‌گرد -->
+          <rect x="104" y="140" width="28" height="30" rx="3" fill="rgba(220,240,255,.18)" stroke="rgba(200,235,255,.7)" stroke-width="3"/>
+          <circle cx="118" cy="214" r="54" fill="rgba(220,240,255,.14)" stroke="rgba(200,235,255,.75)" stroke-width="3"/>
+          <g clip-path="url(#enRB)"><g class="liq-wave"><path d="M50 214 q17 -8 34 0 t34 0 t34 0 t34 0 t34 0 V280 H50z" fill="url(#enTeal)"/></g></g>
+          <circle class="bub" cx="104" cy="240" r="5" fill="#d8fff8"/><circle class="bub" cx="126" cy="250" r="3.5" fill="#d8fff8"/><circle class="bub" cx="116" cy="232" r="4" fill="#d8fff8"/>
+          <path d="M80 190 a44 44 0 0 1 22 -24" stroke="rgba(255,255,255,.7)" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <!-- پایهٔ فلاسک -->
+          <path d="M80 268 h76" stroke="url(#enMetal)" stroke-width="7" stroke-linecap="round"/>
+          <!-- ارلن -->
+          <path d="M352 120h28v46l40 74a10 10 0 0 1-9 15h-90a10 10 0 0 1-9-15l40-74z" fill="rgba(220,240,255,.14)" stroke="rgba(200,235,255,.75)" stroke-width="3"/>
+          <g clip-path="url(#enER)"><g class="liq-wave"><path d="M300 200 q15 -7 30 0 t30 0 t30 0 t30 0 t30 0 V270 H300z" fill="url(#enAmber)"/></g></g>
+          <circle class="bub" cx="358" cy="246" r="4" fill="#fff4d6"/><circle class="bub" cx="374" cy="238" r="3" fill="#fff4d6"/>
+          <path d="M352 176 l-26 48" stroke="rgba(255,255,255,.6)" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <rect x="348" y="112" width="36" height="10" rx="4" fill="rgba(200,235,255,.6)"/>
+          <!-- لوله‌های آزمایش -->
+          <rect x="196" y="236" width="76" height="12" rx="4" fill="#244e6b"/>
+          <g>
+            <rect x="204" y="190" width="14" height="58" rx="7" fill="rgba(220,240,255,.15)" stroke="rgba(200,235,255,.7)" stroke-width="2.5"/>
+            <rect x="206.5" y="222" width="9" height="23" rx="4.5" fill="url(#enViolet)"/>
+            <rect x="227" y="182" width="14" height="66" rx="7" fill="rgba(220,240,255,.15)" stroke="rgba(200,235,255,.7)" stroke-width="2.5"/>
+            <rect x="229.5" y="208" width="9" height="37" rx="4.5" fill="url(#enTeal)"/>
+            <rect x="250" y="196" width="14" height="52" rx="7" fill="rgba(220,240,255,.15)" stroke="rgba(200,235,255,.7)" stroke-width="2.5"/>
+            <rect x="252.5" y="226" width="9" height="19" rx="4.5" fill="url(#enAmber)"/>
+          </g>
+          <!-- چراغ آزمایشگاه و چراغک -->
+          <g transform="translate(232 214)">
+            <ellipse class="glow-pulse" cx="0" cy="-70" rx="62" ry="70" fill="url(#enGlow)"/>
+          </g>
+          <path d="M218 276 l4 -38 h20 l4 38z" fill="url(#enMetal)"/>
+          <rect x="214" y="270" width="36" height="8" rx="3" fill="#8597b0"/>
+          <rect x="220" y="232" width="24" height="8" rx="2" fill="#a9b8cc"/>
+          <g transform="translate(232 226)"><g class="chera-bob">
+            <path class="flame-outer" d="M0 -96 C20 -68 44 -48 44 -12 C44 14 24 32 0 32 C-24 32 -44 14 -44 -12 C-44 -38 -28 -52 -16 -76 C-12 -60 -6 -54 0 -52 C3 -66 0 -82 0 -96Z" fill="url(#enFire)"/>
+            <path class="flame-inner" d="M0 -46 C13 -28 26 -16 26 2 C26 18 14 26 0 26 C-14 26 -26 18 -26 2 C-26 -16 -13 -28 0 -46Z" fill="#fff3bf" opacity=".9"/>
+            <g class="chera-eyes"><ellipse cx="-11" cy="-2" rx="6.5" ry="8" fill="#2a1f3d"/><ellipse cx="11" cy="-2" rx="6.5" ry="8" fill="#2a1f3d"/><circle cx="-9" cy="-5" r="2.3" fill="#fff"/><circle cx="13" cy="-5" r="2.3" fill="#fff"/></g>
+            <path d="M-8 12 q8 8 16 0" stroke="#b5521a" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+            <circle cx="-21" cy="9" r="5" fill="#ff8f7a" opacity=".55"/><circle cx="21" cy="9" r="5" fill="#ff8f7a" opacity=".55"/>
+          </g></g>
+          <!-- جرقه‌ها -->
+          <path class="spark" d="M300 40 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z" fill="#ffd27a"/>
+          <path class="spark" d="M60 90 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#7ee8d6"/>
+          <path class="spark" d="M420 60 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#c4b5ff"/>
+          <circle class="spark" cx="180" cy="40" r="3" fill="#fff"/>
         </svg>
       </div>
-      <div class="bubble">
-        <div class="typer" id="intro2-text"><span class="cursor">▌</span></div>
-        <div class="intro-actions" id="intro2-actions" style="display:none">
-          <button class="btn" id="intro2-next">بریم آزمایشگاه! 🔬</button>
-          <button class="btn ghost voice-toggle" id="voice-toggle-2" type="button">🔊 صدا روشن</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== معرفی حکیم ===================== -->
+<section id="screen-intro" class="screen">
+  <div class="wrap">
+    <div class="intro-stage">
+      <div class="shelf" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid slice" focusable="false"><rect class="sb" x="0" y="150" width="250" height="9" rx="4"/><rect class="sb" x="760" y="132" width="240" height="9" rx="4"/><rect class="sb" x="0" y="470" width="230" height="9" rx="4"/><rect class="sb" x="780" y="486" width="220" height="9" rx="4"/><path fill="rgba(63,216,194,.35)" d="M35.5 122.7H68.5L81.2 148.5H22.8z"/><path class="sg" d="M46 72h12v31.2L83.2 150H20.8L46 103.2z"/><path fill="rgba(255,170,60,.35)" d="M98.2 123.0A30 30 0 0 0 157.8 123.0z"/><rect class="sg" x="122" y="74.0" width="12" height="18" rx="2"/><circle class="sg" cx="128" cy="120.0" r="30"/><rect fill="rgba(150,120,255,.3)" x="182.0" y="125.7" width="36.0" height="22.3" rx="3"/><path class="sg" d="M176.0 96h4v50a4 4 0 0 0 4 4h32a4 4 0 0 0 4-4v-50h4"/><rect class="sb" x="792" y="118" width="92" height="8" rx="3"/><rect fill="rgba(255,120,150,.35)" x="801" y="98" width="8" height="24" rx="4"/><rect class="sg" x="799" y="70" width="12" height="56" rx="6"/><rect fill="rgba(63,216,194,.35)" x="823" y="98" width="8" height="24" rx="4"/><rect class="sg" x="821" y="70" width="12" height="56" rx="6"/><rect fill="rgba(255,190,80,.35)" x="845" y="98" width="8" height="24" rx="4"/><rect class="sg" x="843" y="70" width="12" height="56" rx="6"/><rect fill="rgba(110,170,255,.35)" x="867" y="98" width="8" height="24" rx="4"/><rect class="sg" x="865" y="70" width="12" height="56" rx="6"/><path fill="rgba(110,200,120,.35)" d="M914.1 108.6A26 26 0 0 0 965.9 108.6z"/><rect class="sg" x="934" y="64.0" width="12" height="18" rx="2"/><circle class="sg" cx="940" cy="106.0" r="26"/><rect fill="rgba(255,190,80,.3)" x="39.0" y="443.0" width="42.0" height="25.0" rx="3"/><path class="sg" d="M33.0 410h4v56a4 4 0 0 0 4 4h38a4 4 0 0 0 4-4v-56h4"/><path fill="rgba(255,120,150,.32)" d="M134.8 445.5H165.2L176.0 468.5H124.0z"/><path class="sg" d="M144 400h12v28.0L178.0 470H122.0L144 428.0z"/><path fill="rgba(110,170,255,.32)" d="M822.5 456.6H857.5L871.6 484.5H808.4z"/><path class="sg" d="M834 402h12v33.6L873.6 486H806.4L834 435.6z"/><path fill="rgba(63,216,194,.35)" d="M902.1 460.8A28 28 0 0 0 957.9 460.8z"/><rect class="sg" x="924" y="414.0" width="12" height="18" rx="2"/><circle class="sg" cx="930" cy="458.0" r="28"/></svg></div>
+      <div class="intro-who">
+        <div class="char-svg hakim-core-hero" id="hakim-fig" role="img" aria-label="حکیم، همراه دانای حکیمستان"></div>
+        <div class="who-tag" id="intro-label">حکیم <small>استاد آزمایشگاه</small></div>
+      </div>
+      <div class="intro-talk">
+        <h2 class="sr-only">گفت‌وگو با حکیم</h2>
+        <div class="bubble">
+          <div class="typer" id="intro-text" aria-live="polite"><span class="cursor">▌</span></div>
+          <div class="intro-actions" id="intro-actions" style="display:none">
+            <button class="btn" id="intro-next" type="button">ادامه <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button class="btn ghost" id="intro-replay" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg> پخش دوباره</button>
+            <button class="btn ghost voice-toggle" id="voice-toggle-1" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> صدا روشن</button>
+            <button class="btn ghost" id="intro-skip" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m13 6-6 6 6 6M19 6l-6 6 6 6"/></svg> رد کردن</button>
+          </div>
         </div>
+        <div class="intro-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== معرفی چراغک ===================== -->
+<section id="screen-intro2" class="screen">
+  <div class="wrap">
+    <div class="intro-stage">
+      <div class="shelf" aria-hidden="true"><svg viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid slice" focusable="false"><rect class="sb" x="0" y="150" width="250" height="9" rx="4"/><rect class="sb" x="760" y="132" width="240" height="9" rx="4"/><rect class="sb" x="0" y="470" width="230" height="9" rx="4"/><rect class="sb" x="780" y="486" width="220" height="9" rx="4"/><path fill="rgba(63,216,194,.35)" d="M35.5 122.7H68.5L81.2 148.5H22.8z"/><path class="sg" d="M46 72h12v31.2L83.2 150H20.8L46 103.2z"/><path fill="rgba(255,170,60,.35)" d="M98.2 123.0A30 30 0 0 0 157.8 123.0z"/><rect class="sg" x="122" y="74.0" width="12" height="18" rx="2"/><circle class="sg" cx="128" cy="120.0" r="30"/><rect fill="rgba(150,120,255,.3)" x="182.0" y="125.7" width="36.0" height="22.3" rx="3"/><path class="sg" d="M176.0 96h4v50a4 4 0 0 0 4 4h32a4 4 0 0 0 4-4v-50h4"/><rect class="sb" x="792" y="118" width="92" height="8" rx="3"/><rect fill="rgba(255,120,150,.35)" x="801" y="98" width="8" height="24" rx="4"/><rect class="sg" x="799" y="70" width="12" height="56" rx="6"/><rect fill="rgba(63,216,194,.35)" x="823" y="98" width="8" height="24" rx="4"/><rect class="sg" x="821" y="70" width="12" height="56" rx="6"/><rect fill="rgba(255,190,80,.35)" x="845" y="98" width="8" height="24" rx="4"/><rect class="sg" x="843" y="70" width="12" height="56" rx="6"/><rect fill="rgba(110,170,255,.35)" x="867" y="98" width="8" height="24" rx="4"/><rect class="sg" x="865" y="70" width="12" height="56" rx="6"/><path fill="rgba(110,200,120,.35)" d="M914.1 108.6A26 26 0 0 0 965.9 108.6z"/><rect class="sg" x="934" y="64.0" width="12" height="18" rx="2"/><circle class="sg" cx="940" cy="106.0" r="26"/><rect fill="rgba(255,190,80,.3)" x="39.0" y="443.0" width="42.0" height="25.0" rx="3"/><path class="sg" d="M33.0 410h4v56a4 4 0 0 0 4 4h38a4 4 0 0 0 4-4v-56h4"/><path fill="rgba(255,120,150,.32)" d="M134.8 445.5H165.2L176.0 468.5H124.0z"/><path class="sg" d="M144 400h12v28.0L178.0 470H122.0L144 428.0z"/><path fill="rgba(110,170,255,.32)" d="M822.5 456.6H857.5L871.6 484.5H808.4z"/><path class="sg" d="M834 402h12v33.6L873.6 486H806.4L834 435.6z"/><path fill="rgba(63,216,194,.35)" d="M902.1 460.8A28 28 0 0 0 957.9 460.8z"/><rect class="sg" x="924" y="414.0" width="12" height="18" rx="2"/><circle class="sg" cx="930" cy="458.0" r="28"/></svg></div>
+      <div class="intro-who">
+        <svg class="char-svg" viewBox="0 0 240 300" role="img" aria-label="چراغک، شعلهٔ کارتونی بامزه روی چراغ آزمایشگاه">
+          <defs>
+            <radialGradient id="fire1" cx="50%" cy="72%" r="70%"><stop offset="0" stop-color="#fff6c4"/><stop offset=".45" stop-color="#ffb547"/><stop offset="1" stop-color="#f26b1d"/></radialGradient>
+            <radialGradient id="fireglow" cx="50%" cy="55%" r="60%"><stop offset="0" stop-color="#ffce7a" stop-opacity=".85"/><stop offset="1" stop-color="#ffce7a" stop-opacity="0"/></radialGradient>
+            <linearGradient id="burnerMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d7f99"/><stop offset=".5" stop-color="#d3deec"/><stop offset="1" stop-color="#5d6f88"/></linearGradient>
+          </defs>
+          <ellipse class="glow-pulse" cx="120" cy="140" rx="112" ry="128" fill="url(#fireglow)"/>
+          <path d="M96 292 l6 -52 h36 l6 52z" fill="url(#burnerMetal)"/>
+          <rect x="88" y="284" width="64" height="12" rx="5" fill="#8597b0"/>
+          <rect x="98" y="232" width="44" height="12" rx="3" fill="#a9b8cc"/>
+          <g transform="translate(120 196)"><g class="chera-bob">
+            <path class="flame-outer" d="M0 -180 C38 -128 82 -92 82 -24 C82 26 46 60 0 60 C-46 60 -82 26 -82 -24 C-82 -72 -52 -98 -30 -142 C-22 -112 -12 -100 0 -96 C6 -124 0 -152 0 -180Z" fill="url(#fire1)"/>
+            <path class="flame-inner" d="M0 -86 C24 -52 48 -30 48 4 C48 34 26 48 0 48 C-26 48 -48 34 -48 4 C-48 -30 -24 -52 0 -86Z" fill="#fff3bf" opacity=".9"/>
+            <path d="M-34 -30 q12 -9 24 -2" stroke="#a4551e" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M10 -32 q12 -7 24 2" stroke="#a4551e" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <g class="chera-eyes">
+              <ellipse cx="-21" cy="-6" rx="15" ry="17" fill="#fff"/><ellipse cx="21" cy="-6" rx="15" ry="17" fill="#fff"/>
+              <circle cx="-19" cy="-2" r="8.5" fill="#25203a"/><circle cx="23" cy="-2" r="8.5" fill="#25203a"/>
+              <circle cx="-16" cy="-6" r="3.2" fill="#fff"/><circle cx="26" cy="-6" r="3.2" fill="#fff"/>
+            </g>
+            <path d="M-20 22 q20 20 40 0" stroke="#c06a2a" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <circle cx="-40" cy="16" r="10" fill="#ff9e9e" opacity=".6"/><circle cx="40" cy="16" r="10" fill="#ff9e9e" opacity=".6"/>
+          </g></g>
+        </svg>
+        <div class="who-tag">چراغک <small>دستیار شعله‌ای آزمایشگاه</small></div>
+      </div>
+      <div class="intro-talk">
+        <h2 class="sr-only">گفت‌وگو با چراغک</h2>
+        <div class="bubble">
+          <div class="typer" id="intro2-text" aria-live="polite"><span class="cursor">▌</span></div>
+          <div class="intro-actions" id="intro2-actions" style="display:none">
+            <button class="btn" id="intro2-next" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6.2L4.6 18.4A2 2 0 0 0 6.3 21.5h11.4a2 2 0 0 0 1.7-3.1L14 9.2V3"/><path d="M7.2 15.5h9.6"/></svg> بریم آزمایشگاه!</button>
+            <button class="btn ghost voice-toggle" id="voice-toggle-2" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> صدا روشن</button>
+          </div>
+        </div>
+        <div class="intro-dots" aria-hidden="true"><i></i><i class="on"></i><i></i></div>
       </div>
     </div>
   </div>
@@ -512,47 +826,98 @@ table.res tr:last-child td{border-bottom:0}
 <!-- ===================== LOBBY ===================== -->
 <section id="screen-lobby" class="screen">
   <div class="wrap">
-    <div class="lobby-head">
+    <header class="lab-hero">
       <div class="brand">
-        <span class="pill" style="--h:var(--teal)">علوم پنجم دبستان · ۹ بازی و آزمایش</span>
-        <h1>آزمایشگاه حکیمستان</h1>
-        <div class="designer">🎓 طراح: <b>مهدی شریفیان</b></div>
-        <p class="muted" style="margin-top:.3rem">به آزمایشگاه خوش اومدی، <span id="lobby-name">دانشمند</span>! یک آزمایش رو انتخاب کن.</p>
+        <span class="kicker">علوم پنجم دبستان — ۹ آزمایش و بازی</span>
+        <h1>آزمایشگاه <span>حکیمستان</span></h1>
+        <p class="hello">به آزمایشگاه خوش اومدی، <b id="lobby-name">دانشمند</b>! یک ایستگاه رو انتخاب کن تا چراغک از لوله‌های شیشه‌ای ببردت اون‌جا.</p>
+        <div class="designer">طراح: <b>مهدی شریفیان</b></div>
+        <div class="hud">
+          <span class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17.1 6.4 20l1.1-6.2L2.9 9.4l6.3-.9z" fill="currentColor" stroke="none"/></svg> ستاره‌ها <b id="hud-stars">۰</b></span>
+          <span class="chip c2"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="14.5" r="6"/><path d="M8.6 3h6.8l-2.2 5.8M10.8 8.8 8.6 3"/><path d="m12 11.8.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2-1.45-1.4 2-.3z" fill="currentColor" stroke="none"/></svg> امتیاز <b id="hud-score">۰</b></span>
+          <span class="chip c3"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4"/></svg> پیشرفت <b id="hud-progress">۰/۹</b></span>
+        </div>
       </div>
-      <div class="hud">
-        <span class="chip">⭐ ستاره‌ها: <b id="hud-stars">۰</b></span>
-        <span class="chip">🏅 امتیاز: <b id="hud-score">۰</b></span>
-        <span class="chip">📊 پیشرفت: <b id="hud-progress">۰/۹</b></span>
+      <div class="hero-flask" aria-hidden="true">
+        <svg viewBox="0 0 170 190">
+          <defs>
+            <clipPath id="heroClip"><path d="M68 14h34v46l52 90a14 14 0 0 1-12 21H28a14 14 0 0 1-12-21l52-90z"/></clipPath>
+            <linearGradient id="heroLiq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset=".5" stop-color="#3fd8c2"/><stop offset="1" stop-color="#0b8577"/></linearGradient>
+          </defs>
+          <ellipse cx="85" cy="176" rx="64" ry="8" fill="rgba(0,0,0,.25)"/>
+          <path d="M68 14h34v46l52 90a14 14 0 0 1-12 21H28a14 14 0 0 1-12-21l52-90z" fill="rgba(220,240,255,.12)"/>
+          <g clip-path="url(#heroClip)">
+            <g id="heroLiquid" style="transform:translateY(160px)">
+              <g class="liq-wave"><path d="M-10 6 q14 -8 28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 V200 H-10z" fill="url(#heroLiq)"/></g>
+              <circle class="bub" cx="70" cy="40" r="5" fill="#e6fffb"/><circle class="bub" cx="96" cy="52" r="3.5" fill="#e6fffb"/><circle class="bub" cx="84" cy="30" r="4" fill="#e6fffb"/>
+            </g>
+          </g>
+          <path d="M68 14h34v46l52 90a14 14 0 0 1-12 21H28a14 14 0 0 1-12-21l52-90z" fill="none" stroke="rgba(210,236,255,.85)" stroke-width="4" stroke-linejoin="round"/>
+          <rect x="62" y="6" width="46" height="12" rx="5" fill="rgba(210,236,255,.75)"/>
+          <path d="M60 78 l-30 52" stroke="rgba(255,255,255,.55)" stroke-width="5" stroke-linecap="round"/>
+          <g fill="rgba(255,255,255,.7)"><rect x="104" y="96" width="14" height="3" rx="1.5"/><rect x="114" y="116" width="10" height="3" rx="1.5"/><rect x="122" y="136" width="14" height="3" rx="1.5"/></g>
+        </svg>
+        <div class="cap">فلاسک دانش تو<b id="hero-pct">۰٪</b></div>
       </div>
+    </header>
+
+    <div class="sec-head">
+      <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></svg> مسیر شیشه‌ای آزمایش‌ها</h2>
+      <p>هر ایستگاهی که کامل کنی، فلاسکش پر و لوله‌اش روشن می‌شه.</p>
+    </div>
+    <div class="lab-map" id="lab-map">
+      <div class="map-status" aria-hidden="true"><span id="map-status"></span></div>
+      <div id="lab-map-host"></div>
+      <div class="map-legend" aria-hidden="true">
+        <span><i class="fl"></i> چراغک</span>
+        <span><i class="full"></i> ایستگاه کامل‌شده</span>
+        <span><i></i> ایستگاه در انتظار</span>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg> فهرست ایستگاه‌ها</h2>
+      <p>با انتخاب هر کارت، چراغک راه می‌افتد و آزمایش باز می‌شود.</p>
     </div>
     <div class="lobby-grid" id="lobby-grid"></div>
+
     <div class="lobby-actions">
-      <button class="btn ghost" id="btn-theme" type="button" aria-label="تغییر حالت روز و شب">🌙 حالت شب</button>
-      <button class="btn ghost" id="btn-report" type="button">📄 گزارش متنی</button>
-      <button class="btn ghost" id="btn-cert" type="button">🏆 گواهی‌نامهٔ پایان دوره</button>
-      <button class="btn ghost" id="btn-logout" type="button">🚪 خروج از آزمایشگاه</button>
+      <button class="btn ghost" id="btn-cert" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg> گواهی پایان دوره</button>
+      <button class="btn ghost" id="btn-report" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg> گزارش متنی</button>
+      <button class="btn ghost theme-toggle" id="btn-theme" type="button" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg> تم شب</button>
+      <button class="btn ghost" id="btn-logout" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11"/></svg> خروج و پاک کردن پیشرفت</button>
     </div>
-    <p class="muted center" style="margin-top:1.4rem;font-size:.82rem">آزمایشگاه حکیمستان — ساخته‌شده برای دانش‌آموزان پایه پنجم دبستان 🧪</p>
+    <p class="lobby-foot">آزمایشگاه حکیمستان — ساخته‌شده برای دانش‌آموزان پایهٔ پنجم دبستان — <a href="../index.html">صفحهٔ اصلی حکیمستان</a></p>
   </div>
 </section>
 
 <!-- ===================== LAB ===================== -->
 <section id="screen-lab" class="screen">
   <div class="lab-wrap">
-    <div class="lab-top">
+    <div class="bench-head">
       <div class="lab-title">
-        <button class="btn ghost small" id="lab-back">⟵ لابی</button>
-        <span class="pill" id="lab-ico-pill">آزمایش</span>
-        <h2 id="lab-title">آزمایش</h2>
+        <span class="bench-ico" id="lab-ico" aria-hidden="true"></span>
+        <div class="lab-title-copy">
+          <div class="k"><span id="lab-station">ایستگاه</span><span class="pill" id="lab-ico-pill">درس</span></div>
+          <h2 id="lab-title">آزمایش</h2>
+        </div>
       </div>
-      <span class="lab-hint" id="lab-hint">راهنما</span>
+      <button class="btn ghost small" id="lab-back" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg> مسیر آزمایش‌ها</button>
     </div>
     <div class="lab-body">
-      <div class="stage"><canvas id="lab-canvas" width="800" height="560"></canvas></div>
-      <aside class="taskbar" id="lab-taskbar"></aside>
-    </div>
-    <div class="lab-foot">
-      <button class="btn" id="lab-finish">پایان آزمایش و شروع آزمون ✅</button>
+      <div class="stage-col">
+        <div class="stage">
+          <div class="stage-bar" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span>میز آزمایش</span><span class="live">زنده</span></div>
+          <canvas id="lab-canvas" width="800" height="560"></canvas>
+        </div>
+        <div class="stage-foot">
+          <p class="lab-hint" id="lab-hint">راهنما</p>
+        </div>
+        <div class="lab-foot">
+          <button class="btn btn-lg" id="lab-finish" type="button">پایان آزمایش و شروع آزمون</button>
+        </div>
+      </div>
+      <aside class="taskbar" id="lab-taskbar" aria-label="ابزارها و یادداشت‌های آزمایش"></aside>
     </div>
   </div>
 </section>
@@ -560,13 +925,16 @@ table.res tr:last-child td{border-bottom:0}
 <!-- ===================== EMBEDDED HAKIM-GOSH GAME ===================== -->
 <section id="screen-hakim-gosh" class="screen">
   <div class="hakim-gosh-shell">
-    <div class="lab-top no-print">
+    <div class="bench-head no-print">
       <div class="lab-title">
-        <button class="btn ghost small" id="hakim-gosh-back">⟵ لابی</button>
-        <span class="pill" style="--h:var(--violet)">بازی ویژه</span>
-        <h2 id="hakim-gosh-screen-title">چشمِ حکیم</h2>
+        <span class="bench-ico" id="game-ico" aria-hidden="true"></span>
+        <div class="lab-title-copy">
+          <div class="k"><span id="game-station">بازی ویژه</span><span class="pill" style="--h:var(--violet)">بازی ویژه</span></div>
+          <h2 id="hakim-gosh-screen-title">چشمِ حکیم</h2>
+          <p class="lab-hint" id="hakim-gosh-screen-hint">بازی چهارمرحله‌ای بینایی — درس ۶ علوم پنجم</p>
+        </div>
       </div>
-      <span class="lab-hint" id="hakim-gosh-screen-hint">بازی چهارمرحله‌ای بینایی — درس ۶ علوم پنجم</span>
+      <button class="btn ghost small" id="hakim-gosh-back" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg> مسیر آزمایش‌ها</button>
     </div>
     <div class="hakim-gosh-frame-wrap">
       <iframe id="hakim-gosh-frame" title="بازی حکیم" allow="autoplay"></iframe>
@@ -577,38 +945,36 @@ table.res tr:last-child td{border-bottom:0}
 <!-- ===================== CERTIFICATE ===================== -->
 <section id="screen-cert" class="screen">
   <div class="wrap">
-    <div class="lab-top no-print">
-      <button class="btn ghost small" id="cert-back">⟵ لابی</button>
-      <span class="pill" style="--h:var(--amber)">گواهی پایان دوره</span>
+    <div class="page-head no-print">
+      <button class="btn ghost small" id="cert-back" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg> مسیر آزمایش‌ها</button>
+      <span class="pill" style="--h:var(--amber)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg> گواهی پایان دوره</span>
     </div>
     <div id="cert-sheet" class="hk-tazhib" data-hk-cert>
       <div class="cert-kicker" id="cert-kicker">✦ گواهی پایان دورهٔ آزمایشگاه حکیمستان ✦</div>
       <h2 class="cert-title">آزمایشگاه حکیمستان</h2>
       <p class="cert-line">این گواهی با افتخار به دانشمند کوشا اهدا می‌شود:</p>
       <div class="cert-name" id="cert-name">نام دانشمند</div>
-      <p class="cert-line" id="cert-line2">برای تلاش علمی در آزمایشگاه حکیمستان 🌱</p>
+      <p class="cert-line" id="cert-line2">برای تلاش علمی در آزمایشگاه حکیمستان</p>
       <div class="cert-rows">
-        <div>کلاس<b id="cert-class">—</b></div>
-        <div>مدرسه<b id="cert-school">—</b></div>
         <div>ستاره‌ها<b id="cert-stars">۰</b></div>
         <div>امتیاز<b id="cert-score">۰</b></div>
         <div>بخش‌های کامل‌شده<b id="cert-done">۰ از ۹</b></div>
         <div>تاریخ صدور<b id="cert-date">—</b></div>
       </div>
       <div class="cert-progress"><i id="cert-bar"></i></div>
-      <h3 class="cert-list-title">📋 فهرست بخش‌های دوره — تیک هر بخشی که کامل شده است</h3>
+      <h3 class="cert-list-title">فهرست بخش‌های دوره — تیک هر بخشی که کامل شده است</h3>
       <ul class="cert-list" id="cert-list"></ul>
       <p class="cert-note" id="cert-note"></p>
       <div class="cert-sign">
         <img class="hk-cert-brand" src="../assets/img/hakimestan-logo-stacked.svg" alt="لوگوی حکیمستان">
         <div>طراحی و توسعه<b>مهدی شریفیان</b></div>
       </div>
-      <p class="cert-foot">گواهی صادرشده در <span id="cert-date2">—</span> · ساعت <span id="cert-time">—</span> — آزمایشگاه حکیمستان · علوم پایهٔ پنجم دبستان</p>
+      <p class="cert-foot">گواهی صادرشده در <span id="cert-date2">—</span>، ساعت <span id="cert-time">—</span> — آزمایشگاه حکیمستان — علوم پایهٔ پنجم دبستان</p>
     </div>
     <div class="center no-print" style="margin-top:1.2rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
-      <button class="btn" id="cert-print">🖨️ چاپ / ذخیرهٔ PDF</button>
-      <button class="btn ghost" id="cert-save">💾 ذخیرهٔ متن گواهی</button>
-      <button class="btn ghost" id="cert-back2">بازگشت به لابی</button>
+      <button class="btn" id="cert-print" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 8V3h10v5"/><rect x="3" y="8" width="18" height="9" rx="2"/><path d="M7 14h10v7H7z"/></svg> چاپ / ذخیرهٔ PDF</button>
+      <button class="btn ghost" id="cert-save" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> ذخیرهٔ متن گواهی</button>
+      <button class="btn ghost" id="cert-back2" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg> بازگشت به مسیر</button>
     </div>
   </div>
 </section>
@@ -616,42 +982,64 @@ table.res tr:last-child td{border-bottom:0}
 <!-- ===================== REPORT ===================== -->
 <section id="screen-report" class="screen">
   <div class="wrap narrow">
-    <div class="lab-top no-print">
-      <button class="btn ghost small" id="report-back">⟵ لابی</button>
-      <span class="pill" style="--h:var(--violet)">گزارش متنی (فارسی)</span>
+    <div class="page-head no-print">
+      <button class="btn ghost small" id="report-back" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg> مسیر آزمایش‌ها</button>
+      <span class="pill" style="--h:var(--violet)"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg> گزارش متنی</span>
     </div>
     <div class="report-body" id="report-text"></div>
     <div class="report-actions no-print">
-      <button class="btn" id="report-print">🖨️ چاپ / ذخیرهٔ PDF</button>
-      <button class="btn ghost" id="report-save">💾 ذخیرهٔ فایل متنی</button>
-      <button class="btn ghost" id="report-back2">بازگشت به لابی</button>
+      <button class="btn" id="report-print" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 8V3h10v5"/><rect x="3" y="8" width="18" height="9" rx="2"/><path d="M7 14h10v7H7z"/></svg> چاپ / ذخیرهٔ PDF</button>
+      <button class="btn ghost" id="report-save" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> ذخیرهٔ فایل متنی</button>
+      <button class="btn ghost" id="report-back2" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg> بازگشت به مسیر</button>
     </div>
   </div>
 </section>
 
 <!-- ===================== QUIZ OVERLAY ===================== -->
 <div class="overlay" id="quiz-overlay" role="dialog" aria-modal="true" aria-labelledby="quiz-q">
-  <div class="quiz-card">
-    <div class="qbar"><i id="quiz-bar"></i></div>
+  <div class="quiz-card" id="quiz-card">
     <div class="quiz-top">
-      <span class="pill" id="quiz-badge">چالش</span>
-      <span class="muted" id="quiz-progress" style="font-size:.82rem"></span>
+      <div class="quiz-who">
+        <span class="bench-ico" id="quiz-ico" aria-hidden="true"></span>
+        <div style="min-width:0"><div class="t">آزمون ایستگاه</div><div class="n" id="quiz-badge">چالش</div></div>
+      </div>
+      <div class="qpips" id="quiz-pips" aria-hidden="true"></div>
     </div>
+    <div class="qcount" id="quiz-progress"></div>
     <div class="qtext" id="quiz-q">سؤال</div>
     <div class="opts" id="quiz-opts"></div>
-    <p class="qfb" id="quiz-fb"></p>
-    <p class="qexpl" id="quiz-expl"></p>
-    <div class="quiz-actions"><button class="btn" id="quiz-next" style="display:none">سؤال بعدی ➜</button></div>
+    <div class="qfb-wrap" id="quiz-fbw" aria-live="polite">
+      <p class="qfb" id="quiz-fb"></p>
+      <p class="qexpl" id="quiz-expl"></p>
+    </div>
+    <div class="quiz-actions"><button class="btn" id="quiz-next" type="button" style="display:none">سؤال بعدی</button></div>
   </div>
 </div>
 
 <!-- ===================== RESULT OVERLAY ===================== -->
-<div class="overlay" id="result-overlay" role="dialog" aria-modal="true">
-  <div class="quiz-card">
-    <div class="center">
-      <span class="pill" style="--h:var(--teal)">نتیجهٔ آزمایش</span>
-      <h2 id="result-title" style="margin:.4rem 0">آفرین!</h2>
-      <div class="big-stars" id="result-stars">⭐⭐⭐</div>
+<div class="overlay" id="result-overlay" role="dialog" aria-modal="true" aria-labelledby="result-title">
+  <div class="quiz-card result-card" id="result-card">
+    <div class="confetti" id="result-confetti" aria-hidden="true"></div>
+    <span class="pill" style="--h:var(--teal)">نتیجهٔ آزمایش</span>
+    <div class="result-hero">
+      <svg class="result-flask" viewBox="0 0 150 170" aria-hidden="true">
+        <defs>
+          <clipPath id="resClip"><path d="M58 10h34v40a62 62 0 1 1-34 0z"/></clipPath>
+          <linearGradient id="resLiq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ef3e0"/><stop offset="1" stop-color="#0b8577"/></linearGradient>
+        </defs>
+        <g clip-path="url(#resClip)">
+          <g id="resLiquid" style="transform:translateY(130px)">
+            <g class="liq-wave"><path d="M-10 0 q14 -8 28 0 t28 0 t28 0 t28 0 t28 0 t28 0 V200 H-10z" fill="url(#resLiq)"/></g>
+            <circle class="bub" cx="64" cy="40" r="5" fill="#e6fffb"/><circle class="bub" cx="88" cy="56" r="4" fill="#e6fffb"/><circle class="bub" cx="76" cy="30" r="3" fill="#e6fffb"/>
+          </g>
+        </g>
+        <path d="M58 10h34v40a62 62 0 1 1-34 0z" fill="none" stroke="var(--tube-edge)" stroke-width="4" stroke-linejoin="round"/>
+        <rect x="52" y="4" width="46" height="10" rx="4" fill="var(--tube-edge)"/>
+        <path d="M44 74 a50 50 0 0 0 -16 36" stroke="rgba(255,255,255,.8)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <text id="res-pct" x="75" y="122" text-anchor="middle" font-family="Lalezar,Vazirmatn,sans-serif" font-size="28" fill="var(--ink)">۰٪</text>
+      </svg>
+      <h2 id="result-title">آفرین!</h2>
+      <div class="big-stars" id="result-stars" role="img" aria-label="ستاره‌ها"></div>
     </div>
     <div class="result-grid">
       <div class="r">پاسخ درست<b id="result-correct">۰</b></div>
@@ -659,25 +1047,22 @@ table.res tr:last-child td{border-bottom:0}
       <div class="r">دقت<b id="result-acc">۰٪</b></div>
       <div class="r">امتیاز<b id="result-score">۰</b></div>
     </div>
-    <p class="center" id="result-msg" style="color:#33445f;font-weight:600"></p>
+    <p class="center" id="result-msg"></p>
     <div class="center" style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
-      <button class="btn" id="result-ok">بازگشت به لابی 🏠</button>
-      <button class="btn ghost" id="result-retry">تلاش دوباره 🔁</button>
+      <button class="btn" id="result-ok" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></svg> بازگشت به مسیر</button>
+      <button class="btn ghost" id="result-retry" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg> تلاش دوباره</button>
     </div>
   </div>
 </div>
 
 <!-- ===================== CHERAGHAK CORNER ===================== -->
 <div id="cheraghak-corner" aria-live="polite">
-  <svg class="flame" id="cheraghak-mini" viewBox="0 0 240 300" role="img" aria-label="چراغک">
-    <defs><radialGradient id="fire2" cx="50%" cy="62%" r="60%">
-      <stop offset="0" stop-color="#fff3b0"/><stop offset="45%" stop-color="#ffb547"/><stop offset="100%" stop-color="#f5852a"/>
-    </radialGradient></defs>
-    <path d="M120 18 Q162 92 168 134 Q186 190 120 236 Q54 190 72 134 Q78 92 120 18 Z" fill="url(#fire2)"/>
-    <path d="M120 66 Q146 122 146 152 Q154 190 120 214 Q86 190 94 152 Q94 122 120 66 Z" fill="#fff0b8" opacity=".85"/>
-    <circle cx="100" cy="162" r="17" fill="#fff"/><circle cx="150" cy="162" r="17" fill="#fff"/>
-    <circle cx="101" cy="166" r="9" fill="#25203a"/><circle cx="151" cy="166" r="9" fill="#25203a"/>
-    <path d="M98 190 q22 22 44 0" stroke="#c06a2a" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <svg class="flame" id="cheraghak-mini" viewBox="-60 -110 120 150" role="img" aria-label="چراغک">
+    <defs><radialGradient id="fire2" cx="50%" cy="72%" r="70%"><stop offset="0" stop-color="#fff6c4"/><stop offset=".45" stop-color="#ffb547"/><stop offset="1" stop-color="#f26b1d"/></radialGradient></defs>
+    <path class="flame-outer" d="M0 -96 C20 -68 44 -48 44 -12 C44 14 24 32 0 32 C-24 32 -44 14 -44 -12 C-44 -38 -28 -52 -16 -76 C-12 -60 -6 -54 0 -52 C3 -66 0 -82 0 -96Z" fill="url(#fire2)"/>
+    <path class="flame-inner" d="M0 -46 C13 -28 26 -16 26 2 C26 18 14 26 0 26 C-14 26 -26 18 -26 2 C-26 -16 -13 -28 0 -46Z" fill="#fff3bf" opacity=".9"/>
+    <g class="chera-eyes"><ellipse cx="-11" cy="-2" rx="6.5" ry="8" fill="#2a1f3d"/><ellipse cx="11" cy="-2" rx="6.5" ry="8" fill="#2a1f3d"/><circle cx="-9" cy="-5" r="2.3" fill="#fff"/><circle cx="13" cy="-5" r="2.3" fill="#fff"/></g>
+    <path d="M-8 12 q8 8 16 0" stroke="#b5521a" stroke-width="3.4" fill="none" stroke-linecap="round"/>
   </svg>
   <div class="tip" id="cheraghak-tip"><b>چراغک</b>سلام! من کمکت می‌کنم.</div>
 </div>
@@ -749,10 +1134,9 @@ function restoreLabProgress(){
 function applyLabTheme(theme){
   const dark = theme === 'dark';
   document.body.dataset.theme = dark ? 'dark' : 'light';
-  const label = dark ? '☀️ حالت روز' : '🌙 حالت شب';
-  ['btn-theme','btn-theme-entry'].forEach(function(id){
-    const el = document.getElementById(id);
-    if(el){ el.textContent = label; el.setAttribute('aria-pressed', dark ? 'true' : 'false'); }
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.innerHTML = ui(dark ? 'sun' : 'moon') + (dark ? ' تم روز' : ' تم شب');
+    el.setAttribute('aria-pressed', dark ? 'true' : 'false');
   });
 }
 function toggleLabTheme(){
@@ -765,6 +1149,23 @@ function toggleLabTheme(){
 const $ = (id) => document.getElementById(id);
 const fa = (n) => String(n).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
 function pad(n){ return String(n).padStart(2,'0'); }
+const UI_ICONS = {"tag": "<path d=\"M3 12V4h8l10 10-8 8z\"/><path d=\"M7.5 7.5h.01\"/>", "eraser": "<path d=\"M7 21h10M5.5 16.5l9-9 5 5-6.5 6.5H9z\"/><path d=\"M10 12l5 5\"/>", "scale": "<path d=\"M12 4v16M7 20h10M5 7h14\"/><path d=\"M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z\"/>", "leaf": "<path d=\"M5 19c0-8 5-13 15-14-1 10-6 15-14 15\"/><path d=\"M5 19l7-7\"/>", "mountain": "<path d=\"M3 20l6-11 4 6 2-3 6 8z\"/>", "rain": "<path d=\"M7 15a4 4 0 1 1 1.2-7.8A5 5 0 0 1 18 8a3.5 3.5 0 0 1 0 7z\"/><path d=\"M8 18l-1 3M12 18l-1 3M16 18l-1 3\"/>", "table": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\"/><path d=\"M4 10h16M10 4v16\"/>", "timer": "<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2.5 2M9 2h6\"/>", "snow": "<path d=\"M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9\"/><path d=\"M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5\"/>", "bolt": "<path d=\"M13 2L5 14h6l-1 8 8-12h-6z\"/>", "flask": "<path d=\"M9 3h6M10 3v6.2L4.6 18.4A2 2 0 0 0 6.3 21.5h11.4a2 2 0 0 0 1.7-3.1L14 9.2V3\"/><path d=\"M7.2 15.5h9.6\"/>", "star": "<path d=\"M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17.1 6.4 20l1.1-6.2L2.9 9.4l6.3-.9z\" fill=\"currentColor\" stroke=\"none\"/>", "medal": "<circle cx=\"12\" cy=\"14.5\" r=\"6\"/><path d=\"M8.6 3h6.8l-2.2 5.8M10.8 8.8 8.6 3\"/><path d=\"m12 11.8.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2-1.45-1.4 2-.3z\" fill=\"currentColor\" stroke=\"none\"/>", "pie": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 3v9l6.4 6.4\"/>", "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\"/>", "moon": "<path d=\"M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z\"/>", "doc": "<path d=\"M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z\"/><path d=\"M14 3v5h5M9 13h6M9 17h4\"/>", "award": "<circle cx=\"12\" cy=\"9\" r=\"6\"/><path d=\"M8.5 14 7 22l5-3 5 3-1.5-8\"/>", "logout": "<path d=\"M15 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11\"/>", "back": "<path d=\"M5 12h14M13 6l6 6-6 6\"/>", "next": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "replay": "<path d=\"M3 12a9 9 0 1 0 3-6.7L3 8\"/><path d=\"M3 3v5h5\"/>", "sound": "<path d=\"M11 5 6 9H3v6h3l5 4z\"/><path d=\"M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13\"/>", "mute": "<path d=\"M11 5 6 9H3v6h3l5 4z\"/><path d=\"m16 9 5 6M21 9l-5 6\"/>", "skip": "<path d=\"m13 6-6 6 6 6M19 6l-6 6 6 6\"/>", "check": "<path d=\"m5 12.5 4.5 4.5L19 7.5\"/>", "x": "<path d=\"M6 6l12 12M18 6 6 18\"/>", "bulb": "<path d=\"M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z\"/>", "pencil": "<path d=\"M4 20h4L19 9l-4-4L4 16z\"/><path d=\"m13.5 6.5 4 4\"/>", "route": "<circle cx=\"6\" cy=\"18\" r=\"2.5\"/><circle cx=\"18\" cy=\"6\" r=\"2.5\"/><path d=\"M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5\"/>", "grid": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/>", "book": "<path d=\"M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z\"/><path d=\"M4 19V5M8 7h7\"/>", "brush": "<path d=\"M3 21c3 0 5-1.5 5-4a3 3 0 0 0-3-3c-2 0-2 3-2 7z\"/><path d=\"m8 14 11-11 2 2-11 11\"/>", "gamepad": "<rect x=\"2\" y=\"7\" width=\"20\" height=\"11\" rx=\"5\"/><path d=\"M7 11v3M5.5 12.5h3\"/><circle cx=\"16\" cy=\"11.5\" r=\"1\" fill=\"currentColor\"/><circle cx=\"18\" cy=\"13.5\" r=\"1\" fill=\"currentColor\"/>", "quiz": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6\"/><circle cx=\"12\" cy=\"17\" r=\".9\" fill=\"currentColor\"/>", "save": "<path d=\"M12 3v12M7 10l5 5 5-5M5 21h14\"/>", "print": "<path d=\"M7 8V3h10v5\"/><rect x=\"3\" y=\"8\" width=\"18\" height=\"9\" rx=\"2\"/><path d=\"M7 14h10v7H7z\"/>"};
+function ui(name){ return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (UI_ICONS[name] || '') + '</svg>'; }
+const STAR_PATH = 'M12 2.8l2.8 5.7 6.3.9-4.6 4.4 1.1 6.2L12 17.1 6.4 20l1.1-6.2L2.9 9.4l6.3-.9z';
+function starSvg(on){ return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="' + STAR_PATH + '" fill="' + (on ? '#f3b62b' : 'var(--line-2)') + '" stroke="' + (on ? '#d18f0f' : 'none') + '" stroke-width="1"/></svg>'; }
+function reducedMotion(){ try{ return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }catch(e){ return false; } }
+function shade(hex, t){
+  const n = parseInt(String(hex).slice(1), 16); let r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  const T = t < 0 ? 0 : 255, p = Math.abs(t);
+  r = Math.round((T - r) * p + r); g = Math.round((T - g) * p + g); b = Math.round((T - b) * p + b);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+function rangeFill(inp){
+  const mn = parseFloat(inp.min) || 0, mx = parseFloat(inp.max); const top = isFinite(mx) ? mx : 100;
+  const v = parseFloat(inp.value); const pct = top > mn ? (v - mn) / (top - mn) * 100 : 0;
+  inp.style.setProperty('--p', Math.max(0, Math.min(100, pct)) + '%');
+}
+document.addEventListener('input', function(e){ if(e.target && e.target.type === 'range') rangeFill(e.target); }, true);
 /* ---------- تاریخ شمسی ---------- */
 const J_MONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 const J_WEEK=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنج‌شنبه','جمعه','شنبه'];
@@ -828,7 +1229,9 @@ function show(screenId){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const el = $(screenId); if(el) el.classList.add('active');
   window.scrollTo(0,0);
+  if(screenId === 'screen-lobby' && LOBBY_READY){ try{ renderLobby(); }catch(e){ console.error(e); } }
 }
+let LOBBY_READY = false;
 
 /* ---------- تایپ‌گر متن ---------- */
 function typeLines(el, lines, done){
@@ -956,11 +1359,11 @@ function buildLabGuide(exp){
       '</div>'+
     '</div>'+
     '<div class="lab-guide-steps" aria-label="روند آزمایش">'+
-      '<span>۱ · کشف کن</span><span>۲ · تغییر بده</span><span>۳ · نتیجه بگیر</span><span>۴ · آزمون</span>'+
+      '<span><b>۱</b>کشف کن</span><span><b>۲</b>تغییر بده</span><span><b>۳</b>نتیجه بگیر</span><span><b>۴</b>آزمون</span>'+
     '</div>'+
     '<div class="lab-guide-actions">'+
-      '<button class="btn ghost small" id="lab-guide-tip" type="button">💡 نکتهٔ حکیم</button>'+
-      '<button class="btn ghost small" id="lab-reset" type="button">🔄 شروع دوباره</button>'+ 
+      '<button class="btn ghost small" id="lab-guide-tip" type="button">'+ui('bulb')+' نکتهٔ حکیم</button>'+
+      '<button class="btn ghost small" id="lab-reset" type="button">'+ui('replay')+' شروع دوباره</button>'+
     '</div>'+
   '</div>';
 }
@@ -983,12 +1386,12 @@ function openHakimGame(exp){
     speech = '💡 دو مرحلهٔ نخست گوش حکیم را کامل کن؛ حکیم همراه توست.';
   } else if(exp.id === 'pulley'){
     appUrl = 'lab2d-apps/hakim-pulley.html';
-    title = 'آزمایشگاه قرقره 🛞';
+    title = 'آزمایشگاه قرقره';
     hint = 'قرقرهٔ ثابت و متحرک — درس ۹ علوم پنجم';
     speech = '💡 آزمایشگاه قرقره شروع شد! با کشیدن طناب، راز قرقره‌ها رو کشف کن.';
   } else if(exp.id === 'incline'){
     appUrl = 'lab2d-apps/hakim-incline.html';
-    title = 'آزمایشگاه سطح شیب‌دار 📐';
+    title = 'آزمایشگاه سطح شیب‌دار';
     hint = 'ماشین‌های ساده و سطح شیب‌دار — درس ۹ علوم پنجم';
     speech = '💡 آزمایشگاه سطح شیب‌دار شروع شد! با تغییر شیب، راز نیرو رو کشف کن.';
   }
@@ -999,6 +1402,8 @@ function openHakimGame(exp){
   frame.title = title;
   $('hakim-gosh-screen-title').textContent = title;
   $('hakim-gosh-screen-hint').textContent = hint;
+  const gi = $('game-ico'); gi.innerHTML = ICONS[exp.id] || ''; gi.style.setProperty('--h', exp.color);
+  $('game-station').textContent = 'ایستگاه ' + fa(EXPS.indexOf(exp)+1) + ' از ' + fa(EXPS.length);
   show('screen-hakim-gosh');
   cheraghakSay(speech);
 }
@@ -1014,7 +1419,9 @@ function openLab(exp){
   $('lab-title').textContent = exp.title;
   $('lab-ico-pill').textContent = exp.lesson;
   $('lab-ico-pill').style.setProperty('--h', exp.color);
-  $('lab-hint').textContent = '💡 ' + exp.hint;
+  $('lab-station').textContent = 'ایستگاه ' + fa(EXPS.indexOf(exp)+1) + ' از ' + fa(EXPS.length);
+  const labIco = $('lab-ico'); labIco.innerHTML = ICONS[exp.id] || ''; labIco.style.setProperty('--h', exp.color);
+  $('lab-hint').innerHTML = ui('bulb') + ' ' + exp.hint;
   const cv = $('lab-canvas');
   cv.setAttribute('role','img');
   cv.setAttribute('aria-label', exp.title + ' — بوم تعاملی آزمایش');
@@ -1027,7 +1434,7 @@ function openLab(exp){
   taskbar.innerHTML = buildLabGuide(exp);
   LAB.api = BUILDERS[exp.id](taskbar, cv, c);
   $('lab-finish').disabled = false;
-  $('lab-finish').textContent = 'پایان آزمایش و شروع آزمون ✅';
+  $('lab-finish').innerHTML = ui('check') + ' پایان آزمایش و شروع آزمون';
   if(window.Hakim && typeof window.Hakim.renderFace === 'function'){
     window.Hakim.renderFace('wise', $('lab-guide-face'));
   }
@@ -1066,28 +1473,39 @@ function openLab(exp){
 }
 
 /* ------- ساخت کنترل‌ها ------- */
+ctlSlider.n = 0;
 function ctlSlider(parent, label, min, max, val, stepv, onInput){
   const wrap = document.createElement('div'); wrap.className = 'ctrl';
   const lab = document.createElement('label');
   const spanT = document.createElement('span'); spanT.textContent = label;
-  const spanV = document.createElement('span'); spanV.className = 'val'; spanV.style.color = '#ffe3b8';
+  const spanV = document.createElement('span'); spanV.className = 'val';
   lab.appendChild(spanT); lab.appendChild(spanV);
   const inp = document.createElement('input');
   inp.type='range'; inp.min=min; inp.max=max; inp.step=stepv||1; inp.value=val;
+  inp.id = 'ctl-sl-' + (++ctlSlider.n); lab.htmlFor = inp.id;
   const fmt = (v)=> (stepv && stepv<1 ? num(v,1) : num(v,0));
   spanV.textContent = fmt(val);
-  inp.oninput = ()=>{ spanV.textContent = fmt(inp.value); onInput(parseFloat(inp.value)); };
+  inp.oninput = ()=>{ spanV.textContent = fmt(inp.value); rangeFill(inp); onInput(parseFloat(inp.value)); };
+  rangeFill(inp);
   wrap.appendChild(lab); wrap.appendChild(inp); parent.appendChild(wrap);
-  return { el:inp, set:(v)=>{ inp.value=v; spanV.textContent=fmt(v); } };
+  return { el:inp, set:(v)=>{ inp.value=v; spanV.textContent=fmt(v); rangeFill(inp); } };
+}
+const EMOJI_ICON = [['🖌','brush'],['🏷','tag'],['🧹','eraser'],['⚖','scale'],['🌱','leaf'],['💪','bolt'],['⛰','mountain'],['🌧','rain'],['📋','table'],['🧮','table'],['✅','check'],['⏱','timer'],['🧊','snow'],['🔁','replay']];
+function iconLabel(node, text){
+  let name = '', t = String(text);
+  for(const pair of EMOJI_ICON){ if(t.indexOf(pair[0]) === 0){ name = pair[1]; t = t.slice(pair[0].length).replace(/^[\uFE0F\s]+/, ''); break; } }
+  node.textContent = '';
+  if(name){ node.insertAdjacentHTML('afterbegin', ui(name)); node.classList.add('has-ico'); }
+  node.appendChild(document.createTextNode(t));
 }
 function ctlButton(parent, text, oncl, cls){
   const b = document.createElement('button');
-  b.className = 'btn small ' + (cls||''); b.textContent = text;
+  b.className = 'btn small ' + (cls||''); iconLabel(b, text);
   b.onclick = ()=>{ SND.click(); oncl(); };
   parent.appendChild(b); return b;
 }
 function ctlTitle(parent, text){
-  const h = document.createElement('h3'); h.textContent = text; parent.appendChild(h); return h;
+  const h = document.createElement('h3'); iconLabel(h, text); parent.appendChild(h); return h;
 }
 function ctlMetric(parent, label){
   const d = document.createElement('div'); d.className='metric';
@@ -1247,7 +1665,7 @@ BUILDERS['fossil'] = function(taskbar, cv, c){
         state.reveal[f.id] = p;
         if(p >= 0.5 && !state.found[f.id]){
           state.found[f.id] = true;
-          toast('🎉 ' + f.label + ' پیدا شد!');
+          toast(f.label.replace(/^\S+\s/, '') + ' پیدا شد!');
           cheraghakSay('آفرین! ' + f.label + ' را پیدا کردی؛ حالا در «جدول یافته‌ها» ثبتش کن 📋');
         }
       });
@@ -1604,8 +2022,18 @@ BUILDERS['erosion'] = function(taskbar, cv, c){
       const sky=c.createLinearGradient(0,0,0,300); sky.addColorStop(0, raining?'#a9bfd6':'#c9def0'); sky.addColorStop(1, raining?'#d4e3ef':'#edf6fe');
       c.fillStyle=sky; c.fillRect(0,0,W,320);
       // clouds
-      c.fillStyle= raining? 'rgba(255,255,255,.96)':'rgba(255,255,255,.82)';
-      [[160,70,60],[240,60,80],[330,78,55],[560,64,70],[660,74,52]].forEach(cl=>{ c.beginPath(); c.arc(cl[0],cl[1],cl[2]*.6,0,Math.PI*2); c.fill(); });
+      [[210,74,1.1],[575,60,.95],[395,118,.62]].forEach(function(cl, ci){
+        const cx = cl[0] + Math.sin(time*.18 + ci*1.7)*16, cy = cl[1], s = cl[2];
+        c.save(); c.translate(cx, cy); c.scale(s, s);
+        c.fillStyle = raining ? 'rgba(90,110,140,.18)' : 'rgba(90,120,160,.10)';
+        c.beginPath(); c.ellipse(4, 40, 92, 10, 0, 0, Math.PI*2); c.fill();
+        const cg = c.createLinearGradient(0, -64, 0, 36);
+        cg.addColorStop(0, raining ? '#f2f5f9' : '#ffffff'); cg.addColorStop(1, raining ? '#aebccd' : '#dde9f5');
+        c.fillStyle = cg;
+        [[-58,8,30],[-22,-14,40],[24,-24,46],[66,2,32]].forEach(function(b){ c.beginPath(); c.arc(b[0], b[1], b[2], 0, Math.PI*2); c.fill(); });
+        c.beginPath(); rr(c, -90, 2, 188, 36, 18); c.fill();
+        c.restore();
+      });
       // hill (sloped)
       const hillH = 300, hor = 470;
       const ang = slope*Math.PI/180;
@@ -1792,7 +2220,7 @@ EXTRAS['erosion'] = function(taskbar, api){
   const btn=el('button','btn small teal','🧊 فریز کن و تغییر حجم را ببین'); taskbar.appendChild(btn);
   const btn2=el('button','btn small ghost','🔁 شروع دوبارهٔ آزمایش'); btn2.style.marginTop='.3rem'; taskbar.appendChild(btn2);
   const vis=el('div'); vis.style.cssText='display:grid;place-items:center;margin-top:.4rem'; taskbar.appendChild(vis);
-  vis.innerHTML = '<svg viewBox="0 0 250 212" width="100%" style="max-width:250px" role="img" aria-label="بطری آب و سنگ شکاف‌دار در فریزر">'+
+  vis.innerHTML = '<svg class="freeze-svg" viewBox="0 0 250 212" width="100%" style="max-width:250px" role="img" aria-label="بطری آب و سنگ شکاف‌دار در فریزر">'+
     '<defs>'+
       '<linearGradient id="bw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbe8ff"/><stop offset="1" stop-color="#5aa7e0"/></linearGradient>'+
       '<linearGradient id="rk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b0aba2"/><stop offset="1" stop-color="#6b665f"/></linearGradient>'+
@@ -1803,7 +2231,7 @@ EXTRAS['erosion'] = function(taskbar, api){
     '<rect x="22" y="44" width="54" height="124" rx="12" fill="url(#bw)" stroke="#2f6fa3" stroke-width="3"/>'+
     '<rect x="34" y="28" width="30" height="20" rx="6" fill="#e8f4ff" stroke="#2f6fa3" stroke-width="3"/>'+
     '<path class="crack" d="M52 50 l8 22 l-10 14 l12 22 l-8 18 l6 20" fill="none" stroke="#16324a" stroke-width="3" opacity="0" style="transition:opacity .5s"/>'+
-    '<text x="49" y="188" text-anchor="middle" font-size="11" fill="#cfeaff">بطری آب</text>'+
+    '<text x="49" y="188" text-anchor="middle" font-size="11" class="lt">بطری آب</text>'+
     /* ---- سنگ با شکافِ پُر از آب/یخ ---- */
     '<rect class="icelens" x="166" y="60" width="18" height="92" rx="7" fill="url(#wat)" stroke="#8dc7e8" stroke-width="1.5" style="transform-origin:175px 106px;transition:transform .8s ease"/>'+
     '<g class="rockL" style="transform-origin:139px 106px;transition:transform 1s ease">'+
@@ -1814,8 +2242,8 @@ EXTRAS['erosion'] = function(taskbar, api){
       '<path d="M182 58 L190 76 L181 90 L192 104 L182 118 L190 132 L182 150 L226 152 L238 126 L232 96 L214 66 L194 54 Z" fill="url(#rk)" stroke="#4b4741" stroke-width="2"/>'+
       '<path class="mini" d="M204 84 L218 92 L210 106" fill="none" stroke="#3d3a35" stroke-width="2" opacity="0" style="transition:opacity .6s"/>'+
     '</g>'+
-    '<text x="176" y="188" text-anchor="middle" font-size="11" fill="#e6d9c0">سنگ با شکافِ پُر از آب</text>'+
-    '<text x="176" y="204" text-anchor="middle" font-size="11" fill="#ff9c9c" id="rockmsg"></text>'+
+    '<text x="176" y="188" text-anchor="middle" font-size="11" class="lt">سنگ با شکافِ پُر از آب</text>'+
+    '<text x="176" y="204" text-anchor="middle" font-size="11" class="lr" id="rockmsg"></text>'+
   '</svg>'+
   '<div class="step-hint" id="freeze-msg" style="text-align:center">آمادهٔ آزمایش: آب مایع است و شکاف سنگ پر از آب</div>';
   const timers=[];
@@ -1887,7 +2315,7 @@ const TIPS = {
 };
 function cheraghakSay(msg){
   const cor = $('cheraghak-corner'); cor.classList.add('show');
-  $('cheraghak-tip').innerHTML = '<b>چراغک 🔥</b>' + msg;
+  $('cheraghak-tip').innerHTML = '<b>چراغک</b>' + msg;
   clearTimeout(cheraT);
   cheraT = setTimeout(()=>{ cor.classList.remove('show'); }, 9000);
 }
@@ -1902,9 +2330,21 @@ $('cheraghak-mini').addEventListener('click', ()=>{
 let quizCtx = null;
 function startQuiz(expId, onDone){
   const qs = QUESTIONS[expId];
-  quizCtx = { expId, qs, idx:0, correct:0, onDone, startTime:Date.now() };
+  quizCtx = { expId, qs, idx:0, correct:0, onDone, startTime:Date.now(), results:[] };
+  const exp = LAB.exp || EXPS.find(function(e){ return e.id === expId; });
+  if(exp){
+    $('quiz-card').style.setProperty('--h', exp.color);
+    const qi = $('quiz-ico'); qi.innerHTML = ICONS[exp.id] || ''; qi.style.setProperty('--h', exp.color);
+  }
   $('quiz-overlay').classList.add('show');
   renderQuiz();
+}
+function renderQuizPips(){
+  const qs = quizCtx.qs, idx = quizCtx.idx, res = quizCtx.results;
+  $('quiz-pips').innerHTML = qs.map(function(_, i){
+    const cls = res[i] === true ? 'ok' : (res[i] === false ? 'no' : (i === idx ? 'cur' : ''));
+    return '<svg class="' + cls + '" viewBox="0 0 26 34" focusable="false"><path class="pip-glass" d="M9 2h8v9l7 14a4 4 0 0 1-3.6 6H5.6A4 4 0 0 1 2 25l7-14z"/><path class="pip-liq" d="M6.2 20h13.6l2.6 5.3a2.6 2.6 0 0 1-2.3 3.7H5.9a2.6 2.6 0 0 1-2.3-3.7z"/></svg>';
+  }).join('');
 }
 function renderQuiz(){
   const {qs, idx} = quizCtx;
@@ -1918,35 +2358,54 @@ function renderQuiz(){
   quizCtx.order = order;
   $('quiz-badge').textContent = LAB.exp ? LAB.exp.title : 'چالش';
   $('quiz-progress').textContent = 'سؤال ' + fa(idx+1) + ' از ' + fa(qs.length);
-  $('quiz-bar').style.width = ((idx)/qs.length*100) + '%';
+  renderQuizPips();
   $('quiz-q').textContent = q.q;
   const box = $('quiz-opts'); box.innerHTML = '';
   $('quiz-fb').textContent=''; $('quiz-fb').className='qfb';
   $('quiz-expl').textContent='';
+  $('quiz-fbw').className='qfb-wrap';
   $('quiz-next').style.display='none';
   const keys = ['الف','ب','پ','ت'];
   order.forEach((origIdx, dispIdx)=>{
     const b = document.createElement('button');
     b.className='opt'; b.type='button';
-    b.innerHTML = '<span class="k">'+keys[dispIdx]+'</span><span>'+q.opts[origIdx]+'</span>';
+    b.innerHTML = '<span class="k">'+keys[dispIdx]+'</span><span class="tx">'+q.opts[origIdx]+'</span><span class="mk" aria-hidden="true"></span>';
     b.onclick = ()=> answerQ(dispIdx, origIdx, box, q);
     box.appendChild(b);
   });
 }
+function popBubbles(btn){
+  if(!btn || reducedMotion()) return;
+  const pop = document.createElement('span'); pop.className = 'pop'; pop.setAttribute('aria-hidden', 'true');
+  for(let i = 0; i < 12; i++){
+    const b = document.createElement('i');
+    const a = Math.random() * Math.PI * 2, d = 26 + Math.random() * 46;
+    b.style.setProperty('--dx', (Math.cos(a) * d).toFixed(1) + 'px');
+    b.style.setProperty('--dy', (Math.sin(a) * d * .7 - 14).toFixed(1) + 'px');
+    b.style.animationDelay = (Math.random() * .12).toFixed(2) + 's';
+    const s = 6 + Math.random() * 8; b.style.width = b.style.height = s.toFixed(1) + 'px';
+    pop.appendChild(b);
+  }
+  btn.appendChild(pop);
+  setTimeout(function(){ if(pop.parentNode) pop.parentNode.removeChild(pop); }, 1100);
+}
 function answerQ(dispChoice, origChoice, box, q){
-  if(quizCtx.answered) return; quizCtx.answered = true;
+  if(!quizCtx || quizCtx.answered) return; quizCtx.answered = true;
   const t = Math.round((Date.now()-quizCtx.qStart)/1000);
   const isOk = origChoice === q.a;
   [...box.children].forEach((b,i)=>{
-    b.classList.add('locked');
-    if(quizCtx.order[i] === q.a) b.classList.add('correct');
-    if(i === dispChoice && !isOk) b.classList.add('wrong');
+    b.classList.add('locked'); b.setAttribute('aria-disabled', 'true');
+    if(quizCtx.order[i] === q.a){ b.classList.add('correct'); b.querySelector('.mk').innerHTML = ui('check'); }
+    if(i === dispChoice && !isOk){ b.classList.add('wrong'); b.querySelector('.mk').innerHTML = ui('x'); }
   });
-  if(isOk){ SND.correct(); quizCtx.correct++; }
+  quizCtx.results[quizCtx.idx] = isOk;
+  renderQuizPips();
+  if(isOk){ SND.correct(); quizCtx.correct++; popBubbles(box.children[dispChoice]); }
   else SND.wrong();
-  $('quiz-fb').textContent = isOk? '✅ آفرین! درست بود.' : '❌ این یکی نه... جواب درست مشخص شد.';
+  $('quiz-fb').innerHTML = isOk ? ui('check') + ' آفرین! درست بود.' : ui('x') + ' این یکی نه… جواب درست سبز شد.';
   $('quiz-fb').className = 'qfb ' + (isOk?'ok':'no');
-  $('quiz-expl').textContent = '💡 ' + q.expl;
+  $('quiz-expl').textContent = q.expl;
+  $('quiz-fbw').className = 'qfb-wrap show ' + (isOk?'ok':'no');
   // ---- log answer to DB
   sendToDB({
     action:'answer', type:'answer', student_name:STUDENT.name, student_class:STUDENT.cls, student_school:STUDENT.school,
@@ -1958,13 +2417,15 @@ function answerQ(dispChoice, origChoice, box, q){
   persistLabProgress();
   const next = $('quiz-next');
   next.style.display = 'inline-flex';
-  next.textContent = (quizCtx.idx < quizCtx.qs.length-1)? 'سؤال بعدی ➜' : 'پایان چالش ✅';
+  next.innerHTML = (quizCtx.idx < quizCtx.qs.length-1) ? 'سؤال بعدی ' + ui('next') : ui('check') + ' پایان آزمون';
   next.onclick = ()=>{
     SND.click();
+    if(!quizCtx) return;
     quizCtx.answered = false;
     if(quizCtx.idx < quizCtx.qs.length-1){ quizCtx.idx++; renderQuiz(); }
     else { finishQuiz(); }
   };
+  setTimeout(function(){ try{ next.focus({preventScroll:true}); }catch(e){} }, 40);
 }
 function finishQuiz(){
   $('quiz-overlay').classList.remove('show');
@@ -1977,6 +2438,7 @@ function finishQuiz(){
   const prevStars = PROGRESS.stars[expId]||0;
   PROGRESS.stars[expId] = Math.max(prevStars, stars);
   PROGRESS.score[expId] = Math.max(PROGRESS.score[expId]||0, score);
+  if(!PROGRESS.done[expId]) LAB.justDone = expId;
   PROGRESS.done[expId] = true;
   if(!PROGRESS.completedAt[expId]) PROGRESS.completedAt[expId] = Date.now();
   PROGRESS.attempts[expId] = (PROGRESS.attempts[expId]||0) + 1;
@@ -1991,16 +2453,40 @@ function finishQuiz(){
    ============================================================ */
 function showResult(r){
   if(r.stars>=3) SND.star(); else SND.success();
-  $('result-title').textContent = r.stars>=3? 'فوق‌العاده! 🏆' : (r.stars===2? 'خوب بود! 👏':'ادامه بده! 💪');
-  $('result-stars').textContent = '⭐'.repeat(r.stars) + '☆'.repeat(3-r.stars);
+  const exp = EXPS.find(function(e){ return e.id === r.expId; });
+  if(exp) $('result-card').style.setProperty('--h', exp.color);
+  $('result-title').textContent = r.stars>=3 ? 'فوق‌العاده! دانشمند واقعی' : (r.stars===2 ? 'خوب بود! نزدیک به کمال' : 'ادامه بده! دوباره امتحان کن');
+  const st = $('result-stars');
+  st.setAttribute('aria-label', fa(r.stars) + ' ستاره از ۳');
+  st.innerHTML = [0,1,2].map(function(i){ return starSvg(i >= 3 - r.stars).replace('<svg ', '<svg class="' + (i >= 3 - r.stars ? 'on' : 'off') + '" '); }).join('');
   $('result-correct').textContent = fa(r.correct);
   $('result-total').textContent = fa(r.total);
   $('result-acc').textContent = fa(r.acc)+'٪';
   $('result-score').textContent = fa(r.score);
-  $('result-msg').textContent = r.stars>=3? 'تو یه دانشمند واقعی هستی! حالا یه آزمایش دیگه رو امتحان کن.' :
+  $('res-pct').textContent = fa(r.acc) + '٪';
+  $('result-msg').textContent = r.stars>=3? 'تو یه دانشمند واقعی هستی! حالا یه ایستگاه دیگه رو امتحان کن.' :
     (r.stars===2? 'نزدیک بود به کمال! یه بار دیگه تلاش کن تا ۳ ستاره بگیری.' :
      'اشکالی نداره؛ چراغک می‌گه دوباره امتحان کن، این‌بار حتماً بهتر می‌شی!');
+  const liq = $('resLiquid');
+  liq.style.transition = 'none'; liq.style.transform = 'translateY(172px)';
   $('result-overlay').classList.add('show');
+  const target = 172 - Math.max(.08, r.acc / 100) * 132;
+  requestAnimationFrame(function(){ liq.style.transition = ''; requestAnimationFrame(function(){ liq.style.transform = 'translateY(' + target.toFixed(1) + 'px)'; }); });
+  const rm = reducedMotion();
+  [...st.children].forEach(function(s, i){ setTimeout(function(){ s.classList.add('in'); if(s.classList.contains('on')) SND.tick(); }, rm ? 0 : 500 + i * 280); });
+  const cf = $('result-confetti'); cf.innerHTML = '';
+  if(r.stars >= 2 && !rm){
+    const cols = ['#f3b62b','#3fd8c2','#ff7d9a','#a996ff','#5cc8f0','#ff9f43'];
+    for(let i = 0; i < 34; i++){
+      const p = document.createElement('i');
+      p.style.left = (Math.random() * 100).toFixed(1) + '%';
+      p.style.background = cols[i % cols.length];
+      p.style.animationDelay = (Math.random() * .9).toFixed(2) + 's';
+      p.style.animationDuration = (2 + Math.random() * 1.4).toFixed(2) + 's';
+      cf.appendChild(p);
+    }
+  }
+  setTimeout(function(){ try{ $('result-ok').focus({preventScroll:true}); }catch(e){} }, 60);
 }
 
 /* ============================================================
@@ -2014,32 +2500,294 @@ function updateHUD(){
   $('hud-score').textContent = fa(totalScore());
   $('hud-progress').textContent = fa(doneCount())+'/'+fa(EXPS.length);
 }
+/* ============================================================
+   مدار شیشه‌ای — نقشهٔ زندهٔ ایستگاه‌های آزمایشگاه
+   هر ایستگاه یک فلاسک است و ایستگاه‌ها با لوله‌های شیشه‌ای به هم
+   وصل‌اند. با انتخاب ایستگاه، چراغک از درون لوله‌ها به آن‌جا می‌رود
+   و بعد آزمایش باز می‌شود. ایستگاهِ کامل‌شده پر از مایع رنگی است و
+   مایعش به لوله‌های کناری هم می‌ریزد.
+   ============================================================ */
+const MAP_SHORT = {
+  fossil:'فسیل‌ها', lever:'اهرم و تعادل', 'water-transfer':'آب در گیاه', arm:'بازو و مفصل', erosion:'فرسایش خاک',
+  'hakim-gosh':'چشم حکیم', 'hakim-goosh':'گوش حکیم', pulley:'قرقره', incline:'سطح شیب‌دار'
+};
+const IFRAME_EXPS = ['hakim-gosh','hakim-goosh','pulley','incline'];
+const LAB_AT_KEY = 'hakim_lab2d_at';
+const FLAME_D = 'M0 -96 C20 -68 44 -48 44 -12 C44 14 24 32 0 32 C-24 32 -44 14 -44 -12 C-44 -38 -28 -52 -16 -76 C-12 -60 -6 -54 0 -52 C3 -66 0 -82 0 -96Z';
+const FLAME_IN = 'M0 -46 C13 -28 26 -16 26 2 C26 18 14 26 0 26 C-14 26 -26 18 -26 2 C-26 -16 -13 -28 0 -46Z';
+
+const LabMap = (function(){
+  const NS = 'http://www.w3.org/2000/svg';
+  let L = null, svg = null, pathEl = null, stLens = [], at = 0, busy = false, lastKind = '', statusT = null;
+  try{ const v = parseInt(localStorage.getItem(LAB_AT_KEY) || '0', 10); if(v >= 0 && v < EXPS.length) at = v; }catch(e){}
+
+  function layoutFor(w){
+    if(w >= 700){
+      const pts = [];
+      [880,690,500,310,120].forEach(function(x){ pts.push([x,128]); });
+      [215,405,595,785].forEach(function(x){ pts.push([x,346]); });
+      return {kind:'wide', w:1000, h:470, pts:pts, r:42, fs:16, num:15, nr:13, ss:14, tw:22, sc:.46};
+    }
+    const pts = [], ys = [104,286,468];
+    [288,180,72].forEach(function(x){ pts.push([x,ys[0]]); });
+    [72,180,288].forEach(function(x){ pts.push([x,ys[1]]); });
+    [288,180,72].forEach(function(x){ pts.push([x,ys[2]]); });
+    return {kind:'narrow', w:360, h:560, pts:pts, r:31, fs:12.5, num:12, nr:10.5, ss:11, tw:17, sc:.34};
+  }
+  function segD(a, b){
+    if(a[1] === b[1]) return 'M' + a[0] + ' ' + a[1] + ' L' + b[0] + ' ' + b[1];
+    const side = (a[0] < L.w / 2) ? -1 : 1;
+    const cx = (side < 0 ? Math.min(a[0], b[0]) : Math.max(a[0], b[0])) + side * (L.kind === 'wide' ? 118 : 46);
+    return 'M' + a[0] + ' ' + a[1] + ' C' + cx + ' ' + a[1] + ' ' + cx + ' ' + b[1] + ' ' + b[0] + ' ' + b[1];
+  }
+  function perch(i){
+    const p = L.pts[i];
+    return [p[0], p[1] - L.r * 1.34 - 32 * L.sc - 3];
+  }
+  function lvlFor(done){ return done ? -L.r * .4 : L.r + 2; }
+  function status(msg){
+    const s = $('map-status'); if(!s) return;
+    clearTimeout(statusT);
+    if(msg){ s.textContent = msg; s.classList.add('show'); }
+    else s.classList.remove('show');
+  }
+  function stationAria(exp, i, done, st){
+    return (MAP_SHORT[exp.id] || exp.title) + ' — ایستگاه ' + fa(i+1) + ': ' + exp.title + '، ' +
+      (done ? 'کامل شده با ' + fa(st) + ' ستاره از ۳' : 'هنوز انجام نشده') + (i === at ? '، چراغک این‌جاست' : '');
+  }
+
+  function build(fresh){
+    const host = $('lab-map-host'); if(!host) return;
+    const w = host.clientWidth || Math.min(1100, (window.innerWidth || 1000) - 40);
+    L = layoutFor(w); lastKind = L.kind;
+    const P = L.pts, r = L.r, tw = L.tw;
+    const segs = [];
+    for(let i = 0; i < P.length - 1; i++) segs.push(segD(P[i], P[i+1]));
+    const full = segs.map(function(d, i){ return i === 0 ? d : d.replace(/^M\S+ \S+ /, ''); }).join(' ');
+    let s = '<svg viewBox="0 0 ' + L.w + ' ' + L.h + '" role="group" aria-label="نقشهٔ ایستگاه‌های آزمایشگاه؛ هر ایستگاه یک دکمه است" focusable="false">';
+    s += '<defs>';
+    s += '<pattern id="mpDots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.3" class="bench-dot"/></pattern>';
+    s += '<radialGradient id="mpGlow" cx="50%" cy="55%" r="55%"><stop offset="0" stop-color="#ffcf6b" stop-opacity=".7"/><stop offset="1" stop-color="#ffcf6b" stop-opacity="0"/></radialGradient>';
+    s += '<radialGradient id="mpFire" cx="50%" cy="72%" r="70%"><stop offset="0" stop-color="#fff6c4"/><stop offset=".45" stop-color="#ffb547"/><stop offset="1" stop-color="#f26b1d"/></radialGradient>';
+    s += '<radialGradient id="mpBg1" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#3fd8c2" stop-opacity=".16"/><stop offset="1" stop-color="#3fd8c2" stop-opacity="0"/></radialGradient>';
+    s += '<radialGradient id="mpBg2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffb547" stop-opacity=".16"/><stop offset="1" stop-color="#ffb547" stop-opacity="0"/></radialGradient>';
+    EXPS.forEach(function(exp, i){
+      s += '<linearGradient id="mpg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + shade(exp.color, .35) + '"/><stop offset="1" stop-color="' + shade(exp.color, -.18) + '"/></linearGradient>';
+    });
+    s += '</defs>';
+    s += '<rect width="' + L.w + '" height="' + L.h + '" fill="url(#mpDots)"/>';
+    s += '<circle cx="' + (L.w * .82) + '" cy="' + (L.h * .25) + '" r="' + (L.w * .3) + '" fill="url(#mpBg1)"/>';
+    s += '<circle cx="' + (L.w * .18) + '" cy="' + (L.h * .78) + '" r="' + (L.w * .3) + '" fill="url(#mpBg2)"/>';
+    /* لوله‌ها */
+    s += '<path class="tube-edge" d="' + full + '" stroke-width="' + tw + '"/>';
+    s += '<path class="tube-glass" d="' + full + '" stroke-width="' + (tw - 5) + '"/>';
+    segs.forEach(function(d, i){
+      const a = EXPS[i], b = EXPS[i+1];
+      const da = !!PROGRESS.done[a.id] && a.id !== fresh, db = !!PROGRESS.done[b.id] && b.id !== fresh;
+      if(da) s += '<path class="tube-liquid" d="' + d + '" stroke="' + a.color + '" stroke-width="' + (tw - 10) + '" pathLength="100" stroke-dasharray="50 100"/>';
+      if(db) s += '<path class="tube-liquid" d="' + d + '" stroke="' + b.color + '" stroke-width="' + (tw - 10) + '" pathLength="100" stroke-dasharray="0 50 50 100"/>';
+      if(da && db) s += '<path class="tube-flow" d="' + d + '" stroke-width="' + Math.max(3, tw - 15) + '"/>';
+    });
+    s += '<path class="tube-shine" d="' + full + '" stroke-width="2" transform="translate(0 -' + (tw * .22).toFixed(1) + ')"/>';
+    /* ایستگاه‌ها */
+    EXPS.forEach(function(exp, i){
+      const x = P[i][0], y = P[i][1];
+      const done = !!PROGRESS.done[exp.id], st = PROGRESS.stars[exp.id] || 0;
+      const lvl = (exp.id === fresh) ? lvlFor(false) : lvlFor(done);
+      s += '<g class="st' + (done ? ' done' : '') + (i === at ? ' here' : '') + '" data-i="' + i + '" role="button" tabindex="0" aria-label="' + stationAria(exp, i, done, st) + '" transform="translate(' + x + ' ' + y + ')">';
+      s += '<circle class="st-hit" r="' + (r + 22) + '"/>';
+      s += '<circle class="st-ring" r="' + (r + 9) + '" stroke="' + exp.color + '"/>';
+      s += '<g class="st-body">';
+      s += '<rect class="bulb-neck" x="' + (-r * .3).toFixed(1) + '" y="' + (-r * 1.34).toFixed(1) + '" width="' + (r * .6).toFixed(1) + '" height="' + (r * .6).toFixed(1) + '" rx="3"/>';
+      s += '<circle class="bulb-glass" r="' + r + '"/>';
+      s += '<clipPath id="mpc' + i + '"><circle r="' + (r - 2.5) + '"/></clipPath>';
+      let wave = 'M' + (-r * 2) + ' 0 q' + (r * .25).toFixed(1) + ' ' + (-r * .14).toFixed(1) + ' ' + (r * .5).toFixed(1) + ' 0';
+      for(let k = 0; k < 8; k++) wave += ' t' + (r * .5).toFixed(1) + ' 0';
+      wave += ' V' + (r * 3) + ' H' + (-r * 2) + 'z';
+      s += '<g clip-path="url(#mpc' + i + ')"><g class="st-liq" style="transform:translateY(' + lvl.toFixed(1) + 'px)"><g class="liq-wave"><path d="' + wave + '" fill="url(#mpg' + i + ')"/></g></g>';
+      s += '<g class="st-bubbles"><circle cx="' + (-r * .3).toFixed(1) + '" cy="' + (r * .55).toFixed(1) + '" r="3" fill="#fff"/><circle cx="' + (r * .22).toFixed(1) + '" cy="' + (r * .62).toFixed(1) + '" r="2.4" fill="#fff"/><circle cx="' + (r * .04).toFixed(1) + '" cy="' + (r * .4).toFixed(1) + '" r="2" fill="#fff"/></g></g>';
+      s += '<path class="bulb-shine" d="M' + (-r * .7).toFixed(1) + ' ' + (-r * .2).toFixed(1) + ' A' + (r * .74).toFixed(1) + ' ' + (r * .74).toFixed(1) + ' 0 0 1 ' + (-r * .24).toFixed(1) + ' ' + (-r * .66).toFixed(1) + '"/>';
+      s += '<g class="st-ico">' + (ICONS[exp.id] || '').replace('<svg ', '<svg x="' + (-r * .42).toFixed(1) + '" y="' + (-r * .42).toFixed(1) + '" width="' + (r * .84).toFixed(1) + '" height="' + (r * .84).toFixed(1) + '" aria-hidden="true" focusable="false" ') + '</g>';
+      s += '</g>';
+      const nx = (r * .74).toFixed(1), ny = (-r * .74).toFixed(1);
+      s += '<circle class="st-num-bg" cx="' + nx + '" cy="' + ny + '" r="' + L.nr + '" fill="' + shade(exp.color, -.42) + '"/>';
+      s += '<text class="st-num" x="' + nx + '" y="' + ny + '" dy=".08em" text-anchor="middle" dominant-baseline="central" font-size="' + L.num + '">' + fa(i+1) + '</text>';
+      s += '<text class="st-label" y="' + (r + L.fs + 8).toFixed(1) + '" text-anchor="middle" font-size="' + L.fs + '">' + (MAP_SHORT[exp.id] || exp.title) + '</text>';
+      const ss = L.ss, sy = r + L.fs + 15;
+      for(let k = 0; k < 3; k++){
+        const sx = (k - 1) * (ss + 3) - ss / 2;
+        s += '<svg x="' + sx.toFixed(1) + '" y="' + sy.toFixed(1) + '" width="' + ss + '" height="' + ss + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="map-star' + (k >= 3 - st ? '' : ' off') + '" d="' + STAR_PATH + '"/></svg>';
+      }
+      s += '</g>';
+    });
+    /* چراغک */
+    const pp = perch(at);
+    s += '<g id="chera-trail"></g>';
+    s += '<g id="chera" transform="translate(' + pp[0].toFixed(1) + ' ' + pp[1].toFixed(1) + ')"><g class="chera-bob"><g transform="scale(' + L.sc + ')">' +
+      '<ellipse class="glow-pulse" cx="0" cy="-30" rx="74" ry="84" fill="url(#mpGlow)"/>' +
+      '<path class="flame-outer" d="' + FLAME_D + '" fill="url(#mpFire)"/>' +
+      '<path class="flame-inner" d="' + FLAME_IN + '" fill="#fff3bf" opacity=".92"/>' +
+      '<g class="chera-eyes"><ellipse cx="-11" cy="-2" rx="6.5" ry="8" fill="#2a1f3d"/><ellipse cx="11" cy="-2" rx="6.5" ry="8" fill="#2a1f3d"/><circle cx="-9" cy="-5" r="2.3" fill="#fff"/><circle cx="13" cy="-5" r="2.3" fill="#fff"/></g>' +
+      '<path d="M-8 12 q8 8 16 0" stroke="#b5521a" stroke-width="3.4" fill="none" stroke-linecap="round"/>' +
+      '<circle cx="-21" cy="9" r="5" fill="#ff8f7a" opacity=".55"/><circle cx="21" cy="9" r="5" fill="#ff8f7a" opacity=".55"/>' +
+      '</g></g></g>';
+    s += '</svg>';
+    host.innerHTML = s;
+    svg = host.querySelector('svg');
+    /* طول مسیر تا هر ایستگاه، برای حرکت چراغک روی لوله‌ها */
+    pathEl = null; stLens = [0];
+    try{
+      const tmp = document.createElementNS(NS, 'path');
+      tmp.setAttribute('fill', 'none'); tmp.setAttribute('stroke', 'none');
+      svg.appendChild(tmp);
+      let acc = 0;
+      segs.forEach(function(d){ tmp.setAttribute('d', d); acc += tmp.getTotalLength(); stLens.push(acc); });
+      tmp.setAttribute('d', full);
+      if(tmp.getTotalLength() > 0 && typeof tmp.getPointAtLength === 'function') pathEl = tmp;
+    }catch(e){ pathEl = null; }
+    svg.querySelectorAll('.st').forEach(function(g){
+      const i = +g.getAttribute('data-i');
+      g.addEventListener('click', function(){ go(i); });
+      g.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(i); } });
+    });
+    if(fresh){
+      const fi = EXPS.findIndex(function(e){ return e.id === fresh; });
+      const g = svg.querySelector('.st[data-i="' + fi + '"]');
+      const lq = g && g.querySelector('.st-liq');
+      if(lq){
+        const fill = function(){ lq.style.transform = 'translateY(' + lvlFor(true).toFixed(1) + 'px)'; g.classList.add('boil'); };
+        if(reducedMotion()) fill();
+        else setTimeout(function(){ requestAnimationFrame(fill); }, 350);
+        status('ایستگاه «' + (MAP_SHORT[fresh] || '') + '» کامل شد؛ فلاسکش پر شد!');
+        statusT = setTimeout(function(){ status(''); }, 3200);
+      }
+    }
+  }
+
+  function setAt(i){
+    at = i;
+    try{ localStorage.setItem(LAB_AT_KEY, String(i)); }catch(e){}
+  }
+  function placeAt(i){
+    if(!svg || !L) return;
+    const g = svg.querySelector('#chera'); const p = perch(i);
+    if(g) g.setAttribute('transform', 'translate(' + p[0].toFixed(1) + ' ' + p[1].toFixed(1) + ')');
+    svg.querySelectorAll('.st').forEach(function(n){ n.classList.toggle('here', +n.getAttribute('data-i') === i); });
+  }
+  function spawnTrail(layer, x, y){
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', x.toFixed(1)); c.setAttribute('cy', y.toFixed(1)); c.setAttribute('r', (1.6 + Math.random() * 2.6).toFixed(1));
+    c.setAttribute('fill', Math.random() < .5 ? '#ffcf6b' : '#fff1b8');
+    layer.appendChild(c);
+    if(typeof c.animate === 'function'){
+      const a = c.animate([{opacity:.95, transform:'translate(0,0)'}, {opacity:0, transform:'translate(' + (Math.random() * 10 - 5).toFixed(1) + 'px,-16px)'}], {duration:720, easing:'ease-out'});
+      a.onfinish = function(){ c.remove(); };
+    } else setTimeout(function(){ c.remove(); }, 400);
+  }
+  /* چراغک را از ایستگاه فعلی تا ایستگاه i روی لوله‌ها حرکت می‌دهد */
+  function travelTo(i){
+    return new Promise(function(resolve){
+      if(!svg || !L){ setAt(i); resolve(); return; }
+      if(!pathEl || reducedMotion() || i === at){
+        setAt(i); placeAt(i);
+        const g0 = svg.querySelector('.st[data-i="' + i + '"]'); if(g0) g0.classList.add('boil');
+        setTimeout(resolve, (reducedMotion() || !pathEl) ? 0 : 380);
+        return;
+      }
+      const g = svg.querySelector('#chera'), trail = svg.querySelector('#chera-trail');
+      const l0 = stLens[at], l1 = stLens[i];
+      const dur = clamp(Math.abs(l1 - l0) * 1.45, 950, 2600);
+      const pa = perch(at), pb = perch(i), sc = L.sc;
+      const t0 = performance.now(); let lastTrail = 0;
+      status('چراغک در راه «' + (MAP_SHORT[EXPS[i].id] || EXPS[i].title) + '»…');
+      svg.querySelectorAll('.st.here').forEach(function(n){ n.classList.remove('here'); });
+      g.classList.add('moving');
+      function frame(now){
+        const t = clamp((now - t0) / dur, 0, 1);
+        const e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const p = pathEl.getPointAtLength(l0 + (l1 - l0) * e);
+        const tx = p.x, ty = p.y + 14 * sc;
+        let x, y, k2 = .7;
+        if(t < .16){ const k = t / .16; x = lerp(pa[0], tx, k); y = lerp(pa[1], ty, k) - Math.sin(k * Math.PI) * 18; k2 = lerp(1, .7, k); }
+        else if(t > .84){ const k = (t - .84) / .16; x = lerp(tx, pb[0], k); y = lerp(ty, pb[1], k) - Math.sin(k * Math.PI) * 18; k2 = lerp(.7, 1, k); }
+        else { x = tx; y = ty; }
+        g.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ') scale(' + k2.toFixed(3) + ')');
+        if(now - lastTrail > 40 && t > .08 && t < .92){ lastTrail = now; spawnTrail(trail, x, y - 22 * sc); }
+        if(t < 1){ requestAnimationFrame(frame); return; }
+        g.classList.remove('moving');
+        setAt(i); placeAt(i); status('');
+        const stg = svg.querySelector('.st[data-i="' + i + '"]');
+        if(stg) stg.classList.add('boil');
+        SND.correct();
+        setTimeout(resolve, 520);
+      }
+      SND.tick();
+      requestAnimationFrame(frame);
+    });
+  }
+  /* انتخاب ایستگاه: نقشه را نشان بده، چراغک را ببر و آزمایش را باز کن */
+  function go(i){
+    if(busy) return Promise.resolve();
+    const exp = EXPS[i]; if(!exp) return Promise.resolve();
+    busy = true; SND.click();
+    const mapEl = $('lab-map');
+    let needScroll = false;
+    try{ const rc = mapEl.getBoundingClientRect(); needScroll = rc.bottom < 140 || rc.top > (window.innerHeight || 800) - 200; }catch(e){}
+    const run = function(){
+      return travelTo(i).then(function(){ busy = false; openLab(exp); }, function(){ busy = false; openLab(exp); });
+    };
+    if(needScroll && !reducedMotion() && mapEl.scrollIntoView){
+      mapEl.scrollIntoView({behavior:'smooth', block:'center'});
+      return new Promise(function(res){ setTimeout(function(){ run().then(res); }, 560); });
+    }
+    return run();
+  }
+  let rto = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(rto);
+    rto = setTimeout(function(){
+      const host = $('lab-map-host'); if(!host || busy || !host.clientWidth) return;
+      if(layoutFor(host.clientWidth).kind !== lastKind) build(null);
+    }, 200);
+  });
+  return { build:build, travelTo:travelTo, go:go, get at(){ return at; }, get busy(){ return busy; } };
+})();
+
 function renderLobby(){
-  const grid = $('lobby-grid'); grid.innerHTML='';
-  EXPS.forEach((exp,i)=>{
-    const card = document.createElement('article');
+  const grid = $('lobby-grid'); grid.innerHTML = '';
+  EXPS.forEach(function(exp, i){
+    const card = document.createElement('div');
     card.className = 'exp-card'; card.style.setProperty('--h', exp.color);
-    card.tabIndex = 0; card.setAttribute('role','button');
-    card.setAttribute('aria-label', exp.title + ' — شروع بازی');
-    const st = PROGRESS.stars[exp.id]||0;
+    card.tabIndex = 0; card.setAttribute('role', 'button');
+    card.setAttribute('aria-labelledby', 'card-t-' + i + ' card-s-' + i);
+    const done = !!PROGRESS.done[exp.id];
+    const st = PROGRESS.stars[exp.id] || 0;
     card.innerHTML =
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem">'+
-        '<div class="exp-ico">'+ICONS[exp.id]+'</div>'+
-        (PROGRESS.done[exp.id]?'<span class="done-badge">انجام شد ✓</span>':'')+
-      '</div>'+
-      '<h3>'+fa(i+1)+'. '+exp.title+'</h3>'+
-      '<div class="les">📘 '+exp.lesson+'</div>'+
-      '<div class="exp-desc">💡 '+exp.hint+'</div>'+
-      '<div class="exp-card-footer">'+
-        '<div class="exp-stars">'+ '★'.repeat(st) + '<span style="color:rgba(255,255,255,.22)">'+'★'.repeat(3-st)+'</span></div>'+
-        '<span class="exp-start">شروع بازی ➜</span>'+
+      '<div class="exp-top">' +
+        '<div class="exp-ico" aria-hidden="true">' + ICONS[exp.id] + '<span class="n">' + fa(i+1) + '</span></div>' +
+        '<div class="exp-tags"><span class="exp-type">' + (IFRAME_EXPS.indexOf(exp.id) >= 0 ? 'بازی ویژه' : 'آزمایش روی میز') + '</span>' +
+        (done ? '<span class="done-badge">' + ui('check') + ' انجام شد</span>' : '') + '</div>' +
+      '</div>' +
+      '<h3 id="card-t-' + i + '">' + exp.title + '</h3>' +
+      '<div class="les">' + ui('book') + ' ' + exp.lesson + ' علوم پنجم</div>' +
+      '<div class="exp-desc">' + exp.hint + '</div>' +
+      '<div class="exp-card-footer">' +
+        '<div class="exp-stars" role="img" aria-label="' + fa(st) + ' ستاره از ۳">' + [0,1,2].map(function(k){ return starSvg(k >= 3 - st); }).join('') + '</div>' +
+        '<span class="exp-start" id="card-s-' + i + '">' + (done ? 'دوباره' : 'شروع') + ' ' + ui('next') + '</span>' +
       '</div>';
-    const open = ()=>{ SND.click(); openLab(exp); };
+    const open = function(){ LabMap.go(i); };
     card.addEventListener('click', open);
-    card.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+    card.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); } });
     grid.appendChild(card);
   });
   updateHUD();
+  const frac = doneCount() / EXPS.length;
+  const hl = $('heroLiquid');
+  if(hl) hl.style.transform = 'translateY(' + (171 - Math.max(frac, .05) * 137).toFixed(1) + 'px)';
+  if($('hero-pct')) $('hero-pct').textContent = fa(Math.round(frac * 100)) + '٪';
+  let fresh = null;
+  if(LAB.justDone && $('screen-lobby').classList.contains('active')){ fresh = LAB.justDone; LAB.justDone = null; }
+  LabMap.build(fresh);
 }
 
 /* ============================================================
@@ -2056,8 +2804,8 @@ function certPlainText(){
   const L=[];
   L.push('گواهی پایان دوره — آزمایشگاه حکیمستان');
   L.push('نام دانش‌آموز: ' + (STUDENT.name || 'دانشمند کوچک'));
-  L.push('کلاس: ' + (STUDENT.cls || '—'));
-  L.push('مدرسه: ' + (STUDENT.school || '—'));
+  if(STUDENT.cls) L.push('کلاس: ' + STUDENT.cls);
+  if(STUDENT.school) L.push('مدرسه: ' + STUDENT.school);
   L.push('ستاره‌ها: ' + fa(totalStars()) + ' از ' + fa(EXPS.length*3));
   L.push('امتیاز: ' + fa(totalScore()));
   L.push('بخش‌های کامل‌شده: ' + fa(doneCount()) + ' از ' + fa(EXPS.length));
@@ -2076,8 +2824,6 @@ function certPlainText(){
 
 function buildCert(){
   $('cert-name').textContent = STUDENT.name || 'دانشمند کوچک';
-  $('cert-class').textContent = STUDENT.cls || '—';
-  $('cert-school').textContent = STUDENT.school || '—';
   $('cert-stars').textContent = fa(totalStars()) + ' از ' + fa(EXPS.length * 3);
   $('cert-score').textContent = fa(totalScore());
   const done = doneCount(), all = EXPS.length;
@@ -2090,7 +2836,7 @@ function buildCert(){
     const when = PROGRESS.completedAt[exp.id];
     const li = document.createElement('li');
     if(ok) li.className = 'ok';
-    const meta = ok ? (fa(st) + ' ستاره' + (when ? ' · ' + faDate(new Date(when)) : '')) : 'در انتظار تکمیل';
+    const meta = ok ? (fa(st) + ' ستاره' + (when ? '، ' + faDate(new Date(when)) : '')) : 'در انتظار تکمیل';
     li.innerHTML = '<span class="tick">' + (ok ? '✓' : '') + '</span>' +
       '<span class="nm">' + fa(i+1) + '. ' + exp.title + ' <span style="color:#8b93a8;font-weight:500">(' + exp.lesson + ')</span></span>' +
       '<span class="mt">' + meta + '</span>';
@@ -2100,12 +2846,12 @@ function buildCert(){
   const complete = done >= all;
   $('cert-kicker').textContent = complete ? '✦ گواهی پایان دورهٔ آزمایشگاه حکیمستان ✦' : '✦ گواهی پیشرفت دانشمند کوچک ✦';
   $('cert-line2').textContent = complete ?
-    'برای انجام کامل هر ' + fa(all) + ' بخش بازی و آزمایش علوم و کشف رازهای طبیعت 🌱' :
-    'برای تکمیل ' + fa(done) + ' بخش از ' + fa(all) + ' بخش بازی و آزمایش علوم 🌱';
+    'برای انجام کامل هر ' + fa(all) + ' بخش بازی و آزمایش علوم و کشف رازهای طبیعت' :
+    'برای تکمیل ' + fa(done) + ' بخش از ' + fa(all) + ' بخش بازی و آزمایش علوم';
   const left = EXPS.filter(function(e){ return !PROGRESS.done[e.id]; }).map(function(e){ return e.title; });
   $('cert-note').innerHTML = complete ?
-    '🎉 آفرین! همهٔ بخش‌ها کامل شده است؛ این گواهی پایان دوره با افتخار به تو تقدیم می‌شود.' :
-    '⏳ بخش‌های باقی‌مانده: <b>' + left.join('، ') + '</b><br>هر بخش را که کامل کنی، همان لحظه تیک آن در این فهرست خورده می‌شود و در پایان، گواهی پایان دوره صادر می‌شود.';
+    'آفرین! همهٔ بخش‌ها کامل شده است؛ این گواهی پایان دوره با افتخار به تو تقدیم می‌شود.' :
+    'بخش‌های باقی‌مانده: <b>' + left.join('، ') + '</b><br>هر بخش را که کامل کنی، همان لحظه تیک آن در این فهرست خورده می‌شود و در پایان، گواهی پایان دوره صادر می‌شود.';
   const now = new Date();
   $('cert-date').textContent = faDate(now);
   $('cert-date2').textContent = faDateLong(now);
@@ -2132,14 +2878,14 @@ function buildReport(){
   const now = new Date();
   const L = [];
   L.push('📄 گزارش متنی — آزمایشگاه حکیمستان');
-  L.push('درس علوم پایهٔ پنجم دبستان · طراح: مهدی شریفیان');
+  L.push('درس علوم پایهٔ پنجم دبستان — طراح: مهدی شریفیان');
   L.push('────────────────────────────');
   L.push('تاریخ گزارش (شمسی): ' + faDateLong(now));
   L.push('ساعت تهیهٔ گزارش: ' + faTime(now));
   L.push('');
   L.push('نام دانش‌آموز: ' + (STUDENT.name || '—'));
-  L.push('کلاس: ' + (STUDENT.cls || '—'));
-  L.push('مدرسه: ' + (STUDENT.school || '—'));
+  if(STUDENT.cls) L.push('کلاس: ' + STUDENT.cls);
+  if(STUDENT.school) L.push('مدرسه: ' + STUDENT.school);
   L.push('نوع دستگاه: ' + (deviceType()==='mobile' ? 'گوشی همراه' : 'رایانه'));
   L.push('');
   L.push('⭐ مجموع ستاره‌ها: ' + fa(totalStars()) + ' از ' + fa(EXPS.length*3));
@@ -2215,21 +2961,33 @@ function logSession(experimentId, opts){
    ============================================================ */
 /* صفحهٔ هشدار اینترنت حذف شد؛ بازی از همان کارت ورود شروع می‌شود. */
 
-$('login-form').addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const name = $('f-name').value.trim();
-  if(!name){ $('form-err').textContent = 'لطفاً اسم و فامیلت رو بنویس. 🙂'; $('f-name').focus(); SND.wrong(); return; }
-  $('form-err').textContent = '';
-  STUDENT.name = name; STUDENT.cls = $('f-class').value.trim(); STUDENT.school = $('f-school').value.trim();
-  if(window.Hakim && typeof Hakim.setName === 'function') Hakim.setName(name);
+/* نام دانش‌آموز از نام سراسری سایت (HakimStudent) خوانده می‌شود؛ فرم جداگانه‌ای لازم نیست. */
+function siteName(){ try{ return (window.HakimStudent && typeof HakimStudent.get === 'function') ? (HakimStudent.get() || '') : ''; }catch(e){ return ''; } }
+function syncStudentName(){
+  const n = siteName();
+  if(n) STUDENT.name = n;
+  const shown = STUDENT.name || 'دانشمند';
+  if($('entry-name')) $('entry-name').textContent = shown;
+  if($('lobby-name')) $('lobby-name').textContent = shown.split(' ')[0];
+}
+function enterLab(){
+  syncStudentName();
+  if(!STUDENT.name){
+    if(window.HakimStudent && typeof HakimStudent.require === 'function') HakimStudent.require(function(){ enterLab(); });
+    return;
+  }
+  if(window.Hakim && typeof Hakim.setName === 'function') Hakim.setName(STUDENT.name);
   persistLabProgress();
-  $('lobby-name').textContent = name.split(' ')[0];
   SND.success();
   logSession('form-entry');
-  renderLobby();
   show('screen-intro');
   startHakim();
-});
+}
+$('btn-enter').onclick = enterLab;
+$('btn-rename').onclick = ()=>{ SND.click(); if(window.HakimStudent && typeof HakimStudent.edit === 'function') HakimStudent.edit(); };
+if(window.HakimStudent && typeof HakimStudent.onChange === 'function'){
+  HakimStudent.onChange(function(){ syncStudentName(); if(STUDENT.name) persistLabProgress(); });
+}
 
 /* ---------- گفتار (گویندگی) حکیم و چراغک ----------
    VOICE_CLIPS: کلیپ‌های صوتی fa-IR که به‌صورت data URI در همین فایل جاسازی شده‌اند.
@@ -2344,7 +3102,7 @@ function stopSpeech(){
 }
 function setVoiceUI(){
   document.querySelectorAll('.voice-toggle').forEach(function(b){
-    b.textContent = voiceOn ? '🔊 صدا روشن' : '🔇 صدا خاموش';
+    b.innerHTML = voiceOn ? ui('sound') + ' صدا روشن' : ui('mute') + ' صدا خاموش';
   });
 }
 /* گفت‌وگوی اول بازی: هر جمله نمایش داده می‌شود و با گویندهٔ مربوط خوانده می‌شود */
@@ -2468,7 +3226,6 @@ function startHakim(){
     window.Hakim.renderFace('normal', $('hakim-fig'));
   }
   $('hakim-fig').style.opacity = '1';
-  $('intro-label').textContent = 'حکیم';
   const lines = [
     'سلام دوست من! من حکیمم.',
     'امروز می‌خوام تو رو با دوست کوچیکم آشنا کنم.',
@@ -2495,7 +3252,7 @@ function startChera(){
   $('intro2-actions').style.display = 'none';
   playDialogue('cheraghak', lines, $('intro2-text'), $('intro2-actions'));
 }
-$('intro2-next').onclick = ()=>{ SND.click(); stopSpeech(); show('screen-lobby'); cheraghakSay('یکی از ' + fa(EXPS.length) + ' بازی و آزمایش رو انتخاب کن تا شروع کنیم! ✨'); };
+$('intro2-next').onclick = ()=>{ SND.click(); stopSpeech(); show('screen-lobby'); cheraghakSay('من روی لوله‌های شیشه‌ای منتظرم! یکی از ' + fa(EXPS.length) + ' ایستگاه رو انتخاب کن تا ببرمت اون‌جا ✨'); };
 
 $('lab-back').onclick = ()=>{ SND.click(); cancelAnimationFrame(LAB.raf); show('screen-lobby'); };
 $('hakim-gosh-back').onclick = ()=>{ SND.click(); if($('hakim-gosh-frame')) $('hakim-gosh-frame').src = 'about:blank'; show('screen-lobby'); renderLobby(); };
@@ -2520,6 +3277,7 @@ window.addEventListener('message', (event)=>{
   if(!expId || !EXPS.some(function(e){ return e.id === expId; })) return;
   const score = Math.max(0, Math.min(100, Number(data.score) || 0));
   const stars = Math.max(0, Math.min(3, Number(data.stars) || 0));
+  if(!PROGRESS.done[expId]) LAB.justDone = expId;
   PROGRESS.done[expId] = true;
   if(!PROGRESS.completedAt[expId]) PROGRESS.completedAt[expId] = Date.now();
   PROGRESS.score[expId] = Math.max(PROGRESS.score[expId] || 0, score);
@@ -2607,15 +3365,22 @@ window.addEventListener('beforeunload', ()=>{
 'use strict';
 try{ applyLabTheme(localStorage.getItem(LAB_THEME_KEY) || 'light'); }catch(e){ applyLabTheme('light'); }
 if(window.Hakim && typeof window.Hakim.renderFace === 'function'){ window.Hakim.renderFace('normal', $('hakim-fig')); }
-if(restoreLabProgress()){
-  $('f-name').value = STUDENT.name;
-  $('f-class').value = STUDENT.cls;
-  $('f-school').value = STUDENT.school;
-  $('lobby-name').textContent = STUDENT.name.split(' ')[0];
+const hadProgress = restoreLabProgress();
+syncStudentName();
+LOBBY_READY = true;
+if(hadProgress && STUDENT.name){
   if(window.Hakim && typeof Hakim.setName === 'function') Hakim.setName(STUDENT.name);
   show('screen-lobby');
+} else {
+  renderLobby();
 }
-renderLobby();
+window.LabUI = {
+  showLobby: function(){ show('screen-lobby'); },
+  travelTo: function(i){ return LabMap.travelTo(i); },
+  go: function(i){ return LabMap.go(i); },
+  map: LabMap,
+  enter: enterLab
+};
 </script>
 
 <script src="../back-to-lobby.js"></script>
