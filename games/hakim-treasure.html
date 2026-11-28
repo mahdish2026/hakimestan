@@ -402,20 +402,58 @@ body[data-theme="dark"] #gameTitle .glint{ background-image:linear-gradient(100d
 #toast.show{ transform:translate(-50%, 0); opacity:1; visibility:visible; }
 .row-btns{ display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; }
 
-/* گواهی چاپی */
-#printCert{ display:none; }
+/* ── لوح زرّین سفر: گواهی اختصاصی A4 با صفحهٔ تذهیب ── */
+@font-face{ font-family:'IranNastaliq'; src:url('../assets/fonts/iran-nastaliq-400.woff2') format('woff2'); font-display:swap; }
+#modalCert .card{ width:min(640px, 100%); }
+#modalCert .row{ margin-top:.8rem; }
+.tc-wrap{ container-type:inline-size; width:min(100%, 560px); margin:0 auto; }
+.tc-sheet{ position:relative; aspect-ratio:210 / 297; width:100%; overflow:hidden; color:#3a2210; direction:rtl;
+  background:#fbf3df url('../assets/img/tazhib-ganj-a4.webp') center / 100% 100% no-repeat;
+  box-shadow:0 18px 40px -18px rgba(60,30,5,.7); border-radius:2px; -webkit-print-color-adjust:exact; print-color-adjust:exact; --k:1; }
+.tc-sheet *{ box-sizing:border-box; }
+.tc-sheet, .tc-sheet *{ transition:none !important; transition-duration:0s !important; animation:none !important; }
+.tc-zone > *{ flex-shrink:0; }
+.tc-zone{ position:absolute; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.tc-top{ top:17.6%; left:36%; right:36%; height:10.6%; justify-content:flex-start; gap:.5cqw; }
+.tc-main{ top:26.6%; left:21.2%; right:21.2%; bottom:26.4%; justify-content:center; gap:calc(.75cqw * var(--k)); }
+.tc-foot{ bottom:16.4%; left:35.5%; right:35.5%; height:10.4%; justify-content:flex-end; gap:.25cqw; }
+.tc-logo{ height:7.4cqw; width:auto; display:block; }
+.tc-bism{ font-family:'IranNastaliq', var(--font-story); font-size:2.7cqw; line-height:1.5; color:#8a1f2b; margin:0; }
+.tc-kicker{ font-family:var(--font-ui); font-weight:800; font-size:calc(1.45cqw * var(--k)); letter-spacing:.1cqw; color:#127a7a; margin:0; }
+.tc-title{ font-family:'IranNastaliq', var(--font-title); font-size:calc(5.8cqw * var(--k)); line-height:1.2; margin:0; color:#7a1420;
+  text-shadow:0 .15cqw 0 rgba(255,236,180,.9); }
+.tc-sub{ font-family:var(--font-title); font-size:calc(2.6cqw * var(--k)); line-height:1.2; margin:0; color:#a56a12; }
+.tc-emblem{ width:calc(22cqw * var(--k)); height:auto; display:block; margin:calc(.2cqw * var(--k)) 0; }
+.tc-to{ font-family:var(--font-story); font-size:calc(1.9cqw * var(--k)); margin:0; color:#5a3a1c; }
+.tc-name{ font-family:'IranNastaliq', var(--font-title); font-size:calc(6.4cqw * var(--k)); line-height:1.55; margin:calc(.5cqw * var(--k)) 0 0; color:#8a1f2b; padding:0 2cqw;
+  background:linear-gradient(90deg, transparent, rgba(184,134,43,.85) 20%, rgba(184,134,43,.85) 80%, transparent) center bottom / 100% .22cqw no-repeat; max-width:100%; overflow-wrap:anywhere; }
+.tc-text{ font-family:var(--font-story); font-size:calc(1.8cqw * var(--k)); line-height:1.85; margin:0; color:#3a2210; max-width:54cqw; text-wrap:balance; }
+.tc-rank{ display:inline-flex; align-items:center; gap:1cqw; padding:calc(.45cqw * var(--k)) 3.2cqw; margin:0;
+  font-family:var(--font-title); font-size:calc(2.3cqw * var(--k)); color:#fff6dc; background:linear-gradient(180deg,#a92c38,#7a1420); border:.25cqw solid #d9a63a;
+  clip-path:polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%); box-shadow:inset 0 0 0 .25cqw rgba(255,230,170,.35); }
+.tc-rank small{ font-family:var(--font-ui); font-size:.55em; font-weight:700; opacity:.9; }
+.tc-stats{ display:grid; grid-template-columns:repeat(4, 1fr); gap:1.2cqw; width:100%; margin:0; padding:0; list-style:none; }
+.tc-stats li{ border:.2cqw solid rgba(184,134,43,.7); border-radius:1.2cqw; padding:calc(.5cqw * var(--k)) .4cqw; background:rgba(255,250,236,.75); }
+.tc-stats b{ display:block; font-family:var(--font-title); font-weight:400; font-size:calc(2.5cqw * var(--k)); line-height:1.25; color:#127a7a; }
+.tc-stats span{ display:block; font-family:var(--font-ui); font-size:calc(1.2cqw * var(--k)); font-weight:700; color:#6a4a22; }
+.tc-seals{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 6.2cqw); justify-content:center; gap:.3cqw; margin:0; padding:0; list-style:none; width:100%; }
+.tc-seals li{ display:flex; flex-direction:column; align-items:center; min-width:0; }
+.tc-seals svg{ width:calc(4.6cqw * var(--k)); height:calc(4.6cqw * var(--k)); display:block; }
+.tc-seals small{ font-family:var(--font-ui); font-size:calc(.9cqw * var(--k)); line-height:1.3; color:#6a4a22; text-align:center; overflow-wrap:anywhere; }
+.tc-line{ font-family:var(--font-ui); font-size:calc(1.3cqw * var(--k)); line-height:1.75; margin:0; color:#4a3018; max-width:47cqw; text-wrap:balance; }
+.tc-line b{ color:#7a1420; }
+.tc-quote{ font-family:'IranNastaliq', var(--font-story); font-size:2.5cqw; line-height:1.45; margin:0; color:#127a7a; }
+.tc-meta{ font-family:var(--font-ui); font-size:1.15cqw; line-height:1.6; margin:0; color:#5a3a1c; white-space:nowrap; }
+.tc-credit{ font-family:var(--font-ui); font-size:1.3cqw; font-weight:800; margin:0; color:#7a1420; white-space:nowrap; }
 @media print{
-  @page{ size:A4 landscape; margin:10mm; }
-  body > *:not(#printCert){ display:none !important; }
-  body{ background:#fff !important; }
-  #printCert{ display:block !important; color:#2b1d12; font-family:var(--font-ui); }
-  .pc-frame{ border:6px double #b8862a; border-radius:18px; padding:18mm 16mm; text-align:center; min-height:170mm; position:relative; background:#fffdf5; }
-  .pc-frame h2{ font-family:var(--font-title); font-size:34pt; margin:0 0 6mm; color:#80510b; }
-  .pc-name{ font-family:var(--font-title); font-size:30pt; margin:4mm 0; }
-  .pc-text{ font-family:var(--font-story); font-size:15pt; line-height:2; }
-  .pc-seals{ display:flex; justify-content:center; gap:3mm; margin:6mm 0; }
-  .pc-seals svg{ width:16mm; height:16mm; }
-  .pc-foot{ display:flex; justify-content:space-between; margin-top:10mm; font-size:11pt; }
+  @page{ size:A4 portrait; margin:0; }
+  html, body{ background:#fff !important; margin:0 !important; padding:0 !important; height:auto !important; overflow:visible !important; }
+  body > *:not(#modalCert){ display:none !important; }
+  #modalCert, #modalCert[hidden]{ display:block !important; position:static !important; padding:0 !important; background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; overflow:visible !important; }
+  #modalCert .card{ all:unset; display:block; width:210mm; }
+  #modalCert .card > *:not(.tc-wrap){ display:none !important; }
+  .tc-wrap{ width:210mm !important; max-width:none !important; margin:0 !important; }
+  .tc-sheet{ width:210mm; height:297mm; aspect-ratio:auto; box-shadow:none; border-radius:0; break-inside:avoid; page-break-after:avoid; }
 }
 
 /* ================================================================== */
@@ -868,14 +906,42 @@ body.paused .scene *{ animation-play-state:paused !important; }
   </div>
 </div>
 
-<div id="printCert" aria-hidden="true">
-  <div class="pc-frame">
-    <h2>گواهی سفرِ راز گنج حکیم</h2>
-    <p class="pc-text">این گواهی با افتخار تقدیم می‌شود به</p>
-    <p class="pc-name" id="pcName">سالک</p>
-    <p class="pc-text" id="pcText"></p>
-    <div class="pc-seals" id="pcSeals"></div>
-    <div class="pc-foot"><span id="pcDate"></span><span>حکیمستان — hakimistan.ir</span><span>طراحی و توسعه: مهدی شریفیان</span></div>
+<div id="modalCert" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="certH">
+  <div class="card">
+    <h2 id="certH"><span data-ic="trophy"></span>لوح زرّین سفر</h2>
+    <p class="muted" style="margin:0 0 .7rem">گواهی اختصاصی تو، روی یک برگ A4. با «چاپ یا ذخیرهٔ PDF» آن را نگه دار.</p>
+    <div class="tc-wrap">
+      <article class="tc-sheet" id="certSheet" data-hk-cert aria-label="گواهی پایان سفر راز گنج حکیم">
+        <div class="tc-zone tc-top">
+          <img class="tc-logo hk-cert-brand" src="../assets/img/hakimestan-logo-stacked.svg" alt="لوگوی حکیمستان">
+          <p class="tc-bism">به نام خداوند جان و خرد</p>
+        </div>
+        <div class="tc-zone tc-main" id="tcMain">
+          <p class="tc-title">گواهی پایان سفر</p>
+          <p class="tc-sub">راز گنج حکیم</p>
+          <svg class="tc-emblem" id="tcEmblem" viewBox="0 0 260 120" aria-hidden="true" focusable="false"></svg>
+          <p class="tc-to">این لوح با افتخار تقدیم می‌شود به</p>
+          <p class="tc-name" id="tcName">سالک</p>
+          <p class="tc-text" id="tcText"></p>
+          <p class="tc-rank" id="tcRank"></p>
+          <ul class="tc-stats" id="tcStats"></ul>
+          <ul class="tc-seals" id="tcSeals" aria-label="مهرهای فصل‌ها"></ul>
+          <p class="tc-line" id="tcVirtues"></p>
+          <p class="tc-line" id="tcComp"></p>
+          <p class="tc-line" id="tcBadges"></p>
+        </div>
+        <div class="tc-zone tc-foot">
+          <p class="tc-quote">«توانا بود هر که دانا بود»</p>
+          <p class="tc-meta" id="tcMeta"></p>
+          <p class="tc-meta">سامانهٔ آموزشی حکیمستان · hakimistan.ir</p>
+          <p class="tc-credit">طراحی و توسعه: مهدی شریفیان</p>
+        </div>
+      </article>
+    </div>
+    <div class="row">
+      <button type="button" id="btnCertPrint" class="btn primary"><span data-ic="print"></span>چاپ یا ذخیرهٔ PDF</button>
+      <button type="button" id="btnCertBack" class="btn ghost"><span data-ic="back"></span>بازگشت به نتیجه</button>
+    </div>
   </div>
 </div>
 
@@ -1266,6 +1332,8 @@ var ICON_PATHS = {
   crown:'<path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z" fill="currentColor"/>',
   target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>',
   check:'<path d="M5 12l5 5 9-10"/>',
+  back:'<path d="M9 6l6 6-6 6"/>',
+  trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 13v4M8 21h8M9.5 17h5l.5 4h-6z"/>',
   users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14a5 5 0 0 1 6 5"/>',
   /* نشان مکان‌ها */
   pHome:'<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',
@@ -2960,11 +3028,73 @@ function showResult(){
   later(900 + locks.length * 330, function(){ chest.classList.add('open'); Audio_.win(); Fx.burst(true); });
   later(2600 + locks.length * 330, function(){ Fx.burst(false); });
 }
+/* لوح زرّین سفر */
+var CERT_EMBLEM = '<defs><radialGradient id="tcGlow" cx="50%" cy="55%" r="55%"><stop offset="0" stop-color="#fff3c0"/><stop offset="1" stop-color="#fff3c0" stop-opacity="0"/></radialGradient>' +
+  '<linearGradient id="tcWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8743a"/><stop offset="1" stop-color="#6b3a16"/></linearGradient>' +
+  '<linearGradient id="tcGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1bf"/><stop offset=".5" stop-color="#e2b13c"/><stop offset="1" stop-color="#a5741f"/></linearGradient>' +
+  '<radialGradient id="tcMir" cx="45%" cy="38%" r="70%"><stop offset="0" stop-color="#f4fbff"/><stop offset="1" stop-color="#9fc4e8"/></radialGradient></defs>' +
+  '<ellipse cx="130" cy="62" rx="120" ry="58" fill="url(#tcGlow)"/>' +
+  (function(){ var r = ''; for(var k = 0; k < 12; k++){ var a = (k / 12) * Math.PI * 2; r += '<path d="M130 58 L' + (130 + Math.cos(a) * 64).toFixed(1) + ' ' + (58 + Math.sin(a) * 50).toFixed(1) + '" stroke="#e2b13c" stroke-width="1.2" opacity=".45"/>'; } return r; })() +
+  '<path d="M30 84 l4 -9 l4 9 l9 4 l-9 4 l-4 9 l-4 -9 l-9 -4Z M230 84 l4 -9 l4 9 l9 4 l-9 4 l-4 9 l-4 -9 l-9 -4Z" fill="url(#tcGold)" stroke="#8a5a1a" stroke-width=".8"/>' +
+  '<path d="M60 40 l2.4 -5.4 l2.4 5.4 l5.4 2.4 l-5.4 2.4 l-2.4 5.4 l-2.4 -5.4 l-5.4 -2.4Z M196 36 l2.4 -5.4 l2.4 5.4 l5.4 2.4 l-5.4 2.4 l-2.4 5.4 l-2.4 -5.4 l-5.4 -2.4Z" fill="#e2b13c" opacity=".9"/>' +
+  /* درِ باز با آینه */
+  '<path d="M88 66 L92 26 Q130 8 168 26 L172 66Z" fill="url(#tcWood)" stroke="#3e2008" stroke-width="2"/>' +
+  '<path d="M92 26 Q130 8 168 26" stroke="#e2b13c" stroke-width="4" fill="none"/>' +
+  '<ellipse cx="130" cy="44" rx="20" ry="16" fill="url(#tcGold)" stroke="#7a4f12" stroke-width="1.4"/><ellipse cx="130" cy="44" rx="15.5" ry="12" fill="url(#tcMir)" stroke="#fff6dc" stroke-width="1"/>' +
+  '<text x="130" y="49.5" text-anchor="middle" font-size="14" font-family="Lalezar, Vazirmatn, sans-serif" fill="#7a1420">تو</text>' +
+  '<path d="M121 38 q4 -4 9 -4" stroke="#fff" stroke-width="1.6" fill="none" opacity=".8" stroke-linecap="round"/>' +
+  /* بدنهٔ صندوق و جواهر */
+  '<path d="M96 66 q10 -10 22 -4 q8 -9 18 -2 q10 -7 20 2 q10 -4 12 6Z" fill="#f1c453" stroke="#a5741f" stroke-width="1"/>' +
+  '<circle cx="112" cy="63" r="3.4" fill="#d94f5c" stroke="#7a1420" stroke-width=".8"/><circle cx="146" cy="62" r="3.2" fill="#38b0a8" stroke="#127a7a" stroke-width=".8"/><circle cx="130" cy="60" r="2.6" fill="#fff6dc"/>' +
+  '<rect x="84" y="64" width="92" height="44" rx="5" fill="url(#tcWood)" stroke="#3e2008" stroke-width="2"/>' +
+  '<path d="M84 76 H176 M84 98 H176" stroke="#e2b13c" stroke-width="4"/><path d="M98 64 V108 M162 64 V108" stroke="#e2b13c" stroke-width="4"/>' +
+  '<rect x="122" y="78" width="16" height="18" rx="3" fill="url(#tcGold)" stroke="#7a4f12" stroke-width="1.2"/><circle cx="130" cy="85" r="2.4" fill="#3e2008"/><path d="M130 86 v5" stroke="#3e2008" stroke-width="2"/>' +
+  /* کلید */
+  '<g transform="translate(184 100) rotate(-24)"><circle r="6.5" fill="none" stroke="url(#tcGold)" stroke-width="3"/><path d="M6 0 H30 M24 0 v6 M29 0 v5" stroke="#c99a2e" stroke-width="3" stroke-linecap="round"/></g>';
+function certHash(s){ var h = 2166136261; s = String(s || ''); for(var i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function fitCertificate(){
+  var main = $('tcMain'), sheet = $('certSheet');
+  if(!main || !sheet || !main.offsetHeight) return;
+  var k = 1; sheet.style.setProperty('--k', '1');
+  for(var n = 0; n < 14 && main.scrollHeight > main.clientHeight + 1; n++){ k -= .04; sheet.style.setProperty('--k', k.toFixed(2)); }
+}
 function fillCertificate(e, total){
-  $('pcName').textContent = S.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک');
-  $('pcText').textContent = 'که سفر «راز گنج حکیم» را با ' + toFa(S.stages.length) + ' فصل، ' + toFa(S.stars) + ' ستاره و عنوان «' + e.title + '» به پایان رساند و نشان داد دانایی و مهربانی، دو کلید یک صندوق‌اند.';
-  $('pcSeals').innerHTML = S.seals.map(function(lv){ return sealSvg(lv || 'cracked'); }).join('');
-  try{ $('pcDate').textContent = new Date().toLocaleDateString('fa-IR'); }catch(er){ $('pcDate').textContent = ''; }
+  var name = S.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک');
+  var stages = S.stages || [];
+  $('tcName').textContent = name;
+  $('tcEmblem').innerHTML = CERT_EMBLEM;
+  $('tcText').textContent = 'که سفر «راز گنج حکیم» را در ' + toFa(stages.length) + ' فصل به پایان رساند؛ با دانایی قفل‌ها را گشود و با مهربانی دلِ همسفرانش را به دست آورد، و در آینهٔ صندوق دید که گنجِ واقعی خودِ اوست.';
+  $('tcRank').innerHTML = '<small>عنوان سفر</small>' + esc(e.title);
+  var kind = S.maxScore ? Math.round(clamp(S.score / S.maxScore, 0, 1) * 100) : 0;
+  $('tcStats').innerHTML = [
+    [toFa(stages.length), 'فصلِ پیموده'],
+    [toFa(S.stars) + ' از ' + toFa(stages.length * 3), 'ستاره'],
+    [toFa(kind) + '٪', 'دلِ مهربان'],
+    [fmtTime(S.seconds || 0), 'زمان سفر']
+  ].map(function(x){ return '<li><b>' + x[0] + '</b><span>' + x[1] + '</span></li>'; }).join('');
+  $('tcSeals').innerHTML = stages.map(function(st, k){
+    var lv = S.seals[k] || 'cracked';
+    return '<li>' + sealSvg(lv) + '<small>' + esc(shortText(st.title || ('فصل ' + toFa(k + 1)), 12)) + '</small></li>';
+  }).join('');
+  var virtues = [];
+  stages.forEach(function(st){ if(st.virtue && virtues.indexOf(st.virtue) < 0) virtues.push(st.virtue); });
+  $('tcVirtues').innerHTML = virtues.length ? '<b>فضیلت‌های این سفر:</b> ' + virtues.map(esc).join(' · ') : '';
+  var comps = (S.companions || []).map(function(c){ return esc((COMPANIONS[c] || {}).name || c); });
+  $('tcComp').innerHTML = comps.length ? '<b>همسفران:</b> ' + comps.join(' و ') : '<b>همسفر:</b> دلِ دانا و مهربانِ خودت';
+  var badges = BADGES.filter(function(b){ try{ return b.test(S); }catch(er){ return false; } }).map(function(b){ return esc(b.name); });
+  $('tcBadges').innerHTML = badges.length ? '<b>نشان‌ها:</b> ' + badges.join(' · ') : '';
+  $('tcBadges').hidden = !badges.length;
+  var date = '';
+  try{ date = new Date().toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric' }); }catch(er){ try{ date = new Date().toLocaleDateString('fa-IR'); }catch(er2){} }
+  var no = 'RG-' + String(certHash(name + '|' + S.score + '|' + S.stars + '|' + (S.seconds || 0) + '|' + date) % 1000000).padStart(6, '0');
+  $('tcMeta').textContent = (date ? 'تاریخ: ' + date + ' · ' : '') + 'شمارهٔ لوح: ' + toFa(no);
+  fitCertificate();
+}
+function openCertificate(){
+  if(!$('tcStats').children.length) fillCertificate(endingFor(finalRatio()), 0);
+  Modal.open('modalCert');
+  fitCertificate();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitCertificate);
 }
 function resultText(){
   var e = endingFor(finalRatio());
@@ -3460,7 +3590,10 @@ $('btnCopy').addEventListener('click', function(){
     navigator.clipboard.writeText(txt).then(function(){ toast('نتیجه کپی شد.'); }, fallback);
   } else fallback();
 });
-$('btnPrint').addEventListener('click', function(){ setTimeout(function(){ try{ window.print(); }catch(e){} }, 120); });
+$('btnPrint').addEventListener('click', openCertificate);
+$('btnCertBack').addEventListener('click', function(){ Modal.open('modalResult'); });
+$('btnCertPrint').addEventListener('click', function(){ fitCertificate(); setTimeout(function(){ try{ window.print(); }catch(e){} }, 120); });
+window.addEventListener('beforeprint', fitCertificate);
 
 /* پارالاکس صحنه */
 $('scene').addEventListener('pointermove', function(e){
@@ -3494,6 +3627,7 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
     if(Modal.openId === 'modalPause'){ resumeGame(); return; }
     if(Modal.openId === 'modalHelp' || Modal.openId === 'modalError'){ Modal.close(Modal.openId); return; }
+    if(Modal.openId === 'modalCert'){ Modal.open('modalResult'); return; }
     if(Modal.openId === 'modalResult'){ Modal.close('modalResult'); goHome(); return; }
     if(S.started && !S.done) pauseGame();
     return;
