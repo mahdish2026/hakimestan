@@ -592,7 +592,7 @@ function applyTheme(){
 }
 function playerName(){
   const n = (saved.name || '').trim();
-  return n.replace(/</g, '&lt;').replace(/>/g, '&gt;') || 'دانش‌آموزِ گرامی';
+  return n.replace(/</g, '&lt;').replace(/>/g, '&gt;') || (window.HakimStudent ? HakimStudent.name('دانش‌آموزِ گرامی') : 'دانش‌آموزِ گرامی');
 }
 function requireName(){
   if((saved.name || '').trim()) return true;

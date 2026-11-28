@@ -4475,6 +4475,20 @@
             studentState = Object.assign({}, studentState, parsed);
           }
         } catch (e) {}
+        /* نام سراسری حکیمستان (HakimStudent) بر نام ذخیره‌شدهٔ این بازی مقدم است */
+        const HS = window.HakimStudent;
+        if (HS) {
+          const site = HS.get();
+          if (site) studentState.name = site;
+          if (!loadStudentState.hooked) {
+            loadStudentState.hooked = true;
+            HS.onChange(function (n) {
+              if (!n || n === studentState.name) return;
+              studentState.name = n;
+              saveStudentState();
+            });
+          }
+        }
       }
 
       function saveStudentState() {
@@ -4559,7 +4573,7 @@
         const coinsEl = document.getElementById('hdrCoinsCount');
         const gameNameInput = document.getElementById('gameStudentName');
 
-        if (nameEl) nameEl.textContent = studentState.name || 'دانش‌آموز دانا';
+        if (nameEl) nameEl.textContent = studentState.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز دانا') : 'دانش‌آموز دانا');
         if (clsEl) clsEl.textContent = '(' + (studentState.studentClass || 'پنجم') + ')';
         if (gameNameInput && document.activeElement !== gameNameInput) {
           gameNameInput.value = studentState.name || '';
@@ -4585,7 +4599,7 @@
         const easy = words.filter(w => diffMap[w.id] === 'easy' && !isDifficultWord(w)).length;
         const hard = words.filter(w => isDifficultWord(w)).length;
         const pct = total ? Math.round((easy / total) * 100) : 0;
-        set('vzHeroName', studentState.name || 'دانش‌آموز دانا');
+        set('vzHeroName', studentState.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز دانا') : 'دانش‌آموز دانا'));
         set('vzHeroLevel', (lvl ? lvl.title : '') + ' · ' + toPersianDigits(studentState.xp || 0) + ' امتیاز تجربه');
         set('vzRingPct', toPersianDigits(pct) + '٪');
         set('vzStatEasy', toPersianDigits(easy));
@@ -5721,7 +5735,7 @@
 
         const logItem = {
           action: 'answer',
-          student_name: studentState.name || 'دانش‌آموز',
+          student_name: studentState.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
           game_id: GAME_ID,
           experiment_id: activeGame.gameName,
           question_id: targetWordObj ? targetWordObj.id : uid(),
@@ -6334,7 +6348,7 @@
         const finishedAtISO = new Date().toISOString();
 
         lastGameResult = {
-          studentName: studentState.name || 'دانش‌آموز دانا',
+          studentName: studentState.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز دانا') : 'دانش‌آموز دانا'),
           gameType: activeGame.type,
           gameName: activeGame.gameName,
           correct: activeGame.correctCount,
@@ -6423,7 +6437,7 @@
       async function sendSessionToTeacherPanel(res) {
         const sessionPayload = {
           action: 'session',
-          student_name: res.studentName || 'دانش‌آموز',
+          student_name: res.studentName || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
           student_class: studentState.studentClass || '',
           student_school: studentState.school || '',
           game_id: 'farsi5-vocab',
@@ -6561,7 +6575,7 @@
         if (!mountEl || !window.HakimCert) return null;
         const r = lastGameResult;
         const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-        const name = (r.studentName || studentState.name || 'دانش‌آموز دانا').trim();
+        const name = (r.studentName || studentState.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز دانا') : 'دانش‌آموز دانا')).trim();
         const cls = (studentState.studentClass || '').trim();
         const school = (studentState.school || '').trim().replace(/^حکیمستان$/, '');
         const grade = cls ? (/پنجم/.test(cls) ? cls : 'پنجم دبستان — ' + cls) : 'پنجم دبستان';
@@ -7144,7 +7158,8 @@
         });
         document.getElementById('studentProfileForm').addEventListener('submit', (e) => {
           e.preventDefault();
-          studentState.name = document.getElementById('profNameInput').value.trim() || 'دانش‌آموز دانا';
+          studentState.name = document.getElementById('profNameInput').value.trim() || (window.HakimStudent ? HakimStudent.name('دانش‌آموز دانا') : 'دانش‌آموز دانا');
+          if (window.HakimStudent) HakimStudent.set(studentState.name, { source: 'game-input' });
           studentState.studentClass = document.getElementById('profClassInput').value.trim() || 'پنجم';
           studentState.school = document.getElementById('profSchoolInput').value.trim() || 'حکیمستان';
           saveStudentState();

@@ -1238,7 +1238,7 @@ function hakimSay(text, mood){
 }
 function hakimReact(event, data){
   data = data || {};
-  const name = data.name || 'دوست من';
+  const name = data.name || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
   switch(event){
     case 'welcome':
       hakimSay('سلام دوستان! من حکیمم. اسمت را بنویس، رنگت را انتخاب کن و اتاق بساز یا با کد اتاق به دوستانت بپیوند!', 'happy');
@@ -1851,7 +1851,7 @@ async function submitOnline(choice){
     const expl = explanation || (q && q.explanation) || '';
     if(window.Hakim && typeof Hakim.saveAnswer === 'function' && q){
       Hakim.saveAnswer({
-        student_name: room.myName || 'بازیکن',
+        student_name: room.myName || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'),
         game_id: GAME_ID,
         experiment_id: room.code || 'online',
         question_id: String((q && q.id) || 'q'),
@@ -3173,7 +3173,7 @@ let myColor = PALETTE[0];
 let chosenMax = 2;
 function readName(){
   const v = (document.getElementById('myName').value || '').trim().slice(0, 20);
-  return v || 'بازیکن';
+  return v || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن');
 }
 function saveMe(){
   try{ localStorage.setItem(ME_KEY, JSON.stringify({ name: readName(), color: myColor })); }catch(e){}

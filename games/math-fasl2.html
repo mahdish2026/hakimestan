@@ -992,7 +992,7 @@
     function bootGuide(name='دوست من'){
       const core=window.Hakim;
       if(!core||typeof core.init!=='function')return;
-      try{core.init({container:'#hakimPanelMount',name:name||'دوست من',font:false,autoHideMs:7200});if(typeof core.setName==='function')core.setName(name||'دوست من');}catch(e){}
+      try{core.init({container:'#hakimPanelMount',name:name|| (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'),font:false,autoHideMs:7200});if(typeof core.setName==='function')core.setName(name|| (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'));}catch(e){}
     }
     function logGameVisit(){
       try{
@@ -2563,7 +2563,7 @@
     $('#reviewModal').addEventListener('click',event=>{if(event.target===$('#reviewModal'))$('#reviewModal').hidden=true;});
     document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(!$('#repModal').hidden)$('#repModal').hidden=true;if(!$('#reviewModal').hidden)$('#reviewModal').hidden=true;if(!$('#guideModal').hidden)closeGuide();});
     const savedName=safeRead(ACTIVE_NAME_KEY)||'';$('#studentName').value=savedName;
-    syncSoundButton();bootGuide(savedName||'دوست من');logGameVisit();
+    syncSoundButton();bootGuide(savedName|| (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'));logGameVisit();
     guideSay(savedName?`سلام ${savedName}! من حکیم هستم؛ برای ادامه نامت را تأیید کن.`:'سلام! من حکیم هستم، راهنمای کسرستان. اول نامت را وارد کن تا با هم سفر یادگیری را آغاز کنیم.',savedName?'happy':'wise');
     if(savedName)$('#nameError').textContent='نام قبلی پیدا شد؛ برای ادامه، ورود به کسرستان را بزن.';
     document.title=persianSpacing(document.title);applyPersianSpacing(document.documentElement);observePersianSpacing();

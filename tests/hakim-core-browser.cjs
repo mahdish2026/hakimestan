@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 // Real-browser checks for the shared character on representative pages.
 'use strict';
 const assert=require('node:assert/strict');

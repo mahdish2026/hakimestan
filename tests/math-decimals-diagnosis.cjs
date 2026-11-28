@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),D=require('../games/math-decimals/data.js'),X=require('../games/math-decimals/diagnose.js'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 const all=D.stages.flatMap(s=>s.tasks);
 assert.equal(all.length,76);assert.equal(all.filter(t=>t.teach).length,43);
@@ -30,11 +31,11 @@ assert.match(await p.$eval('#feedback',e=>e.innerText),/ارزش مکانی/);
 assert.equal(await p.$$eval('[data-remedy]',es=>es.length),2);
 await p.click('[data-remedy="0"]');assert.match(await p.$eval('#remedyNote',e=>e.textContent),/درست است/);
 await p.click('#retryFocus');await p.$eval('#answer',e=>e.select());await p.type('#answer','۰٫۷');await p.click('#check');assert(await p.$('#feedback.success'));assert.match(await p.$eval('#feedback',e=>e.textContent),/جبران/);
-const profile=await p.evaluate(()=>JSON.parse(localStorage.getItem('hakim.decimals.v1.player.کاوشگر مهمان')));
+const profile=await p.evaluate(()=>JSON.parse(localStorage.getItem('hakim.decimals.v1.player.'+localStorage.getItem('hakimestan_student_name'))));
 assert.equal(profile.misconceptions.place_shift,1);assert.equal(profile.drafts.fraction.remedied,true);
 const answerReport=reports.find(r=>r.action==='answer'&&r.question_id==='fraction'&&r.is_correct);assert.equal(answerReport.misconception,'place_shift');assert.equal(answerReport.remedied,true);
 // choice diagnosis uses the specific distractor explanation
-await p.click('[data-task="2"]');await p.click('[data-choice="0"]');await p.click('#check');assert.match(await p.$eval('#feedback',e=>e.textContent),/شش صدم/);assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('hakim.decimals.v1.player.کاوشگر مهمان')).misconceptions.choice),1);
+await p.click('[data-task="2"]');await p.click('[data-choice="0"]');await p.click('#check');assert.match(await p.$eval('#feedback',e=>e.textContent),/شش صدم/);assert.equal(await p.evaluate(()=>JSON.parse(localStorage.getItem('hakim.decimals.v1.player.'+localStorage.getItem('hakimestan_student_name'))).misconceptions.choice),1);
 await p.click('[data-choice="1"]');await p.click('#check');assert(await p.$('#feedback.success'));
 // a slash is rejected with a teaching message, not treated as a decimal
 await p.click('[data-task="3"]');await p.type('#answer','7/10');await p.click('#check');assert.match(await p.$eval('#feedback',e=>e.textContent),/این نوشته عدد نیست/);

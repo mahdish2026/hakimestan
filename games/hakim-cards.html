@@ -513,7 +513,7 @@ function hakimSay(text, mood){
 }
 function hakimReact(event, data){
   data = data || {};
-  const name = state.name || 'دوست من';
+  const name = state.name || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
   switch(event){
     case 'welcome':
       hakimSay('سلام! من حکیمم. دو کارت رو برگردون و سؤال رو به پاسخ درستش وصل کن. جای کارت‌ها رو به خاطر بسپار؛ آماده‌ای یک ماجرای تازه رو شروع کنی؟', 'happy');
@@ -790,7 +790,7 @@ function checkPair(){
   if(window.Hakim && typeof Hakim.saveAnswer === 'function'){
     const qPair = state.pairs[c1.pair] || {};
     Hakim.saveAnswer({
-      student_name: state.name || 'بازیکن',
+      student_name: state.name || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'),
       game_id: 'hakim-cards',
       experiment_id: 'level-' + state.level,
       question_id: 'pair-' + (c1.pair + 1),
@@ -882,7 +882,7 @@ function startGame(level){
   if(fileLoading){ toast('کمی صبر کن؛ فایل سؤال‌ها در حال آماده‌شدن است.'); return; }
   ensureAudio();
   state.level = [6,8,12].includes(Number(level)) ? Number(level) : state.level || 6;
-  state.name = (document.getElementById('nameInput').value || '').trim() || 'دوست من';
+  state.name = (document.getElementById('nameInput').value || '').trim() || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
   buildPairs();
   const want = Math.min(state.level,state.pairs.length);
   if(want < 3){ showError('برای این بازی دست‌کم ۳ جفت سؤال و پاسخ لازم است. یک فایل کامل‌تر بارگذاری کن.'); return; }
@@ -942,7 +942,7 @@ function sendResultsToPanel(){
     } catch(e){}
     const payload = {
       action: 'session',
-      student_name: state.name || 'بازیکن',
+      student_name: state.name || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'),
       student_class: '',
       student_school: '',
       game_id: 'hakim-cards',

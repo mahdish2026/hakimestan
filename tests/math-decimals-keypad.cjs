@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 (async()=>{const b=await pup.launch({executablePath:await chromium.executablePath(),args:[...chromium.args,'--disable-gpu'],headless:true});try{const p=await b.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.setViewport({width:1280,height:900});await p.goto('http://localhost:8000/games/math-decimals.html',{waitUntil:'networkidle0'});await p.evaluate(()=>localStorage.clear());await p.reload({waitUntil:'networkidle0'});
 await p.click('[data-stage="0"]');await p.click('#lessonNext');await p.click('#lessonNext');await p.click('#lessonNext');await p.click('[data-task="1"]');

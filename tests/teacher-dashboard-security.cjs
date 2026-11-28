@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 // Serve the repo on localhost:8000. Install puppeteer-core and @sparticuz/chromium, or supply CHROME_PATH.
 // Every remote endpoint is intercepted: no real student data is read, written or deleted.
 //

@@ -2575,7 +2575,7 @@ function answerMath(i){
   if(window.Hakim && typeof window.Hakim.saveAnswer === 'function'){
     var stg = cur() || {};
     window.Hakim.saveAnswer({
-      student_name: S.name || 'سالک',
+      student_name: S.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک'),
       game_id: 'hakim-treasure',
       experiment_id: stg.id || ('stage-' + (S.i + 1)),
       question_id: (stg.id || ('stage-' + (S.i + 1))) + '-math',
@@ -2609,7 +2609,7 @@ function confirmTextAnswer(){
   if(window.Hakim && typeof window.Hakim.saveAnswer === 'function'){
     var stg = cur() || {};
     window.Hakim.saveAnswer({
-      student_name: S.name || 'سالک',
+      student_name: S.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک'),
       game_id: 'hakim-treasure',
       experiment_id: stg.id || ('stage-' + (S.i + 1)),
       question_id: (stg.id || ('stage-' + (S.i + 1))) + '-math-text',
@@ -2687,7 +2687,7 @@ function sendResultsToPanel(){
     const accuracy = S.stages.length ? Math.round(((S.stages.length - Math.min(S.stages.length, S.errors)) / S.stages.length) * 100) : 0;
     const payload = {
       action: 'session',
-      student_name: S.name || 'سالک',
+      student_name: S.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک'),
       student_class: '',
       student_school: '',
       game_id: 'hakim-treasure',
@@ -2797,7 +2797,7 @@ function showResult(){
 /* لوح افتخار چاپی (فقط هنگام چاپ دیده می‌شود) */
 function fillCertificate(e, total){
   try{
-    $('pcName').textContent = S.name || 'سالک';
+    $('pcName').textContent = S.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک');
     $('pcText').textContent = 'به پاس پیمودن ' + toFa(S.stages.length) + ' فصل از سفر «راز گنج حکیم» با دلی مهربان و ذهنی دانا، و رسیدن به عنوان «' + e.title + '».';
     $('pcStats').innerHTML = [
       '💖 مهربانی: ' + toFa(S.score + (S.bonus || 0)),
@@ -3051,7 +3051,7 @@ function startJourney(kind){
              : (kind === 'custom' && customStages.length) ? customStages
              : STAGES_CLASSIC.map(normalizeStage);
   if(!stages.length){ showError('هیچ مرحلهٔ معتبری برای سفر وجود ندارد.'); return; }
-  S.name = ($('nameInput').value || '').trim() || SETTINGS.name || 'سالک';
+  S.name = ($('nameInput').value || '').trim() || SETTINGS.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک');
   SETTINGS.name = ($('nameInput').value || '').trim();
   SETTINGS.diff = diff; saveSettings();
   resetState(stages, kind, diff);
@@ -3134,7 +3134,7 @@ function resumeJourney(){
   if(!r){ toast('سفر ذخیره‌شده‌ای پیدا نشد.'); return; }
   audioKick();
   S.stages = r.stages; S.journey = r.journey || 'classic'; S.diff = DIFF[r.diff] ? r.diff : 'normal';
-  S.name = r.name || 'سالک';
+  S.name = r.name || (window.HakimStudent ? HakimStudent.name('سالک') : 'سالک');
   S.i = r.i | 0; S.score = r.score | 0; S.bonus = r.bonus | 0;
   S.maxScore = r.maxScore || maxKindness(S.stages);
   S.stars = r.stars | 0; S.errors = r.errors | 0;

@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),D=require('../games/math-geometry/data.js'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 for(const axis of ['v','h','d','c'])for(let x=0;x<=8;x++)for(let y=0;y<=8;y++){const p=[x,y],r=D.reflect(p,axis);assert.deepEqual(D.reflect(r,axis),p);assert(r.every(v=>v>=0&&v<=8));if(axis==='v')assert.equal(r[1],y);if(axis==='h')assert.equal(r[0],x);if(axis==='c')assert.deepEqual([(x+r[0])/2,(y+r[1])/2],[4,4]);}
 for(const t of D.stages.flatMap(s=>s.tasks))for(const bad of [null,undefined,true,false,{},[],Infinity,NaN,'',' ', '0x10'])assert(!D.correct(t,bad),t.id+' accepts '+String(bad));

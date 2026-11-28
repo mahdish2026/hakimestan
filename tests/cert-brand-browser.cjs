@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 // Certificate branding, printing and the legacy canvas export work offline.
 'use strict';
 const assert = require('node:assert/strict');

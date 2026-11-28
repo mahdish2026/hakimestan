@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 // Start a static server on port 8000; install puppeteer-core and @sparticuz/chromium.
 // All reporting endpoints are intercepted: this test never writes real student data.
 const puppeteer=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;

@@ -4076,7 +4076,7 @@ html { scrollbar-gutter: stable; }
         totalWrong = data.totalWrong || 0;
         storyIndex = data.storyIndex || 0;
         startTime = data.startTime || Date.now();
-        studentName = data.studentName || 'دانش‌آموز عزیز';
+        studentName = data.studentName || (window.HakimStudent ? HakimStudent.name('دانش‌آموز عزیز') : 'دانش‌آموز عزیز');
         heartsLostCount = data.heartsLostCount || 0;
         totalStarsEarned = Number.isFinite(data.totalStarsEarned) ? data.totalStarsEarned : 0;
         const input = document.getElementById('studentNameInput');
@@ -4747,7 +4747,7 @@ html { scrollbar-gutter: stable; }
       const d=DECISIONS[currentDecisionCity];if(!d)return;const choice=d.choices[choiceIndex];if(!choice)return;
       document.getElementById('decisionChoices').style.display='none';
       document.getElementById('decisionOutcomeText').textContent=choice.outcome+' '+d.closing;
-      document.getElementById('decisionOutcomeHakim').textContent=fillTemplate(choice.hakim,{name:studentName||'دوست من'});
+      document.getElementById('decisionOutcomeHakim').textContent=fillTemplate(choice.hakim,{name:studentName|| (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من')});
       document.getElementById('decisionOutcome').style.display='block';
       const faceEl=document.getElementById('decisionFace');
       if(faceEl){faceEl.innerHTML=HAKIM_FACES[choice.mood]||HAKIM_FACES['happy'];faceEl.classList.remove('face-change');void faceEl.offsetWidth;faceEl.classList.add('face-change');}
@@ -4894,25 +4894,25 @@ html { scrollbar-gutter: stable; }
 
     function hakimReactToAnswer(correct, timeUsed, lesson, wasTimeout) {
       ensureProfile();
-      Hakim.setName(studentName || 'دوست من');
+      Hakim.setName(studentName || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'));
       Hakim.react(state.profile, correct, timeUsed, lesson, wasTimeout);
     }
 
     function hakimOnCityConquered(cityIndex, isPerfect) {
       const city = CITIES[cityIndex];
       if (!city) return;
-      Hakim.setName(studentName || 'دوست من');
+      Hakim.setName(studentName || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'));
       Hakim.onCityConquered(city.name, isPerfect);
     }
 
     function hakimOnLowHearts() {
-      Hakim.setName(studentName || 'دوست من');
+      Hakim.setName(studentName || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'));
       Hakim.onLowHearts(state.hearts);
     }
 
     function buildHakimReport() {
       ensureProfile();
-      Hakim.setName(studentName || 'دوست من');
+      Hakim.setName(studentName || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'));
       const cmd = (state.commander && COMMANDERS[state.commander]) ? COMMANDERS[state.commander] : null;
       return Hakim.buildReport(state.profile, { commander: cmd });
     }
@@ -4940,7 +4940,7 @@ html { scrollbar-gutter: stable; }
       ensureProfile();
     }
 
-    function getStudentName() { const i = document.getElementById('studentNameInput'); studentName = (i && i.value.trim()) ? i.value.trim() : 'دانش‌آموز عزیز'; return studentName; }
+    function getStudentName() { const i = document.getElementById('studentNameInput'); studentName = (i && i.value.trim()) ? i.value.trim() : (window.HakimStudent ? HakimStudent.name('دانش‌آموز عزیز') : 'دانش‌آموز عزیز'); return studentName; }
 
     function showStoryPopup(index) {
       const story = STORIES[index];
@@ -5084,7 +5084,7 @@ html { scrollbar-gutter: stable; }
       createBgStars();
       setTimeout(() => {
         if (!showHakimReturnGreeting()) {
-          showHakimMessage(pickPhrase(HAKIM_PHRASES.intro), { name: studentName || 'دوست من' }, { emoji: '🧙‍♂️', autoHide: false });
+          showHakimMessage(pickPhrase(HAKIM_PHRASES.intro), { name: studentName || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من') }, { emoji: '🧙‍♂️', autoHide: false });
         }
       }, 900);
     }
@@ -5098,7 +5098,7 @@ html { scrollbar-gutter: stable; }
         localStorage.removeItem('ftah_hakim_promise');
         showHakimMessage(
           'خوش برگشتی {name}! گفتم درس {lesson} رو یه بار دیگه بخون. حالا ببینم چقدر یاد گرفتی! 👀',
-          { name: studentName || 'دوست من', lesson: toPersianNum(p.lesson) },
+          { name: studentName || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'), lesson: toPersianNum(p.lesson) },
           { emoji: '😊', autoHide: false }
         );
         return true;
@@ -6121,7 +6121,7 @@ function animateTravelDot(fromIndex, toIndex) {
     function timeUp() { state.answered = true; const q = QUESTIONS[state.currentQ]; const correctText = q.type === 'tf' ? (q.answer ? 'صحیح' : 'غلط') : q.options[q.answer]; totalWrong++; state.cityTotal++; state.combo = 0; reviewList.push({ question: q.q, user: '⏱️ زمان تمام شد', correct: correctText, explain: q.explanation || '' });
       if (typeof Hakim !== 'undefined' && typeof Hakim.saveAnswer === 'function') {
         Hakim.saveAnswer({
-          student_name: studentName || 'دانش‌آموز',
+          student_name: studentName || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
           game_id: 'kohan-diyar',
           experiment_id: CITIES[q.city] ? CITIES[q.city].name : 'city-' + q.city,
           question_id: 'q' + (state.currentQ + 1),
@@ -6197,7 +6197,7 @@ function animateTravelDot(fromIndex, toIndex) {
       if (typeof Hakim !== 'undefined' && typeof Hakim.saveAnswer === 'function') {
         const correctText = q.type === 'tf' ? (q.answer ? 'صحیح' : 'غلط') : q.options[q.answer];
         Hakim.saveAnswer({
-          student_name: studentName || 'دانش‌آموز',
+          student_name: studentName || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
           game_id: 'kohan-diyar',
           experiment_id: CITIES[q.city] ? CITIES[q.city].name : 'city-' + q.city,
           question_id: 'q' + (state.currentQ + 1),
@@ -6858,7 +6858,7 @@ function animateTravelDot(fromIndex, toIndex) {
     divLine(400);
 
     // --- متن گواهی با فونت‌های اصلاح‌شده ---
-    const name = studentName || 'دانش‌آموز';
+    const name = studentName || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز');
 
     ctx.fillStyle = '#8b6030';
     ctx.font = '400 30px "Vazirmatn", Tahoma, sans-serif';

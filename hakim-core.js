@@ -729,7 +729,7 @@
     options = options || {};
     injectStyles();
     if (options.font !== false) injectFont();
-    if (options.name) state.name = String(options.name);
+    if (options.name) setName(options.name);
     if (typeof options.autoHideMs === 'number') state.autoHideMs = options.autoHideMs;
 
     let panelEl = findExistingPanel(options.container);
@@ -906,7 +906,12 @@
     setMood('normal');
   }
 
-  function setName(name) { state.name = String(name || 'دوست من'); }
+  function setName(name) {
+    var n = String(name || '').trim();
+    var HS = global.HakimStudent;
+    if (HS && (!n || HS.isPlaceholder(n))) n = HS.get() || n;
+    state.name = n || 'دوست من';
+  }
   function getName() { return state.name; }
   function isReady() { return state.initialized; }
 
@@ -1208,6 +1213,13 @@
     global.addEventListener('online', function(){ flushTelemetry(); });
   }
 
+  /* نام ثبت‌شدهٔ دانش‌آموز (HakimStudent) جایگزین نام‌های خالی یا پیش‌فرض مثل «سالک» و «بازیکن» می‌شود */
+  function resolveStudentName(n){
+    var HS = global && global.HakimStudent;
+    if (HS && typeof HS.resolve === 'function') return HS.resolve(n, state.name);
+    return n || state.name || 'دانش‌آموز';
+  }
+
   function saveSession(data){
     data = data || {};
     var detailsVal = data.details;
@@ -1216,7 +1228,7 @@
     }
     var payload = {
       action: 'session',
-      student_name: data.student_name || state.name || 'دانش‌آموز',
+      student_name: resolveStudentName(data.student_name),
       student_class: data.student_class || '',
       student_school: data.student_school || '',
       game_id: data.game_id || 'unknown',
@@ -1239,7 +1251,7 @@
     data = data || {};
     var payload = {
       action: 'answer',
-      student_name: data.student_name || state.name || 'دانش‌آموز',
+      student_name: resolveStudentName(data.student_name),
       game_id: data.game_id || 'unknown',
       experiment_id: data.experiment_id || '',
       question_id: data.question_id || (data.question_num != null ? String(data.question_num) : ''),
@@ -1253,6 +1265,429 @@
     if (data.attempts != null) payload.attempts = Number(data.attempts) || 1;
     if (data.diagnostic) payload.diagnostic = String(data.diagnostic);
     return sendTelemetryPayload(payload);
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  //  🪪 HakimStudent — نام دانش‌آموز، یک بار برای کل سایت
+  //  • در همهٔ صفحه‌های بازی (games/*) تا نام ثبت نشود، پنجرهٔ
+  //    «اسمت چیه؟» جلوی بازی را می‌گیرد (بدون گزینهٔ مهمان).
+  //  • نام در localStorage['hakimestan_student_name'] می‌ماند؛ همان
+  //    کلیدی که گفت‌وگوی لابی هم می‌خواند.
+  //  • خانه‌های نام خود بازی‌ها پیش‌پر و همگام می‌شوند و ویرایش آن‌ها
+  //    نام سراسری را هم عوض می‌کند. HakimStudent.edit() تغییر نام است.
+  // ═══════════════════════════════════════════════════════════
+  var STUDENT_KEY = 'hakimestan_student_name';
+  var STUDENT_LEGACY_KEY = 'studentName';
+  var STUDENT_EVENT = 'hakim:student-name';
+  var NAME_INPUT_SELECTOR = '#nameInput,#studentNameInput,#gameStudentName,#profNameInput,#nameInp,#myName,#studentName,#nameIn,#playerName,#f-name,#studentIdentity,[data-hakim-student-name]';
+  /* نام‌های پیش‌فرض قدیمی بازی‌ها؛ این‌ها هیچ‌وقت «نام دانش‌آموز» حساب نمی‌شوند */
+  var NAME_PLACEHOLDERS = ['دوست من', 'دانش آموز', 'دانشآموز', 'بازیکن', 'سالک', 'مهمان', 'دانش آموز حکیم', 'دانشآموز حکیم',
+    'دانش آموز عزیز', 'دانش آموز دانا', 'دانشآموز دانا', 'دانشآموز عزیز', 'دانش آموز گرامی', 'دانشآموز گرامی', 'قهرمان زمان', 'کاوشگر مهمان',
+    'معمار جوان', 'تحلیل گر جوان', 'تحلیلگر جوان', 'ایران گرد جوان', 'ایرانگرد جوان', 'ادیب جوان', 'ناشناس', 'کاربر'];
+
+  function studentStore() { try { return global.localStorage || null; } catch (e) { return null; } }
+  function normalizeStudentName(v) {
+    return String(v == null ? '' : v).replace(/[<>{}\u0000-\u001f\u007f]/g, '').replace(/\s+/g, ' ').trim().slice(0, 40);
+  }
+  function placeholderKey(v) {
+    return normalizeStudentName(v).replace(/[\u064B-\u0652\u0670]/g, '').replace(/\u200c/g, '').replace(/ي/g, 'ی').replace(/ك/g, 'ک');
+  }
+  function isPlaceholderName(v) {
+    var k = placeholderKey(v);
+    if (!k) return true;
+    for (var i = 0; i < NAME_PLACEHOLDERS.length; i++) {
+      if (k === NAME_PLACEHOLDERS[i].replace(/\u200c/g, '')) return true;
+    }
+    return false;
+  }
+  function validateStudentName(v) {
+    var n = normalizeStudentName(v);
+    if (!n) return { ok: false, name: n, message: 'برای شروع، اسمت را بنویس.' };
+    if (n.replace(/\s/g, '').length < 2) return { ok: false, name: n, message: 'اسم باید دست‌کم دو حرف داشته باشد.' };
+    /* حروف فارسی/عربی/لاتین؛ ارقام (۰-۹، ٠-٩) و علائم و اِعراب حرف حساب نمی‌شوند */
+    var letters = n.match(/[A-Za-z\u0621-\u063A\u0641-\u064A\u066E-\u066F\u0671-\u06D3\u06D5\u06EE-\u06EF\u06FA-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/g) || [];
+    if (letters.length < 2) return { ok: false, name: n, message: 'اسم باید با حروف نوشته شود، نه فقط عدد یا علامت.' };
+    if (isPlaceholderName(n)) return { ok: false, name: n, message: 'لطفاً اسم خودت را بنویس.' };
+    return { ok: true, name: n, message: '' };
+  }
+  function getStudentName() {
+    var s = studentStore();
+    if (!s) return memoryStudentName;
+    var keys = [STUDENT_KEY, STUDENT_LEGACY_KEY];
+    for (var i = 0; i < keys.length; i++) {
+      var raw = '';
+      try { raw = s.getItem(keys[i]) || ''; } catch (e) { raw = ''; }
+      var r = validateStudentName(raw);
+      if (r.ok) return r.name;
+    }
+    return memoryStudentName;
+  }
+  var memoryStudentName = '';
+  function hasStudentName() { return !!getStudentName(); }
+
+  function emitStudentName(name, source) {
+    var detail = { name: name, source: source || 'api' };
+    try {
+      var ev = typeof CustomEvent === 'function'
+        ? new CustomEvent(STUDENT_EVENT, { detail: detail })
+        : (function () { var e = document.createEvent('CustomEvent'); e.initCustomEvent(STUDENT_EVENT, false, false, detail); return e; })();
+      global.dispatchEvent(ev);
+    } catch (e) { /* رویداد اختیاری است */ }
+  }
+
+  function setStudentName(v, opts) {
+    opts = opts || {};
+    var r = validateStudentName(v);
+    if (!r.ok) return false;
+    var prev = getStudentName();
+    memoryStudentName = r.name;
+    var s = studentStore();
+    if (s) { try { s.setItem(STUDENT_KEY, r.name); } catch (e) { /* حالت خصوصی */ } }
+    state.name = r.name;
+    if (r.name !== prev || opts.force) {
+      syncNameInputs(true, opts.sourceEl || null);
+      /* رویداد پس از پایان رویداد جاری فرستاده می‌شود تا بازی‌ها وسط submit/change خودشان دوباره رسم نشوند */
+      var src = opts.source || 'api', nm = r.name;
+      if (opts.sync) emitStudentName(nm, src);
+      else setTimeout(function () { if (getStudentName() === nm) emitStudentName(nm, src); }, 0);
+    }
+    return true;
+  }
+
+  /* نام مناسب برای ثبت نتیجه: نام واقعیِ داده‌شده ← نام ثبت‌شدهٔ سایت ← نام حکیم ← «دانش‌آموز» */
+  function resolveStudentNameValue(given, fallback) {
+    var g = normalizeStudentName(given);
+    if (g && !isPlaceholderName(g)) return g;
+    var stored = getStudentName();
+    if (stored) return stored;
+    var f = normalizeStudentName(fallback);
+    if (f && !isPlaceholderName(f)) return f;
+    return g || 'دانش‌آموز';
+  }
+
+  function isGamePage() {
+    if (typeof document === 'undefined' || !global.location) return false;
+    var meta = document.querySelector && document.querySelector('meta[name="hakim-name-gate"]');
+    var mode = meta ? String(meta.getAttribute('content') || '').toLowerCase() : '';
+    if (mode === 'off') return false;
+    if (mode === 'on') return true;
+    var path = '';
+    try { path = decodeURIComponent(String(global.location.pathname || '')); } catch (e) { path = String(global.location.pathname || ''); }
+    return /\/games\//i.test(path) && !/teacher/i.test(path);
+  }
+
+  /* ── همگام‌سازی خانه‌های نامِ خود بازی‌ها ── */
+  function nameInputs() {
+    if (typeof document === 'undefined' || !document.querySelectorAll) return [];
+    var list = document.querySelectorAll(NAME_INPUT_SELECTOR);
+    var out = [];
+    for (var i = 0; i < list.length; i++) {
+      var el = list[i];
+      if (el.tagName !== 'INPUT' || el.closest('#hk-name-gate')) continue;
+      out.push(el);
+    }
+    return out;
+  }
+  /* خانه‌هایی که خودِ دانش‌آموز در آن‌ها تایپ کرده؛ همگام‌سازی خودکار روی آن‌ها نمی‌نویسد */
+  var typedInputs = typeof WeakSet === 'function' ? new WeakSet() : null;
+  /* خانه‌هایی که یک بار دیده‌ایم؛ همگام‌سازی پس‌زمینه فقط خانه‌های تازه را بازنویسی می‌کند */
+  var seenInputs = typeof WeakSet === 'function' ? new WeakSet() : null;
+  function syncNameInputs(force, skipEl, background) {
+    var name = getStudentName();
+    if (!name) return;
+    var inputs = nameInputs();
+    for (var i = 0; i < inputs.length; i++) {
+      var el = inputs[i];
+      if (el === skipEl) continue;
+      var fresh = !seenInputs || !seenInputs.has(el);
+      if (seenInputs) seenInputs.add(el);
+      var cur = normalizeStudentName(el.value);
+      if (cur === name) continue;
+      var overwrite = background ? fresh : force;
+      if (!overwrite && cur && !isPlaceholderName(cur)) continue;
+      if (document.activeElement === el) continue;
+      if (background && typedInputs && typedInputs.has(el)) continue;
+      el.value = name;
+      el.setAttribute('data-hakim-name-synced', '1');
+      try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) { /* مرورگر قدیمی */ }
+    }
+  }
+  function markInputsRequired() {
+    var inputs = nameInputs();
+    for (var i = 0; i < inputs.length; i++) {
+      var el = inputs[i];
+      if (!el.hasAttribute('aria-required')) el.setAttribute('aria-required', 'true');
+      if (!el.hasAttribute('autocomplete')) el.setAttribute('autocomplete', 'name');
+    }
+  }
+  function onNameInputChange(e) {
+    var el = e.target;
+    if (!el || !el.matches || !el.matches(NAME_INPUT_SELECTOR) || el.closest('#hk-name-gate')) return;
+    /* بازی‌هایی که پیشرفت را به نام گره می‌زنند، نام را فقط با «شروع» ثبت می‌کنند */
+    if (el.getAttribute('data-hakim-name-commit') === 'submit') return;
+    var r = validateStudentName(el.value);
+    if (r.ok) {
+      if (r.name !== getStudentName()) setStudentName(r.name, { source: 'game-input', sourceEl: el });
+    } else if (e.type === 'change') {
+      /* نام خالی یا پیش‌فرض پذیرفته نیست؛ نام ثبت‌شده برمی‌گردد */
+      var stored = getStudentName();
+      if (stored) {
+        el.value = stored;
+        try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (er) { /* */ }
+      }
+    }
+  }
+
+  /* ── پنجرهٔ «اسمت چیه؟» ── */
+  var gateEl = null, gateMode = '', gateInerted = [], gateObserver = null, gateReturnFocus = null;
+  var gateWaiters = [];
+
+  function injectGateStyles() {
+    if (document.getElementById('hk-name-gate-style')) return;
+    var css = '' +
+      'html.hkng-open,html.hkng-open body{overflow:hidden!important}' +
+      '#hk-name-gate{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box;' +
+        'background:rgba(15,23,42,.78);direction:rtl;font-family:Vazirmatn,"Vazir",Tahoma,system-ui,sans-serif;overflow:auto;-webkit-tap-highlight-color:transparent}' +
+      '#hk-name-gate *{box-sizing:border-box}' +
+      '#hk-name-gate .hkng-card{position:relative;width:100%;max-width:25rem;max-height:calc(100dvh - 24px);overflow:auto;margin:auto;padding:22px 20px 20px;border-radius:22px;' +
+        'background:#fffdf6;color:#1f2937;border:3px solid #d4a017;box-shadow:0 24px 60px rgba(0,0,0,.45);text-align:center;line-height:1.75}' +
+      '#hk-name-gate .hkng-face{width:92px;height:92px;margin:-4px auto 4px}' +
+      '#hk-name-gate .hkng-face svg{width:100%;height:100%;display:block}' +
+      '#hk-name-gate h2{margin:0 0 6px;font-size:1.35rem;line-height:1.5;color:#3b1f6e;font-weight:900}' +
+      '#hk-name-gate .hkng-desc{margin:0 0 14px;font-size:.95rem;color:#374151}' +
+      '#hk-name-gate label{display:block;text-align:right;font-weight:800;font-size:.95rem;margin:0 0 6px;color:#1f2937}' +
+      '#hk-name-gate input{display:block;width:100%;min-height:48px;padding:10px 14px;border:2px solid #6b7280;border-radius:14px;background:#fff;color:#111827;' +
+        'font:inherit;font-size:1.1rem;text-align:right;direction:rtl}' +
+      '#hk-name-gate input:focus{outline:3px solid #7c3aed;outline-offset:2px;border-color:#7c3aed}' +
+      '#hk-name-gate input[aria-invalid="true"]{border-color:#b91c1c}' +
+      '#hk-name-gate .hkng-hint{margin:6px 0 0;font-size:.85rem;color:#4b5563;text-align:right}' +
+      '#hk-name-gate .hkng-error{margin:6px 0 0;min-height:1.5em;font-size:.9rem;font-weight:800;color:#b91c1c;text-align:right}' +
+      '#hk-name-gate .hkng-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}' +
+      '#hk-name-gate button{flex:1 1 9rem;min-height:48px;padding:10px 16px;border-radius:14px;font:inherit;font-weight:900;font-size:1.05rem;cursor:pointer}' +
+      '#hk-name-gate .hkng-go{border:0;background:#5b21b6;color:#fff;box-shadow:0 4px 0 #3b0f80}' +
+      '#hk-name-gate .hkng-go:hover{background:#4c1d95}' +
+      '#hk-name-gate .hkng-cancel{border:2px solid #6b7280;background:#fff;color:#1f2937}' +
+      '#hk-name-gate button:focus-visible{outline:3px solid #d97706;outline-offset:3px}' +
+      '#hk-name-gate .hkng-note{margin:12px 0 0;font-size:.8rem;color:#4b5563}' +
+      '@media print{#hk-name-gate{display:none!important}}';
+    var st = document.createElement('style');
+    st.id = 'hk-name-gate-style';
+    st.textContent = css;
+    (document.head || document.documentElement).appendChild(st);
+  }
+
+  function inertOthers() {
+    var kids = document.body ? document.body.children : [];
+    for (var i = 0; i < kids.length; i++) {
+      var k = kids[i];
+      if (k === gateEl || k.tagName === 'SCRIPT' || k.tagName === 'STYLE' || k.hasAttribute('inert') || k.hasAttribute('data-hkng-hidden')) continue;
+      k.setAttribute('inert', '');
+      /* inert فقط روی عناصر HTML اثر دارد؛ SVGهای مستقیمِ body از درخت دسترس‌پذیری پنهان می‌شوند */
+      if (typeof HTMLElement !== 'undefined' && !(k instanceof HTMLElement) && !k.hasAttribute('aria-hidden')) {
+        k.setAttribute('aria-hidden', 'true');
+        k.setAttribute('data-hkng-hidden', '');
+      }
+      gateInerted.push(k);
+    }
+  }
+  function releaseInert() {
+    for (var i = 0; i < gateInerted.length; i++) {
+      var k = gateInerted[i];
+      k.removeAttribute('inert');
+      if (k.hasAttribute('data-hkng-hidden')) { k.removeAttribute('data-hkng-hidden'); k.removeAttribute('aria-hidden'); }
+    }
+    gateInerted = [];
+  }
+  function gateFocusables() {
+    if (!gateEl) return [];
+    return Array.prototype.filter.call(gateEl.querySelectorAll('input,button'), function (el) { return !el.disabled; });
+  }
+
+  function openGate(mode, opts) {
+    if (typeof document === 'undefined' || !document.body) return;
+    if (gateEl) { var inp0 = gateEl.querySelector('input'); if (inp0) inp0.focus(); return; }
+    gateMode = mode === 'edit' ? 'edit' : 'require';
+    injectGateStyles();
+    gateReturnFocus = (opts && opts.returnFocus) || (document.activeElement && document.activeElement !== document.body ? document.activeElement : null);
+    var editing = gateMode === 'edit';
+    var current = getStudentName();
+    gateEl = document.createElement('div');
+    gateEl.id = 'hk-name-gate';
+    gateEl.setAttribute('role', 'dialog');
+    gateEl.setAttribute('aria-modal', 'true');
+    gateEl.setAttribute('aria-labelledby', 'hkngTitle');
+    gateEl.setAttribute('aria-describedby', 'hkngDesc');
+    gateEl.setAttribute('dir', 'rtl');
+    gateEl.setAttribute('lang', 'fa');
+    gateEl.innerHTML =
+      '<form class="hkng-card" novalidate>' +
+        '<div class="hkng-face" aria-hidden="true"></div>' +
+        '<h2 id="hkngTitle">' + (editing ? 'تغییر اسم' : 'سلام! اسمت چیه؟') + '</h2>' +
+        '<p class="hkng-desc" id="hkngDesc">' + (editing
+          ? 'اسم تازه در همهٔ بازی‌ها، کارنامه و گواهی‌های بعدی می‌آید.'
+          : 'پیش از شروع بازی، اسمت را بنویس. فقط همین یک بار می‌پرسم؛ همهٔ بازی‌های حکیمستان، کارنامه و گواهی با همین اسم ثبت می‌شوند.') + '</p>' +
+        '<label for="hkngInput">اسم تو</label>' +
+        '<input id="hkngInput" name="hakim-student-name" type="text" inputmode="text" autocomplete="name" maxlength="40" required aria-required="true" aria-invalid="false" aria-describedby="hkngHint hkngError">' +
+        '<p class="hkng-hint" id="hkngHint">مثلاً: سارا احمدی</p>' +
+        '<p class="hkng-error" id="hkngError" aria-live="assertive"></p>' +
+        '<div class="hkng-actions">' +
+          '<button type="submit" class="hkng-go">' + (editing ? 'ذخیرهٔ اسم' : 'شروع بازی') + '</button>' +
+          (editing ? '<button type="button" class="hkng-cancel">انصراف</button>' : '') +
+        '</div>' +
+        (editing ? '' : '<p class="hkng-note">بعداً هم می‌توانی اسمت را در خانهٔ نامِ بازی‌ها یا از منوی دسترس‌پذیری (♿) عوض کنی.</p>') +
+      '</form>';
+    try { gateEl.querySelector('.hkng-face').innerHTML = buildFaceSVG(resolveMood(editing ? 'wise' : 'happy')); } catch (e) { /* چهره اختیاری است */ }
+    document.body.appendChild(gateEl);
+    document.documentElement.classList.add('hkng-open');
+    inertOthers();
+    if (typeof MutationObserver === 'function') {
+      gateObserver = new MutationObserver(inertOthers);
+      gateObserver.observe(document.body, { childList: true });
+    }
+    var form = gateEl.querySelector('form');
+    var input = gateEl.querySelector('input');
+    var err = gateEl.querySelector('.hkng-error');
+    if (editing && current) input.value = current;
+    else if (!editing && suggestedName) input.value = suggestedName;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var r = validateStudentName(input.value);
+      if (!r.ok) {
+        err.textContent = r.message;
+        input.setAttribute('aria-invalid', 'true');
+        input.focus();
+        return;
+      }
+      setStudentName(r.name, { source: editing ? 'edit' : 'gate', force: !editing });
+      closeGate();
+    });
+    input.addEventListener('input', function () {
+      if (input.getAttribute('aria-invalid') === 'true') { input.setAttribute('aria-invalid', 'false'); err.textContent = ''; }
+    });
+    var cancel = gateEl.querySelector('.hkng-cancel');
+    if (cancel) cancel.addEventListener('click', closeGate);
+    gateEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        if (gateMode === 'edit') { e.preventDefault(); closeGate(); }
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      var f = gateFocusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+    if (editing && input.select) input.select();
+  }
+
+  function closeGate() {
+    if (!gateEl) return;
+    if (gateObserver) { gateObserver.disconnect(); gateObserver = null; }
+    releaseInert();
+    if (gateEl.parentNode) gateEl.parentNode.removeChild(gateEl);
+    gateEl = null;
+    document.documentElement.classList.remove('hkng-open');
+    var back = gateReturnFocus;
+    gateReturnFocus = null;
+    if (back && back.focus) { try { back.focus({ preventScroll: true }); } catch (e) { back.focus(); } }
+    if (hasStudentName()) {
+      var waiters = gateWaiters; gateWaiters = [];
+      for (var i = 0; i < waiters.length; i++) { try { waiters[i](getStudentName()); } catch (e) { /* */ } }
+    }
+  }
+
+  /* نامی که بازی از قبل می‌شناسد (مثلاً آخرین بازیکنِ همین بازی) فقط پیشنهاد می‌شود؛
+     دانش‌آموز باید خودش آن را در پنجره تأیید کند. */
+  var suggestedName = '';
+  function suggestStudentName(v) {
+    var r = validateStudentName(v);
+    if (!r.ok || getStudentName()) return false;
+    suggestedName = r.name;
+    if (gateEl && gateMode === 'require') {
+      var inp = gateEl.querySelector('input');
+      if (inp && !inp.value) inp.value = r.name;
+    }
+    return true;
+  }
+
+  /* کار خواسته‌شده را پس از ثبت نام اجرا می‌کند (اگر نام هست، بی‌درنگ) */
+  function requireStudentName(cb) {
+    var name = getStudentName();
+    if (name) { if (typeof cb === 'function') cb(name); return true; }
+    if (typeof cb === 'function') gateWaiters.push(cb);
+    if (typeof document !== 'undefined' && document.body) openGate('require');
+    return false;
+  }
+
+  function bootStudentGate() {
+    var stored = getStudentName();
+    if (stored) state.name = stored;
+    if (!isGamePage()) return;
+    document.addEventListener('change', onNameInputChange, true);
+    document.addEventListener('submit', function (e) {
+      var form = e.target;
+      if (!form || !form.querySelectorAll) return;
+      var inputs = form.querySelectorAll(NAME_INPUT_SELECTOR);
+      for (var i = 0; i < inputs.length; i++) {
+        var r = validateStudentName(inputs[i].value);
+        if (r.ok && r.name !== getStudentName()) setStudentName(r.name, { source: 'game-input', sourceEl: inputs[i] });
+      }
+    }, true);
+    document.addEventListener('input', function (e) {
+      var el = e.target;
+      if (typedInputs && e.isTrusted && el && el.matches && el.matches(NAME_INPUT_SELECTOR)) typedInputs.add(el);
+    }, true);
+    markInputsRequired();
+    syncNameInputs(true, null, true);
+    if (typeof MutationObserver === 'function' && document.body) {
+      var pending = false;
+      new MutationObserver(function () {
+        if (pending) return;
+        pending = true;
+        setTimeout(function () { pending = false; markInputsRequired(); syncNameInputs(true, null, true); }, 0);
+      }).observe(document.body, { childList: true, subtree: true });
+    }
+    global.addEventListener('storage', function (e) {
+      if (e.key !== STUDENT_KEY && e.key !== STUDENT_LEGACY_KEY) return;
+      var n = getStudentName();
+      if (!n) return;
+      state.name = n;
+      syncNameInputs(true);
+      emitStudentName(n, 'storage');
+    });
+    if (!stored) openGate('require');
+  }
+
+  global.HakimStudent = {
+    KEY: STUDENT_KEY,
+    EVENT: STUDENT_EVENT,
+    get: getStudentName,
+    /* نام ثبت‌شده، یا مقدار جایگزین وقتی هنوز نامی نیست */
+    name: function (fallback) { return getStudentName() || (fallback == null ? '' : String(fallback)); },
+    has: hasStudentName,
+    set: setStudentName,
+    validate: validateStudentName,
+    isPlaceholder: isPlaceholderName,
+    resolve: resolveStudentNameValue,
+    require: requireStudentName,
+    edit: function (opts) { openGate('edit', opts); },
+    suggest: suggestStudentName,
+    isGamePage: isGamePage,
+    onChange: function (cb) {
+      if (typeof cb !== 'function') return function () {};
+      var h = function (e) { cb(e.detail && e.detail.name, e.detail && e.detail.source); };
+      global.addEventListener(STUDENT_EVENT, h);
+      return function () { global.removeEventListener(STUDENT_EVENT, h); };
+    }
+  };
+  api.student = global.HakimStudent;
+
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootStudentGate);
+    else bootStudentGate();
   }
 
 })(typeof window !== 'undefined' ? window : this);

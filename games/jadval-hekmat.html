@@ -2147,7 +2147,7 @@ function hakimSay(text, mood, forceNow){
 
 function hakimReact(event, data){
   data = data || {};
-  const name = state.name || 'دوست من';
+  const name = state.name || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
   const ch = CHAMBERS[state.level] || CHAMBERS[6];
   switch(event){
     case 'welcome':
@@ -2872,7 +2872,7 @@ function celebrateWord(w){
   sfxWord();
   if(window.Hakim && typeof Hakim.saveAnswer === 'function' && w){
     Hakim.saveAnswer({
-      student_name: state.name || 'بازیکن',
+      student_name: state.name || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'),
       game_id: 'jadval-hekmat',
       experiment_id: 'level-' + state.level,
       question_id: 'word-' + (w.idx + 1),
@@ -2941,7 +2941,7 @@ function sendResultsToPanel(){
     } catch(e){}
     const payload = {
       action: 'session',
-      student_name: state.name || 'بازیکن',
+      student_name: state.name || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'),
       student_class: '',
       student_school: '',
       game_id: 'jadval-hekmat',
@@ -2989,7 +2989,7 @@ function showResult(){
   const certLabel = document.getElementById('certChamberLabel');
   if(certLabel) certLabel.textContent = '✦ لوح افتخار ' + ch.name + ' ✦';
   const nameEl = document.getElementById('resPlayerName');
-  if(nameEl) nameEl.textContent = 'خوشنویس فرهیخته: ' + (state.name || 'بازیکن');
+  if(nameEl) nameEl.textContent = 'خوشنویس فرهیخته: ' + (state.name || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'));
 
   const wordsRow = document.getElementById('resWordsRow');
   if(wordsRow){
@@ -3038,7 +3038,7 @@ function applyChamberTheme(level){
 
 function startGame(level){
   ensureAudio(); ensureMusic();
-  state.name = (document.getElementById('nameInput').value || '').trim() || 'بازیکن';
+  state.name = (document.getElementById('nameInput').value || '').trim() || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن');
   state.level = level;
   applyChamberTheme(level);
   const pool = shuffle(state.words.slice());

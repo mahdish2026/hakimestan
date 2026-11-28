@@ -2549,7 +2549,7 @@ function sendAnswerToPanel(st, ok, info, attemptNo, diagText){
     else if(st.type==='pctpaint') correctStr = st.target+'%';
     else if(st.type==='shop') correctStr = st.off+'%';
     Hakim.saveAnswer({
-      student_name: S.name || 'دانش‌آموز',
+      student_name: S.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
       game_id: 'math-nesbat',
       stage: L.name,
       question_num: STEPS.indexOf(st) + 1,
@@ -2784,7 +2784,7 @@ function showCert(){
 function sendResultsToPanel(score, stars, level, duration, details, completed){
   try{
     const payload = {
-      student_name: S.name || 'دانش‌آموز',
+      student_name: S.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
       student_class: '',
       student_school: '',
       game_id: 'math-nesbat',

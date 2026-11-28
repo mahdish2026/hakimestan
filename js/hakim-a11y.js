@@ -868,6 +868,11 @@
       { zoom: 0.87, icon: 'A−', label: 'A− کوچک‌کردن متن' },
       { reset: true, icon: '↺', label: '↺ بازنشانی تنظیمات' }
     ];
+    /* تغییر نام سراسری دانش‌آموز (hakim-core → HakimStudent) در صفحه‌های بازی */
+    var HS = window.HakimStudent;
+    if (HS && typeof HS.edit === 'function' && (HS.isGamePage() || HS.has())) {
+      items.push({ student: true, icon: '👤', label: 'تغییر اسم دانش‌آموز' });
+    }
 
     items.forEach(function (it) {
       var b = document.createElement('button');
@@ -885,6 +890,12 @@
           savePrefs();
           applyPrefs();
           announce('اندازهٔ متن: ' + Math.round(prefs.textScale * 100) + ' درصد');
+        });
+      } else if (it.student) {
+        b.setAttribute('data-student-name', '');
+        b.addEventListener('click', function () {
+          setOpen(false);
+          window.HakimStudent.edit({ returnFocus: fab });
         });
       } else if (it.reset) {
         b.addEventListener('click', function () {
