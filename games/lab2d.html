@@ -446,10 +446,6 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .lab-guide-kicker{font-size:.7rem;color:var(--violet);font-weight:800;letter-spacing:.02em}
 .lab-guide-title{font-size:.95rem;color:var(--amber-ink);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lab-guide-message{font-size:.8rem;color:var(--ink2);line-height:1.75;margin-top:.12rem}
-.lab-guide-steps{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;counter-reset:gs}
-.lab-guide-steps span b{font-family:var(--font-display);font-weight:400;margin-inline-end:.25rem;opacity:.75}
-.lab-guide-steps span{position:relative;text-align:center;font-size:.68rem;font-weight:800;padding:.3rem .2rem;border-radius:10px;color:var(--ink2);background:var(--surface);border:1px solid var(--line)}
-.lab-guide-steps span:first-child{color:var(--amber-ink);background:color-mix(in oklab,var(--amber) 14%,var(--surface));border-color:color-mix(in oklab,var(--amber) 40%,transparent)}
 .lab-guide-actions{position:relative;z-index:1;display:flex;gap:.4rem;flex-wrap:wrap}
 .lab-guide-actions .btn{flex:1;min-width:0;padding:.45rem .65rem;font-size:.76rem}
 @media(max-width:420px){.lab-guide-face{width:52px;height:52px}.lab-guide-title{font-size:.86rem}.lab-guide-message{font-size:.74rem}.exp-desc{font-size:.76rem}}
@@ -655,6 +651,111 @@ table.res select{background:var(--surface)!important;color:var(--ink)!important}
   border:1px solid color-mix(in oklab,var(--amber) 42%,transparent);box-shadow:none;font-weight:800}
 .taskbar .btn.small:not(.ghost):not(.teal):hover{background:color-mix(in oklab,var(--amber) 22%,var(--surface))}
 .st-hint{font-size:.78rem;color:var(--muted);text-align:center;margin:.2rem 0 0}
+/* ===== میز آزمایش نو: صحنه، مأموریت‌ها و دفترچهٔ کشف ===== */
+.scene{position:relative;aspect-ratio:800/560;background:#eaf6fb;overflow:hidden}
+.scene>svg{display:block;width:100%;height:100%;touch-action:none;user-select:none;-webkit-user-select:none;font-family:var(--font-body)}
+.scene .sv-btn{cursor:pointer;outline:none}
+.scene .sv-btn:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}
+.scene .sv-drag{cursor:grab}
+.scene-banner{position:absolute;bottom:10px;left:10px;max-width:calc(100% - 20px);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  padding:.3rem .8rem .3rem .4rem;border-radius:999px;background:rgba(15,34,56,.82);color:#fff;font-size:.8rem;line-height:1.6;pointer-events:none;
+  box-shadow:0 8px 20px -10px rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fadeUp .4s both}
+.scene-banner .sb-k{display:inline-flex;align-items:center;gap:.3rem;padding:.1rem .6rem;border-radius:999px;background:#f59e0b;color:#1f1300;font-weight:900;font-size:.74rem}
+.scene-banner .sb-k.sb-ok{background:#22c55e;color:#052e16}
+.scene-banner .sb-k .ico{width:.9rem;height:.9rem}
+.scene-banner b{font-weight:800}
+.scene-q{position:absolute;inset-inline:12% ;bottom:14px;padding:.8rem 1rem;border-radius:18px;background:rgba(255,255,255,.96);color:#0f2238;
+  box-shadow:0 16px 36px -14px rgba(0,0,0,.55);text-align:center;animation:popIn .45s cubic-bezier(.3,1.4,.5,1) both}
+.scene-q p{margin:0 0 .5rem;font-weight:700;font-size:.92rem}
+.btn-row{display:flex;gap:.45rem;flex-wrap:wrap}
+.btn-row>.btn{flex:1 1 auto}
+.scene-q .btn-row{justify-content:center}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* SVG motion */
+.scene .pop{animation:svPop .5s cubic-bezier(.3,1.6,.5,1) both;transform-box:fill-box;transform-origin:center}
+@keyframes svPop{from{opacity:0;scale:.3}to{opacity:1;scale:1}}
+.scene .shake{animation:svShake .45s both;transform-box:fill-box}
+@keyframes svShake{0%,100%{translate:0 0}20%{translate:-7px 0}40%{translate:6px 0}60%{translate:-4px 0}80%{translate:3px 0}}
+.fo-fossil.found .fo-art{animation:foGlow 1.6s ease-out 1}
+@keyframes foGlow{0%{filter:drop-shadow(0 0 0 #ffd166)}30%{filter:drop-shadow(0 0 14px #ffd166)}100%{filter:drop-shadow(0 0 0 #ffd166)}}
+.fo-fossil.sv-btn:hover .fo-art,.fo-fossil.sv-btn:focus-visible .fo-art{filter:drop-shadow(0 0 8px #fff3b0)}
+.lv-block{cursor:grab;transition:filter .2s}
+.lv-block.fixed{cursor:default}
+.lv-block.lifted{cursor:grabbing;filter:drop-shadow(0 12px 10px rgba(0,0,0,.3))}
+#lv-push{cursor:pointer}
+#lv-push path{animation:pushBob 1.4s ease-in-out infinite;transform-box:fill-box}
+@keyframes pushBob{0%,100%{translate:0 0}50%{translate:0 6px}}
+.wt-dye{cursor:pointer;transition:transform .2s}
+.wt-stemhit{cursor:zoom-in}
+.am-joint .ring{animation:jPulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.am-joint.done .ring{stroke:#86efac;fill:rgba(134,239,172,.2);animation:none}
+@keyframes jPulse{0%,100%{scale:1;opacity:1}50%{scale:1.25;opacity:.6}}
+.am-m{cursor:pointer}
+.er-spot{cursor:pointer}
+.er-spot circle{animation:jPulse 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.er-tree.grow{animation:svGrow .7s cubic-bezier(.3,1.5,.5,1) both;transform-box:fill-box;transform-origin:50% 60%}
+@keyframes svGrow{from{scale:.1}to{scale:1}}
+#er-frost{cursor:pointer}
+#er-sl,#er-sr,#er-ice{transition:transform .6s cubic-bezier(.3,1.4,.5,1),fill .6s,opacity .4s;transform-box:view-box}
+/* پنل: مأموریت‌ها */
+.mission-box{display:grid;gap:.55rem;padding:.8rem;border-radius:18px;border:1px solid color-mix(in oklab,var(--amber) 35%,transparent);
+  background:linear-gradient(160deg,color-mix(in oklab,var(--amber) 10%,var(--surface)),var(--surface))}
+.mb-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.mb-head h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:1.1rem;color:var(--amber-ink);display:flex;align-items:center;gap:.4rem}
+.mb-head h2 .ico{width:1.25rem;height:1.25rem}
+.mb-count{font-weight:900;font-size:.8rem;color:var(--amber-ink);background:color-mix(in oklab,var(--amber) 16%,var(--surface));padding:.1rem .6rem;border-radius:999px}
+.mb-bar{height:8px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.mb-bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#f59e0b,#22c55e);transition:width .6s cubic-bezier(.3,1.2,.5,1)}
+.missions{list-style:none;margin:0;padding:0;display:grid;gap:.4rem}
+.mission{display:flex;gap:.6rem;align-items:flex-start;padding:.55rem .6rem;border-radius:14px;border:1px solid var(--line);background:var(--surface);opacity:.72;transition:opacity .3s,border-color .3s,background .3s}
+.mission .mi-num{flex:none;width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.85rem;background:var(--surface-3);color:var(--ink2)}
+.mission .mi-copy{flex:1;min-width:0}
+.mission b{display:block;font-size:.9rem;color:var(--ink);line-height:1.6}
+.mission p{margin:0;font-size:.8rem;line-height:1.75;color:var(--ink2)}
+.mission .mi-ok{flex:none;width:1.6rem;height:1.6rem;border-radius:50%;display:grid;place-items:center;color:#fff;background:#22c55e;transform:scale(0);transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.mission .mi-ok .ico{width:1rem;height:1rem}
+.mission.now{opacity:1;border-color:color-mix(in oklab,var(--amber) 60%,transparent);box-shadow:0 8px 18px -14px rgba(224,138,12,.8)}
+.mission.now .mi-num{background:var(--amber);color:#1f1300}
+.mission.done{opacity:1;background:color-mix(in oklab,#22c55e 8%,var(--surface));border-color:color-mix(in oklab,#22c55e 40%,transparent)}
+.mission.done .mi-num{background:#22c55e;color:#fff}
+.mission.done .mi-ok{transform:scale(1)}
+.mission.done p{display:none}
+/* دفترچهٔ کشف */
+.notebook{order:99;padding:.8rem;border-radius:18px;border:1px dashed color-mix(in oklab,var(--violet) 40%,transparent);background:color-mix(in oklab,var(--violet) 5%,var(--surface))}
+.notebook h2{margin:0 0 .5rem;font-family:var(--font-display);font-weight:400;font-size:1.05rem;color:var(--violet);display:flex;align-items:center;gap:.4rem}
+.notebook h2 .ico{width:1.2rem;height:1.2rem}
+.nb-list{display:grid;gap:.45rem}
+.nb-empty{margin:0;font-size:.8rem;color:var(--muted)}
+.nb-fact{padding:.55rem .7rem;border-radius:12px;background:var(--surface);border:1px solid color-mix(in oklab,var(--violet) 25%,transparent);animation:popIn .5s cubic-bezier(.3,1.4,.5,1) both}
+.nb-fact .nb-n{display:inline-flex;align-items:center;gap:.25rem;font-size:.72rem;font-weight:900;color:var(--violet)}
+.nb-fact .nb-n .ico{width:.9rem;height:.9rem}
+.nb-fact p{margin:.15rem 0 0;font-size:.84rem;line-height:1.85;color:var(--ink)}
+/* بخش‌های ابزار */
+.bench-sec{display:grid;gap:.55rem}
+.bench-sec h2{margin:.2rem 0 0;font-size:1.05rem;font-family:var(--font-display);font-weight:400;color:var(--amber-ink);display:flex;align-items:center;gap:.45rem}
+.bench-sec h2 .ico{width:1.5rem;height:1.5rem;padding:.22rem;border-radius:8px;background:rgba(255,181,71,.18);color:var(--amber-ink);flex:none}
+.bench-sec h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.seg-tabs{display:flex;gap:.3rem;padding:.25rem;border-radius:14px;background:var(--surface-3)}
+.seg-tabs .seg{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;border:0;border-radius:11px;padding:.45rem .6rem;font:inherit;font-size:.85rem;font-weight:800;color:var(--ink2);background:transparent;cursor:pointer}
+.seg-tabs .seg .ico{width:1rem;height:1rem}
+.seg-tabs .seg.on{background:var(--surface);color:var(--amber-ink);box-shadow:0 4px 12px -8px rgba(15,40,70,.5)}
+.lv-rows{display:grid;gap:.35rem}
+.lv-row{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;color:var(--ink2);background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:.35rem .5rem}
+.lv-row span:nth-child(2){flex:1}
+.lv-row select{font:inherit;font-size:.78rem;padding:.25rem .4rem;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink)}
+.lv-sw{width:14px;height:14px;border-radius:4px;flex:none}
+.jt-row{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;padding:.4rem .5rem;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);transition:background .3s}
+.jt-row .jt-name{flex:0 0 3.6rem;font-weight:900;font-size:.85rem;color:var(--ink)}
+.jt-opt{flex:1 1 auto;font:inherit;font-size:.78rem;font-weight:800;padding:.3rem .5rem;border-radius:9px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink2);cursor:pointer}
+.jt-opt.ok{background:#22c55e;border-color:#16a34a;color:#fff}
+.jt-row.done{background:color-mix(in oklab,#22c55e 9%,var(--surface))}
+.jt-row.flash{background:color-mix(in oklab,var(--amber) 20%,var(--surface))}
+.jt-row.shake{animation:shake .45s both}
+#lab-finish:disabled{opacity:1;cursor:not-allowed;background:var(--surface-3);color:var(--ink2);box-shadow:none;border:1px dashed var(--line-2)}
+#lab-finish.ready{animation:finishGlow 1.8s ease-in-out infinite}
+@keyframes finishGlow{0%,100%{box-shadow:0 10px 24px -12px rgba(224,138,12,.8)}50%{box-shadow:0 0 0 6px rgba(245,158,11,.25),0 10px 30px -10px rgba(224,138,12,.9)}}
+@media (max-width:560px){.scene-banner{font-size:.7rem;bottom:6px;left:6px}.scene-q{inset-inline:4%}}
+@media (prefers-reduced-motion: reduce){.scene .pop,.scene .shake,.er-tree.grow,.am-joint .ring,.er-spot circle,#lv-push path,#lab-finish.ready{animation:none!important}}
 </style>
 <link rel="stylesheet" href="../css/hakim-cert.css"><script src="../js/hakim-logo.js"></script><script src="../js/hakim-cert.js"></script>
 </head>
@@ -663,6 +764,7 @@ table.res select{background:var(--surface)!important;color:var(--ink)!important}
 <div class="lab-bg" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <!-- ===================== ورودی آزمایشگاه ===================== -->
+<main id="lab-main">
 <section id="screen-form" class="screen active">
   <div class="wrap entry">
     <div class="entry-card">
@@ -899,7 +1001,7 @@ table.res select{background:var(--surface)!important;color:var(--ink)!important}
         <span class="bench-ico" id="lab-ico" aria-hidden="true"></span>
         <div class="lab-title-copy">
           <div class="k"><span id="lab-station">ایستگاه</span><span class="pill" id="lab-ico-pill">درس</span></div>
-          <h2 id="lab-title">آزمایش</h2>
+          <h2 id="lab-title" role="heading" aria-level="1">آزمایش</h2>
         </div>
       </div>
       <button class="btn ghost small" id="lab-back" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg> مسیر آزمایش‌ها</button>
@@ -907,8 +1009,8 @@ table.res select{background:var(--surface)!important;color:var(--ink)!important}
     <div class="lab-body">
       <div class="stage-col">
         <div class="stage">
-          <div class="stage-bar" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span>میز آزمایش</span><span class="live">زنده</span></div>
-          <canvas id="lab-canvas" width="800" height="560"></canvas>
+          <div class="stage-bar" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span id="lab-stage-name">میز آزمایش</span><span class="live">زنده</span></div>
+          <div class="scene" id="lab-scene"></div>
         </div>
         <div class="stage-foot">
           <p class="lab-hint" id="lab-hint">راهنما</p>
@@ -930,7 +1032,7 @@ table.res select{background:var(--surface)!important;color:var(--ink)!important}
         <span class="bench-ico" id="game-ico" aria-hidden="true"></span>
         <div class="lab-title-copy">
           <div class="k"><span id="game-station">بازی ویژه</span><span class="pill" style="--h:var(--violet)">بازی ویژه</span></div>
-          <h2 id="hakim-gosh-screen-title">چشمِ حکیم</h2>
+          <h2 id="hakim-gosh-screen-title" role="heading" aria-level="1">چشمِ حکیم</h2>
           <p class="lab-hint" id="hakim-gosh-screen-hint">بازی چهارمرحله‌ای بینایی — درس ۶ علوم پنجم</p>
         </div>
       </div>
@@ -994,6 +1096,7 @@ table.res select{background:var(--surface)!important;color:var(--ink)!important}
     </div>
   </div>
 </section>
+</main>
 
 <!-- ===================== QUIZ OVERLAY ===================== -->
 <div class="overlay" id="quiz-overlay" role="dialog" aria-modal="true" aria-labelledby="quiz-q">
@@ -1270,15 +1373,15 @@ const ICONS = {
 
 const EXPS = [
   {id:'fossil', title:'فسیل و لایه‌های رسوبی', lesson:'درس ۴', color:'#e6c07b',
-   hint:'با قلم‌مو روی خاک بکش تا استخوان‌های فسیل پیدا شود.'},
+   hint:'با قلم‌مو چهار فسیل پنهان را پیدا کن، آن‌ها را روی خط زمان بچین و کشف کن این‌جا روزی دریا بوده یا نه.'},
   {id:'lever', title:'اهرم و تعادل', lesson:'درس ۸', color:'#ffb547',
-   hint:'فاصله و جرم را تغییر بده تا گشتاور دو طرف برابر شود.'},
+   hint:'وزنه‌ها را روی الاکلنگ بچین تا تراز شود، بعد با دیلم سنگ ۶۰۰ نیوتنی را با زور کم بلند کن.'},
   {id:'water-transfer', title:'انتقال آب در گیاه', lesson:'درس ۱۲', color:'#5cc8ff',
-   hint:'آب خاک و دما را کم و زیاد کن و مسیر آب را ببین.'},
+   hint:'گل سفید را در آب رنگی بگذار، زمان را جلو ببر، درون ساقه را با ذره‌بین ببین و تعرق برگ‌ها را تماشا کن.'},
   {id:'arm', title:'مدل بازو و مفصل', lesson:'درس ۵', color:'#ff7a9c',
-   hint:'دست را بگیر و خم کن؛ ببین عضلات چه می‌کنند.'},
+   hint:'لیوان را بالا بیاور، کار جفتی ماهیچه‌ها را کشف کن و نوع مفصل‌های شانه، آرنج و جمجمه را بشناس.'},
   {id:'erosion', title:'فرسایش خاک', lesson:'درس ۱۰', color:'#6ad06a',
-   hint:'باران و شیب را زیاد کن، بعد با کاشتن گیاه خاک را نجات بده.'},
+   hint:'باران تند را روی دامنهٔ لخت ببار، با نهال‌ها خاک را نجات بده و ببین یخ چطور سنگ را می‌شکند.'},
   {id:'hakim-gosh', title:'چشمِ حکیم — بازی بینایی', lesson:'درس ۶', color:'#8b5cf6',
    hint:'چهار مرحلهٔ بازی را انجام بده: آناتومی چشم، نور، مسیر دیدن و عدسی.'},
   {id:'hakim-goosh', title:'گوشِ حکیم — دو مرحلهٔ نخست', lesson:'درس ۶', color:'#5eead4',
@@ -1291,29 +1394,34 @@ const EXPS = [
 
 const QUESTIONS = {
   'fossil':[
-    {q:'فسیل چیست؟', opts:['بقایای جانداران بسیار قدیمی که در سنگ‌های رسوبی به‌جا مانده است','ابزاری برای حفاری در معدن','نوعی گیاه که در دریا رشد می‌کند','سنگی که از آتش‌کوه درست شده است'], a:0, expl:'فسیل بقایا یا اثر جانداری است که در لایه‌های رسوبی حفظ شده و اطلاعات گذشتهٔ زمین را می‌دهد.'},
-    {q:'فسیل‌ها بیشتر در کدام لایه از زمین یافت می‌شوند؟', opts:['لایهٔ خاک سطحی','لایه‌های سنگ رسوبی','اعماق آتش‌کوه','لایهٔ یخ‌های قطبی'], a:1, expl:'رسوب‌ها روی هم ته‌نشین می‌شوند و فسیل را درون خود نگه می‌دارند.'},
-    {q:'برای فهمیدن «سن» لایه‌ها به چه نکته‌ای توجه می‌کنیم؟', opts:['لایهٔ پایین‌تر قدیمی‌تر است','لایهٔ پایین‌تر تازه‌تر است','سن همهٔ لایه‌ها یکسان است','فقط رنگ لایه مهم است'], a:0, expl:'قانون روی‌هم‌قرارگیری: هر لایه روی لایهٔ قدیمی‌تر خود می‌نشیند.'}
+    {q:'فسیل چیست؟', opts:['بقایا یا اثر جانداری که میلیون‌ها سال پیش زندگی می‌کرده و در سنگ حفظ شده','سنگی که از گدازهٔ آتشفشان درست شده','نوعی کانی درخشان که در معدن پیدا می‌شود','استخوان جانوری که همین امسال مرده است'], a:0, expl:'فسیل بقایا یا اثر جانداران بسیار قدیمی است که در سنگ‌ها، به‌ویژه سنگ‌های رسوبی، حفظ شده است.'},
+    {q:'در کاوشگاه، سه‌لوبی در پایین‌ترین لایه و برگ سرخس در لایه‌ای بالاتر بود. کدام قدیمی‌تر است؟', opts:['سه‌لوبی، چون لایهٔ پایین‌تر زودتر ته‌نشین شده','سرخس، چون به سطح زمین نزدیک‌تر است','هر دو هم‌سن‌اند','از روی لایه‌ها نمی‌شود فهمید'], a:0, expl:'در لایه‌های دست‌نخورده، لایه‌های پایین‌تر زودتر ته‌نشین شده‌اند؛ پس فسیل‌هایشان قدیمی‌ترند.'},
+    {q:'فسیل‌ها بیشتر در کدام نوع سنگ پیدا می‌شوند؟', opts:['سنگ‌های رسوبی','سنگ‌های آتشفشانی','سنگ‌های قیمتی','در هیچ سنگی'], a:0, expl:'رسوب‌ها آرام‌آرام روی بقایای جانداران می‌نشینند و آن‌ها را حفظ می‌کنند؛ گرمای زیادِ آتشفشان فسیل را از بین می‌برد.'},
+    {q:'روی یک کوه، فسیل صدف و ماهی پیدا شده است. این نشان می‌دهد…', opts:['این منطقه زمانی زیر آب دریا بوده است','ماهی‌ها می‌توانستند از کوه بالا بروند','کسی صدف‌ها را آن‌جا جا گذاشته است','کوه از صدف ساخته شده است'], a:0, expl:'فسیل جانداران دریایی در خشکی نشان می‌دهد که آن‌جا روزگاری دریا بوده و بعدها خشکی شده است.'}
   ],
   'lever':[
-    {q:'اهرم وقتی در تعادل است که…', opts:['گشتاور دو طرف برابر باشد','جرم دو طرف برابر باشد','فاصله‌ها برابر باشند','تکیه‌گاه در وسط نباشد'], a:0, expl:'تعادل به گشتاور بستگی دارد، نه فقط به جرم یا فاصله.'},
-    {q:'گشتاور چگونه محاسبه می‌شود؟', opts:['نیرو × فاصله از تکیه‌گاه','نیرو + فاصله','نیرو ÷ فاصله','جرم × سرعت'], a:0, expl:'گشتاور = نیرو × بازوی اهرم (فاصله تا تکیه‌گاه).'},
-    {q:'اگر وزنهٔ سنگین را نزدیک تکیه‌گاه بگذاریم، برای بلند کردنش…', opts:['نیروی کمتری لازم است','نیروی بیشتری لازم است','نیرو تغییری نمی‌کند','اهرم کار نمی‌کند'], a:0, expl:'بازوی کوچک‌تر برای وزن سنگین، بازوی بلندتر برای نیروی کم را می‌خواهد.'}
+    {q:'الاکلنگ وقتی تراز می‌شود که…', opts:['گشتاور دو طرف برابر باشد','دو طرف حتماً وزنهٔ یکسان داشته باشند','وزنه‌ها کنار تکیه‌گاه باشند','یک طرف خالی باشد'], a:0, expl:'تعادل اهرم به گشتاور بستگی دارد: وزن × فاصله از تکیه‌گاه در دو طرف باید برابر باشد.'},
+    {q:'سنگ ۴ کیلویی در فاصلهٔ ۲ از تکیه‌گاه است. وزنهٔ ۲ کیلویی را در چه فاصله‌ای بگذاریم تا الاکلنگ تراز شود؟', opts:['۴','۲','۱','۸'], a:0, expl:'گشتاور سمت سنگ ۴ × ۲ = ۸ است؛ پس سمت دیگر هم باید ۲ × ۴ = ۸ شود.'},
+    {q:'برای بلند کردن سنگ سنگین با دیلم، تکیه‌گاه را کجا بگذاریم تا نیروی کمتری لازم باشد؟', opts:['نزدیک سنگ','نزدیک دست خودمان','دقیقاً وسط دیلم','فرقی نمی‌کند'], a:0, expl:'وقتی تکیه‌گاه نزدیک بار است، بازوی نیرو بلندتر می‌شود و نیروی کمتری لازم است.'},
+    {q:'کدام وسیله یک اهرم است؟', opts:['قیچی','لیوان','توپ','کتاب'], a:0, expl:'قیچی، الاکلنگ، دیلم، دربازکن و فرغون نمونه‌هایی از اهرم‌اند.'}
   ],
   'water-transfer':[
-    {q:'آب از ریشه تا برگ از چه راهی بالا می‌رود؟', opts:['آوند چوبی داخل ساقه','پوست ساقه','رگبرگ‌های برگ','از طریق گل'], a:0, expl:'آوند چوبی مثل لوله‌ای آب را از ریشه به برگ می‌رساند.'},
-    {q:'تعرق در گیاه یعنی چه؟', opts:['خروج بخار آب از روزنه‌های برگ','ریختن آب روی برگ','جذب آب توسط ریشه','رشد ریشه'], a:0, expl:'تعرق همان بخار شدن آب از برگ است که آب تازه را به بالا می‌کشد.'},
-    {q:'اگر آب خاک از حد لازم کمتر شود، برگ‌های گیاه چه می‌شوند؟', opts:['پژمرده و شل می‌شوند','بزرگ‌تر می‌شوند','رنگ‌شان نارنجی می‌شود','سخت می‌شوند'], a:0, expl:'کم‌آبی آماس سلول‌ها را کم می‌کند و برگ پژمرده می‌شود.'}
+    {q:'وقتی ساقهٔ گل سفید را در آب رنگی گذاشتیم، چرا گلبرگ‌ها رنگی شدند؟', opts:['آب رنگی از آوندهای ساقه بالا رفت و به گلبرگ‌ها رسید','رنگ از هوا روی گلبرگ‌ها نشست','گل خودش رنگ ساخت','نور چراغ گلبرگ‌ها را رنگی کرد'], a:0, expl:'آوند چوبی آب را از پایین ساقه تا برگ‌ها و گلبرگ‌ها بالا می‌برد؛ جوهر مسیر آب را نشان می‌دهد.'},
+    {q:'لوله‌های ریزی که در برش ساقه رنگی دیده شدند چه نام دارند؟', opts:['آوند چوبی','ریشهٔ فرعی','روزنهٔ برگ','گلبرگ'], a:0, expl:'آوندهای چوبی لوله‌های باریک ساقه‌اند که آب و مواد معدنی را بالا می‌برند.'},
+    {q:'چرا داخل کیسهٔ پلاستیکیِ روی برگ‌ها قطره‌های آب جمع شد؟', opts:['برگ‌ها از روزنه‌هایشان بخار آب بیرون دادند (تعرق)','باران روی کیسه بارید','کیسه از اول خیس بود','ریشه‌ها آب را به بیرون پاشیدند'], a:0, expl:'به خروج بخار آب از روزنه‌های برگ «تعرق» می‌گوییم؛ بخار روی دیوارهٔ کیسه به قطره تبدیل می‌شود.'},
+    {q:'وقتی نور و گرما بیشتر شود، تعرق گیاه چه تغییری می‌کند؟', opts:['بیشتر می‌شود','کمتر می‌شود','کاملاً متوقف می‌شود','هیچ تغییری نمی‌کند'], a:0, expl:'در نور و گرمای بیشتر، آب بیشتری از برگ‌ها بخار می‌شود؛ برای همین گیاهان در روزهای گرم آب بیشتری لازم دارند.'}
   ],
   'arm':[
-    {q:'وقتی آرنج را خم می‌کنیم، کدام عضله منقبض می‌شود؟', opts:['دوسر بازو','سه‌سر بازو','عضلهٔ شکم','ماهیچهٔ ساق'], a:0, expl:'دوسر بازو کوتاه و ضخیم می‌شود و ساعد را بالا می‌کشد.'},
-    {q:'عضلات به استخوان‌ها با چه چیزی وصل می‌شوند؟', opts:['تاندون (زردپی)','رگ خونی','پوست','غضروف فقط'], a:0, expl:'تاندون عضله را محکم به استخوان می‌چسباند.'},
-    {q:'مفصل آرنج چه نوع مفصلی است؟', opts:['لولایی (لولا)','گوی‌و‌ساکت','ثابت','کشویی'], a:0, expl:'آرنج مثل لولا فقط در یک جهت خم و باز می‌شود.'}
+    {q:'وقتی آرنج را خم می‌کنیم و لیوان را بالا می‌آوریم، کدام ماهیچه منقبض می‌شود؟', opts:['دوسر بازو (جلوی بازو)','سه‌سر بازو (پشت بازو)','ماهیچهٔ ساق پا','ماهیچهٔ شکم'], a:0, expl:'دوسر بازو کوتاه و ضخیم می‌شود و ساعد را بالا می‌کشد.'},
+    {q:'چرا ماهیچه‌های بازو جفت‌جفت و مخالف هم کار می‌کنند؟', opts:['چون ماهیچه‌ها فقط می‌توانند بکشند، نه هل بدهند','چون یک ماهیچه همیشه خسته است','چون استخوان‌ها خودشان حرکت می‌کنند','چون ماهیچه‌ها فقط هل می‌دهند'], a:0, expl:'هر ماهیچه فقط با منقبض شدن می‌کشد؛ برای برگرداندن حرکت، ماهیچهٔ مخالف لازم است.'},
+    {q:'شانه چه نوع مفصلی است؟', opts:['گوی و کاسه','لولایی','ثابت','بدون مفصل'], a:0, expl:'سر استخوان بازو مثل گوی در کاسهٔ شانه می‌چرخد و دست در همهٔ جهت‌ها حرکت می‌کند.'},
+    {q:'استخوان‌های جمجمه با چه نوع مفصلی به هم وصل شده‌اند؟', opts:['ثابت','لولایی','گوی و کاسه','چرخشی'], a:0, expl:'استخوان‌های جمجمه با درزهای محکم به هم چسبیده‌اند تا از مغز محافظت کنند و حرکت نمی‌کنند.'}
   ],
   'erosion':[
-    {q:'کدام مورد فرسایش خاک را افزایش می‌دهد؟', opts:['حذف گیاهان و باران شدید روی شیب','کاشتن درخت','پوشاندن خاک با برگ','مالچ‌پاشی'], a:0, expl:'بدون ریشه، آب و باد ذرات خاک را جدا و جابه‌جا می‌کنند.'},
-    {q:'ریشهٔ گیاهان چه نقشی در برابر فرسایش دارند؟', opts:['خاک را نگه می‌دارند و فرسایش را کم می‌کنند','خاک را سست می‌کنند','آب را بیشتر می‌کنند','هیچ نقشی ندارند'], a:0, expl:'ریشه‌ها خاک را مثل تور به هم می‌دوزند.'},
-    {q:'فرسایش خاک یعنی چه؟', opts:['جدا شدن و جابه‌جا شدن ذرات خاک','سخت شدن خاک','خشک شدن گیاه','پر شدن خاک از آب'], a:0, expl:'عوامل طبیعی مثل آب، باد و شیب، لایهٔ سطحی خاک را می‌برند.'}
+    {q:'در آزمایش، کجا خاک بیشتری شسته شد؟', opts:['دامنهٔ پرشیب و بی‌گیاه زیر باران تند','دامنهٔ کم‌شیب پر از درخت','زمین صاف بدون باران','دامنهٔ پوشیده از چمن'], a:0, expl:'شیب زیاد، باران تند و نبودن گیاه، فرسایش خاک را بیشتر می‌کند.'},
+    {q:'نهال‌ها چگونه از خاک دامنه محافظت کردند؟', opts:['ریشه‌ها خاک را نگه داشتند و برگ‌ها ضربهٔ باران را گرفتند','نهال‌ها باران را متوقف کردند','نهال‌ها خاک را سنگی کردند','نهال‌ها آب رود را کم کردند'], a:0, expl:'ریشه‌ها مثل تور ذرات خاک را به هم می‌دوزند و پوشش گیاهی جلوی برخورد مستقیم قطره‌ها را می‌گیرد.'},
+    {q:'چرا رود پایین دامنه گِل‌آلود شد؟', opts:['آب باران خاکِ دامنه را با خود به رود برد','ماهی‌ها کف رود را کندند','خورشید آب رود را قهوه‌ای کرد','آب رود از زمین بیرون آمد'], a:0, expl:'خاکِ شسته‌شده همراه آب جاری به رود می‌رسد؛ فرسایش هم خاک را هدر می‌دهد و هم آب را گِل‌آلود می‌کند.'},
+    {q:'آب درون شکاف سنگ چگونه سنگ را خرد می‌کند؟', opts:['وقتی یخ می‌زند حجمش بیشتر می‌شود و شکاف را باز می‌کند','آب سنگ را در یک شب حل می‌کند','آب سنگ را داغ می‌کند','آب سنگ را سبک‌تر می‌کند'], a:0, expl:'آب با یخ زدن منبسط می‌شود؛ تکرار یخ‌زدن و آب‌شدن، شکاف را بزرگ و سنگ را خرد می‌کند.'}
   ],
   'pulley':[
     {q:'قرقرهٔ ثابت چه فایده‌ای در بلند کردن اجسام دارد؟', opts:['جهت نیرو را تغییر می‌دهد تا با وزن بدن کشیدن آسان‌تر شود','نیروی لازم را نصف می‌کند','مسافت کشیدن طناب را کم می‌کند','وزن جسم را کاهش می‌دهد'], a:0, expl:'قرقرهٔ ثابت مقدار نیرو را کم نمی‌کند، اما جهت نیرو را تغییر می‌دهد تا با کشیدن طناب به سمت پایین و با کمک وزن بدن، جسم بالا برود.'},
@@ -1357,9 +1465,6 @@ function buildLabGuide(exp){
         '<div class="lab-guide-title">'+exp.title+'</div>'+
         '<div class="lab-guide-message" id="lab-guide-message">'+exp.hint+'</div>'+
       '</div>'+
-    '</div>'+
-    '<div class="lab-guide-steps" aria-label="روند آزمایش">'+
-      '<span><b>۱</b>کشف کن</span><span><b>۲</b>تغییر بده</span><span><b>۳</b>نتیجه بگیر</span><span><b>۴</b>آزمون</span>'+
     '</div>'+
     '<div class="lab-guide-actions">'+
       '<button class="btn ghost small" id="lab-guide-tip" type="button">'+ui('bulb')+' نکتهٔ حکیم</button>'+
@@ -1422,50 +1527,34 @@ function openLab(exp){
   $('lab-station').textContent = 'ایستگاه ' + fa(EXPS.indexOf(exp)+1) + ' از ' + fa(EXPS.length);
   const labIco = $('lab-ico'); labIco.innerHTML = ICONS[exp.id] || ''; labIco.style.setProperty('--h', exp.color);
   $('lab-hint').innerHTML = ui('bulb') + ' ' + exp.hint;
-  const cv = $('lab-canvas');
-  cv.setAttribute('role','img');
-  cv.setAttribute('aria-label', exp.title + ' — بوم تعاملی آزمایش');
-  cv.tabIndex = 0;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  cv.width = W*dpr; cv.height = H*dpr;
-  const c = cv.getContext('2d');
-  c.setTransform(dpr,0,0,dpr,0,0);
   const taskbar = $('lab-taskbar');
   taskbar.innerHTML = buildLabGuide(exp);
-  LAB.api = BUILDERS[exp.id](taskbar, cv, c);
-  $('lab-finish').disabled = false;
-  $('lab-finish').innerHTML = ui('check') + ' پایان آزمایش و شروع آزمون';
+  if(LAB.kit) LAB.kit.destroy();
+  cancelAnimationFrame(LAB.raf);
+  const K = makeKit(exp, $('lab-scene'), taskbar);
+  LAB.kit = K; LAB.errShown = false;
+  LAB.api = BENCH[exp.id](K) || {};
   if(window.Hakim && typeof window.Hakim.renderFace === 'function'){
     window.Hakim.renderFace('wise', $('lab-guide-face'));
   }
   $('lab-reset').onclick = ()=>{ SND.click(); openLab(exp); };
-  $('lab-guide-tip').onclick = ()=>{
-    SND.click();
-    const msg = $('lab-guide-message');
-    msg.textContent = 'آرام تغییر بده، نتیجه را نگاه کن و بعد سراغ آزمون برو. هر آزمایش یک سرنخ علمی دارد ✨';
-    cheraghakSay('آفرین! اول یک تغییر کوچک بده و اثرش را روی بوم ببین.');
-  };
+  $('lab-guide-tip').onclick = ()=>{ SND.click(); K.say(K.missions ? K.missions.hint() : exp.hint); };
   show('screen-lab');
-  cheraghakSay('💡 ' + exp.hint);
-  // pointer events
-  const down = (e)=>{ e.preventDefault(); const p = canvasPointer(cv,e); if(LAB.api.onDown) LAB.api.onDown(p.x,p.y); };
-  const move = (e)=>{ const p = canvasPointer(cv,e); if(LAB.api.onMove) LAB.api.onMove(p.x,p.y); };
-  const up   = ()=>{ if(LAB.api.onUp) LAB.api.onUp(); };
-  cv.onpointerleave = up;
-  cv.onpointerdown = down; cv.onpointermove = move; cv.onpointerup = up; cv.onpointercancel = up;
-  // loop
-  cancelAnimationFrame(LAB.raf); LAB.t0 = performance.now(); LAB.last = LAB.t0;
+  const first = K.missions && K.missions.current();
+  K.say(first ? 'مأموریت ۱ — ' + first.title + ': ' + first.text : exp.hint);
+  LAB.last = performance.now();
   function loop(now){
     const dt = clamp((now - LAB.last)/1000, 0, .05); LAB.last = now;
-    c.clearRect(0,0,W,H);
-    try{ LAB.api.draw(now, dt); if(LAB.api._extraUpdate) LAB.api._extraUpdate(); }
+    try{ if(LAB.api.tick) LAB.api.tick(dt, now); }
     catch(err){
       console.error(err);
-      const msg = document.createElement('div');
-      msg.className = 'obs warn';
-      msg.textContent = 'حکیم می‌گوید: این آزمایش نیاز به یک شروع دوباره دارد. دکمهٔ «شروع دوباره» را بزن.';
-      const bar = $('lab-taskbar');
-      if(bar && !bar.querySelector('.lab-runtime-error')){ msg.classList.add('lab-runtime-error'); bar.appendChild(msg); }
+      if(!LAB.errShown){
+        LAB.errShown = true;
+        const msg = document.createElement('div');
+        msg.className = 'obs warn lab-runtime-error';
+        msg.textContent = 'حکیم می‌گوید: این آزمایش نیاز به یک شروع دوباره دارد. دکمهٔ «شروع دوباره» را بزن.';
+        $('lab-taskbar').appendChild(msg);
+      }
     }
     LAB.raf = requestAnimationFrame(loop);
   }
@@ -1517,801 +1606,1145 @@ function ctlNote(parent, text){
   const p = document.createElement('p'); p.className='muted'; p.style.fontSize='.82rem'; p.style.margin='.2rem 0 0'; p.textContent = text; parent.appendChild(p); return p;
 }
 
+Object.assign(UI_ICONS, {
+  flag:'<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
+  drop:'<path d="M12 3.5c3 3.6 6 7.2 6 10.5a6 6 0 0 1-12 0c0-3.3 3-6.9 6-10.5z"/>'
+});
 /* ============================================================
-   سازندگان آزمایش‌ها
+   میز آزمایش نو — موتور صحنه‌های برداری، مأموریت‌ها و دفترچهٔ کشف
+   هر آزمایش یک صحنهٔ SVG زنده است و چند «مأموریت» دارد. هر مأموریت
+   که کامل شود، یک «کشف» علمی در دفترچه ثبت می‌شود و وقتی همهٔ
+   مأموریت‌ها تمام شد، آزمون ایستگاه باز می‌شود.
    ============================================================ */
-const BUILDERS = {};
-
-/* ---------- ۱) فسیل و لایه‌های رسوبی ---------- */
-BUILDERS['fossil'] = function(taskbar, cv, c){
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  function mk(){ const k=document.createElement('canvas'); k.width=W*dpr; k.height=H*dpr; const x=k.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0); return {cv:k,ctx:x}; }
-  const fossilL = mk(), maskL = mk();
-  let brush = 46, showLabels = true, strokes = 0;
-  const layers = [
-    {y:70,h:66,g:['#6b4f31','#8a6a44'],name:'خاک سطحی'},
-    {y:136,h:74,g:['#a9865a','#c7a878'],name:'ماسه‌سنگ'},
-    {y:210,h:96,g:['#cbb488','#e0cba1'],name:'لایهٔ رسوبی'},
-    {y:306,h:92,g:['#b3a077','#c9b791'],name:'سنگ آهکی'},
-    {y:398,h:112,g:['#7f6c4d','#9a8563'],name:'سنگ کهن'}
-  ];
-  const bx0=230, bx1=640, by0=214, by1=340;
-  /* ---- دو فسیل واقعی روی بوم: ۱) اسکلت ماهی در «لایهٔ رسوبی»  ۲) صدف در «سنگ آهکی» ---- */
-  const FOSSILS = [
-    {id:'bones', label:'🦴 اسکلت ماهی', layer:'لایهٔ رسوبی'},
-    {id:'shell', label:'🐚 صدف دریایی', layer:'سنگ آهکی'}
-  ];
-  function drawSkeleton(x){
-    x.save(); x.shadowColor='rgba(70,45,10,.45)'; x.shadowBlur=5; x.strokeStyle='#fdf8ea'; x.fillStyle='#fdf8ea'; x.lineWidth=7; x.lineCap='round';
-    x.beginPath(); x.moveTo(bx0+40,by0+62); x.lineTo(bx1-70,by0+48); x.stroke();
-    for(let i=0;i<6;i++){ const px=bx0+70+i*44; const py=by0+60-i*2;
-      x.beginPath(); x.moveTo(px,py-34); x.lineTo(px,py+34); x.stroke(); }
-    x.beginPath(); x.ellipse(bx0+16,by0+62,34,26,-0.1,0,Math.PI*2); x.stroke();
-    x.lineWidth=5; x.beginPath(); x.moveTo(bx0-2,by0+64); x.lineTo(bx0-26,by0+64); x.stroke();
-    x.beginPath(); x.moveTo(bx0,by0+58); x.lineTo(bx0-30,by0+40); x.moveTo(bx0,by0+68); x.lineTo(bx0-30,by0+88); x.stroke();
-    x.beginPath(); x.moveTo(bx1-70,by0+48); x.lineTo(bx1-10,by0+18); x.lineTo(bx1-30,by0+50); x.lineTo(bx1-8,by0+82); x.lineTo(bx1-70,by0+52); x.closePath(); x.stroke();
-    x.beginPath(); x.arc(bx0+8,by0+56,7,0,Math.PI*2); x.fill();
-    x.restore();
-  }
-  function drawShell(x){
-    const cx=260, cy=368, r=42;
-    x.save();
-    x.shadowColor='rgba(70,45,10,.45)'; x.shadowBlur=5; x.strokeStyle='#fdf8ea'; x.fillStyle='rgba(253,248,234,.22)'; x.lineWidth=6; x.lineCap='round';
-    x.beginPath(); x.arc(cx,cy,r,Math.PI,Math.PI*2); x.closePath(); x.fill(); x.stroke();
-    x.lineWidth=3.5;
-    for(let i=-3;i<=3;i++){
-      x.beginPath(); x.moveTo(cx,cy);
-      x.lineTo(cx+Math.sin(i*0.42)*r*0.94, cy-Math.cos(i*0.42)*r*0.94); x.stroke();
-    }
-    x.beginPath(); x.arc(cx, cy+2, 6, 0, Math.PI*2); x.stroke();
-    x.restore();
-  }
-  function drawFossil(x){ drawSkeleton(x); drawShell(x); }
-  /* نقاط نمونه روی خود فسیل‌ها؛ اگر قلم‌مو آن‌ها را کنار بزند، فسیل «پیدا شده» است */
-  const FOSSIL_PTS = (function(){
-    const bones=[], shell=[];
-    for(let i=0;i<=5;i++){ const t=i/5; bones.push({x:bx0+40+(bx1-110-(bx0+40))*t, y:by0+62-14*t}); }
-    for(let i=0;i<6;i++){ const px=bx0+70+i*44, py=by0+60-i*2; bones.push({x:px,y:py-28}); bones.push({x:px,y:py+28}); }
-    bones.push({x:bx0+16,y:by0+62},{x:bx0-22,y:by0+64},{x:bx0-24,y:by0+46},{x:bx0-24,y:by0+84});
-    bones.push({x:bx1-40,y:by0+34},{x:bx1-30,y:by0+66},{x:bx1-60,y:by0+50});
-    const cx=260, cy=368, r=42;
-    shell.push({x:cx,y:cy-8});
-    for(let i=-3;i<=3;i++){ const th=i*0.42; shell.push({x:cx+Math.sin(th)*r*0.8, y:cy-Math.cos(th)*r*0.8}); }
-    for(let i=-2;i<=2;i++){ const th=i*0.42; shell.push({x:cx+Math.sin(th)*22, y:cy-Math.cos(th)*22}); }
-    return {bones:bones, shell:shell};
-  })();
-  let maskImage = null, maskDirty = false;
-  function refreshMaskImage(){ try{ maskImage = maskL.ctx.getImageData(0,0,maskL.cv.width,maskL.cv.height); }catch(e){ maskImage=null; } }
-  function sampleAlpha(x,y){
-    if(!maskImage) return 0;
-    const px = Math.round(clamp(x,0,W-1)*dpr), py = Math.round(clamp(y,0,H-1)*dpr);
-    if(px<0||py<0||px>=maskImage.width||py>=maskImage.height) return 0;
-    return maskImage.data[(py*maskImage.width+px)*4+3];
-  }
-  function revealOf(f){
-    const pts = FOSSIL_PTS[f.id]; if(!pts) return 0;
-    let hit=0;
-    pts.forEach(function(p){ if(sampleAlpha(p.x,p.y) > 20) hit++; });
-    return pts.length ? hit/pts.length : 0;
-  }
-  function revealedPct(){
-    return Math.min(1, (revealOf(FOSSILS[0])+revealOf(FOSSILS[1]))/2);
-  }
-
-  function paint(p){
-    const m = maskL.ctx;
-    m.fillStyle='#fff';
-    const grad = m.createRadialGradient(p.x,p.y,0,p.x,p.y,brush);
-    grad.addColorStop(0,'rgba(255,255,255,1)'); grad.addColorStop(1,'rgba(255,255,255,0)');
-    m.fillStyle = grad;
-    m.beginPath(); m.arc(p.x,p.y,brush,0,Math.PI*2); m.fill();
-    maskDirty = true;
-  }
-  /* controls */
-  ctlTitle(taskbar,'🖌️ قلم‌موی باستان‌شناس');
-  ctlSlider(taskbar,'اندازهٔ قلم‌مو', 18, 90, brush, 2, v=>brush=v);
-  const mb = ctlMetric(taskbar,'میزان کشف فسیل');
-  const ml = ctlMetric(taskbar,'لایهٔ در حال کاوش');
-  ctlButton(taskbar,'🏷️ نمایش/پنهان نام لایه‌ها', ()=>{ showLabels=!showLabels; });
-  ctlButton(taskbar,'🧹 پاک‌کردن رد قلم‌مو', ()=>{ maskL.ctx.clearRect(0,0,W,H); strokes=0; maskDirty=true; cheraghakSay('خاک رو نو کردم! دوباره بکاو.'); });
-  ctlNote(taskbar,'با انگشت یا موس روی خاک بکش و به‌آرامی لایه‌ها را کنار بزن.');
-
-  let lastPaint = {x:-999,y:-999};
-  const state = { reveal:{bones:0, shell:0}, found:{bones:false, shell:false}, fossils:FOSSILS, layers:layers.map(L=>L.name) };
-  return {
-    state: state,
-    draw(now){
-      c.save();
-      // sky / ground backdrop
-      const skyG=c.createLinearGradient(0,0,0,H); skyG.addColorStop(0,'#eef5fd'); skyG.addColorStop(1,'#e0ebf8');
-      c.fillStyle=skyG; c.fillRect(0,0,W,H);
-      c.fillStyle='rgba(255,255,255,.92)'; c.fillRect(0,40,W,30);
-      c.strokeStyle='rgba(19,34,56,.12)'; c.lineWidth=1; c.beginPath(); c.moveTo(0,70); c.lineTo(W,70); c.stroke();
-      c.fillStyle='#2b6f96'; c.font='700 15px Vazirmatn,Tahoma'; c.textAlign='left';
-      c.fillText('♻️ سطح زمین', 24, 60);
-      layers.forEach(Ly=>{
-        const g = c.createLinearGradient(0,Ly.y,0,Ly.y+Ly.h);
-        g.addColorStop(0,Ly.g[0]); g.addColorStop(1,Ly.g[1]);
-        c.fillStyle=g; c.fillRect(0,Ly.y,W,Ly.h);
-        c.strokeStyle='rgba(0,0,0,.22)'; c.lineWidth=2;
-        c.beginPath(); c.moveTo(0,Ly.y); c.lineTo(W,Ly.y); c.stroke();
-        // grain
-        c.globalAlpha=.10;
-        for(let i=0;i<40;i++){ const gx=(i*97+Ly.y)%W, gy=Ly.y+6+((i*53)%(Ly.h-8)); c.fillStyle= i%2?'rgba(70,45,15,.9)':'rgba(255,255,255,.9)'; c.fillRect(gx,gy,3,2); }
-        c.globalAlpha=1;
-        if(showLabels) txt(c, Ly.name, W-18, Ly.y+22, {size:14,color:'rgba(19,34,56,.72)',align:'right'});
-      });
-      // fossil layer masked
-      fossilL.ctx.clearRect(0,0,W,H); drawFossil(fossilL.ctx);
-      fossilL.ctx.globalCompositeOperation='destination-in';
-      fossilL.ctx.drawImage(maskL.cv,0,0,W,H);
-      fossilL.ctx.globalCompositeOperation='source-over';
-      c.drawImage(fossilL.cv,0,0,W,H);
-      c.restore();
-      /* نشان «پیدا شد» روی فسیل‌های کشف‌شده */
-      FOSSILS.forEach(function(f){
-        if(!state.found[f.id]) return;
-        const px = (f.id==='bones') ? bx0-46 : 146, py = (f.id==='bones') ? by0-10 : 322;
-        c.fillStyle='rgba(47,214,192,.92)';
-        c.beginPath(); c.arc(px,py,12,0,Math.PI*2); c.fill();
-        c.fillStyle='#04241f'; c.font='700 16px Vazirmatn,Tahoma'; c.textAlign='center'; c.textBaseline='middle';
-        c.fillText('✓', px, py+1);
-        c.textAlign='right'; c.textBaseline='alphabetic';
-      });
-      /* اطلاع رسانی رنگ لایه‌ها به جدول یافته‌ها */
-      if(maskDirty){ refreshMaskImage(); maskDirty = false; }
-      FOSSILS.forEach(function(f){
-        const p = revealOf(f);
-        state.reveal[f.id] = p;
-        if(p >= 0.5 && !state.found[f.id]){
-          state.found[f.id] = true;
-          toast(f.label.replace(/^\S+\s/, '') + ' پیدا شد!');
-          cheraghakSay('آفرین! ' + f.label + ' را پیدا کردی؛ حالا در «جدول یافته‌ها» ثبتش کن 📋');
-        }
-      });
-      const pct = revealedPct();
-      mb.textContent = num(pct*100,0)+'٪';
-      const idx = Math.min(layers.length-1, Math.max(0, Math.floor(( (lastPaint.y) - 70)/80)));
-      ml.textContent = layers[idx] ? layers[idx].name : '—';
-    },
-    onDown(x,y){ paint({x,y}); lastPaint={x,y}; strokes++; },
-    onMove(x,y){ if(maskL && (Math.abs(x-lastPaint.x)>6||Math.abs(y-lastPaint.y)>6)){ paint({x,y}); lastPaint={x,y}; } },
-    onUp(){ SND.tick(); }
-  };
-};
-
-/* ---------- ۲) اهرم و تعادل ---------- */
-BUILDERS['lever'] = function(taskbar, cv, c){
-  let lm=10, ld=2, rm=5, rd=4, angle=0, drag=null;
-  const PX=400, PY=300, SCALE=62, BEAM=330;
-  const td = (m,d)=> m*d;
-  ctlTitle(taskbar,'⚖️ ترازوی اهرمی');
-  const sl = ctlSlider(taskbar,'جرم وزنهٔ چپ (kg)',1,20,lm,1,v=>{lm=v; SND.tick();});
-  const dl = ctlSlider(taskbar,'فاصلهٔ چپ از تکیه‌گاه',1,5,ld,1,v=>{ld=v;});
-  const sr = ctlSlider(taskbar,'جرم وزنهٔ راست (kg)',1,20,rm,1,v=>{rm=v; SND.tick();});
-  const dr = ctlSlider(taskbar,'فاصلهٔ راست از تکیه‌گاه',1,5,rd,1,v=>{rd=v;});
-  const mTl = ctlMetric(taskbar,'گشتاور چپ'), mTr = ctlMetric(taskbar,'گشتاور راست'), mB = ctlMetric(taskbar,'وضعیت');
-  ctlNote(taskbar,'گشتاور = جرم × فاصله. می‌توانی وزنه‌ها را روی بوم هم بکشی.');
-  let sign = 0;
-  return {
-    draw(now, dt){
-      const lG=c.createLinearGradient(0,0,0,H); lG.addColorStop(0,'#f7fafe'); lG.addColorStop(1,'#e8f0f9');
-      c.fillStyle=lG; c.fillRect(0,0,W,H);
-      c.fillStyle='#dde7f3'; c.fillRect(0,430,W,130);
-      c.strokeStyle='rgba(19,34,56,.12)'; c.lineWidth=1; c.beginPath(); c.moveTo(0,430); c.lineTo(W,430); c.stroke();
-      const Tl=td(lm,ld), Tr=td(rm,rd);
-      const diff = Tl-Tr; const target = clamp(diff/70, -0.30, 0.30);
-      angle = lerp(angle, target, clamp(dt*8,0,1));
-      // stand
-      c.fillStyle='#93a5bd'; rr(c,PX-8,PY,16,140,4); c.fill();
-      c.beginPath(); c.moveTo(PX,PY); c.lineTo(PX-60,450); c.lineTo(PX+60,450); c.closePath();
-      const gg=c.createLinearGradient(0,PY,0,450); gg.addColorStop(0,'#c9d5e6'); gg.addColorStop(1,'#93a6c0'); c.fillStyle=gg; c.fill();
-      c.save(); c.translate(PX,PY); c.rotate(-angle);
-      // beam
-      const bg=c.createLinearGradient(0,-14,0,14); bg.addColorStop(0,'#e2c07a'); bg.addColorStop(.5,'#b8904c'); bg.addColorStop(1,'#8a6a34');
-      c.fillStyle=bg; rr(c,-BEAM,-12,BEAM*2,24,10); c.fill();
-      c.strokeStyle='rgba(255,255,255,.35)'; c.lineWidth=2; c.beginPath(); c.moveTo(-BEAM+10,0); c.lineTo(BEAM-10,0); c.stroke();
-      // marks
-      for(let i=1;i<=5;i++){ c.strokeStyle='rgba(0,0,0,.35)'; c.lineWidth=2;
-        c.beginPath(); c.moveTo(-i*SCALE,-12); c.lineTo(-i*SCALE,-2); c.moveTo(i*SCALE,-12); c.lineTo(i*SCALE,-2); c.stroke(); }
-      // hook strings
-      c.strokeStyle='#5f7290'; c.lineWidth=2;
-      c.beginPath(); c.moveTo(-ld*SCALE,10); c.lineTo(-ld*SCALE,34); c.moveTo(rd*SCALE,10); c.lineTo(rd*SCALE,34); c.stroke();
-      c.restore();
-      // weights (world positions)
-      function hookPos(side){
-        const d = side<0?ld:rd; const x0 = side* d*SCALE;
-        return { x: PX + x0*Math.cos(angle) - 34*(side<0?-1:1)*Math.sin(angle)*0, y: PY + x0*Math.sin(-angle) + 34 };
-      }
-      function drawWeight(px,py,mass,color){
-        const s = 34 + mass*2.1;
-        c.save(); c.translate(px,py);
-        const wg=c.createLinearGradient(0,0,0,s); wg.addColorStop(0,color[0]); wg.addColorStop(1,color[1]);
-        c.fillStyle=wg; rr(c,-s/2,0,s,s,8); c.fill();
-        c.strokeStyle='rgba(0,0,0,.45)'; c.lineWidth=2; c.stroke();
-        txt(c, num(mass)+'kg', 0, s/2+7, {align:'center', size:15, color:'#fff'});
-        c.restore();
-      }
-      const lp = hookPos(-1), rp = hookPos(1);
-      drawWeight(lp.x, lp.y, lm, ['#ff9b7a','#c04a2e']);
-      drawWeight(rp.x, rp.y, rm, ['#7ad8ff','#2b7fb8']);
-      // pivot
-      c.fillStyle='#e9c46a'; c.beginPath(); c.arc(PX,PY,13,0,Math.PI*2); c.fill();
-      c.strokeStyle='#7a5a20'; c.lineWidth=3; c.stroke();
-      // labels
-      txt(c,'چپ', 60, 60, {size:18, color:'#c0492b'});
-      txt(c,'راست', W-60, 60, {size:18, color:'#1f6fa8'});
-      mTl.textContent = num(Tl,0); mTr.textContent = num(Tr,0);
-      if(Math.abs(diff)<0.51){ mB.textContent='متعادل ✅'; mB.className='badge-ok'; }
-      else if(diff<0){ mB.textContent='سمت چپ پایین ⬇️'; mB.className=''; }
-      else { mB.textContent='سمت راست پایین ⬇️'; mB.className=''; }
-    },
-    onDown(x,y){ const lp={x:PX-ld*SCALE,y:PY+40}, rp={x:PX+rd*SCALE,y:PY+40};
-      if(Math.abs(x-lp.x)<60 && y>230) drag='l'; else if(Math.abs(x-rp.x)<60 && y>230) drag='r'; },
-    onMove(x,y){ if(!drag) return; const d = clamp(Math.round(Math.abs(x-PX)/SCALE),1,5);
-      if(drag==='l'){ ld=d; dl.set(d); } else { rd=d; dr.set(d); } },
-    onUp(){ drag=null; }
-  };
-};
-
-/* ---------- ۳) انتقال آب در گیاه ---------- */
-BUILDERS['water-transfer'] = function(taskbar, cv, c){
-  let soil=65, temp=24, flow=0, parts=[], vapors=[], time=0;
-  let dyeHours=0, flowParts=null, leafDrops=[], leafTips=[];
-  const rootX=[330,370,400,430,470];
-  ctlTitle(taskbar,'🌱 گیاه تشنهٔ آب');
-  ctlSlider(taskbar,'آب موجود در خاک (٪)',0,100,soil,1,v=>{soil=v;});
-  ctlSlider(taskbar,'دمای هوا (°C)',8,40,temp,1,v=>{temp=v;});
-  const mS = ctlMetric(taskbar,'آب خاک'), mT = ctlMetric(taskbar,'سرعت تعرق'), mL = ctlMetric(taskbar,'وضعیت برگ');
-  ctlNote(taskbar,'آب از ریشه بالا می‌رود و از روزنهٔ برگ‌ها بخار می‌شود (تعرق).');
-  return {
-    setDyeHours(v){ dyeHours = v; },
-    draw(now, dt){
-      time += dt;
-      c.fillStyle='#f1fafc'; c.fillRect(0,0,W,H);
-      const g=c.createLinearGradient(0,0,0,H); g.addColorStop(0,'#e2f2f8'); g.addColorStop(1,'#fafdff');
-      c.fillStyle=g; c.fillRect(0,0,W,H);
-      // sun / temp glow
-      const sunCol = temp>30? '#ff9c5b' : temp<15? '#7fb4ff' : '#ffd77f';
-      c.globalAlpha=.30; c.fillStyle=sunCol; c.beginPath(); c.arc(700,80,temp*1.4,0,Math.PI*2); c.fill(); c.globalAlpha=1;
-      const sunTxt = temp>30? '#c0492b' : temp<15? '#1f6fa8' : '#9a6b00';
-      txt(c,'🌡️ '+num(temp)+'°', 700, 88, {align:'center', size:15, color:sunTxt});
-      // pot + soil
-      const potY=430;
-      c.fillStyle='#3a2a20'; rr(c,300,potY,200,110,14); c.fill();
-      c.fillStyle='#241813'; rr(c,300,potY,200,26,10); c.fill();
-      const wet = soil/100;
-      const soilG=c.createLinearGradient(0,potY,0,potY+110);
-      soilG.addColorStop(0, `rgb(${Math.round(120-40*wet)},${Math.round(90-20*wet)},${Math.round(60+10*wet)})`);
-      soilG.addColorStop(1, `rgb(${Math.round(84-30*wet)},${Math.round(60-16*wet)},${Math.round(42+8*wet)})`);
-      c.fillStyle=soilG; rr(c,306,potY+4,188,102,12); c.fill();
-      // water table
-      const wl = potY+104 - wet*70;
-      c.globalAlpha=.5; c.fillStyle='#3ea7d8'; c.beginPath(); c.moveTo(306,wl);
-      for(let x=306;x<=494;x+=10) c.lineTo(x, wl+Math.sin(x*.05+time*2)*2);
-      c.lineTo(494,potY+106); c.lineTo(306,potY+106); c.closePath(); c.fill(); c.globalAlpha=1;
-      txt(c,'آب خاک', 292, 508, {align:'right', size:13.5, color:'#1f6fa8'});
-      // roots
-      c.strokeStyle='#b98a5a'; c.lineWidth=7; c.lineCap='round';
-      rootX.forEach((rx,i)=>{ c.beginPath(); c.moveTo(rx, potY+6);
-        c.bezierCurveTo(rx+(i-2)*18, potY+50, rx+(i-2)*26, potY+70, rx+(i-2)*34, potY+96); c.stroke(); });
-      // stem
-      c.strokeStyle='#5aa84f'; c.lineWidth=14; c.beginPath(); c.moveTo(400,potY+8); c.lineTo(400,220); c.stroke();
-      c.strokeStyle='#7fd06a'; c.lineWidth=5; c.beginPath(); c.moveTo(400,potY+8); c.lineTo(400,220); c.stroke();
-      // xylem tube highlight
-      c.globalAlpha=.28; c.strokeStyle='#8fe0ff'; c.lineWidth=8; c.beginPath(); c.moveTo(398,potY+8); c.lineTo(398,222); c.stroke(); c.globalAlpha=1;
-      /* ===== برگ‌ها: رگبرگ‌ها، جریان آب داخل برگ و تعرق روی سطح برگ ===== */
-      const wilt = clamp(1 - soil/45, 0, .65);
-      const dyeT = clamp(dyeHours/24, 0, 1);         // پیشرفت آب رنگی در آوندها
-      const leafList = [
-        {cx:400, cy:250, dir:-1, ang:0.35}, {cx:400, cy:300, dir:1, ang:0.35},
-        {cx:400, cy:340, dir:-1, ang:0.30}, {cx:400, cy:375, dir:1, ang:0.30},
-        {cx:400, cy:290, dir:-1, ang:0.85}, {cx:400, cy:330, dir:1, ang:0.85}
-      ];
-      function local2global(cx,cy,th,lx,ly){
-        const cs=Math.cos(th), sn=Math.sin(th);
-        return {x: cx + lx*cs - ly*sn, y: cy + lx*sn + ly*cs};
-      }
-      /* پیشرفت آب رنگی در آوند چوبی ساقه */
-      if(dyeT > 0.02){
-        const front = lerp(potY+6, 216, dyeT);
-        c.globalAlpha=.62; c.strokeStyle='rgba(226,66,96,.95)'; c.lineWidth=8; c.lineCap='round';
-        c.beginPath(); c.moveTo(398, potY+6); c.lineTo(398, front); c.stroke();
-        c.globalAlpha=1;
-      }
-      leafTips = [];
-      leafList.forEach(function(L){
-        const th = L.dir*(L.ang + wilt*0.5*L.dir);
-        c.save(); c.translate(L.cx, L.cy); c.rotate(th);
-        const lg=c.createLinearGradient(0,0,L.dir*100,0);
-        lg.addColorStop(0,'#4f9a43'); lg.addColorStop(1, wilt>0.3 ? '#a8b45a' : '#8fe07a');
-        c.fillStyle=lg;
-        c.beginPath(); c.moveTo(0,0); c.quadraticCurveTo(L.dir*50,-46, L.dir*100,0);
-        c.quadraticCurveTo(L.dir*50,46, 0,0); c.fill();
-        /* رگبرگ میانی و رگبرگ‌های کناری؛ در آب رنگی کم‌کم قرمز می‌شوند */
-        const vcol = 'rgb(' + Math.round(126+120*dyeT) + ',' + Math.round(200-96*dyeT) + ',' + Math.round(118-64*dyeT) + ')';
-        c.strokeStyle=vcol; c.lineWidth=3; c.globalAlpha=.95;
-        c.beginPath(); c.moveTo(0,0); c.lineTo(L.dir*96,0); c.stroke();
-        c.lineWidth=2; c.globalAlpha=.62;
-        for(let i=1;i<=4;i++){
-          const bxx = L.dir*19*i;
-          c.beginPath(); c.moveTo(bxx,0); c.lineTo(bxx - L.dir*15, -25 + i*3); c.stroke();
-          c.beginPath(); c.moveTo(bxx,0); c.lineTo(bxx - L.dir*15,  25 - i*3); c.stroke();
-        }
-        c.globalAlpha=1;
-        c.restore();
-        leafTips.push({L:L, th:th});
-      });
-      /* ===== جریان آب داخل برگ‌ها (ذرات روی رگبرگ میانی) ===== */
-      if(!flowParts || !flowParts.length){
-        flowParts = [];
-        leafTips.forEach(function(L,i){
-          for(let k=0;k<3;k++) flowParts.push({i:i, t:Math.random(), sp:0.32+Math.random()*0.36, off:(Math.random()*2-1)*14});
-        });
-      }
-      const flowSpeed = clamp(soil/100*(0.55+temp/60), 0, 1.5);
-      flowParts.forEach(function(p){
-        const L = leafTips[p.i]; if(!L){ return; }
-        p.t += p.sp*flowSpeed*dt;
-        if(p.t > 1) p.t -= 1;
-        const lx = L.L.dir*100*p.t;
-        const ly = p.off * (p.t>0.12 && p.t<0.9 ? 1 : 0);
-        const g = local2global(L.L.cx, L.L.cy, L.th, lx, ly);
-        c.fillStyle = dyeT>0.25 ? 'rgba(255,104,126,.95)' : 'rgba(150,225,255,.95)';
-        c.beginPath(); c.arc(g.x, g.y, 2.7, 0, Math.PI*2); c.fill();
-      });
-      /* ===== تعرق: قطره‌های آب روی سطح برگ که بخار می‌شوند ===== */
-      const rate = clamp(soil/100 * (0.6 + temp/60), 0, 1.6);
-      if(Math.random() < rate*0.9 && leafDrops.length<70 && leafTips.length){
-        const li = Math.floor(Math.random()*leafTips.length);
-        const t = 0.18 + Math.random()*0.74;
-        leafDrops.push({i:li, t:t, off:(Math.random()*2-1)*26*Math.sin(t*Math.PI), age:0});
-      }
-      for(let i=leafDrops.length-1;i>=0;i--){
-        const d = leafDrops[i], L = leafTips[d.i];
-        if(!L){ leafDrops.splice(i,1); continue; }
-        d.age += dt;
-        const g = local2global(L.L.cx, L.L.cy, L.th, L.L.dir*100*d.t, d.off);
-        if(d.age < 1.15){                       /* قطره روی سطح برگ */
-          c.fillStyle='rgba(196,238,255,.9)';
-          c.beginPath(); c.ellipse(g.x, g.y, 3.8, 3, 0, 0, Math.PI*2); c.fill();
-          c.fillStyle='rgba(255,255,255,.95)';
-          c.beginPath(); c.arc(g.x-1.1, g.y-1.1, 1.1, 0, Math.PI*2); c.fill();
-        } else if(d.age < 1.5){                 /* بلند شدن و تبدیل به بخار */
-          const kk = (d.age-1.15)/0.35;
-          c.globalAlpha = clamp(1-kk, 0, 1);
-          c.fillStyle='rgba(207,234,255,.95)';
-          c.beginPath(); c.arc(g.x, g.y - kk*16, 2.5, 0, Math.PI*2); c.fill();
-          c.globalAlpha = 1;
-        } else {                                /* حالا بخار آب است و بالا می‌رود */
-          if(vapors.length < 170) vapors.push({x:g.x, y:g.y-16, life:1, v:22+Math.random()*26});
-          leafDrops.splice(i,1);
-        }
-      }
-      /* ذرات آب داخل آوند چوبی ساقه (جریان ورودی از ریشه) */
-      if(Math.random() < rate*0.5 && parts.length<120) parts.push({y: potY+6, x:398+(Math.random()-.5)*10, v: 40+Math.random()*50});
-      parts.forEach(p=> p.y -= p.v*dt*rate*1.35 );
-      parts = parts.filter(p=> p.y>214);
-      parts.forEach(p=>{
-        c.fillStyle = dyeT>0.05 ? 'rgba(255,120,140,.95)' : 'rgba(150,225,255,.9)';
-        c.beginPath(); c.arc(p.x, p.y, 3.4, 0, Math.PI*2); c.fill();
-      });
-      /* بخار تعرق */
-      vapors.forEach(v=>{ v.y -= v.v*dt; v.x += Math.sin(v.y*.05)*0.6; v.life -= dt*0.9; });
-      vapors = vapors.filter(v=> v.life>0);
-      vapors.forEach(v=>{ c.globalAlpha = clamp(v.life*0.8,0,.8); c.fillStyle='rgba(116,148,178,.75)'; c.beginPath(); c.arc(v.x,v.y,2.6,0,Math.PI*2); c.fill(); });
-      c.globalAlpha=1;
-      /* ===== برش عرضی ساقه (لوله‌های آوند) ===== */
-      (function(){
-        const sx=118, sy=424, sr=56;
-        c.save();
-        c.fillStyle='rgba(255,255,255,.94)';
-        c.beginPath(); c.arc(sx,sy,sr+9,0,Math.PI*2); c.fill();
-        c.setLineDash([7,7]); c.strokeStyle='rgba(31,111,168,.40)'; c.lineWidth=2;
-        c.beginPath(); c.arc(sx,sy,sr+9,0,Math.PI*2); c.stroke(); c.setLineDash([]);
-        const ring=c.createRadialGradient(sx-18,sy-18,6,sx,sy,sr);
-        ring.addColorStop(0,'#c6e7b0'); ring.addColorStop(.62,'#9ecf83'); ring.addColorStop(1,'#6f9a56');
-        c.fillStyle=ring; c.beginPath(); c.arc(sx,sy,sr,0,Math.PI*2); c.fill();
-        c.strokeStyle='#4d7a3d'; c.lineWidth=3; c.stroke();
-        const on = Math.round(dyeT*8);
-        for(let i=0;i<8;i++){
-          const a=i*Math.PI/4, rr2=sr*0.62;
-          const px=sx+Math.cos(a)*rr2, py=sy+Math.sin(a)*rr2;
-          c.beginPath(); c.arc(px,py,6.5,0,Math.PI*2);
-          c.fillStyle = (i<on) ? 'rgba(214,54,84,.95)' : 'rgba(232,246,255,.9)'; c.fill();
-          c.strokeStyle='rgba(60,90,70,.75)'; c.lineWidth=1.5; c.stroke();
-        }
-        c.restore();
-        txt(c,'برش عرضی ساقه', sx, sy+sr+24, {align:'center', size:13, color:'#28536f'});
-        txt(c,'لوله‌های رنگی (آوند) 🎨', sx, sy+sr+42, {align:'center', size:12, color:'#b03050'});
-      })();
-      txt(c,'جریان آب در رگبرگ‌ها ↑', 700, 236, {align:'right', size:14, color:'#1f6fa8'});
-      txt(c,'تعرق: بخار آب از سطح برگ 💧→☁️', 782, 200, {align:'right', size:14, color:'#28536f'});
-      txt(c,'آوند چوبی', 340, 170, {align:'right', size:14, color:'#1f6fa8'});
-      mS.textContent = num(soil)+'٪';
-      mT.textContent = num(rate*100,0)+'٪';
-      mL.textContent = soil<22? 'پژمرده 🥀' : (soil<50? 'کمی تشنه':'سرسبز 🌿');
-    }
-  };
-};
-
-/* ---------- ۴) مدل بازو و مفصل ---------- */
-BUILDERS['arm'] = function(taskbar, cv, c){
-  let ang = 35, drag=false;
-  ctlTitle(taskbar,'💪 بازوی من');
-  ctlSlider(taskbar,'زاویهٔ آرنج (درجه)',0,150,ang,1,v=>{ang=v;});
-  const mA = ctlMetric(taskbar,'زاویهٔ آرنج'), mBi = ctlMetric(taskbar,'عضلهٔ دوسر'), mTri = ctlMetric(taskbar,'عضلهٔ سه‌سر');
-  ctlNote(taskbar,'با فشردن دست روی بوم، آرنج را خم و باز کن.');
-  const SX=180, SY=180, UA=230, FA=200;
-  return {
-    draw(now, dt){
-      c.fillStyle='#f7fafe'; c.fillRect(0,0,W,H);
-      const g=c.createLinearGradient(0,0,0,H); g.addColorStop(0,'#eaf1fa'); g.addColorStop(1,'#fbfdff'); c.fillStyle=g; c.fillRect(0,0,W,H);
-      const rad = ang*Math.PI/180;
-      const EX = SX+UA, EY = SY;              // elbow
-      const HX = EX + Math.cos(Math.PI - rad*0) * 0;
-      const fx = EX - Math.cos(rad)*0 + Math.cos(-rad+Math.PI)*0;
-      // forearm endpoint
-      const a2 = Math.PI - rad; // rotate downward-ish
-      const FX = EX + Math.cos(a2)*FA;
-      const FY = EY + Math.sin(a2)*FA;
-      const flex = ang/150;
-      // muscles first (behind bones)
-      // biceps (upper, on top side)
-      c.strokeStyle='#e06a5a'; c.lineWidth = 26 + flex*22; c.lineCap='round';
-      c.beginPath(); c.moveTo(SX+20, SY-6); c.quadraticCurveTo((SX+EX)/2, SY-30 - flex*16, EX-16, EY-4); c.stroke();
-      c.strokeStyle='rgba(255,255,255,.22)'; c.lineWidth=6;
-      c.beginPath(); c.moveTo(SX+30, SY-14); c.quadraticCurveTo((SX+EX)/2, SY-36-flex*16, EX-24, EY-12); c.stroke();
-      // triceps (bottom)
-      c.strokeStyle='#7a90c9'; c.lineWidth = 20 + (1-flex)*16; c.lineCap='round';
-      c.beginPath(); c.moveTo(SX+24, SY+16); c.quadraticCurveTo((SX+EX)/2, SY+40 + (1-flex)*10, EX-14, EY+16); c.stroke();
-      // tendon
-      c.strokeStyle='#f2e6c8'; c.lineWidth=6;
-      c.beginPath(); c.moveTo(EX-52, EY-10); c.lineTo(EX-8, EY-4); c.stroke();
-      c.beginPath(); c.moveTo(EX-50, EY+12); c.lineTo(EX-10, EY+16); c.stroke();
-      // bones
-      function bone(x1,y1,x2,y2){
-        c.save(); c.lineCap='round';
-        c.strokeStyle='rgba(92,80,58,.45)'; c.lineWidth=36; c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke();
-        c.strokeStyle='#fbf6e8'; c.lineWidth=30; c.beginPath(); c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke();
-        c.strokeStyle='#d8cbaa'; c.lineWidth=30; c.globalAlpha=.55; c.beginPath(); c.moveTo(x1,y1+8); c.lineTo(x2,y2+8); c.stroke(); c.globalAlpha=1;
-        c.beginPath(); c.arc(x1,y1,19,0,Math.PI*2); c.fillStyle='#fbf6e8'; c.fill(); c.strokeStyle='rgba(92,80,58,.4)'; c.lineWidth=3; c.stroke();
-        c.beginPath(); c.arc(x2,y2,17,0,Math.PI*2); c.fill(); c.stroke();
-        c.restore();
-      }
-      bone(SX,SY,EX,EY);
-      bone(EX,EY,FX,FY);
-      // joint highlight
-      c.fillStyle='#8fd8ff'; c.globalAlpha=.85; c.beginPath(); c.arc(EX,EY,10,0,Math.PI*2); c.fill(); c.globalAlpha=1;
-      c.strokeStyle='#3d7fa8'; c.lineWidth=3; c.beginPath(); c.arc(EX,EY,10,0,Math.PI*2); c.stroke();
-      // hand
-      c.save(); c.translate(FX,FY); c.rotate(a2);
-      c.fillStyle='#f0c193'; c.beginPath(); c.ellipse(14,0,22,16,0,0,Math.PI*2); c.fill();
-      for(let i=0;i<4;i++){ c.beginPath(); c.ellipse(34, -12+i*8, 14, 5, 0, 0, Math.PI*2); c.fill(); }
-      c.restore();
-      // labels
-      txt(c,'شانه', SX-6, SY-40, {align:'center', size:14, color:'#5c6c86'});
-      txt(c,'آرنج (مفصل لولایی)', EX, EY-42, {align:'center', size:14, color:'#1f6fa8'});
-      txt(c,'دوسر بازو', SX+70, SY-60, {align:'center', size:15, color:'#c0492b'});
-      txt(c,'سه‌سر بازو', SX+70, SY+80, {align:'center', size:15, color:'#3f5fae'});
-      mA.textContent = num(ang)+'°';
-      mBi.textContent = flex>0.15? 'منقبض 💥' : 'شل';
-      mTri.textContent = flex<0.85? 'منقبض 💥' : 'شل';
-    },
-    onDown(x,y){ drag=true; },
-    onMove(x,y){ if(!drag) return; const EX=SX+UA,EY=SY; const dx=x-EX, dy=y-EY; if(dy<=-10) ang=0;
-      else { let v = Math.atan2(dy, dx); let deg = (Math.PI - v)*180/Math.PI; ang = clamp(Math.round(deg),0,150); } },
-    onUp(){ drag=false; }
-  };
-};
-
-/* ---------- ۶) فرسایش خاک ---------- */
-BUILDERS['erosion'] = function(taskbar, cv, c){
-  let slope=20, rain=45, plants=20, raining=true, lost=0, parts=[], time=0;
-  ctlTitle(taskbar,'⛰️ خاک در برابر باران');
-  ctlSlider(taskbar,'شیب زمین (درجه)',0,45,slope,1,v=>{slope=v;});
-  ctlSlider(taskbar,'شدت باران (٪)',0,100,rain,1,v=>{rain=v;});
-  ctlSlider(taskbar,'پوشش گیاهی (٪)',0,100,plants,1,v=>{plants=v;});
-  const mE = ctlMetric(taskbar,'فرسایش خاک'), mR = ctlMetric(taskbar,'روان‌آب سطحی'), mG = ctlMetric(taskbar,'پوشش گیاهی');
-  ctlButton(taskbar,'🌧️ روشن/خاموش باران', ()=>{ raining=!raining; toast(raining?'باران شروع شد 🌧️':'باران ایستاد ☁️'); });
-  let tsec = 0;
-  return {
-    draw(now, dt){
-      time += dt; if(raining) tsec += dt; else tsec = Math.max(0,tsec-dt);
-      c.fillStyle='#f4f9fe'; c.fillRect(0,0,W,H);
-      const sky=c.createLinearGradient(0,0,0,300); sky.addColorStop(0, raining?'#a9bfd6':'#c9def0'); sky.addColorStop(1, raining?'#d4e3ef':'#edf6fe');
-      c.fillStyle=sky; c.fillRect(0,0,W,320);
-      // clouds
-      [[210,74,1.1],[575,60,.95],[395,118,.62]].forEach(function(cl, ci){
-        const cx = cl[0] + Math.sin(time*.18 + ci*1.7)*16, cy = cl[1], s = cl[2];
-        c.save(); c.translate(cx, cy); c.scale(s, s);
-        c.fillStyle = raining ? 'rgba(90,110,140,.18)' : 'rgba(90,120,160,.10)';
-        c.beginPath(); c.ellipse(4, 40, 92, 10, 0, 0, Math.PI*2); c.fill();
-        const cg = c.createLinearGradient(0, -64, 0, 36);
-        cg.addColorStop(0, raining ? '#f2f5f9' : '#ffffff'); cg.addColorStop(1, raining ? '#aebccd' : '#dde9f5');
-        c.fillStyle = cg;
-        [[-58,8,30],[-22,-14,40],[24,-24,46],[66,2,32]].forEach(function(b){ c.beginPath(); c.arc(b[0], b[1], b[2], 0, Math.PI*2); c.fill(); });
-        c.beginPath(); rr(c, -90, 2, 188, 36, 18); c.fill();
-        c.restore();
-      });
-      // hill (sloped)
-      const hillH = 300, hor = 470;
-      const ang = slope*Math.PI/180;
-      c.beginPath(); c.moveTo(0, H-hillH+slope*3.1); 
-      // draw slope line from left bottom up to right
-      const x0=0, y0 = 470 - slope*3.4, x1=W, y1 = 470 - 0;
-      c.moveTo(x0,y0); c.lineTo(x1,y1); c.lineTo(x1,H); c.lineTo(x0,H); c.closePath();
-      const sg=c.createLinearGradient(0,y0,0,H); sg.addColorStop(0,'#6b8a4a'); sg.addColorStop(.25,'#7a6242'); sg.addColorStop(1,'#4a3826');
-      c.fillStyle=sg; c.fill();
-      c.strokeStyle='#9ec06a'; c.lineWidth=5; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x1,y1); c.stroke();
-      // plants
-      const nP = Math.round(plants/6);
-      for(let i=0;i<nP;i++){ const px = 30 + i*(W-60)/Math.max(1,nP-1); const py = lerp(y0,y1, px/W);
-        c.strokeStyle='#4faa4a'; c.lineWidth=3; c.beginPath(); c.moveTo(px,py); c.lineTo(px, py-22); c.stroke();
-        c.fillStyle='#6ad06a'; c.beginPath(); c.ellipse(px, py-24, 9, 13, 0, 0, Math.PI*2); c.fill(); }
-      // rain
-      if(raining && rain>3){ const n=Math.round(rain/3);
-        c.strokeStyle='rgba(60,120,185,.5)'; c.lineWidth=2;
-        for(let i=0;i<n;i++){ const rx=(i*97 + (time*260)%W)%W; const ry=((i*53 + time*420)%H); c.beginPath(); c.moveTo(rx,ry); c.lineTo(rx-6, ry+16); c.stroke(); } }
-      // erosion particles
-      const slopeFactor = 0.3 + slope/45;
-      const bareLoss = (1 - plants/100*0.85);
-      const rate = raining? (rain/100)*slopeFactor*bareLoss : 0;
-      lost += rate*dt*6;
-      if(raining && Math.random() < rate*2.2 && parts.length<220){
-        const px = Math.random()*W; const py = lerp(y0,y1,px/W) - 4;
-        parts.push({x:px, y:py, v: 40 + rate*260 + Math.random()*40, s: 2+Math.random()*3});
-      }
-      parts.forEach(p=>{ p.y += p.v*dt; p.x += p.v*dt*0.4*(slope/45+0.2); p.v += 30*dt; });
-      parts = parts.filter(p=> p.y < H+20);
-      parts.forEach(p=>{ c.fillStyle='rgba(150,116,74,.85)'; c.beginPath(); c.arc(p.x,p.y,p.s,0,Math.PI*2); c.fill(); });
-      // runoff pool
-      c.globalAlpha= clamp(0.12 + tsec*0.02 + rate*0.2, 0, .5);
-      c.fillStyle='#7a5a38'; c.fillRect(0,H-46,W,46); c.globalAlpha=1;
-      txt(c,'آب و گلِ جابه‌جا شده', 400, H-16, {align:'center', size:14, color:'#fdf1de'});
-      txt(c, '🌧️ '+num(rain)+'٪', 60, 40, {align:'right', size:16, color:'#24506e'});
-      mE.textContent = num(lost,1)+' واحد';
-      mR.textContent = num(rate*100,0)+'٪';
-      mG.textContent = num(plants)+'٪';
-    }
-  };
-};
-
-/* ============================================================
-   ویژگی‌های تعاملی هر آزمایش (جدول یافته‌ها، زمان، آزمایش یخ، …)
-   ============================================================ */
+const SVGNS = 'http://www.w3.org/2000/svg';
+const BENCH = {};
+function sv(tag, attrs, parent){
+  const n = document.createElementNS(SVGNS, tag);
+  if(attrs) for(const k in attrs){ if(attrs[k] != null) n.setAttribute(k, attrs[k]); }
+  if(parent) parent.appendChild(n);
+  return n;
+}
+function svgPoint(svg, e){
+  const p = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e;
+  const r = svg.getBoundingClientRect();
+  if(!r.width || !r.height) return {x:0, y:0};
+  return { x: (p.clientX - r.left) / r.width * 800, y: (p.clientY - r.top) / r.height * 560 };
+}
+function f1(v){ return (+v).toFixed(1); }
+function mixHex(a, b, t){
+  const pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
+  const r = Math.round(((pa >> 16) & 255) * (1 - t) + ((pb >> 16) & 255) * t);
+  const g = Math.round(((pa >> 8) & 255) * (1 - t) + ((pb >> 8) & 255) * t);
+  const bl = Math.round((pa & 255) * (1 - t) + (pb & 255) * t);
+  return '#' + ((1 << 24) | (r << 16) | (g << 8) | bl).toString(16).slice(1);
+}
 function el(tag, cls, html){ const d=document.createElement(tag); if(cls) d.className=cls; if(html!=null) d.innerHTML=html; return d; }
 function obsBox(parent, text, kind){ const d=el('div','obs'+(kind?(' '+kind):''), text); parent.appendChild(d); return d; }
-function tableWrap(parent, caption){
-  const wrap=el('div','table-wrap'); const t=el('table','res');
-  t.innerHTML='<caption>'+caption+'</caption>'; wrap.appendChild(t); parent.appendChild(wrap); return t;
-}
-const SEL_STYLE='width:100%;padding:.3rem .4rem;border-radius:9px;border:1px solid var(--line);background:#ffffff;color:var(--ink);font-family:var(--font-body);font-size:.78rem';
-const LAYERS_AGED=[
-  {n:'خاک سطحی', age:'بسیار جدید'},
-  {n:'ماسه‌سنگ', age:'نسبتاً جدید'},
-  {n:'لایهٔ رسوبی', age:'قدیمی'},
-  {n:'سنگ آهکی', age:'خیلی قدیمی'},
-  {n:'سنگ کهن', age:'قدیمی‌ترین'}
-];
-function agedSelect(){
-  const s=el('select'); s.style.cssText=SEL_STYLE;
-  const ph=el('option'); ph.value=-1; ph.textContent='انتخاب کن…'; s.appendChild(ph);
-  LAYERS_AGED.forEach((L,i)=>{ const o=el('option'); o.value=i; o.textContent=L.n; s.appendChild(o); });
-  s.value=-1;
-  return s;
-}
 
-const EXTRAS = {};
-
-/* ---------- ۱) فسیل: جدول ثبت یافته‌ها ---------- */
-EXTRAS['fossil'] = function(taskbar, api){
-  ctlTitle(taskbar,'📋 جدول یافته‌های من');
-  const t = tableWrap(taskbar,'چه چیزی با قلم‌مو پیدا شد و در کدام لایه بود؟');
-  t.innerHTML += '<thead><tr><th>یافته</th><th>در کدام لایه؟</th><th>قدمت لایه</th><th>وضعیت</th></tr></thead><tbody></tbody>';
-  const tbody = t.querySelector('tbody');
-  const F = (api.state && api.state.fossils) ? api.state.fossils : [];
-  const rows = {};
-  F.forEach(function(f){
-    const tr = document.createElement('tr');
-    const td1 = el('td', null, f.label);
-    const td2 = el('td');
-    const td3 = el('td', 'a', '—');
-    const td4 = el('td', null, '⏳ پیدا نشده');
-    const s = agedSelect(); s.disabled = true;
-    td2.appendChild(s);
-    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
-    tbody.appendChild(tr);
-    rows[f.id] = {tr:tr, sel:s, age:td3, st:td4, layer:f.layer};
-    s.onchange = function(){
-      const v = parseInt(s.value,10);
-      td3.textContent = (v>=0 && LAYERS_AGED[v]) ? LAYERS_AGED[v].age : '—';
-    };
-  });
-  const out = el('div','obs info','🔎 اول با قلم‌مو روی خاک بکش؛ یافته‌ها فقط وقتی در جدول فعال می‌شوند که با قلم‌مو پیدا شده باشند.');
-  taskbar.appendChild(out);
-  api._extraUpdate = function(){
-    const st = api.state; if(!st || !st.found) return;
-    Object.keys(rows).forEach(function(id){
-      const r = rows[id];
-      if(st.found[id] && r.sel.disabled){
-        r.sel.disabled = false;
-        r.st.innerHTML = '✅ با قلم‌مو پیدا شد';
-        r.tr.style.background = 'rgba(47,214,192,.10)';
-      }
+function makeKit(exp, host, panel){
+  host.innerHTML = '';
+  const svg = sv('svg', {viewBox:'0 0 800 560', id:'lab-svg', role:'group', 'aria-label': exp.title + ' — صحنهٔ تعاملی آزمایش', focusable:'false'}, host);
+  const defs = sv('defs', null, svg);
+  const K = { exp:exp, host:host, svg:svg, defs:defs, panel:panel, timers:[] };
+  K.g = function(attrs, parent){ return sv('g', attrs, parent || svg); };
+  K.add = function(parent, markup){ parent.insertAdjacentHTML('beforeend', markup); return parent.lastElementChild; };
+  K.pt = function(e){ return svgPoint(svg, e); };
+  K.later = function(fn, ms){ const t = setTimeout(fn, ms); K.timers.push(t); return t; };
+  K.say = function(msg){ const m = $('lab-guide-message'); if(m) m.textContent = msg; cheraghakSay(msg); };
+  K.section = function(title, icon){
+    const s = el('section', 'bench-sec');
+    s.innerHTML = '<h2>' + ui(icon || 'flask') + '<span>' + title + '</span></h2>';
+    panel.appendChild(s); return s;
+  };
+  K.btn = function(node, label, fn){
+    node.setAttribute('role', 'button'); node.setAttribute('tabindex', '0'); node.setAttribute('aria-label', label);
+    node.classList.add('sv-btn');
+    node.addEventListener('click', function(e){ fn(e); });
+    node.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fn(e); } });
+    return node;
+  };
+  K.drag = function(node, h){
+    node.style.touchAction = 'none';
+    node.addEventListener('pointerdown', function(e){
+      if(e.button > 0) return;
+      const p = K.pt(e);
+      if(h.start && h.start(p, e) === false) return;
+      e.preventDefault();
+      try{ node.setPointerCapture(e.pointerId); }catch(_){}
+      const mv = function(ev){ if(h.move) h.move(K.pt(ev), ev); };
+      const up = function(ev){
+        node.removeEventListener('pointermove', mv); node.removeEventListener('pointerup', up); node.removeEventListener('pointercancel', up);
+        if(h.end) h.end(K.pt(ev), ev);
+      };
+      node.addEventListener('pointermove', mv); node.addEventListener('pointerup', up); node.addEventListener('pointercancel', up);
     });
   };
-  ctlButton(taskbar,'✅ بررسی پاسخ‌های من', function(){
-    let found=0, right=0, wrong=0, skip=0;
-    Object.keys(rows).forEach(function(id){
-      const r = rows[id];
-      if(!api.state.found[id]) return;
-      found++;
-      const v = parseInt(r.sel.value,10);
-      if(v<0){ skip++; r.tr.style.outline='2px solid rgba(255,181,71,.65)'; return; }
-      if(LAYERS_AGED[v].n === r.layer){ right++; r.tr.style.outline='2px solid rgba(47,214,192,.7)'; }
-      else { wrong++; r.tr.style.outline='2px solid rgba(255,122,156,.7)'; }
+  K.burst = function(x, y, cols){
+    if(reducedMotion()) return;
+    cols = cols || ['#f3b62b','#3fd8c2','#ff7d9a','#a996ff','#5cc8f0'];
+    const g = sv('g', {'pointer-events':'none'}, svg);
+    for(let i = 0; i < 14; i++){
+      const a = i / 14 * Math.PI * 2 + Math.random() * .4, d = 34 + Math.random() * 40;
+      const c = sv(i % 3 ? 'circle' : 'rect', i % 3 ? {cx:x, cy:y, r:3 + Math.random() * 3, fill:cols[i % cols.length]} : {x:x - 3, y:y - 3, width:6, height:6, rx:1.5, fill:cols[i % cols.length]}, g);
+      if(typeof c.animate === 'function'){
+        c.animate([{transform:'translate(0,0) scale(1)', opacity:1}, {transform:'translate(' + f1(Math.cos(a) * d) + 'px,' + f1(Math.sin(a) * d - 10) + 'px) scale(.4)', opacity:0}], {duration:800 + Math.random() * 300, easing:'cubic-bezier(.2,.7,.3,1)', fill:'forwards'});
+      }
+    }
+    K.later(function(){ g.remove(); }, 1200);
+  };
+  K.banner = el('div', 'scene-banner');
+  K.banner.setAttribute('aria-live', 'polite');
+  host.appendChild(K.banner);
+  K.float = function(cls, html){ const d = el('div', 'scene-float ' + (cls || ''), html); host.appendChild(d); return d; };
+  K.destroy = function(){ K.timers.forEach(clearTimeout); K.timers.length = 0; };
+  return K;
+}
+
+/* ------- فهرست مأموریت‌ها + دفترچهٔ کشف ------- */
+function makeMissions(K, list){
+  const done = {};
+  const box = el('section', 'mission-box');
+  box.setAttribute('aria-labelledby', 'mb-h');
+  box.innerHTML = '<div class="mb-head"><h2 id="mb-h">' + ui('flag') + '<span>مأموریت‌های این ایستگاه</span></h2><span class="mb-count" id="mb-count"></span></div>' +
+    '<div class="mb-bar" aria-hidden="true"><i id="mb-fill"></i></div>' +
+    '<ol class="missions">' + list.map(function(m, i){
+      return '<li class="mission" data-id="' + m.id + '"><span class="mi-num" aria-hidden="true">' + fa(i + 1) + '</span>' +
+        '<div class="mi-copy"><b>' + m.title + '</b><p>' + m.text + '</p></div><span class="mi-ok" aria-hidden="true">' + ui('check') + '</span>' +
+        '<span class="sr-only mi-state">در انتظار</span></li>';
+    }).join('') + '</ol>';
+  const guide = K.panel.querySelector('.lab-guide');
+  if(guide && guide.nextSibling) K.panel.insertBefore(box, guide.nextSibling); else K.panel.appendChild(box);
+  const nb = el('section', 'notebook');
+  nb.innerHTML = '<h2>' + ui('book') + '<span>دفترچهٔ کشف</span></h2><div class="nb-list" id="nb-list"><p class="nb-empty">هر مأموریتی که کامل کنی، یک کشف علمی این‌جا ثبت می‌شود.</p></div>';
+  K.panel.appendChild(nb);
+  const M = {
+    list:list,
+    isDone:function(id){ return !!done[id]; },
+    current:function(){ for(const m of list){ if(!done[m.id]) return m; } return null; },
+    count:function(){ return list.filter(function(m){ return done[m.id]; }).length; },
+    allDone:function(){ return M.count() === list.length; },
+    hint:function(){ const c = M.current(); return c ? c.hint : 'همهٔ مأموریت‌ها کامل شده؛ حالا آزمون ایستگاه منتظر توست.'; },
+    complete:function(id, x, y){
+      if(done[id]) return false;
+      const m = list.find(function(z){ return z.id === id; }); if(!m) return false;
+      done[id] = true;
+      render();
+      const nl = $('nb-list'); const empty = nl.querySelector('.nb-empty'); if(empty) empty.remove();
+      const card = el('div', 'nb-fact');
+      card.innerHTML = '<span class="nb-n">' + ui('bulb') + ' کشف ' + fa(M.count()) + '</span><p>' + m.fact + '</p>';
+      nl.appendChild(card);
+      K.burst(x == null ? 400 : x, y == null ? 260 : y);
+      if(M.allDone()){
+        SND.star();
+        K.say('آفرین! همهٔ مأموریت‌های «' + K.exp.title + '» کامل شد. حالا آزمون ایستگاه را شروع کن.');
+        K.later(function(){ K.burst(260, 160); K.burst(540, 200, ['#ffd166','#06d6a0','#ef476f']); }, 350);
+      } else {
+        SND.success();
+        const nx = M.current();
+        K.say('مأموریت «' + m.title + '» کامل شد! بعدی: ' + nx.title + ' — ' + nx.text);
+      }
+      if(M.onChange) M.onChange(id);
+      return true;
+    }
+  };
+  function render(){
+    const n = M.count(), cur = M.current();
+    box.querySelectorAll('.mission').forEach(function(li){
+      const id = li.getAttribute('data-id');
+      li.classList.toggle('done', !!done[id]);
+      li.classList.toggle('now', !!cur && cur.id === id);
+      li.querySelector('.mi-state').textContent = done[id] ? 'انجام شد' : (cur && cur.id === id ? 'مأموریت فعلی' : 'در انتظار');
     });
-    if(!found){ SND.wrong(); out.className='obs warn'; out.innerHTML='هنوز هیچ فسیلی با قلم‌مو پیدا نکرده‌ای! 🖌️'; return; }
-    if(skip){ SND.wrong(); out.className='obs warn'; out.innerHTML='برای '+fa(skip)+' یافته لایه‌ای انتخاب نکرده‌ای. از فهرست، لایهٔ درست را انتخاب کن.'; return; }
-    if(wrong===0){ SND.correct(); out.className='obs'; out.innerHTML='✅ آفرین! هر یافته در لایهٔ درست ثبت شد. یادت باشه: <b>هرچه لایه پایین‌تر، قدیمی‌تر است</b>.'; }
-    else { SND.wrong(); out.className='obs warn'; out.innerHTML='❌ '+fa(wrong)+' پاسخ جای بازبینی دارد. راهنما: 🐚 صدف دریایی در <b>سنگ آهکی</b> و 🦴 اسکلت ماهی در <b>لایهٔ رسوبی</b> پیدا می‌شود.'; }
+    $('mb-count').textContent = fa(n) + ' از ' + fa(list.length);
+    $('mb-fill').style.width = (n / list.length * 100) + '%';
+    const idx = cur ? list.indexOf(cur) : -1;
+    K.banner.innerHTML = cur ? '<span class="sb-k">' + ui('flag') + ' مأموریت ' + fa(idx + 1) + ' از ' + fa(list.length) + '</span><b>' + cur.title + '</b>'
+      : '<span class="sb-k sb-ok">' + ui('check') + ' همهٔ مأموریت‌ها کامل شد</span><b>آزمون منتظر توست</b>';
+    const fin = $('lab-finish');
+    if(fin){
+      const all = M.allDone();
+      fin.disabled = !all;
+      fin.classList.toggle('ready', all);
+      fin.innerHTML = all ? ui('check') + ' پایان آزمایش و شروع آزمون' : ui('flag') + ' اول مأموریت‌ها را کامل کن (' + fa(n) + ' از ' + fa(list.length) + ')';
+    }
+  }
+  K.missions = M;
+  render();
+  return M;
+}
+
+/* ---------- ۱) کاوشگاه دیرینه‌شناسی: فسیل و لایه‌های رسوبی ---------- */
+BENCH['fossil'] = function(K){
+  const svg = K.svg;
+  K.defs.innerHTML =
+    '<linearGradient id="fo-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd0f2"/><stop offset="1" stop-color="#e9f7fd"/></linearGradient>' +
+    '<radialGradient id="fo-sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6c8"/><stop offset=".55" stop-color="#ffd76a"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient>' +
+    '<pattern id="fo-soil" width="22" height="18" patternUnits="userSpaceOnUse"><rect width="22" height="18" fill="#7a5233"/><circle cx="5" cy="6" r="1.8" fill="#8d6340"/><circle cx="16" cy="13" r="1.4" fill="#5f3f26"/><circle cx="12" cy="3" r="1" fill="#946a45"/></pattern>' +
+    '<pattern id="fo-sand" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#e3c68d"/><circle cx="3" cy="4" r="1.1" fill="#cba868"/><circle cx="11" cy="10" r="1.3" fill="#d6b677"/><circle cx="7" cy="14" r=".9" fill="#b9935b"/></pattern>' +
+    '<pattern id="fo-shale" width="44" height="12" patternUnits="userSpaceOnUse"><rect width="44" height="12" fill="#a3abb5"/><path d="M0 4h44M0 9h28" stroke="#8d96a1" stroke-width="1"/></pattern>' +
+    '<pattern id="fo-lime" width="34" height="26" patternUnits="userSpaceOnUse"><rect width="34" height="26" fill="#efe4c7"/><path d="M5 8a4 4 0 0 1 8 0" stroke="#d3c196" fill="none" stroke-width="1.3"/><path d="M20 19a3 3 0 0 1 6 0" stroke="#d3c196" fill="none" stroke-width="1.2"/><circle cx="28" cy="6" r="1.2" fill="#d9caa4"/></pattern>' +
+    '<pattern id="fo-slate" width="46" height="30" patternUnits="userSpaceOnUse"><rect width="46" height="30" fill="#5f6878"/><path d="M4 22l9-6 7 3M28 8l8 5 6-2" stroke="#515a69" fill="none" stroke-width="1.3"/></pattern>' +
+    '<pattern id="fo-dust" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="18" height="18" fill="#d9bf95"/><circle cx="4" cy="5" r="1.4" fill="#c7a878"/><circle cx="13" cy="12" r="1.1" fill="#e6d0aa"/><circle cx="9" cy="2" r=".8" fill="#bf9f6e"/></pattern>' +
+    '<mask id="fo-reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="560"><rect width="800" height="560" fill="#000"/><g id="fo-holes-a" fill="#fff"></g></mask>' +
+    '<mask id="fo-cover" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="560"><rect width="800" height="560" fill="#fff"/><g id="fo-holes-b" fill="#000"></g></mask>' +
+    '<filter id="fo-emboss" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-color="#2b1d0c" flood-opacity=".45"/></filter>' +
+    '<linearGradient id="fo-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5cc8ff" stop-opacity=".55"/><stop offset="1" stop-color="#1e6fb3" stop-opacity=".75"/></linearGradient>';
+
+  const LAYERS = [
+    {name:'خاک سطحی', top:118, fill:'url(#fo-soil)'},
+    {name:'ماسه‌سنگ', top:172, fill:'url(#fo-sand)'},
+    {name:'شیل (سنگ رُسی)', top:262, fill:'url(#fo-shale)'},
+    {name:'سنگ آهک', top:352, fill:'url(#fo-lime)'},
+    {name:'سنگ کهن', top:442, fill:'url(#fo-slate)'}
+  ];
+  const wy = function(i, x){ return LAYERS[i].top + (i ? 5 * Math.sin(x / 85 + i * 1.7) + 3 * Math.sin(x / 37 + i) : 2 * Math.sin(x / 60)); };
+  let s = '<rect width="800" height="140" fill="url(#fo-sky)"/>' +
+    '<circle cx="690" cy="44" r="46" fill="url(#fo-sun)"/><circle cx="690" cy="44" r="17" fill="#ffe27a"/>' +
+    '<path d="M0 118 L70 70 L130 98 L210 52 L300 104 L380 76 L470 112 L800 112 L800 140 L0 140Z" fill="#b9d7c4" opacity=".7"/>' +
+    '<g fill="#fff" opacity=".9"><ellipse cx="150" cy="36" rx="34" ry="11"/><ellipse cx="175" cy="30" rx="22" ry="12"/><ellipse cx="470" cy="28" rx="28" ry="9"/></g>';
+  LAYERS.forEach(function(L, i){
+    let d = 'M0 ' + f1(wy(i, 0));
+    for(let x = 20; x <= 800; x += 20) d += ' L' + x + ' ' + f1(wy(i, x));
+    d += ' L800 560 L0 560Z';
+    s += '<path d="' + d + '" fill="' + L.fill + '"/>';
+    if(i) s += '<path d="' + d.split(' L800 560')[0] + '" fill="none" stroke="rgba(40,25,10,.28)" stroke-width="1.6"/>';
   });
-  obsBox(taskbar,'🔎 هرچه لایه <b>پایین‌تر</b> باشد <b>قدیمی‌تر</b> است؛ بقایای جانداران درون لایه‌ها «فسیل» نامیده می‌شود.');
-  obsBox(taskbar,'💧 جانداران نرم‌بدن (مثل عروس دریایی) چون سریع از بین می‌روند، کمتر فسیل می‌شوند.','warn');
+  /* سطح زمین: چمن، چادر کاوش، بیل و پرچم */
+  s += '<path d="M0 116 Q200 110 400 117 T800 114 L800 124 L0 124Z" fill="#6cbf4f"/>';
+  for(let x = 8; x < 800; x += 26) s += '<path d="M' + x + ' 119 l3 -9 l2 9 l4 -7 l1 7" stroke="#4f9a37" stroke-width="2" fill="none" stroke-linecap="round"/>';
+  s += '<g transform="translate(560 64)"><path d="M0 52 L42 0 L84 52Z" fill="#f2a541"/><path d="M42 0 L54 52 L30 52Z" fill="#c97a1c"/><path d="M42 0 V-16" stroke="#6b4a2a" stroke-width="3"/><path d="M42 -16 l20 6 l-20 6z" fill="#e5484d"/></g>';
+  s += '<g transform="translate(470 74) rotate(18)"><rect x="-3" y="0" width="6" height="40" rx="2" fill="#8b5a2b"/><path d="M-11 38 h22 l-3 18 q-8 6 -16 0z" fill="#9aa6b2" stroke="#6d7885"/></g>';
+  s += '<g id="fo-labels"></g>';
+  K.add(svg, '<g id="fo-scene">' + s + '</g>');
+  const labels = svg.querySelector('#fo-labels');
+  LAYERS.forEach(function(L, i){
+    const y0 = L.top + (i ? 0 : 0), y1 = i < 4 ? LAYERS[i + 1].top : 560;
+    const cy = (y0 + y1) / 2 + 4, w = L.name.length * 7.2 + 22;
+    K.add(labels, '<g class="fo-lab"><rect x="' + f1(786 - w) + '" y="' + (cy - 13) + '" width="' + f1(w) + '" height="24" rx="12" fill="rgba(255,255,255,.82)" stroke="rgba(60,40,20,.18)"/><text x="776" y="' + (cy + 4) + '" text-anchor="start" font-size="12.5" font-weight="800" fill="#3a2a17">' + L.name + '</text></g>');
+  });
+  /* لایهٔ گرد و خاکی که با قلم‌مو کنار می‌رود */
+  K.add(svg, '<rect id="fo-dustlayer" x="0" y="124" width="800" height="436" fill="url(#fo-dust)" opacity=".62" mask="url(#fo-cover)"/>');
+
+  /* ---- فسیل‌ها ---- */
+  const BONE = 'fill="#f6ead0" stroke="#8f6c3e" stroke-width="1.6" stroke-linejoin="round"';
+  function fernArt(){
+    let a = '<path d="M-74 20 C-30 10 22 -6 74 -24" stroke="#f6ead0" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M-74 20 C-30 10 22 -6 74 -24" stroke="#8f6c3e" stroke-width="1.3" fill="none"/>';
+    for(let i = 0; i < 10; i++){
+      const t = i / 9, x = -64 + t * 132, y = 17 - t * 38, sz = 17 - 9 * t;
+      a += '<ellipse cx="' + f1(x) + '" cy="' + f1(y - sz * .72) + '" rx="' + f1(sz * .36) + '" ry="' + f1(sz) + '" transform="rotate(-38 ' + f1(x) + ' ' + f1(y) + ')" ' + BONE + '/>';
+      a += '<ellipse cx="' + f1(x) + '" cy="' + f1(y + sz * .72) + '" rx="' + f1(sz * .36) + '" ry="' + f1(sz) + '" transform="rotate(-62 ' + f1(x) + ' ' + f1(y) + ')" ' + BONE + '/>';
+    }
+    return a;
+  }
+  function fishArt(){
+    let a = '<path d="M50 0 L82 -20 L74 0 L82 20Z" ' + BONE + '/>';
+    a += '<path d="M-42 0 H56" stroke="#f6ead0" stroke-width="6" stroke-linecap="round"/><path d="M-42 0 H56" stroke="#8f6c3e" stroke-width="1.2"/>';
+    for(let i = 0; i < 10; i++){
+      const x = -32 + i * 9.5, h = 21 - Math.abs(i - 3) * 1.7;
+      a += '<path d="M' + x + ' -2 q5 ' + f1(-h * .5) + ' 9 ' + f1(-h) + ' M' + x + ' 2 q5 ' + f1(h * .5) + ' 9 ' + f1(h) + '" stroke="#f6ead0" stroke-width="3.4" fill="none" stroke-linecap="round"/>';
+      a += '<path d="M' + x + ' -2 q5 ' + f1(-h * .5) + ' 9 ' + f1(-h) + ' M' + x + ' 2 q5 ' + f1(h * .5) + ' 9 ' + f1(h) + '" stroke="#8f6c3e" stroke-width=".9" fill="none"/>';
+    }
+    a += '<path d="M-44 -2 C-50 -22 -78 -20 -82 -2 C-80 14 -56 20 -44 4Z" ' + BONE + '/><circle cx="-66" cy="-6" r="5" fill="#8f6c3e"/><path d="M-82 2 l9 3" stroke="#8f6c3e" stroke-width="1.5"/>';
+    return a;
+  }
+  function ammoArt(){
+    let d = '';
+    for(let k = 0; k <= 140; k++){ const th = k / 140 * 4.5 * Math.PI, r = 2.4 * Math.exp(.2 * th); d += (k ? ' L' : 'M') + f1(r * Math.cos(th)) + ' ' + f1(r * Math.sin(th)); }
+    let a = '<circle r="41" ' + BONE + '/><path d="' + d + '" fill="none" stroke="#8f6c3e" stroke-width="2"/>';
+    for(let k = 14; k < 140; k += 5){
+      const th = k / 140 * 4.5 * Math.PI, r1 = 2.4 * Math.exp(.2 * th), r0 = 2.4 * Math.exp(.2 * (th - 2 * Math.PI));
+      a += '<path d="M' + f1(r0 * Math.cos(th)) + ' ' + f1(r0 * Math.sin(th)) + ' L' + f1(r1 * Math.cos(th)) + ' ' + f1(r1 * Math.sin(th)) + '" stroke="#b08a57" stroke-width="1.1"/>';
+    }
+    return a;
+  }
+  function triloArt(){
+    let a = '<path d="M-36 -26 Q0 -66 36 -26 Q22 -18 0 -18 Q-22 -18 -36 -26Z" ' + BONE + '/>';
+    a += '<path d="M-30 -18 Q-36 14 -16 52 Q0 60 16 52 Q36 14 30 -18Z" ' + BONE + '/>';
+    for(let i = 0; i < 8; i++){ const y = -10 + i * 7.6, w = 29 - i * 1.6; a += '<path d="M' + f1(-w) + ' ' + f1(y) + ' Q0 ' + f1(y + 4) + ' ' + f1(w) + ' ' + f1(y) + '" stroke="#8f6c3e" stroke-width="1.2" fill="none"/>'; }
+    a += '<path d="M-9 -18 Q-11 16 -5 52 M9 -18 Q11 16 5 52" stroke="#8f6c3e" stroke-width="1.6" fill="none"/>';
+    a += '<path d="M-20 -32 q4 -5 8 0 M12 -32 q4 -5 8 0" stroke="#8f6c3e" stroke-width="2" fill="none"/><path d="M-14 -44 Q0 -54 14 -44 Q0 -36 -14 -44Z" fill="#ead9b3" stroke="#8f6c3e" stroke-width="1"/>';
+    return a;
+  }
+  const FOSSILS = [
+    {id:'trilo', name:'سه‌لوبی (تریلوبیت)', layer:4, x:560, y:502, w:76, h:118, age:0, sea:true, art:triloArt, info:'سه‌لوبی‌ها بندپایانی دریایی بودند که بیش از ۲۵۰ میلیون سال پیش منقرض شدند.'},
+    {id:'ammo', name:'آمونیت (صدف مارپیچ)', layer:3, x:212, y:398, w:86, h:86, age:1, sea:true, art:ammoArt, info:'آمونیت جانوری دریایی با صدف مارپیچ بود؛ خویشاوند امروزیِ او ناتیلوس است.'},
+    {id:'fish', name:'اسکلت ماهی', layer:2, x:500, y:306, w:166, h:50, age:2, sea:true, art:fishArt, info:'ماهی‌ها در آب زندگی می‌کنند؛ این اسکلت در گِل کف دریا مدفون شده است.'},
+    {id:'fern', name:'برگ سرخس', layer:1, x:262, y:216, w:156, h:62, age:3, sea:false, art:fernArt, info:'سرخس گیاهی است که روی خشکی و جاهای مرطوب می‌روید.'}
+  ];
+  const revealG = K.g({mask:'url(#fo-reveal)', id:'fo-fossils'});
+  const holesA = svg.querySelector('#fo-holes-a'), holesB = svg.querySelector('#fo-holes-b');
+  FOSSILS.forEach(function(F){
+    F.node = K.add(revealG, '<g class="fo-fossil" data-id="' + F.id + '" transform="translate(' + F.x + ' ' + F.y + ')"><g class="fo-art" filter="url(#fo-emboss)">' + F.art() + '</g></g>');
+    F.pts = [];
+    for(let i = 0; i < 4; i++) for(let j = 0; j < 3; j++) F.pts.push({x:F.x - F.w * .4 + i * F.w * .8 / 3, y:F.y - F.h * .35 + j * F.h * .7 / 2, on:false});
+    F.found = false;
+  });
+  const fx = K.g({id:'fo-fx', 'pointer-events':'none'});
+  const tagsG = K.g({id:'fo-tags'});
+  const timeline = K.add(svg, '<g id="fo-time" opacity="0" pointer-events="none"><path d="M24 168 V540" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".85"/><path d="M24 168 V540" stroke="#7c4dff" stroke-width="3" stroke-linecap="round"/><path d="M14 530 l10 14 l10 -14" fill="#7c4dff"/><text text-anchor="end" x="34" y="182" font-size="12" font-weight="800" fill="#fff" stroke="#3a2a17" stroke-width="3" paint-order="stroke">جدیدتر</text><text text-anchor="end" x="34" y="526" font-size="12" font-weight="800" fill="#fff" stroke="#3a2a17" stroke-width="3" paint-order="stroke">قدیمی‌تر</text></g>');
+  const sea = K.add(svg, '<g id="fo-seaov" opacity="0" pointer-events="none"><path id="fo-seawave" d="" fill="url(#fo-sea)"/><text x="400" y="230" text-anchor="middle" font-size="24" font-weight="900" fill="#fff" stroke="#0b3d63" stroke-width="5" paint-order="stroke">میلیون‌ها سال پیش، این‌جا کفِ دریا بود!</text></g>');
+
+  /* قلم‌مو */
+  const cursor = K.add(svg, '<g id="fo-brush" pointer-events="none" opacity="0"><circle class="ring" r="23" fill="rgba(255,255,255,.18)" stroke="#fff" stroke-width="2" stroke-dasharray="5 4"/><g transform="rotate(-35)"><rect x="-4" y="-58" width="8" height="34" rx="3" fill="#b5651d"/><rect x="-6" y="-26" width="12" height="9" rx="2" fill="#c0c7d0"/><path d="M-7 -17 h14 l3 14 h-20z" fill="#3b2a1a"/></g></g>');
+  let brushR = 23, found = 0, lastDab = null, sweeping = false;
+  function dab(x, y, r){
+    if(y < 124) return;
+    sv('circle', {cx:f1(x), cy:f1(y), r:r}, holesA);
+    sv('circle', {cx:f1(x), cy:f1(y), r:r}, holesB);
+    FOSSILS.forEach(function(F){
+      if(F.found) return;
+      let on = 0;
+      F.pts.forEach(function(p){ if(!p.on && (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y) < r * r) p.on = true; if(p.on) on++; });
+      if(on / F.pts.length >= .6) reveal(F);
+    });
+  }
+  function reveal(F){
+    F.found = true; found++;
+    const R = Math.max(F.w, F.h) * .62;
+    sv('circle', {cx:F.x, cy:F.y, r:f1(R)}, holesA); sv('circle', {cx:F.x, cy:F.y, r:f1(R)}, holesB);
+    F.node.classList.add('found');
+    const tw = F.name.length * 6.6 + 24, ty = F.y - F.h / 2 - 14;
+    F.tag = K.add(tagsG, '<g class="fo-tag pop" transform="translate(' + F.x + ' ' + f1(ty) + ')" pointer-events="none"><rect x="' + f1(-tw / 2) + '" y="-13" width="' + f1(tw) + '" height="24" rx="12" fill="#3b2a6b"/><text y="4" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">' + F.name + '</text></g>');
+    SND.correct(); K.burst(F.x, F.y, ['#ffd166','#f6ead0','#a996ff']);
+    metric.textContent = fa(found) + ' از ' + fa(FOSSILS.length);
+    if(found < FOSSILS.length) K.say('آفرین! «' + F.name + '» پیدا شد. ' + fa(FOSSILS.length - found) + ' فسیل دیگر در لایه‌ها پنهان است.');
+    if(found === FOSSILS.length){
+      K.later(function(){
+        M.complete('dig', 400, 250);
+        FOSSILS.forEach(function(G){ K.btn(G.node, G.name, function(){ pick(G); }); });
+        timeline.style.transition = 'opacity .6s'; timeline.setAttribute('opacity', '1');
+      }, 500);
+    }
+  }
+  K.drag(svg, {
+    start:function(p){ if(sweeping || found === FOSSILS.length || p.y < 124) return false; lastDab = p; dab(p.x, p.y, brushR); moveCursor(p); SND.tick(); },
+    move:function(p){
+      moveCursor(p);
+      if(!lastDab) return;
+      const d = Math.hypot(p.x - lastDab.x, p.y - lastDab.y);
+      if(d > brushR * .35){ const n = Math.ceil(d / (brushR * .35)); for(let k = 1; k <= n; k++) dab(lastDab.x + (p.x - lastDab.x) * k / n, lastDab.y + (p.y - lastDab.y) * k / n, brushR); lastDab = p; }
+    },
+    end:function(){ lastDab = null; }
+  });
+  function moveCursor(p){ cursor.setAttribute('transform', 'translate(' + f1(p.x) + ' ' + f1(p.y) + ')'); cursor.setAttribute('opacity', found === FOSSILS.length ? '0' : '1'); }
+  svg.addEventListener('pointermove', function(e){ if(!lastDab && found < FOSSILS.length){ const p = K.pt(e); if(p.y > 124) moveCursor(p); else cursor.setAttribute('opacity', '0'); } });
+  svg.addEventListener('pointerleave', function(){ cursor.setAttribute('opacity', '0'); });
+
+  /* ---- مأموریت ۲ و ۳: لمس فسیل‌ها ---- */
+  let orderIdx = 0; const seaPicked = {};
+  function badge(F, txt, col){
+    const b = K.add(F.node, '<g class="fo-badge pop" transform="translate(' + f1(-F.w / 2 + 4) + ' ' + f1(-F.h / 2 + 6) + ')"><circle r="14" fill="' + col + '" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">' + txt + '</text></g>');
+    return b;
+  }
+  function shake(F){ F.node.classList.remove('shake'); void F.node.getBBox; requestAnimationFrame(function(){ F.node.classList.add('shake'); }); }
+  function pick(F){
+    if(!M.isDone('order')){
+      const want = FOSSILS.find(function(G){ return G.age === orderIdx; });
+      if(F === want){
+        orderIdx++; badge(F, fa(orderIdx), '#7c4dff'); SND.correct();
+        F.node.setAttribute('aria-label', F.name + ' — شمارهٔ ' + fa(orderIdx) + ' در خط زمان');
+        if(orderIdx === FOSSILS.length) M.complete('order', 120, 300);
+        else K.say('درست! «' + F.name + '» شمارهٔ ' + fa(orderIdx) + ' است. حالا فسیل قدیمی‌ترِ بعدی را پیدا کن.');
+      } else if(F.age < orderIdx){
+        K.say('این فسیل را قبلاً شماره زده‌ای. فسیل بعدی را انتخاب کن.');
+      } else { SND.wrong(); shake(F); K.say('هنوز نه! یادت باشد: لایه‌ای که پایین‌تر است، قدیمی‌تر است. از پایین‌ترین لایه شروع کن.'); }
+      return;
+    }
+    if(!M.isDone('sea')){
+      if(seaPicked[F.id]){ K.say('این یکی را قبلاً انتخاب کرده‌ای.'); return; }
+      if(F.sea){
+        seaPicked[F.id] = true; badge(F, '≈', '#1e88e5'); SND.correct();
+        const n = Object.keys(seaPicked).length;
+        if(n === 3){ M.complete('sea', 400, 300); seaRise(); }
+        else K.say('درست! «' + F.name + '» جانداری دریایی بود. ' + fa(3 - n) + ' فسیل دریایی دیگر مانده.');
+      } else { SND.wrong(); shake(F); K.say('سرخس گیاه خشکی است؛ در دریا زندگی نمی‌کرد. دنبال جانداران آبزی بگرد.'); }
+      return;
+    }
+    K.say(F.name + ': ' + F.info);
+  }
+  function seaRise(){
+    const wave = svg.querySelector('#fo-seawave');
+    const t0 = performance.now(), dur = reducedMotion() ? 1 : 4200;
+    sea.setAttribute('opacity', '1');
+    (function step(now){
+      const t = clamp((now - t0) / dur, 0, 1);
+      const lvl = 560 - Math.min(1, t / .35) * 330, ph = now / 380;
+      let d = 'M0 ' + f1(lvl);
+      for(let x = 0; x <= 800; x += 40) d += ' L' + x + ' ' + f1(lvl + Math.sin(x / 60 + ph) * 7);
+      wave.setAttribute('d', d + ' L800 560 L0 560Z');
+      sea.setAttribute('opacity', t > .75 ? f1((1 - t) / .25) : '1');
+      if(t < 1) requestAnimationFrame(step); else sea.setAttribute('opacity', '0');
+    })(t0);
+  }
+
+  /* ---- پنل ---- */
+  const tools = K.section('ابزار کاوش', 'brush');
+  ctlSlider(tools, 'پهنای قلم‌مو', 14, 40, brushR, 1, function(v){ brushR = v; cursor.querySelector('.ring').setAttribute('r', v); });
+  const metric = ctlMetric(tools, 'فسیل‌های پیداشده');
+  metric.textContent = '۰ از ۴';
+  ctlButton(tools, '🔁 کمک چراغک: جاروی خودکار', function(){
+    const F = FOSSILS.find(function(G){ return !G.found; });
+    if(!F){ K.say('همهٔ فسیل‌ها پیدا شده‌اند!'); return; }
+    if(sweeping) return;
+    sweeping = true;
+    K.say('چراغک دارد با احتیاط روی «لایهٔ ' + LAYERS[F.layer].name + '» قلم‌مو می‌کشد…');
+    const pts = [];
+    for(let j = 0; j < 4; j++) for(let i = 0; i <= 6; i++){ const ii = j % 2 ? 6 - i : i; pts.push([F.x - F.w * .5 + ii * F.w / 6, F.y - F.h * .42 + j * F.h * .84 / 3]); }
+    let k = 0;
+    const iv = setInterval(function(){
+      if(k >= pts.length || F.found || !document.body.contains(svg)){ clearInterval(iv); sweeping = false; if(!F.found) reveal(F); return; }
+      dab(pts[k][0], pts[k][1], 26); moveCursor({x:pts[k][0], y:pts[k][1]}); k++;
+    }, reducedMotion() ? 1 : 45);
+    K.timers.push(iv);
+  }, 'ghost');
+  obsBox(tools, 'روی لایه‌ها قلم‌مو بکش تا گرد و خاک کنار برود. در هر لایهٔ سنگی یک فسیل پنهان است. فسیل‌ها را که پیدا کردی، می‌توانی آن‌ها را روی صحنه لمس کنی.', 'info');
+  const M = makeMissions(K, [
+    {id:'dig', title:'کاوش با قلم‌مو', text:'روی لایه‌ها قلم‌مو بکش و هر ۴ فسیل پنهان را پیدا کن.', hint:'آرام روی همهٔ لایه‌های سنگی قلم‌مو بکش؛ در هر کدام یک فسیل است. اگر گیر کردی، «کمک چراغک» را بزن.', fact:'فسیل‌ها بیشتر در سنگ‌های رسوبی پیدا می‌شوند؛ رسوب‌ها بقایای جانداران را می‌پوشانند و حفظ می‌کنند.'},
+    {id:'order', title:'خط زمان فسیل‌ها', text:'فسیل‌ها را به ترتیب از قدیمی‌ترین تا جدیدترین لمس کن.', hint:'لایه‌ای که پایین‌تر است زودتر ته‌نشین شده؛ پس فسیلِ پایین‌ترین لایه قدیمی‌ترین است.', fact:'در لایه‌های دست‌نخوردهٔ رسوبی، هر لایه از لایهٔ روی خودش قدیمی‌تر است؛ پس فسیل‌های پایین‌تر قدیمی‌ترند.'},
+    {id:'sea', title:'این‌جا روزی دریا بود؟', text:'فسیل هر سه جانداری را که در دریا زندگی می‌کردند لمس کن.', hint:'سه‌لوبی، آمونیت و ماهی در آب زندگی می‌کردند؛ سرخس گیاه خشکی است.', fact:'پیدا شدن فسیل جانداران دریایی در خشکی نشان می‌دهد که این منطقه زمانی زیر آب دریا بوده است.'}
+  ]);
+  return {};
 };
 
-/* ---------- ۲) اهرم: جدول گشتاور زنده ---------- */
-EXTRAS['lever'] = function(taskbar, api){
-  ctlTitle(taskbar,'🧮 جدول گشتاور');
-  const t = tableWrap(taskbar,'قانون اهرم: جرم × فاصله');
-  t.innerHTML += '<thead><tr><th>طرف</th><th>گشتاور</th></tr></thead><tbody>'+
-    '<tr><td>⬅️ چپ</td><td class="vl">—</td></tr>'+
-    '<tr><td>➡️ راست</td><td class="vr">—</td></tr>'+
-    '<tr><td>⚖️ وضعیت</td><td class="vs">—</td></tr></tbody>';
-  obsBox(taskbar,'🧰 الاکلنگ، ترازو، قیچی، فرغون و دربازکن همه <b>اهرم</b> هستند. جسم سنگین نزدیک تکیه‌گاه راحت‌تر بلند می‌شود.');
-  api._extraUpdate = function(){
-    const ms = taskbar.querySelectorAll('.metric b');
-    if(ms.length>=3){
-      t.querySelector('.vl').textContent = ms[0].textContent;
-      t.querySelector('.vr').textContent = ms[1].textContent;
-      t.querySelector('.vs').textContent = ms[2].textContent;
+/* ---------- ۲) الاکلنگ حکیم: اهرم و تعادل ---------- */
+BENCH['lever'] = function(K){
+  const svg = K.svg;
+  K.defs.innerHTML =
+    '<linearGradient id="lv-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ad8f7"/><stop offset="1" stop-color="#eaf8ff"/></linearGradient>' +
+    '<linearGradient id="lv-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9a65a"/><stop offset="1" stop-color="#b56a26"/></linearGradient>' +
+    '<linearGradient id="lv-metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7e8da3"/><stop offset="1" stop-color="#465469"/></linearGradient>' +
+    '<linearGradient id="lv-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c7d1dc"/><stop offset="1" stop-color="#6c7a8b"/></linearGradient>' +
+    '<radialGradient id="lv-rock" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#b4aca2"/><stop offset="1" stop-color="#6e655c"/></radialGradient>' +
+    '<filter id="lv-sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1b2a3a" flood-opacity=".28"/></filter>';
+  /* پس‌زمینهٔ پارک */
+  K.add(svg, '<g id="lv-bg"><rect width="800" height="560" fill="url(#lv-sky)"/>' +
+    '<g fill="#fff" opacity=".92"><ellipse cx="130" cy="70" rx="46" ry="15"/><ellipse cx="160" cy="60" rx="30" ry="17"/><ellipse cx="610" cy="54" rx="40" ry="13"/><ellipse cx="640" cy="46" rx="24" ry="14"/></g>' +
+    '<path d="M0 360 Q120 320 240 352 T480 344 T800 340 V560 H0Z" fill="#bfe3a8"/>' +
+    '<g><rect x="56" y="250" width="12" height="110" fill="#8b5a2b"/><circle cx="62" cy="236" r="44" fill="#5fb85a"/><circle cx="34" cy="262" r="28" fill="#4fa34b"/><circle cx="92" cy="258" r="30" fill="#6cc466"/></g>' +
+    '<g><rect x="726" y="266" width="10" height="94" fill="#8b5a2b"/><circle cx="731" cy="254" r="36" fill="#6cc466"/><circle cx="752" cy="276" r="22" fill="#4fa34b"/></g>' +
+    '<path d="M0 452 H800 V560 H0Z" fill="#8fcf72"/><path d="M0 452 H800" stroke="#6fb456" stroke-width="3"/></g>');
+
+  /* ======== حالت ۱: الاکلنگ ======== */
+  const PX = 400, PY = 372, SP = 58;
+  const modeA = K.g({id:'lv-seesaw'});
+  K.add(modeA, '<g id="lv-board" filter="url(#lv-sh)"><rect x="262" y="22" width="276" height="74" rx="18" fill="rgba(255,255,255,.93)" stroke="rgba(15,34,56,.12)"/>' +
+    '<text x="520" y="47" text-anchor="start" font-size="13" font-weight="800" fill="#2c3f5c">گشتاور چپ</text><text text-anchor="end" x="280" y="47" font-size="13" font-weight="800" fill="#2c3f5c">گشتاور راست</text>' +
+    '<text id="lv-tl" x="520" y="78" text-anchor="start" font-size="20" font-weight="900" fill="#c2410c">۰</text><text text-anchor="end" id="lv-tr" x="280" y="78" font-size="20" font-weight="900" fill="#1d4ed8">۰</text>' +
+    '<rect id="lv-stb" x="356" y="56" width="88" height="28" rx="14" fill="#fde68a"/><text id="lv-st" x="400" y="75" text-anchor="middle" font-size="12.5" font-weight="900" fill="#7c4a03">نامتعادل</text></g>');
+  K.add(modeA, '<g><path d="M' + (PX - 46) + ' 452 L' + PX + ' ' + (PY + 6) + ' L' + (PX + 46) + ' 452Z" fill="url(#lv-metal)"/><circle cx="' + PX + '" cy="' + (PY + 6) + '" r="9" fill="#2b3647"/><circle cx="' + PX + '" cy="' + (PY + 6) + '" r="3.5" fill="#c7d1dc"/><ellipse cx="' + PX + '" cy="456" rx="70" ry="8" fill="rgba(0,0,0,.13)"/></g>');
+  const beam = K.g({id:'lv-beam'}, modeA);
+  let bs = '<rect x="' + (PX - 330) + '" y="' + (PY - 8) + '" width="660" height="16" rx="8" fill="url(#lv-wood)" stroke="#8a4f17" stroke-width="1.5"/>';
+  for(let side = -1; side <= 1; side += 2) for(let d = 1; d <= 5; d++){
+    const x = PX + side * d * SP;
+    bs += '<g class="lv-peg"><circle cx="' + x + '" cy="' + PY + '" r="5.5" fill="#fff6e6" stroke="#8a4f17" stroke-width="1.5"/><text x="' + x + '" y="' + (PY + 28) + '" text-anchor="middle" font-size="12" font-weight="800" fill="#5b3510">' + fa(d) + '</text></g>';
+  }
+  bs += '<g transform="translate(' + PX + ' ' + (PY - 18) + ')"><rect x="-26" y="-7" width="52" height="14" rx="7" fill="#e0f2fe" stroke="#64748b" stroke-width="1.3"/><circle id="lv-bubble" cx="0" cy="0" r="4.6" fill="#22c55e" stroke="#15803d"/><path d="M-6 -7 V7 M6 -7 V7" stroke="#64748b" stroke-width="1"/></g>';
+  K.add(beam, bs);
+  const onBeam = K.g({id:'lv-onbeam'}, beam);
+  const trayG = K.g({id:'lv-tray'}, modeA);
+  K.add(trayG, '<rect x="470" y="478" width="300" height="66" rx="16" fill="rgba(255,255,255,.55)" stroke="rgba(15,34,56,.18)" stroke-dasharray="6 5"/><text x="760" y="472" text-anchor="start" font-size="12" font-weight="800" fill="#2c5a1e">سینی وزنه‌ها</text>');
+  const dragLayer = K.g({id:'lv-drag'}, modeA);
+  const BLOCKS = [
+    {id:'rock', m:4, fixed:true, side:-1, d:2, color:'#8b7d6b', name:'سنگ ۴ کیلویی حکیم'},
+    {id:'k1', m:1, color:'#f59e0b', name:'وزنهٔ ۱ کیلویی نارنجی'},
+    {id:'k2a', m:2, color:'#14b8a6', name:'وزنهٔ ۲ کیلویی سبزآبی'},
+    {id:'k2b', m:2, color:'#3b82f6', name:'وزنهٔ ۲ کیلویی آبی'},
+    {id:'k3', m:3, color:'#e11d48', name:'وزنهٔ ۳ کیلویی قرمز'}
+  ];
+  const TRAY_X = {k1:735, k2a:672, k2b:604, k3:526};
+  BLOCKS.forEach(function(b){
+    b.w = 30 + b.m * 7; b.h = 24 + b.m * 6;
+    if(!b.fixed){ b.side = 0; b.d = 0; }
+    const face = '<circle cx="' + f1(-b.w * .2) + '" cy="' + f1(-b.h * .1) + '" r="2.4" fill="#1f2937"/><circle cx="' + f1(b.w * .2) + '" cy="' + f1(-b.h * .1) + '" r="2.4" fill="#1f2937"/><path d="M' + f1(-b.w * .14) + ' ' + f1(b.h * .12) + ' q' + f1(b.w * .14) + ' 6 ' + f1(b.w * .28) + ' 0" stroke="#1f2937" stroke-width="2" fill="none" stroke-linecap="round"/>';
+    const body = b.fixed
+      ? '<path d="M' + f1(-b.w / 2) + ' ' + f1(b.h / 2) + ' Q' + f1(-b.w / 2 - 4) + ' ' + f1(-b.h / 3) + ' ' + f1(-b.w / 5) + ' ' + f1(-b.h / 2) + ' Q' + f1(b.w / 3) + ' ' + f1(-b.h / 2 - 5) + ' ' + f1(b.w / 2) + ' ' + f1(-b.h / 6) + ' Q' + f1(b.w / 2 + 3) + ' ' + f1(b.h / 3) + ' ' + f1(b.w / 2) + ' ' + f1(b.h / 2) + 'Z" fill="url(#lv-rock)" stroke="#4b443d" stroke-width="1.5"/>'
+      : '<rect x="' + f1(-b.w / 2) + '" y="' + f1(-b.h / 2) + '" width="' + b.w + '" height="' + b.h + '" rx="7" fill="' + b.color + '" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/><rect x="' + f1(-b.w / 2 + 4) + '" y="' + f1(-b.h / 2 + 3) + '" width="' + f1(b.w - 8) + '" height="5" rx="2.5" fill="rgba(255,255,255,.35)"/>';
+    const lab = '<text y="' + f1(b.h / 2 - 5) + '" text-anchor="middle" font-size="11" font-weight="900" fill="#fff">' + fa(b.m) + ' کیلو</text>';
+    b.node = K.add(trayG, '<g class="lv-block' + (b.fixed ? ' fixed' : '') + '" filter="url(#lv-sh)">' + body + face + lab + (b.fixed ? '<g transform="translate(' + f1(b.w / 2 - 2) + ' ' + f1(-b.h / 2) + ')"><circle r="8" fill="#334155"/><path d="M-3 -1 v-2 a3 3 0 0 1 6 0 v2 M-4 -1 h8 v5 h-8z" fill="none" stroke="#fff" stroke-width="1.4"/></g>' : '') + '</g>');
+  });
+  let theta = 0, vel = 0;
+  function sideBlocks(side){ return BLOCKS.filter(function(b){ return b.side === side; }); }
+  function torque(side){ return sideBlocks(side).reduce(function(a, b){ return a + b.m * b.d; }, 0); }
+  function layout(){
+    const stack = {};
+    BLOCKS.forEach(function(b){
+      if(b.drag) return;
+      if(b.side === 0){
+        if(b.node.parentNode !== trayG) trayG.appendChild(b.node);
+        b.node.setAttribute('transform', 'translate(' + TRAY_X[b.id] + ' ' + f1(534 - b.h / 2) + ')');
+        return;
+      }
+      if(b.node.parentNode !== onBeam) onBeam.appendChild(b.node);
+      const key = b.side + ':' + b.d, base = stack[key] || 0;
+      b.node.setAttribute('transform', 'translate(' + (PX + b.side * b.d * SP) + ' ' + f1(PY - 8 - base - b.h / 2) + ')');
+      stack[key] = base + b.h;
+    });
+    const tl = torque(-1), tr = torque(1);
+    svg.querySelector('#lv-tl').textContent = sideBlocks(-1).map(function(b){ return fa(b.m) + '×' + fa(b.d); }).join(' + ') + ' = ' + fa(tl);
+    svg.querySelector('#lv-tr').textContent = (sideBlocks(1).length ? sideBlocks(1).map(function(b){ return fa(b.m) + '×' + fa(b.d); }).join(' + ') + ' = ' : '') + fa(tr);
+    BLOCKS.forEach(function(b){ if(b.sel) b.sel.value = b.side === 0 ? '0' : String(b.side * b.d); });
+  }
+  function pegWorld(side, d){
+    const s = side * d * SP, c = Math.cos(theta * Math.PI / 180), sn = Math.sin(theta * Math.PI / 180);
+    return {x:PX + s * c, y:PY + s * sn};
+  }
+  function place(b, side, d){ b.side = side; b.d = d; layout(); SND.tick(); settleT = 0; }
+  BLOCKS.forEach(function(b){
+    if(b.fixed) return;
+    let off = null;
+    K.drag(b.node, {
+      start:function(p){
+        if(mode !== 'A') return false;
+        b.drag = true; dragLayer.appendChild(b.node);
+        off = {x:0, y:b.h * .2};
+        b.node.setAttribute('transform', 'translate(' + f1(p.x) + ' ' + f1(p.y - off.y) + ')');
+        b.node.classList.add('lifted');
+      },
+      move:function(p){ b.node.setAttribute('transform', 'translate(' + f1(p.x) + ' ' + f1(p.y - off.y) + ')'); },
+      end:function(p){
+        b.drag = false; b.node.classList.remove('lifted');
+        let best = null, bd = 1e9;
+        for(let side = -1; side <= 1; side += 2) for(let d = 1; d <= 5; d++){
+          const w = pegWorld(side, d), dist = Math.hypot(w.x - p.x, (w.y - 30) - p.y);
+          if(dist < bd){ bd = dist; best = [side, d]; }
+        }
+        if(best && bd < 62 && p.y < PY + 40) place(b, best[0], best[1]); else place(b, 0, 0);
+      }
+    });
+  });
+
+  /* ======== حالت ۲: دیلم و سنگ ======== */
+  const modeB = K.g({id:'lv-crow', style:'display:none'});
+  const BX0 = 150, BL = 500, FY = 412;
+  K.add(modeB, '<g filter="url(#lv-sh)"><rect x="236" y="22" width="328" height="78" rx="18" fill="rgba(255,255,255,.94)" stroke="rgba(15,34,56,.12)"/>' +
+    '<text x="548" y="46" text-anchor="start" font-size="12.5" font-weight="800" fill="#2c3f5c">نیروی لازم برای بلند کردن سنگ</text>' +
+    '<text id="lv-need" x="548" y="80" text-anchor="start" font-size="22" font-weight="900" fill="#b91c1c">—</text>' +
+    '<text text-anchor="end" x="252" y="46" font-size="12.5" font-weight="800" fill="#2c3f5c">زور تو</text><text text-anchor="end" x="252" y="80" font-size="22" font-weight="900" fill="#15803d">۲۰۰ نیوتن</text></g>');
+  const crow = K.g({id:'lv-crowbar'}, modeB);
+  const rockB = K.add(crow, '<g id="lv-bigrock"><path d="M' + (BX0 - 70) + ' ' + (FY - 10) + ' Q' + (BX0 - 86) + ' ' + (FY - 100) + ' ' + (BX0 - 20) + ' ' + (FY - 124) + ' Q' + (BX0 + 40) + ' ' + (FY - 136) + ' ' + (BX0 + 60) + ' ' + (FY - 70) + ' Q' + (BX0 + 70) + ' ' + (FY - 20) + ' ' + (BX0 + 46) + ' ' + (FY - 8) + 'Z" fill="url(#lv-rock)" stroke="#4b443d" stroke-width="2"/><path d="M' + (BX0 - 40) + ' ' + (FY - 90) + ' q20 -12 40 -4" stroke="rgba(255,255,255,.35)" stroke-width="5" fill="none" stroke-linecap="round"/><text x="' + (BX0 - 12) + '" y="' + (FY - 56) + '" text-anchor="middle" font-size="15" font-weight="900" fill="#fff">۶۰۰ نیوتن</text></g>');
+  K.add(crow, '<rect x="' + (BX0 - 10) + '" y="' + (FY - 12) + '" width="' + (BL + 10) + '" height="11" rx="5" fill="url(#lv-bar)" stroke="#3f4a59" stroke-width="1.2"/>');
+  const pusher = K.add(crow, '<g id="lv-push"><path d="M' + (BX0 + BL - 6) + ' ' + (FY - 112) + ' V' + (FY - 30) + '" stroke="#16a34a" stroke-width="9" stroke-linecap="round"/><path d="M' + (BX0 + BL - 22) + ' ' + (FY - 40) + ' l16 22 l16 -22z" fill="#16a34a"/><text x="' + (BX0 + BL - 6) + '" y="' + (FY - 122) + '" text-anchor="middle" font-size="13" font-weight="900" fill="#14532d">نیروی تو</text></g>');
+  K.add(modeB, '<path d="M0 ' + FY + ' H800" stroke="#6fb456" stroke-width="0"/>');
+  const fulcrum = K.add(modeB, '<g id="lv-ful" class="sv-drag"><path d="M-26 40 L0 0 L26 40Z" fill="url(#lv-metal)" stroke="#2b3647" stroke-width="1.5"/><circle r="6" fill="#2b3647"/><text y="58" text-anchor="middle" font-size="12" font-weight="800" fill="#1f3b14">تکیه‌گاه</text></g>');
+  const armsG = K.add(modeB, '<g id="lv-arms" pointer-events="none"></g>');
+  let p = 5, lifting = false, liftA = 0;
+  function needF(){ return Math.round(600 * p / (10 - p)); }
+  function drawCrow(){
+    const fx = BX0 + p * BL / 10;
+    fulcrum.setAttribute('transform', 'translate(' + f1(fx) + ' ' + FY + ')');
+    crow.setAttribute('transform', 'rotate(' + f1(liftA) + ' ' + f1(fx) + ' ' + (FY - 6) + ')');
+    const F = needF(), ok = F <= 200;
+    const need = svg.querySelector('#lv-need');
+    need.textContent = fa(F) + ' نیوتن'; need.setAttribute('fill', ok ? '#15803d' : '#b91c1c');
+    armsG.innerHTML = '<path d="M' + BX0 + ' ' + (FY + 30) + ' H' + f1(fx) + '" stroke="#c2410c" stroke-width="3"/><text x="' + f1((BX0 + fx) / 2) + '" y="' + (FY + 50) + '" text-anchor="middle" font-size="12" font-weight="800" fill="#9a3412">بازوی بار: ' + fa(p).replace('.', '٫') + '</text>' +
+      '<path d="M' + f1(fx) + ' ' + (FY + 30) + ' H' + (BX0 + BL) + '" stroke="#1d4ed8" stroke-width="3"/><text x="' + f1((fx + BX0 + BL) / 2) + '" y="' + (FY + 50) + '" text-anchor="middle" font-size="12" font-weight="800" fill="#1e3a8a">بازوی نیرو: ' + fa(10 - p).replace('.', '٫') + '</text>';
+    if(pSlider) pSlider.set(p);
+  }
+  K.drag(fulcrum, {
+    start:function(){ if(lifting) return false; },
+    move:function(q){ p = clamp(Math.round((q.x - BX0) / BL * 20) / 2, 1, 8); drawCrow(); },
+    end:function(){ SND.tick(); }
+  });
+  function push(){
+    if(lifting) return;
+    const F = needF();
+    lifting = true;
+    if(F <= 200){
+      SND.correct();
+      const t0 = performance.now(), dur = reducedMotion() ? 1 : 900;
+      (function step(now){ const t = clamp((now - t0) / dur, 0, 1); liftA = -9 * (1 - Math.pow(1 - t, 3)); drawCrow(); if(t < 1) requestAnimationFrame(step); else {
+        K.say('سنگ ۶۰۰ نیوتنی با فقط ' + fa(F) + ' نیوتن بلند شد! چون تکیه‌گاه نزدیک سنگ است، بازوی نیرو بلندتر شده.');
+        M.complete('crow', BX0, FY - 140);
+        K.later(function(){ const t1 = performance.now(); (function back(n){ const u = clamp((n - t1) / 700, 0, 1); liftA = -9 * (1 - u); drawCrow(); if(u < 1) requestAnimationFrame(back); else lifting = false; })(t1); }, 1600);
+      } })(t0);
+    } else {
+      SND.wrong();
+      const t0 = performance.now();
+      (function wob(now){ const t = (now - t0) / 600; liftA = t < 1 ? Math.sin(t * Math.PI * 4) * 1.2 * (1 - t) : 0; drawCrow(); if(t < 1) requestAnimationFrame(wob); else lifting = false; })(t0);
+      K.say('خیلی سنگین است! نیروی لازم ' + fa(F) + ' نیوتن است ولی زور تو ۲۰۰ نیوتن. تکیه‌گاه را جابه‌جا کن و دوباره هل بده.');
+    }
+  }
+  K.btn(pusher, 'هل بده و سنگ را بلند کن', push);
+
+  /* ======== پنل ======== */
+  let mode = 'A';
+  const tabs = el('div', 'seg-tabs'); tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'حالت آزمایش');
+  const tA = el('button', 'seg on', ui('scale') + ' الاکلنگ'), tB = el('button', 'seg', ui('mountain') + ' دیلم و سنگ');
+  [tA, tB].forEach(function(t, i){ t.type = 'button'; t.setAttribute('role', 'tab'); t.setAttribute('aria-selected', i ? 'false' : 'true'); tabs.appendChild(t); });
+  const secA = K.section('وزنه‌ها روی الاکلنگ', 'scale');
+  secA.insertBefore(tabs, secA.firstChild);
+  const listA = el('div', 'lv-rows'); secA.appendChild(listA);
+  BLOCKS.forEach(function(b){
+    if(b.fixed) return;
+    const row = el('label', 'lv-row'); const sid = 'lv-sel-' + b.id;
+    row.setAttribute('for', sid);
+    row.innerHTML = '<span class="lv-sw" style="background:' + b.color + '"></span><span>' + b.name + '</span>';
+    const sel = el('select'); sel.id = sid;
+    sel.innerHTML = '<option value="0">در سینی</option>' + [1,2,3,4,5].map(function(d){ return '<option value="-' + d + '">چپ — جای ' + fa(d) + '</option>'; }).join('') + [1,2,3,4,5].map(function(d){ return '<option value="' + d + '">راست — جای ' + fa(d) + '</option>'; }).join('');
+    sel.onchange = function(){ const v = +sel.value; place(b, Math.sign(v), Math.abs(v)); };
+    b.sel = sel; row.appendChild(sel); listA.appendChild(row);
+  });
+  obsBox(secA, 'وزنه‌ها را از سینی بکش و روی میخ‌های الاکلنگ بگذار. <b>گشتاور = وزن × فاصله از تکیه‌گاه</b>. وقتی گشتاور دو طرف برابر شود، الاکلنگ تراز می‌شود.', 'info');
+  const secB = K.section('دیلم و سنگ بزرگ', 'mountain');
+  secB.style.display = 'none';
+  const pSlider = ctlSlider(secB, 'فاصلهٔ تکیه‌گاه از سنگ', 1, 8, p, .5, function(v){ p = v; drawCrow(); });
+  ctlButton(secB, '✅ هل بده!', push);
+  obsBox(secB, 'سنگ ۶۰۰ نیوتن وزن دارد و زور تو فقط ۲۰۰ نیوتن است. تکیه‌گاه را جابه‌جا کن تا نیروی لازم به اندازهٔ زور تو برسد.', 'info');
+  function setMode(m){
+    mode = m;
+    modeA.style.display = m === 'A' ? '' : 'none'; modeB.style.display = m === 'B' ? '' : 'none';
+    secA.style.display = ''; secB.style.display = m === 'B' ? '' : 'none';
+    listA.style.display = m === 'A' ? '' : 'none';
+    secA.querySelectorAll('.obs').forEach(function(o){ o.style.display = m === 'A' ? '' : 'none'; });
+    tA.classList.toggle('on', m === 'A'); tB.classList.toggle('on', m === 'B');
+    tA.setAttribute('aria-selected', m === 'A' ? 'true' : 'false'); tB.setAttribute('aria-selected', m === 'B' ? 'true' : 'false');
+    if(m === 'B') drawCrow();
+  }
+  tA.onclick = function(){ SND.click(); setMode('A'); };
+  tB.onclick = function(){ SND.click(); setMode('B'); K.say('حالا با یک دیلم می‌خواهیم سنگ بزرگی را بلند کنیم. تکیه‌گاه را جابه‌جا کن و ببین نیروی لازم چه می‌شود.'); };
+
+  const M = makeMissions(K, [
+    {id:'balance', title:'الاکلنگ را تراز کن', text:'سنگ ۴ کیلویی حکیم سمت چپ است؛ با وزنه‌های سینی سمت راست را طوری بچین که الاکلنگ تراز شود.', hint:'گشتاور چپ ۴×۲ = ۸ است. سمت راست هم باید ۸ شود؛ مثلاً یک وزنه ۴ کیلویی… یا وزنه‌های کوچک‌تر در فاصلهٔ بیشتر!', fact:'اهرم وقتی در تعادل است که گشتاور دو طرف برابر باشد؛ گشتاور یعنی وزن ضرب در فاصله از تکیه‌گاه.'},
+    {id:'light', title:'وزنهٔ سبک، بازوی بلند', text:'فقط با یک وزنهٔ سبک‌تر از سنگ، الاکلنگ را تراز کن.', hint:'یک وزنهٔ ۲ کیلویی دو برابر دورتر از سنگ بگذار: ۲×۴ = ۴×۲.', fact:'یک وزنهٔ سبک اگر دورتر از تکیه‌گاه باشد، می‌تواند با وزنهٔ سنگین نزدیک تکیه‌گاه برابری کند.'},
+    {id:'crow', title:'سنگ بزرگ را بلند کن', text:'در حالت «دیلم و سنگ»، تکیه‌گاه را جابه‌جا کن و سنگ ۶۰۰ نیوتنی را با زور ۲۰۰ نیوتنی بلند کن.', hint:'تکیه‌گاه را به سنگ نزدیک کن؛ هرچه بازوی بار کوتاه‌تر و بازوی نیرو بلندتر باشد، نیروی کمتری لازم است.', fact:'هرچه تکیه‌گاه به بار نزدیک‌تر باشد، نیروی کمتری لازم است؛ اما سرِ اهرم را باید مسافت بیشتری پایین ببریم.'}
+  ]);
+  M.onChange = function(id){ if(id === 'light' || (id === 'balance' && M.isDone('light'))){ if(!M.isDone('crow')) K.later(function(){ setMode('B'); K.say('عالی بود! حالا نوبت دیلم است: سنگ ۶۰۰ نیوتنی را با زور ۲۰۰ نیوتنی بلند کن.'); }, 1400); } };
+  layout(); drawCrow();
+  let settleT = 0;
+  return {
+    tick:function(dt){
+      if(mode !== 'A') return;
+      const diff = torque(1) - torque(-1);
+      const target = clamp(diff * 2.4, -13, 13);
+      vel += (target - theta) * 30 * dt; vel *= Math.pow(.025, dt); theta += vel * dt;
+      beam.setAttribute('transform', 'rotate(' + f1(theta) + ' ' + PX + ' ' + PY + ')');
+      const bub = svg.querySelector('#lv-bubble'); bub.setAttribute('cx', f1(clamp(-theta * 1.6, -19, 19)));
+      const bal = diff === 0 && sideBlocks(1).length > 0;
+      bub.setAttribute('fill', Math.abs(theta) < .6 ? '#22c55e' : '#f59e0b');
+      const st = svg.querySelector('#lv-st'), stb = svg.querySelector('#lv-stb');
+      st.textContent = bal ? 'متعادل' : (diff > 0 ? 'راست سنگین‌تر' : (diff < 0 ? 'چپ سنگین‌تر' : 'نامتعادل'));
+      stb.setAttribute('fill', bal ? '#bbf7d0' : '#fde68a'); st.setAttribute('fill', bal ? '#14532d' : '#7c4a03');
+      if(bal && Math.abs(theta) < .5 && Math.abs(vel) < 1.5){
+        settleT += dt;
+        if(settleT > .35){
+          if(!M.isDone('balance')) M.complete('balance', PX, PY - 80);
+          const right = sideBlocks(1), leftM = sideBlocks(-1).reduce(function(a, b){ return a + b.m; }, 0);
+          if(!M.isDone('light') && right.length === 1 && right[0].m < leftM) M.complete('light', PX + right[0].d * SP, PY - 70);
+        }
+      } else settleT = 0;
     }
   };
 };
 
-/* ---------- ۳) انتقال آب: زمان و رنگین‌شدن آوندها ---------- */
-EXTRAS['water-transfer'] = function(taskbar, api){
-  ctlTitle(taskbar,'⏱️ آزمایش آب رنگی و آوندها');
-  let hours = 0;
-  ctlSlider(taskbar,'زمان سپری‌شده در آب رنگی (ساعت)',0,24,0,1,function(v){ hours=v; if(api.setDyeHours) api.setDyeHours(v); show(); });
-  const tl=el('div'); tl.style.marginTop='.2rem'; taskbar.appendChild(tl);
-  const bar=el('div','timer','<i></i>'); tl.appendChild(bar);
-  const msg=el('div','step-hint'); tl.appendChild(msg);
-  function show(){
-    bar.firstChild.style.width=(hours/24*100)+'%';
-    if(hours<6) msg.textContent='هنوز زود است… (در آزمایش واقعی ۶ تا ۲۴ ساعت لازم است)';
-    else if(hours<24) msg.textContent='آوندها رنگی شده‌اند و رنگ به برگ رسیده است ✅';
-    else msg.textContent='برش عرضی ساقه را ببین: لوله‌های رنگی (آوند) دیده می‌شوند ✅';
+/* ---------- ۳) گلخانهٔ آوند: انتقال آب در گیاه ---------- */
+BENCH['water-transfer'] = function(K){
+  const svg = K.svg;
+  K.defs.innerHTML =
+    '<linearGradient id="wt-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dff5ec"/><stop offset="1" stop-color="#f4fbf7"/></linearGradient>' +
+    '<linearGradient id="wt-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c98b52"/><stop offset="1" stop-color="#8f5a2c"/></linearGradient>' +
+    '<linearGradient id="wt-stem" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3f9d45"/><stop offset=".5" stop-color="#7bcf6e"/><stop offset="1" stop-color="#2f7d35"/></linearGradient>' +
+    '<linearGradient id="wt-glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset=".3" stop-color="#ffffff" stop-opacity=".12"/><stop offset="1" stop-color="#ffffff" stop-opacity=".4"/></linearGradient>' +
+    '<radialGradient id="wt-petal" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="#ffffff"/><stop id="wt-p1" offset=".55" stop-color="#ffffff"/><stop id="wt-p2" offset="1" stop-color="#f3f4f6"/></radialGradient>' +
+    '<radialGradient id="wt-lamp" cx="50%" cy="0%" r="100%"><stop offset="0" stop-color="#fff3b0" stop-opacity=".9"/><stop offset="1" stop-color="#fff3b0" stop-opacity="0"/></radialGradient>' +
+    '<clipPath id="wt-vclip"><path d="M206 302 L294 302 L290 448 Q250 458 210 448Z"/></clipPath>' +
+    '<clipPath id="wt-bagclip"><path d="M570 168 Q640 120 712 168 L716 338 Q640 356 566 338Z"/></clipPath>' +
+    '<filter id="wt-sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#163a2a" flood-opacity=".22"/></filter>';
+  let s = '<rect width="800" height="560" fill="url(#wt-bg)"/>';
+  /* قاب‌های شیشه‌ای گلخانه */
+  s += '<g stroke="#b7dccb" stroke-width="4" fill="none"><path d="M0 40 Q400 -30 800 40"/><path d="M160 0 V440 M320 0 V440 M480 0 V440 M640 0 V440 M0 180 H800"/></g>';
+  s += '<g opacity=".55"><path d="M40 0 l50 440 h70 l-60 -440z" fill="#ffffff"/><path d="M520 0 l40 440 h50 l-46 -440z" fill="#ffffff"/></g>';
+  s += '<g fill="#7fbf7a" opacity=".55"><path d="M760 60 q-30 30 -10 70 q10 -40 10 -70z"/><path d="M780 70 q-10 40 10 80 q14 -42 -10 -80z"/><path d="M20 90 q30 30 10 70 q-10 -40 -10 -70z"/></g>';
+  /* میز چوبی */
+  s += '<rect x="0" y="452" width="800" height="22" fill="url(#wt-wood)"/><rect x="0" y="474" width="800" height="86" fill="#a86c38"/><path d="M0 500 Q200 492 400 502 T800 498 M0 530 Q240 522 480 532 T800 528" stroke="#94592a" stroke-width="2" fill="none" opacity=".6"/>';
+  /* ساعت */
+  s += '<g transform="translate(92 96)" filter="url(#wt-sh)"><circle r="46" fill="#fff" stroke="#2c3f5c" stroke-width="5"/>';
+  for(let i = 0; i < 12; i++){ const a = i / 12 * Math.PI * 2; s += '<path d="M' + f1(Math.sin(a) * 36) + ' ' + f1(-Math.cos(a) * 36) + ' L' + f1(Math.sin(a) * 41) + ' ' + f1(-Math.cos(a) * 41) + '" stroke="#2c3f5c" stroke-width="' + (i % 3 ? 2 : 4) + '"/>'; }
+  s += '<path id="wt-hh" d="M0 0 V-22" stroke="#0f2238" stroke-width="5" stroke-linecap="round"/><path id="wt-mh" d="M0 0 V-32" stroke="#e11d48" stroke-width="3" stroke-linecap="round"/><circle r="5" fill="#0f2238"/></g>';
+  s += '<text id="wt-hours" x="92" y="168" text-anchor="middle" font-size="14" font-weight="900" fill="#14532d">۰ ساعت</text>';
+  /* لیوان و آب */
+  s += '<g id="wt-vase"><rect x="200" y="446" width="100" height="10" rx="5" fill="rgba(0,0,0,.1)"/>' +
+    '<g clip-path="url(#wt-vclip)"><rect id="wt-water" x="200" y="350" width="100" height="110" fill="#bfe6ff" style="transition:fill 1.2s"/><ellipse id="wt-surf" cx="250" cy="350" rx="44" ry="5" fill="#e0f4ff" style="transition:fill 1.2s"/></g>' +
+    '<path d="M206 302 L294 302 L290 448 Q250 458 210 448Z" fill="url(#wt-glass)" stroke="#9cc3d8" stroke-width="2.5"/><path d="M216 312 L214 438" stroke="#fff" stroke-width="4" opacity=".7" stroke-linecap="round"/></g>';
+  K.add(svg, '<g id="wt-scene">' + s + '</g>');
+  /* ساقه، آوندها و گل */
+  const STEM = 'M250 440 C244 380 260 300 252 240 C246 196 252 170 250 150';
+  const plant = K.g({id:'wt-plant'});
+  K.add(plant, '<path d="M251 330 C280 316 300 300 318 276 C292 282 270 300 251 330Z" fill="#5fb85a" stroke="#2f7d35" stroke-width="1.5"/><path d="M250 262 C222 250 204 232 190 210 C214 214 236 230 250 262Z" fill="#6cc466" stroke="#2f7d35" stroke-width="1.5"/>');
+  K.add(plant, '<path d="' + STEM + '" stroke="url(#wt-stem)" stroke-width="11" fill="none" stroke-linecap="round"/>');
+  const xyl = K.add(plant, '<g id="wt-xylem" fill="none" stroke-linecap="round"><path d="' + STEM + '" transform="translate(-2.2 0)" stroke="#3b82f6" stroke-width="2.2" pathLength="100" stroke-dasharray="100 100" stroke-dashoffset="100"/><path d="' + STEM + '" transform="translate(2.2 0)" stroke="#3b82f6" stroke-width="2.2" pathLength="100" stroke-dasharray="100 100" stroke-dashoffset="100"/></g>');
+  const stemHit = K.add(plant, '<path d="M250 440 C244 380 260 300 252 240" stroke="transparent" stroke-width="34" fill="none" class="wt-stemhit"/>');
+  let head = '<g id="wt-flower" transform="translate(250 136)">';
+  [[16, 46, 0], [12, 36, 15], [9, 25, 7]].forEach(function(ring){
+    const n = ring[0], len = ring[1];
+    for(let i = 0; i < n; i++){
+      const a = i / n * 360 + ring[2];
+      head += '<path d="M0 0 C' + f1(-len * .45) + ' ' + f1(-len * .35) + ' ' + f1(-len * .42) + ' ' + f1(-len * .95) + ' ' + f1(-len * .2) + ' ' + f1(-len) + ' L' + f1(-len * .1) + ' ' + f1(-len * .9) + ' L0 ' + f1(-len * 1.04) + ' L' + f1(len * .1) + ' ' + f1(-len * .9) + ' L' + f1(len * .2) + ' ' + f1(-len) + ' C' + f1(len * .42) + ' ' + f1(-len * .95) + ' ' + f1(len * .45) + ' ' + f1(-len * .35) + ' 0 0Z" transform="rotate(' + f1(a) + ')" fill="url(#wt-petal)" stroke="#d6d9de" stroke-width="1"/>';
+    }
+  });
+  head += '<circle r="7" fill="#fde68a"/></g>';
+  K.add(plant, head);
+  /* شیشه‌های جوهر */
+  const DYES = [{id:'blue', name:'جوهر آبی', col:'#2563eb', x:380}, {id:'red', name:'جوهر قرمز', col:'#e11d48', x:444}];
+  DYES.forEach(function(d){
+    d.node = K.add(svg, '<g class="wt-dye" transform="translate(' + d.x + ' 452)" filter="url(#wt-sh)"><rect x="-16" y="-50" width="32" height="50" rx="8" fill="' + d.col + '"/><rect x="-16" y="-50" width="32" height="50" rx="8" fill="url(#wt-glass)"/><rect x="-7" y="-66" width="14" height="16" rx="3" fill="#334155"/><ellipse cx="0" cy="-70" rx="9" ry="6" fill="#111827"/><rect x="-11" y="-36" width="22" height="16" rx="3" fill="#fff"/><text y="-24" text-anchor="middle" font-size="9" font-weight="900" fill="' + d.col + '">' + (d.id === 'blue' ? 'آبی' : 'قرمز') + '</text></g>');
+  });
+  const dropper = K.add(svg, '<g id="wt-dropper" opacity="0" pointer-events="none"><rect x="-5" y="-60" width="10" height="44" rx="4" fill="#e5e7eb" stroke="#94a3b8"/><ellipse cx="0" cy="-64" rx="9" ry="8" fill="#111827"/><path d="M-3 -16 h6 l-3 10z" fill="#94a3b8"/><circle id="wt-drop" cx="0" cy="-2" r="4.5" fill="#2563eb" opacity="0"/></g>');
+  /* گیاه گلدانی با کیسهٔ پلاستیکی و چراغ */
+  let pot = '<g id="wt-pot"><path d="M598 382 h84 l-10 70 h-64z" fill="#c2662d"/><rect x="592" y="372" width="96" height="16" rx="5" fill="#d97a3d"/><ellipse cx="640" cy="374" rx="44" ry="5" fill="#5b3a22"/>' +
+    '<path d="M640 374 V250" stroke="#3f9d45" stroke-width="6"/>';
+  [[-1, 330, 46], [1, 306, 50], [-1, 280, 44], [1, 256, 40], [-1, 232, 34], [1, 212, 30]].forEach(function(l){
+    const sx = l[0], y = l[1], w = l[2];
+    pot += '<path d="M640 ' + y + ' C' + (640 + sx * w * .4) + ' ' + (y - 22) + ' ' + (640 + sx * w) + ' ' + (y - 16) + ' ' + (640 + sx * w * 1.08) + ' ' + (y - 4) + ' C' + (640 + sx * w * .7) + ' ' + (y + 6) + ' ' + (640 + sx * w * .3) + ' ' + (y + 6) + ' 640 ' + y + 'Z" fill="#5fb85a" stroke="#2f7d35" stroke-width="1.3"/>';
+  });
+  pot += '</g>';
+  K.add(svg, pot);
+  const bag = K.add(svg, '<g id="wt-bag" opacity="0" style="transition:opacity .6s"><path d="M570 168 Q640 120 712 168 L716 338 Q640 356 566 338Z" fill="rgba(220,240,255,.28)" stroke="rgba(120,160,200,.8)" stroke-width="2"/><path d="M584 182 Q600 166 618 160" stroke="#fff" stroke-width="5" opacity=".7" fill="none" stroke-linecap="round"/><path d="M572 338 Q640 356 712 338 l-8 12 q-64 14 -124 0z" fill="rgba(120,160,200,.5)"/><rect id="wt-fog" x="560" y="120" width="160" height="240" fill="#ffffff" opacity="0" clip-path="url(#wt-bagclip)"/><g id="wt-drops" clip-path="url(#wt-bagclip)"></g></g>');
+  const lamp = K.add(svg, '<g id="wt-lamp"><path d="M640 0 V36" stroke="#334155" stroke-width="3"/><path d="M604 70 Q640 20 676 70Z" fill="#0f766e"/><ellipse cx="640" cy="70" rx="36" ry="7" fill="#134e4a"/><path id="wt-glow" d="M606 72 L540 340 L740 340 L674 72Z" fill="url(#wt-lamp)" opacity="0"/><circle id="wt-bulb" cx="640" cy="72" r="9" fill="#9ca3af"/></g>');
+  /* ذره‌بین: برش عرضی ساقه */
+  const lens = K.add(svg, '<g id="wt-lens" opacity="0" pointer-events="none" style="transition:opacity .4s"><path d="M262 300 L420 250" stroke="#334155" stroke-width="3" stroke-dasharray="6 5"/><circle cx="476" cy="236" r="100" fill="#fff" stroke="#334155" stroke-width="7" filter="url(#wt-sh)"/><circle cx="476" cy="236" r="84" fill="#7bcf6e"/><circle cx="476" cy="236" r="70" fill="#c8eebd"/><circle cx="476" cy="236" r="30" fill="#e7f8e1"/><g id="wt-bundles"></g><text x="476" y="356" text-anchor="middle" font-size="13" font-weight="900" fill="#14532d">برش عرضی ساقه</text></g>');
+  const bundles = lens.querySelector('#wt-bundles');
+  for(let i = 0; i < 9; i++){ const a = i / 9 * Math.PI * 2; sv('circle', {cx:f1(476 + Math.cos(a) * 50), cy:f1(236 + Math.sin(a) * 50), r:9, fill:'#f8fafc', stroke:'#4d7c0f', 'stroke-width':2}, bundles); }
+
+  let dye = null, hours = 0, light = 0, bagged = false, vapor = 0, lensOn = false, ffwd = null;
+  const dropsG = svg.querySelector('#wt-drops');
+  function prog(){ return dye ? clamp(hours / 14, 0, 1) : 0; }
+  function update(){
+    const P = prog();
+    xyl.querySelectorAll('path').forEach(function(p){ p.setAttribute('stroke-dashoffset', f1(100 - P * 100)); p.setAttribute('stroke', dye ? dye.col : '#3b82f6'); });
+    const k = dye ? clamp((hours - 9) / 13, 0, 1) : 0;
+    svg.querySelector('#wt-p2').setAttribute('stop-color', dye ? mixHex('#f3f4f6', dye.col, k * .92) : '#f3f4f6');
+    svg.querySelector('#wt-p1').setAttribute('stop-color', dye ? mixHex('#ffffff', dye.col, k * .3) : '#ffffff');
+    const hh = svg.querySelector('#wt-hh'), mh = svg.querySelector('#wt-mh');
+    hh.setAttribute('transform', 'rotate(' + f1(hours * 30) + ')'); mh.setAttribute('transform', 'rotate(' + f1(hours * 360) + ')');
+    svg.querySelector('#wt-hours').textContent = fa(Math.round(hours)) + ' ساعت';
+    bundles.querySelectorAll('circle').forEach(function(c){ c.setAttribute('fill', dye && P > .3 ? mixHex('#f8fafc', dye.col, clamp((P - .3) / .4, 0, 1)) : '#f8fafc'); });
+    svg.querySelector('#wt-glow').setAttribute('opacity', f1(light / 100 * .9));
+    svg.querySelector('#wt-bulb').setAttribute('fill', light > 0 ? mixHex('#fde68a', '#fffbeb', light / 100) : '#9ca3af');
+    if(tSlider) tSlider.set(Math.round(hours));
+    if(dye && hours >= 20 && !M.isDone('time')){ M.complete('time', 250, 140); K.say('ببین! رنگ از آوندهای ساقه بالا رفت و لبه‌های گلبرگ‌ها رنگی شد. آب در گیاه از راه آوند چوبی بالا می‌رود.'); }
   }
-  show();
-  ctlNote(taskbar,'ساقه را در لیوان آب رنگی (مثلاً رنگ خوراکی قرمز) بگذار؛ روی بوم، بالا رفتن رنگ در آوند چوبی و برش عرضی ساقه را ببین.');
-  obsBox(taskbar,'🌬️ اگر روی برگ <b>وازلین</b> بمالیم، روزنه‌ها بسته می‌شود، تعرق کم می‌شود و برگ پژمرده می‌شود.');
-  obsBox(taskbar,'💧 تعرق یعنی بخار شدن آب از <b>روزنه‌های سطح برگ</b>؛ همین تعرق آب تازه را در گیاه بالا می‌کشد.','info');
-};
-
-/* ---------- ۴) بازو: جدول مشاهده ---------- */
-EXTRAS['arm'] = function(taskbar, api){
-  ctlTitle(taskbar,'📋 جدول مشاهده');
-  const t = tableWrap(taskbar,'کدام نخ را کشیدی؟ چه شد؟');
-  t.innerHTML += '<thead><tr><th>نخ</th><th>نقش</th><th>مشاهده</th></tr></thead><tbody>'+
-    '<tr><td>🔴 قرمز</td><td>ماهیچهٔ جلوی بازو</td><td>مقوا خم می‌شود</td></tr>'+
-    '<tr><td>🔵 آبی</td><td>ماهیچهٔ پشت بازو</td><td>مقوا باز می‌شود</td></tr></tbody>';
-  obsBox(taskbar,'💡 ماهیچه‌ها فقط <b>کوتاه (منقبض)</b> می‌شوند و نمی‌توانند بلند شوند؛ همیشه به‌صورت <b>جفت مخالف</b> کار می‌کنند.');
-  obsBox(taskbar,'🦴 مفصل = محل اتصال دو استخوان، مثل آرنج، زانو و شانه.','info');
-};
-
-/* ---------- ۵) فرسایش: آب در شکاف سنگ ---------- */
-EXTRAS['erosion'] = function(taskbar, api){
-  obsBox(taskbar,'🌱 ریشه‌ها مثل <b>تور</b> خاک را نگه می‌دارند؛ زمین بی‌گیاه سریع‌تر فرسایش می‌یابد.');
-  ctlTitle(taskbar,'🧊 آزمایش اختیاری: آب در شکاف سنگ');
-  const box=el('div','obs warn','بطری پر از آب و سنگی با <b>شکافِ پُر از آب</b> را در فریزر بگذار. آب هنگام یخ‌زدن <b>منبسط</b> می‌شود: هم بطری ترک می‌خورد و هم شکاف سنگ بازتر می‌شود. (نقش آب‌وهوا در فرسایش)');
-  taskbar.appendChild(box);
-  const btn=el('button','btn small teal','🧊 فریز کن و تغییر حجم را ببین'); taskbar.appendChild(btn);
-  const btn2=el('button','btn small ghost','🔁 شروع دوبارهٔ آزمایش'); btn2.style.marginTop='.3rem'; taskbar.appendChild(btn2);
-  const vis=el('div'); vis.style.cssText='display:grid;place-items:center;margin-top:.4rem'; taskbar.appendChild(vis);
-  vis.innerHTML = '<svg class="freeze-svg" viewBox="0 0 250 212" width="100%" style="max-width:250px" role="img" aria-label="بطری آب و سنگ شکاف‌دار در فریزر">'+
-    '<defs>'+
-      '<linearGradient id="bw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbe8ff"/><stop offset="1" stop-color="#5aa7e0"/></linearGradient>'+
-      '<linearGradient id="rk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b0aba2"/><stop offset="1" stop-color="#6b665f"/></linearGradient>'+
-      '<linearGradient id="ick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf7ff"/><stop offset="1" stop-color="#7fc4ec"/></linearGradient>'+
-      '<linearGradient id="wat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#57b6ea"/><stop offset="1" stop-color="#2f6fa3"/></linearGradient>'+
-    '</defs>'+
-    /* ---- بطری ---- */
-    '<rect x="22" y="44" width="54" height="124" rx="12" fill="url(#bw)" stroke="#2f6fa3" stroke-width="3"/>'+
-    '<rect x="34" y="28" width="30" height="20" rx="6" fill="#e8f4ff" stroke="#2f6fa3" stroke-width="3"/>'+
-    '<path class="crack" d="M52 50 l8 22 l-10 14 l12 22 l-8 18 l6 20" fill="none" stroke="#16324a" stroke-width="3" opacity="0" style="transition:opacity .5s"/>'+
-    '<text x="49" y="188" text-anchor="middle" font-size="11" class="lt">بطری آب</text>'+
-    /* ---- سنگ با شکافِ پُر از آب/یخ ---- */
-    '<rect class="icelens" x="166" y="60" width="18" height="92" rx="7" fill="url(#wat)" stroke="#8dc7e8" stroke-width="1.5" style="transform-origin:175px 106px;transition:transform .8s ease"/>'+
-    '<g class="rockL" style="transform-origin:139px 106px;transition:transform 1s ease">'+
-      '<path d="M170 58 L160 76 L170 90 L158 104 L168 118 L160 132 L170 150 L128 156 L108 132 L114 100 L126 76 L148 56 Z" fill="url(#rk)" stroke="#4b4741" stroke-width="2"/>'+
-      '<path class="mini" d="M150 86 L134 94 L142 108" fill="none" stroke="#3d3a35" stroke-width="2" opacity="0" style="transition:opacity .6s"/>'+
-    '</g>'+
-    '<g class="rockR" style="transform-origin:210px 104px;transition:transform 1s ease">'+
-      '<path d="M182 58 L190 76 L181 90 L192 104 L182 118 L190 132 L182 150 L226 152 L238 126 L232 96 L214 66 L194 54 Z" fill="url(#rk)" stroke="#4b4741" stroke-width="2"/>'+
-      '<path class="mini" d="M204 84 L218 92 L210 106" fill="none" stroke="#3d3a35" stroke-width="2" opacity="0" style="transition:opacity .6s"/>'+
-    '</g>'+
-    '<text x="176" y="188" text-anchor="middle" font-size="11" class="lt">سنگ با شکافِ پُر از آب</text>'+
-    '<text x="176" y="204" text-anchor="middle" font-size="11" class="lr" id="rockmsg"></text>'+
-  '</svg>'+
-  '<div class="step-hint" id="freeze-msg" style="text-align:center">آمادهٔ آزمایش: آب مایع است و شکاف سنگ پر از آب</div>';
-  const timers=[];
-  function clearT(){ timers.forEach(function(t){ clearTimeout(t); }); timers.length=0; }
-  function reset(){
-    clearT();
-    const g=function(s){ return vis.querySelector(s); };
-    if(g('.crack')) g('.crack').style.opacity='0';
-    const lens=g('.icelens'); if(lens){ lens.style.transform='scaleX(1)'; lens.setAttribute('fill','url(#wat)'); }
-    const rl=g('.rockL'), rr2=g('.rockR');
-    if(rl) rl.style.transform='translate(0,0) rotate(0deg)';
-    if(rr2) rr2.style.transform='translate(0,0) rotate(0deg)';
-    vis.querySelectorAll('.mini').forEach(function(m){ m.style.opacity='0'; });
-    const rm=g('#rockmsg'); if(rm) rm.textContent='';
-    g('#freeze-msg').textContent='آمادهٔ آزمایش: آب مایع است و شکاف سنگ پر از آب';
+  function addDye(d){
+    if(dye){ K.say(dye.id === d.id ? 'این جوهر را قبلاً اضافه کرده‌ای.' : 'آب لیوان رنگی شده است؛ برای جوهر تازه «شروع دوباره» را بزن.'); return; }
+    dye = d; SND.click();
+    dropper.setAttribute('transform', 'translate(250 260)'); dropper.setAttribute('opacity', '1');
+    const drop = dropper.querySelector('#wt-drop'); drop.setAttribute('fill', d.col);
+    const t0 = performance.now(), dur = reducedMotion() ? 1 : 900;
+    (function fall(now){
+      const t = clamp((now - t0) / dur, 0, 1);
+      drop.setAttribute('opacity', '1'); drop.setAttribute('cy', f1(-2 + t * t * 88));
+      if(t < 1){ requestAnimationFrame(fall); return; }
+      drop.setAttribute('opacity', '0');
+      svg.querySelector('#wt-water').style.fill = mixHex('#bfe6ff', d.col, .55);
+      svg.querySelector('#wt-surf').style.fill = mixHex('#e0f4ff', d.col, .4);
+      K.later(function(){ dropper.setAttribute('opacity', '0'); }, 500);
+      if(tSlider){ tSlider.el.disabled = false; }
+      if(ffBtn) ffBtn.disabled = false;
+      M.complete('dye', 250, 340);
+      K.say('آب لیوان ' + (d.id === 'blue' ? 'آبی' : 'قرمز') + ' شد. حالا زمان را جلو ببر و ساقه و گل را تماشا کن.');
+    })(t0);
   }
-  btn.onclick=function(){
-    SND.click(); reset();
-    const g=function(s){ return vis.querySelector(s); };
-    /* مرحلهٔ ۱: آب یخ می‌زند و حجمش کمی بیشتر می‌شود */
-    if(g('.crack')) g('.crack').style.opacity='1';
-    const lens=g('.icelens'); if(lens){ lens.style.transform='scaleX(1.5)'; lens.setAttribute('fill','url(#ick)'); }
-    g('#freeze-msg').textContent='❄️ آب یخ زد و منبسط شد؛ بطری ترک خورد و فشار در شکاف سنگ زیاد شد…';
-    /* مرحلهٔ ۲: شکاف بازتر می‌شود */
-    timers.push(setTimeout(function(){
-      const rl=g('.rockL'), rr2=g('.rockR');
-      if(rl) rl.style.transform='translate(-7px,0) rotate(-2deg)';
-      if(rr2) rr2.style.transform='translate(7px,0) rotate(2deg)';
-      if(lens) lens.style.transform='scaleX(2.1)';
-      vis.querySelectorAll('.mini').forEach(function(m){ m.style.opacity='1'; });
-      g('#rockmsg').textContent='شکاف بازتر شد…';
-      SND.tick();
-    }, 1100));
-    /* مرحلهٔ ۳: سنگ از وسط نصف می‌شود */
-    timers.push(setTimeout(function(){
-      const rl=g('.rockL'), rr2=g('.rockR');
-      if(rl) rl.style.transform='translate(-20px,2px) rotate(-6deg)';
-      if(rr2) rr2.style.transform='translate(20px,2px) rotate(6deg)';
-      if(lens) lens.style.transform='scaleX(2.9)';
-      g('#rockmsg').textContent='سنگ از وسط ترک خورد!';
-      g('#freeze-msg').innerHTML='🧱 سنگ از وسط نصف شد! همان آب، وقتی یخ زد کمی <b>بزرگ‌تر</b> شد و سنگ را شکست — این یکی از راه‌های <b>فرسایش</b> سنگ‌ها در طبیعت است.';
-      SND.success();
-    }, 2500));
+  DYES.forEach(function(d){ K.btn(d.node, d.name + ' را در آب لیوان بریز', function(){ addDye(d); }); });
+  function toggleLens(){
+    lensOn = !lensOn; SND.click();
+    lens.setAttribute('opacity', lensOn ? '1' : '0');
+    if(lensBtn) lensBtn.lastChild.textContent = lensOn ? 'بستن ذره‌بین' : 'ذره‌بین روی ساقه';
+    if(!lensOn) return;
+    if(prog() > .45){
+      if(!M.isDone('cut')) M.complete('cut', 476, 236);
+      K.say('در برش ساقه، لوله‌های ریزِ رنگی دیده می‌شوند؛ این‌ها همان آوندهای چوبی‌اند که آب را بالا می‌برند.');
+    } else K.say(dye ? 'هنوز رنگ به این بخش ساقه نرسیده؛ کمی زمان را جلو ببر و دوباره نگاه کن.' : 'اول جوهر را در آب بریز و زمان را جلو ببر، بعد ساقه را با ذره‌بین ببین.');
+  }
+  K.btn(stemHit, 'نگاه با ذره‌بین به برش ساقه', toggleLens);
+  function toggleBag(){
+    bagged = !bagged; SND.click();
+    bag.setAttribute('opacity', bagged ? '1' : '0');
+    if(bagBtn) bagBtn.lastChild.textContent = bagged ? 'برداشتن کیسه' : 'کشیدن کیسهٔ پلاستیکی روی برگ‌ها';
+    if(!bagged){ vapor = 0; dropsG.innerHTML = ''; }
+    K.say(bagged ? 'کیسه روی برگ‌ها کشیده شد. حالا چراغ را روشن کن و منتظر بمان.' : 'کیسه برداشته شد.');
+  }
+
+  /* پنل */
+  const s1 = K.section('لیوان آب و جوهر', 'drop');
+  const dyeRow = el('div', 'btn-row'); s1.appendChild(dyeRow);
+  DYES.forEach(function(d){ ctlButton(dyeRow, d.name, function(){ addDye(d); }, d.id === 'blue' ? 'ghost wt-b' : 'ghost wt-r'); });
+  const tSlider = ctlSlider(s1, 'زمان گذشته (ساعت)', 0, 24, 0, 1, function(v){ hours = v; update(); });
+  tSlider.el.disabled = true;
+  const ffBtn = ctlButton(s1, '⏱ گذر سریع زمان تا ۲۴ ساعت', function(){
+    if(!dye) return;
+    clearInterval(ffwd);
+    ffwd = setInterval(function(){ hours = Math.min(24, hours + .25); update(); if(hours >= 24) clearInterval(ffwd); }, reducedMotion() ? 1 : 40);
+    K.timers.push(ffwd);
+  }, 'ghost');
+  ffBtn.disabled = true;
+  const lensBtn = ctlButton(s1, '🔁 ذره‌بین روی ساقه', toggleLens, 'ghost');
+  lensBtn.querySelector('svg') && (lensBtn.querySelector('svg').outerHTML = ui('search'));
+  const s2 = K.section('تعرق برگ‌ها', 'leaf');
+  const bagBtn = ctlButton(s2, '🌱 کشیدن کیسهٔ پلاستیکی روی برگ‌ها', toggleBag, 'ghost');
+  ctlSlider(s2, 'نور چراغ (٪)', 0, 100, 0, 5, function(v){ light = v; update(); });
+  const vMetric = ctlMetric(s2, 'بخار جمع‌شده در کیسه');
+  vMetric.textContent = '۰٪';
+  obsBox(s2, 'گیاه از روزنه‌های ریز برگ، بخار آب پس می‌دهد. اگر روی برگ‌ها کیسه بکشیم، این بخار روی دیوارهٔ کیسه قطره‌قطره می‌شود.', 'info');
+
+  const M = makeMissions(K, [
+    {id:'dye', title:'آب رنگی', text:'یکی از جوهرها را لمس کن تا در آب لیوانِ گل بریزد.', hint:'روی شیشهٔ جوهر آبی یا قرمز کنار لیوان بزن.', fact:'جوهر به ما کمک می‌کند مسیر حرکت آب را در گیاه ببینیم.'},
+    {id:'time', title:'سفر آب تا گلبرگ', text:'زمان را جلو ببر تا آب رنگی به گلبرگ‌ها برسد (دست‌کم ۲۰ ساعت).', hint:'لغزندهٔ «زمان گذشته» را به جلو بکش یا «گذر سریع زمان» را بزن.', fact:'آب از ریشه (این‌جا از تهِ ساقه) وارد آوند چوبی می‌شود و تا برگ‌ها و گلبرگ‌ها بالا می‌رود.'},
+    {id:'cut', title:'راز درون ساقه', text:'با ذره‌بین به برش ساقه نگاه کن و آوندهای رنگی را ببین.', hint:'روی ساقهٔ گل بزن یا دکمهٔ «ذره‌بین روی ساقه» را بزن؛ اول باید رنگ بالا رفته باشد.', fact:'درون ساقه لوله‌های باریکی به نام آوند هست؛ آوند چوبی آب و مواد معدنی را بالا می‌برد.'},
+    {id:'trans', title:'تعرق را ببین', text:'کیسه را روی برگ‌های گیاه گلدانی بکش، چراغ را روشن کن و صبر کن تا کیسه پر از قطره شود.', hint:'اول «کشیدن کیسه» را بزن، بعد نور چراغ را زیاد کن و چند لحظه منتظر بمان.', fact:'تعرق یعنی خروج بخار آب از روزنه‌های برگ؛ نور و گرما تعرق را بیشتر می‌کند و آب تازه را در ساقه بالا می‌کشد.'}
+  ]);
+  update();
+  let dropAcc = 0;
+  return {
+    tick:function(dt){
+      if(!bagged || light <= 0) return;
+      vapor = Math.min(100, vapor + light / 100 * dt * 16);
+      dropAcc += light / 100 * dt * 6;
+      while(dropAcc > 1 && dropsG.childNodes.length < 70){
+        dropAcc -= 1;
+        const x = 576 + Math.random() * 132, y = 170 + Math.random() * 160;
+        sv('ellipse', {cx:f1(x), cy:f1(y), rx:f1(2 + Math.random() * 2.2), ry:f1(2.6 + Math.random() * 2.6), fill:'rgba(255,255,255,.9)', stroke:'rgba(80,140,200,.7)', 'stroke-width':1}, dropsG);
+      }
+      svg.querySelector('#wt-fog').setAttribute('opacity', f1(vapor / 100 * .35));
+      vMetric.textContent = fa(Math.round(vapor)) + '٪';
+      if(vapor >= 60 && !M.isDone('trans')){ M.complete('trans', 640, 240); K.say('دیوارهٔ کیسه پر از قطره شد! این آب از روزنه‌های برگ بیرون آمده است؛ به این کار «تعرق» می‌گوییم.'); }
+    }
   };
-  btn2.onclick=function(){ SND.click(); reset(); };
 };
 
-/* ---- سوارکردن ویژگی‌های تعاملی روی سازنده‌ها ---- */
-const BASE2 = {...BUILDERS};
-Object.keys(EXTRAS).forEach(function(id){
-  const base = BASE2[id];
-  BUILDERS[id] = function(taskbar, cv, c){
-    const api = base(taskbar, cv, c);
-    try{ EXTRAS[id](taskbar, api); }catch(e){ console.log('extra err '+id, e); }
-    return api;
+/* ---------- ۴) کارگاه بازو: ماهیچه‌ها و مفصل‌ها روی میز نور ---------- */
+BENCH['arm'] = function(K){
+  let svg = K.svg;
+  const RS = .84, RX = 70, RY = 8;
+  function toRoot(p){ return {x:(p.x - RX) / RS, y:(p.y - RY) / RS}; }
+  function toView(x, y){ return {x:x * RS + RX, y:y * RS + RY}; }
+  K.defs.innerHTML =
+    '<radialGradient id="am-bg" cx="45%" cy="40%" r="75%"><stop offset="0" stop-color="#1b4a6e"/><stop offset="1" stop-color="#0b2236"/></radialGradient>' +
+    '<pattern id="am-grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="rgba(140,200,255,.10)" stroke-width="1"/></pattern>' +
+    '<linearGradient id="am-bone" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#cfe6ff"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#bcd8f5"/></linearGradient>' +
+    '<linearGradient id="am-bi" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a8a"/><stop offset="1" stop-color="#d9304b"/></linearGradient>' +
+    '<linearGradient id="am-tri" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5b8cff"/><stop offset="1" stop-color="#2f4fcf"/></linearGradient>' +
+    '<filter id="am-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+    '<filter id="am-sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/></filter>';
+  K.add(svg, '<g id="am-bgg"><rect width="800" height="560" fill="url(#am-bg)"/><rect width="800" height="560" fill="url(#am-grid)"/><text x="776" y="30" text-anchor="start" font-size="12" font-weight="800" fill="rgba(190,225,255,.75)">میز نور — تصویر پرتوی ایکس</text></g>');
+  svg = K.g({id:'am-root', transform:'translate(' + RX + ' ' + RY + ') scale(' + RS + ')'});
+  const S = {x:330, y:214}, E = {x:330, y:384}, FL = 160;
+  /* بدن نیمه‌شفاف، سر و جمجمه */
+  K.add(svg, '<g id="am-body"><path d="M246 168 Q300 150 350 182 Q372 198 368 236 L366 420 Q300 470 170 470 L150 300 Q160 190 246 168Z" fill="rgba(255,214,186,.13)" stroke="rgba(255,214,186,.45)" stroke-width="2"/>' +
+    '<path d="M266 132 L262 172 M300 132 L304 170" stroke="rgba(255,214,186,.45)" stroke-width="2"/>' +
+    '<circle cx="282" cy="76" r="62" fill="rgba(255,214,186,.13)" stroke="rgba(255,214,186,.45)" stroke-width="2"/>' +
+    '<path d="M234 82 Q232 30 282 22 Q334 26 334 80 Q334 108 316 118 L306 136 H260 L250 118 Q234 106 234 82Z" fill="url(#am-bone)" opacity=".92"/>' +
+    '<path d="M246 58 l8 -6 l6 7 l8 -7 l7 7 l8 -7 l7 7 l8 -6 l7 6 l8 -5" stroke="#5b7fa8" stroke-width="2" fill="none"/>' +
+    '<ellipse cx="300" cy="84" rx="13" ry="11" fill="#163a5a"/><path d="M318 100 l8 6 l-8 4" fill="#163a5a"/><path d="M272 128 h36" stroke="#5b7fa8" stroke-width="2" stroke-dasharray="4 3"/>' +
+    '<path d="M254 210 Q300 196 346 206" stroke="url(#am-bone)" stroke-width="9" fill="none" stroke-linecap="round"/>' +
+    '<path d="M196 230 q60 30 120 22 M190 270 q60 28 126 20 M186 310 q60 26 130 18" stroke="rgba(207,230,255,.55)" stroke-width="6" fill="none" stroke-linecap="round"/></g>');
+  /* بازو */
+  K.add(svg, '<path d="M298 200 Q330 186 362 204 L364 392 Q330 410 296 392Z" fill="rgba(255,214,186,.12)" stroke="rgba(255,214,186,.4)" stroke-width="2"/>');
+  K.add(svg, '<g id="am-humerus"><path d="M322 228 Q330 300 324 362 Q322 372 330 378 Q338 372 336 362 Q330 300 338 228Z" fill="url(#am-bone)"/><circle cx="332" cy="216" r="17" fill="url(#am-bone)"/><path d="M314 372 Q330 394 346 372 Q350 384 340 392 H320 Q310 384 314 372Z" fill="url(#am-bone)"/></g>');
+  const fore = K.g({id:'am-fore'}, svg);
+  K.add(fore, '<path d="M-30 -6 Q0 -18 30 -6 L26 ' + (FL + 6) + ' Q0 ' + (FL + 16) + ' -26 ' + (FL + 6) + 'Z" fill="rgba(255,214,186,.12)" stroke="rgba(255,214,186,.4)" stroke-width="2"/>' +
+    '<path d="M-14 6 Q-12 80 -10 ' + FL + '" stroke="url(#am-bone)" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M10 4 Q12 80 12 ' + FL + '" stroke="url(#am-bone)" stroke-width="8" fill="none" stroke-linecap="round"/>' +
+    '<path d="M-20 -4 Q-14 -18 -4 -10" stroke="url(#am-bone)" stroke-width="11" fill="none" stroke-linecap="round"/>' +
+    '<g transform="translate(0 ' + (FL + 4) + ')"><path d="M-20 0 Q-26 26 -14 44 Q4 54 20 40 Q28 20 20 0Z" fill="rgba(255,214,186,.35)" stroke="rgba(255,214,186,.7)" stroke-width="2"/><path d="M-12 8 v28 M-2 10 v32 M8 8 v30" stroke="url(#am-bone)" stroke-width="4" stroke-linecap="round"/></g>');
+  const muscles = K.g({id:'am-muscles'}, svg);
+  const bi = K.add(muscles, '<g class="am-m" id="am-bi"><path class="tend" fill="none" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round"/><path class="belly" fill="url(#am-bi)" stroke="#ffd1d9" stroke-width="1.5"/></g>');
+  const tri = K.add(muscles, '<g class="am-m" id="am-tri"><path class="tend" fill="none" stroke="#f1f5f9" stroke-width="3" stroke-linecap="round"/><path class="belly" fill="url(#am-tri)" stroke="#c7d4ff" stroke-width="1.5"/></g>');
+  const cup = K.add(svg, '<g id="am-cup" filter="url(#am-sh)"><path d="M-17 -30 h34 l-3 32 q-14 6 -28 0z" fill="#fbbf24" stroke="#92400e" stroke-width="1.5"/><path d="M17 -22 q12 2 10 12 q-2 8 -12 6" stroke="#92400e" stroke-width="3" fill="none"/><ellipse cx="0" cy="-30" rx="17" ry="4" fill="#78350f"/><g class="steam" stroke="rgba(255,255,255,.7)" stroke-width="2" fill="none" stroke-linecap="round"><path d="M-6 -38 q-4 -6 0 -12 q4 -6 0 -12"/><path d="M6 -40 q-4 -6 0 -12"/></g></g>');
+  const target = K.add(svg, '<g id="am-target" pointer-events="none"><circle cx="498" cy="289" r="32" fill="none" stroke="#fde68a" stroke-width="3" stroke-dasharray="7 6"/><text x="498" y="340" text-anchor="middle" font-size="12" font-weight="800" fill="#fde68a">لیوان را تا این‌جا بیاور</text></g>');
+  const labBi = K.add(svg, '<g pointer-events="none"><rect id="am-lbr" x="380" y="180" width="160" height="44" rx="12" fill="rgba(217,48,75,.9)"/><text x="528" y="198" text-anchor="start" font-size="12" font-weight="900" fill="#fff">دوسر بازو (جلو)</text><text id="am-lb" x="528" y="216" text-anchor="start" font-size="12" font-weight="700" fill="#ffe4e6">شل</text></g>');
+  const labTri = K.add(svg, '<g pointer-events="none"><rect id="am-ltr" x="118" y="306" width="160" height="44" rx="12" fill="rgba(47,79,207,.9)"/><text x="268" y="324" text-anchor="start" font-size="12" font-weight="900" fill="#fff">سه‌سر بازو (پشت)</text><text id="am-lt" x="268" y="342" text-anchor="start" font-size="12" font-weight="700" fill="#dbeafe">شل</text></g>');
+  /* نقاط مفصل‌ها */
+  const JOINTS = [
+    {id:'shoulder', name:'شانه', x:332, y:216, type:'ball', why:'شانه مثل گوی در کاسه است؛ دست را می‌شود در همهٔ جهت‌ها چرخاند.'},
+    {id:'elbow', name:'آرنج', x:330, y:384, type:'hinge', why:'آرنج مثل لولای در است؛ فقط در یک جهت باز و بسته می‌شود.'},
+    {id:'skull', name:'جمجمه', x:282, y:52, type:'fixed', why:'استخوان‌های جمجمه با درزهای محکم به هم چسبیده‌اند و حرکت نمی‌کنند.'}
+  ];
+  const jG = K.g({id:'am-joints'}, svg);
+  JOINTS.forEach(function(j){
+    j.node = K.add(jG, '<g class="am-joint" transform="translate(' + j.x + ' ' + j.y + ')"><circle class="ring" r="20" fill="rgba(253,230,138,.15)" stroke="#fde68a" stroke-width="2.5"/><circle r="5" fill="#fde68a"/></g>');
+    K.btn(j.node, 'مفصل ' + j.name + ' — نوعش را در پنل انتخاب کن', function(){ focusJoint(j); });
+  });
+  const hit = K.add(svg, '<circle id="am-hit" r="46" fill="transparent" class="sv-drag"/>');
+
+  let phi = 0, goal = null, prevPhi = 0, activeB = 0, activeT = 0, maxPhi = 0, asked = false, phiSlider = null;
+  function L2W(lx, ly){ const a = phi * Math.PI / 180; return {x:E.x + lx * Math.cos(a) + ly * Math.sin(a), y:E.y - lx * Math.sin(a) + ly * Math.cos(a)}; }
+  function musclePath(A, B, w){
+    const dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
+    const a = {x:A.x + ux * L * .14, y:A.y + uy * L * .14}, b = {x:A.x + ux * L * .86, y:A.y + uy * L * .86};
+    const m = {x:(a.x + b.x) / 2, y:(a.y + b.y) / 2};
+    return {
+      tend:'M' + f1(A.x) + ' ' + f1(A.y) + ' L' + f1(a.x) + ' ' + f1(a.y) + ' M' + f1(b.x) + ' ' + f1(b.y) + ' L' + f1(B.x) + ' ' + f1(B.y),
+      belly:'M' + f1(a.x) + ' ' + f1(a.y) + ' Q' + f1(m.x + nx * w) + ' ' + f1(m.y + ny * w) + ' ' + f1(b.x) + ' ' + f1(b.y) + ' Q' + f1(m.x - nx * w) + ' ' + f1(m.y - ny * w) + ' ' + f1(a.x) + ' ' + f1(a.y) + 'Z',
+      len:L
+    };
+  }
+  function draw(){
+    fore.setAttribute('transform', 'translate(' + E.x + ' ' + E.y + ') rotate(' + f1(-phi) + ')');
+    const Ib = L2W(9, 30), It = L2W(-16, -8);
+    const pb = musclePath({x:346, y:226}, Ib, 0), pt0 = musclePath({x:316, y:230}, It, 0);
+    const wb = clamp(11 * Math.pow(186 / pb.len, 1.7), 9, 30) * (1 + activeB * .12);
+    const wt = 13 * (1 + activeT * .32);
+    const B = musclePath({x:346, y:226}, Ib, wb), T = musclePath({x:316, y:230}, It, -wt);
+    bi.querySelector('.tend').setAttribute('d', B.tend); bi.querySelector('.belly').setAttribute('d', B.belly);
+    tri.querySelector('.tend').setAttribute('d', T.tend); tri.querySelector('.belly').setAttribute('d', T.belly);
+    bi.setAttribute('filter', activeB > .4 ? 'url(#am-glow)' : ''); tri.setAttribute('filter', activeT > .4 ? 'url(#am-glow)' : '');
+    svg.querySelector('#am-lb').textContent = activeB > .4 ? 'منقبض — کوتاه و ضخیم' : 'شل';
+    svg.querySelector('#am-lt').textContent = activeT > .4 ? 'منقبض — کوتاه و سفت' : 'شل';
+    const W = L2W(0, FL + 30);
+    cup.setAttribute('transform', 'translate(' + f1(W.x + 4) + ' ' + f1(W.y + 14) + ')');
+    const H = L2W(0, FL * .72); hit.setAttribute('cx', f1(H.x)); hit.setAttribute('cy', f1(H.y));
+    if(phiSlider) phiSlider.set(Math.round(phi));
+    angleM.textContent = fa(Math.round(phi)) + ' درجه';
+  }
+  function setPhi(v){ phi = clamp(v, 0, 145); }
+  K.drag(hit, {
+    start:function(){ goal = null; },
+    move:function(p){ p = toRoot(p); setPhi(Math.atan2(p.x - E.x, p.y - E.y) * 180 / Math.PI); },
+    end:function(){}
+  });
+  function choose(which){
+    if(!asked || M.isDone('pair')) return;
+    if(which === 'tri'){ SND.correct(); qBox.remove(); M.complete('pair', 230, 320); K.say('درست است! وقتی سه‌سر بازو منقبض می‌شود، ساعد را پایین می‌کشد و دست صاف می‌شود.'); }
+    else { SND.wrong(); K.say('دوسر بازو برای خم کردن بود. وقتی دست صاف می‌شود، ماهیچهٔ پشت بازو کار می‌کند. دوباره فکر کن!'); }
+  }
+  K.btn(bi, 'ماهیچهٔ دوسر بازو', function(){ choose('bi'); });
+  K.btn(tri, 'ماهیچهٔ سه‌سر بازو', function(){ choose('tri'); });
+  const qBox = el('div', 'scene-q');
+  qBox.innerHTML = '<p>دست صاف شد! <b>کدام ماهیچه</b> ساعد را پایین کشید؟</p><div class="btn-row"><button type="button" class="btn small" data-w="bi">دوسر بازو (جلو)</button><button type="button" class="btn small" data-w="tri">سه‌سر بازو (پشت)</button></div>';
+  qBox.querySelectorAll('button').forEach(function(b){ b.onclick = function(){ choose(b.getAttribute('data-w')); }; });
+
+  /* پنل */
+  const s1 = K.section('حرکت آرنج', 'bolt');
+  phiSlider = ctlSlider(s1, 'زاویهٔ خم شدن آرنج (درجه)', 0, 145, 0, 1, function(v){ goal = null; setPhi(v); });
+  const angleM = ctlMetric(s1, 'زاویهٔ فعلی');
+  const row = el('div', 'btn-row'); s1.appendChild(row);
+  ctlButton(row, 'خم کن', function(){ goal = 140; }, 'ghost');
+  ctlButton(row, 'صاف کن', function(){ goal = 0; }, 'ghost');
+  obsBox(s1, 'دست را از ساعد بگیر و بکش، یا از لغزنده و دکمه‌ها استفاده کن. رنگ قرمز ماهیچهٔ جلوی بازو و رنگ آبی ماهیچهٔ پشت بازوست.', 'info');
+  const s2 = K.section('نقشهٔ مفصل‌ها', 'grid');
+  const TYPES = [['hinge', 'لولایی'], ['ball', 'گوی و کاسه'], ['fixed', 'ثابت']];
+  const jdone = {};
+  JOINTS.forEach(function(j){
+    const r = el('div', 'jt-row'); r.setAttribute('role', 'group'); r.setAttribute('aria-label', 'نوع مفصل ' + j.name);
+    r.innerHTML = '<span class="jt-name">' + j.name + '</span>';
+    TYPES.forEach(function(t){
+      const b = el('button', 'jt-opt', t[1]); b.type = 'button';
+      b.onclick = function(){
+        if(jdone[j.id]) return;
+        if(t[0] === j.type){
+          jdone[j.id] = true; SND.correct(); b.classList.add('ok'); r.classList.add('done');
+          j.node.classList.add('done'); const v = toView(j.x, j.y); K.burst(v.x, v.y, ['#fde68a', '#86efac', '#fff']);
+          K.say('آفرین! ' + j.why);
+          if(Object.keys(jdone).length === 3) M.complete('joints', 300, 200);
+        } else { SND.wrong(); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); K.say('نه دقیقاً. فکر کن ' + j.name + ' چطور حرکت می‌کند: در یک جهت، در همهٔ جهت‌ها، یا اصلاً حرکت نمی‌کند؟'); }
+      };
+      r.appendChild(b);
+    });
+    j.row = r; s2.appendChild(r);
+  });
+  function focusJoint(j){ SND.click(); j.row.classList.add('flash'); K.later(function(){ j.row.classList.remove('flash'); }, 900); const b = j.row.querySelector('.jt-opt'); if(b) b.focus(); K.say('مفصل ' + j.name + ': در پنل «نقشهٔ مفصل‌ها» نوعش را انتخاب کن.'); }
+
+  const M = makeMissions(K, [
+    {id:'lift', title:'لیوان را بالا بیاور', text:'آرنج را خم کن تا لیوان به دایرهٔ زرد برسد و ببین کدام ماهیچه منقبض می‌شود.', hint:'دکمهٔ «خم کن» را بزن یا ساعد را با انگشت بالا بکش.', fact:'برای خم کردن آرنج، ماهیچهٔ دوسر بازو منقبض، کوتاه و ضخیم می‌شود و ساعد را بالا می‌کشد.'},
+    {id:'pair', title:'کار جفتی ماهیچه‌ها', text:'حالا دست را کاملاً صاف کن و بگو کدام ماهیچه آن را پایین کشید.', hint:'دکمهٔ «صاف کن» را بزن؛ بعد روی ماهیچهٔ درست بزن یا از دکمه‌های روی صحنه انتخاب کن.', fact:'ماهیچه‌ها فقط می‌کشند و نمی‌توانند هل بدهند؛ برای همین جفت‌جفت و مخالف هم کار می‌کنند.'},
+    {id:'joints', title:'نقشهٔ مفصل‌ها', text:'نوع هر سه مفصلِ شانه، آرنج و جمجمه را در پنل انتخاب کن.', hint:'آرنج یک‌جهته است، شانه همه‌جهته و جمجمه حرکت نمی‌کند.', fact:'مفصل محل اتصال استخوان‌هاست: آرنج لولایی، شانه گوی و کاسه‌ای و درزهای جمجمه ثابت‌اند.'}
+  ]);
+  draw();
+  return {
+    tick:function(dt, now){
+      if(goal != null){ const d = goal - phi; setPhi(phi + clamp(d, -170 * dt, 170 * dt)); if(Math.abs(d) < .5) goal = null; }
+      const dphi = phi - prevPhi; prevPhi = phi;
+      const tb = dphi > .05 ? 1 : (phi > 12 && Math.abs(dphi) <= .05 ? .55 : 0);
+      const tt = dphi < -.05 ? 1 : 0;
+      activeB += (tb - activeB) * Math.min(1, dt * 8); activeT += (tt - activeT) * Math.min(1, dt * 8);
+      draw();
+      maxPhi = Math.max(maxPhi, phi);
+      if(phi >= 118 && !M.isDone('lift')){ M.complete('lift', 488, 251); target.style.display = 'none'; K.say('لیوان بالا آمد! دیدی؟ ماهیچهٔ قرمزِ جلوی بازو منقبض و ضخیم شد. حالا دست را صاف کن.'); }
+      if(M.isDone('lift') && !asked && phi <= 12){ asked = true; K.host.appendChild(qBox); K.say('دست صاف شد! حالا بگو کدام ماهیچه ساعد را پایین کشید.'); }
+      const steam = cup.querySelector('.steam'); if(steam && !reducedMotion()) steam.setAttribute('transform', 'translate(0 ' + f1(Math.sin(now / 400) * 2) + ')');
+    }
   };
-});
+};
+
+/* ---------- ۵) دامنهٔ باران: فرسایش خاک ---------- */
+BENCH['erosion'] = function(K){
+  const svg = K.svg;
+  K.defs.innerHTML =
+    '<linearGradient id="er-sky" x1="0" y1="0" x2="0" y2="1"><stop id="er-s1" offset="0" stop-color="#8ccff0"/><stop id="er-s2" offset="1" stop-color="#e6f6fd"/></linearGradient>' +
+    '<pattern id="er-rock" width="40" height="26" patternUnits="userSpaceOnUse"><rect width="40" height="26" fill="#8a8f98"/><path d="M0 13h16l6-6h18M10 26l6-8h12" stroke="#767c86" stroke-width="1.4" fill="none"/></pattern>' +
+    '<pattern id="er-soil" width="20" height="16" patternUnits="userSpaceOnUse"><rect width="20" height="16" fill="#8a5a33"/><circle cx="5" cy="5" r="1.6" fill="#a06c40"/><circle cx="14" cy="11" r="1.3" fill="#6e4526"/></pattern>' +
+    '<linearGradient id="er-river" x1="0" y1="0" x2="0" y2="1"><stop id="er-r1" offset="0" stop-color="#5ab8f0"/><stop id="er-r2" offset="1" stop-color="#2a7fc0"/></linearGradient>' +
+    '<radialGradient id="er-sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6c8"/><stop offset=".55" stop-color="#ffd76a"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient>' +
+    '<filter id="er-sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1b2a3a" flood-opacity=".25"/></filter>';
+  K.add(svg, '<rect width="800" height="560" fill="url(#er-sky)"/>');
+  const sun = K.add(svg, '<g id="er-sunG"><circle cx="90" cy="64" r="52" fill="url(#er-sun)"/><circle cx="90" cy="64" r="20" fill="#ffe27a"/></g>');
+  K.add(svg, '<path d="M380 250 L470 170 L540 220 L620 150 L720 236 L800 200 V440 H380Z" fill="#b8cfc4" opacity=".7"/>');
+  const night = K.add(svg, '<g id="er-night" opacity="0" pointer-events="none" style="transition:opacity .8s"><rect width="800" height="560" fill="#0b1a33" opacity=".55"/><g fill="#fff"><circle cx="420" cy="40" r="1.6"/><circle cx="520" cy="80" r="1.2"/><circle cx="610" cy="34" r="1.8"/><circle cx="700" cy="96" r="1.3"/><circle cx="300" cy="60" r="1.2"/></g><circle cx="640" cy="70" r="20" fill="#f1f5f9"/><circle cx="650" cy="64" r="18" fill="#2b3a55"/></g>');
+  const rockG = K.add(svg, '<path id="er-rockp" fill="url(#er-rock)" stroke="#5f656e" stroke-width="2"/>');
+  const soilP = K.add(svg, '<path id="er-soilp" fill="url(#er-soil)"/>');
+  const grassP = K.add(svg, '<path id="er-grass" fill="none" stroke="#5cb848" stroke-width="5" stroke-linecap="round"/>');
+  const river = K.add(svg, '<g id="er-riverG"><path id="er-riverp" fill="url(#er-river)"/><path id="er-sed" fill="#9a6a3f" opacity=".95"/></g>');
+  const runoff = K.add(svg, '<path id="er-run" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="14 12" opacity="0"/>');
+  const plantsG = K.g({id:'er-plants'});
+  const frost = K.g({id:'er-frost'});
+  const clouds = K.add(svg, '<g id="er-clouds" style="transition:opacity .6s"><g fill="#e5e7eb" stroke="#cbd5e1"><ellipse cx="300" cy="64" rx="70" ry="24"/><ellipse cx="340" cy="46" rx="44" ry="26"/><ellipse cx="262" cy="52" rx="34" ry="20"/><ellipse cx="520" cy="58" rx="62" ry="22"/><ellipse cx="556" cy="42" rx="38" ry="22"/></g></g>');
+  const rainP = K.add(svg, '<path id="er-rain" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none" opacity=".75"/>');
+  const meter = K.add(svg, '<g id="er-meter" filter="url(#er-sh)"><rect x="590" y="300" width="194" height="80" rx="16" fill="rgba(255,255,255,.93)"/><text x="772" y="324" text-anchor="start" font-size="12.5" font-weight="800" fill="#2c3f5c">خاکِ باقی‌مانده روی دامنه</text><rect x="604" y="336" width="168" height="14" rx="7" fill="#e5e7eb"/><rect id="er-mfill" x="604" y="336" width="168" height="14" rx="7" fill="#8a5a33"/><text id="er-mtxt" x="772" y="370" text-anchor="start" font-size="13" font-weight="900" fill="#7c2d12">۱۰۰٪</text><text text-anchor="end" id="er-rate" x="604" y="370" font-size="12" font-weight="800" fill="#475569">بدون باران</text></g>');
+
+  let ang = 30, rain = 70, raining = false, soil = 1, sed = 0, greenT = 0, frostN = 0, frostBusy = false, rate = 0, drops = [];
+  const SPOTS = [.14, .28, .42, .56, .7, .84];
+  const planted = SPOTS.map(function(){ return null; });
+  function geo(){
+    const tn = Math.tan(ang * Math.PI / 180);
+    const yTop = Math.max(150, 440 - tn * 420), xB = 150 + (440 - yTop) / tn;
+    return {yTop:yTop, xB:xB, tn:tn};
+  }
+  function surf(x, G){ if(x <= 150) return G.yTop; if(x >= G.xB) return 440; return G.yTop + (x - 150) * G.tn; }
+  function draw(){
+    const G = geo(), T = 30;
+    rockG.setAttribute('d', 'M0 ' + f1(G.yTop + T) + ' L150 ' + f1(G.yTop + T) + ' L' + f1(G.xB) + ' ' + (440 + T) + ' L800 ' + (440 + T) + ' L800 560 L0 560Z');
+    let top = '', bot = '';
+    const pts = [];
+    for(let x = 0; x <= 800; x += 10) pts.push(x);
+    pts.forEach(function(x, i){
+      const onSlope = x > 150 && x < G.xB, loss = onSlope ? (1 - soil) : (x <= 150 ? (1 - soil) * .35 : 0);
+      const y = surf(x, G) + T * loss;
+      top += (i ? ' L' : 'M') + x + ' ' + f1(y);
+    });
+    for(let i = pts.length - 1; i >= 0; i--) bot += ' L' + pts[i] + ' ' + f1(surf(pts[i], G) + T);
+    soilP.setAttribute('d', top + bot + 'Z');
+    grassP.setAttribute('d', top.split(' L').filter(function(_, i){ return pts[i] <= G.xB; }).join(' L'));
+    grassP.setAttribute('opacity', f1(clamp((soil - .45) / .4, 0, 1)));
+    const rx0 = Math.max(G.xB + 60, 560);
+    svg.querySelector('#er-riverp').setAttribute('d', 'M' + f1(rx0) + ' 440 Q' + f1(rx0 + 30) + ' 476 ' + f1(rx0 + 90) + ' 478 L800 478 L800 440Z');
+    const sh = sed * 26;
+    svg.querySelector('#er-sed').setAttribute('d', 'M' + f1(G.xB - 10) + ' 440 Q' + f1(G.xB + 50) + ' ' + f1(440 - sh) + ' ' + f1(G.xB + 140 + sed * 60) + ' 440Z');
+    const mud = clamp(sed * 1.6, 0, 1);
+    svg.querySelector('#er-r1').setAttribute('stop-color', mixHex('#5ab8f0', '#a47148', mud));
+    svg.querySelector('#er-r2').setAttribute('stop-color', mixHex('#2a7fc0', '#7c4f2c', mud));
+    runoff.setAttribute('d', 'M150 ' + f1(G.yTop + 2) + ' L' + f1(G.xB) + ' 440 L' + f1(rx0 + 20) + ' 446');
+    planted.forEach(function(pl, i){ if(pl){ const x = 150 + SPOTS[i] * (G.xB - 150); pl.setAttribute('transform', 'translate(' + f1(x) + ' ' + f1(surf(x, G) + 2) + ')'); } });
+    spotNodes.forEach(function(n, i){ const x = 150 + SPOTS[i] * (G.xB - 150); n.setAttribute('transform', 'translate(' + f1(x) + ' ' + f1(surf(x, G) - 4) + ')'); n.style.display = planted[i] ? 'none' : ''; });
+    frost.setAttribute('transform', 'translate(92 ' + f1(G.yTop) + ')');
+    svg.querySelector('#er-mfill').setAttribute('width', f1(168 * soil));
+    svg.querySelector('#er-mtxt').textContent = fa(Math.round(soil * 100)) + '٪';
+    const r = svg.querySelector('#er-rate');
+    r.textContent = !raining ? 'بدون باران' : (rate > .03 ? 'فرسایش: زیاد' : rate > .012 ? 'فرسایش: متوسط' : 'فرسایش: کم');
+    r.setAttribute('fill', !raining ? '#475569' : (rate > .03 ? '#b91c1c' : rate > .012 ? '#b45309' : '#15803d'));
+  }
+  const spotNodes = SPOTS.map(function(_, i){
+    const n = K.add(svg, '<g class="er-spot"><circle r="13" fill="rgba(255,255,255,.75)" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="4 3"/><path d="M0 -6 v12 M-6 0 h12" stroke="#15803d" stroke-width="3" stroke-linecap="round"/></g>');
+    K.btn(n, 'کاشتن نهال در جای ' + fa(i + 1) + ' دامنه', function(){ plant(i); });
+    return n;
+  });
+  function treeMarkup(){
+    return '<g class="er-tree grow"><path d="M0 0 l-10 26 M0 0 l12 24 M0 0 l-2 34 M-6 14 l-12 8 M7 13 l12 9" stroke="#7c4a23" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".85"/><rect x="-3" y="-34" width="6" height="34" rx="2" fill="#7c4a23"/><circle cx="0" cy="-44" r="18" fill="#3f9d45"/><circle cx="-12" cy="-36" r="12" fill="#4fae4f"/><circle cx="12" cy="-38" r="13" fill="#5fbf5a"/><circle cx="-4" cy="-52" r="9" fill="#6fcf66" opacity=".8"/></g>';
+  }
+  function plant(i){
+    if(planted[i]) return;
+    if(soil < .3){ SND.wrong(); K.say('خاک این دامنه آن‌قدر شسته شده که نهال جا نمی‌گیرد. اول «خاک تازه» را بزن.'); return; }
+    planted[i] = K.add(plantsG, treeMarkup()); SND.tick();
+    const n = planted.filter(Boolean).length;
+    plantM.textContent = fa(n) + ' از ' + fa(SPOTS.length);
+    draw();
+    if(n === 5) K.say('پنج نهال کاشته شد! ریشه‌ها مثل تور خاک را نگه می‌دارند. حالا باران تند را روشن کن.');
+    if(n === SPOTS.length) K.later(function(){ const s = spotNodes.find(function(z){ return z.style.display !== 'none'; }); if(!s) rainBtn.focus(); }, 50);
+  }
+  /* سنگ ترک‌خورده و یخ‌زدگی */
+  K.add(frost, '<g id="er-stone"><path id="er-sl" d="M-44 0 Q-50 -40 -14 -54 L-2 -54 L-6 -30 L2 -14 L-4 0Z" fill="#9aa1ab" stroke="#4b5563" stroke-width="2"/><path id="er-sr" d="M4 0 L10 -14 L2 -30 L8 -54 L20 -54 Q52 -42 46 0Z" fill="#a7aeb8" stroke="#4b5563" stroke-width="2"/><path id="er-ice" d="M-2 -52 L6 -52 L0 -30 L8 -14 L2 0 L-2 0 L4 -14 L-4 -30Z" fill="#7dd3fc" stroke="#0284c7" stroke-width="1"/><g id="er-bits"></g></g>');
+  function frostCycle(){
+    if(frostBusy || frostN >= 3) return;
+    frostBusy = true; frostN++; SND.click();
+    night.setAttribute('opacity', '1');
+    const ice = svg.querySelector('#er-ice'), sl = svg.querySelector('#er-sl'), sr = svg.querySelector('#er-sr');
+    ice.setAttribute('fill', '#e0f2fe');
+    const gap = frostN * 3;
+    K.later(function(){
+      sl.setAttribute('transform', 'translate(' + (-gap) + ' 0) rotate(' + (-frostN * 2) + ' -44 0)');
+      sr.setAttribute('transform', 'translate(' + gap + ' 0) rotate(' + (frostN * 2) + ' 46 0)');
+      ice.setAttribute('transform', 'scale(' + (1 + frostN * .35) + ' 1)');
+      K.say('شب سرد: آبِ درون شکاف یخ زد. یخ جای بیشتری می‌گیرد و شکاف را باز می‌کند! (چرخهٔ ' + fa(frostN) + ' از ۳)');
+    }, reducedMotion() ? 0 : 700);
+    K.later(function(){
+      night.setAttribute('opacity', '0'); ice.setAttribute('fill', '#7dd3fc');
+      if(frostN >= 3){
+        sl.setAttribute('transform', 'translate(-14 4) rotate(-15 -44 0)'); sr.setAttribute('transform', 'translate(14 3) rotate(13 46 0)'); ice.setAttribute('opacity', '0');
+        svg.querySelector('#er-bits').innerHTML = '<circle cx="-2" cy="-4" r="5" fill="#9aa1ab"/><circle cx="10" cy="-2" r="3.5" fill="#a7aeb8"/><circle cx="-12" cy="-2" r="3" fill="#8b929c"/>';
+        SND.success(); M.complete('frost', 92, geo().yTop - 40);
+        K.say('سنگ از هم باز شد! یخ زدن و آب شدنِ چندبارهٔ آب در شکاف‌ها، سنگ‌ها را خرد می‌کند.');
+      } else K.say('روز گرم: یخ آب شد و بیشتر در شکاف فرو رفت. یک چرخهٔ دیگر را امتحان کن.');
+      frostBusy = false;
+      if(frostBtn) frostBtn.disabled = frostN >= 3;
+    }, reducedMotion() ? 10 : 2100);
+  }
+  K.btn(frost, 'سنگ ترک‌خورده — یک چرخهٔ یخ‌زدن و آب‌شدن را اجرا کن', frostCycle);
+
+  /* پنل */
+  const s1 = K.section('باران و دامنه', 'rain');
+  const rainBtn = ctlButton(s1, '🌧 باران: خاموش — روشنش کن', function(){
+    raining = !raining; rainBtn.lastChild.textContent = raining ? 'باران: روشن — خاموشش کن' : 'باران: خاموش — روشنش کن';
+    rainBtn.setAttribute('aria-pressed', raining ? 'true' : 'false');
+    if(!raining){ rate = 0; drops = []; rainP.setAttribute('d', ''); }
+    draw();
+  }, 'ghost');
+  rainBtn.setAttribute('aria-pressed', 'false');
+  ctlSlider(s1, 'شدت باران (٪)', 10, 100, rain, 5, function(v){ rain = v; });
+  ctlSlider(s1, 'شیب دامنه (درجه)', 10, 40, ang, 1, function(v){ ang = v; draw(); });
+  ctlButton(s1, '🔁 خاک تازه (دامنه را دوباره خاک‌دار کن)', function(){ soil = 1; sed = 0; greenT = 0; draw(); K.say('دامنه دوباره پر از خاک شد.'); }, 'ghost');
+  const s2 = K.section('سپر سبز', 'leaf');
+  const plantM = ctlMetric(s2, 'نهال‌های کاشته‌شده'); plantM.textContent = '۰ از ' + fa(SPOTS.length);
+  const greenM = ctlMetric(s2, 'آزمون سپر سبز'); greenM.textContent = '—';
+  obsBox(s2, 'روی دایره‌های سبزِ روی دامنه بزن تا نهال بکاری. بعد زیر باران تند ببین سرعت فرسایش چه می‌شود.', 'info');
+  const s3 = K.section('سنگ و یخ', 'snow');
+  const frostBtn = ctlButton(s3, '🧊 یک شب یخبندان و یک روز گرم', frostCycle, 'ghost');
+  obsBox(s3, 'در شکاف سنگِ بالای تپه کمی آب جمع شده است. چند بار یخ زدن و آب شدن را امتحان کن.', 'info');
+
+  const M = makeMissions(K, [
+    {id:'flood', title:'باران تند روی دامنهٔ لخت', text:'بدون هیچ گیاهی، باران تند (دست‌کم ۶۰٪) را روی شیب تند (دست‌کم ۲۵ درجه) ببار تا یک‌چهارمِ خاک شسته شود.', hint:'باران را روشن کن، شدتش را بالای ۶۰ و شیب را بالای ۲۵ بگذار و نهال نکار.', fact:'روی دامنهٔ شیب‌دار و بی‌گیاه، آب باران ذره‌های خاک را جدا می‌کند و با خود به پایین و به رود می‌برد.'},
+    {id:'green', title:'سپر سبز', text:'دست‌کم ۵ نهال بکار و ۶ ثانیه زیر همان باران تند ببین که خاک کمتر شسته می‌شود.', hint:'اگر خاک کم شده، «خاک تازه» را بزن. بعد روی دایره‌های سبز نهال بکار و باران تند را روشن نگه دار.', fact:'ریشهٔ گیاهان خاک را مثل تور نگه می‌دارد و برگ‌ها ضربهٔ قطره‌ها را می‌گیرند؛ پس گیاهان فرسایش را کم می‌کنند.'},
+    {id:'frost', title:'سنگ و یخ', text:'با سه چرخهٔ یخ‌زدن و آب‌شدن، سنگ ترک‌خوردهٔ بالای تپه را خرد کن.', hint:'دکمهٔ «یک شب یخبندان و یک روز گرم» را سه بار بزن یا روی سنگ بزن.', fact:'آب وقتی یخ می‌زند حجمش بیشتر می‌شود؛ تکرار یخ‌زدن در شکاف‌ها سنگ را خرد می‌کند و این هم نوعی فرسایش است.'}
+  ]);
+  draw();
+  return {
+    tick:function(dt){
+      const n = planted.filter(Boolean).length;
+      clouds.setAttribute('opacity', raining ? '1' : '.35');
+      sun.setAttribute('opacity', raining ? '.25' : '1');
+      if(!raining){ runoff.setAttribute('opacity', '0'); return; }
+      const G = geo();
+      rate = (rain / 100) * (.35 + 1.4 * G.tn) * (1 - .13 * n) * .045;
+      const lost = Math.min(soil, rate * dt);
+      soil -= lost; sed = Math.min(1, sed + lost * .9);
+      /* قطره‌ها */
+      const want = Math.round(rain * 1.4);
+      while(drops.length < want) drops.push({x:Math.random() * 820, y:60 + Math.random() * 400, v:420 + Math.random() * 160});
+      if(drops.length > want) drops.length = want;
+      let d = '';
+      drops.forEach(function(p){ p.y += p.v * dt; p.x -= 40 * dt; if(p.y > surf(p.x, G) || p.x < -10){ p.y = 70 + Math.random() * 30; p.x = 180 + Math.random() * 640; } d += 'M' + f1(p.x) + ' ' + f1(p.y) + 'l-3 13'; });
+      rainP.setAttribute('d', reducedMotion() ? '' : d);
+      runoff.setAttribute('opacity', f1(clamp(.25 + rate * 14, 0, .95)));
+      runoff.setAttribute('stroke', mixHex('#60a5fa', '#8a5a33', clamp(rate * 30, 0, 1)));
+      if(!reducedMotion()) runoff.setAttribute('stroke-dashoffset', f1((performance.now() / 18) % 26 * -1));
+      const strong = rain >= 60 && ang >= 25;
+      if(strong && n === 0 && soil <= .75 && !M.isDone('flood')){ M.complete('flood', 300, 260); K.say('دیدی؟ بدون گیاه، خاکِ دامنه شسته شد و رود گِل‌آلود شد. حالا «خاک تازه» را بزن و نهال بکار.'); }
+      if(strong && n >= 5){
+        greenT += dt; greenM.textContent = fa(Math.min(6, Math.floor(greenT))) + ' از ۶ ثانیه';
+        if(greenT >= 6 && !M.isDone('green')){ M.complete('green', 320, 240); K.say('با ریشهٔ نهال‌ها، سرعت فرسایش خیلی کم شد! گیاهان سپر خاک‌اند.'); }
+      }
+      draw();
+    }
+  };
+};
 
 /* ============================================================
    چراغک (راهنما)
    ============================================================ */
 let cheraT = null;
 const TIPS = {
-  fossil:'با انگشت روی خاک بکش و به‌آرامی لایه‌ها را کنار بزن 🔎',
-  lever:'گشتاور = جرم × فاصله. هر دو طرف رو برابر کن ⚖️',
-  'water-transfer':'آب از ریشه تا برگ تو آوند چوبی بالا می‌ره 🌱',
-  arm:'وقتی آرنج خم می‌شه، دوسر بازو کوتاه و ضخیم می‌شه 💪',
-  erosion:'ریشهٔ گیاه خاک رو نگه می‌داره؛ بدونش خاک می‌ره 🌧️'
+  fossil:'هر لایهٔ سنگی یک فسیل دارد؛ پایین‌ترین لایه، قدیمی‌ترین است.',
+  lever:'گشتاور یعنی وزن ضرب در فاصله از تکیه‌گاه؛ دو طرف را برابر کن.',
+  'water-transfer':'آب رنگی از آوندهای ساقه بالا می‌رود؛ زمان را جلو ببر و صبر کن.',
+  arm:'ماهیچه‌ها فقط می‌کشند؛ برای همین جفت‌جفت و مخالف هم کار می‌کنند.',
+  erosion:'ریشهٔ نهال‌ها خاک را مثل تور نگه می‌دارد.'
 };
 function cheraghakSay(msg){
   const cor = $('cheraghak-corner'); cor.classList.add('show');
@@ -3254,7 +3687,7 @@ function startChera(){
 }
 $('intro2-next').onclick = ()=>{ SND.click(); stopSpeech(); show('screen-lobby'); cheraghakSay('من روی لوله‌های شیشه‌ای منتظرم! یکی از ' + fa(EXPS.length) + ' ایستگاه رو انتخاب کن تا ببرمت اون‌جا ✨'); };
 
-$('lab-back').onclick = ()=>{ SND.click(); cancelAnimationFrame(LAB.raf); show('screen-lobby'); };
+$('lab-back').onclick = ()=>{ SND.click(); cancelAnimationFrame(LAB.raf); if(LAB.kit) LAB.kit.destroy(); show('screen-lobby'); };
 $('hakim-gosh-back').onclick = ()=>{ SND.click(); if($('hakim-gosh-frame')) $('hakim-gosh-frame').src = 'about:blank'; show('screen-lobby'); renderLobby(); };
 window.addEventListener('message', (event)=>{
   // فقط پیام‌های بازیِ درون همین قاب و از همین مبدأ پذیرفته می‌شود؛ وگرنه هر پنجرهٔ دیگری
