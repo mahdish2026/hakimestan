@@ -999,7 +999,7 @@ function paintFace(el, mood){
 function bootHakim(){
   if(!window.Hakim || typeof Hakim.init!=='function') return;
   try{
-    Hakim.init({ container:'#hakimPanelMount', name: S.name||'دوست من', font:false, autoHideMs:8000 });
+    Hakim.init({ container:'#hakimPanelMount', name: S.name|| (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من'), font:false, autoHideMs:8000 });
     if(S.name && Hakim.setName) Hakim.setName(S.name);
   }catch(e){}
 }
@@ -1918,7 +1918,7 @@ function sendAnswerToPanel(st, ok, info, attemptNo, diagText){
     else if(st.type==='pick') correctStr = String((st.options[st.answer]||{}).label || (st.answer+1));
     else if(st.type==='table') correctStr = Object.keys(st.table.answers).map(k=>st.table.answers[k]).join(',');
     Hakim.saveAnswer({
-      student_name: S.name || 'دانش‌آموز',
+      student_name: S.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
       game_id: 'math-olgoha',
       stage: L.name,
       question_num: qIdx + 1,
@@ -2124,7 +2124,7 @@ function showCert(){
 function sendResultsToPanel(score, stars, level, duration, details, completed){
   try{
     const payload = {
-      student_name: S.name || 'دانش‌آموز',
+      student_name: S.name || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
       student_class: '',
       student_school: '',
       game_id: 'math-olgoha',

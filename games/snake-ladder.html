@@ -898,7 +898,7 @@ function hakimSay(text, mood){
 }
 function hakimReact(event, data){
   data = data || {};
-  const name = data.name || 'دوست من';
+  const name = data.name || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
   switch(event){
     case 'welcome':
       hakimSay('سلام دوستان! من حکیمم. هر جواب درست یک فرصت پرتاب تاسه؛ با هم یاد می‌گیریم و تا خانهٔ ۱۰۰ پیش می‌ریم!', 'happy');

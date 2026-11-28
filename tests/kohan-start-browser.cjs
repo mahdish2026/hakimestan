@@ -19,7 +19,7 @@ const overlap = (a,b) => a.left < b.right-1 && a.right > b.left+1 && a.top < b.b
       await page.emulateMediaFeatures([{name:'prefers-reduced-motion',value:'reduce'}]);
       await page.setBypassServiceWorker(true);
       await page.evaluateOnNewDocument(() => {
-        localStorage.setItem('hk_no_stats','1'); window.__csp=[];
+        localStorage.setItem('hk_no_stats','1'); localStorage.setItem('hakimestan_student_name','Student Test'); window.__csp=[];
         document.addEventListener('securitypolicyviolation', e => window.__csp.push(e.violatedDirective));
       });
       await page.goto(URL,{waitUntil:'load'});
@@ -58,7 +58,8 @@ const overlap = (a,b) => a.left < b.right-1 && a.right > b.left+1 && a.top < b.b
       await page.keyboard.press('Escape');
       assert.equal(await page.$('#provincePopup'),null);
       assert.equal(await page.evaluate(()=>document.activeElement.id),'start-city-4');
-      await page.type('#studentNameInput','Student');
+      // نام سراسری حکیمستان (یک بار ثبت‌شده) خانهٔ نام بازی را پر کرده است
+      assert.equal(await page.$eval('#studentNameInput',e=>e.value),'Student Test');
       await page.click('[data-id="nasir"]');
       await page.click('.journey-actions .start-btn');
       const game = await page.evaluate(() => {
@@ -99,10 +100,10 @@ const overlap = (a,b) => a.left < b.right-1 && a.right > b.left+1 && a.top < b.b
     }
     const page=await browser.newPage();
     await page.setViewport({width:360,height:900});
-    await page.evaluateOnNewDocument(()=>localStorage.setItem('hk_no_stats','1'));
+    await page.evaluateOnNewDocument(()=>{localStorage.setItem('hk_no_stats','1');localStorage.setItem('hakimestan_student_name','Student Test');});
     await page.goto(URL,{waitUntil:'load'});
     await page.evaluate(()=>{document.querySelector('#intro-screen').style.display='none';const v=document.getElementById('startVideo');const pause=v.pause.bind(v);v.pause=()=>{window.__videoPaused=true;pause()}});
-    await page.type('#studentNameInput','Student');
+    assert.equal(await page.$eval('#studentNameInput',e=>e.value),'Student Test');
     await page.click('[data-id="nasir"]');
     await page.click('.journey-actions .start-btn');
     assert.equal(await page.evaluate(()=>window.__videoPaused),true,'starting stops video');

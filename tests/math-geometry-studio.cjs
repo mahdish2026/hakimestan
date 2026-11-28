@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 // Geometry invariants + real-browser discovery/drag tests. All remote writes mocked.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const D=require('../games/math-geometry/data.js');

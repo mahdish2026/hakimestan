@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 const assert=require('node:assert/strict'),S=require('../games/math-geometry/skills.js'),D=require('../games/math-geometry/data.js'),fs=require('node:fs'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 assert.deepEqual(S.validDrafts({unknown:{}}),{});assert.equal(S.validDrafts({compound:{reading:'" onfocus="alert(1)'}}).compound.reading,'');assert.equal(S.validDrafts({protractor:{phase:2,rotation:80}}).protractor.phase,1);
 // Sparse arrays must not pass validation and then crash geometry/midpoint code.

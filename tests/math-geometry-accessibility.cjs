@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 // Independent axe-core scan. Run against the static server on port 8000.
 const fs=require('node:fs'),assert=require('node:assert/strict'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 (async()=>{const b=await pup.launch({executablePath:await chromium.executablePath(),args:[...chromium.args,'--disable-gpu'],headless:true});try{const p=await b.newPage(),results=[];await p.setViewport({width:1280,height:900});await p.setRequestInterception(true);p.on('request',r=>r.url().startsWith('http://localhost:8000/')||r.url().startsWith('data:')?r.continue():r.abort());await p.goto('http://localhost:8000/games/math-geometry.html',{waitUntil:'networkidle0'});await p.addScriptTag({content:fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8')});

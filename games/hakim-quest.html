@@ -1963,7 +1963,7 @@ function reaction(msg){
 /* انتخاب پیام هوشمند از بانک عبارات حکیم (hakim-core.js) با جایگذاری نام و زمان */
 function pickHakimPhrase(category, timeUsed, extraVars){
   if(!window.Hakim || !Hakim.PHRASES || !Hakim.PHRASES[category]) return '';
-  const name = ($('nameInput') && $('nameInput').value.trim()) || 'دوست من';
+  const name = ($('nameInput') && $('nameInput').value.trim()) || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
   const t = Hakim.utils ? Hakim.utils.toEnglishNum(timeUsed) : timeUsed;
   const raw = Hakim.utils ? Hakim.utils.pickPhrase(Hakim.PHRASES[category]) : Hakim.PHRASES[category][0];
   return Hakim.utils ? Hakim.utils.fillTemplate(raw, Object.assign({ name, t }, extraVars || {})) : raw;
@@ -2583,7 +2583,7 @@ function finish(q, isCorrect, highlightFn, userAnswerText){
   const timeUsed = Math.max(0, Math.round((Date.now() - (state.questionStartTime || Date.now())) / 1000));
   if(hakimProfile && window.Hakim) Hakim.track(hakimProfile, isCorrect, timeUsed, null);
   if(window.Hakim && typeof Hakim.saveAnswer === 'function'){
-    const studentName = ($('nameInput') && $('nameInput').value.trim()) || 'دانش‌آموز حکیم';
+    const studentName = ($('nameInput') && $('nameInput').value.trim()) || (window.HakimStudent ? HakimStudent.name('دانش‌آموز حکیم') : 'دانش‌آموز حکیم');
     Hakim.saveAnswer({
       student_name: studentName,
       game_id: 'hakim-quest',
@@ -2733,7 +2733,7 @@ function startGame(practice){
     hakimProfile.recovered = 0; hakimProfile.lastWasWrong = false; hakimProfile._shownRecovery = false;
   }
   if(window.Hakim && Hakim.setName){
-    const nm = ($('nameInput') && $('nameInput').value.trim()) || 'دوست من';
+    const nm = ($('nameInput') && $('nameInput').value.trim()) || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
     Hakim.setName(nm);
   }
   clearProgress();
@@ -2759,7 +2759,7 @@ function sendResultToPanel(reason){
     const total = state.questions.length;
     const pct = total ? Math.round(state.correct / total * 100) : 0;
     const stars = pct >= 90 ? 3 : (pct >= 70 ? 2 : (pct >= 50 ? 1 : 0));
-    const name = ($('nameInput').value || '').trim() || 'دانش‌آموز حکیم';
+    const name = ($('nameInput').value || '').trim() || (window.HakimStudent ? HakimStudent.name('دانش‌آموز حکیم') : 'دانش‌آموز حکیم');
     const durationSec = Math.max(1, Math.round((Date.now() - (state.sessionStartTime || Date.now())) / 1000));
     const payload = {
       action: 'session',
@@ -2803,7 +2803,7 @@ function renderResult(reason){
   const total = state.questions.length;
   const pct = total ? Math.round(state.correct / total * 100) : 0;
   const stars = pct >= 90 ? 3 : (pct >= 70 ? 2 : (pct >= 50 ? 1 : 0));
-  const name = ($('nameInput').value || '').trim() || 'دانش‌آموز حکیم';
+  const name = ($('nameInput').value || '').trim() || (window.HakimStudent ? HakimStudent.name('دانش‌آموز حکیم') : 'دانش‌آموز حکیم');
   const win = reason === 'win' || reason === 'practice';
   const practice = reason === 'practice';
 
@@ -2875,7 +2875,7 @@ function renderReview(){
 /* خروجی نتیجه برای معلم (JSON) */
 function exportResult(){
   const total = state.questions.length;
-  const name = ($('nameInput').value || '').trim() || 'دانش‌آموز حکیم';
+  const name = ($('nameInput').value || '').trim() || (window.HakimStudent ? HakimStudent.name('دانش‌آموز حکیم') : 'دانش‌آموز حکیم');
   const pct = total ? Math.round(state.correct / total * 100) : 0;
   const now = new Date();
   const jalali = new Intl.DateTimeFormat('fa-IR', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(now).replace(/\//g, '/');

@@ -9,7 +9,7 @@
 <!-- hakim-core:end -->
 <script>
 window.AUTO_START_LAB = "pulley";
-window.STUDENT_NAME = (function(){ try { return (window.parent && window.parent.HAKIM_STUDENT_NAME) || ""; } catch (_) { return ""; } })();
+window.STUDENT_NAME = (function(){ try { return (window.parent && window.parent.HAKIM_STUDENT_NAME) || localStorage.getItem("hakimestan_student_name") || ""; } catch (_) { return ""; } })();
 </script>
 
 <meta charset="utf-8">
@@ -1879,7 +1879,7 @@ function runQuiz(lab){
           });
           if(window.parent === window && window.Hakim && typeof Hakim.saveAnswer === 'function'){
             Hakim.saveAnswer({
-              student_name: save.name || window.STUDENT_NAME || 'دانش‌آموز',
+              student_name: save.name || window.STUDENT_NAME || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
               game_id: 'hakimestan-lab-2d',
               experiment_id: lab,
               question_id: lab + '-q' + (curQIdx + 1),
@@ -1909,7 +1909,7 @@ function runQuiz(lab){
           });
           if(window.parent === window && window.Hakim && typeof Hakim.saveAnswer === 'function'){
             Hakim.saveAnswer({
-              student_name: save.name || window.STUDENT_NAME || 'دانش‌آموز',
+              student_name: save.name || window.STUDENT_NAME || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
               game_id: 'hakimestan-lab-2d',
               experiment_id: lab,
               question_id: lab + '-q' + (curQIdx + 1),
@@ -1946,7 +1946,7 @@ function runQuiz(lab){
           }, '*');
         } else if(window.Hakim && typeof Hakim.saveSession === 'function'){
           Hakim.saveSession({
-            student_name: save.name || window.STUDENT_NAME || 'دانش‌آموز',
+            student_name: save.name || window.STUDENT_NAME || (window.HakimStudent ? HakimStudent.name('دانش‌آموز') : 'دانش‌آموز'),
             game_id: 'hakimestan-lab-2d',
             experiment_id: lab,
             duration: Math.max(1, Math.round((Date.now() - Game.t0) / 1000)),

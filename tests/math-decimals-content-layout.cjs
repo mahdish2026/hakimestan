@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),D=require('../games/math-decimals/data.js'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 const oracle={'mixed-fraction':2470000,'remaining-unit':630000,'read-thousandths':37000,'descending-pattern':250000,'cross-unit':1020000,'truncate-estimate':14000000,'round-carry':2000000,'sum-pyramid':8800000,'missing-addend':730000,'repeated-machine':7980000,'perimeter':5000000,'product-fraction':21000,'factor-powers':100000000,'greater-factor':55000000,'mass-unit':3500000000,'length-unit':1507000};
 for(const [id,n] of Object.entries(oracle)){const t=D.stages.flatMap(s=>s.tasks).find(t=>t.id===id);assert.equal(D.parse(t.answer),n,id);assert(t.teach);}

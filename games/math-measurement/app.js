@@ -90,7 +90,7 @@
       const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
       if (!raw || typeof raw !== 'object') return defaultState();
       const base = defaultState();
-      base.name = String(raw.name || 'معمار جوان').trim().slice(0, 36) || 'معمار جوان';
+      base.name = String(raw.name || (window.HakimStudent ? HakimStudent.name('معمار جوان') : 'معمار جوان')).trim().slice(0, 36) || (window.HakimStudent ? HakimStudent.name('معمار جوان') : 'معمار جوان');
       if (raw.done && typeof raw.done === 'object') {
         for (const t of allTasks) {
           if (raw.done[t.id]?.ok) {
@@ -121,6 +121,22 @@
   }
 
   let profile = loadState();
+  /* نام سراسری حکیمستان (HakimStudent) جای نام پیش‌فرض یا قدیمیِ پروفایل را می‌گیرد */
+  (function syncSiteName() {
+    const HS = window.HakimStudent;
+    if (!HS) return;
+    const site = HS.get();
+    if (site && site !== profile.name) {
+      profile.name = site;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(profile)); } catch { /* ذخیره اختیاری */ }
+    }
+    HS.onChange((n) => {
+      if (!n || n === profile.name) return;
+      profile.name = n;
+      saveState();
+      if (document.getElementById('studentNameInput')) renderMap();
+    });
+  })();
   let view = 'map'; // 'map' | 'lesson' | 'task' | 'studio' | 'cert'
   let si = 0;
   let qi = 0;
@@ -425,7 +441,7 @@
     W()?.bind(main, { cert: renderCertificate });
     $('nameForm').onsubmit = (e) => {
       e.preventDefault();
-      profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || 'معمار جوان';
+      profile.name = String($('studentNameInput').value || '').trim().slice(0, 36) || (window.HakimStudent ? HakimStudent.name('معمار جوان') : 'معمار جوان');
       HC()?.setName(profile.name);
       saveState();
       renderMap();

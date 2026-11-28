@@ -1090,7 +1090,7 @@ function hakimSay(text, mood){
 }
 function hakimReact(ev, d){
   d = d || {};
-  const name = d.name || 'دوست من';
+  const name = d.name || (window.HakimStudent ? HakimStudent.name('دوست من') : 'دوست من');
   switch(ev){
     case 'welcome':
       hakimSay('سلام دوستان! من حکیمم. اسمت را بنویس، رنگ مهره‌هایت را انتخاب کن و اتاق بساز یا با کد اتاق به دوستانت بپیوند!','happy'); break;
@@ -2036,7 +2036,7 @@ async function submitAnswer(given, btnEl){
   if(window.Hakim && typeof Hakim.saveAnswer === 'function' && q){
     const sentAns = (Array.isArray(given) ? given.join(' | ') : String(given));
     Hakim.saveAnswer({
-      student_name: room.myName || 'بازیکن',
+      student_name: room.myName || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'),
       game_id: GAME_ID,
       experiment_id: room.code || 'online',
       question_id: String(q.id || 'q'),
@@ -2222,7 +2222,7 @@ function sendMyResult(wIdx, wName){
     const payload = {
       action: 'mancha_saveResult',
       game_id: GAME_ID,
-      student_name: room.myName || me.name || 'بازیکن',
+      student_name: room.myName || me.name || (window.HakimStudent ? HakimStudent.name('بازیکن') : 'بازیکن'),
       score: correct * 10 + inHome * 15 + (iWon ? 40 : 0),
       max_score: (correct + wrong) * 10 + 60 + 40,
       stars: iWon ? 3 : (inHome >= 2 ? 2 : (correct >= 2 ? 1 : 0)),
@@ -2319,7 +2319,7 @@ function exitRoom(opts){
 let myColor = PALETTE[0], chosenMax = 2;
 function readName(){
   const v = $('nameInp').value.trim();
-  return v ? v.slice(0,24) : 'بازیکن';
+  return v ? v.slice(0,24) : (window.HakimStudent ? HakimStudent.name('بازیکن').slice(0,24) : 'بازیکن');
 }
 function saveMe(){
   try{ localStorage.setItem(ME_KEY, JSON.stringify({ name: readName(), color: myColor })); }catch(e){}

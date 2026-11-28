@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),P=require('../games/math-decimals/presentation.js'),D=require('../games/math-decimals/data.js'),pup=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 // 1) A token becomes a stacked fraction; a plain slash stays prose and is escaped, never a decimal.
 const html=P.rich('کسر ⟦۷|۱۰⟧ برابر ۰٫۷ است.');

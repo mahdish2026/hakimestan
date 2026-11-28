@@ -1,3 +1,4 @@
+require('./helpers/student-name.cjs');
 const assert=require('node:assert/strict'),puppeteer=require('puppeteer-core'),chromium=require('@sparticuz/chromium').default;
 (async()=>{const b=await puppeteer.launch({executablePath:await chromium.executablePath(),args:[...chromium.args,'--disable-gpu'],headless:true});try{const p=await b.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.setRequestInterception(true);p.on('request',r=>r.url().startsWith('http://localhost:8000/')||r.url().startsWith('data:')?r.continue():r.abort());await p.setViewport({width:1200,height:900});await p.goto('http://localhost:8000/games/math-geometry.html',{waitUntil:'networkidle0'});await p.click('#discoveryBtn');
 const range=async v=>p.$eval('#toolRange',(e,v)=>{e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}));},v),act=()=>p.click('#toolAction');
